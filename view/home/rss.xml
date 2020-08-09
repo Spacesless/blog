@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>{$ options.title $}</title>
+        <link>{$ siteurl $}</link>
+        <description>{$ options.description $}</description>
+        <atom:link href="{$ siteurl $}/rss.html" rel="self" />
+        <language>zh-cn</language>
+        <lastBuildDate>{$ currentTime $}</lastBuildDate>
+        {% for item in list %}
+          <item>
+            <title>{$ item.title $}</title>
+            <link>{$ item.url $}</link>
+            <description><![CDATA[
+              {$ item.description | xml | safe $}
+            ]]></description>
+            <pubDate>{$ item.updatetime $}</pubDate>
+            <guid>{$ item.url $}</guid>
+          </item>
+        {%- endfor %}
+    </channel>
+</rss>

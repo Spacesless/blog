@@ -1,0 +1,149 @@
+@import './variables.scss';
+
+code[class*="language-"], pre[class*="language-"] {
+	font-family: Consolas,Menlo,Courier,monospace;
+	font-size: 14px;
+	white-space: pre-wrap;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: break-word;
+	line-height: 1.5;
+	tab-size: 2;
+  hyphens: none;
+
+  &::selection,
+  & ::selection{
+    text-shadow: none;
+    background: #b3d4fc;
+  }
+}
+@media print {
+	code[class*="language-"],
+	pre[class*="language-"] {
+		text-shadow: none;
+	}
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+  margin: 0;
+	padding: 50px 15px 10px;
+  color: #525252;
+}
+
+/* Inline code */
+.token{
+  &.comment,&.prolog,&.doctype,&.cdata{ // 注释
+    color: #b3b3b3;
+  }
+  &.punctuation{ // 标点符号
+    color: #909399;
+  }
+  &.tag {
+    color: #3e76f6;
+  }
+  &.boolean,&.number,&.constant,&.symbol,&.deleted{
+    color: #fc1e70;
+  }
+  &.selector,&.string,&.attr-value,&.char,&.builtin,&.inserted{
+    color: #42b983;
+  }
+  &.operator,&.entity,&.regex,&.url,.language-css &.string,.style &.string{
+    color: #af7dff;
+  }
+  &.atrule,&.attr-name,&.keyword{
+    color: #008dff;
+  }
+  &.function,&.class-name{
+    color: #f74455;
+  }
+  &.property,&.function,&.important,&.variable{
+    color: #e96900;
+  }
+  &.important,&.bold{
+    font-weight: bold;
+  }
+  &.italic{
+    font-style: italic;
+  }
+  &.entity{
+    cursor: help;
+  }
+}
+
+// toolbar
+.code-toolbar{
+  position: relative;
+  margin: 10px 0;
+  border-radius: 4px;
+  background: #fff;
+  border: 1px solid #EBEEF5;
+}
+.toolbar{
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  text-align: right;
+  border-bottom: 1px dashed #EBEEF5;
+  box-sizing: border-box;
+  padding: 0 10px;
+  &-item{
+    float: right;
+    margin-left: 10px;
+    span{
+      color: #909399;
+      font-size: 16px;
+      font-weight: normal;
+      user-select: none;
+      padding-right: 10px;
+      position: absolute;
+      left: 15px;
+      top: 0;
+    }
+    &-button{
+      display: inline-block;
+      font-size: 14px;
+      border: none;
+      background: none;
+      padding: 3px 6px;
+      color: #606266;
+      position: relative;
+      cursor: pointer;
+      &__tips{
+        position: absolute;
+        background-color: #303133;
+        color: #fff;
+        font-size: 12px;
+        border-radius: 4px;
+        width: 80px;
+        height: 30px;
+        line-height: 30px;
+        bottom: 30px;
+        left: 50%;
+        margin-left: -44px;
+        opacity: 0;
+        transition: opacity .3s;
+        &:after{
+          content: '';
+          display: block;
+          width: 0;
+          height: 0;
+          border: 6px solid transparent;
+          border-top-color: #303133;
+          border-bottom-width: 0;
+          position: absolute;
+          left: 50%;
+          margin-left: -3px;
+        }
+      }
+      &:hover{
+        color: $primary;
+      }
+      &:hover &__tips{
+        opacity: 1;
+      }
+    }
+  }
+}

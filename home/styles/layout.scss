@@ -1,0 +1,335 @@
+@import './variables.scss';
+
+.aside{
+  width: $asideWidth;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  background-color: #F2F6FC;
+  box-shadow: 2px 0 10px rgba(0,0,0,.1);
+  transition: width 0.3s;
+  &-logo{
+    text-align: center;
+    padding: 15px 0 10px;
+    &__img{
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      transition: all .3s;
+    }
+    &__name{
+      font-family: 'Neo', '黑体';
+      font-size: 22px;
+      padding-top: 5px;
+      color: $primary;
+      transition: width 0.3;
+      white-space: nowrap;;
+      overflow: hidden;
+    }
+    &--collapse &__img{
+      width: 50px;
+      height: 50px;
+    }
+    &--collapse &__name{
+      width: 0;
+      height: 0;
+    }
+  }
+  &-wrap{
+    overflow-x: hidden;
+  }
+  &-menu{
+    height: 100%;
+    border-right: none !important;
+    a{
+      display: inline-block;
+      width: 100%;
+      overflow: hidden;
+    }
+    &__icon{
+      vertical-align: middle;
+      margin-right: 5px;
+      width: 24px;
+      text-align: center;
+      font-size: 18px;
+    }
+    .el-menu-item{
+      &:focus,&:hover{
+        background-color: #d9ecff !important;
+      }
+    }
+    .el-submenu__title:hover{
+      background-color: #d9ecff !important;
+    }
+  }
+  .horizontal-collapse-transition {
+    transition: 0s width ease-in-out, 0s padding-left ease-in-out, 0s padding-right ease-in-out;
+  }
+  .el-menu-item,.el-submenu__title{
+    height: 50px;
+    line-height: 50px;
+  }
+  .el-submenu .el-menu-item{
+    height: 45px;
+    line-height: 45px;
+  }
+  &-button{
+    padding-top: 15px;
+    text-align: center;
+    a,span{
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      line-height: 30px;
+      font-size: 22px;
+      color: #606266;
+      margin: 0 10px;
+      vertical-align: middle;
+      cursor: pointer;
+      &:hover{
+        color: $primary;
+      }
+    }
+  }
+  .el-scrollbar{
+    height: calc(100vh - 160px);
+  }
+}
+
+.header{
+  width: calc(100% - #{$asideWidth});
+  padding: 0 15px;
+  height: 60px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 998;
+  line-height: 50px;
+  background-color: #fff;
+  border-bottom: 1px solid #EBEEF5;
+  box-sizing: border-box;
+  transition: width 0.3s;
+  &-logo{
+    &__avatar{
+      height: 40px;
+      vertical-align: middle;
+    }
+  }
+  &-menus{
+    text-align: right;
+    height: 60px;
+    line-height: 60px;
+    &__btn{
+      font-size: 18px;
+      color: #606266;
+      padding: 3px;
+      margin-left: 5px;
+      user-select: none;
+      cursor: pointer;
+      &:hover{
+        color: #303133;
+      }
+    }
+  }
+}
+
+.search{
+  padding-bottom: 32px;
+  clear: both;
+  &-drawer{
+    height: auto;
+    outline: none;
+    .el-drawer__header>:first-child{
+      outline: none;
+    }
+  }
+  &-wrap{
+    position: relative;
+  }
+  &-classify{
+    float: left;
+  }
+  &-input{
+    display: block;
+    overflow: hidden;
+    padding-left: 15px;
+    width: auto;
+  }
+  &__button{
+    display: inline-block;
+    width: 40px;
+    line-height: 40px;
+    text-align: center;
+    color: #606266;
+    position: absolute;
+    right: 0;
+    top: 0;
+    cursor: pointer;
+    &:hover{
+      color: $primary;
+    }
+  }
+  &-hot{
+    padding-top: 25px;
+    &-header{
+      font-size: 18px;
+      padding-bottom: 15px;
+    }
+    &__icon{
+      color: #F56C6C;
+    }
+    &__title{
+      font-weight: normal;
+      color: #606266;
+    }
+    &__link{
+      display: inline-block;
+      padding: 7px 15px;
+      border-radius: 15px;
+      font-size: 13px;
+      color: #606266;
+      background-color: #E4E7ED;
+      margin-bottom: 10px;
+      margin-right: 10px;
+      cursor: pointer;
+      &:hover{
+        background-color: #ecf5ff;
+        color: $primary;
+      }
+    }
+  }
+}
+
+.app-main{
+  margin-left: $asideWidth;
+  padding-top: 60px;
+  transition: margin 0.3s;
+  max-width: calc(100% - #{$asideWidth});
+  &__title{
+    position: relative;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 1em;
+    padding-left: 15px;
+    color: #303133;
+    margin: 15px 0;
+    &:before{
+      content: '';
+      display: block;
+      position: absolute;
+      width: 3px;
+      height: 100%;
+      left: 0;
+      top: 0;
+      background-color: $primary;
+    }
+  }
+}
+
+.app-container {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+  min-height: calc(100vh - 150px);
+  box-sizing: border-box;
+  @media (min-width: 576px) {
+    max-width: 540px;
+  }
+  @media (min-width: 768px) {
+    max-width: 720px;
+  }
+  @media (min-width: 992px) {
+    max-width: 960px;
+  }
+  @media (min-width: 1200px) {
+    max-width: 1140px;
+  }
+  @media (min-width: 1920px) {
+    max-width: 1280px;
+  }
+}
+
+.footer{
+  font-size: 14px;
+  color: #909399;
+  line-height: 1.3;
+  padding: 20px 0;
+  &__icon{
+    vertical-align: text-bottom;
+    padding: 0 3px;
+  }
+  &-info{
+    text-align: center;
+    margin-bottom: 5px;
+  }
+  &-copyright{
+    text-align: center;
+    &__link{
+      color: $primary;
+      margin-left: 10px;
+    }
+  }
+}
+
+.hideAside {
+  .aside{
+    width: 64px;
+    &-logo{
+      &__name{
+        display: hidden;
+      }
+    }
+    &-wrap{
+      overflow: hidden;
+    }
+    .el-submenu {
+      overflow: hidden;
+
+      &>.el-submenu__title {
+        .el-submenu__icon-arrow {
+          display: none;
+        }
+      }
+    }
+    .el-menu--collapse {
+      .el-submenu {
+        &>.el-submenu__title {
+          &>span {
+            height: 0;
+            width: 0;
+            overflow: hidden;
+            visibility: hidden;
+            display: inline-block;
+          }
+        }
+      }
+    }
+  }
+  .app-main{
+    margin-left: 64px;
+    max-width: calc(100% - 64px);
+  }
+  .header {
+    width: calc(100% - 64px)
+  }
+}
+
+.mobile {
+  .header {
+    width: 100%;
+  }
+  .app-main{
+    margin-left: 0;
+  }
+  &.hideAside {
+    .aside{
+      pointer-events: none;
+      transition-duration: 0.3s;
+      transform: translate3d(-$asideWidth, 0, 0);
+    }
+  }
+}

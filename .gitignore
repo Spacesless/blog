@@ -1,0 +1,36 @@
+# Logs
+logs
+*.log
+
+# IDE config
+.idea
+
+# output
+output/
+output.tar.gz
+
+# Dependency directory
+# https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
+node_modules/
+
+.DS_Store
+package-lock.json
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# other ignore file
+runtime/
+app/
+.nuxt/
+www/cms
+www/upload
+www/static
+
+config.development.js
+adapter.development.js
