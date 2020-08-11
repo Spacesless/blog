@@ -69,7 +69,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['column'])
+    ...mapGetters(['columns'])
   },
   created() {
     this.fetchList()
@@ -86,7 +86,7 @@ export default {
     },
     getClassName(row) {
       const id = row.class2 ? (row.class3 ? row.class3 : row.class2) : row.class1
-      const findRow = this.column.find(item => item.id === id)
+      const findRow = this.columns.find(item => item.id === id)
       return findRow ? findRow.name : ''
     },
     handleSelect() {

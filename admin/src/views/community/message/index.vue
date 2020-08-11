@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-table
       ref="multipleTable"
-      v-el-height-adaptive-table="{bottomOffset: 62}"
+      v-el-height-adaptive-table="{bottomOffset: 140}"
       v-loading="listLoading"
       :data="messageList"
       height="233"

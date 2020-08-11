@@ -111,13 +111,13 @@ export function param2Obj(url) {
 
 /**
  * 栏目数组转换成树形结构
- * @param {Array} column 栏目数组
+ * @param {Array} columns 栏目数组
  * @returns {Array} 栏目树形结果数组
  */
-export function formatColumn(column, parentid = 0) {
+export function formatColumn(columns, parentid = 0) {
   const tree = []
   let temp
-  const cloneColumn = JSON.parse(JSON.stringify(column))
+  const cloneColumn = JSON.parse(JSON.stringify(columns))
   for (let i = 0; i < cloneColumn.length; i++) {
     if (cloneColumn[i].parentid === parentid) {
       const item = cloneColumn[i]
@@ -133,14 +133,14 @@ export function formatColumn(column, parentid = 0) {
 
 /**
  * 根据module获取对应类型的栏目树形结构数组
- * @param {Array} column 栏目数组
+ * @param {Array} columns 栏目数组
  * @param {Number(Int)} module 栏目模型
  * @returns {Array} 栏目树形结果数组
  */
-export function getColumnByModule(column, module) {
+export function getColumnByModule(columns, module) {
   const columnEnum = ['', '', 'blog', 'image', 'bangumi']
   const findIndex = columnEnum.findIndex(item => item === module)
-  const filterColumn = column.filter(item => item.module === findIndex)
+  const filterColumn = columns.filter(item => item.module === findIndex)
   filterColumn.forEach(element => {
     element.value = element.id
     element.label = element.name
@@ -150,14 +150,14 @@ export function getColumnByModule(column, module) {
 
 /**
  * 根据class获取对应类型的栏目树形结构数组
- * @param {Array} column 栏目数组
+ * @param {Array} columns 栏目数组
  * @param {Nubmer [int]} class1 一级栏目
  * @param {Nubmer [int]} class2 二级栏目
  * @param {Nubmer [int]} class3 三级栏目
  * @returns {Array} 栏目id数组
  */
-export function getIDByClass(column, class1 = 0, class2 = 0, class3 = 0) {
-  const filterColumn = column.filter(item => [class1, class2, class3].includes(item.id))
+export function getIDByClass(columns, class1 = 0, class2 = 0, class3 = 0) {
+  const filterColumn = columns.filter(item => [class1, class2, class3].includes(item.id))
   return filterColumn.map(item => item.id)
 }
 

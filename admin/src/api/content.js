@@ -3,7 +3,7 @@ import request from '@/utils/request'
 /**
  * 获取详情
  * @param {String} controller 控制器
- * @param {Number [int]} id 
+ * @param {Number [int]} id
  */
 export function GetContent(controller, id) {
   return request({

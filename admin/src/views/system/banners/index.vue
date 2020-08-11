@@ -2,9 +2,10 @@
   <div>
     <el-table
       ref="multipleTable"
-      v-el-height-adaptive-table="{bottomOffset: 62}"
+      v-el-height-adaptive-table="{bottomOffset: 15}"
       v-loading="listLoading"
       :data="bannerList"
+      height="233"
       border
       @selection-change="onSelectionChange"
     >

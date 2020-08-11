@@ -61,18 +61,16 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
-      'config'
-    ])
+    ...mapGetters(['configs'])
   },
   created() {
-    const { topcode, bottomcode, seo_title_type } = this.config
+    const { topcode, bottomcode, seo_title_type } = this.configs
     this.formData = { topcode, bottomcode, seo_title_type }
   },
   methods: {
     async handleSubmit() {
       this.confirmLoading = true
-      await this.$store.dispatch('config/updateConfig', this.formData).then(() => {
+      await this.$store.dispatch('config/updateConfigs', this.formData).then(() => {
         this.$message({
           type: 'success',
           message: '更新成功'

@@ -78,7 +78,7 @@ export default {
     UploadImage
   },
   props: {
-    config: {
+    configs: {
       type: Object,
       default: () => {}
     }
@@ -96,7 +96,7 @@ export default {
   methods: {
     async handleSubmit() {
       this.confirmLoading = true
-      await this.$store.dispatch('config/updateConfig', this.form).then(() => {
+      await this.$store.dispatch('config/updateConfigs', this.form).then(() => {
         this.$message({
           type: 'success',
           message: '更新成功'

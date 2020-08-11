@@ -103,7 +103,7 @@ export const multipleTable = {
       const multipleTable = this.$refs.multipleTable && this.$refs.multipleTable.bodyWrapper
       multipleTable && scrollTo(0, 200, null, multipleTable)
     },
-    onKeywordInput: debounce(() => {
+    onKeywordInput: debounce(function() {
       this.handleSearch()
     }, 500),
     handleSearchTitle(keyword) {

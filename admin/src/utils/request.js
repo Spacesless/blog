@@ -44,10 +44,9 @@ service.interceptors.response.use(
 
     // if the custom code is not 0, it is judged as an error.
     if (res.errno !== 0) {
-      Message({
+      _Message({
         message: res.msg || 'error',
-        type: 'error',
-        duration: 5 * 1000
+        type: 'error'
       })
 
       // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
@@ -56,7 +55,7 @@ service.interceptors.response.use(
         if (!invalidTokenMsg) {
           invalidTokenMsg = true
           store.dispatch('user/logout').then(() => {
-            _Message.error('登录状态过期，请重新登录！')
+            _Message.error('登录状态已过期，请重新登录！')
             setTimeout(() => {
               location.reload()// 为了重新实例化vue-router对象 避免bug
             }, 1000)

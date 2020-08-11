@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: 'Timeless`s小窝',
+  title: 'Timeless`s 管理平台',
 
   /**
    * @type {boolean} true | false

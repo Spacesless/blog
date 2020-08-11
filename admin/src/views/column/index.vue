@@ -65,7 +65,7 @@
       </el-table-column>
     </el-table>
 
-    <move-column :visible="dialogVisible" :current-row="currentRow" :column="column" @onConfirm="onConfirm" />
+    <move-column :visible="dialogVisible" :current-row="currentRow" :columns="columns" @onConfirm="onConfirm" />
   </div>
 </template>
 
@@ -106,7 +106,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['column'])
+    ...mapGetters(['columns'])
   },
   created() {
     this.fetchList()
@@ -114,11 +114,11 @@ export default {
   methods: {
     async fetchList() {
       this.listLoading = true
-      if (!this.column.length) {
-        await this.$store.dispatch('list/getColumn').catch(() => {})
+      if (!this.columns.length) {
+        await this.$store.dispatch('list/getColumns').catch(() => {})
       }
-      const column = formatColumn(this.column)
-      this.columnlist = JSON.parse(JSON.stringify(column))
+      const columns = formatColumn(this.columns)
+      this.columnlist = JSON.parse(JSON.stringify(columns))
       this.listLoading = false
     },
     handleAdd() {

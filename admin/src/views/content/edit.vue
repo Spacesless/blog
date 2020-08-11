@@ -1,7 +1,7 @@
 <template>
   <article-content
     :is-edit="true"
-    :columns="column"
+    :columns="columns"
     :column-options="columnOptions"
   />
 </template>
@@ -17,10 +17,10 @@ export default {
     ArticleContent
   },
   computed: {
-    ...mapGetters(['column']),
+    ...mapGetters(['columns']),
     columnOptions() {
       const currentModule = this.$route.query.module
-      const result = getColumnByModule(this.column, currentModule)
+      const result = getColumnByModule(this.columns, currentModule)
       return result
     }
   }

@@ -132,22 +132,22 @@ div:focus {
   }
 }
 
-@media (pointer: fine) {
-  ::-webkit-scrollbar {
+// scrollbar
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  &-track {
     background-color: #f2f2f2;
-    height: 8px;
-    width: 8px;
   }
-  ::-webkit-scrollbar-button {
-    width: 0;
-    height: 0;
-  }
-  ::-webkit-scrollbar-thumb {
-    background-color: rgba(0,0,0,.2);
+  &-thumb {
     border-radius: 4px;
+    background-color: rgba(0,0,0,.2);
     &:hover{
       background-color: rgba(0,0,0,.3);
     }
+  }
+  &-corner, &-track {
+    background-color: #f2f2f2;
   }
 }
 .scrollbar-wrapper{

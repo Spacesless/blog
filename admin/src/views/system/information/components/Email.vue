@@ -81,7 +81,7 @@
 <script>
 export default {
   props: {
-    config: {
+    configs: {
       type: Object,
       default: () => {}
     }
@@ -101,7 +101,7 @@ export default {
       this.$refs.form.validate(async(valid) => {
         if (!valid) return
         this.confirmLoading = true
-        await this.$store.dispatch('config/updateConfig', this.formData).then(() => {
+        await this.$store.dispatch('config/updateConfigs', this.formData).then(() => {
           this.$message({
             type: 'success',
             message: '更新成功'

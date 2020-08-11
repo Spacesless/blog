@@ -16,16 +16,8 @@
         <i v-if="!tag.meta.affix" class="el-icon-close" @click.prevent.stop="closeSelectedTag(tag)" />
       </router-link>
     </scroll-pane>
-    <div class="tags-view-close">
-      <el-dropdown>
-        <span class="el-dropdown-link">
-          <i class="el-icon-circle-close" />
-        </span>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item @click.native="closeAllTags(selectedTag)">关闭所有</el-dropdown-item>
-          <el-dropdown-item @click.native="closeNotActiveTags">关闭其他</el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
+    <div class="tags-view-refresh" @click="handleRefresh">
+      <i class="el-icon-refresh" />
     </div>
     <ul v-show="visible" :style="{left:left+'px',top:top+'px'}" class="contextmenu">
       <li @click="refreshSelectedTag(selectedTag)">刷新</li>
@@ -59,7 +51,7 @@ export default {
       return this.$store.state.tagsView.visitedViews
     },
     routes() {
-      return this.$store.state.permission.routes
+      return this.$router.options.routes
     }
   },
   watch: {
@@ -135,6 +127,18 @@ export default {
         }
       })
     },
+    // 刷新当前页
+    handleRefresh() {
+      const view = this.$route
+      this.$store.dispatch('tagsView/delCachedView', view).then(() => {
+        const { fullPath } = view
+        this.$nextTick(() => {
+          this.$router.replace({
+            path: '/redirect' + fullPath
+          })
+        })
+      })
+    },
     refreshSelectedTag(view) {
       this.$store.dispatch('tagsView/delCachedView', view).then(() => {
         const { fullPath } = view
@@ -157,14 +161,6 @@ export default {
       this.$store.dispatch('tagsView/delOthersViews', this.selectedTag).then(() => {
         this.moveToCurrentTag()
       })
-    },
-    /**
-     * 关闭非激活状态的tag
-     * @summary 右侧关闭其他按钮获取不到this.selectedTag
-     */
-    closeNotActiveTags() {
-      this.selectedTag = this.visitedViews.find(item => this.isActive(item))
-      this.closeOthersTags()
     },
     closeAllTags(view) {
       this.$store.dispatch('tagsView/delAllViews').then(({ visitedViews }) => {
@@ -275,20 +271,21 @@ export default {
       }
     }
   }
-  &-close{
+  &-refresh{
     position: absolute;
     z-index: 999;
     right: 0;
     width: 32px;
-    height: 38px;
-    line-height: 38px;
+    height: 40px;
+    line-height: 40px;
     text-align: center;
     background-color: #fff;
-    color: #909399;
-    .el-dropdown-link{
-      font-size: 18px;
-      display: block;
-      cursor: pointer;
+    font-size: 20px;
+    color: #606266;
+    border-bottom: 1px solid #EBEEF5;
+    cursor: pointer;
+    &:hover{
+      color: #303133;
     }
   }
 }

@@ -13,12 +13,10 @@ export default {
     ArticleContent
   },
   computed: {
-    ...mapGetters([
-      'column'
-    ]),
+    ...mapGetters(['columns']),
     columnOptions() {
       const currentModule = this.$route.query.module
-      const result = getColumnByModule(this.column, currentModule)
+      const result = getColumnByModule(this.columns, currentModule)
       return result
     },
     currentColumn() {

@@ -75,7 +75,7 @@
         :total="total"
         :page.sync="listQuery.page"
         :limit.sync="listQuery.limit"
-        @pagination="fecthData"
+        @pagination="fecthList"
       />
     </div>
 
@@ -89,7 +89,7 @@
 <script>
 import { debounce } from 'lodash-es'
 import Pagination from '@/components/Pagination'
-// import { GetPathList } from '@/api/common'
+import { GetPathList } from '@/api/common'
 import { parseTime } from '@/utils'
 
 export default {
@@ -141,25 +141,19 @@ export default {
     visible(isShow) {
       if (isShow && !this.isLazyLoaded) {
         this.isLazyLoaded = true
-        this.fecthData()
+        this.fecthList()
       }
     }
   },
-  created() {
-    this.onKeywordInput = debounce(() => {
-      this.listQuery.page = 1
-      this.fecthData()
-    }, 200)
-  },
   methods: {
-    async fecthData() {
+    async fecthList() {
       this.listLoading = true
       this.listQuery.path = this.path
-      // await GetPathList(this.listQuery).then(res => {
-      //   const { data, count } = res.data
-      //   this.fileList = data
-      //   this.total = count
-      // }).catch(() => {})
+      await GetPathList(this.listQuery).then(res => {
+        const { data, count } = res.data
+        this.fileList = data
+        this.total = count
+      }).catch(() => {})
       this.listLoading = false
     },
     changePath(passData) {
@@ -167,9 +161,12 @@ export default {
       this.path = path
       this.breadcrumbs = this.breadcrumbs.slice(0, index + 1)
       this.listQuery.page = 1
-      this.fecthData()
+      this.fecthList()
     },
-    onKeywordInput() {},
+    onKeywordInput: debounce(function() {
+      this.listQuery.page = 1
+      this.fecthList()
+    }, 200),
     enterDirectory(path) {
       this.path = path
       const urlHash = path.split('/')
@@ -178,7 +175,7 @@ export default {
         path: path
       })
       this.listQuery.page = 1
-      this.fecthData()
+      this.fecthList()
     },
     toggleSelect(item) {
       if (!item.check) {

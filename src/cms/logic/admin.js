@@ -9,11 +9,11 @@ module.exports = class extends think.Logic {
     this.rules = {
       username: {
         required: true,
-        length: { min: 4 }
+        length: { min: 5 }
       },
       password: {
         required: true,
-        length: { min: 6 }
+        length: { min: 8 }
       },
       captcha: {
         required: true

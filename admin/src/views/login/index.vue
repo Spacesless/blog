@@ -1,10 +1,10 @@
 <template>
   <div class="login">
     <el-row>
-      <el-col class="hidden-sm-only" :md="12" :lg="14">
+      <el-col class="login-info hidden-sm-only" :md="12" :lg="14">
         <img src="" alt="">
       </el-col>
-      <el-col :sm="24" :md="12" :lg="10">
+      <el-col class="login-wrap" :sm="24" :md="12" :lg="10">
         <el-form
           ref="loginForm"
           size="large"
@@ -14,25 +14,24 @@
           label-position="left"
           @submit.native.prevent
         >
-          <div class="title-container">
-            <img src="@/assets/logo.png" alt="">
+          <div class="login-form-title">
+            123
           </div>
           <el-form-item prop="username">
-            <span class="form-label">
+            <span class="login-form-label">
               <i class="el-icon-user" />
             </span>
             <el-input
               ref="username"
               v-model="loginForm.username"
               placeholder="用户名"
-              name="username"
-              type="text"
               tabindex="1"
               auto-complete="on"
+              clearable
             />
           </el-form-item>
           <el-form-item prop="password">
-            <span class="form-label">
+            <span class="login-form-label">
               <i class="el-icon-lock" />
             </span>
             <el-input
@@ -48,17 +47,26 @@
               <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
             </span>
           </el-form-item>
-          <el-form-item class="form-captcha mb5" prop="captcha">
-            <span class="form-label">
+          <el-form-item class="login-form-captcha" prop="captcha">
+            <span class="login-form-label">
               <i class="el-icon-picture-outline-round" />
             </span>
-            <el-input ref="captcha" v-model="loginForm.captcha" placeholder="验证码" tabindex="3" @keyup.enter.native="handleLogin" />
-            <div class="svg-captcha" @click="getCaptcha" v-html="svgCaptcha" />
+            <el-input
+              ref="captcha"
+              v-model="loginForm.captcha"
+              placeholder="验证码"
+              tabindex="3"
+              clearable
+              @keyup.enter.native="handleLogin"
+            />
+            <!-- svg图片验证码 -->
+            <div v-loading="captchaLoading" class="login-form-captcha__svg" @click="fetchCaptcha" v-html="svgCaptcha" />
           </el-form-item>
-          <el-form-item class="text-right mb5">
-            <el-checkbox v-model="loginForm.remember">自动登录</el-checkbox>
+          <!-- session有效期：不记录为1天，记录为15天 -->
+          <el-form-item class="login-form-remember">
+            <el-checkbox v-model="loginForm.remember">记住登录状态</el-checkbox>
           </el-form-item>
-          <el-button :loading="loading" type="primary" size="large" native-type="submit" @click="handleLogin">登录</el-button>
+          <el-button class="login-form-submit" :loading="loginLoading" type="primary" size="large" native-type="submit" @click="handleLogin">登录</el-button>
         </el-form>
       </el-col>
     </el-row>
@@ -73,7 +81,7 @@ export default {
   data() {
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
-        callback(new Error('密码不能少于6位'))
+        callback(new Error('密码不能少于8位'))
       } else {
         callback()
       }
@@ -82,6 +90,7 @@ export default {
       loginForm: {
         username: '',
         password: '',
+        captcha: '',
         remember: true
       },
       loginRules: {
@@ -89,10 +98,10 @@ export default {
         password: [{ required: true, trigger: 'blur', validator: validatePassword }],
         captcha: [{ required: true, trigger: 'blur', message: '请输入验证码' }]
       },
-      svgCaptcha: false,
-      loading: false,
-      passwordType: 'password',
-      redirect: undefined
+      svgCaptcha: '',
+      loginLoading: false,
+      captchaLoading: false,
+      passwordType: 'password'
     }
   },
   watch: {
@@ -104,38 +113,42 @@ export default {
     }
   },
   created() {
-    this.getCaptcha()
+    this.fetchCaptcha()
   },
   methods: {
     showPwd() {
-      if (this.passwordType === 'password') {
-        this.passwordType = ''
-      } else {
-        this.passwordType = 'password'
-      }
+      this.passwordType = this.passwordType === 'password' ? '' : 'password'
       this.$nextTick(() => {
         this.$refs.password.focus()
       })
     },
-    getCaptcha() {
+    // 请求接口svg图片验证码
+    async fetchCaptcha() {
+      this.loginForm.captcha = ''
       // SVG二维码参数
       const svgOptions = {
         width: 150,
         height: 38,
         fontSize: 36
       }
-      GetCaptcha(svgOptions).then(response => {
+      this.captchaLoading = true
+      await GetCaptcha(svgOptions).then(response => {
         this.svgCaptcha = response.data
-      })
+      }).catch(() => {})
+      this.captchaLoading = false
     },
     handleLogin() {
       this.$refs.loginForm.validate(async(valid) => {
         if (valid) {
-          this.loading = true
-          this.$store.dispatch('user/login', this.loginForm).then(() => {
+          this.loginLoading = true
+          await this.$store.dispatch('user/login', this.loginForm).then(() => {
             this.$router.push({ path: this.redirect || '/' })
-          }).catch(() => {})
-          this.loading = false
+          }).catch((error) => {
+            if (error === '验证码不正确') { // 验证码不正确自动刷新
+              this.fetchCaptcha()
+            }
+          })
+          this.loginLoading = false
         }
       })
     }
@@ -144,33 +157,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$dark_gray: #889aa4;
 .login{
-	&,.el-row,.el-col{
+	&,.el-row,.el-col {
 		height: 100%;
 	}
-	.el-col{
+	.el-col {
 		position: relative;
 	}
-	.title-container{
-		padding: 15px 0;
-		text-align: center;
-		.title{
-			margin: 0;
-			font-weight: normal;
-			font-size: 30px;
-			line-height: 2em;
-		}
-	}
-	.login-form{
-		width: 100%;
-		padding: 50px 30px;
+  &-info {
+    background-color: #0f0f0f;
+  }
+	&-form{
+		width: 350px;
+    height: 340px;
 		position: absolute;
 		top: 50%;
-		margin-top: -240px;
-		.mb5{
-			margin-bottom: 10px;
-		}
+    left: 50%;
+		margin-top: -200px;
+    margin-left: -175px;
 		.el-input{
 			::v-deep input{
 				padding-left: 40px;
@@ -179,42 +183,61 @@ $dark_gray: #889aa4;
 				}
 			}
 		}
-	}
-	.form-label{
-		width: 40px;
-		text-align: center;
-		position: absolute;
-		left: 0;
-		top: 0;
-		font-size: 24px;
-		color: $dark_gray;
-		z-index: 5;
+    &-title{
+      height: 50px;
+      line-height: 50px;
+      margin-bottom: 20px;
+    }
+    &-label{
+      width: 40px;
+      text-align: center;
+      position: absolute;
+      left: 0;
+      top: 0;
+      font-size: 24px;
+      color: #909399;
+      z-index: 5;
+    }
+    &-captcha{
+      ::v-deep .el-input{
+        &__inner{
+          padding-right: 180px;
+        }
+        &__suffix {
+          right: 155px;
+        }
+      }
+      &__svg{
+        width: 150px;
+        height: 38px;
+        position: absolute;
+        right: 1px;
+        top: 1px;
+        border-left: 1px solid #DCDFE6;
+        border-top-right-radius: 4px;
+        border-bottom-right-radius: 4px;
+        overflow: hidden;
+        cursor: pointer;
+      }
+    }
+    &-remember{
+      text-align: right;
+      ::v-deep .el-form-item__content{
+        line-height: 19px;
+      }
+    }
+    &-submit{
+      width: 100%;
+    }
 	}
 	.show-pwd {
 		position: absolute;
 		right: 10px;
 		top: 0;
 		font-size: 16px;
-		color: $dark_gray;
+		color: #909399;
 		cursor: pointer;
 		user-select: none;
-	}
-  .form-captcha{
-    ::v-deep .el-input__inner{
-      padding-right: 160px;
-    }
-  }
-	.svg-captcha{
-    width: 150px;
-    height: 38px;
-    position: absolute;
-    right: 1px;
-    top: 1px;
-    border-left: 1px solid #DCDFE6;
-    border-top-left-radius: 4px;
-    border-bottom-left-radius: 4px;
-    overflow: hidden;
-    cursor: pointer;
 	}
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="app-container bangumi">
     <header-menu
-      :columns="columns"
+      :columns="currentColumns"
       :current-module="currentModule"
       @onSearchKeyword="handleSearch"
       @onColumnChange="handleChangeColumn"
@@ -61,7 +61,7 @@
     </el-table>
 
     <footer-menu
-      :columns="columns"
+      :columns="currentColumns"
       :delete-loading="deleteLoading"
       :multiple-selection="multipleSelection"
     />
@@ -98,9 +98,9 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['column', 'updateRoute']),
-    columns() {
-      const result = getColumnByModule(this.column, this.currentModule)
+    ...mapGetters(['columns', 'updateRoute']),
+    currentColumns() {
+      const result = getColumnByModule(this.columns, this.currentModule)
       return result
     }
   },

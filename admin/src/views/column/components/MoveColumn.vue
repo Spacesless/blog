@@ -40,7 +40,7 @@ export default {
       type: Object,
       default: () => {}
     },
-    column: {
+    columns: {
       type: Array,
       default: () => []
     }
@@ -53,7 +53,7 @@ export default {
   computed: {
     columnOptions() {
       const { module } = this.currentRow
-      return getColumnByModule(this.column, module)
+      return getColumnByModule(this.columns, module)
     }
   },
   methods: {

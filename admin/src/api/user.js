@@ -23,9 +23,7 @@ export function GetInfo() {
   })
 }
 
-/**
- * 注销
- */
+// 注销
 export function Logout() {
   return request({
     url: '/admin/logout',

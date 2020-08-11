@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { debounce } from 'lodash/function'
+import { debounce } from 'lodash-es'
 
 export default {
   props: {
@@ -54,20 +54,12 @@ export default {
       this.$router.push({ name: 'ContentCreate', query: { module: this.currentModule, column: columnToStr }})
     },
     onColumnChange() {
-      const _column = this.selectedColumn
-      const columnObj = {
-        class1: _column[0] ? _column[0] : null,
-        class2: _column[1] ? _column[1] : null,
-        class3: _column[2] ? _column[2] : null
-      }
-      this.$emit('onColumnChange', columnObj)
+      const [class1, class2, class3] = this.selectedColumn || []
+      this.$emit('onColumnChange', { class1, class2, class3 })
     },
-    handleSearch() {
-      const onKeywordInput = debounce(() => {
-        this.$emit('onSearchKeyword', this.keyword)
-      }, 500)
-      onKeywordInput()
-    }
+    handleSearch: debounce(function() {
+      this.$emit('onSearchKeyword', this.keyword)
+    }, 500)
   }
 }
 </script>

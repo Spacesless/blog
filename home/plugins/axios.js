@@ -6,8 +6,8 @@ export default function({ store, app: { $axios }}) {
   // request timeout
   $axios.defaults.timeout = 15000
 
-  $axios.onRequest(config => {
-    config.headers.common['SupportWebp'] = store.state.isSupportWebp ? 1 : 0
+  $axios.onRequest(configs => {
+    configs.headers.common['SupportWebp'] = store.state.isSupportWebp ? 1 : 0
   })
 
   $axios.onResponse(response => {

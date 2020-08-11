@@ -1,11 +1,11 @@
 <template>
-  <div class="app-container">
+  <div class="app-container information">
     <el-tabs v-model="activeName" type="card">
       <el-tab-pane label="网站信息" name="info">
-        <info :config="config" />
+        <info :configs="configs" />
       </el-tab-pane>
       <el-tab-pane label="邮箱设置" name="email">
-        <email :config="config" />
+        <email :configs="configs" />
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -27,15 +27,13 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
-      'config'
-    ])
+    ...mapGetters(['configs'])
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.app-container{
+.information{
   ::v-deep .el-tabs__header{
     margin-bottom: 0;
   }

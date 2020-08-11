@@ -1,5 +1,6 @@
 import request from '@/utils/request'
 
+// 清除缓存
 export function RefreshCache() {
   return request({
     url: '/index/refresh',
@@ -20,6 +21,10 @@ export function UploadFiles(formData) {
   })
 }
 
+/**
+ * 获取上传文件列表
+ * @param {Object} query 查询条件
+ */
 export function GetPathList(query) {
   return request({
     url: '/file/get',

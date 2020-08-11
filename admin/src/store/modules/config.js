@@ -1,22 +1,22 @@
 import { GetConfigs, UpdateConfigs } from '@/api/config'
 
 const state = {
-  config: {}
+  configs: {}
 }
 
 const mutations = {
-  SET_CONFIG: (state, config) => {
-    state.config = config
+  SET_CONFIGS: (state, configs) => {
+    state.configs = { ...state.configs, ...configs }
   }
 }
 
 const actions = {
   // 获取配置信息
-  getConfig({ commit }) {
+  getConfigs({ commit }) {
     return new Promise((resolve, reject) => {
       GetConfigs().then(response => {
         const { data } = response
-        commit('SET_CONFIG', data)
+        commit('SET_CONFIGS', data)
         resolve()
       }).catch(error => {
         reject(error)
@@ -24,11 +24,14 @@ const actions = {
     })
   },
 
-  // 更新配置信息
-  updateConfig({ commit, state }, data) {
+  /**
+   * 更新配置信息
+   * @param {Object} data 所需更新的配置
+   */
+  updateConfigs({ commit }, data) {
     return new Promise((resolve, reject) => {
-      UpdateConfigs(data).then(response => {
-        commit('SET_CONFIG', { ...state.config, ...data })
+      UpdateConfigs(data).then(res => {
+        commit('SET_CONFIGS', res.data)
         resolve()
       }).catch(error => {
         reject(error)

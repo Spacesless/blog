@@ -39,8 +39,8 @@
       </el-table-column>
       <el-table-column class-name="status-col" label="状态" width="110" align="center">
         <template #default="scope">
-          <el-tag v-if="scope.row.status" type="success">已激活</el-tag>
-          <el-tag v-else type="info">未激活</el-tag></el-tag>
+          <el-tag v-if="scope.row.status">已激活</el-tag>
+          <el-tag v-else type="info">未激活</el-tag>
         </template>
       </el-table-column>
       <el-table-column align="center" label="操作" width="180">

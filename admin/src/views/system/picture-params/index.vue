@@ -74,16 +74,16 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['config'])
+    ...mapGetters(['configs'])
   },
   created() {
-    const { thumb_blog_x, thumb_blog_y, thumb_image_x, thumb_image_y, thumb_bangumi_x, thumb_bangumi_y } = this.config
+    const { thumb_blog_x, thumb_blog_y, thumb_image_x, thumb_image_y, thumb_bangumi_x, thumb_bangumi_y } = this.configs
     this.formData = { thumb_blog_x, thumb_blog_y, thumb_image_x, thumb_image_y, thumb_bangumi_x, thumb_bangumi_y }
   },
   methods: {
     async handleSubmit() {
       this.confirmLoading = true
-      await this.$store.dispatch('config/updateConfig', this.formData).then(() => {
+      await this.$store.dispatch('config/updateConfigs', this.formData).then(() => {
         this.$message({
           type: 'success',
           message: '更新成功'

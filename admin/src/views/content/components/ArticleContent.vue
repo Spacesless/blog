@@ -122,7 +122,7 @@
               {{ tag }}
             </el-tag>
             <el-input
-              v-if="tagVisible"
+              v-if="inputVisible"
               ref="saveTagInput"
               v-model="inputTag"
               class="input-new-tag"
@@ -135,7 +135,7 @@
       </el-form-item>
       <div class="stick-bottom">
         <el-button type="warning" plain @click="handleCancel">取消</el-button>
-        <el-button type="primary" @click="handleSubmit">确定</el-button>
+        <el-button type="primary" :loading="confirmLoading" @click="handleSubmit">确定</el-button>
       </div>
     </el-form>
   </div>
@@ -182,9 +182,10 @@ export default {
       formData: {},
       fileList: [],
       tags: [],
-      tagVisible: false,
+      inputVisible: false,
       inputTag: '',
-      fetchLoading: false
+      fetchLoading: false,
+      confirmLoading: false
     }
   },
   computed: {
@@ -194,9 +195,9 @@ export default {
     },
     paramComponent() {
       const moduleEnum = {
-        blog: 'BlogOption',
-        image: 'ImageOption',
-        bangumi: 'BangumiOption'
+        blog: 'BlogParam',
+        image: 'ImageParam',
+        bangumi: 'BangumiParam'
       }
       return moduleEnum[this.currentModule] || ''
     }
@@ -240,8 +241,8 @@ export default {
       this.tags.splice(this.tags.indexOf(tag), 1)
     },
     showTagInput() {
-      this.tagVisible = true
-      this.$nextTick(_ => {
+      this.inputVisible = true
+      this.$nextTick(() => {
         this.$refs.saveTagInput.focus()
       })
     },
@@ -250,7 +251,7 @@ export default {
       if (inputTag) {
         this.tags.push(inputTag)
       }
-      this.tagVisible = false
+      this.inputVisible = false
       this.inputTag = ''
     },
     handleSubmit() {

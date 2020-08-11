@@ -9,7 +9,7 @@
         <i class="el-icon-refresh" @click="handleClearCache" />
       </el-tooltip>
       <el-tooltip class="btn-container" effect="dark" content="前台预览" placement="bottom">
-        <a :href="config.siteurl" target="_blank">
+        <a :href="configs.siteurl" target="_blank">
           <i class="el-icon-monitor" />
         </a>
       </el-tooltip>
@@ -46,7 +46,7 @@ export default {
     ...mapGetters([
       'sidebar',
       'userinfo',
-      'config'
+      'configs'
     ])
   },
   methods: {
@@ -63,8 +63,8 @@ export default {
           type: 'success',
           message: '清除缓存成功'
         })
-        this.$store.dispatch('list/getColumn')
-        this.$store.dispatch('config/getConfig')
+        this.$store.dispatch('list/getColumns')
+        this.$store.dispatch('config/getConfigs')
       }).catch(() => {
         this.$message({
           type: 'error',
