@@ -1,22 +1,21 @@
 <template>
   <div class="app-container">
-    <div class="app-top-menu">
-      <el-row>
-        <el-col :xs="24" :sm="12">
-          <el-button type="primary" icon="el-icon-plus" @click="handleAdd">添加栏目</el-button>
-          <el-switch
-            v-model="expandAll"
-            class="expand-ctrl"
-            active-text="全部展开"
-            inactive-text="全部收缩"
-          />
-        </el-col>
-        <el-col :xs="24" :sm="12" class="text-right">
-          <el-button type="danger" icon="el-icon-delete" :loading="deleteLoading" @click="handleDeleteSelection">删除</el-button>
-          <el-button type="success" icon="el-icon-check" :loading="saveLoading" @click="handleSave">保存</el-button>
-        </el-col>
-      </el-row>
-    </div>
+    <el-row class="app-header">
+      <el-col :xs="24" :sm="12">
+        <el-button type="primary" icon="el-icon-plus" @click="handleAdd">添加栏目</el-button>
+        <el-switch
+          v-model="expandAll"
+          class="expand-ctrl"
+          active-text="全部展开"
+          inactive-text="全部收缩"
+        />
+      </el-col>
+      <el-col :xs="24" :sm="12" class="text-right">
+        <el-button type="danger" icon="el-icon-delete" :loading="deleteLoading" @click="handleDeleteSelection">删除</el-button>
+        <el-button type="success" icon="el-icon-check" :loading="saveLoading" @click="handleSave">保存</el-button>
+      </el-col>
+    </el-row>
+
     <el-table
       ref="columnTable"
       v-el-height-adaptive-table="{bottomOffset: 62}"
@@ -187,7 +186,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.app-top-menu{
+.app-header{
   .expand-ctrl{
     padding-left: 15px;
   }

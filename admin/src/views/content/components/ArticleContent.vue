@@ -228,11 +228,13 @@ export default {
         this.formData = res.data
         const { class1, class2, class3, imgurl, tag } = this.formData
         this.formData.column = getIDByClass(this.columns, class1, class2, class3)
-        const { basename } = getPathName(imgurl)
-        this.fileList = imgurl ? [{
-          name: basename,
-          url: imgurl
-        }] : []
+        if (imgurl) {
+          const { basename } = getPathName(imgurl)
+          this.fileList = [{
+            name: basename,
+            url: imgurl
+          }]
+        }
         this.tags = tag ? tag.split('|') : []
       }).catch(() => {})
       this.fetchLoading = false

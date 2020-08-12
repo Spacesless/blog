@@ -55,3 +55,11 @@ export function GetAdminList(query) {
     params: query
   })
 }
+
+export function UpdateAdminInfo(data) {
+  return request({
+    url: '/admmin/update',
+    method: 'post',
+    data
+  })
+}

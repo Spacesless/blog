@@ -78,30 +78,28 @@ div:focus {
   &-container {
     padding: 15px;
   }
+  &-header{
+    padding: 15px;
+    border: 1px solid #EBEEF5;
+    border-bottom: none;
+  }
+  &-footer {
+    padding: 15px;
+    border: 1px solid #EBEEF5;
+    border-top: none;
+    .el-cascader{
+      margin-right: 15px;
+    }
+    .el-dropdown{
+      margin-right: 15px;
+    }
+  }
   &-preview{
     .el-image{
       &__error, &__inner{
         display: none;
       }
     }
-  }
-}
-
-.top-menu{
-  padding: 15px;
-  border: 1px solid #EBEEF5;
-  border-bottom: none;
-}
-
-.footer-menu{
-  padding: 15px;
-  border: 1px solid #EBEEF5;
-  border-top: none;
-  .el-cascader{
-    margin-right: 15px;
-  }
-  .el-dropdown{
-    margin-right: 15px;
   }
 }
 

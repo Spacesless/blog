@@ -93,7 +93,7 @@ export default {
     }
   },
   created() {
-    const { email_person, email_username, email_auth, email_host, email_port, email_way } = this.config
+    const { email_person, email_username, email_auth, email_host, email_port, email_way } = this.configs
     this.formData = { email_person, email_username, email_auth, email_host, email_port, email_way }
   },
   methods: {

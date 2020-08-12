@@ -1,16 +1,15 @@
 <template>
   <div class="app-container">
-    <div class="app-top-menu">
-      <el-row>
-        <el-col :xs="24" :sm="12">
-          <el-input v-model="listQuery.keyword" placeholder="请输入网站标题、地址" clearable @change="onKeywordInput" />
-        </el-col>
-        <el-col :xs="24" :sm="12" class="text-right">
-          <el-button type="primary" icon="el-icon-plus" @click="handleAdd">添加友链</el-button>
-          <el-button type="danger" icon="el-icon-delete" @click="handleDeleteSelection">删除选中</el-button>
-        </el-col>
-      </el-row>
-    </div>
+    <el-row class="app-header">
+      <el-col :xs="24" :sm="12">
+        <el-input v-model="listQuery.keyword" placeholder="请输入网站标题、地址" clearable @change="onKeywordInput" />
+      </el-col>
+      <el-col :xs="24" :sm="12" class="text-right">
+        <el-button type="primary" icon="el-icon-plus" @click="handleAdd">添加友链</el-button>
+        <el-button type="danger" icon="el-icon-delete" @click="handleDeleteSelection">删除选中</el-button>
+      </el-col>
+    </el-row>
+
     <el-table
       v-loading="listLoading"
       class="links-list"

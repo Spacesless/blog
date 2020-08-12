@@ -10,7 +10,25 @@
   >
 
     <el-form ref="form" :model="formData" :rules="rules" label-width="80px">
-      123
+      <el-form-item label="用户名" prop="username">
+        <el-input v-model="formData.username" />
+      </el-form-item>
+      <el-form-item v-if="!currentId" label="密码" prop="password">
+        <el-input v-model="formData.password" />
+      </el-form-item>
+      <el-form-item label="昵称">
+        <el-input v-model="formData.nickname" />
+      </el-form-item>
+      <el-form-item v-if="currentId" label="最后登录时间">
+        <el-date-picker
+          v-model="formData.login_time"
+          type="datetime"
+          readonly
+        />
+      </el-form-item>
+      <el-form-item label="是否激活">
+        <el-switch v-model="formData.status" />
+      </el-form-item>
     </el-form>
 
     <div slot="footer" class="dialog-footer">
@@ -22,14 +40,14 @@
 
 <script>
 import { dialogForm } from '@/mixins'
-import { GetContent, CreateContent, UpdateContent } from '@/api/content'
+import { UpdateAdminInfo } from '@/api/user'
 
 export default {
   mixins: [dialogForm],
   props: {
-    currentId: {
-      type: Number,
-      default: 0
+    currentRow: {
+      type: Object,
+      default: () => {}
     }
   },
   data() {
@@ -48,20 +66,12 @@ export default {
     onOpen() {
       this.currentId && this.fetchData()
     },
-    async fetchData() {
-      this.fetchLoading = true
-      await GetContent('links', this.currentId).then(res => {
-        this.formData = res.data
-      }).catch(() => {})
-      this.fetchLoading = false
-    },
     handleConfirm() {
       this.$refs.form.validate(async(valid) => {
         if (!valid) return
         this.dialogLoading = true
 
-        const SubmitHandler = this.currentId ? UpdateContent : CreateContent
-        await SubmitHandler(this.formData).then(res => {
+        await UpdateAdminInfo(this.formData).then(res => {
 
         }).catch(() => {
 

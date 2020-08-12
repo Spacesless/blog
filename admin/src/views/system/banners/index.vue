@@ -1,8 +1,14 @@
 <template>
-  <div>
+  <div class="app-container banners">
+    <el-row class="app-header">
+      <el-col :xs="24">
+        <el-button type="primary" icon="el-icon-plus" @click="handleAdd">添加banner</el-button>
+      </el-col>
+    </el-row>
+
     <el-table
       ref="multipleTable"
-      v-el-height-adaptive-table="{bottomOffset: 15}"
+      v-el-height-adaptive-table="{bottomOffset: 80}"
       v-loading="listLoading"
       :data="bannerList"
       height="233"
@@ -21,32 +27,34 @@
       </el-table-column>
       <el-table-column label="标题" prop="title" />
       <el-table-column label="描述" prop="mark" />
+      <el-table-column align="center" label="排序" prop="sort" />
       <el-table-column align="center" label="操作" width="230">
         <template #default="scope">
           <el-button type="primary" @click="handleEdit(scope.row.id)">编辑</el-button>
-          <el-button type="danger" plain @click="handleDelete(scope.row.id)">删除</el-button>
+          <el-button type="danger" :loading="scope.row.deleteLoading" plain @click="handleDelete(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
 
-    <banner-form />
+    <banner-form :dialog-visible="dialogVisible" :current-id="currentId" @onConfirm="onConfirm" />
   </div>
 </template>
 
 <script>
 import BannerForm from './components/BannerForm'
 import elHeightAdaptiveTable from '@/directive/el-table'
-import { multipleTable } from '@/mixins'
+import { multipleTable, listDialog } from '@/mixins'
 import { GetList } from '@/api/list'
 
 export default {
+  name: 'Banners',
   components: {
     BannerForm
   },
   directives: {
     elHeightAdaptiveTable
   },
-  mixins: [multipleTable],
+  mixins: [multipleTable, listDialog],
   data() {
     return {
       bannerList: []
@@ -56,17 +64,9 @@ export default {
     async fetchList() {
       this.listLoading = true
       await GetList('banner').then(res => {
-        const { count, data } = res.data
-        this.total = count
-        this.bannerList = data
+        this.bannerList = res.data
       }).catch(() => {})
       this.listLoading = false
-    },
-    handleEdit() {
-
-    },
-    handleDelete() {
-
     }
   }
 }

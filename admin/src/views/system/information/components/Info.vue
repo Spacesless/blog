@@ -90,7 +90,7 @@ export default {
     }
   },
   created() {
-    const { sitename, siteurl, keywords, description, logo, icp_beian, police_beian } = this.config
+    const { sitename, siteurl, keywords, description, logo, icp_beian, police_beian } = this.configs
     this.formData = { sitename, siteurl, keywords, description, logo, icp_beian, police_beian }
   },
   methods: {

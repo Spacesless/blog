@@ -3,8 +3,7 @@
     <div class="top-menu">
       <el-row>
         <el-col :xs="24" :sm="12">
-          <el-select v-model="listQuery.module" clearable placeholder="请选择" @change="handleSelect">
-            <el-option label="请选择" value="" />
+          <el-select v-model="listQuery.module" clearable placeholder="请选择模块" @change="handleSelect">
             <el-option label="文章模块" value="2" />
             <el-option label="壁纸模块" value="3" />
             <el-option label="追番模块" value="4" />
@@ -16,11 +15,13 @@
         </el-col>
       </el-row>
     </div>
+
     <el-table
       ref="multipleTable"
-      v-el-height-adaptive-table="{bottomOffset: 62}"
+      v-el-height-adaptive-table="{bottomOffset: 80}"
       v-loading="listLoading"
       :data="recycleList"
+      height="233"
       border
       @selection-change="onSelectionChange"
     >
@@ -44,7 +45,8 @@
         </template>
       </el-table-column>
     </el-table>
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="fetchList" />
+
+    <pagination :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.pageSize" @pagination="fetchList" />
   </div>
 </template>
 

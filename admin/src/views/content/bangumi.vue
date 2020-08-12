@@ -9,7 +9,7 @@
 
     <el-table
       ref="multipleTable"
-      v-el-height-adaptive-table="{bottomOffset: 140}"
+      v-el-height-adaptive-table="{bottomOffset: 142}"
       v-loading="listLoading"
       :data="list"
       height="233"

@@ -1,12 +1,10 @@
 <template>
   <div class="app-container">
-    <div class="app-top-menu">
-      <el-row>
-        <el-col :xs="24">
-          <el-button type="primary" icon="el-icon-plus" @click="handleAdd">添加管理员</el-button>
-        </el-col>
-      </el-row>
-    </div>
+    <el-row class="app-header">
+      <el-col :xs="24">
+        <el-button type="primary" icon="el-icon-plus" @click="handleAdd">添加管理员</el-button>
+      </el-col>
+    </el-row>
 
     <el-table
       v-loading="listLoading"
@@ -37,7 +35,7 @@
           <span>{{ scope.row.login_time }}</span>
         </template>
       </el-table-column>
-      <el-table-column class-name="status-col" label="状态" width="110" align="center">
+      <el-table-column label="状态" width="110" align="center">
         <template #default="scope">
           <el-tag v-if="scope.row.status">已激活</el-tag>
           <el-tag v-else type="info">未激活</el-tag>
@@ -45,15 +43,14 @@
       </el-table-column>
       <el-table-column align="center" label="操作" width="180">
         <template #default="scope">
-          <el-button type="primary" @click="handleEdit(scope.row.id)">编辑</el-button>
-          <el-button type="danger" plain @click="handleDelete(scope.row.id)">删除</el-button>
+          <el-button type="primary" @click="handleEdit(scope.row)">编辑</el-button>
         </template>
       </el-table-column>
     </el-table>
 
     <pagination :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.pageSize" @pagination="fetchList" />
 
-    <admin-form :dialog-visible="dialogVisible" :current-id="currentId" @onConfirm="onConfirm" />
+    <admin-form :dialog-visible="dialogVisible" :current-row="currentRow" @onConfirm="onConfirm" />
   </div>
 </template>
 
@@ -76,8 +73,8 @@ export default {
   mixins: [multipleTable, listDialog],
   data() {
     return {
-      searchName: '',
-      adminList: []
+      adminList: [],
+      currentRow: {}
     }
   },
   created() {
@@ -92,6 +89,14 @@ export default {
         this.total = count
       }).catch(() => {})
       this.listLoading = false
+    },
+    handleAdd() {
+      this.currentRow = {}
+      this.dialogVisible = true
+    },
+    handleEdit(row) {
+      this.currentRow = row
+      this.dialogVisible = true
     }
   }
 }

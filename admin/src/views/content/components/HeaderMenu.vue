@@ -1,31 +1,29 @@
 <template>
-  <div class="top-menu">
-    <el-row>
-      <el-col :xs="24" :sm="12">
-        <el-cascader
-          v-model="selectedColumn"
-          class="top-menu-select"
-          :options="columns"
-          :props="{ checkStrictly: true }"
-          placeholder="请选择栏目"
-          clearable
-          @change="onColumnChange"
-        />
-        <el-input
-          v-model="keyword"
-          placeholder="请输入关键字"
-          clearable
-          style="width:220px"
-          @input="handleSearch"
-        >
-          <i slot="prefix" class="el-input__icon el-icon-search" />
-        </el-input>
-      </el-col>
-      <el-col :xs="24" :sm="12" class="text-right">
-        <el-button type="primary" icon="el-icon-plus" @click="handleAdd">添加内容</el-button>
-      </el-col>
-    </el-row>
-  </div>
+  <el-row class="app-header">
+    <el-col :xs="24" :sm="12">
+      <el-cascader
+        v-model="selectedColumn"
+        class="top-menu-select"
+        :options="columns"
+        :props="{ checkStrictly: true }"
+        placeholder="请选择栏目"
+        clearable
+        @change="onColumnChange"
+      />
+      <el-input
+        v-model="keyword"
+        placeholder="请输入关键字"
+        clearable
+        style="width:220px"
+        @input="handleSearch"
+      >
+        <i slot="prefix" class="el-input__icon el-icon-search" />
+      </el-input>
+    </el-col>
+    <el-col :xs="24" :sm="12" class="text-right">
+      <el-button type="primary" icon="el-icon-plus" @click="handleAdd">添加内容</el-button>
+    </el-col>
+  </el-row>
 </template>
 
 <script>
