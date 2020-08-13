@@ -1,8 +1,8 @@
-const path = require('path');
-const isDev = think.env.includes('development');
-const isStaging = think.env === 'development.local';
-const nuxt = require('./middleware/nuxt');
-const nuxtConfig = require(path.join(think.ROOT_PATH, '/nuxt.config.js'));
+const path = require('path')
+const isDev = think.env.includes('development')
+const isStaging = think.env === 'development.local'
+const nuxt = require('./middleware/nuxt')
+const nuxtConfig = require(path.join(think.ROOT_PATH, '/nuxt.config.js'))
 
 const middleware = [
   {
@@ -42,9 +42,9 @@ const middleware = [
   },
   'logic',
   'controller'
-];
+]
 
-if(!isStaging) {
+if (!isStaging) {
   middleware.push({
     handle: nuxt,
     options: {

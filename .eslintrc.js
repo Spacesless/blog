@@ -1,27 +1,30 @@
 module.exports = {
   root: true,
-  "env": {
-    "browser": true,
-    node: true,
-    "es6": true
-  },
-  "extends": [
-    "eslint:recommended",
-    "plugin:vue/essential"
-  ],
-  "globals": {
-    "Atomics": "readonly",
-    "SharedArrayBuffer": "readonly"
-  },
-  "parserOptions": {
+  parserOptions: {
     parser: 'babel-eslint',
     sourceType: 'module'
   },
-  "plugins": [
-    "vue"
-  ],
-  "rules": {
-    'no-console': 'off',
+  env: {
+    browser: true,
+    node: true,
+    es6: true,
+  },
+  extends: ['think', 'plugin:vue/recommended', 'eslint:recommended'],
+
+  // add your custom rules here
+  //it is base on https://github.com/vuejs/eslint-config-vue
+  rules: {
+    "vue/max-attributes-per-line": [2, {
+      "singleline": 10,
+      "multiline": {
+        "max": 1,
+        "allowFirstLine": false
+      }
+    }],
+    "vue/singleline-html-element-content-newline": "off",
+    "vue/multiline-html-element-content-newline":"off",
+    "vue/name-property-casing": ["error", "PascalCase"],
+    "vue/no-v-html": "off",
     'accessor-pairs': 2,
     'arrow-spacing': [2, {
       'before': true,
@@ -192,4 +195,4 @@ module.exports = {
     }],
     'array-bracket-spacing': [2, 'never']
   }
-};
+}

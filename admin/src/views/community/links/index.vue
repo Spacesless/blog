@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container">
+  <div class="app-container links">
     <el-row class="app-header">
       <el-col :xs="24" :sm="12">
         <el-input v-model="listQuery.keyword" placeholder="请输入网站标题、地址" clearable @change="onKeywordInput" />
@@ -12,8 +12,9 @@
 
     <el-table
       v-loading="listLoading"
-      class="links-list"
+      v-el-height-adaptive-table="{bottomOffset: 15}"
       :data="linkList"
+      height="233"
       border
       @selection-change="onSelectionChange"
     >
@@ -27,24 +28,15 @@
           </el-image>
         </template>
       </el-table-column>
-      <el-table-column label="网站标题">
-        <template #default="scope">
-          {{ scope.row.webname }}
-        </template>
-      </el-table-column>
+      <el-table-column label="网站标题" prop="webname" />
       <el-table-column label="网站地址">
         <template #default="scope">
           <el-link :underline="false" :href="scope.row.weburl" target="_blank">{{ scope.row.weburl }}</el-link>
         </template>
       </el-table-column>
-      <el-table-column prop="no_order" label="排序" width="50" align="center" />
-      <el-table-column align="center" label="添加时间" width="200">
-        <template #default="scope">
-          <i class="el-icon-time" />
-          <span>{{ scope.row.addtime }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column align="center" label="操作" width="180">
+      <el-table-column align="center" label="排序" prop="no_order" width="50" />
+      <el-table-column align="center" label="添加时间" prop="addtime" width="200" />
+      <el-table-column align="center" label="操作" width="200">
         <template #default="scope">
           <el-button type="primary" @click="handleEdit(scope.row.id)">编辑</el-button>
           <el-button type="danger" plain @click="handleDelete(scope.row.id)">删除</el-button>
@@ -61,6 +53,7 @@
 <script>
 import Pagination from '@/components/Pagination'
 import LinksForm from './components/LinksForm'
+import elHeightAdaptiveTable from '@/directive/el-table'
 import { multipleTable, listDialog } from '@/mixins'
 import { GetList, DeleteList } from '@/api/list'
 
@@ -69,6 +62,9 @@ export default {
   components: {
     Pagination,
     LinksForm
+  },
+  directives: {
+    elHeightAdaptiveTable
   },
   mixins: [multipleTable, listDialog],
   data() {
@@ -130,7 +126,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.links-list{
+.links{
   .el-image{
     width: 60px;
     height: 60px;

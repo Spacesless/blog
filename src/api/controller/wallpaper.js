@@ -1,44 +1,44 @@
-const Base = require('./base.js');
+const Base = require('./base.js')
 
 module.exports = class extends Base {
   constructor(...arg) {
-    super(...arg);
-    this.modelInstance = this.model('image');
+    super(...arg)
+    this.modelInstance = this.model('image')
   }
 
   async listAction() {
-    const { id, page, sortBy, orderBy, resolutions, resolutionBy, tags } = this.get();
+    const { id, page, sortBy, orderBy, resolutions, resolutionBy, tags } = this.get()
 
     // 当前栏目
-    const { column, seo } = this.getListInfo(id);
+    const { column, seo } = this.getListInfo(id)
     if (think.isEmpty(column)) {
-      return this.ctx.throw(404);
+      return this.ctx.throw(404)
     }
 
     // 当前列表
-    const { list_image: pageSize } = this.options;
-    const field = 'id,title,description,imgurl,updatetime,hits,imgwidth,imgheight';
-    const sort = sortBy || 'updatetime';
-    const order = orderBy ? orderBy.toUpperCase() : 'DESC';
-    const where = { is_show: 1, is_recycle: 0 };
+    const { list_image: pageSize } = this.options
+    const field = 'id,title,description,imgurl,updatetime,hits,imgwidth,imgheight'
+    const sort = sortBy || 'updatetime'
+    const order = orderBy ? orderBy.toUpperCase() : 'DESC'
+    const where = { is_show: 1, is_recycle: 0 }
     switch (column.classtype) {
       case 2:
-        where.class2 = column.id;
-        break;
+        where.class2 = column.id
+        break
       case 3:
-        where.class3 = column.id;
-        break;
+        where.class3 = column.id
+        break
       default:
-        where.class1 = column.id;
+        where.class1 = column.id
     }
     // 分辨率
     if (!think.isEmpty(resolutions)) {
-      const upperToArr = resolutions.split('x');
-      const expectWidth = upperToArr[0] ? parseInt(upperToArr[0]) : null;
-      const expectHeight = upperToArr[1] ? parseInt(upperToArr[1]) : null;
-      const logic = resolutionBy === 'equal' ? '=' : '>=';
-      if (!think.isEmpty(expectWidth)) where.imgwidth = [logic, expectWidth];
-      if (!think.isEmpty(expectHeight)) where.imgheight = [logic, expectHeight];
+      const upperToArr = resolutions.split('x')
+      const expectWidth = upperToArr[0] ? parseInt(upperToArr[0]) : null
+      const expectHeight = upperToArr[1] ? parseInt(upperToArr[1]) : null
+      const logic = resolutionBy === 'equal' ? '=' : '>='
+      if (!think.isEmpty(expectWidth)) where.imgwidth = [logic, expectWidth]
+      if (!think.isEmpty(expectHeight)) where.imgheight = [logic, expectHeight]
     }
     // tag标签
     if (tags) where.tag = ['like', tags.split()]
@@ -47,43 +47,43 @@ module.exports = class extends Base {
       .field(field)
       .order(`${sort} ${order}`)
       .page(page, pageSize)
-      .countSelect();
+      .countSelect()
 
-    const { thumb_image_x: imageX, thumb_image_y: imageY, thumb_kind: thumbKind } = this.options;
+    const { thumb_image_x: imageX, thumb_image_y: imageY, thumb_kind: thumbKind } = this.options
     for (const item of list.data) {
-      item.imgurl = await this.thumbImage(item.imgurl, imageX, imageY, thumbKind);
+      item.imgurl = await this.thumbImage(item.imgurl, imageX, imageY, thumbKind)
     }
 
     return this.success({
       seo,
       column,
       list
-    });
+    })
   }
 
   async contentAction() {
-    const { id, webp } = this.get();
+    const { id, webp } = this.get()
     if (!think.isInt(+id)) {
-      return this.ctx.throw(404);
+      return this.ctx.throw(404)
     }
 
     const content = await this.modelInstance
       .where({ id, is_recycle: 0 })
-      .find();
+      .find()
 
     if (think.isEmpty(content)) {
-      return this.ctx.throw(404);
+      return this.ctx.throw(404)
     }
 
-    const { column, seo } = this.getDetailInfo(content);
+    const { column, seo } = this.getDetailInfo(content)
 
-    const { thumb_kind: thumbKind } = this.options;
-    content.preview = await this.thumbImage(content.imgurl, 1280, 720, thumbKind, { isConvert: webp });
+    const { thumb_kind: thumbKind } = this.options
+    content.preview = await this.thumbImage(content.imgurl, 1280, 720, thumbKind, { isConvert: webp })
 
     return this.success({
       seo,
       column,
-      content,
-    });
+      content
+    })
   }
-};
+}

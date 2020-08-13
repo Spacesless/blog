@@ -4,4 +4,4 @@ module.exports = {
   errmsgField: 'msg', // errmsg field
   defaultErrno: 500, // default errno
   validateDefaultErrno: 501
-};
+}

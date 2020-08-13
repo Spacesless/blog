@@ -3,7 +3,7 @@
     <el-col :xs="24" :sm="12">
       <el-cascader
         v-model="selectedColumn"
-        class="top-menu-select"
+        class="app-header-select"
         :options="columns"
         :props="{ checkStrictly: true }"
         placeholder="请选择栏目"
@@ -61,11 +61,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.top-menu{
-  &-select{
-    margin-right: 15px;
-  }
-}
-</style>

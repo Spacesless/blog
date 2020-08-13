@@ -1,9 +1,9 @@
-const fileCache = require('think-cache-file');
-const mysql = require('think-model-mysql');
-const fileSession = require('think-session-file');
-const {Console, File, DateFile} = require('think-logger3');
-const path = require('path');
-const isDev = think.env.includes('development');
+const fileCache = require('think-cache-file')
+const mysql = require('think-model-mysql')
+const fileSession = require('think-session-file')
+const { Console, File, DateFile } = require('think-logger3')
+const path = require('path')
+const isDev = think.env.includes('development')
 
 /**
  * cache adapter config
@@ -20,7 +20,7 @@ exports.cache = {
     pathDepth: 1,
     gcInterval: 24 * 60 * 60 * 1000 // gc interval
   }
-};
+}
 
 /**
  * model adapter config
@@ -45,7 +45,7 @@ exports.model = {
     dateStrings: true,
     pagesize: 20
   }
-};
+}
 
 /**
  * session adapter config
@@ -67,13 +67,13 @@ exports.session = {
     handle: fileSession,
     sessionPath: path.join(think.ROOT_PATH, 'runtime/session')
   }
-};
+}
 
 /**
  * view adapter config
  * @type {Object}
  */
-exports.view = require('./view');
+exports.view = require('./view')
 
 /**
  * logger adapter config
@@ -99,4 +99,4 @@ exports.logger = {
     alwaysIncludePattern: true,
     filename: path.join(think.ROOT_PATH, 'logs/app.log')
   }
-};
+}

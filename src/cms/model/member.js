@@ -1,5 +1,5 @@
-const { PasswordHash } = require('phpass');
-const Base = require('./base.js');
+const { PasswordHash } = require('phpass')
+const Base = require('./base.js')
 
 module.exports = class extends Base {
   /**
@@ -9,9 +9,9 @@ module.exports = class extends Base {
    * @return {String}          []
    */
   getEncryptPassword(password) {
-    const passwordHash = new PasswordHash();
-    const hash = passwordHash.hashPassword(password);
-    return hash;
+    const passwordHash = new PasswordHash()
+    const hash = passwordHash.hashPassword(password)
+    return hash
   }
 
   /**
@@ -20,15 +20,15 @@ module.exports = class extends Base {
    * @param {Object} data 用户信息
    */
   async saveMember(id, data) {
-    const info = await this.where({ id }).find();
+    const info = await this.where({ id }).find()
     if (think.isEmpty(info)) {
-      return Promise.reject(new Error('UESR_NOT_EXIST'));
+      return Promise.reject(new Error('UESR_NOT_EXIST'))
     }
-    const password = data.password;
+    const password = data.password
     if (password) {
-      data.password = this.getEncryptPassword(password);
+      data.password = this.getEncryptPassword(password)
     }
-    data.login_time = think.datetime();
-    return this.where({ id }).update(data);
+    data.login_time = think.datetime()
+    return this.where({ id }).update(data)
   }
-};
+}

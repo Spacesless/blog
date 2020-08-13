@@ -43,20 +43,22 @@
       </el-table-column>
       <el-table-column align="center" label="操作" width="180">
         <template #default="scope">
-          <el-button type="primary" @click="handleEdit(scope.row)">编辑</el-button>
+          <el-button type="primary" @click="handleEdit(scope.row.id)">编辑</el-button>
+          <el-button type="danger" @click="handleDelete(scope.row)">删除</el-button>
+          <el-button type="primary" plain @click="changePassword(scope.row.id)" />
         </template>
       </el-table-column>
     </el-table>
 
     <pagination :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.pageSize" @pagination="fetchList" />
 
-    <admin-form :dialog-visible="dialogVisible" :current-row="currentRow" @onConfirm="onConfirm" />
+    <change-password :dialog-visible="dialogVisible" :current-row="currentRow" @onConfirm="onConfirm" />
   </div>
 </template>
 
 <script>
 import Pagination from '@/components/Pagination'
-import AdminForm from './components/AdminForm'
+import ChangePassword from './components/ChangePassword'
 import elHeightAdaptiveTable from '@/directive/el-table'
 import { multipleTable, listDialog } from '@/mixins'
 import { GetAdminList } from '@/api/user'
@@ -65,7 +67,7 @@ export default {
   name: 'Admin',
   components: {
     Pagination,
-    AdminForm
+    ChangePassword
   },
   directives: {
     elHeightAdaptiveTable
@@ -73,8 +75,7 @@ export default {
   mixins: [multipleTable, listDialog],
   data() {
     return {
-      adminList: [],
-      currentRow: {}
+      adminList: []
     }
   },
   created() {
@@ -91,11 +92,13 @@ export default {
       this.listLoading = false
     },
     handleAdd() {
-      this.currentRow = {}
-      this.dialogVisible = true
+      this.$router.push({ name: 'CreateAdmin' })
     },
-    handleEdit(row) {
-      this.currentRow = row
+    handleEdit(id) {
+      this.$router.push({ name: 'EditAdmin', params: { id }})
+    },
+    changePassword(id) {
+      this.currentId = id
       this.dialogVisible = true
     }
   }

@@ -28,7 +28,7 @@ module.exports = {
     continuous: true
   },
   plugins: [
-    "~/plugins/element",
+    '~/plugins/element',
     '~/plugins/axios'
   ],
   modules: [
@@ -65,16 +65,13 @@ module.exports = {
         [
           'prismjs',
           {
-            'languages': ['markup', 'css', 'javascript', 'json','bash', 'less', 'php', 'sql' ],
-            'plugins': ['show-language', 'highlight-keywords','toolbar'],
+            'languages': ['markup', 'css', 'javascript', 'json', 'bash', 'less', 'php', 'sql'],
+            'plugins': ['show-language', 'highlight-keywords', 'toolbar'],
             'css': false
           }
         ]
       ]
     },
-    extend (config, { isDev }) {
-      
-    },
     extractCSS: true,
     filenames: {
       app: ({ isDev }) => isDev ? '[name].js' : 'js/app.[contenthash:8].js',
@@ -118,8 +115,8 @@ module.exports = {
         threshold: 10240 // 大于10kb的会压缩，默认为0
       })
     ] : []
-  },
+  }
   // render: {
   //   resourceHints: false
   // }
-};
+}

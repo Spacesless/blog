@@ -18,6 +18,7 @@
       :file-list="fileList"
       :before-upload="beforeUpload"
       :http-request="handleUploadFile"
+      :on-change="onChange"
       :on-remove="onRemove"
       :on-preview="handlePreviewCard"
       :auto-upload="false"
@@ -42,7 +43,7 @@
 <script>
 import PictureAblum from './components/PictureAblum'
 import PictureLinks from './components/PictureLinks'
-// import { UploadFiles } from '@/api/common'
+import { UploadFiles } from '@/api/common'
 
 export default {
   name: 'Upload',
@@ -53,7 +54,7 @@ export default {
   props: {
     multiple: {
       type: Boolean,
-      default: true
+      default: false
     },
     draggable: {
       type: Boolean,
@@ -98,6 +99,9 @@ export default {
         this.$refs.preview && this.$refs.preview.clickHandler()
       })
     },
+    onChange(file, fileList) {
+      this.$emit('update:fileList', fileList)
+    },
     /**
      * 删除list-card里面的图片
      */
@@ -117,10 +121,10 @@ export default {
       const files = param.file
       const formData = new FormData()
       formData.append('file', files)
-      // UploadFiles(formData).then(res => {
-      //   const fileList = res.data
-      //   this.$emit('update:fileList', fileList)
-      // })
+      UploadFiles(formData).then(res => {
+        const fileList = res.data
+        this.$emit('update:fileList', fileList)
+      })
     },
     onSelectFile(files) {
       const result = [...this.fileList, ...files]

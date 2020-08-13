@@ -102,9 +102,7 @@ export default {
       })
     },
     deleteSelection(listCount) {
-      const lists = this.multipleSelection.map(item => {
-        return item.id
-      })
+      const lists = this.multipleSelection.map(item => item.id)
       DeleteList('message', lists).then(response => {
         this.$message({
           type: 'success',

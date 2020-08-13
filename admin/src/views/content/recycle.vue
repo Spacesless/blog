@@ -1,20 +1,18 @@
 <template>
   <div class="app-container">
-    <div class="top-menu">
-      <el-row>
-        <el-col :xs="24" :sm="12">
-          <el-select v-model="listQuery.module" clearable placeholder="请选择模块" @change="handleSelect">
-            <el-option label="文章模块" value="2" />
-            <el-option label="壁纸模块" value="3" />
-            <el-option label="追番模块" value="4" />
-          </el-select>
-        </el-col>
-        <el-col :xs="24" :sm="12" class="text-right">
-          <el-button type="danger" icon="el-icon-delete" :loading="deleteLoading" @click="handleDeleteSelection">删除</el-button>
-          <el-button type="success" icon="el-icon-refresh-right" :loading="restoreLoading" @click="handleRestoreSelection">还原</el-button>
-        </el-col>
-      </el-row>
-    </div>
+    <el-row class="app-header">
+      <el-col :xs="24" :sm="12">
+        <el-select v-model="listQuery.module" clearable placeholder="请选择模块" @change="handleSelect">
+          <el-option label="文章模块" value="2" />
+          <el-option label="壁纸模块" value="3" />
+          <el-option label="追番模块" value="4" />
+        </el-select>
+      </el-col>
+      <el-col :xs="24" :sm="12" class="text-right">
+        <el-button type="danger" icon="el-icon-delete" :loading="deleteLoading" @click="handleDeleteSelection">删除</el-button>
+        <el-button type="success" icon="el-icon-refresh-right" :loading="restoreLoading" @click="handleRestoreSelection">还原</el-button>
+      </el-col>
+    </el-row>
 
     <el-table
       ref="multipleTable"
@@ -87,9 +85,10 @@ export default {
       this.listLoading = false
     },
     getClassName(row) {
-      const id = row.class2 ? (row.class3 ? row.class3 : row.class2) : row.class1
-      const findRow = this.columns.find(item => item.id === id)
-      return findRow ? findRow.name : ''
+      const { class1, class2, class3 } = row
+      const id = class2 ? (class3 || class2) : class1
+      const findColumn = this.columns.find(item => item.id === id)
+      return findColumn ? findColumn.name : ''
     },
     handleSelect() {
       this.listQuery.page = 1

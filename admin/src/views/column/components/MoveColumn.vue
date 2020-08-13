@@ -12,7 +12,6 @@
       <el-form-item label="移动到">
         <el-cascader
           v-model="selectedColumn"
-          class="top-menu-select"
           :options="columnOptions"
           :props="{ checkStrictly: true }"
           placeholder="请选择栏目"

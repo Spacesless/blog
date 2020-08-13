@@ -1,8 +1,8 @@
-const nodemailer = require('nodemailer');
+const nodemailer = require('nodemailer')
 
 module.exports = class extends think.Service {
   constructor(config) {
-    super();
+    super()
 
     const transport = {
       host: config.email_smtp, // 邮件服务器地址
@@ -12,9 +12,9 @@ module.exports = class extends think.Service {
         user: config.email_usename, // 发送端用户名
         pass: config.email_auth // 发送端authorization code, 一般不用密码
       }
-    };
+    }
 
-    this.transporter = nodemailer.createTransport(transport);
+    this.transporter = nodemailer.createTransport(transport)
   }
 
   /**
@@ -27,6 +27,6 @@ module.exports = class extends think.Service {
    * @returns {Function} Promise
    */
   sendMail(options) {
-    return this.transporter.sendMail(options);
+    return this.transporter.sendMail(options)
   }
-};
+}

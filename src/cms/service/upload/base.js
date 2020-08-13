@@ -1,5 +1,5 @@
-const path = require('path');
-const moment = require('moment');
+const path = require('path')
+const moment = require('moment')
 
 module.exports = class extends think.Service {
   /**
@@ -7,11 +7,11 @@ module.exports = class extends think.Service {
    * @param {String} origin 源地址
    */
   getAbsOrigin(origin) {
-    const reg = /^(https?:)?\/\/.+/;
+    const reg = /^(https?:)?\/\/.+/
     if (!reg.test(origin)) {
-      return `http://${origin}`;
+      return `http://${origin}`
     }
-    return origin;
+    return origin
   }
 
   /**
@@ -19,7 +19,7 @@ module.exports = class extends think.Service {
    * @returns {String} YYYYMM 年月
    */
   getYearMonth() {
-    return moment(new Date()).format('YYYYMM');
+    return moment(new Date()).format('YYYYMM')
   }
 
   /**
@@ -28,9 +28,9 @@ module.exports = class extends think.Service {
    * @param {String} prefix 目录前缀
    */
   getSavePath(filename, prefix) {
-    prefix = prefix ? `${prefix}/` : '';
-    const dir = this.getYearMonth();
-    const basename = path.basename(filename);
-    return `${prefix}${dir}/${basename}`;
+    prefix = prefix ? `${prefix}/` : ''
+    const dir = this.getYearMonth()
+    const basename = path.basename(filename)
+    return `${prefix}${dir}/${basename}`
   }
-};
+}

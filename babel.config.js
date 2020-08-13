@@ -13,10 +13,10 @@ module.exports = {
     [
       'prismjs',
       {
-        'languages': ['markup', 'css', 'javascript', 'json','bash', 'less', 'php', 'sql' ],
-        'plugins': ['show-language', 'highlight-keywords','toolbar'],
+        'languages': ['markup', 'css', 'javascript', 'json', 'bash', 'less', 'php', 'sql'],
+        'plugins': ['show-language', 'highlight-keywords', 'toolbar'],
         'css': false
       }
     ]
   ]
-};
+}

@@ -34,34 +34,24 @@
           </el-col>
         </el-row>
       </el-form-item>
+      <el-form-item label="标题格式">
+        <el-radio-group v-model="formData.seo_title_type">
+          <div class="radio-item">
+            <el-radio label="1">内容标题</el-radio>
+          </div>
+          <div class="radio-item">
+            <el-radio label="2">内容标题 + 网站关键词</el-radio>
+          </div>
+          <div class="radio-item">
+            <el-radio label="3">内容标题 + 网站名称</el-radio>
+          </div>
+          <div class="radio-item">
+            <el-radio label="4">内容标题 + 网站关键词 + 网站名称</el-radio>
+          </div>
+        </el-radio-group>
+      </el-form-item>
       <el-form-item label="网站logo">
         <upload-image :file-list="formData.weblogo" />
-      </el-form-item>
-      <el-form-item label="默哀模式">
-        <el-switch v-model="formData.isSilent " />
-      </el-form-item>
-      <el-form-item class="form-title">
-        底部信息设置
-      </el-form-item>
-      <el-form-item label="ICP备案号">
-        <el-row>
-          <el-col :xs="24" :md="12">
-            <el-input v-model="formData.icp_beian" />
-          </el-col>
-          <el-col :xs="24" :md="12">
-            <span style="margin-left:15px;">工信部ICP备案号</span>
-          </el-col>
-        </el-row>
-      </el-form-item>
-      <el-form-item label="公网安备">
-        <el-row>
-          <el-col :xs="24" :md="12">
-            <el-input v-model="formData.police_beian" />
-          </el-col>
-          <el-col :xs="24" :md="12">
-            <span style="margin-left:15px;">公安部网络安全备案号</span>
-          </el-col>
-        </el-row>
       </el-form-item>
       <el-form-item class="text-right">
         <el-button type="primary" :loading="confirmLoading" @click="handleSubmit">保存</el-button>
@@ -90,8 +80,8 @@ export default {
     }
   },
   created() {
-    const { sitename, siteurl, keywords, description, logo, icp_beian, police_beian } = this.configs
-    this.formData = { sitename, siteurl, keywords, description, logo, icp_beian, police_beian }
+    const { sitename, siteurl, keywords, description, seo_title_type, logo, icp_beian, police_beian } = this.configs
+    this.formData = { sitename, siteurl, keywords, description, seo_title_type, logo, icp_beian, police_beian }
   },
   methods: {
     async handleSubmit() {
@@ -112,26 +102,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.avatar-uploader{
-  ::v-deep .el-upload {
-    border: 1px dashed #d9d9d9;
-    border-radius: 6px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    &:hover {
-      border-color: #409EFF;
-    }
-  }
-  &-icon {
-    font-size: 28px;
-    color: #8c939d;
-    width: 150px;
-    height: 150px;
-    line-height: 150px;
-    text-align: center;
-  }
-}
-</style>

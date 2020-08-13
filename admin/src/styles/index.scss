@@ -82,6 +82,9 @@ div:focus {
     padding: 15px;
     border: 1px solid #EBEEF5;
     border-bottom: none;
+    &-select{
+      margin-right: 15px;
+    }
   }
   &-footer {
     padding: 15px;

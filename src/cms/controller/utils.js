@@ -1,15 +1,15 @@
-const Base = require('./base.js');
-const axios = require('axios');
+const Base = require('./base.js')
+const axios = require('axios')
 
 module.exports = class extends Base {
   async refreshAction() {
-    await think.cache('column', null);
-    await think.cache('config', null);
+    await think.cache('column', null)
+    await think.cache('config', null)
   }
 
   async clearCacheAction() {
-    const { type, list } = this.get();
-    const APIURL = `https://cdn.tencentcloudapi.com/?Action=${type === 'path' ? 'PurgePathCache' : 'PurgeUrlsCache'}`;
+    const { type, list } = this.get()
+    const APIURL = `https://cdn.tencentcloudapi.com/?Action=${type === 'path' ? 'PurgePathCache' : 'PurgeUrlsCache'}`
     await axios.post(APIURL,
       {
         headers: {
@@ -22,15 +22,15 @@ module.exports = class extends Base {
         params: {
           FlushType: 'flush',
           ...list.map((item, index) => {
-            const format = {};
-            const key = type === 'path' ? `Paths.${index}` : `Urls.${index}`;
-            format[key] = item;
-            return format;
+            const format = {}
+            const key = type === 'path' ? `Paths.${index}` : `Urls.${index}`
+            format[key] = item
+            return format
           })
         }
       }
     ).then(response => {
-      console.log(response.data);
-    });
+      console.log(response.data)
+    })
   }
-};
+}

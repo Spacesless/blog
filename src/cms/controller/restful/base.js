@@ -1,13 +1,13 @@
-const BaseRest = require('../rest');
+const BaseRest = require('../rest')
 
 module.exports = class extends BaseRest {
   async __before() {
-    const userInfo = await this.session('userInfo') || {};
+    const userInfo = await this.session('userInfo') || {}
     if (think.isEmpty(userInfo)) {
-      return this.fail(401, '未授权，请登录后再操作！');
+      return this.fail(401, '未授权，请登录后再操作！')
     }
 
-    this.siteurl = this.ctx.origin.replace(/http:|https:/, '');
+    this.siteurl = this.ctx.origin.replace(/http:|https:/, '')
   }
 
   /**
@@ -31,12 +31,12 @@ module.exports = class extends BaseRest {
         format: +isSupportWebp ? 'webp' : 'jpg',
         ...options
       }
-    );
+    )
 
-    return dest ? this.siteurl + dest : '';
+    return dest ? this.siteurl + dest : ''
   }
 
   async __call() {
-    return this.fail(404, '该功能未开发 || 本就没有');
+    return this.fail(404, '该功能未开发 || 本就没有')
   }
-};
+}

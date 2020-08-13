@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container">
+  <div class="app-container columns">
     <el-row class="app-header">
       <el-col :xs="24" :sm="12">
         <el-button type="primary" icon="el-icon-plus" @click="handleAdd">添加栏目</el-button>
@@ -18,38 +18,44 @@
 
     <el-table
       ref="columnTable"
-      v-el-height-adaptive-table="{bottomOffset: 62}"
+      v-el-height-adaptive-table="{bottomOffset: 15}"
       v-loading="listLoading"
       :data="columnlist"
       :default-expand-all="expandAll"
+      row-key="id"
       height="233"
       border
       @selection-change="onSelectionChange"
     >
       <el-table-column type="selection" align="center" width="55" />
-      <el-table-column label="排序">
+      <el-table-column
+        prop="id"
+        label="ID"
+        width="110"
+      />
+      <el-table-column align="center" label="排序" min-width="160">
         <template #default="scope">
           <el-input-number v-model.number="scope.row.no_order" controls-position="right" />
         </template>
       </el-table-column>
-      <el-table-column label="栏目名称">
+      <el-table-column label="栏目名称" min-width="220">
         <template #default="scope">
           <el-input v-model="scope.row.name" />
         </template>
       </el-table-column>
-      <el-table-column label="状态">
-        <el-select :value="scope.row.is_nav | shownavFilter">
-          <el-option label="不显示" value="0" />
-          <el-option label="显示" value="1" />
-        </el-select>
-      </el-table-column>
-      <el-table-column label="所属模块">
-        <template #default="scope">{{ scope.row.module | moduleFilter }}</template>
-      </el-table-column>
-      <el-table-column label="目录" prop="folder_name" />
-      <el-table-column label="操作" align="center">
+      <el-table-column align="center" label="状态" min-width="120">
         <template #default="scope">
-          <el-button type="primary" @click="handleEdit(scope.row)">编辑</el-button>
+          <el-select v-model="scope.row.is_nav">
+            <el-option label="不显示" value="0" />
+            <el-option label="显示" value="1" />
+          </el-select>
+        </template>
+      </el-table-column>
+      <el-table-column label="所属模块" min-width="160" formatter="formatModuleName" />
+      <el-table-column label="目录" prop="folder_name" min-width="160" />
+      <el-table-column label="操作" align="center" width="250">
+        <template #default="scope">
+          <el-button class="columns-tools-edit" type="primary" @click="handleEdit(scope.row)">编辑</el-button>
           <el-dropdown>
             <el-button type="primary" plain :loading="scope.row.deleteLoading">
               更多操作<i class="el-icon-arrow-down el-icon--right" />
@@ -80,16 +86,6 @@ export default {
   name: 'Column',
   components: {
     MoveColumn
-  },
-  filters: {
-    shownavFilter(status) {
-      const shownav = ['不显示', '显示']
-      return shownav[status]
-    },
-    moduleFilter(module) {
-      const moduleEnum = ['', '简介模块', '文章模块', '图片模块', '追番模块', 'webapp']
-      return moduleEnum[module] || ''
-    }
   },
   directives: {
     elHeightAdaptiveTable
@@ -149,9 +145,7 @@ export default {
       })
     },
     deleteSelection(listCount) {
-      const lists = this.multipleSelection.map(item => {
-        return item.id
-      })
+      const lists = this.multipleSelection.map(item => item.id)
       DeleteList('column', lists).then(res => {
         this.$message({
           type: 'success',
@@ -180,6 +174,14 @@ export default {
         })
       })
       this.saveLoading = false
+    },
+    /**
+     * 格式化模块名称
+     * @param {Number [int]} cellValue 当前行所属模块
+     */
+    formatModuleName(row, column, cellValue) {
+      const moduleEnum = ['', '简介模块', '文章模块', '图片模块', '追番模块', 'webapp']
+      return moduleEnum[cellValue] || ''
     }
   }
 }
@@ -191,18 +193,10 @@ export default {
     padding-left: 15px;
   }
 }
-.column-table{
-  width: 100%;
-  margin-bottom: 20px;
-  ::v-deep .el-input__inner{
-    padding: 0 6px;
-  }
-  ::v-deep .el-table__expand-icon{
-    width: 20px;
-    height: 20px;
-    .el-icon{
-      margin-top: -7px;
-      margin-left: -7px;
+.columns{
+  &-tools{
+    &-edit{
+      margin-right: 15px;
     }
   }
 }

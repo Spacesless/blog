@@ -1,77 +1,76 @@
-const isDev = think.env.includes('development');
-const path = require('path');
+const isDev = think.env.includes('development')
+const path = require('path')
 
 module.exports = class extends think.Controller {
   constructor(...arg) {
-    super(...arg);
-    this.siteurl = '';
-    this.title = '';
-    this.options = null;
-    this.columns = null;
+    super(...arg)
+    this.siteurl = ''
+    this.title = ''
+    this.options = null
+    this.columns = null
   }
 
   async __before() {
     // 配置信息
-    this.siteurl = this.ctx.origin.replace(/http:|https:/, '');
-    this.options = await this.model('config').getConfig();
+    this.siteurl = this.ctx.origin.replace(/http:|https:/, '')
+    this.options = await this.model('config').getConfig()
 
     // SEO
     switch (this.options.seo_title_type) {
       case '1':
-        this.title = '';
-        break;
+        this.title = ''
+        break
       case '2':
-        this.title = ` - ${this.options.keywords}`;
-        break;
+        this.title = ` - ${this.options.keywords}`
+        break
       case '3':
-        this.title = ` - ${this.options.sitename}`;
-        break;
+        this.title = ` - ${this.options.sitename}`
+        break
       case '4':
-        this.title = ` - ${this.options.keywords} | ${this.options.sitename}`;
-        break;
+        this.title = ` - ${this.options.keywords} | ${this.options.sitename}`
+        break
     }
 
     // 主导航信息
-    const allColumns = await this.model('column').getColumn();
-    this.columns = this.formatNavigation(allColumns);
+    const allColumns = await this.model('column').getColumn()
+    this.columns = this.formatNavigation(allColumns)
   }
 
   findAllParent(id, parentNodes = []) {
-    const row = this.columns.find(item => item.id === id);
-    if (!row) return;
-    const { parentid } = row;
-    parentNodes.push(row);
+    const row = this.columns.find(item => item.id === id)
+    if (!row) return
+    const { parentid } = row
+    parentNodes.push(row)
     if (parentid) {
-      return this.findAllParent(parentid, parentNodes);
+      return this.findAllParent(parentid, parentNodes)
     }
     return parentNodes.sort((a, b) => {
-      return a.classtype - b.classtype;
-    });
+      return a.classtype - b.classtype
+    })
   }
 
   formatNavigation(columns) {
     columns.forEach(item => {
-      const { id, folderName, filename, classtype, module: _module } = item;
-      let path = '';
+      const { id, folderName, filename, classtype, module: _module } = item
+      let path = ''
       if (think.isEmpty(filename)) {
         switch (_module) {
           case 5:
-            path = classtype === 1 ? '' : id;
-            break;
+            path = classtype === 1 ? '' : id
+            break
           case 7:
-            path = '';
-            break;
+            path = ''
+            break
           default:
-            path = classtype === 1 ? '' : id;
+            path = classtype === 1 ? '' : id
         }
       } else {
-        path = `${filename}`;
+        path = `${filename}`
       }
-      item.url = `/${folderName}/${path}`;
-    });
-    return columns;
+      item.url = `/${folderName}/${path}`
+    })
+    return columns
   }
-
 
   /**
    * 二维数组转树形数组
@@ -80,19 +79,19 @@ module.exports = class extends think.Controller {
    * @returns {Array} 树形数组 [{id:1,children:[{id:2},{id:3,children:[{id:4}]}]}]
    */
   convertToTree(data, parentid = 0) {
-    const tree = [];
-    let temp;
+    const tree = []
+    let temp
     for (let i = 0; i < data.length; i++) {
       if (data[i].parentid === parentid) {
-        const obj = data[i];
-        temp = this.convertToTree(data, data[i].id);
+        const obj = data[i]
+        temp = this.convertToTree(data, data[i].id)
         if (temp.length > 0) {
-          obj.children = temp;
+          obj.children = temp
         }
-        tree.push(obj);
+        tree.push(obj)
       }
     }
-    return tree;
+    return tree
   }
 
   /**
@@ -100,52 +99,52 @@ module.exports = class extends think.Controller {
    * @param {Number} Id 期望栏目id
    */
   getListInfo(Id) {
-    let column;
+    let column
     // 当前栏目
     if (think.isEmpty(Id)) {
-      const path = this.ctx.path;
-      column = this.columns.find(item => item.classtype === 1 && path.indexOf(item.folderName) > -1);
+      const path = this.ctx.path
+      column = this.columns.find(item => item.classtype === 1 && path.indexOf(item.folderName) > -1)
     } else {
-      column = this.columns.find(item => item.id === +Id);
+      column = this.columns.find(item => item.id === +Id)
     }
 
     if (!column) {
-      return null;
+      return null
     }
 
-    const id = column.id;
+    const id = column.id
     // meta信息
-    const { name: title, keywords, description } = column;
+    const { name: title, keywords, description } = column
     const seo = {
       title: title + this.title,
       keywords,
       description
-    };
+    }
 
     return {
       column,
       seo
-    };
+    }
   }
 
   getDetailInfo(content) {
-    const { title, keywords, description, class1, class2, class3 } = content;
+    const { title, keywords, description, class1, class2, class3 } = content
 
     // meta信息
-    const currentClass = class3 || class2 || class1;
-    const column = this.columns.find(item => item.id === currentClass);
-    const { keywords: columnKeywords, description: columnDescription } = column;
+    const currentClass = class3 || class2 || class1
+    const column = this.columns.find(item => item.id === currentClass)
+    const { keywords: columnKeywords, description: columnDescription } = column
 
     const seo = {
       title: title + this.title,
       keywords: keywords || columnKeywords,
       description: description || columnDescription
-    };
+    }
 
     return {
       column,
       seo
-    };
+    }
   }
 
   /**
@@ -157,20 +156,20 @@ module.exports = class extends think.Controller {
    */
   async thumbImage(src, width, height, fit = 0, options = {}) {
     if (think.isEmpty(src)) {
-      src = '/static/placeholder.png';
+      src = '/static/placeholder.png'
     }
     const isSupportWebp = this.ctx.headers.supportwebp
     const dest = await think.sharpResize(src, {
-        width: +width,
-        height: +height,
-        fit: +fit
-      },
-      {
-        format: +isSupportWebp ? 'webp' : 'jpg',
-        ...options
-    });
+      width: +width,
+      height: +height,
+      fit: +fit
+    },
+    {
+      format: +isSupportWebp ? 'webp' : 'jpg',
+      ...options
+    })
 
-    return isDev ? dest : `${ dest ? '//cdn.timelessq.com' + dest : ''}`;
+    return isDev ? dest : `${dest ? '//cdn.timelessq.com' + dest : ''}`
   }
 
   /**
@@ -183,9 +182,9 @@ module.exports = class extends think.Controller {
     const isSupportWebp = this.ctx.headers.supportwebp
     const dest = await think.sharpFormat(src, {
       format: +isSupportWebp ? 'webp' : 'jpg'
-    });
+    })
 
-    return isDev ? dest : `${ dest ? '//cdn.timelessq.com' + dest : ''}`;
+    return isDev ? dest : `${dest ? '//cdn.timelessq.com' + dest : ''}`
   }
 
   /**
@@ -196,27 +195,27 @@ module.exports = class extends think.Controller {
   async compressContent(content) {
     const isSupportWebp = this.ctx.headers.supportwebp
     if (+isSupportWebp) {
-      const contentImages = content.match(/<img[^>]+>/g) || [];
-      const temp = [];
+      const contentImages = content.match(/<img[^>]+>/g) || []
+      const temp = []
       contentImages.forEach((item) => {
         item.replace(/<img [^>]*src=['"]([^'"]+)[^>]*>/gi, (match, capture) => {
           if (capture.includes('upload')) { temp.push(capture) }
-        });
-      });
+        })
+      })
       const ext = '.webp'
       for (let i = 0; i < temp.length; i++) {
-        const src = temp[i];
+        const src = temp[i]
         if (think.isEmpty(src)) continue
 
         const dest = await think.sharpFormat(src, {
           format: +isSupportWebp ? 'webp' : 'jpg'
-        });
-        const fileUrl = isDev ? dest : `${ dest ? '//cdn.timelessq.com' + dest : ''}`;
+        })
+        const fileUrl = isDev ? dest : `${dest ? '//cdn.timelessq.com' + dest : ''}`
         if (dest) { content = content.replace(src, fileUrl) }
       }
     }
 
-    return content;
+    return content
   }
 
   /**
@@ -225,10 +224,10 @@ module.exports = class extends think.Controller {
    * @param {Number [int]} length 截取长度
    */
   substr(str, index, length) {
-    return str.substr(index, length);
+    return str.substr(index, length)
   }
 
   __cell() {
-    return this.ctx.throw(404);
+    return this.ctx.throw(404)
   }
-};
+}

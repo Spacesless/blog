@@ -100,7 +100,7 @@
       </el-form-item>
       <el-form-item class="text-right">
         <el-button type="primary" plain @click="handleCancel">取消</el-button>
-        <el-button type="primary" :loading="submitLoading" @click="handleSubmit">保存</el-button>
+        <el-button type="primary" :loading="confirmLoading" @click="handleSubmit">保存</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -109,10 +109,6 @@
 <script>
 import Tinymce from '@/components/Tinymce'
 import { GetContent, CreateContent, UpdateContent } from '@/api/content'
-
-const defaultForm = {
-
-}
 
 export default {
   components: {
@@ -126,9 +122,13 @@ export default {
   },
   data() {
     return {
-      formData: {},
+      formData: {
+        is_show: 1,
+        is_nav: 1,
+        list_order: 1
+      },
       fetchLoading: false,
-      submitLoading: false
+      confirmLoading: false
     }
   },
   created() {
@@ -136,8 +136,6 @@ export default {
       const id = this.$route.params && this.$route.params.id
       this.fetchData(id)
       this.formData.id = id
-    } else {
-      this.formData = Object.assign({}, defaultForm)
     }
   },
   methods: {
@@ -152,7 +150,7 @@ export default {
     handleSubmit() {
       this.$refs.postformData.validate(async(valid) => {
         if (valid) {
-          this.submitLoading = true
+          this.confirmLoading = true
           if (this.isEdit) {
             await UpdateContent('column', this.formData).then(res => {
               this.$message({
@@ -180,7 +178,7 @@ export default {
               })
             })
           }
-          this.submitLoading = false
+          this.confirmLoading = false
         }
       })
     },

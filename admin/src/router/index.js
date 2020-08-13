@@ -199,26 +199,41 @@ export const constantRoutes = [
         hidden: true,
         component: () => import('@/views/community/message/content'),
         meta: { title: '留言详情', noCache: true }
+      },
+      {
+        path: 'link',
+        name: 'Link',
+        component: () => import('@/views/community/links/index'),
+        meta: { title: '友情链接' }
       }
     ]
   },
 
   {
-    path: '/seo',
+    path: '/user',
     component: Layout,
-    meta: { title: 'SEO', icon: 'seo' },
+    redirect: '/user',
+    meta: { title: '管理员', icon: 'member' },
     children: [
       {
         path: '',
-        name: 'Seo',
-        component: () => import('@/views/seo/market/index'),
-        meta: { title: 'SEO优化' }
+        name: 'Admin',
+        component: () => import('@/views/user/admin/index'),
+        meta: { title: '管理员' }
       },
       {
-        path: 'link',
-        name: 'Link',
-        component: () => import('@/views/seo/links/index'),
-        meta: { title: '友情链接' }
+        path: 'profile/create',
+        name: 'CreateAdmin',
+        hidden: true,
+        component: () => import('@/views/user/profile/create'),
+        meta: { title: '添加管理员' }
+      },
+      {
+        path: 'profile/edit/:id',
+        name: 'EditAdmin',
+        hidden: true,
+        component: () => import('@/views/user/profile/edit'),
+        meta: { title: '管理员信息' }
       }
     ]
   },
@@ -230,28 +245,28 @@ export const constantRoutes = [
     meta: { title: '系统管理', icon: 'system' },
     children: [
       {
-        path: 'information',
-        name: 'Information',
-        component: () => import('@/views/system/information/index'), // Parent router-view
-        meta: { title: '站点信息', noCache: true }
+        path: 'options-general',
+        name: 'OptionsGeneral',
+        component: () => import('@/views/system/options-general/index'),
+        meta: { title: '常规配置', noCache: true }
       },
       {
-        path: 'admin',
-        name: 'Admin',
-        component: () => import('@/views/system/admin/index'),
-        meta: { title: '管理员配置' }
-      },
-      {
-        path: 'picture-params',
-        name: 'PictureParams',
-        component: () => import('@/views/system/picture-params/index'),
-        meta: { title: '图片参数配置', noCache: true }
+        path: 'options-media',
+        name: 'OptionsMedia',
+        component: () => import('@/views/system/options-media/index'),
+        meta: { title: '媒体配置', noCache: true }
       },
       {
         path: 'banners',
         name: 'Banners',
         component: () => import('@/views/system/banners/index'),
-        meta: { title: 'Banner管理', noCache: true }
+        meta: { title: 'Banner管理' }
+      },
+      {
+        path: 'customize',
+        name: 'Customize',
+        component: () => import('@/views/system/customize/index'),
+        meta: { title: '外观配置', noCache: true }
       }
     ]
   },

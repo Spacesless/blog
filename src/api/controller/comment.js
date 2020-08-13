@@ -1,8 +1,8 @@
-const Base = require('./base.js');
+const Base = require('./base.js')
 
 module.exports = class extends Base {
   async indexAction() {
-    const { id, page, pageSize } = this.get();
+    const { id, page, pageSize } = this.get()
     // 查询主评论
     const list = await this.model('comment')
       .where({ page_id: id, is_reply: 0 })
@@ -18,25 +18,25 @@ module.exports = class extends Base {
 
     const treeData = this.convertToTree([...list, ...replyList])
 
-    return this.success(treeData);
+    return this.success(treeData)
   }
 
   async postAction() {
-    let result;
-    const data = this.post();
+    let result
+    const data = this.post()
 
-    const { ip, content } = data;
+    const { ip, content } = data
     const isExist = await this.model('message')
-      .where({ ip, content: ['like', '%content%'] })
-      .select();
-    if(isExist) {
+      .where({ ip, content: ['like', `%${content}%`] })
+      .select()
+    if (isExist) {
       return this.fail()
     } else {
       result = await this.model('comment')
-        .add(data);
+        .add(data)
     }
 
-    if (result) return this.success();
-    else return this.fail();
+    if (result) return this.success()
+    else return this.fail()
   }
-};
+}

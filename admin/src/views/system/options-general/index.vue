@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container information">
+  <div class="app-container general">
     <el-tabs v-model="activeName" type="card">
       <el-tab-pane label="网站信息" name="info">
         <info :configs="configs" />
@@ -33,12 +33,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.information{
-  ::v-deep .el-tabs__header{
-    margin-bottom: 0;
-  }
-  ::v-deep .el-tabs__content{
-    margin-top: -1px;
+.general{
+  ::v-deep .el-tabs {
+    &__header{
+      margin-bottom: 0;
+    }
+    &__content{
+      margin-top: -1px;
+    }
   }
 }
 </style>
