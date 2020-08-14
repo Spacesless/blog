@@ -158,31 +158,31 @@ export default {
 
 <style lang="scss" scoped>
 .login{
-	&,.el-row,.el-col {
-		height: 100%;
-	}
-	.el-col {
-		position: relative;
-	}
+  &,.el-row,.el-col {
+    height: 100%;
+  }
+  .el-col {
+    position: relative;
+  }
   &-info {
     background-color: #0f0f0f;
   }
-	&-form{
-		width: 350px;
+  &-form{
+    width: 350px;
     height: 340px;
-		position: absolute;
-		top: 50%;
+    position: absolute;
+    top: 50%;
     left: 50%;
-		margin-top: -200px;
+    margin-top: -200px;
     margin-left: -175px;
-		.el-input{
-			::v-deep input{
-				padding-left: 40px;
-				&:focus{
-					border-color: #409EFF;
-				}
-			}
-		}
+    .el-input{
+      ::v-deep input{
+        padding-left: 40px;
+        &:focus{
+          border-color: #409EFF;
+        }
+      }
+    }
     &-title{
       height: 50px;
       line-height: 50px;
@@ -229,15 +229,15 @@ export default {
     &-submit{
       width: 100%;
     }
-	}
-	.show-pwd {
-		position: absolute;
-		right: 10px;
-		top: 0;
-		font-size: 16px;
-		color: #909399;
-		cursor: pointer;
-		user-select: none;
-	}
+  }
+  .show-pwd {
+    position: absolute;
+    right: 10px;
+    top: 0;
+    font-size: 16px;
+    color: #909399;
+    cursor: pointer;
+    user-select: none;
+  }
 }
 </style>

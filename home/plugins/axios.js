@@ -1,5 +1,6 @@
 const isDev = process.env.NODE_ENV === 'development'
 
+// eslint-disable-next-line standard/object-curly-even-spacing
 export default function({ store, app: { $axios }}) {
   // url = base url + request url
   $axios.defaults.baseURL = isDev ? 'http://127.0.0.1:8360/api' : 'https://www.timelessq.com/api'

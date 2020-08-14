@@ -12,7 +12,7 @@
 
     <el-table
       v-loading="listLoading"
-      v-el-height-adaptive-table="{bottomOffset: 15}"
+      v-el-height-adaptive-table="{bottomOffset: 80}"
       :data="linkList"
       height="233"
       border
@@ -21,7 +21,7 @@
       <el-table-column type="selection" width="50" align="center" />
       <el-table-column label="网站Logo" width="100" align="center">
         <template #default="scope">
-          <el-image :src="scope.row.weblogo" lazy>
+          <el-image class="links-list-logo" :src="scope.row.weblogo" lazy>
             <div slot="error" class="image-slot">
               <i class="el-icon-picture-outline-round" />
             </div>
@@ -86,7 +86,10 @@ export default {
       this.listLoading = false
     },
     handleEdit(id) {
-      this.$router.push({ name: 'EditLinks', params: { id: id }})
+      this.$router.push({
+        name: 'EditLinks',
+        params: { id: id }
+      })
     },
     deleteSingle(id) {
       DeleteList('links', [id]).then(res => {
@@ -127,11 +130,13 @@ export default {
 
 <style lang="scss" scoped>
 .links{
-  .el-image{
+  &-list-logo{
     width: 60px;
     height: 60px;
     border-radius: 30px;
     overflow: hidden;
+    display: block;
+    margin: 0 auto;
   }
 }
 </style>

@@ -1,59 +1,59 @@
 <template>
   <div id="weather" class="weather">
-    <div class="background"></div>
+    <div class="background" />
     <div class="container">
       <div class="location">
         <span class="location-map">
-          <i class="el-icon-location-information"></i>
-          {{basic.location}}
+          <i class="el-icon-location-information" />
+          {{ basic.location }}
         </span>
         <el-cascader
           ref="chinaAreas"
           v-model="areas"
           :props="props"
           @change="handleSearch"
-        >
-        </el-cascader>
+        />
       </div>
       <!-- realtime start -->
       <div class="realtime">
-        <p class="realtime__updatetime">{{update.loc}} 中央气象台发布</p>
+        <p class="realtime__updatetime">{{ update.loc }} 中央气象台发布</p>
         <div class="realtime-main">
-          <strong class="realtime-main__tem">{{now.tmp}}°</strong>
-          <span class="realtime-main__cond">{{now.cond_txt}}</span>
+          <strong class="realtime-main__tem">{{ now.tmp }}°</strong>
+          <span class="realtime-main__cond">{{ now.cond_txt }}</span>
           <img class="realtime-main__wea" :src="'/static/weather/' + now.cond_code + '.png'">
         </div>
         <div class="realtime-air">
           <el-popover
+            v-model="airVisible"
             placement="top"
             width="160"
-            v-model="airVisible">
-            <span class="realtime-air__quality" slot="reference">
-              <i class="tl-icon">&#xe617;</i> {{airs.aqi}} {{airs.qlty}}
+          >
+            <span slot="reference" class="realtime-air__quality">
+              <i class="tl-icon">&#xe617;</i> {{ airs.aqi }} {{ airs.qlty }}
             </span>
             <div>
-              <p>主要污染物：{{airs.main}}</p>
-              <p>pm10: {{airs.pm10}}</p>
-              <p>pm25: {{airs.pm25}}</p>
-              <p>二氧化氮: {{airs.no2}}</p>
-              <p>二氧化硫: {{airs.so2}}</p>
-              <p>一氧化碳: {{airs.co}}</p>
-              <p>臭氧: {{airs.o3}}</p>
+              <p>主要污染物：{{ airs.main }}</p>
+              <p>pm10: {{ airs.pm10 }}</p>
+              <p>pm25: {{ airs.pm25 }}</p>
+              <p>二氧化氮: {{ airs.no2 }}</p>
+              <p>二氧化硫: {{ airs.so2 }}</p>
+              <p>一氧化碳: {{ airs.co }}</p>
+              <p>臭氧: {{ airs.o3 }}</p>
             </div>
           </el-popover>
         </div>
         <div class="realtime-wind">
           <i v-if="now.wind_deg" class="tl-icon">&#xe649;</i>
           <i v-else class="realtime-wind__direction tl-icon">&#xe679;</i>
-          <span>{{now.wind_dir}}</span>
-          <span>{{now.wind_sc}}级</span>
-          <span>风速 {{now.wind_spd}}km/h</span>
+          <span>{{ now.wind_dir }}</span>
+          <span>{{ now.wind_sc }}级</span>
+          <span>风速 {{ now.wind_spd }}km/h</span>
         </div>
         <div class="realtime-other">
-          <span>相对湿度 {{now.hum}}%</span>
-          <span>降水量 {{now.pcpn}}mm</span>
-          <span>气压 {{now.pres}}hPa</span>
-          <span>能见度 {{now.vis}}km</span>
+          <span>相对湿度 {{ now.hum }}%</span>
+          <span>降水量 {{ now.pcpn }}mm</span>
+          <span>气压 {{ now.pres }}hPa</span>
+          <span>能见度 {{ now.vis }}km</span>
         </div>
       </div>
       <!-- realtime start -->
@@ -61,17 +61,17 @@
         <h3 class="weather-title">生活指数</h3>
         <div class="el-row">
           <div
-            class="el-col el-col-24 el-col-sm-8 el-col-md-6 el-col-lg-4"
             v-for="item in lifestyle"
             :key="item.type"
+            class="el-col el-col-24 el-col-sm-8 el-col-md-6 el-col-lg-4"
           >
             <div class="lifestyle-item">
               <div class="lifestyle-item__intr">
-                <span>{{item.type | lifestyleText}}</span>
-                <p>{{item.brf}}</p>
+                <span>{{ item.type | lifestyleText }}</span>
+                <p>{{ item.brf }}</p>
               </div>
               <div class="lifestyle-item__desc">
-                <p>{{item.txt}}</p>
+                <p>{{ item.txt }}</p>
               </div>
             </div>
           </div>
@@ -83,16 +83,16 @@
         <el-scrollbar wrap-class="weather-wrap">
           <div class="hourly-wrap">
             <div
-              class="hourly-item"
               v-for="item in hourly"
               :key="item.time"
+              class="hourly-item"
             >
               <p class="hourly-item__time">{{ item.time }}</p>
               <img class="hourly-item__icon" :src="'/static/weather/' + item.cond_code + '.png'" alt="">
-              <p class="hourly-item__cond">{{item.cond_txt}}</p>
-              <p class="hourly-item__other">降雨概率 {{item.pop}}</p>
-              <p class="hourly-item__other">{{item.wind_dir + item.wind_sc}}级</p>
-              <p class="hourly-item__other">相对湿度 {{item.hum}}</p>
+              <p class="hourly-item__cond">{{ item.cond_txt }}</p>
+              <p class="hourly-item__other">降雨概率 {{ item.pop }}</p>
+              <p class="hourly-item__other">{{ item.wind_dir + item.wind_sc }}级</p>
+              <p class="hourly-item__other">相对湿度 {{ item.hum }}</p>
             </div>
           </div>
         </el-scrollbar>
@@ -102,24 +102,24 @@
         <h3 class="weather-title">未来天气预报</h3>
         <div class="forecast-info clearfix">
           <div
-            v-cloak
             v-for="(item,index) in forecast"
+            v-cloak
             :key="item.date"
             class="forecast-item"
             :class="index === 0 ? 'current' : ''"
           >
-            <p class="forecast-item__date">{{item.date}}</p>
-            <p class="forecast-item__cond">{{item.cond_txt_d}}</p>
+            <p class="forecast-item__date">{{ item.date }}</p>
+            <p class="forecast-item__cond">{{ item.cond_txt_d }}</p>
             <img class="forecast-item__day" :src="'/static/weather/' + item.cond_code_d + '.png'" alt="">
             <img class="forecast-item__night" :src="'/static/weather/' + item.cond_code_n + '.png'" alt="">
-            <p class="forecast-item__cond">{{item.cond_txt_n}}</p>
-            <p class="forecast-item__other">{{item.wind_dir + item.wind_sc}}级</p>
-            <p class="forecast-item__other">降水量 {{item.pcpn}}</p>
-            <p class="forecast-item__other">降水概率 {{item.pop}}</p>
-            <p class="forecast-item__other">紫外线 {{item.uv_index}}</p>
+            <p class="forecast-item__cond">{{ item.cond_txt_n }}</p>
+            <p class="forecast-item__other">{{ item.wind_dir + item.wind_sc }}级</p>
+            <p class="forecast-item__other">降水量 {{ item.pcpn }}</p>
+            <p class="forecast-item__other">降水概率 {{ item.pop }}</p>
+            <p class="forecast-item__other">紫外线 {{ item.uv_index }}</p>
           </div>
         </div>
-        <div ref="chartContext" class="forecast-chart" id="chart"></div>
+        <div id="chart" ref="chartContext" class="forecast-chart" />
       </div>
     </div>
   </div>

@@ -41,6 +41,7 @@ export default {
   },
   data() {
     return {
+      dialogTitle: '',
       formData: {},
       fileList: [],
       fetchLoading: false,
@@ -49,12 +50,14 @@ export default {
       }
     }
   },
-  created() {
-    this.fetchData()
-  },
   methods: {
     onOpen() {
-      this.currentId && this.fetchData()
+      if (this.currentId) {
+        this.dialogTitle = '修改Banner'
+        this.fetchData()
+      } else {
+        this.dialogTitle = '添加Banner'
+      }
     },
     async fetchData() {
       this.fetchLoading = true
@@ -76,9 +79,12 @@ export default {
         if (!valid) return
         this.dialogLoading = true
 
-        const postData = { ...this.formData, ...{
-          imgurl: this.fileList.length ? this.fileList[0].url : ''
-        }}
+        const postData = {
+          ...this.formData,
+          ...{
+            imgurl: this.fileList.length ? this.fileList[0].url : ''
+          }
+        }
 
         const SubmitHandler = this.currentId ? UpdateContent : CreateContent
         await SubmitHandler(postData).then(res => {

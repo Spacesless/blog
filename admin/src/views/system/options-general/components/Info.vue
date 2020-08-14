@@ -1,5 +1,5 @@
 <template>
-  <div class="web-info">
+  <div class="info">
     <el-form
       ref="form"
       :model="formData"
@@ -36,18 +36,10 @@
       </el-form-item>
       <el-form-item label="标题格式">
         <el-radio-group v-model="formData.seo_title_type">
-          <div class="radio-item">
-            <el-radio label="1">内容标题</el-radio>
-          </div>
-          <div class="radio-item">
-            <el-radio label="2">内容标题 + 网站关键词</el-radio>
-          </div>
-          <div class="radio-item">
-            <el-radio label="3">内容标题 + 网站名称</el-radio>
-          </div>
-          <div class="radio-item">
-            <el-radio label="4">内容标题 + 网站关键词 + 网站名称</el-radio>
-          </div>
+          <el-radio label="1">内容标题</el-radio>
+          <el-radio label="2">内容标题 + 网站关键词</el-radio>
+          <el-radio label="3">内容标题 + 网站名称</el-radio>
+          <el-radio label="4">内容标题 + 网站关键词 + 网站名称</el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="网站logo">
@@ -102,3 +94,12 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.info{
+  .el-radio{
+    display: block;
+    padding: 10px 0;
+  }
+}
+</style>

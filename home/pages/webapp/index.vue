@@ -1,12 +1,12 @@
 <template>
   <div class="webapp">
     <el-row :gutter="15">
-      <el-col :sm="12" :md="8" :xl="6" v-for="item in webappList" :key="item.id">
+      <el-col v-for="item in webappList" :key="item.id" :sm="12" :md="8" :xl="6">
         <a class="webapp-card" :href="item.filename" :title="item.name" target="_blank">
           <div class="webapp-card__header">{{ item.name }}</div>
           <div class="webapp-card__body">
             <div class="clearfix">
-              <img class="webapp-card__logo img-fluid" :src="item.columnimg"/>
+              <img class="webapp-card__logo img-fluid" :src="item.columnimg">
               <p class="webapp-card__desc">{{ item.info }}</p>
             </div>
             <p class="webapp-card__version">版本号：{{ item.version }}</p>

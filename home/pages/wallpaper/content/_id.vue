@@ -3,9 +3,9 @@
     <div class="wallpaper-preview">
       <div class="wallpaper-preview__img">
         <el-tooltip effect="dark" content="点击预览原图" placement="bottom">
-          <img ref="source" class="img-fluid" :src="data.preview" :data-src="data.imgurl" :alt="data.title" @click="openViewer" />
+          <img ref="source" class="img-fluid" :src="data.preview" :data-src="data.imgurl" :alt="data.title" @click="openViewer">
         </el-tooltip>
-        <el-image ref="preview" class="app-preview" :src="previewSrc" :preview-src-list="previewSrcList"></el-image>
+        <el-image ref="preview" class="app-preview" :src="previewSrc" :preview-src-list="previewSrcList" />
       </div>
       <div class="wallpaper-preview__size">
         <p>当前为预览，点击查看原始尺寸哟！</p>
@@ -15,7 +15,7 @@
             :href="configs.siteurl + '/download?file=' + data.imgurl + '&filename=' + data.title + '-' + data.imgwidth + 'x' + data.imgheight"
             target="_blank"
           >
-            <i class="el-icon-download"></i>
+            <i class="el-icon-download" />
             下载原图 {{ data.imgwidth }}x{{ data.imgheight }}
           </a>
           <el-select v-model="downloadSize" clearable placeholder="下载其它分辨率" @change="downloadTheSize">
@@ -43,7 +43,7 @@
               <span class="filter-item__desc">UltraHD 8K</span>
             </el-option>
           </el-select>
-          <el-button type="primary"  @click="initCropper" plain>自定义裁剪</el-button>
+          <el-button type="primary" plain @click="initCropper">自定义裁剪</el-button>
         </div>
 
         <el-dialog
@@ -52,63 +52,63 @@
           :visible.sync="cropperVisible"
           custom-class="cropper-dialog"
         >
-          <div class="cropper-wrap" :style="{ height: wrapHeight + 'px' }" v-if="cropperIsExist">
+          <div v-if="cropperIsExist" class="cropper-wrap" :style="{ height: wrapHeight + 'px' }">
             <img ref="cropper" class="img-fluid" :alt="data.title">
           </div>
           <div ref="footer" slot="footer" class="dialog-footer">
             <el-form class="cropper-info" label-width="50px" :inline="true">
               <el-form-item label="X">
-                <el-input v-model.number="croped.x" @change="onChange"></el-input>
+                <el-input v-model.number="croped.x" @change="onChange" />
               </el-form-item>
               <el-form-item label="Y">
-                <el-input v-model.number="croped.y" @change="onChange"></el-input>
+                <el-input v-model.number="croped.y" @change="onChange" />
               </el-form-item>
               <el-form-item label="宽">
-                <el-input v-model.number="croped.width" @change="onChange"></el-input>
+                <el-input v-model.number="croped.width" @change="onChange" />
               </el-form-item>
               <el-form-item label="高">
-                <el-input v-model.number="croped.height" @change="onChange"></el-input>
+                <el-input v-model.number="croped.height" @change="onChange" />
               </el-form-item>
               <el-form-item label="旋转">
-                <el-input v-model.number="croped.rotate" @change="onChange"></el-input>
+                <el-input v-model.number="croped.rotate" @change="onChange" />
               </el-form-item>
               <el-form-item label="scaleX">
-                <el-input v-model.number="croped.scaleX" @change="onChange"></el-input>
+                <el-input v-model.number="croped.scaleX" @change="onChange" />
               </el-form-item>
               <el-form-item label="scaleY">
-                <el-input v-model.number="croped.scaleY" @change="onChange"></el-input>
+                <el-input v-model.number="croped.scaleY" @change="onChange" />
               </el-form-item>
             </el-form>
             <div class="cropper-opatate">
               <el-select v-model="aspectRatio" placeholder="请选择宽高比">
-                <el-option label="无比例限制" value="无比例限制"></el-option>
-                <el-option label="1:1" :value="1"></el-option>
-                <el-option label="4:3" :value="4 / 3"></el-option>
-                <el-option label="16:9" :value="16 / 9"></el-option>
-                <el-option label="16:10" :value="16 / 10"></el-option>
+                <el-option label="无比例限制" value="无比例限制" />
+                <el-option label="1:1" :value="1" />
+                <el-option label="4:3" :value="4 / 3" />
+                <el-option label="16:9" :value="16 / 9" />
+                <el-option label="16:10" :value="16 / 10" />
               </el-select>
               <el-button-group>
                 <el-tooltip content="下载裁剪的图片" placement="top">
-                  <el-button type="primary" icon="el-icon-download" @click="downloadCrop"></el-button>
+                  <el-button type="primary" icon="el-icon-download" @click="downloadCrop" />
                 </el-tooltip>
                 <el-tooltip content="重置" placement="top">
-                  <el-button type="primary" icon="el-icon-refresh" @click="refreshCrop"></el-button>
+                  <el-button type="primary" icon="el-icon-refresh" @click="refreshCrop" />
                 </el-tooltip>
               </el-button-group>
               <el-button-group>
                 <el-tooltip content="向左旋转45度" placement="top">
-                  <el-button type="primary" icon="el-icon-refresh-left" plain @click="rotateCrop(-45)"></el-button>
+                  <el-button type="primary" icon="el-icon-refresh-left" plain @click="rotateCrop(-45)" />
                 </el-tooltip>
                 <el-tooltip content="向右旋转45度" placement="top">
-                  <el-button type="primary" icon="el-icon-refresh-right" plain @click="rotateCrop(45)"></el-button>
+                  <el-button type="primary" icon="el-icon-refresh-right" plain @click="rotateCrop(45)" />
                 </el-tooltip>
               </el-button-group>
               <el-button-group>
                 <el-tooltip content="水平翻转图片" placement="top">
-                  <el-button type="primary" icon="tl-icon-horizontal" plain @click="turnCrop('horizontal')"></el-button>
+                  <el-button type="primary" icon="tl-icon-horizontal" plain @click="turnCrop('horizontal')" />
                 </el-tooltip>
                 <el-tooltip content="垂直翻转图片" placement="top">
-                  <el-button type="primary" icon="tl-icon-vertical" plain @click="turnCrop('vertical')"></el-button>
+                  <el-button type="primary" icon="tl-icon-vertical" plain @click="turnCrop('vertical')" />
                 </el-tooltip>
               </el-button-group>
               <el-button type="danger" @click="cropperVisible = false">取消</el-button>
@@ -129,7 +129,7 @@
             <i class="tl-icon">&#xe70b;</i>{{ data.updatetime }}
           </span>
         </div>
-        <div class="share-desc" v-html="data.content"></div>
+        <div class="share-desc" v-html="data.content" />
       </div>
       <!-- share start -->
       <Share />
@@ -150,6 +150,12 @@ import Comment from '@/components/Comment'
 import { contentPage } from '@/mixins'
 
 export default {
+  components: {
+    Share,
+    Advertisement,
+    Comment
+  },
+  mixins: [contentPage],
   async asyncData({ app, params, $axios }) {
     const id = params.id
     const { seo, content: data } = await $axios.$get('/wallpaper/content', {
@@ -157,21 +163,6 @@ export default {
     })
     return { seo, data }
   },
-  head() {
-    return {
-      title: this.seo.title,
-      meta: [
-        { hid: 'description', name: 'description', content: this.seo.description },
-        { hid: 'keyword', name: 'keyword', content: this.seo.keyword }
-      ]
-    }
-  },
-  components: {
-    Share,
-    Advertisement,
-    Comment
-  },
-  mixins: [contentPage],
   data() {
     return {
       previewSrc: '',
@@ -252,7 +243,9 @@ export default {
             y: Math.round(y),
             width: Math.round(width),
             height: Math.round(height),
-            rotate, scaleX, scaleY
+            rotate,
+            scaleX,
+            scaleY
           }
         }
       })
@@ -298,6 +291,15 @@ export default {
           this.cropper.scaleY(-this.croped.scaleY)
           break
       }
+    }
+  },
+  head() {
+    return {
+      title: this.seo.title,
+      meta: [
+        { hid: 'description', name: 'description', content: this.seo.description },
+        { hid: 'keyword', name: 'keyword', content: this.seo.keyword }
+      ]
     }
   }
 }

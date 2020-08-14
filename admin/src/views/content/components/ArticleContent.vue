@@ -4,26 +4,23 @@
       ref="form"
       v-loading="fetchLoading"
       :model="formData"
+      :rules="rules"
       label-position="left"
       label-width="100px"
       class="form-container is-bottom"
     >
-      <el-form-item label="所属栏目">
-        <el-row>
-          <el-col :xs="24" :md="12">
-            <el-cascader
-              v-model="formData.column"
-              :options="columnOptions"
-              :props="{ checkStrictly: true }"
-              placeholder="请选择栏目"
-              clearable
-            />
-          </el-col>
-        </el-row>
+      <el-form-item label="所属栏目" prop="column">
+        <el-cascader
+          v-model="formData.column"
+          :options="columnOptions"
+          :props="{ checkStrictly: true }"
+          placeholder="请选择栏目"
+          clearable
+        />
       </el-form-item>
-      <el-form-item label="文章标题">
+      <el-form-item label="文章标题" prop="title">
         <el-row>
-          <el-col :xs="24" :md="12">
+          <el-col :sm="24" :md="12">
             <el-input v-model="formData.title" />
           </el-col>
         </el-row>
@@ -32,7 +29,7 @@
         <upload-image :file-list.sync="fileList" />
       </el-form-item>
 
-      <component :is="paramComponent" :options="formData" />
+      <component :is="paramComponent" :params="formData" :file-list="fileList" />
 
       <div class="form-item">
         <Tinymce ref="editor" v-model="formData.content" :height="500" />
@@ -46,9 +43,9 @@
           <el-option label="前台显示" :value="1" />
         </el-select>
       </el-form-item>
-      <el-form-item label="发布时间">
+      <el-form-item label="发布时间" prop="addtime">
         <el-row>
-          <el-col :xs="24" :md="12">
+          <el-col :sm="24" :md="12">
             <el-date-picker
               v-model="formData.addtime"
               type="datetime"
@@ -56,7 +53,7 @@
               placeholder="请选择发布时间"
             />
           </el-col>
-          <el-col :xs="24" :md="12">
+          <el-col :xs="sm" :md="12" prop="updatetime">
             <el-form-item label="更新时间" class="inner-item">
               <el-date-picker
                 v-model="formData.updatetime"
@@ -69,22 +66,14 @@
         </el-row>
       </el-form-item>
       <el-form-item label="作者">
-        <el-row>
-          <el-col :xs="24" :md="12" :lg="5">
-            <el-input v-model="formData.author" />
-          </el-col>
-        </el-row>
+        <el-input v-model="formData.author" class="form-container-input" />
       </el-form-item>
       <el-form-item label="访问量">
-        <el-row>
-          <el-col :xs="24" :md="12" :lg="5">
-            <el-input v-model="formData.hits" />
-          </el-col>
-        </el-row>
+        <el-input v-model="formData.hits" class="form-container-input" />
       </el-form-item>
       <el-form-item label="链接至">
         <el-row>
-          <el-col :xs="24" :md="12">
+          <el-col :sm="24" :md="12">
             <el-input v-model="formData.links" />
           </el-col>
         </el-row>
@@ -94,44 +83,36 @@
       </el-form-item>
       <el-form-item label="文章关键词">
         <el-row>
-          <el-col :xs="24" :md="12">
+          <el-col :sm="24" :md="12">
             <el-input v-model="formData.keywords" />
           </el-col>
-          <el-col :xs="24" :md="12">
+          <el-col :sm="24" :md="12">
             <span style="margin-left:15px;">多个关键词请用“|”或“，”隔开。</span>
           </el-col>
         </el-row>
       </el-form-item>
       <el-form-item label="描述文字">
-        <el-row>
-          <el-col :xs="24">
-            <el-input v-model="formData.description" type="textarea" :rows="4" />
-          </el-col>
-        </el-row>
+        <el-input v-model="formData.description" type="textarea" :rows="4" />
       </el-form-item>
       <el-form-item label="Tag标签">
-        <el-row>
-          <el-col :xs="24">
-            <el-tag
-              v-for="tag in tags"
-              :key="tag"
-              closable
-              :disable-transitions="false"
-              @close="handleDeleteTag(tag)"
-            >
-              {{ tag }}
-            </el-tag>
-            <el-input
-              v-if="inputVisible"
-              ref="saveTagInput"
-              v-model="inputTag"
-              class="input-new-tag"
-              @keyup.enter.native="handleInputConfirm"
-              @blur="handleInputConfirm"
-            />
-            <el-button v-else class="button-new-tag" @click="showTagInput">+ 新标签</el-button>
-          </el-col>
-        </el-row>
+        <el-tag
+          v-for="tag in tags"
+          :key="tag"
+          closable
+          :disable-transitions="false"
+          @close="handleDeleteTag(tag)"
+        >
+          {{ tag }}
+        </el-tag>
+        <el-input
+          v-if="inputVisible"
+          ref="saveTagInput"
+          v-model="inputTag"
+          class="input-new-tag"
+          @keyup.enter.native="handleInputConfirm"
+          @blur="handleInputConfirm"
+        />
+        <el-button v-else class="button-new-tag" @click="showTagInput">+ 新标签</el-button>
       </el-form-item>
       <div class="stick-bottom">
         <el-button type="warning" plain @click="handleCancel">取消</el-button>
@@ -145,7 +126,6 @@
 import { mapGetters } from 'vuex'
 import UploadImage from '@/components/Upload/index'
 import Tinymce from '@/components/Tinymce'
-import BlogParam from './parameter/BlogParam'
 import ImageParam from './parameter/ImageParam'
 import BangumiParam from './parameter/BangumiParam'
 import { getIDByClass, getPathName } from '@/utils'
@@ -155,7 +135,6 @@ export default {
   components: {
     UploadImage,
     Tinymce,
-    BlogParam,
     ImageParam,
     BangumiParam
   },
@@ -179,13 +158,30 @@ export default {
   },
   data() {
     return {
-      formData: {},
+      formData: {
+        column: this.currentColumn,
+        addtime: new Date(),
+        updatetime: new Date(),
+        is_show: 1,
+        author: this.userinfo.nickname,
+        status: 1,
+        ratings: 8
+      },
       fileList: [],
       tags: [],
       inputVisible: false,
       inputTag: '',
       fetchLoading: false,
-      confirmLoading: false
+      confirmLoading: false,
+      rules: {
+        column: [{ required: true, message: '请选择栏目', trigger: 'change' }],
+        title: [{ required: true, message: '请输入标题', trigger: 'blur' }],
+        addtime: [{ required: true, message: '请选择发布时间', trigger: 'change' }],
+        updatetime: [{ required: true, message: '请选择更新时间', trigger: 'change' }],
+        showtime: [{ required: true, message: '请选择放映时间', trigger: 'change' }],
+        total: [{ required: true, message: '请输入总集数', trigger: 'blur' }],
+        current: [{ required: true, message: '请输入追剧进度', trigger: 'blur' }]
+      }
     }
   },
   computed: {
@@ -195,7 +191,6 @@ export default {
     },
     paramComponent() {
       const moduleEnum = {
-        blog: 'BlogParam',
         image: 'ImageParam',
         bangumi: 'BangumiParam'
       }
@@ -206,19 +201,6 @@ export default {
     if (this.isEdit) {
       const id = this.$route.params && this.$route.params.id
       this.fetchData(id)
-    } else {
-      this.formData = {
-        ...{
-          addtime: new Date(),
-          updatetime: new Date(),
-          players: [],
-          is_show: 1
-        },
-        ...{
-          column: this.currentColumn,
-          author: this.userinfo.nickname
-        }
-      }
     }
   },
   methods: {
@@ -235,6 +217,7 @@ export default {
             url: imgurl
           }]
         }
+        this.formData.updatetime = new Date()
         this.tags = tag ? tag.split('|') : []
       }).catch(() => {})
       this.fetchLoading = false
@@ -261,13 +244,16 @@ export default {
         if (!valid) return
         this.confirmLoading = true
         const [class1, class2, class3] = this.formData.column || []
-        const postData = { ...this.formData, ...{
-          class1,
-          class2,
-          class3,
-          imgurl: this.fileList.length ? this.fileList[0].url : '',
-          tag: this.tags.join('|')
-        }}
+        const postData = {
+          ...this.formData,
+          ...{
+            class1,
+            class2,
+            class3,
+            imgurl: this.fileList.length ? this.fileList[0].url : '',
+            tag: this.tags.join('|')
+          }
+        }
 
         const SubmitHandler = this.isEdit ? UpdateContent : CreateContent
         await SubmitHandler(this.currentModule, postData).then(res => {

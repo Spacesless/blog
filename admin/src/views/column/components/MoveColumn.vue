@@ -8,10 +8,10 @@
     @close="handleCancel"
     @closed="onClosed"
   >
-    <el-form ref="form" :model="formData">
-      <el-form-item label="移动到">
+    <el-form ref="form" :model="formData" :rules="rules">
+      <el-form-item label="移动到" prop="column">
         <el-cascader
-          v-model="selectedColumn"
+          v-model="formData.column"
           :options="columnOptions"
           :props="{ checkStrictly: true }"
           placeholder="请选择栏目"
@@ -46,7 +46,10 @@ export default {
   },
   data() {
     return {
-      selectedColumn: []
+      formData: {},
+      rules: {
+        column: [{ required: true, message: '请选择栏目', trigger: 'change' }]
+      }
     }
   },
   computed: {
@@ -56,14 +59,19 @@ export default {
     }
   },
   methods: {
+    onOpen() {
+
+    },
     handleConfirm() {
       this.$refs.form.validate(async(valid) => {
         if (!valid) return
         this.dialogLoading = true
-        const [class1, class2, class3] = this.selectedColumn
+        const [class1, class2, class3] = this.formData.column || []
         const postData = {
           id: this.currentRow.id,
-          class1, class2, class3
+          class1,
+          class2,
+          class3
         }
         await UpdateContent('column', postData).then(res => {
 

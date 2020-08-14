@@ -2,12 +2,12 @@
   <div class="blog">
     <el-row class="blog-summary">
       <el-col class="blog-summary-cover" :sm="12" :lg="8">
-        <img class="img-fluid" :src="data.imgurl" :alt="data.title" />
+        <img class="img-fluid" :src="data.imgurl" :alt="data.title">
       </el-col>
       <el-col class="blog-summary-info" :sm="12" :lg="16">
         <h1 class="blog-summary__title">{{ data.title }}</h1>
         <div class="blog-summary__admin">
-          <span><i class="el-icon-user"></i>{{ data.author }}</span>
+          <span><i class="el-icon-user" />{{ data.author }}</span>
           <span><i class="tl-icon">&#xe70b;</i>{{ data.updatetime }}</span>
           <span><i class="tl-icon">&#xe601;</i>{{ data.hits }}</span>
         </div>
@@ -16,8 +16,8 @@
     <!--blog content-->
     <div class="blog-content">
       <div class="blog-content-wrap">
-        <div class="Tinymce" ref="content" v-html="data.content"></div>
-        <el-image ref="preview" class="app-preview" :src="previewSrc" :preview-src-list="previewSrcList"></el-image>
+        <div ref="content" class="Tinymce" v-html="data.content" />
+        <el-image ref="preview" class="app-preview" :src="previewSrc" :preview-src-list="previewSrcList" />
       </div>
       <div v-if="headings.length" class="blog-content-catalogue" :class="{'blog-content-catalogue--close': isHideCatalogue}">
         <div class="blog-content-catalogue-head">
@@ -26,7 +26,7 @@
         </div>
         <ul>
           <li v-for="(item,index) in headings" :key="index" class="blog-content-catalogue-item" :class="'blog-content-catalogue--'+item.nodeName">
-            <span @click="scrollIntoView(item)" :class="index === isActive ? 'active': ''">{{item.innerText}}</span>
+            <span :class="index === isActive ? 'active': ''" @click="scrollIntoView(item)">{{ item.innerText }}</span>
           </li>
         </ul>
       </div>
@@ -50,26 +50,17 @@ import { position, scrollTo } from '@/utils/scroll-to'
 
 export default {
   name: 'BlogConent',
+  components: {
+    Share,
+    Advertisement,
+    Comment
+  },
   async asyncData({ params, $axios }) {
     const id = params.id
     const { seo, content: data } = await $axios.$get('/blog/content', {
       params: { id }
     })
     return { seo, data }
-  },
-  head() {
-    return {
-      title: this.seo.title,
-      meta: [
-        { hid: 'description', name: 'description', content: this.seo.description },
-        { hid: 'keyword', name: 'keyword', content: this.seo.keyword }
-      ]
-    }
-  },
-  components: {
-    Share,
-    Advertisement,
-    Comment
   },
   data() {
     return {
@@ -180,6 +171,15 @@ export default {
     },
     closeViewer() {
       this.$refs.preview && this.$refs.preview.closeViewer()
+    }
+  },
+  head() {
+    return {
+      title: this.seo.title,
+      meta: [
+        { hid: 'description', name: 'description', content: this.seo.description },
+        { hid: 'keyword', name: 'keyword', content: this.seo.keyword }
+      ]
     }
   }
 }

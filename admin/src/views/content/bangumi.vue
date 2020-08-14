@@ -42,6 +42,7 @@
             v-model="scope.row.current"
             controls-position="right"
             :min="0"
+            :max="scope.row.total"
           />
         </template>
       </el-table-column>
@@ -143,7 +144,11 @@ export default {
       this.$set(row, 'updateLoading', false)
     },
     handleEdit(id) {
-      this.$router.push({ name: 'ContentEdit', params: { id: id }, query: { module: this.currentModule }})
+      this.$router.push({
+        name: 'ContentEdit',
+        params: { id: id },
+        query: { module: this.currentModule }
+      })
     },
     deleteSingle(id) {
       return DeleteList(this.currentModule, [id]).then(res => {

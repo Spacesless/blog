@@ -68,14 +68,18 @@ service.interceptors.response.use(
     }
   },
   error => {
-    console.log('err' + error) // for debug
+    let message = '[err] ' + error
+    console.log(message) // for debug
 
-    let message
-    if (error.includes('Network Error')) message = '网络错误，请稍候重试'
-    else if (error.includes('timeout')) message = '请求超时，请稍候重试'
+    if (message.includes('Request failed')) {
+      message = '网络错误，请稍候重试'
+    } else if (message.includes('timeout')) {
+      message = '请求超时，请稍候重试'
+    }
+
     if (!networkErrorMsg) {
       networkErrorMsg = true
-      _Message.error(message)
+      _Message.error(message || error.toString())
       setTimeout(() => {
         networkErrorMsg = false
       }, 2000) // duration = 2000ms

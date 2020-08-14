@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container">
+  <div class="app-container customize">
     <el-form
       ref="form"
       :model="formData"
@@ -54,3 +54,11 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.customize{
+  .el-input{
+    width: 230px;
+  }
+}
+</style>

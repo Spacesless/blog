@@ -40,13 +40,11 @@
       </el-table-column>
     </el-table>
 
-    <div class="app-footer-menu">
-      <el-row>
-        <el-col :xs="24" class="text-right">
-          <el-button type="danger" icon="el-icon-delete" @click="handleDeleteSelection">删除选中</el-button>
-        </el-col>
-      </el-row>
-    </div>
+    <el-row class="app-footer">
+      <el-col :xs="24" class="text-right">
+        <el-button type="danger" icon="el-icon-delete" @click="handleDeleteSelection">删除选中</el-button>
+      </el-col>
+    </el-row>
 
     <pagination :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.pageSize" @pagination="fetchList" />
   </div>
@@ -84,7 +82,10 @@ export default {
       this.listLoading = false
     },
     handleView(id) {
-      this.$router.push({ name: 'MessageDetail', params: { id: id }})
+      this.$router.push({
+        name: 'MessageDetail',
+        params: { id: id }
+      })
     },
     deleteSingle(id) {
       DeleteList('message', [id]).then(response => {

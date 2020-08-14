@@ -15,17 +15,17 @@
       <a class="search-hot__link" @click="handleSearchHot('web前端')">web前端</a>
       <a class="search-hot__link" @click="handleSearchHot('二次元')">二次元</a>
     </div>
-    <ol class="search-list" v-if="total > 0">
+    <ol v-if="total > 0" class="search-list">
       <h3 class="search-list__result">检索到包含 {{ resultInfo.keyword }} 的{{ resultInfo.classify }} {{ total }} 篇</h3>
-      <li class="search-list-item el-row" v-for="item in searchList" :key="item.id">
+      <li v-for="item in searchList" :key="item.id" class="search-list-item el-row">
         <div class="search-list__thumb el-col el-col el-col-sm-10 el-col-md-6 el-col-lg-8">
           <nuxt-link :to="item.url">
-            <img class="img-fluid" :src="item.imgurl" :alt="item.title" />
+            <img class="img-fluid" :src="item.imgurl" :alt="item.title">
           </nuxt-link>
         </div>
         <div class="search-list__info el-col el-col-sm-14 el-col-md-18 el-col-lg-16">
-          <nuxt-link class="search-list__title" :to="item.url" v-html="item.title"></nuxt-link>
-          <p v-html="item.content"></p>
+          <nuxt-link class="search-list__title" :to="item.url" v-html="item.title" />
+          <p v-html="item.content" />
           <div class="search-list__classify">
             <nuxt-link v-for="info in item.classList" :key="info.name" :to="info.url" :title="info.name">{{ info.name }}</nuxt-link>
           </div>
@@ -65,16 +65,6 @@ export default {
   computed: {
     ...mapGetters(['configs'])
   },
-  head() {
-    const { sitename, keywords, description } = this.configs
-    return {
-      title: `站内搜索 - ${sitename}`,
-      meta: [
-        { hid: 'description', name: 'description', content: description },
-        { hid: 'keyword', name: 'keyword', content: keywords }
-      ]
-    }
-  },
   mounted() {
     const { keyword, classify } = this.$route.query
 
@@ -107,6 +97,16 @@ export default {
       this.listQuery.keyword = keyword
       this.listQuery.classify = null
       this.handleSearch()
+    }
+  },
+  head() {
+    const { sitename, keywords, description } = this.configs
+    return {
+      title: `站内搜索 - ${sitename}`,
+      meta: [
+        { hid: 'description', name: 'description', content: description },
+        { hid: 'keyword', name: 'keyword', content: keywords }
+      ]
     }
   }
 }

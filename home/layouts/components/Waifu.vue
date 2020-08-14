@@ -1,16 +1,16 @@
 <template>
-  <div class="waifu" @mousedown="drag" ref="waifu" v-if="isShow">
+  <div v-if="isShow" ref="waifu" class="waifu" @mousedown="drag">
     <transition name="fade-transform" mode="out-in">
-      <div class="waifu-tips" v-html="tips" v-show="tipsShow"></div>
+      <div v-show="tipsShow" class="waifu-tips" v-html="tips" />
     </transition>
-    <canvas id="live2d" width="280" height="250" ref="live2d" class="live2d"></canvas>
+    <canvas id="live2d" ref="live2d" width="280" height="250" class="live2d" />
     <div class="waifu-tool">
-      <span class="tl-icon" ref="home" @click="goToHome">&#xe76f;</span>
-      <span class="tl-icon" ref="feedback" @click="openFeedback">&#xe745;</span>
-      <span class="tl-icon" ref="model" @click="loadOtherModel">&#xe6ed;</span>
-      <span class="tl-icon" ref="textures" @click="loadOtherTexture">&#xe646;</span>
-      <span class="tl-icon" ref="photo" @click="handleTakePhoto">&#xe704;</span>
-      <span class="tl-icon" ref="close" @click="handleCloseLive2d">&#xe602;</span>
+      <span ref="home" class="tl-icon" @click="goToHome">&#xe76f;</span>
+      <span ref="feedback" class="tl-icon" @click="openFeedback">&#xe745;</span>
+      <span ref="model" class="tl-icon" @click="loadOtherModel">&#xe6ed;</span>
+      <span ref="textures" class="tl-icon" @click="loadOtherTexture">&#xe646;</span>
+      <span ref="photo" class="tl-icon" @click="handleTakePhoto">&#xe704;</span>
+      <span ref="close" class="tl-icon" @click="handleCloseLive2d">&#xe602;</span>
     </div>
   </div>
 </template>

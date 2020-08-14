@@ -2,31 +2,31 @@
   <div id="live" class="live">
     <div class="el-row">
       <div class="el-col el-col-md-10">
-        <div class="live2d" ref="waifu">
+        <div ref="waifu" class="live2d">
           <transition name="fade-transform" mode="out-in">
-            <div class="live-tips" v-html="tips" v-show="tipsShow"></div>
+            <div v-show="tipsShow" class="live-tips" v-html="tips" />
           </transition>
-          <canvas id="live2d" width="500" height="450" ref="live2d"></canvas>
+          <canvas id="live2d" ref="live2d" width="500" height="450" />
         </div>
         <div class="live-info">
-          <p>{{currentInfo.message}}</p>
-          <a :href="currentInfo.from" target="_blank">{{currentInfo.from}}</a>
+          <p>{{ currentInfo.message }}</p>
+          <a :href="currentInfo.from" target="_blank">{{ currentInfo.from }}</a>
         </div>
       </div>
       <div class="el-col el-col-md-14">
         <div class="live-filter">
-          <el-cascader :value="selectModel" :options="options" @change="changeClassify"></el-cascader>
-          <el-radio-group v-show=mixVisible v-model="isMix" @change="changeMix">
+          <el-cascader :value="selectModel" :options="options" @change="changeClassify" />
+          <el-radio-group v-show="mixVisible" v-model="isMix" @change="changeMix">
             <el-radio-button :label="0">套装</el-radio-button>
             <el-radio-button :label="1">百搭</el-radio-button>
           </el-radio-group>
         </div>
         <el-scrollbar class="live-wrapper" wrap-class="scroll-warpper">
-          <div class="live-list" v-infinite-scroll="loadMore" :infinite-scroll-immediate="false" :infinite-scroll-distance="100">
+          <div v-infinite-scroll="loadMore" class="live-list" :infinite-scroll-immediate="false" :infinite-scroll-distance="100">
             <div class="el-row">
-              <div class="el-col-12 el-col-sm-8 el-col-md-6" v-for="item in modelCount" :key="item">
+              <div v-for="item in modelCount" :key="item" class="el-col-12 el-col-sm-8 el-col-md-6">
                 <div class="live-list__item" :class="{ 'live-list__item--active': selectModel === modelId && selectTexture === item }">
-                  <el-image :src="thumbFormat(item)" @click="loadModel(selectModel, item)"></el-image>
+                  <el-image :src="thumbFormat(item)" @click="loadModel(selectModel, item)" />
                 </div>
               </div>
             </div>

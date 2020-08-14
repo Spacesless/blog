@@ -8,30 +8,29 @@
       label-width="100px"
       class="form-container"
     >
-      <el-form-item class="form-title">
-        基本信息
+      <el-form-item class="form-title">基本信息</el-form-item>
+      <el-form-item label="栏目名称" prop="name">
+        <el-input v-model="formData.name" class="form-container-input" />
       </el-form-item>
-      <el-form-item label="栏目名称">
-        <el-row>
-          <el-col :xs="24" :md="12">
-            <el-input v-model="formData.name" />
-          </el-col>
-        </el-row>
-      </el-form-item>
+      <template v-if="!isEdit">
+        <el-form-item label="所属栏目" prop="column">
+          <el-cascader
+            v-model="formData.column"
+            :options="columnOptions"
+            :props="{ checkStrictly: true }"
+            placeholder="请选择栏目"
+            clearable
+          />
+        </el-form-item>
+      </template>
       <el-form-item label="同级栏目排序">
-        <el-row>
-          <el-col :xs="24" :md="12">
-            <el-input v-model="formData.no_order" />
-          </el-col>
-          <el-col :xs="24" :md="12">
-            <span style="margin-left:15px;">数值越小越靠前</span>
-          </el-col>
-        </el-row>
+        <el-input-number v-model="formData.no_order" controls-position="right" :min="0" />
+        <span class="form-container-tips">数值越小越靠前</span>
       </el-form-item>
       <el-form-item label="导航栏显示">
         <el-radio-group v-model="formData.is_nav">
-          <el-radio :label="1">不显示</el-radio>
-          <el-radio :label="2">显示</el-radio>
+          <el-radio :label="0">不显示</el-radio>
+          <el-radio :label="1">显示</el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="列表排序">
@@ -58,7 +57,7 @@
             <el-input v-model="formData.title" />
           </el-col>
           <el-col :xs="24" :md="12">
-            <span style="margin-left:15px;">为空则使用SEO参数设置中设置的title构成方式</span>
+            <span class="form-container-tips">为空则使用SEO参数设置中设置的title构成方式</span>
           </el-col>
         </el-row>
       </el-form-item>
@@ -68,7 +67,7 @@
             <el-input v-model="formData.keywords" type="textarea" :rows="3" />
           </el-col>
           <el-col :xs="24" :md="12">
-            <span style="margin-left:15px;">多个关键词请用"|"隔开</span>
+            <span class="form-container-tips">多个关键词请用"|"隔开</span>
           </el-col>
         </el-row>
       </el-form-item>
@@ -78,7 +77,7 @@
             <el-input v-model="formData.description" type="textarea" :rows="5" />
           </el-col>
           <el-col :xs="24" :md="12">
-            <span style="margin-left:15px;">描述一般不超过120个字</span>
+            <span class="form-container-tips">描述一般不超过120个字</span>
           </el-col>
         </el-row>
       </el-form-item>
@@ -107,8 +106,10 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import Tinymce from '@/components/Tinymce'
 import { GetContent, CreateContent, UpdateContent } from '@/api/content'
+import { getColumnByModule } from '@/utils'
 
 export default {
   components: {
@@ -128,7 +129,19 @@ export default {
         list_order: 1
       },
       fetchLoading: false,
-      confirmLoading: false
+      confirmLoading: false,
+      rules: {
+        name: [{ required: true, message: '请输入栏目名称', trigger: 'blur' }],
+        column: [{ required: true, message: '请选择栏目', trigger: 'change' }]
+      }
+    }
+  },
+  computed: {
+    ...mapGetters(['columns']),
+    columnOptions() {
+      const currentModule = this.$route.query.module
+      const result = getColumnByModule(this.columns, currentModule)
+      return result
     }
   },
   created() {
@@ -151,45 +164,32 @@ export default {
       this.$refs.postformData.validate(async(valid) => {
         if (valid) {
           this.confirmLoading = true
-          if (this.isEdit) {
-            await UpdateContent('column', this.formData).then(res => {
-              this.$message({
-                type: 'success',
-                message: '更新栏目成功'
-              })
-              this.handleCancel(true)
-            }).catch(() => {
-              this.$message({
-                type: 'error',
-                message: '更新栏目失败'
-              })
+
+          const SubmitHander = this.isEdit ? UpdateContent : CreateContent
+          await SubmitHander('column', this.formData).then(res => {
+            this.$message({
+              type: 'success',
+              message: this.isEdit ? '更新栏目成功' : '添加栏目成功'
             })
-          } else {
-            await CreateContent('column', this.formData).then(res => {
-              this.$message({
-                type: 'success',
-                message: '发布栏目成功'
-              })
-              this.handleCancel(true)
-            }).catch(() => {
-              this.$message({
-                type: 'error',
-                message: '发布栏目失败'
-              })
+            this.$store.commit('list/SET_UPDATELIST', 'Column')
+            this.handleCancel()
+          }).catch(() => {
+            this.$message({
+              type: 'error',
+              message: this.isEdit ? '更新栏目失败' : '添加栏目失败'
             })
-          }
+          })
           this.confirmLoading = false
         }
       })
     },
     /**
      * 返回列表页
-     * @param {Boolean} 是否刷新列表页
      */
-    handleCancel(isRefresh = false) {
+    handleCancel() {
       const { path } = this.$route
       this.$store.dispatch('tagsView/delView', { path }).then(() => {
-        this.$router.push({ name: '', query: { isRefresh }})
+        this.$router.push({ name: 'Column' })
       })
     }
   }
@@ -198,38 +198,8 @@ export default {
 
 <style lang="scss" scoped>
 .form-container{
-  border: 1px solid #EBEEF5;
-  .el-form-item{
-    padding: 20px;
-    border-bottom: 1px solid #EBEEF5;
-    margin-bottom: 0;
-  }
-  .form-title{
-    padding: 5px 20px;
-    color: #409EFF;
-    ::v-deep .el-form-item__content{
-      margin-left: 0 !important;
-    }
-  }
-}
-.avatar-uploader{
-  ::v-deep .el-upload {
-    border: 1px dashed #d9d9d9;
-    border-radius: 6px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    &:hover {
-      border-color: #409EFF;
-    }
-  }
-  &-icon {
-    font-size: 28px;
-    color: #8c939d;
-    width: 150px;
-    height: 150px;
-    line-height: 150px;
-    text-align: center;
+  &-tips{
+    margin-left: 15px;
   }
 }
 </style>

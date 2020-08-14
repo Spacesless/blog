@@ -49,7 +49,10 @@ export default {
   methods: {
     handleAdd() {
       const columnToStr = this.selectedColumn.length ? this.selectedColumn.join(',') : null
-      this.$router.push({ name: 'ContentCreate', query: { module: this.currentModule, column: columnToStr }})
+      this.$router.push({
+        name: 'ContentCreate',
+        query: { module: this.currentModule, column: columnToStr }
+      })
     },
     onColumnChange() {
       const [class1, class2, class3] = this.selectedColumn || []

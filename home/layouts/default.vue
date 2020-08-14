@@ -19,8 +19,8 @@
       <waifu />
     </div>
     <!--background start-->
-    <div class="background" v-show="bubbleActive">
-      <canvas id="flower" width="1900" height="1080"></canvas>
+    <div v-show="bubbleActive" class="background">
+      <canvas id="flower" width="1900" height="1080" />
     </div>
   </div>
 </template>

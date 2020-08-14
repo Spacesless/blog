@@ -8,8 +8,8 @@
 
     <el-table
       v-loading="listLoading"
-      v-el-height-adaptive-table="{bottomOffset: 62}"
-      :data="list"
+      v-el-height-adaptive-table="{bottomOffset: 80}"
+      :data="adminList"
       height="233"
       border
     >
@@ -41,18 +41,18 @@
           <el-tag v-else type="info">未激活</el-tag>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="操作" width="180">
+      <el-table-column align="center" label="操作" width="280">
         <template #default="scope">
           <el-button type="primary" @click="handleEdit(scope.row.id)">编辑</el-button>
           <el-button type="danger" @click="handleDelete(scope.row)">删除</el-button>
-          <el-button type="primary" plain @click="changePassword(scope.row.id)" />
+          <el-button type="primary" plain @click="changePassword(scope.row.id)">修改密码</el-button>
         </template>
       </el-table-column>
     </el-table>
 
     <pagination :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.pageSize" @pagination="fetchList" />
 
-    <change-password :dialog-visible="dialogVisible" :current-row="currentRow" @onConfirm="onConfirm" />
+    <change-password :dialog-visible="dialogVisible" :current-id="currentId" @onConfirm="onConfirm" />
   </div>
 </template>
 
@@ -95,7 +95,10 @@ export default {
       this.$router.push({ name: 'CreateAdmin' })
     },
     handleEdit(id) {
-      this.$router.push({ name: 'EditAdmin', params: { id }})
+      this.$router.push({
+        name: 'EditAdmin',
+        params: { id }
+      })
     },
     changePassword(id) {
       this.currentId = id

@@ -14,7 +14,7 @@
         <nuxt-link class="home-head__more" to="/blog">more+</nuxt-link>
       </div>
       <el-row class="articles-list" :gutter="15">
-        <el-col :md="12" v-for="item in blogs" :key="item.id">
+        <el-col v-for="item in blogs" :key="item.id" :md="12">
           <div class="articles-item">
             <p class="articles-title">
               <nuxt-link :to="'/blog/content/' + item.id" :title="item.title">{{ item.title }}</nuxt-link>
@@ -45,7 +45,7 @@
           <el-row class="bangumi-list-item">
             <el-col :span="8" :xl="10">
               <nuxt-link :to="'/bangumi/content/' + item.id" :title="item.title">
-                <img class="img-fluid" :src="item.imgurl"  :alt="item.title" />
+                <img class="img-fluid" :src="item.imgurl" :alt="item.title">
               </nuxt-link>
             </el-col>
             <el-col class="bangumi-list-info" :span="16" :xl="14">
@@ -58,7 +58,7 @@
                 <div class="el-progress el-progress--line">
                   <div class="el-progress-bar">
                     <div class="el-progress-bar__outer">
-                      <div class="el-progress-bar__inner" :style="'width:' + item.current / item.total * 100 + '%'"></div>
+                      <div class="el-progress-bar__inner" :style="'width:' + item.current / item.total * 100 + '%'" />
                     </div>
                   </div>
                   <div v-if="item.total" class="el-progress__text">{{ item.current }}/{{ item.total }}</div>
@@ -77,20 +77,11 @@ import { debounce } from '@/utils'
 import { globalFilter } from '@/mixins'
 
 export default {
+  mixins: [globalFilter],
   async asyncData({ $axios }) {
     const { seo, banners: bannerList, blogs, bangumis } = await $axios.$get('/index')
     return { seo, bannerList, blogs, bangumis }
   },
-  head() {
-    return {
-      title: this.seo.title,
-      meta: [
-        { hid: 'description', name: 'description', content: this.seo.description },
-        { hid: 'keyword', name: 'keyword', content: this.seo.keyword }
-      ]
-    }
-  },
-  mixins: [globalFilter],
   data() {
     return {
       bannerHeight: '450px'
@@ -110,6 +101,15 @@ export default {
     handleResize() {
       const carouselWidth = this.$refs.carousel.$el.clientWidth
       this.bannerHeight = 420 * carouselWidth / 1280 + 'px'
+    }
+  },
+  head() {
+    return {
+      title: this.seo.title,
+      meta: [
+        { hid: 'description', name: 'description', content: this.seo.description },
+        { hid: 'keyword', name: 'keyword', content: this.seo.keyword }
+      ]
     }
   }
 }

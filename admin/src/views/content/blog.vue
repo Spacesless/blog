@@ -107,7 +107,11 @@ export default {
       this.listLoading = false
     },
     handleEdit(id) {
-      this.$router.push({ name: 'ContentEdit', params: { id: id }, query: { module: this.currentModule }})
+      this.$router.push({
+        name: 'ContentEdit',
+        params: { id: id },
+        query: { module: this.currentModule }
+      })
     },
     deleteSingle(id) {
       DeleteList(this.currentModule, [id]).then(response => {

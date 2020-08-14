@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
+/* Layout */
+import Layout from '@/layout'
+
 // 处理vue-router ≥3.0版本回调形式以及改成promise api的形式了，返回的是一个promise，默认没catch，跳转相同的地址会报以下错误
 // Uncaught (in promise) Error: Redirected when going from *** via a navigation guard
 const originalPush = Router.prototype.push
@@ -9,9 +12,6 @@ Router.prototype.push = function push(location) {
 }
 
 Vue.use(Router)
-
-/* Layout */
-import Layout from '@/layout'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1

@@ -82,14 +82,14 @@ export default {
   computed: {
     ...mapGetters(['configs']),
     fit() {
-      const fit = this.formData.thumb_kind
+      const fit = +this.formData.thumb_kind
       const fitEnum = ['cover', 'contain', 'fill']
       return fitEnum[fit] || 'none'
     }
   },
   created() {
-    const { thumb_blog_x, thumb_blog_y, thumb_image_x, thumb_image_y, thumb_bangumi_x, thumb_bangumi_y } = this.configs
-    this.formData = { thumb_blog_x, thumb_blog_y, thumb_image_x, thumb_image_y, thumb_bangumi_x, thumb_bangumi_y }
+    const { thumb_kind, thumb_blog_x, thumb_blog_y, thumb_image_x, thumb_image_y, thumb_bangumi_x, thumb_bangumi_y } = this.configs
+    this.formData = { thumb_kind, thumb_blog_x, thumb_blog_y, thumb_image_x, thumb_image_y, thumb_bangumi_x, thumb_bangumi_y }
   },
   methods: {
     async handleSubmit() {

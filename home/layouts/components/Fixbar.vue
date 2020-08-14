@@ -10,7 +10,7 @@
       <div class="fixbar-item tl-icon" :class="bubbleActive ? 'active' : ''" @click="toggleBubble">&#xe640;</div>
     </el-tooltip>
     <el-tooltip effect="dark" content="点我坐电梯" placement="left" :disabled="backTopTips">
-      <div class="fixbar-item tl-icon" @click="backTop" v-show="backTopShow">&#xe637;</div>
+      <div v-show="backTopShow" class="fixbar-item tl-icon" @click="backTop">&#xe637;</div>
     </el-tooltip>
   </div>
 </template>

@@ -40,22 +40,20 @@
       </el-table-column>
     </el-table>
 
-    <div class="app-footer-menu">
-      <el-row>
-        <el-col :xs="24" class="text-right">
-          <el-dropdown @command="handleChangeStatus">
-            <el-button type="warning" plain :loading="changeLoading">
-              状态修改<i class="el-icon-arrow-down el-icon--right" />
-            </el-button>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item command="unaudit">未审核</el-dropdown-item>
-              <el-dropdown-item command="audit">已通过</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
-          <el-button type="danger" icon="el-icon-delete" :loading="deleteLoading" @click="handleDeleteSelection">删除选中</el-button>
-        </el-col>
-      </el-row>
-    </div>
+    <el-row class="app-footer">
+      <el-col :xs="24" class="text-right">
+        <el-dropdown @command="handleChangeStatus">
+          <el-button type="warning" plain :loading="changeLoading">
+            状态修改<i class="el-icon-arrow-down el-icon--right" />
+          </el-button>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item command="unaudit">未审核</el-dropdown-item>
+            <el-dropdown-item command="audit">已通过</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+        <el-button type="danger" icon="el-icon-delete" :loading="deleteLoading" @click="handleDeleteSelection">删除选中</el-button>
+      </el-col>
+    </el-row>
 
     <pagination :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.pageSize" @pagination="fetchList" />
   </div>
@@ -94,7 +92,10 @@ export default {
       this.listLoading = false
     },
     handleView(id) {
-      this.$router.push({ name: 'CommentContent', params: { id: id }})
+      this.$router.push({
+        name: 'CommentContent',
+        params: { id: id }
+      })
     },
     deleteSingle(id) {
       DeleteList('comment', [id]).then(response => {

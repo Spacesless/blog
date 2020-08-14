@@ -3,9 +3,9 @@
     <el-form class="filter">
       <el-form-item label="列表排序" label-width="70px">
         <el-select v-model="search.sortBy" placeholder="请选择排序方式" @change="handleSearch('sortBy')">
-          <el-option label="更新时间" value="updatetime"></el-option>
-          <el-option label="发布时间" value="addtime"></el-option>
-          <el-option label="推荐指数" value="ratings"></el-option>
+          <el-option label="更新时间" value="updatetime" />
+          <el-option label="发布时间" value="addtime" />
+          <el-option label="推荐指数" value="ratings" />
         </el-select>
         <el-radio-group v-model="search.orderBy" @change="handleSearch('orderBy')">
           <el-radio-button label="asc">升序</el-radio-button>
@@ -27,25 +27,26 @@
           <el-radio-button label="1">看过</el-radio-button>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="标签" v-if="dynamicTags.length">
+      <el-form-item v-if="dynamicTags.length" label="标签">
         <el-tag
-          :key="tag"
           v-for="tag in dynamicTags"
+          :key="tag"
           closable
           :disable-transitions="false"
-          @close="handleDeleteTag(tag)">
-          {{tag}}
+          @close="handleDeleteTag(tag)"
+        >
+          {{ tag }}
         </el-tag>
       </el-form-item>
     </el-form>
     <!--bangumi list-->
     <div class="bangumi-list">
       <el-row :gutter="15">
-        <el-col :xs="8" :sm="12" v-for="item in bangumiList" :key="item.id">
+        <el-col v-for="item in bangumiList" :key="item.id" :xs="8" :sm="12">
           <el-row class="bangumi-list__item">
             <el-col class="bangumi-list-cover" :span="8" :xl="10">
               <nuxt-link :to="'/bangumi/content/' + item.id">
-                <img class="img-fluid" :src="item.imgurl" :alt="item.title" />
+                <img class="img-fluid" :src="item.imgurl" :alt="item.title">
                 <span class="bangumi-list__ratings">{{ item.ratings }}</span>
               </nuxt-link>
             </el-col>
@@ -59,7 +60,7 @@
                 <div class="el-progress el-progress--line">
                   <div class="el-progress-bar">
                     <div class="el-progress-bar__outer">
-                      <div class="el-progress-bar__inner" :style="'width:' + item.current / item.total * 100 + '%'"></div>
+                      <div class="el-progress-bar__inner" :style="'width:' + item.current / item.total * 100 + '%'" />
                     </div>
                   </div>
                   <div v-if="item.total" class="el-progress__text">{{ item.current }}/{{ item.total }}</div>
@@ -82,6 +83,10 @@ import Pagination from '@/components/Pagination'
 import { listQuery, listPage, globalFilter } from '@/mixins'
 
 export default {
+  components: {
+    Pagination
+  },
+  mixins: [listQuery, listPage, globalFilter],
   async asyncData({ app, params, query, $axios }) {
     const paramId = params.id
     const [id, page] = paramId ? paramId.split('-') : []
@@ -89,7 +94,12 @@ export default {
     const { seo, list } = await $axios.$get('/bangumi/list', {
       params: {
         id: id === 'list' ? null : id,
-        page, sortBy, orderBy, status, progress, tags
+        page,
+        sortBy,
+        orderBy,
+        status,
+        progress,
+        tags
       }
     })
     return {
@@ -118,10 +128,6 @@ export default {
         { hid: 'keyword', name: 'keyword', content: this.seo.keyword }
       ]
     }
-  },
-  mixins: [listQuery, listPage, globalFilter],
-  components: {
-    Pagination
   }
 }
 </script>

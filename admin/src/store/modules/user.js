@@ -44,7 +44,7 @@ const actions = {
       GetInfo().then(response => {
         const { data } = response
         if (!data) {
-          reject('Verification failed, please Login again.')
+          reject(new Error('Verification failed, please Login again.'))
         }
 
         commit('SET_USERINFO', data)

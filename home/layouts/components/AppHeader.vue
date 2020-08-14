@@ -13,7 +13,7 @@
         </el-tooltip>
       </span>
       <el-tooltip effect="dark" content="站内搜索" placement="bottom">
-        <i class="header-menus__btn el-icon-search" @click="handleShowSearch"></i>
+        <i class="header-menus__btn el-icon-search" @click="handleShowSearch" />
       </el-tooltip>
       <el-tooltip effect="dark" content="侧边菜单" placement="bottom">
         <i class="header-menus__btn tl-icon" @click="toggleSidebar">&#xe6ee;</i>
@@ -73,7 +73,10 @@ export default {
       this.$store.dispatch('toggleSideBar')
     },
     handleSearch() {
-      this.$router.push({ name: 'search', query: { keyword: this.keyword, classify: this.classify }})
+      this.$router.push({
+        name: 'search',
+        query: { keyword: this.keyword, classify: this.classify }
+      })
       this.searchVisible = false
     },
     /**
@@ -81,7 +84,9 @@ export default {
      * @param {String} keyword 热门关键字
      */
     handleGoToLink(keyword) {
-      this.$router.push({ name: 'search', query: { keyword }})
+      this.$router.push({
+        name: 'search', query: { keyword }
+      })
       this.searchVisible = false
     }
   }

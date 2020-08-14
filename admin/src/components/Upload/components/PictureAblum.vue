@@ -266,17 +266,17 @@ export default {
     }
   }
   &-info{
-		padding: 5px 10px;
-		background-color: #fdf6ec;
-		p{
-			margin: 0;
-			font-size: 15px;
-			line-height: 1.5em;
-			white-space: nowrap;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			color: #e6a23c;
-		}
+    padding: 5px 10px;
+    background-color: #fdf6ec;
+    p{
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.5em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: #e6a23c;
+    }
   }
   &-time, &-size{
     font-size: 13px;

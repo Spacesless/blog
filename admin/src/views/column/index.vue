@@ -51,7 +51,7 @@
           </el-select>
         </template>
       </el-table-column>
-      <el-table-column label="所属模块" min-width="160" formatter="formatModuleName" />
+      <el-table-column label="所属模块" min-width="160" :formatter="formatModuleName" />
       <el-table-column label="目录" prop="folder_name" min-width="160" />
       <el-table-column label="操作" align="center" width="250">
         <template #default="scope">
@@ -120,10 +120,16 @@ export default {
       this.$router.push({ name: 'ColumnAdd' })
     },
     handleEdit(id) {
-      this.$router.push({ name: 'ColumnEdit', params: { id }})
+      this.$router.push({
+        name: 'ColumnEdit',
+        params: { id }
+      })
     },
     handleAddChild(id) {
-      this.$router.push({ name: 'ColumnAdd', query: { class: id }})
+      this.$router.push({
+        name: 'ColumnAdd',
+        query: { class: id }
+      })
     },
     handleMove(row) {
       this.currentRow = row

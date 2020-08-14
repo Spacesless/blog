@@ -177,6 +177,7 @@ export const dialogForm = {
   },
   data() {
     return {
+      dialogTitle: '',
       dialogLoading: false
     }
   },

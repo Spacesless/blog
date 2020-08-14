@@ -47,7 +47,10 @@ export default {
       this.listLoading = false
     },
     handleEdit(id) {
-      this.$router.push({ name: 'AppContent', params: { id }})
+      this.$router.push({
+        name: 'AppContent',
+        params: { id }
+      })
     }
   }
 }

@@ -486,9 +486,9 @@ class ParticleCanvas {
     // 绘制完成,更新数据
     this.update()
     // 设置下一次绘制
-    //			rAF(function() {
-    //				data.draw(data);
-    //			});
+    // rAF(function() {
+    //    data.draw(data);
+    // });
     this.stopAni = requestAnimationFrame(this.draw.bind(this))
   }
 

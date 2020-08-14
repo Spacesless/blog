@@ -33,7 +33,10 @@ export const listQuery = {
 
       const { fullPath } = this.$route
 
-      this.$router.replace({ path: fullPath, query: { tags }})
+      this.$router.replace({
+        path: fullPath,
+        query: { tags }
+      })
     }
   },
   mounted() {

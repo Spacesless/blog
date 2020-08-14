@@ -3,12 +3,12 @@
   <div class="links">
     <h1 class="links__title">友情链接</h1>
     <el-row class="links-wrap" :gutter="15">
-      <el-col :sm="12" :md="8" :lg="6" :xl="4" v-for="item in linkList" :key="item.id">
+      <el-col v-for="item in linkList" :key="item.id" :sm="12" :md="8" :lg="6" :xl="4">
         <a class="links-item" :href="item.weburl" :title="item.webname" target="_blank">
           <div class="links-logo">
             <el-image class="links-logo__picture" :src="item.weblogo">
               <div slot="error" class="image-slot">
-                <i class="el-icon-picture-outline"></i>
+                <i class="el-icon-picture-outline" />
               </div>
             </el-image>
           </div>

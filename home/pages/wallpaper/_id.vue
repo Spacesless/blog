@@ -3,9 +3,9 @@
     <el-form class="filter">
       <el-form-item label="列表排序">
         <el-select v-model="search.sortBy" placeholder="请选择排序方式" @change="handleSearch('sortBy')">
-          <el-option label="更新时间" value="updatetime"></el-option>
-          <el-option label="发布时间" value="addtime"></el-option>
-          <el-option label="浏览次数" value="hits"></el-option>
+          <el-option label="更新时间" value="updatetime" />
+          <el-option label="发布时间" value="addtime" />
+          <el-option label="浏览次数" value="hits" />
         </el-select>
         <el-radio-group v-model="search.orderBy" @change="handleSearch('orderBy')">
           <el-radio-button label="asc">升序</el-radio-button>
@@ -14,7 +14,7 @@
       </el-form-item>
       <el-form-item label="壁纸尺寸">
         <el-select v-model="search.resolutions" placeholder="请选择分辨率" @change="handleSearch('resolutions')">
-          <el-option label="所有分辨率" value="all"></el-option>
+          <el-option label="所有分辨率" value="all" />
           <el-option value="1920x1080">
             <span class="filter-item__option">1920x1080</span>
             <span class="filter-item__desc">Full HD</span>
@@ -44,24 +44,25 @@
           <el-radio-button label="equal">精确</el-radio-button>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="标签" v-if="dynamicTags.length">
+      <el-form-item v-if="dynamicTags.length" label="标签">
         <el-tag
-          :key="tag"
           v-for="tag in dynamicTags"
+          :key="tag"
           closable
           :disable-transitions="false"
-          @close="handleDeleteTag(tag)">
-          {{tag}}
+          @close="handleDeleteTag(tag)"
+        >
+          {{ tag }}
         </el-tag>
       </el-form-item>
     </el-form>
     <!--wallpaper list-->
     <div class="wallpaper-list">
       <el-row :gutter="15">
-        <el-col :md="12" :lg="8" :xl="6"  v-for="item in imageList" :key="item.id">
+        <el-col v-for="item in imageList" :key="item.id" :md="12" :lg="8" :xl="6">
           <div class="wallpaper-list-item">
             <nuxt-link :to="'/wallpaper/content/' + item.id" :title="item.title">
-              <img class="img-fluid" :src="item.imgurl" :alt="item.title" />
+              <img class="img-fluid" :src="item.imgurl" :alt="item.title">
             </nuxt-link>
             <div class="wallpaper-list__detail">
               <nuxt-link class="wallpaper-list__title" :to="'/wallpaper/content/' + item.id" :title="item.title">{{ item.title }}</nuxt-link>
@@ -87,6 +88,10 @@ import Pagination from '@/components/Pagination'
 import { listQuery, listPage, globalFilter } from '@/mixins'
 
 export default {
+  components: {
+    Pagination
+  },
+  mixins: [listQuery, listPage, globalFilter],
   async asyncData({ app, params, query, $axios }) {
     const paramId = params.id
     const [id, page] = paramId ? paramId.split('-') : []
@@ -94,7 +99,11 @@ export default {
     const { seo, list } = await $axios.$get('/wallpaper/list', {
       params: {
         id: id === 'list' ? null : id,
-        page, sortBy, orderBy, resolutions, resolutionBy
+        page,
+        sortBy,
+        orderBy,
+        resolutions,
+        resolutionBy
       }
     })
     return {
@@ -122,11 +131,7 @@ export default {
       ]
     }
   },
-  watchQuery: ['sortBy', 'orderBy', 'resolutions', 'resolutionBy'],
-  mixins: [listQuery, listPage, globalFilter],
-  components: {
-    Pagination
-  }
+  watchQuery: ['sortBy', 'orderBy', 'resolutions', 'resolutionBy']
 }
 </script>
 

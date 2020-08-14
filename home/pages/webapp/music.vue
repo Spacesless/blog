@@ -2,31 +2,31 @@
   <div class="music">
     <div class="music-background" style="background-image: url({$ '/static/music-background.png' | static(config.thumbFormat) $})">
       <ul class="bg-bubbles">
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
+        <li />
+        <li />
+        <li />
+        <li />
+        <li />
+        <li />
+        <li />
+        <li />
+        <li />
+        <li />
       </ul>
     </div>
-    <div class="music" ref="wrap">
+    <div ref="wrap" class="music">
       <div class="el-row music-wrap">
         <div class="el-col el-col-md-5 music-disst">
           <div class="music-user">
-            <el-image :src="'//q1.qlogo.cn/g?b=qq&s=100&nk=' + userinfo.hostuin"></el-image>
+            <el-image :src="'//q1.qlogo.cn/g?b=qq&s=100&nk=' + userinfo.hostuin" />
             <p class="music-user__name">{{ userinfo.hostname }}</p>
           </div>
           <span>我的音乐</span>
           <template v-for="item in disslist">
             <p
               v-if="item.diss_name === '我喜欢'"
-              class="music-disst__item"
               :key="item.tid"
+              class="music-disst__item"
               @click="getSongLists(item.tid)"
             >
               {{ item.diss_name }}
@@ -36,8 +36,8 @@
           <template v-for="item in disslist">
             <p
               v-if="item.tid && item.diss_name !== '我喜欢'"
-              class="music-disst__item"
               :key="item.tid"
+              class="music-disst__item"
               @click="getSongLists(item.tid)"
             >
               {{ item.diss_name }}
@@ -47,17 +47,17 @@
         <div class="el-col el-col-md-19 music-content">
           <div class="music-search">
             <el-select v-model="searchType" placeholder="请选择">
-              <el-option label="歌曲" :value="1"></el-option>
-              <el-option label="用户" :value="2"></el-option>
+              <el-option label="歌曲" :value="1" />
+              <el-option label="用户" :value="2" />
             </el-select>
-            <el-input placeholder="请输入内容" v-model="keyword" size="medium"></el-input>
-            <i class="music-search__btn el-icon-search" @click="handleSearch(true)"></i>
+            <el-input v-model="keyword" placeholder="请输入内容" size="medium" />
+            <i class="music-search__btn el-icon-search" @click="handleSearch(true)" />
           </div>
           <div class="music-list">
-            <div class="music-list-header" ref="header">
-              <div class="music-info clearfix" v-show="cdinfo.dissname" key="cdinfo">
+            <div ref="header" class="music-list-header">
+              <div v-show="cdinfo.dissname" key="cdinfo" class="music-info clearfix">
                 <div class="music-info-logo">
-                  <el-image :src="cdinfo.logo"></el-image>
+                  <el-image :src="cdinfo.logo" />
                 </div>
                 <div class="music-info-text">
                   <h2>{{ cdinfo.dissname }}</h2>
@@ -79,13 +79,13 @@
             </div>
             <el-table
               ref="lists"
+              v-loading="listLoading"
               :data="songlist"
               :height="listHeight"
-              v-loading="listLoading"
               @selection-change="handleSelection"
             >
-              <el-table-column type="selection" width="45" align="center"></el-table-column>
-              <el-table-column type="index" width="45" align="center"></el-table-column>
+              <el-table-column type="selection" width="45" align="center" />
+              <el-table-column type="index" width="45" align="center" />
               <el-table-column label="歌曲" min-width="220">
                 <template slot-scope="scope">
                   <span class="music-list__songname">{{ scope.row.songname }}</span>
@@ -96,13 +96,13 @@
                       circle
                       :disabled="scope.row.pay.payplay === 1"
                       @click="handlePlaySingle(scope.row)"
-                    ></el-button>
+                    />
                     <el-button
                       icon="tl-icon-add"
                       :disabled="scope.row.pay.payplay === 1"
                       circle
                       @click="handleJoinSingle(scope.row)"
-                    ></el-button>
+                    />
                   </div>
                 </template>
               </el-table-column>
@@ -111,7 +111,7 @@
                   <span class="music-list__singer">{{ scope.row.singer | singerFilter }}</span>
                 </template>
               </el-table-column>
-              <el-table-column prop="albumname" label="专辑" min-width="150"></el-table-column>
+              <el-table-column prop="albumname" label="专辑" min-width="150" />
               <el-table-column label="时长" width="80" align="center">
                 <template slot-scope="scope">
                   <span class="music-list__interval">{{ scope.row.interval | intervalFilter }}</span>
@@ -119,13 +119,13 @@
               </el-table-column>
             </el-table>
           </div>
-          <div class="music-player" id="music-player">
-            <div ref="aplayer"></div>
+          <div id="music-player" class="music-player">
+            <div ref="aplayer" />
             <div class="music-player-control">
               <span class="tl-icon" @click="handleSwitch">&#xe78a;</span>
               <span @click="handleTogglePlay">
-                <i class="tl-icon" v-show="isPlaying" key="play">&#xe7af;</i>
-                <i class="tl-icon" v-show="!isPlaying">&#xe769;</i>
+                <i v-show="isPlaying" key="play" class="tl-icon">&#xe7af;</i>
+                <i v-show="!isPlaying" class="tl-icon">&#xe769;</i>
               </span>
               <span class="tl-icon" @click="handleSwitch(-1)">&#xe7a5;</span>
             </div>
@@ -216,6 +216,7 @@ export default {
       })
     },
     async initAplayer() {
+      // eslint-disable-next-line no-unused-expressions
       import(/* webpackChunkName: "chunk-aplayer" */'aplayer/dist/APlayer.min.css')
       const { default: APlayer } = await import(/* webpackChunkName: "chunk-aplayer" */'aplayer/dist/APlayer.min.js')
       this.ap = new APlayer({

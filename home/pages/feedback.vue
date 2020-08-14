@@ -3,15 +3,15 @@
     <h1 class="feedback__title">在线反馈</h1>
     <el-row>
       <el-col :sm="24" :md="18" :lg="16">
-        <el-form class="feedback-form" ref="form" :model="formData" :rules="rules" label-width="80px" size="medium">
+        <el-form ref="form" class="feedback-form" :model="formData" :rules="rules" label-width="80px" size="medium">
           <h2 class="feedback-form__title">选择、填写反馈内容</h2>
           <el-form-item label="反馈分类" prop="type">
             <el-select v-model="formData.type" placeholder="请选择反馈分类" filterable allow-create>
-              <el-option label="BUG提交" :value="1"></el-option>
-              <el-option label="修改建议" :value="2"></el-option>
-              <el-option label="友链提交" :value="3"></el-option>
-              <el-option label="版权问题" :value="4"></el-option>
-              <el-option label="其他" :value="0"></el-option>
+              <el-option label="BUG提交" :value="1" />
+              <el-option label="修改建议" :value="2" />
+              <el-option label="友链提交" :value="3" />
+              <el-option label="版权问题" :value="4" />
+              <el-option label="其他" :value="0" />
             </el-select>
           </el-form-item>
           <el-form-item label="反馈内容" prop="content">
@@ -20,18 +20,17 @@
               type="textarea"
               :rows="5"
               placeholder="请输入内容"
-            >
-            </el-input>
+            />
           </el-form-item>
           <el-form-item label="相关页面">
-            <el-input v-model="formData.pageUrl" placeholder="请输入相关页面"></el-input>
+            <el-input v-model="formData.pageUrl" placeholder="请输入相关页面" />
           </el-form-item>
           <h2 class="feedback-form__title">填写联系方式</h2>
           <el-form-item label="呢称">
-            <el-input v-model="formData.nickname" placeholder="怎么称呼呢"></el-input>
+            <el-input v-model="formData.nickname" placeholder="怎么称呼呢" />
           </el-form-item>
           <el-form-item label="邮箱地址" prop="email">
-            <el-input v-model="formData.email" placeholder="请输入邮箱地址"></el-input>
+            <el-input v-model="formData.email" placeholder="请输入邮箱地址" />
           </el-form-item>
           <el-form-item class="form-captcha" label="验证码" prop="captcha">
             <el-input
@@ -41,12 +40,12 @@
               name="captcha"
               type="text"
               tabindex="3"
-            ></el-input>
-            <div class="svg-captcha" @click="renderCaptcha" v-html="svgCaptcha"></div>
+            />
+            <div class="svg-captcha" @click="renderCaptcha" v-html="svgCaptcha" />
           </el-form-item>
           <el-form-item>
             <el-button type="primary" :loading="postLoading" @click="handleSumbit">立即提交</el-button>
-            <el-button type="warning" @click="handleReset" plain>重置</el-button>
+            <el-button type="warning" plain @click="handleReset">重置</el-button>
           </el-form-item>
         </el-form>
       </el-col>
@@ -77,16 +76,6 @@ export default {
   },
   computed: {
     ...mapGetters(['configs'])
-  },
-  head() {
-    const { sitename, keywords, description } = this.configs
-    return {
-      title: `在线反馈 - ${sitename}`,
-      meta: [
-        { hid: 'description', name: 'description', content: description },
-        { hid: 'keyword', name: 'keyword', content: keywords }
-      ]
-    }
   },
   mounted() {
     this.renderCaptcha()
@@ -130,6 +119,16 @@ export default {
     },
     handleReset() {
       this.$refs.form.resetFields()
+    }
+  },
+  head() {
+    const { sitename, keywords, description } = this.configs
+    return {
+      title: `在线反馈 - ${sitename}`,
+      meta: [
+        { hid: 'description', name: 'description', content: description },
+        { hid: 'keyword', name: 'keyword', content: keywords }
+      ]
     }
   }
 }

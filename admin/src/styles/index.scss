@@ -85,6 +85,9 @@ div:focus {
     &-select{
       margin-right: 15px;
     }
+    .el-input{
+      width: 230px;
+    }
   }
   &-footer {
     padding: 15px;
@@ -98,6 +101,7 @@ div:focus {
     }
   }
   &-preview{
+    display: block;
     .el-image{
       &__error, &__inner{
         display: none;
@@ -114,17 +118,22 @@ div:focus {
   text-align: right;
 }
 
-.form-container{
-  border: 1px solid #EBEEF5;
-  .el-form-item{
-    padding: 20px;
-    border-bottom: 1px solid #EBEEF5;
-    margin-bottom: 0;
+.form{
+  &-container{
+    border: 1px solid #EBEEF5;
+    .el-form-item{
+      padding: 20px;
+      border-bottom: 1px solid #EBEEF5;
+      margin-bottom: 0;
+    }
+    &-input, .el-select, .el-date-editor {
+      width: 230px;
+    }
   }
-  .form-item{
+  &-item{
     border-bottom: 1px solid #EBEEF5;
   }
-  .form-title{
+  &-title{
     padding: 5px 20px;
     color: #409EFF;
     .el-form-item__content{

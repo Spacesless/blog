@@ -8,7 +8,7 @@
 
     <el-table
       ref="multipleTable"
-      v-el-height-adaptive-table="{bottomOffset: 80}"
+      v-el-height-adaptive-table="{bottomOffset: 15}"
       v-loading="listLoading"
       :data="bannerList"
       height="233"
@@ -59,6 +59,9 @@ export default {
     return {
       bannerList: []
     }
+  },
+  created() {
+    this.fetchList()
   },
   methods: {
     async fetchList() {
