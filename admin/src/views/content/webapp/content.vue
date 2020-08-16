@@ -2,6 +2,7 @@
   <div class="app-container">
     <el-form
       ref="form"
+      v-loading="fetchLoading"
       :model="form"
       label-position="left"
       label-width="100px"
@@ -13,14 +14,14 @@
       <el-form-item label="App版本">
         <el-row>
           <el-col :xs="24" :md="12" :lg="5">
-            <el-input v-model="form.version" />
+            <el-input v-model="formData.version" />
           </el-col>
         </el-row>
       </el-form-item>
       <el-form-item label="App简介">
         <el-row>
           <el-col :xs="24" :md="12">
-            <el-input v-model="form.info" type="textarea" :rows="3" />
+            <el-input v-model="formData.info" type="textarea" :rows="3" />
           </el-col>
         </el-row>
       </el-form-item>
@@ -52,18 +53,22 @@ import { GetContent } from '@/api/content'
 export default {
   data() {
     return {
-      form: {}
+      formData: {},
+      imageUrl: '',
+      fetchLoading: false
     }
   },
   created() {
     this.fetchData()
   },
   methods: {
-    fetchData() {
-      GetContent('webapp', this.$route.params.id).then(response => {
-        const { data } = response
-        this.form = data
-      })
+    async fetchData() {
+      this.fetchLoading = true
+      const id = this.$route.params && this.$route.params.id
+      await GetContent('webapp', id).then(res => {
+        this.formData = res.data
+      }).catch(() => {})
+      this.fetchLoading = false
     }
   }
 }

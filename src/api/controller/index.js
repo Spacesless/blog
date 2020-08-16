@@ -14,7 +14,7 @@ module.exports = class extends Base {
     const banners = await this.model('banner')
       .field(bannerField)
       .where({ isShow: 1 })
-      .order('sort DESC')
+      .order('sort ASC')
       .select()
     for (const element of banners) {
       element.imgurl = await this.convertToWebp(element.imgurl)

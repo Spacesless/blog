@@ -21,7 +21,7 @@
             <el-image :src="'//q1.qlogo.cn/g?b=qq&s=100&nk=' + userinfo.hostuin" />
             <p class="music-user__name">{{ userinfo.hostname }}</p>
           </div>
-          <span>我的音乐</span>
+          <!-- <span>我的音乐</span>
           <template v-for="item in disslist">
             <p
               v-if="item.diss_name === '我喜欢'"
@@ -31,7 +31,7 @@
             >
               {{ item.diss_name }}
             </p>
-          </template>
+          </template> -->
           <span>创建的歌单</span>
           <template v-for="item in disslist">
             <p
@@ -270,8 +270,8 @@ export default {
         const { hostname, hostuin, totoal, disslist } = response.data.data
         this.userinfo = { hostname, hostuin, totoal }
         disslist.sort((a, b) => b.listen_num - a.listen_num)
-        const love = disslist.find(item => item.diss_name === '我喜欢')
-        love.diss_cover = 'https://y.gtimg.cn/mediastyle/global/img/cover_like.png'
+        // const love = disslist.find(item => item.diss_name === '我喜欢')
+        // if (love) love.diss_cover = 'https://y.gtimg.cn/mediastyle/global/img/cover_like.png'
         this.disslist = disslist
         this.listLoading = false
       })
@@ -648,7 +648,7 @@ export default {
     position: relative;
     width: 300px;
     .el-input{
-      ::vue-deep .el-input__inner{
+      ::v-deep .el-input__inner{
         padding: 0 35px 0 65px;
       }
     }
@@ -658,7 +658,7 @@ export default {
       top: 16px;
       left: 16px;
       z-index: 99;
-      ::vue-deep .el-input__inner{
+      ::v-deep .el-input__inner{
         border: none;
         padding: 0 10px;
       }
@@ -701,7 +701,7 @@ export default {
         border: none;
       }
     }
-    ::vue-deep .el-table{
+    ::v-deep .el-table{
       &:before{
         display: none;
       }

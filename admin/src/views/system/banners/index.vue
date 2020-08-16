@@ -16,7 +16,7 @@
       @selection-change="onSelectionChange"
     >
       <el-table-column type="selection" width="50" align="center" />
-      <el-table-column label="图片" width="150" align="center">
+      <el-table-column label="图片" width="300" align="center">
         <template #default="scope">
           <el-image :src="scope.row.imgurl" fit="contain" lazy>
             <div slot="error" class="image-slot">
@@ -27,7 +27,7 @@
       </el-table-column>
       <el-table-column label="标题" prop="title" />
       <el-table-column label="描述" prop="mark" />
-      <el-table-column align="center" label="排序" prop="sort" />
+      <el-table-column align="center" label="排序" prop="sort" width="100" />
       <el-table-column align="center" label="操作" width="230">
         <template #default="scope">
           <el-button type="primary" @click="handleEdit(scope.row.id)">编辑</el-button>

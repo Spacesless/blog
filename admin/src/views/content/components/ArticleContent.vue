@@ -53,7 +53,7 @@
               placeholder="请选择发布时间"
             />
           </el-col>
-          <el-col :xs="sm" :md="12" prop="updatetime">
+          <el-col :xs="24" :md="12" prop="updatetime">
             <el-form-item label="更新时间" class="inner-item">
               <el-date-picker
                 v-model="formData.updatetime"
@@ -158,15 +158,7 @@ export default {
   },
   data() {
     return {
-      formData: {
-        column: this.currentColumn,
-        addtime: new Date(),
-        updatetime: new Date(),
-        is_show: 1,
-        author: this.userinfo.nickname,
-        status: 1,
-        ratings: 8
-      },
+      formData: {},
       fileList: [],
       tags: [],
       inputVisible: false,
@@ -201,6 +193,16 @@ export default {
     if (this.isEdit) {
       const id = this.$route.params && this.$route.params.id
       this.fetchData(id)
+    } else {
+      this.formData = {
+        column: this.currentColumn,
+        addtime: new Date(),
+        updatetime: new Date(),
+        is_show: 1,
+        author: this.userinfo.nickname,
+        status: 1,
+        ratings: 8
+      }
     }
   },
   methods: {

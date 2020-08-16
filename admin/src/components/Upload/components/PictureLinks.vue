@@ -1,5 +1,10 @@
 <template>
-  <el-dialog width="800px" :visible="visible" @close="handleCancel">
+  <el-dialog
+    width="800px"
+    :visible="visible"
+    append-to-body
+    @close="handleCancel"
+  >
     <div class="links-header">
       <el-button type="primary" plain @click="addLink">新增图片</el-button>
     </div>

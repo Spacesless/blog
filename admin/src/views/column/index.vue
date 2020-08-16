@@ -46,8 +46,8 @@
       <el-table-column align="center" label="状态" min-width="120">
         <template #default="scope">
           <el-select v-model="scope.row.is_nav">
-            <el-option label="不显示" value="0" />
-            <el-option label="显示" value="1" />
+            <el-option label="不显示" :value="0" />
+            <el-option label="显示" :value="1" />
           </el-select>
         </template>
       </el-table-column>

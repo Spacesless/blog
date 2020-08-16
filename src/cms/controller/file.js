@@ -102,11 +102,7 @@ module.exports = class extends Base {
 
     let fileUrls
     await Promise.all(promises).then(result => {
-      if (filelist.length === 1) {
-        fileUrls = result[0]
-      } else {
-        fileUrls = [...result]
-      }
+      fileUrls = [...result]
     })
     return this.success(fileUrls)
   }

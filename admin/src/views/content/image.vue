@@ -169,6 +169,7 @@ export default {
     width: 120px;
     height: 100px;
     display: block;
+    margin: 0 auto;
   }
 }
 </style>

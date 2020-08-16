@@ -7,7 +7,7 @@ module.exports = class extends Base {
       return this.success(data)
     } else {
       const where = {}
-      const field = 'id,content,addtime,is_audit'
+      const field = 'id,content,addtime,username'
       const list = await this.modelInstance.where(where)
         .field(field)
         .order('addtime DESC')

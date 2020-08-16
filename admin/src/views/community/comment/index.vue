@@ -10,27 +10,16 @@
       @selection-change="onSelectionChange"
     >
       <el-table-column type="selection" width="50" align="center" />
-      <el-table-column label="评论内容">
-        <template #default="scope">
-          {{ scope.row.title }}
-        </template>
-      </el-table-column>
-      <el-table-column label="用户" width="150" align="center">
-        <template #default="scope">
-          <span>{{ scope.row.username }}</span>
-        </template>
-      </el-table-column>
+      <el-table-column label="评论内容" prop="content" show-overflow-tooltip />
+      <el-table-column align="center" label="用户" width="150" prop="username" />
       <el-table-column class-name="status-col" label="状态" width="110" align="center">
         <template #default="scope">
-          <el-tag v-if="scope.row.status" type="success">已通过</el-tag>
-          <el-tag v-else type="info">未审核</el-tag>
+          <el-tag v-if="scope.row.status">已审核</el-tag>
+          <el-tag v-else type="info">未通过</el-tag>
         </template>
       </el-table-column>
       <el-table-column align="center" label="发布时间" width="200">
-        <template #default="scope">
-          <i class="el-icon-time" />
-          <span>{{ scope.row.updatetime }}</span>
-        </template>
+        <template #default="scope">{{ scope.row.addtime }}</template>
       </el-table-column>
       <el-table-column align="center" label="操作" width="180">
         <template #default="scope">
@@ -47,8 +36,8 @@
             状态修改<i class="el-icon-arrow-down el-icon--right" />
           </el-button>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="unaudit">未审核</el-dropdown-item>
-            <el-dropdown-item command="audit">已通过</el-dropdown-item>
+            <el-dropdown-item command="unaudit">未通过</el-dropdown-item>
+            <el-dropdown-item command="audit">已审核</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
         <el-button type="danger" icon="el-icon-delete" :loading="deleteLoading" @click="handleDeleteSelection">删除选中</el-button>

@@ -1,5 +1,11 @@
 <template>
-  <el-dialog class="ablum" :visible="visible" width="80%" @close="handleCancel">
+  <el-dialog
+    class="ablum"
+    :visible="visible"
+    width="80%"
+    append-to-body
+    @close="handleCancel"
+  >
     <div class="file-header">
       <el-row>
         <el-col :sm="24" :md="12">
@@ -25,7 +31,7 @@
     </div>
 
     <el-scrollbar class="ablum-scroll" wrap-class="scrollbar-wrapper">
-      <el-row v-loading="listLoading" class="file-grid" :gutter="15">
+      <el-row v-loading="listLoading" class="file-grid">
         <el-col v-for="(item, index) in fileList" :key="index" :xs="12" :sm="8" :md="6" :xl="4">
           <div
             v-if="item.type === 1"
@@ -41,7 +47,7 @@
             :class="{active:item.checked}"
             @click="toggleSelect(item)"
           >
-            <el-image :src="item.url" fit="contain" lazy>
+            <el-image :src="item.url" fit="contain" lazy scroll-container=".scrollbar-wrapper">
               <div slot="error" class="image-slot">
                 <i class="el-icon-picture-outline-round" />
               </div>
@@ -201,16 +207,17 @@ export default {
   ::v-deep .el-dialog{
     height: 86%;
     &__body{
-      height: calc(100% - 85px);
+      padding: 15px 20px;
+      height: calc(100% - 95px);
     }
   }
   &-scroll{
-    height: calc(100% - 85px);
+    height: calc(100% - 95px);
   }
 }
 .file {
   &-header{
-    padding: 0 15px;
+    padding: 0 15px 10px;
     .el-breadcrumb{
       line-height: 36px;
       ::v-deep .el-breadcrumb__inner{
@@ -222,8 +229,11 @@ export default {
     }
   }
   &-grid{
-    padding: 0 15px;
+    .el-col{
+      padding: 0 15px;
+    }
     .grid-item{
+      height: 210px;
       margin-bottom: 15px;
       background-color: #ecf5ff;
       border: 1px solid #d9ecff;
@@ -251,7 +261,7 @@ export default {
     }
     .image{
       .el-image{
-        height: 130px;
+        height: 135px;
         padding: 5px 10px;
         display: block;
         margin: 0 auto;
@@ -270,8 +280,8 @@ export default {
     background-color: #fdf6ec;
     p{
       margin: 0;
-      font-size: 15px;
-      line-height: 1.5em;
+      font-size: 14px;
+      line-height: 22px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
