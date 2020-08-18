@@ -50,7 +50,15 @@
             <span><i class="tl-icon">&#xe70b;</i>{{ item.updatetime }}</span>
             <span><i class="tl-icon">&#xe601;</i>{{ item.hits }}</span>
           </div>
-          <div class="blog-list-tag" />
+          <div class="blog-list-tag">
+            <span
+              v-for="(child, childIndex) in tag"
+              :key="childIndex"
+              class="tl-tag"
+              :class="item | tagClassName"
+              @click="handleAddTag(item)"
+            >{{ item }}</span>
+          </div>
           <p class="blog-list__desc">{{ item.description | substr(0, 120) }}</p>
         </el-col>
       </el-row>

@@ -8,7 +8,7 @@
       class="form-container"
     >
       <el-form-item label="沉寂模式">
-        <el-switch v-model="formData.isSilent " />
+        <el-switch v-model="formData.is_silent " />
       </el-form-item>
       <el-form-item label="Live2d模型">
         <el-input v-model="formData.a" />

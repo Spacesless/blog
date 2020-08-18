@@ -66,7 +66,16 @@
             </nuxt-link>
             <div class="wallpaper-list__detail">
               <nuxt-link class="wallpaper-list__title" :to="'/wallpaper/content/' + item.id" :title="item.title">{{ item.title }}</nuxt-link>
-              <p>
+              <div class="wallpaper-list-tag">
+                <span
+                  v-for="(child,index) in tag"
+                  :key="index"
+                  class="tl-tag"
+                  :class="item | tagClassName"
+                  @click="handleAddTag(item)"
+                >{{ item }}</span>
+              </div>
+              <p class="wallpaper-list-info">
                 <span><i class="tl-icon">&#xe70b;</i>{{ item.updatetime }}</span>
                 <span><i class="tl-icon">&#xe601;</i>{{ item.hits }}</span>
                 <span><i class="tl-icon">&#xe695;</i>{{ item.imgwidth }}x{{ item.imgheight }}</span>

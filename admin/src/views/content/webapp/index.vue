@@ -14,7 +14,8 @@
             <img :src="item.columnimg">
           </div>
           <div class="webapp-group-description">
-            <div class="webapp-group__name">{{ item.name }}</div>
+            <p class="webapp-group__name">{{ item.name }}</p>
+            <p class="webapp-gropu__info">{{ item.info }}</p>
             <p class="webapp-group__version">{{ item.version }}</p>
           </div>
         </div>
@@ -93,6 +94,11 @@ export default {
       color: #303133;
       font-size: 16px;
       padding: 15px 0 10px;
+    }
+    &__info{
+      color: #606266;
+      font-size: 14px;
+      padding-bottom: 10px;
     }
     &__version {
       font-size: 14px;

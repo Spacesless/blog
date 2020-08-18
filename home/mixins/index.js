@@ -85,8 +85,10 @@ export const globalFilter = {
       return isDev ? url : '//cdn.timelessq.com' + url
     },
     tagClassName(tag) {
+      const nameEnum = ['red', 'orange', 'yellow', 'green', 'blue', 'purple']
       const tagLength = tag.replace(/[\u0391-\uFFE5]/g, 'aa').length
-      return `tl-tag--color${tagLength % 6}`
+      const findName = nameEnum[tagLength % 6]
+      return findName ? `tl-tag--${findName}` : ''
     }
   }
 }

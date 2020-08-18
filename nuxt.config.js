@@ -1,11 +1,9 @@
-const Compression = require('compression-webpack-plugin')
-
 const isPro = process.env.NODE_ENV === 'production'
 
 module.exports = {
   mode: 'universal',
   modern: isPro,
-  // dev: false,
+  dev: false,
   srcDir: 'home/',
   offline: true,
   telemetry: false,
@@ -107,16 +105,10 @@ module.exports = {
         }
       },
       runtimeChunk: false
-    },
-    plugins: isPro ? [
-      new Compression({
-        // { level: 9 } 默认为9 级别越高压缩率越大，压缩时间也就越长
-        test: /.(js|css|woff|ttf)$/, // 匹配需要压缩的文件后缀 看需求
-        threshold: 10240 // 大于10kb的会压缩，默认为0
-      })
-    ] : []
+    }
+  },
+  render: {
+    compressor: false,
+    // resourceHints: false
   }
-  // render: {
-  //   resourceHints: false
-  // }
 }

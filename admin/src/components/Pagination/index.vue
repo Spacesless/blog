@@ -78,14 +78,14 @@ export default {
       this.$emit('pagination', { page: this.currentPage, limit: val })
       if (this.autoScroll) {
         const multipleTable = this.$parent.$refs.multipleTable && this.$parent.$refs.multipleTable.bodyWrapper
-        multipleTable && scrollTo(0, 200, null, multipleTable)
+        multipleTable && scrollTo(multipleTable, 0, 200)
       }
     },
     handleCurrentChange(val) {
       this.$emit('pagination', { page: val, limit: this.pageSize })
       if (this.autoScroll) {
         const multipleTable = this.$parent.$refs.multipleTable && this.$parent.$refs.multipleTable.bodyWrapper
-        multipleTable && scrollTo(0, 200, null, multipleTable)
+        multipleTable && scrollTo(multipleTable, 0, 200)
       }
     }
   }

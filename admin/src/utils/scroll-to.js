@@ -17,11 +17,11 @@ var requestAnimFrame = (function() {
 
 /**
  * Because it's so fucking difficult to detect the scrolling element, just move them all
- * @param {number} amount
  * @param {Document} element 需要滚动的元素
+ * @param {number} amount
  * @summary element不传则body滚动
  */
-function move(amount, element) {
+function move(element, amount) {
   if (element) {
     element.scrollTop = amount
   } else {
@@ -44,12 +44,12 @@ export function getPosition(element) {
 }
 
 /**
- * @param {number} to
- * @param {number} duration
- * @param {Function} callback 滚动结束的回调函数
  * @param {Document} element 需要滚动的元素
+ * @param {number} to 滚动高度
+ * @param {number} duration 过渡时间
+ * @param {Function} callback 滚动结束的回调函数
  */
-export function scrollTo(to, duration, callback, element) {
+export function scrollTo(element, to, duration, callback) {
   const start = getPosition(element)
   const change = to - start
   const increment = 20

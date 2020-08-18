@@ -4,7 +4,7 @@ module.exports = class extends think.Model {
    * @return {Object} config表配置信息
    */
   async getConfig() {
-    const rows = await this.cache('config', { timeout: 7 * 24 * 3600 * 1000 }).select()
+    const rows = await this.cache('config', { timeout: 30 * 24 * 3600 * 1000 }).select()
     const ret = {}
     rows.forEach(item => {
       ret[item.name] = item.value

@@ -127,6 +127,10 @@ module.exports = class extends think.Controller {
     }
   }
 
+  /**
+   * 获取详情的栏目以及seo信息
+   * @param {Object} content 详情
+   */
   getDetailInfo(content) {
     const { title, keywords, description, class1, class2, class3 } = content
 

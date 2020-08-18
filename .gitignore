@@ -28,6 +28,7 @@ package-lock.json
 runtime/
 app/
 .nuxt/
+view/admin
 www/cms
 www/upload
 www/static

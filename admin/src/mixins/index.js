@@ -101,7 +101,7 @@ export const multipleTable = {
 
       // 表格返回头部
       const multipleTable = this.$refs.multipleTable && this.$refs.multipleTable.bodyWrapper
-      multipleTable && scrollTo(0, 200, null, multipleTable)
+      multipleTable && scrollTo(multipleTable, 0, 200)
     },
     onKeywordInput: debounce(function() {
       this.handleSearch()

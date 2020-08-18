@@ -4,6 +4,10 @@
   "version": "1.0.0",
   "author": "Timeless <804093032@qq.com>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GitProQ/tl-blog.git"
+  },
   "scripts": {
     "start": "node development.js",
     "dev:api": "node development.local.js",

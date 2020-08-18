@@ -8,18 +8,21 @@
 .tl{
   &-tag{
     display: inline-block;
-    padding: 5px 12px;
     font-size: 12px;
-    color: #fff;
-    border-radius: 12px;
-    margin-right: 5px;
+    line-height: 20px;
+    padding: 0 10px;
+    color: #303133;
+    border-radius: 10px;
+    margin-right: 3px;
   }
 }
-$tagColor:#f5ad1b,#5f89ce,#94bf45,#da8ec5,#78bfc2,#bec278;
-@each $color in $tagColor{
-  $i:index($tagColor,$color);
-  .tl-tag--color#{$i}{
-    background: $color;
+$tagColor:#ff4d4f,#ffa940,#ffec3d,#73d13d,#40a9ff,#9254de;
+$tagName: red,orange,yellow,green,blue,purple;
+@each $color in $tagName{
+  $i:index($tagColor, $name);
+  .tl-tag--#{$name}{
+    color: nth($tagColor, $i);
+    background-color: rgba($color: nth($tagColor, $i), $alpha: .15);
   }
 }
 

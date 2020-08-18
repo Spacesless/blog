@@ -17,7 +17,7 @@ module.exports = class extends Base {
 
     // 当前列表
     const { list_image: pageSize } = this.options
-    const field = 'id,title,description,imgurl,updatetime,hits,imgwidth,imgheight'
+    const field = 'id,title,description,imgurl,updatetime,hits,imgwidth,imgheight,tag'
     const sort = sortBy || 'updatetime'
     const order = orderBy ? orderBy.toUpperCase() : 'DESC'
     const where = { is_show: 1, is_recycle: 0 }
@@ -52,6 +52,7 @@ module.exports = class extends Base {
     const { thumb_image_x: imageX, thumb_image_y: imageY, thumb_kind: thumbKind } = this.options
     for (const item of list.data) {
       item.imgurl = await this.thumbImage(item.imgurl, imageX, imageY, thumbKind)
+      item.tag = item.tag.split('|')
     }
 
     return this.success({
@@ -74,6 +75,10 @@ module.exports = class extends Base {
     if (think.isEmpty(content)) {
       return this.ctx.throw(404)
     }
+
+    // 图片标题 添加图片尺寸
+    const { imgwidth, imgheight } = content
+    content.title = `${content.title} ${imgwidth}x${imgheight}`
 
     const { column, seo } = this.getDetailInfo(content)
 

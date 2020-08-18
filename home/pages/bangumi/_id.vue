@@ -54,6 +54,15 @@
               <nuxt-link class="bangumi-list__title" :to="'/bangumi/content/' + item.id">{{ item.title }}</nuxt-link>
               <p><span class="para-name">时间：</span>{{ item.showtime }}</p>
               <p><span class="para-name">状态：</span>{{ item.status | bangumiStatus }}</p>
+              <div class="bangumi-list-tag">
+                <span
+                  v-for="(child,index) in tag"
+                  :key="index"
+                  class="tl-tag"
+                  :class="item | tagClassName"
+                  @click="handleAddTag(item)"
+                >{{ item }}</span>
+              </div>
               <p class="hidden-xs-only"><span class="para-name">简介：</span>{{ item.description | substr(0, 60) }}……</p>
               <div class="bangumi-progress clearfix">
                 <span class="para-name">进度：</span>

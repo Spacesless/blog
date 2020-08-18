@@ -2,9 +2,13 @@ const fs = require('fs')
 const dns = require('dns')
 const path = require('path')
 const { parse } = require('url')
-const request = require('request')
+const axios = require('axios');
 const onFinish = require('on-finished')
 const Base = require('./base')
+
+const writeFileAsync = think.promisify(fs.writeFile, fs)
+const unlinkAsync = think.promisify(fs.unlink, fs)
+const lookupAsync = think.promisify(dns.lookup, dns)
 
 const INTERNAL_AREAS = [
   ['10.0.0.0', '10.255.255.255'],
@@ -12,23 +16,6 @@ const INTERNAL_AREAS = [
   ['192.168.0.0', '192.168.255.255'],
   ['127.0.0.1', '127.255.255.255']
 ]
-
-function ip2long(ip) {
-  const multi = [0x1000000, 0x10000, 0x100, 1]
-  let longValue = 0
-  ip.split('.').forEach((part, i) => { longValue += part * multi[i] })
-  return longValue
-}
-
-const reqIns = request.defaults({
-  strictSSL: false,
-  rejectUnauthorized: false
-})
-
-const getFileContent = think.promisify(reqIns.get, reqIns)
-const writeFileAsync = think.promisify(fs.writeFile, fs)
-const unlinkAsync = think.promisify(fs.unlink, fs)
-const lookupAsync = think.promisify(dns.lookup, dns)
 
 // 允许上传文件格式
 const ALLOW_EXTS = [
@@ -40,6 +27,13 @@ const ALLOW_EXTS = [
   /\.(txt|xml|json|docx?|xlsx?|pptx?)$/i,
   /\.(zip|rar|pdf|gz)$/i
 ]
+
+function ip2long(ip) {
+  const multi = [0x1000000, 0x10000, 0x100, 1]
+  let longValue = 0
+  ip.split('.').forEach((part, i) => { longValue += part * multi[i] })
+  return longValue
+}
 
 module.exports = class extends Base {
   constructor(...args) {
@@ -147,17 +141,12 @@ module.exports = class extends Base {
       }
     }
 
-    const response = await getFileContent({
+    const res = await axios({
       url,
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) Chrome/47.0.2526.111 Safari/537.36'
-      },
-      strictSSL: false,
-      timeout: 1000,
-      encoding: 'binary'
+      responseType: "arraybuffer"
     }).catch(() => { throw new Error('UPLOAD_URL_ERROR') })
 
-    if (response.headers['content-type'].indexOf('image') === -1) {
+    if (res.headers['content-type'].indexOf('image') === -1) {
       throw new Error('UPLOAD_TYPE_ERROR')
     }
 
@@ -168,7 +157,7 @@ module.exports = class extends Base {
 
     const uploadName = think.uuid(20) + path.extname(url)
     const uploadPath = path.join(uploadDir, uploadName)
-    await writeFileAsync(uploadPath, response.body, 'binary')
+    await writeFileAsync(uploadPath, res.data, 'binary')
 
     // after upload delete file
     onFinish(this.ctx.res, () =>
@@ -178,8 +167,8 @@ module.exports = class extends Base {
     return {
       name: path.basename(url),
       path: uploadPath,
-      size: response.headers['content-length'],
-      type: response.headers['content-type']
+      size: res.headers['content-length'],
+      type: res.headers['content-type']
     }
   }
 }

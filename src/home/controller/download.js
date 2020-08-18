@@ -1,12 +1,6 @@
 const { parse } = require('url')
 const path = require('path')
-const request = require('request')
-
-const reqIns = request.defaults({
-  strictSSL: false,
-  rejectUnauthorized: false
-})
-const getFileContent = think.promisify(reqIns.get, reqIns)
+const axios = require('axios')
 
 // 允许下载文件格式
 const ALLOW_EXTS = [
@@ -45,6 +39,11 @@ module.exports = class extends think.Controller {
     }
   }
 
+  /**
+   * 下载本地文件
+   * @param {String} file 文件地址
+   * @param {String} filename 下载文件命名
+   */
   async downloadLocal(file, filename) {
     const filePath = path.join(think.RESOURCE_PATH, file)
     if (think.isExist(filePath)) {
@@ -76,24 +75,19 @@ module.exports = class extends think.Controller {
   }
 
   async downloadRemote(url, filename) {
-    const response = await getFileContent({
+    const res = await axios({
       url,
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) Chrome/47.0.2526.111 Safari/537.36'
-      },
-      strictSSL: false,
-      timeout: 1000,
-      encoding: null
+      responseType: 'arraybuffer'
     }).catch(() => {
-      return this.fail('NOT_FOUND')
+      throw new Error('NOT_FOUND')
     })
 
-    if (response && response.headers['content-type'].indexOf('image') === -1) {
-      throw new Error('NOU_ALLOWS')
+    if (res && res.headers['content-type'].indexOf('image') === -1) {
+      this.fail('NOU_ALLOWS')
     }
 
     this.ctx.set('Content-Disposition', `attachment; filename=${filename || path.basename(url)}`)
-    this.body = response.body
+    this.body = res.data
   }
 
   // MIME过滤

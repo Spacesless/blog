@@ -17,7 +17,7 @@ module.exports = class extends Base {
 
     // 当前列表
     const { list_bangumi: pageSize } = this.options
-    const field = 'id,title,description,total,current,ratings,imgurl,showtime,status'
+    const field = 'id,title,description,total,current,ratings,imgurl,showtime,status,tag'
     const sort = sortBy || 'updatetime'
     const order = orderBy ? orderBy.toUpperCase() : 'DESC'
     const where = { is_show: 1, is_recycle: 0 }
@@ -55,6 +55,7 @@ module.exports = class extends Base {
     const { thumb_bangumi_x: bangumiX, thumb_bangumi_y: bangumiY, thumb_kind: thumbKind } = this.options
     for (const item of list.data) {
       item.imgurl = await this.thumbImage(item.imgurl, bangumiX, bangumiY, thumbKind)
+      item.tag = item.tag.split('|')
     }
 
     return this.success({

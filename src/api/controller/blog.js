@@ -43,6 +43,7 @@ module.exports = class extends Base {
     const { thumb_blog_x: blogX, thumb_blog_y: blogY, thumb_kind: thumbKind } = this.options
     for (const item of list.data) {
       item.imgurl = await this.thumbImage(item.imgurl, blogX, blogY, thumbKind)
+      item.tag = item.tag.split('|')
     }
 
     return this.success({

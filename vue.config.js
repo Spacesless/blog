@@ -1,22 +1,21 @@
-'use strict';
-const path = require('path');
-const CompressionWebpackPlugin = require('compression-webpack-plugin');
-const defaultSettings = require('./admin/src/settings.js');
-const rawArgv = process.argv[3] || [];
+'use strict'
+const path = require('path')
+const CompressionWebpackPlugin = require('compression-webpack-plugin')
+const defaultSettings = require('./admin/src/settings.js')
 
 function resolve(dir) {
-  return path.join(__dirname, 'admin', dir);
+  return path.join(__dirname, 'admin', dir)
 }
 
-const name = defaultSettings.title || 'vue Admin Template'; // page title
-const host = process.env.post || '127.0.0.1'; // devServer host
+const name = defaultSettings.title || 'Timeless`s 管理平台' // page title
+const host = process.env.post || '127.0.0.1' // devServer host
 
 // If your port is set to 80,
 // use administrator privileges to execute the command line.
 // For example, Mac: sudo npm run
 // You can change the port by the following methods:
 // port = 9528 npm run dev OR npm run dev --port = 9528
-const port = process.env.port || process.env.npm_config_port || 9528; // dev port
+const port = process.env.port || process.env.npm_config_port || 9528 // dev port
 
 // All configuration item explanations can be find in https://cli.vuejs.org/config/
 module.exports = {
@@ -68,14 +67,14 @@ module.exports = {
     }
   },
   chainWebpack(config) {
-    config.plugins.delete('preload'); // TODO: need test
-    config.plugins.delete('prefetch'); // TODO: need test
+    config.plugins.delete('preload') // TODO: need test
+    config.plugins.delete('prefetch') // TODO: need test
 
     // set svg-sprite-loader
     config.module
       .rule('svg')
       .exclude.add(resolve('src/icons'))
-      .end();
+      .end()
     config.module
       .rule('icons')
       .test(/\.svg$/)
@@ -86,7 +85,7 @@ module.exports = {
       .options({
         symbolId: 'icon-[name]'
       })
-      .end();
+      .end()
 
     // set preserveWhitespace
     config.module
@@ -94,16 +93,16 @@ module.exports = {
       .use('vue-loader')
       .loader('vue-loader')
       .tap(options => {
-        options.compilerOptions.preserveWhitespace = true;
-        return options;
+        options.compilerOptions.preserveWhitespace = true
+        return options
       })
-      .end();
+      .end()
 
     config
     // https://webpack.js.org/configuration/devtool/#development
       .when(process.env.NODE_ENV === 'development',
         config => config.devtool('cheap-source-map')
-      );
+      )
 
     config
       .when(process.env.NODE_ENV !== 'development',
@@ -115,7 +114,7 @@ module.exports = {
             // `runtime` must same as runtimeChunk name. default is `runtime`
               inline: /runtime\..*\.js$/
             }])
-            .end();
+            .end()
           config.plugin('compress')
             .use(CompressionWebpackPlugin, [
               { // compressionOptions 默认为{ level: 9 } 级别越高压缩率越大，压缩时间也就越长
@@ -123,7 +122,7 @@ module.exports = {
                 threshold: 10240 // 大于10kb的会压缩，默认为0
               }
             ])
-            .end();
+            .end()
           config
             .optimization.splitChunks({
               chunks: 'all',
@@ -147,9 +146,9 @@ module.exports = {
                   reuseExistingChunk: true
                 }
               }
-            });
-          config.optimization.runtimeChunk('single');
+            })
+          config.optimization.runtimeChunk('single')
         }
-      );
+      )
   }
-};
+}
