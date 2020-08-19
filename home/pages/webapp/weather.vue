@@ -332,56 +332,56 @@ export default {
 <style lang="scss" scoped>
 .weather{
   .background{
-    background: url('/static/weather/background.jpg') no-repeat center;
-    background-size: cover;
     position: fixed;
+    z-index: -1;
     width: 100%;
     height: 100%;
-    z-index: -1;
+    background: url('/static/weather/background.jpg') no-repeat center;
+    background-size: cover;
     opacity: .6;
   }
   .location{
     line-height: 50px;
     text-align: right;
     &-map{
-      vertical-align: middle;
       margin-right: 15px;
-      font-size: 15px;
       color: $primary;
+      font-size: 15px;
+      vertical-align: middle;
     }
   }
   &-title{
-    font-size: 16px;
     padding: 15px;
+    border-bottom: 1px solid #f7f7f7;
+    color: #303133;
+    font-size: 16px;
     font-weight: 100;
     line-height: 1;
-    color: #303133;
-    border-bottom: 1px solid #f7f7f7;
     &:before{
       content: '';
       display: inline-block;
       width: 6px;
       height: 6px;
+      margin-right: 5px;
       background-color: $primary;
       border-radius: 50%;
       vertical-align: middle;
-      margin-right: 5px;
     }
   }
   .realtime{
     position: relative;
     padding: 15px 0;
     &__updatetime{
-      font-size: 14px;
       color: #909399;
+      font-size: 14px;
     }
     &-main{
       padding: 15px 0 5px;
       &__tem{
-        font-size: 80px;
-        line-height: 1em;
         color: $primary;
+        font-size: 80px;
         font-weight: 100;
+        line-height: 1em;
       }
       &__cond{
         color: #303133;
@@ -390,40 +390,40 @@ export default {
         position: absolute;
         right: 0;
         top: 50%;
-        margin-top: -80px;
         height: 160px;
+        margin-top: -80px;
       }
     }
     &-air{
       padding-bottom: 5px;
       &__quality{
         padding: 3px 5px;
-        border-radius: 15px;
         background-color: #67C23A;
         color: #fff;
         font-size: 14px;
+        border-radius: 15px;
         i{
           font-size: 16px;
         }
       }
     }
     &-wind, &-other{
-      line-height: 2em;
       color: #606266;
+      line-height: 2em;
       span{
         margin-right: 5px;
       }
     }
   }
   .lifestyle{
+    overflow: hidden;
     margin-top: 10px;
     background: #fff;
-    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
     border-radius: 4px;
-    overflow: hidden;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
     &-item{
-      height: 120px;
       overflow: hidden;
+      height: 120px;
       border-right: 1px solid #f7f7f7;
       border-bottom: 1px solid #f7f7f7;
       &:hover{
@@ -442,9 +442,9 @@ export default {
           color: #303133;
         }
         p{
+          color: #606266;
           font-size: 14px;
           line-height: 1.7;
-          color: #606266;
         }
       }
       &__desc{
@@ -480,15 +480,15 @@ export default {
         line-height: 1.5;
       }
       &__time{
-        font-size: 14px;
-        color: #606266;
         width: 100px;
-        line-height: 1.5;
         margin: 0 auto;
+        color: #606266;
+        font-size: 14px;
+        line-height: 1.5;
       }
       &__cond{
-        color: $primary;
         padding-bottom: 10px;
+        color: $primary;
       }
       &__other{
         color: #909399;
@@ -499,31 +499,31 @@ export default {
     }
   }
   .forecast{
+    overflow: hidden;
+    position: relative;
     margin: 15px 0;
     background: #fff;
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
     border-radius: 4px;
-    overflow: hidden;
-    position: relative;
     &-item{
-      width: 14.36%;
       float: left;
-      text-align: center;
-      padding: 15px 0;
-      border-left: 1px solid #f7f7f7;
+      width: 14.36%;
       margin-left: -1px;
+      padding: 15px 0;
+      text-align: center;
+      border-left: 1px solid #f7f7f7;
       box-sizing: border-box;
       &.current{
         background-color: #ecf5ff;
       }
       p{
-        font-size: 14px;
         margin-bottom: 10px;
+        font-size: 14px;
       }
       &__date{
-        font-size: 15px;
-        color: #303133;
         margin-bottom: 10px;
+        color: #303133;
+        font-size: 15px;
       }
       &__cond{
         color: $primary;

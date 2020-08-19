@@ -13,8 +13,10 @@
             <el-breadcrumb-item
               v-for="(item, index) in breadcrumbs"
               :key="index"
-              @click.native="changePath(item.path, index)"
-            >{{ item.name }}</el-breadcrumb-item>
+            >
+              <span v-if="index === breadcrumbs.length - 1">{{ item.name }}</span>
+              <span v-else class="redirect" @click="changePath(item.path, index)">{{ item.name }}</span>
+            </el-breadcrumb-item>
           </el-breadcrumb>
         </el-col>
         <el-col :sm="24" :md="{span:6,offset:6}">
@@ -129,7 +131,7 @@ export default {
   data() {
     return {
       total: 0,
-      listLoading: true,
+      listLoading: false,
       listQuery: {
         keyword: '',
         page: 1,
@@ -162,8 +164,12 @@ export default {
       }).catch(() => {})
       this.listLoading = false
     },
-    changePath(passData) {
-      const { path, index } = passData
+    /**
+     * 更改文件目录
+     * @param {String} 目录路径
+     * @param {Number [int]} index 所在面包屑菜单下标
+     */
+    changePath(path, index) {
       this.path = path
       this.breadcrumbs = this.breadcrumbs.slice(0, index + 1)
       this.listQuery.page = 1
@@ -173,6 +179,10 @@ export default {
       this.listQuery.page = 1
       this.fecthList()
     }, 200),
+    /**
+     * 进入目录
+     * @param {String} path 目录路径
+     */
     enterDirectory(path) {
       this.path = path
       const urlHash = path.split('/')
@@ -207,8 +217,8 @@ export default {
   ::v-deep .el-dialog{
     height: 86%;
     &__body{
-      padding: 15px 20px;
       height: calc(100% - 95px);
+      padding: 15px 20px;
     }
   }
   &-scroll{
@@ -219,8 +229,9 @@ export default {
   &-header{
     padding: 0 15px 10px;
     .el-breadcrumb{
+      color: #606266;
       line-height: 36px;
-      ::v-deep .el-breadcrumb__inner{
+      .redirect{
         cursor: pointer;
         &:hover{
           color: #409eff;
@@ -233,37 +244,37 @@ export default {
       padding: 0 15px;
     }
     .grid-item{
+      overflow: hidden;
+      z-index: 1;
       height: 210px;
       margin-bottom: 15px;
-      background-color: #ecf5ff;
       border: 1px solid #d9ecff;
-      border-radius: 4px;
-      overflow: hidden;
+      background-color: #ecf5ff;
       cursor: pointer;
-      z-index: 1;
+      border-radius: 4px;
       &.active{
-        background-color: #d9ecff;
         border-color: #409eff;
+        background-color: #d9ecff;
       }
     }
     .folder{
-      text-align: center;
       padding: 60px 0;
+      text-align: center;
       .el-icon-folder{
+        margin: 10px 0;
         font-size: 28px;
-        margin:  10px 0;
       }
       p{
         margin: 0;
-        font-size: 16px;
         color: #409eff;
+        font-size: 16px;
       }
     }
     .image{
       .el-image{
+        display: block;
         height: 135px;
         padding: 5px 10px;
-        display: block;
         margin: 0 auto;
       }
     }
@@ -279,13 +290,13 @@ export default {
     padding: 5px 10px;
     background-color: #fdf6ec;
     p{
+      overflow: hidden;
       margin: 0;
+      color: #e6a23c;
       font-size: 14px;
       line-height: 22px;
       white-space: nowrap;
-      overflow: hidden;
       text-overflow: ellipsis;
-      color: #e6a23c;
     }
   }
   &-time, &-size{

@@ -168,11 +168,11 @@ export default {
     background-color: #0f0f0f;
   }
   &-form{
-    width: 350px;
-    height: 340px;
     position: absolute;
     top: 50%;
     left: 50%;
+    width: 350px;
+    height: 340px;
     margin-top: -200px;
     margin-left: -175px;
     .el-input{
@@ -185,18 +185,18 @@ export default {
     }
     &-title{
       height: 50px;
-      line-height: 50px;
       margin-bottom: 20px;
+      line-height: 50px;
     }
     &-label{
-      width: 40px;
-      text-align: center;
       position: absolute;
       left: 0;
       top: 0;
-      font-size: 24px;
-      color: #909399;
       z-index: 5;
+      width: 40px;
+      color: #909399;
+      font-size: 24px;
+      text-align: center;
     }
     &-captcha{
       ::v-deep .el-input{
@@ -208,15 +208,15 @@ export default {
         }
       }
       &__svg{
-        width: 150px;
-        height: 38px;
+        overflow: hidden;
         position: absolute;
         right: 1px;
         top: 1px;
+        width: 150px;
+        height: 38px;
         border-left: 1px solid #DCDFE6;
         border-top-right-radius: 4px;
         border-bottom-right-radius: 4px;
-        overflow: hidden;
         cursor: pointer;
       }
     }
@@ -234,8 +234,8 @@ export default {
     position: absolute;
     right: 10px;
     top: 0;
-    font-size: 16px;
     color: #909399;
+    font-size: 16px;
     cursor: pointer;
     user-select: none;
   }

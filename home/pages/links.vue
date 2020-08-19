@@ -70,13 +70,13 @@ export default {
 <style lang="scss" scoped>
 .links{
   &__title{
+    padding: 30px 0;
     font-size: 32px;
     font-weight: normal;
     line-height: 1.5;
-    padding: 30px 0;
   }
   &-wrap {
-    ::vue-deep .el-col{
+    ::v-deep .el-col{
       margin-bottom: 15px;
       transition: transform 0.3s;
       &:hover{
@@ -86,16 +86,16 @@ export default {
   }
   &-item{
     display: block;
-    border-top: 3px solid $primary;
     padding: 10px;
+    border-top: 3px solid $primary;
     border-radius: 4px;
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   }
   &-logo{
-    width: 65px;
-    height: 65px;
     overflow: hidden;
     float: left;
+    width: 65px;
+    height: 65px;
     border-radius: 50%;
     &__picture{
       display: block;
@@ -104,28 +104,28 @@ export default {
     }
   }
   &-info{
-    padding-left: 10px;
     overflow: hidden;
+    padding-left: 10px;
     &__name{
       font-size: 16px;
       line-height: 22px;
       color: $primary;
     }
     &__desc{
+      overflow: hidden;
+      height: 42px;
+      color: #606266;
       font-size: 13px;
       line-height: 1.6em;
-      color: #606266;
-      height: 42px;
-      overflow: hidden;
     }
   }
   &-tips{
+    color: #606266;
     font-size: 15px;
     line-height: 2;
-    color: #606266;
-    span{
-      color: #F56C6C;
+    span {
       margin-left: 15px;
+      color: #F56C6C;
     }
   }
 }

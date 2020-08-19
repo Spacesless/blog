@@ -120,38 +120,38 @@ export default {
   }
   &-noData{
     height: 350px;
+    color: #909399;
+    font-size: 18px;
     line-height: 350px;
     text-align: center;
-    font-size: 18px;
-    color: #909399;
   }
   &-list{
-    margin-top: 15px;
-    background-color: #fff;
-    border: 1px solid #EBEEF5;
     overflow: hidden;
+    margin-top: 15px;
+    border: 1px solid #EBEEF5;
+    background-color: #fff;
     border-radius: 4px;
     &__result{
       padding: 10px 15px;
+      color: #303133;
       font-size: 24px;
       font-weight: normal;
-      color: #303133;
     }
     &-item{
-      padding: 10px 15px;
-      background: #fff;
-      border-top: 1px solid #EBEEF5;
-      margin-top: -1px;
       position: relative;
+      margin-top: -1px;
+      padding: 10px 15px;
+      border-top: 1px solid #EBEEF5;
+      background: #fff;
     }
     em{
-      color: #f56c6c;
       padding: 0 5px;
+      color: #f56c6c;
     }
     &__thumb{
       img{
-        border-radius: 4px;
         overflow: hidden;
+        border-radius: 4px;
       }
     }
     &__info{
@@ -164,9 +164,9 @@ export default {
     }
     &__title{
       display: inline-block;
-      font-size: 20px;
       margin: 5px 0 10px;
       color: #303133;
+      font-size: 20px;
       &:hover{
         color: $primary;
       }
@@ -174,12 +174,12 @@ export default {
     &__classify{
       position: absolute;
       bottom: 15px;
-      color: #909399;
       margin-left: -5px;
+      color: #909399;
       a{
-        font-size: 14px;
-        color: $primary;
         margin: 0 5px;
+        color: $primary;
+        font-size: 14px;
         &:hover{
           color:#f56c6c;
         }

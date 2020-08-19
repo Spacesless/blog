@@ -293,11 +293,11 @@ export default {
     bottom: 0;
     left: 0;
     right: 0;
-    text-align: right;
+    z-index: 5;
     padding: 10px 20px;
     background-color: #fff;
+    text-align: right;
     box-shadow: 0 -1px 4px rgba(0, 21, 41, 0.08);
-    z-index: 5;
     .el-select{
       vertical-align: middle;
       margin-right: 15px;
@@ -314,11 +314,11 @@ export default {
   margin-left: 10px;
 }
 .button-new-tag {
-  margin-left: 10px;
   height: 32px;
-  line-height: 30px;
+  margin-left: 10px;
   padding-top: 0;
   padding-bottom: 0;
+  line-height: 30px;
 }
 .input-new-tag {
   width: 90px;

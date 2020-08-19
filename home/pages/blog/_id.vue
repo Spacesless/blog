@@ -121,11 +121,11 @@ export default {
 <style lang="scss" scoped>
 .blog-list{
   &-item{
-    background: #fff;
-    border-radius: 4px;
     margin-bottom: 15px;
-    font-size: 15px;
     border: 1px solid #EBEEF5;
+    background: #fff;
+    font-size: 15px;
+    border-radius: 4px;
     transition: all .3s;
     &:hover{
       box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
@@ -135,8 +135,8 @@ export default {
     padding: 10px 15px;
   }
   &-info{
-    font-size: 14px;
     color: #909399;
+    font-size: 14px;
     line-height: 2em;
     i{
       margin-right: 3px;
@@ -146,11 +146,11 @@ export default {
     }
   }
   &__title{
-    font-size: 24px;
-    color: #303133;
-    display: inline-block;
-    max-width: 100%;
     overflow: hidden;
+    display: inline-block;
+    color: #303133;
+    font-size: 24px;
+    max-width: 100%;
     white-space: nowrap;
     text-overflow: ellipsis;
     &:hover{
@@ -158,8 +158,8 @@ export default {
     }
   }
   &__desc{
-    font-size: 15px;
     color: #606266;
+    font-size: 15px;
     line-height: 1.6em;
   }
 }

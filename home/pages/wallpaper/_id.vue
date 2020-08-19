@@ -147,50 +147,50 @@ export default {
 <style lang="scss" scoped>
 .wallpaper-list{
   &-item{
-    border-radius: 4px;
     overflow: hidden;
+    position: relative;
+    margin-bottom: 15px;
+    border: 4px solid #303133;
     background-color: #fff;
     box-shadow: 4px 4px 0 #66ccff;
-    border: 4px solid #303133;
-    margin-bottom: 15px;
-    position: relative;
+    border-radius: 4px;
     &:hover .wallpaper-list__detail{
       margin-top: -66px;
     }
   }
   &__detail{
-    padding: 5px 10px;
-    line-height: 1.6em;
     position: absolute;
     top: 100%;
-    margin-top: -34px;
     width: 100%;
+    margin-top: -34px;
+    padding: 5px 10px;
     background-color: rgba(0,0,0,.5);
+    line-height: 1.6em;
     transition: margin-top .3s;
     p{
+      overflow: hidden;
+      color: #fff;
       font-size: 14px;
       white-space: nowrap;
       text-overflow: ellipsis;
-      overflow: hidden;
-      color: #fff;
       span{
         padding-right: 5px;
       }
     }
     .tl-icon{
+      padding-right: 3px;
       font-size: 15px;
       vertical-align: baseline;
-      padding-right: 3px;
     }
   }
   &__title{
-    font-size: 16px;
-    color: #fff;
+    overflow: hidden;
     display: inline-block;
     max-width: 100%;
+    color: #fff;
+    font-size: 16px;
     white-space: nowrap;
     text-overflow: ellipsis;
-    overflow: hidden;
     &:hover{
       color: $primary;
     }

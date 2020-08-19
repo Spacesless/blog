@@ -165,12 +165,12 @@ export default {
   }
   &-list{
     &__item{
-      background-color: #fff;
-      border-radius: 4px;
       overflow: hidden;
       position: relative;
       margin-bottom: 15px;
       border: 1px dashed #EBEEF5;
+      background-color: #fff;
+      border-radius: 4px;
       transition: all .3s;
       &:hover{
         border-style: solid;
@@ -184,42 +184,42 @@ export default {
       position: absolute;
       right: 0;
       bottom: 0;
-      font-size: 12px;
+      width: 30px;
+      height: 16px;
       background: $primary;
       color: #fff;
-      width: 30px;
-      text-align: center;
-      height: 16px;
+      font-size: 12px;
       line-height: 16px;
+      text-align: center;
       border-top-left-radius: 4px;
     }
     &-info{
       padding: 10px 12px;
       p, span, .el-progress__text{
+        color: #606266;
         font-size: 14px;
         line-height: 1.6em;
-        color: #606266;
       }
       .el-progress-bar{
         padding-right: 55px;
       }
       .el-progress__text{
-        font-size: 12px;
         margin-left: 0;
+        font-size: 12px;
       }
       .para-name{
         color: #909399;
       }
     }
     &__title{
-      display: inline-block;
-      font-size: 18px;
-      max-width: 100%;
-      color: $primary;
       overflow: hidden;
+      display: inline-block;
+      max-width: 100%;
+      margin-bottom: 5px;
+      color: $primary;
+      font-size: 18px;
       text-overflow: ellipsis;
       white-space: nowrap;
-      margin-bottom: 5px;
     }
   }
 }

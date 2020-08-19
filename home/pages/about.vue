@@ -80,39 +80,39 @@ export default {
 <style lang="scss" scoped>
 .about{
   &-introduce{
+    color: #303133;
     font-size: 15px;
     line-height: 2;
-    color: #303133;
     &-timeline{
       margin-top: 15px;
     }
   }
   &__title{
+    padding: 30px 0;
     font-size: 32px;
     font-weight: normal;
     line-height: 1.5;
-    padding: 30px 0;
   }
   &-connact{
     &__links{
-      vertical-align: middle;
       display: inline-block;
       padding: 5px 12px;
       border: 1px solid #dcdfe6;
       color: #606266;
-      border-radius: 4px;
       line-height: 1;
+      vertical-align: middle;
+      border-radius: 4px;
       &:hover{
         border-color: $primary;
-        color: $primary;
         background-color: #ecf5ff;
+        color: $primary;
       }
     }
     &__image{
-      vertical-align: middle;
       display: inline-block;
       height: 100px;
       margin-left: 10px;
+      vertical-align: middle;
     }
   }
 }

@@ -1,24 +1,24 @@
 #app {
 
   .main-container {
-    min-height: 100%;
-    transition: margin-left .28s;
-    margin-left: $sideBarWidth;
     position: relative;
+    min-height: 100%;
+    margin-left: $sideBarWidth;
+    transition: margin-left .28s;
   }
 
   .sidebar-container {
-    transition: width 0.28s;
-    width: $sideBarWidth !important;
-    background-color: $menuBg;
-    height: 100%;
+    overflow: hidden;
     position: fixed;
-    font-size: 0px;
     top: 0;
     bottom: 0;
     left: 0;
     z-index: 1001;
-    overflow: hidden;
+    width: $sideBarWidth !important;
+    height: 100%;
+    background-color: $menuBg;
+    font-size: 0px;
+    transition: width 0.28s;
 
     // reset element-ui css
     .horizontal-collapse-transition {
@@ -49,8 +49,8 @@
 
     a {
       display: inline-block;
-      width: 100%;
       overflow: hidden;
+      width: 100%;
     }
 
     .svg-icon {
@@ -58,9 +58,9 @@
     }
 
     .el-menu {
-      border: none;
-      height: 100%;
       width: 100% !important;
+      height: 100%;
+      border: none;
     }
 
     // menu hover
@@ -100,8 +100,8 @@
     }
 
     .submenu-title-noDropdown {
-      padding: 0 !important;
       position: relative;
+      padding: 0 !important;
 
       .el-tooltip {
         padding: 0 !important;
@@ -132,11 +132,11 @@
       .el-submenu {
         &>.el-submenu__title {
           &>span {
-            height: 0;
-            width: 0;
+            display: inline-block;
             overflow: hidden;
             visibility: hidden;
-            display: inline-block;
+            width: 0;
+            height: 0;
           }
         }
       }
@@ -154,8 +154,8 @@
     }
 
     .sidebar-container {
-      transition: transform .28s;
       width: $sideBarWidth !important;
+      transition: transform .28s;
     }
 
     &.hideSidebar {
@@ -194,8 +194,8 @@
 
   // the scroll bar appears when the subMenu is too long
   >.el-menu--popup {
-    max-height: 100vh;
     overflow-y: auto;
+    max-height: 100vh;
 
     &::-webkit-scrollbar-track-piece {
       background: #d3dce6;

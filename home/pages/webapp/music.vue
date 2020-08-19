@@ -519,17 +519,17 @@ export default {
       position: absolute;
       top: 0;
       left: 0;
+      z-index: 1;
       width: 100%;
       height: 100%;
-      z-index: 1;
       li {
-        position: absolute;
-        list-style: none;
         display: block;
+        position: absolute;
+        bottom: -160px;
         width: 40px;
         height: 40px;
         background-color: rgba($color: $primary, $alpha: 0.15);
-        bottom: -160px;
+        list-style: none;
         animation: square 25s infinite;
         transition-timing-function: linear;
         &:nth-child(1) {
@@ -550,8 +550,8 @@ export default {
           left: 40%;
           width: 60px;
           height: 60px;
-          animation-duration: 22s;
           background-color: rgba($color: $primary, $alpha: 0.25);
+          animation-duration: 22s;
         }
         &:nth-child(5) {
           left: 70%;
@@ -560,8 +560,8 @@ export default {
           left: 80%;
           width: 120px;
           height: 120px;
-          animation-delay: 3s;
           background-color: rgba($color: $primary, $alpha: 0.2);
+          animation-delay: 3s;
         }
         &:nth-child(7) {
           left: 32%;
@@ -580,9 +580,9 @@ export default {
           left: 25%;
           width: 10px;
           height: 10px;
+          background-color: rgba($color: $primary, $alpha: 0.3);
           animation-delay: 2s;
           animation-duration: 40s;
-          background-color: rgba($color: $primary, $alpha: 0.3);
         }
         &:nth-child(10) {
           left: 90%;
@@ -609,11 +609,11 @@ export default {
   &-disst{
     padding: 15px;
     &__item{
-      font-size: 15px;
-      padding: 10px 0 10px 30px;
-      cursor: pointer;
       margin: 10px 0;
+      padding: 10px 0 10px 30px;
       color: #303133;
+      font-size: 15px;
+      cursor: pointer;
       transition: all .3s;
       &--active, &:hover{
         background-color: #ecf5ff;
@@ -621,22 +621,22 @@ export default {
     }
     span{
       display: block;
-      font-size: 14px;
       color: #909399;
+      font-size: 14px;
     }
   }
   &-user{
-    text-align: center;
     padding: 30px 0;
+    text-align: center;
     &__name{
       font-size: 16px;
       color: #606266;
     }
   }
   &-content{
+    position: relative;
     height: 100%;
     padding-bottom: 90px;
-    position: relative;
     border-left: 1px solid #E4E7ED;
     background-color: rgba($color: #fff, $alpha: 0.6);
     .el-scrollbar__bar{
@@ -644,20 +644,20 @@ export default {
     }
   }
   &-search{
-    padding: 15px;
     position: relative;
     width: 300px;
+    padding: 15px;
     .el-input{
       ::v-deep .el-input__inner{
         padding: 0 35px 0 65px;
       }
     }
     .el-select{
-      width: 65px;
       position: absolute;
       top: 16px;
       left: 16px;
       z-index: 99;
+      width: 65px;
       ::v-deep .el-input__inner{
         border: none;
         padding: 0 10px;
@@ -674,8 +674,8 @@ export default {
   }
   &-list{
     &-header{
-      padding: 0 15px 15px;
       position: relative;
+      padding: 0 15px 15px;
     }
     &-menu{
       position: absolute;
@@ -718,10 +718,10 @@ export default {
       }
     }
     &__tips{
+      color: $primary;
       font-size: 14px;
       line-height: 2;
       text-align: center;
-      color: $primary;
     }
   }
   &-info{
@@ -730,17 +730,17 @@ export default {
       float: left;
     }
     &-text{
-      padding-left: 15px;
       overflow: hidden;
+      padding-left: 15px;
       h2{
+        color: #303133;
         line-height: 1.3;
         font-weight: normal;
-        color: #303133;
       }
       p{
+        color: #606266;
         font-size: 15px;
         line-height: 1.5;
-        color: #606266;
       }
     }
   }
@@ -757,13 +757,13 @@ export default {
       span{
         display: inline-block;
         width: 40px;
-        text-align: center;
         height: 40px;
+        margin-right: 10px;
+        color: #303133;
         line-height: 40px;
+        text-align: center;
         border-radius: 50px;
         box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-        color: #303133;
-        margin-right: 10px;
         cursor: pointer;
         &:hover{
           color: $primary;
@@ -787,16 +787,16 @@ export default {
 }
 #music-player{
   .aplayer{
-    background: none;
-    margin: 0;
     overflow: inherit;
+    margin: 0;
+    background: none;
     box-shadow: none;
     &-music{
       margin: 0 0 13px 15px;
     }
     &-controller{
-      position: absolute;
       display: block;
+      position: absolute;
       top: 0;
       left: 0;
       right: 0;
@@ -805,12 +805,12 @@ export default {
       margin: -5px 0 0 0;
     }
     &-time{
-      bottom: 0;
-      text-align: right;
       top: 5px;
-      font-size: 14px;
-      color: #303133;
+      bottom: 0;
       padding-right: 15px;
+      color: #303133;
+      font-size: 14px;
+      text-align: right;
     }
     &-button{
       display: none;
@@ -832,10 +832,10 @@ export default {
       }
     }
     &-list{
-      width: 350px;
       position: absolute;
       right: 0;
       bottom: 90px;
+      width: 350px;
       background-color: #fff;
     }
   }

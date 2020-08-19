@@ -188,22 +188,22 @@ export default {
 
 <style lang="scss" scoped>
 .forgot{
-  height: 100%;
   position: relative;
+  height: 100%;
   &-background{
+    overflow: hidden;
     position: absolute;
+    z-index: 0;
     width: 100%;
     height: 100%;
-    z-index: 0;
-    overflow: hidden;
     li {
-      position: absolute;
-      list-style: none;
       display: block;
+      position: absolute;
+      bottom: -160px;
       width: 40px;
       height: 40px;
-      background-color: rgba($color: $--color-primary, $alpha: 0.2);
-      bottom: -160px;
+      background-color: rgba($color: #409EFF, $alpha: 0.2);
+      list-style: none;
       animation: square 25s infinite;
       transition-timing-function: linear;
       &:nth-child(1) {
@@ -224,8 +224,8 @@ export default {
         left: 40%;
         width: 60px;
         height: 60px;
+        background-color: rgba($color: #409EFF, $alpha: 0.3);
         animation-duration: 22s;
-        background-color: rgba($color: $--color-primary, $alpha: 0.3);
       }
       &:nth-child(5) {
         left: 70%;
@@ -234,8 +234,8 @@ export default {
         left: 80%;
         width: 120px;
         height: 120px;
+        background-color: rgba($color: #409EFF, $alpha: 0.25);
         animation-delay: 3s;
-        background-color: rgba($color: $--color-primary, $alpha: 0.25);
       }
       &:nth-child(7) {
         left: 32%;
@@ -254,9 +254,9 @@ export default {
         left: 25%;
         width: 10px;
         height: 10px;
+        background-color: rgba($color: #409EFF, $alpha: 0.35);
         animation-delay: 2s;
         animation-duration: 40s;
-        background-color: rgba($color: $--color-primary, $alpha: 0.35);
       }
       &:nth-child(10) {
         left: 90%;
@@ -271,9 +271,9 @@ export default {
     height: 50px;
     line-height: 50px;
     &__title{
+      color: #409EFF;
       font-size: 30px;
       font-weight: normal;
-      color: $--color-primary;
     }
     &-link{
       color: #303133;
@@ -281,7 +281,7 @@ export default {
         padding-right: 5px;
       }
       &:hover{
-        color: $--color-primary;
+        color: #409EFF;
       }
     }
   }

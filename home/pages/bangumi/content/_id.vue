@@ -139,9 +139,6 @@ export default {
 .bangumi{
   &-info{
     margin-top: 15px;
-    // background-color: #fff;
-    // border: 1px solid #EBEEF5;
-    // border-radius: 4px;
     &-text{
       padding: 0 10px;
       padding-right: 15px;
@@ -153,15 +150,15 @@ export default {
         letter-spacing: 1px;
       }
       .para-name{
-        color: #909399;
         padding-right: 5px;
+        color: #909399;
       }
     }
     &__title{
+      padding: 10px 0 5px;
+      color: $primary;
       font-size: 26px;
       font-weight: 100;
-      color: $primary;
-      padding: 10px 0 5px;
     }
     &-ratings{
       margin-bottom: 5px;
@@ -176,16 +173,13 @@ export default {
   &-content{
     margin-top: 15px;
     padding: 15px;
-    // background-color: #fff;
-    // border: 1px solid #EBEEF5;
-    // border-radius: 4px;
   }
   &-links{
     &-item{
       display: inline-block;
       margin-bottom: 10px;
-      font-size: 14px;
       color: #606266;
+      font-size: 14px;
       &:hover{
         color: $primary;
       }

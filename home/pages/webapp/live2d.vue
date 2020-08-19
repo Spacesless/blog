@@ -284,20 +284,20 @@ export default {
     margin-left: -250px;
   }
   &-tips {
+    overflow: hidden;
+    position: absolute;
+    top: 20px;
+    left: 50px;
     width: 350px;
     height: 100px;
     margin: -20px 10px;
     padding: 5px 10px;
     border: 1px solid $primary;
-    border-radius: 12px;
     background-color: rgba(255, 255, 255, 0.8);
-    box-shadow: 0 1px 3px #66ccff;
     font-size: 12px;
     text-overflow: ellipsis;
-    overflow: hidden;
-    position: absolute;
-    top: 20px;
-    left: 50px;
+    box-shadow: 0 1px 3px #66ccff;
+    border-radius: 12px;
     animation: shake 25s ease-in-out 2s infinite;
   }
   &-info{
@@ -320,8 +320,8 @@ export default {
   }
   &-list{
     &__item{
-      border: 1px solid #fff;
       padding: 10px 15px;
+      border: 1px solid #fff;
       &--active{
         border: 1px solid $primary;
         border-radius: 4px;

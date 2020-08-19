@@ -211,23 +211,23 @@ export default {
 <style lang="scss" scoped>
 .tags-view{
   &-container {
+    width: 100%;
     height: 40px;
     border-top: 1px solid #f0f0f0;
     border-bottom: 1px solid #f0f0f0;
-    width: 100%;
     background: #f0f0f0;
     box-shadow: inset 0 0 3px 2px hsla(0,0%,39.2%,.1);
     .contextmenu {
+      position: absolute;
+      z-index: 3000;
+      padding: 5px 0;
       margin: 0;
       background: #fff;
-      z-index: 3000;
-      position: absolute;
-      list-style-type: none;
-      padding: 5px 0;
-      border-radius: 4px;
+      color: #333;
       font-size: 12px;
       font-weight: 400;
-      color: #333;
+      list-style-type: none;
+      border-radius: 4px;
       box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, .3);
       li {
         margin: 0;
@@ -242,30 +242,30 @@ export default {
   &-item {
     display: inline-block;
     height: 30px;
-    line-height: 30px;
-    border: 1px solid #EBEEF5;
-    color: #606266;
-    background: #fff;
-    padding: 0 12px;
-    font-size: 12px;
     margin-left: 5px;
-    border-radius: 3px;
+    padding: 0 12px;
+    border: 1px solid #EBEEF5;
+    background: #fff;
+    color: #606266;
+    font-size: 12px;
+    line-height: 30px;
     cursor: pointer;
+    border-radius: 3px;
     &::before {
       content: '';
-      background-color: #EBEEF5;
       display: inline-block;
+      position: relative;
       width: 12px;
       height: 12px;
-      border-radius: 50%;
-      position: relative;
       margin-right: 10px;
+      background-color: #EBEEF5;
       vertical-align: text-top;
+      border-radius: 50%;
     }
     &.active {
+      border-color: #d9ecff;
       background-color: #ecf5ff;
       color: #409eff;
-      border-color: #d9ecff;
       &::before {
         background-color: #409eff;
       }
@@ -273,16 +273,16 @@ export default {
   }
   &-refresh{
     position: absolute;
-    z-index: 999;
     right: 0;
+    z-index: 999;
     width: 32px;
     height: 40px;
+    border-bottom: 1px solid #EBEEF5;
+    background-color: #fff;
+    color: #606266;
+    font-size: 20px;
     line-height: 40px;
     text-align: center;
-    background-color: #fff;
-    font-size: 20px;
-    color: #606266;
-    border-bottom: 1px solid #EBEEF5;
     cursor: pointer;
     &:hover{
       color: #303133;
@@ -298,12 +298,11 @@ export default {
     .el-icon-close {
       width: 16px;
       height: 16px;
+      margin-left: 6px;
       line-height: 16px;
       text-align: center;
       border-radius: 50%;
-      text-align: center;
       transition: all .3s cubic-bezier(.645, .045, .355, 1);
-      margin-left: 6px;
       &:before {
         display: inline-block;
       }

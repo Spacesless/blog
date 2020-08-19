@@ -137,27 +137,27 @@ export default {
 <style lang="scss" scoped>
 .feedback{
   &__title{
+    margin: 30px 0 15px;
     font-size: 32px;
     font-weight: normal;
     line-height: 1.5;
-    margin: 30px 0 15px;
   }
   &-form{
     &__title{
       position: relative;
-      font-weight: normal;
-      line-height: 1em;
+      margin: 15px 0;
       padding-left: 15px;
       color: #303133;
-      margin: 15px 0;
+      font-weight: normal;
+      line-height: 1em;
       &:before{
         content: '';
         display: block;
         position: absolute;
-        width: 3px;
-        height: 100%;
         left: 0;
         top: 0;
+        width: 3px;
+        height: 100%;
         background-color: $primary;
       }
     }

@@ -42,13 +42,13 @@ export default {
 }
 
 .sidebar-logo-container {
+  overflow: hidden;
   position: relative;
   width: 100%;
   height: 50px;
-  line-height: 50px;
   background: #2b2f3a;
+  line-height: 50px;
   text-align: center;
-  overflow: hidden;
 
   & .sidebar-logo-link {
     height: 100%;
@@ -56,8 +56,8 @@ export default {
 
     & .sidebar-logo {
       height: 36px;
-      vertical-align: middle;
       margin-right: 12px;
+      vertical-align: middle;
     }
   }
 

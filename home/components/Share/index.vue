@@ -2,25 +2,26 @@
   <div class="share">
     <span class="share-icon tl-icon">&#xe725;</span>
     <el-tooltip effect="dark" content="分享到QQ好友" placement="bottom">
-      <span class="share-item QQ" @click="shareToQQ"></span>
+      <span class="share-item QQ" @click="shareToQQ" />
     </el-tooltip>
     <el-tooltip effect="dark" content="分享到QQ空间" placement="bottom">
-      <span class="share-item Qzone" @click="shareToQzone"></span>
+      <span class="share-item Qzone" @click="shareToQzone" />
     </el-tooltip>
     <el-tooltip effect="dark" content="分享到微信" placement="bottom">
       <el-popover
+        v-model="wxVisible"
         placement="bottom"
         width="256"
-        v-model="wxVisible">
+      >
         <div class="qrcode-wrap">
-          <img class="img-fluid" ref="qrcode" alt="">
+          <img ref="qrcode" class="img-fluid" alt="">
           <p>分享到微信</p>
         </div>
-        <span class="share-item Wx" @click="shareToWx" slot="reference"></span>
+        <span slot="reference" class="share-item Wx" @click="shareToWx" />
       </el-popover>
     </el-tooltip>
     <el-tooltip effect="dark" content="分享到新浪微博" placement="bottom">
-      <span class="share-item Sina" @click="shareToSina"></span>
+      <span class="share-item Sina" @click="shareToSina" />
     </el-tooltip>
   </div>
 </template>
@@ -106,27 +107,27 @@ export default {
     display: inline-block;
     width: 40px;
     height: 40px;
-    border-radius: 50%;
-    line-height: 40px;
-    font-size: 22px;
-    color: #606266;
-    background-color: #F2F6FC;
     margin-right: 3px;
+    background-color: #F2F6FC;
+    color: #606266;
+    font-size: 22px;
+    line-height: 40px;
+    border-radius: 50%;
   }
   .el-icon-share{
+    margin-right: 3px;
     color: $primary;
     font-size: 24px;
-    margin-right: 3px;
     line-height: 40px;
   }
   &-item{
     display: inline-block;
-    vertical-align: bottom;
     width: 40px;
     height: 40px;
     margin: 0 3px;
-    cursor: pointer;
     background-image: url('/static/share-icon.png')
+    vertical-align: bottom;
+    cursor: pointer;
   }
   .QQ{
     background-position: 0 0;
@@ -143,10 +144,10 @@ export default {
 }
 .qrcode-wrap{
   p{
-    font-size: 15px;
     padding-top: 10px;
-    text-align: center;
     color: #909399;
+    font-size: 15px;
+    text-align: center;
   }
 }
 </style>

@@ -69,13 +69,13 @@ export default {
 
 <style lang="scss" scoped>
 .scroll-container {
-  white-space: nowrap;
-  position: absolute;
   overflow: hidden;
-  height: 38px;
-  line-height: 38px;
+  position: absolute;
   left: 0;
   right: 32px;
+  height: 38px;
+  line-height: 38px;
+  white-space: nowrap;
   ::v-deep {
     .el-scrollbar__bar {
       bottom: 0px;

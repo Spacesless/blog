@@ -69,17 +69,17 @@ export default {
   .fixbar-item{
     width: 40px;
     height: 40px;
-    text-align: center;
-    line-height: 40px;
-    font-size: 24px;
+    margin-bottom: 5px;
     background-color: #fff;
     color: #606266;
-    box-shadow: rgba(0, 0, 0, 0.12) 0px 0px 6px;
-    border-radius: 4px;
-    margin-bottom: 5px;
+    font-size: 24px;
+    line-height: 40px;
+    text-align: center;
     outline: none;
     user-select: none;
     cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 0px 6px;
+    border-radius: 4px;
     &:hover{
       background-color: #ecf5ff;
       color: $primary;

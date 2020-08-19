@@ -165,11 +165,11 @@ export default {
     &-drag{
       ::v-deep .el-upload{
         &--picture-card {
+          display: inline-block;
           width: 360px;
           height: 180px;
-          line-height: 1em;
           border: none;
-          display: inline-block;
+          line-height: 1em;
         }
       }
     }

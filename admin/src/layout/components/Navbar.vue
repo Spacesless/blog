@@ -78,17 +78,17 @@ export default {
 
 <style lang="scss" scoped>
 .navbar {
-  height: 50px;
   overflow: hidden;
   position: relative;
   z-index: 5;
-  background: #fff;
+  height: 50px;
+  background-color: #fff;
   box-shadow: 0 1px 4px rgba(0,21,41,.08);
 
   .hamburger-container {
-    line-height: 46px;
-    height: 100%;
     float: left;
+    height: 100%;
+    line-height: 46px;
     cursor: pointer;
     transition: background .3s;
     -webkit-tap-highlight-color:transparent;
@@ -114,10 +114,10 @@ export default {
 
     .right-menu-item {
       display: inline-block;
-      padding: 0 8px;
       height: 100%;
-      font-size: 18px;
+      padding: 0 8px;
       color: #5a5e66;
+      font-size: 18px;
       vertical-align: text-bottom;
 
       &.hover-effect {
@@ -131,14 +131,14 @@ export default {
     }
 
     .btn-container{
-      font-size: 22px;
-      color: #606266;
       margin: 0 6px;
+      color: #606266;
+      font-size: 22px;
       cursor: pointer;
       &.el-badge{
         height: 22px;
-        line-height: 22px;
         margin-right: 15px;
+        line-height: 22px;
         vertical-align: baseline;
         ::v-deep .el-badge__content{
           top: 0;
@@ -148,27 +148,27 @@ export default {
     }
 
     .avatar-container {
-      margin-right: 30px;
       height: 45px;
+      margin-right: 30px;
 
       .avatar-wrapper {
         position: relative;
 
         .user-avatar {
-          cursor: pointer;
           width: 40px;
           height: 40px;
-          border-radius: 10px;
-          vertical-align: middle;
           margin-top: -10px;
+          vertical-align: middle;
+          cursor: pointer;
+          border-radius: 10px;
         }
 
         .el-icon-caret-bottom {
-          cursor: pointer;
           position: absolute;
           right: -20px;
           top: 25px;
           font-size: 12px;
+          cursor: pointer;
         }
       }
     }

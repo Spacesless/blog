@@ -41,20 +41,20 @@ export default {
   &-card{
     display: block;
     position: relative;
-    font-size: 14px;
     background-color: #fff;
-    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+    font-size: 14px;
     border-radius: 4px;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
     transition: all 0.6s ease-in;
     &:before,&:after {
       content: '';
       display: block;
       position: absolute;
-      box-sizing: border-box;
-      border-radius: 4px;
-      border: 1px solid transparent;
       width: 0;
       height: 0;
+      border: 1px solid transparent;
+      box-sizing: border-box;
+      border-radius: 4px;
     }
     &:before {
       bottom: 0;
@@ -85,22 +85,22 @@ export default {
     }
     &__header{
       height: 42px;
-      line-height: 42px;
       padding: 0 15px;
-      border-bottom: 1px solid #f6f6f6;
       color: #303133;
+      line-height: 42px;
+      border-bottom: 1px solid #f6f6f6;
     }
     &__body{
       padding: 10px 15px;
       line-height: 24px;
     }
     &__logo{
-      width: 64px;
       float: left;
+      width: 64px;
     }
     &__desc {
-      height: 3em;
       overflow: hidden;
+      height: 3em;
       padding-left: 10px;
       color: #606266;
     }

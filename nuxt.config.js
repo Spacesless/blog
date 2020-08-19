@@ -108,7 +108,7 @@ module.exports = {
     }
   },
   render: {
-    compressor: false,
+    compressor: false
     // resourceHints: false
   }
 }

@@ -113,8 +113,8 @@ export default {
   ::v-deep .el-upload--picture-card {
     width: 100%;
     height: 180px;
-    line-height: 1em;
     border: none;
+    line-height: 1em;
   }
   ::v-deep .el-upload-dragger{
     width: 100%;

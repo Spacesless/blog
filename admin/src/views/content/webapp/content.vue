@@ -84,11 +84,11 @@ export default {
     bottom: 0;
     left: 0;
     right: 0;
-    text-align: right;
+    z-index: 5;
     padding: 10px 20px;
     background-color: #fff;
+    text-align: right;
     box-shadow: 0 -1px 4px rgba(0, 21, 41, 0.08);
-    z-index: 5;
     .el-select{
       vertical-align: middle;
       margin-right: 15px;
@@ -97,20 +97,20 @@ export default {
 }
 .avatar-uploader{
   ::v-deep .el-upload {
-    border: 1px dashed #d9d9d9;
-    border-radius: 6px;
-    cursor: pointer;
-    position: relative;
     overflow: hidden;
+    position: relative;
+    border: 1px dashed #d9d9d9;
+    cursor: pointer;
+    border-radius: 6px;
     &:hover {
       border-color: #409EFF;
     }
   }
   &-icon {
-    font-size: 28px;
-    color: #8c939d;
     width: 150px;
     height: 150px;
+    color: #8c939d;
+    font-size: 28px;
     line-height: 150px;
     text-align: center;
   }

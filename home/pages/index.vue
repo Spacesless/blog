@@ -118,31 +118,31 @@ export default {
 <style lang="scss" scoped>
 .home{
   &-head{
-    padding: 30px 0;
     position: relative;
+    padding: 30px 0;
     &__title{
+      color: $primary;
       font-size: 24px;
       font-weight: normal;
       line-height: 1;
-      color: $primary;
     }
     &__more{
-      font-size: 14px;
-      line-height: 24px;
-      color: #909399;
       position: absolute;
       right: 0;
       top: 30px;
+      color: #909399;
+      font-size: 14px;
+      line-height: 24px;
       &:hover{
         color: $primary;
       }
     }
   }
 }
-.banner{
+.banner {
+  overflow: hidden;
   margin-top: 15px;
   border-radius: 4px;
-  overflow: hidden;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   &-item{
     &__image{
@@ -153,11 +153,11 @@ export default {
       position: absolute;
       bottom: 0;
       right: 0;
+      padding: 7px 15px;
+      background: rgba($color: #000000, $alpha: .5);
       color: #fff;
       font-size: 15px;
-      padding: 7px 15px;
       border-top-left-radius: 4px;
-      background: rgba($color: #000000, $alpha: .5);
     }
   }
 }
@@ -166,11 +166,11 @@ export default {
     margin-top: -15px;
   }
   &-item {
+    margin-top: 15px;
     padding: 10px 15px;
     background: #fff;
     border: 1px solid #EBEEF5;
     border-radius: 4px;
-    margin-top: 15px;
     transition: all .3s;
     &:hover{
       box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
@@ -180,23 +180,23 @@ export default {
     font-size: 24px;
     padding-top: 5px;
     a {
+      overflow: hidden;
       display: inline-block;
       max-width: 100%;
-      overflow: hidden;
+      color: #303133;
       text-overflow: ellipsis;
       white-space: nowrap;
-      color: #303133;
       &:hover{
         color: $primary;
       }
     }
   }
   &-meta {
-    font-size: 14px;
     padding: 5px 0;
+    font-size: 14px;
     span{
-      margin-right: 10px;
       color: #909399;
+      margin-right: 10px;
     }
     i {
       margin-right: 5px;
@@ -207,18 +207,18 @@ export default {
       a{
         color: #F56C6C;
         &:hover{
-            color: $primary;
+          color: $primary;
         }
       }
     }
   }
   &-desc {
     p {
+      overflow: hidden;
+      height: 60px;
       color: #606266;
       font-size: 14px;
       line-height: 2em;
-      height: 60px;
-      overflow: hidden;
     }
   }
 }
@@ -227,9 +227,9 @@ export default {
     margin-top: -15px;
     &-item{
       margin-top: 15px;
+      border: 1px dashed #EBEEF5;
       background-color: #fff;
       border-radius: 4px;
-      border: 1px dashed #EBEEF5;
       transition: all .3s;
       &:hover{
         border-style: solid;
@@ -243,21 +243,21 @@ export default {
       position: absolute;
       right: 0;
       bottom: 0;
-      font-size: 12px;
+      width: 30px;
+      height: 16px;
       background: $primary;
       color: #fff;
-      width: 30px;
-      text-align: center;
-      height: 16px;
+      font-size: 12px;
       line-height: 16px;
+      text-align: center;
       border-top-left-radius: 4px;
     }
     &-info{
       padding: 10px 12px;
       p, span, .el-progress__text{
+        color: #606266;
         font-size: 14px;
         line-height: 1.6em;
-        color: #606266;
       }
       .el-progress-bar{
         padding-right: 55px;
@@ -271,14 +271,14 @@ export default {
       }
     }
     &__title{
-      display: inline-block;
-      font-size: 18px;
-      max-width: 100%;
-      color: $primary;
       overflow: hidden;
+      display: inline-block;
+      max-width: 100%;
+      margin-bottom: 5px;
+      font-size: 18px;
+      color: $primary;
       text-overflow: ellipsis;
       white-space: nowrap;
-      margin-bottom: 5px;
     }
   }
   &-ratings{

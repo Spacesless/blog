@@ -131,12 +131,12 @@ export default {
 <style lang="scss" scoped>
 .links{
   &-list-logo{
-    width: 60px;
-    height: 60px;
-    border-radius: 30px;
     overflow: hidden;
     display: block;
+    width: 60px;
+    height: 60px;
     margin: 0 auto;
+    border-radius: 30px;
   }
 }
 </style>

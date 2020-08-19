@@ -193,14 +193,14 @@ export default {
       padding: 0 15px;
     }
     &__title{
+      color: #303133;
       font-size: 28px;
       font-weight: normal;
       line-height: 2;
-      color: #303133;
     }
     &__admin{
-      font-size: 15px;
       color: #606266;
+      font-size: 15px;
       span{
         margin-right: 8px;
       }
@@ -209,20 +209,20 @@ export default {
   &-content{
     border-radius: 4px;
     &-catalogue{
-      max-width: 250px;
       position: fixed;
       right: 0;
       top: 80px;
-      box-shadow: rgba(0, 0, 0, 0.12) 0px 0px 6px;
+      max-width: 250px;
       background-color: #fff;
       border-top-left-radius: 4px;
       border-bottom-left-radius: 4px;
+      box-shadow: rgba(0, 0, 0, 0.12) 0px 0px 6px;
       &-head{
+        position: relative;
         padding: 0 15px;
         color: #303133;
         line-height: 2;
         border-bottom: 1px dashed #EBEEF5;
-        position: relative;
       }
       &__close{
         position: absolute;
@@ -231,9 +231,9 @@ export default {
         cursor: pointer;
       }
       &-item{
-        font-size: 14px;
         padding: 7px 15px;
-        color: #666666;
+        color: #606266;
+        font-size: 14px;
         cursor: pointer;
         .active{
           color: $primary;

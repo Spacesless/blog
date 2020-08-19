@@ -80,8 +80,8 @@ export default {
     padding-left: 50px;
   }
   &-main{
-    border-bottom: 1px solid #e6e6e6;
     padding: 10px 0;
+    border-bottom: 1px solid #e6e6e6;
   }
   &-item{
     padding: 5px 0;
@@ -90,12 +90,12 @@ export default {
     }
   }
   &-avatar{
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
     overflow: hidden;
     float: left;
+    width: 50px;
+    height: 50px;
     margin-right: 15px;
+    border-radius: 50%;
     img{
       display: block;
       width: 100%;
@@ -103,8 +103,8 @@ export default {
     }
   }
   &-oparate{
-    font-size: 14px;
     color: #909399;
+    font-size: 14px;
   }
 }
 

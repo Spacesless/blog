@@ -315,24 +315,24 @@ export default {
     &__size{
       padding: 15px;
       p{
-        font-size: 15px;
-        color: #F56C6C;
         padding-bottom: 10px;
+        color: #F56C6C;
+        font-size: 15px;
       }
     }
-    ::vue-deep .el-dialog__body{
+    ::v-deep .el-dialog__body{
       padding: 10px 20px;
     }
   }
   &-content{
     &__title{
+      color: $primary;
       font-size: 26px;
       font-weight: 100;
-      color: $primary;
     }
     &__isuse{
-      font-size: 15px;
       color: #909399;
+      font-size: 15px;
       span{
         margin-left: 10px;
       }
@@ -360,12 +360,12 @@ export default {
     .el-button{
       padding: 6px 20px;
     }
-    ::vue-deep .tl-icon-horizontal{
+    ::v-deep .tl-icon-horizontal{
       &:before{
         content: '\e662'
       }
     }
-    ::vue-deep .tl-icon-vertical{
+    ::v-deep .tl-icon-vertical{
       &:before{
         content: '\e661'
       }

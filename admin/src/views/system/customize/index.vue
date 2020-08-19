@@ -11,10 +11,10 @@
         <el-switch v-model="formData.is_silent " />
       </el-form-item>
       <el-form-item label="Live2d模型">
-        <el-input v-model="formData.a" />
+        <el-input v-model="formData.live2d_model" />
       </el-form-item>
       <el-form-item label="Live2d材质">
-        <el-input v-model="formData.b" />
+        <el-input v-model="formData.live2d_texture" />
       </el-form-item>
       <el-form-item class="text-right">
         <el-button type="primary" :loading="confirmLoading" @click="handleSubmit">保存</el-button>
