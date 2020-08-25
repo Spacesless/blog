@@ -68,12 +68,12 @@
               <nuxt-link class="wallpaper-list__title" :to="'/wallpaper/content/' + item.id" :title="item.title">{{ item.title }}</nuxt-link>
               <div class="wallpaper-list-tag">
                 <span
-                  v-for="(child,index) in tag"
+                  v-for="(tag,index) in tag"
                   :key="index"
                   class="tl-tag"
-                  :class="item | tagClassName"
-                  @click="handleAddTag(item)"
-                >{{ item }}</span>
+                  :class="tag | tagClassName"
+                  @click="handleAddTag(tag)"
+                >{{ tag }}</span>
               </div>
               <p class="wallpaper-list-info">
                 <span><i class="tl-icon">&#xe70b;</i>{{ item.updatetime }}</span>
@@ -104,7 +104,7 @@ export default {
   async asyncData({ app, params, query, $axios }) {
     const paramId = params.id
     const [id, page] = paramId ? paramId.split('-') : []
-    const { sortBy, orderBy, resolutions, resolutionBy } = query
+    const { sortBy, orderBy, resolutions, resolutionBy, tags } = query
     const { seo, list } = await $axios.$get('/wallpaper/list', {
       params: {
         id: id === 'list' ? null : id,
@@ -127,8 +127,10 @@ export default {
         sortBy: sortBy || 'updatetime',
         orderBy: orderBy || 'desc',
         resolutions: resolutions || 'all',
-        resolutionBy: resolutionBy || 'less'
-      }
+        resolutionBy: resolutionBy || 'less',
+        tags: tags || ''
+      },
+      dynamicTags: tags ? tags.split(',') : []
     }
   },
   head() {

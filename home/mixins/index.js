@@ -26,22 +26,6 @@ export const listQuery = {
       dynamicTags: []
     }
   },
-  watch: {
-    dynamicTags(data) {
-      if (!data.length) return
-      const tags = data.join()
-
-      const { fullPath } = this.$route
-
-      this.$router.replace({
-        path: fullPath,
-        query: { tags }
-      })
-    }
-  },
-  mounted() {
-    this.dynamicTags = this.search.tags ? this.search.tags.split() : []
-  },
   methods: {
     handleSearch(key) {
       const path = this.$route.fullPath
@@ -51,9 +35,14 @@ export const listQuery = {
     },
     handleDeleteTag(tag) {
       this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1)
+      this.search.tags = this.dynamicTags.join()
+      this.handleSearch('tags')
     },
     handleAddTag(tag) {
+      if (this.dynamicTags.includes(tag)) return
       this.dynamicTags.push(tag)
+      this.search.tags = this.dynamicTags.join()
+      this.handleSearch('tags')
     }
   }
 }
@@ -84,10 +73,21 @@ export const globalFilter = {
       const isDev = process.env.NODE_ENV === 'development'
       return isDev ? url : '//cdn.timelessq.com' + url
     },
+    /**
+     * 计算tag的classname
+     * @param {String} tag 标签名称
+     * @returns {String}
+     * @summary 标签charCodeAt总长度模8
+     */
     tagClassName(tag) {
-      const nameEnum = ['red', 'orange', 'yellow', 'green', 'blue', 'purple']
-      const tagLength = tag.replace(/[\u0391-\uFFE5]/g, 'aa').length
-      const findName = nameEnum[tagLength % 6]
+      const nameEnum = ['red', 'geekblue', 'orange', 'cyan', 'green', 'blue', 'purple', 'magenta']
+      const enumLength = nameEnum.length
+      let tagLength = 0
+      for (let i = 0; i < tag.length; i++) {
+        const charCode = tag.charCodeAt(i)
+        tagLength += charCode
+      }
+      const findName = nameEnum[tagLength % enumLength]
       return findName ? `tl-tag--${findName}` : ''
     }
   }

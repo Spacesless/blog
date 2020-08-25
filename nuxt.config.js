@@ -3,7 +3,7 @@ const isPro = process.env.NODE_ENV === 'production'
 module.exports = {
   mode: 'universal',
   modern: isPro,
-  dev: false,
+  // dev: false,
   srcDir: 'home/',
   offline: true,
   telemetry: false,

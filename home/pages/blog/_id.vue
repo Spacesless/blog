@@ -52,12 +52,12 @@
           </div>
           <div class="blog-list-tag">
             <span
-              v-for="(child, childIndex) in tag"
+              v-for="(tag, childIndex) in item.tag"
               :key="childIndex"
               class="tl-tag"
-              :class="item | tagClassName"
-              @click="handleAddTag(item)"
-            >{{ item }}</span>
+              :class="tag | tagClassName"
+              @click="handleAddTag(tag)"
+            >{{ tag }}</span>
           </div>
           <p class="blog-list__desc">{{ item.description | substr(0, 120) }}</p>
         </el-col>
@@ -82,7 +82,7 @@ export default {
   async asyncData({ app, params, query, $axios }) {
     const paramId = params.id
     const [id, page] = paramId ? paramId.split('-') : []
-    const { sortBy, orderBy } = query
+    const { sortBy, orderBy, tags } = query
     const { seo, list } = await $axios.$get('/blog/list', {
       params: {
         id: id === 'list' ? null : id,
@@ -101,8 +101,10 @@ export default {
       blogList: list.data,
       search: {
         sortBy: sortBy || 'updatetime',
-        orderBy: orderBy || 'desc'
-      }
+        orderBy: orderBy || 'desc',
+        tags: tags || ''
+      },
+      dynamicTags: tags ? tags.split(',') : []
     }
   },
   watchQuery: ['sortBy', 'orderBy'],

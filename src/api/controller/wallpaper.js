@@ -41,7 +41,7 @@ module.exports = class extends Base {
       if (!think.isEmpty(expectHeight)) where.imgheight = [logic, expectHeight]
     }
     // tag标签
-    if (tags) where.tag = ['like', tags.split()]
+    if (tags) where.tag = ['like', tags.split().map(item => `%${item}%`)]
     const list = await this.modelInstance
       .where(where)
       .field(field)

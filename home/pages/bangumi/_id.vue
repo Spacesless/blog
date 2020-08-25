@@ -54,16 +54,16 @@
               <nuxt-link class="bangumi-list__title" :to="'/bangumi/content/' + item.id">{{ item.title }}</nuxt-link>
               <p><span class="para-name">时间：</span>{{ item.showtime }}</p>
               <p><span class="para-name">状态：</span>{{ item.status | bangumiStatus }}</p>
+              <p class="hidden-xs-only"><span class="para-name">简介：</span>{{ item.description | substr(0, 60) }}……</p>
               <div class="bangumi-list-tag">
                 <span
-                  v-for="(child,index) in tag"
+                  v-for="(tag,index) in item.tag"
                   :key="index"
                   class="tl-tag"
-                  :class="item | tagClassName"
-                  @click="handleAddTag(item)"
-                >{{ item }}</span>
+                  :class="tag | tagClassName"
+                  @click="handleAddTag(tag)"
+                >{{ tag }}</span>
               </div>
-              <p class="hidden-xs-only"><span class="para-name">简介：</span>{{ item.description | substr(0, 60) }}……</p>
               <div class="bangumi-progress clearfix">
                 <span class="para-name">进度：</span>
                 <div class="el-progress el-progress--line">
@@ -125,7 +125,8 @@ export default {
         status: status || '',
         progress: progress || '',
         tags: tags || ''
-      }
+      },
+      dynamicTags: tags ? tags.split(',') : []
     }
   },
   watchQuery: ['sortBy', 'orderBy', 'status', 'progress', 'tags'],
@@ -195,11 +196,9 @@ export default {
     }
     &-info{
       padding: 10px 12px;
-      p, span, .el-progress__text{
-        color: #606266;
-        font-size: 14px;
-        line-height: 1.6em;
-      }
+      color: #606266;
+      font-size: 14px;
+      line-height: 1.6em;
       .el-progress-bar{
         padding-right: 55px;
       }

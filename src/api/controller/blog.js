@@ -32,7 +32,7 @@ module.exports = class extends Base {
         where.class1 = column.id
     }
     // tag标签
-    if (tags) where.tag = ['like', tags.split()]
+    if (tags) where.tag = ['like', tags.split().map(item => `%${item}%`)]
     const list = await this.modelInstance
       .where(where)
       .field(field)
@@ -42,8 +42,9 @@ module.exports = class extends Base {
 
     const { thumb_blog_x: blogX, thumb_blog_y: blogY, thumb_kind: thumbKind } = this.options
     for (const item of list.data) {
-      item.imgurl = await this.thumbImage(item.imgurl, blogX, blogY, thumbKind)
-      item.tag = item.tag.split('|')
+      const { imgurl, tag } = item
+      item.imgurl = await this.thumbImage(imgurl, blogX, blogY, thumbKind)
+      item.tag = tag ? tag.split('|') : []
     }
 
     return this.success({
