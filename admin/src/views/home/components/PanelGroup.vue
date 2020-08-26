@@ -93,11 +93,11 @@ export default {
     padding: 0;
   }
   .card-panel {
-    font-size: 12px;
-    position: relative;
     overflow: hidden;
-    color: #606266;
+    position: relative;
     background: #fff;
+    color: #606266;
+    font-size: 12px;
     box-shadow: 0 1px 5px rgba(0, 21, 41, 0.08);
     cursor: pointer;
     &:hover{

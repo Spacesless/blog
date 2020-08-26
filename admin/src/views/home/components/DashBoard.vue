@@ -49,9 +49,9 @@ export default {
     width: 32px;
   }
   span{
-    font-size: 14px;
     margin-left: 5px;
     color: #909399;
+    font-size: 14px;
   }
   .el-divider--horizontal{
     margin: 10px 0;

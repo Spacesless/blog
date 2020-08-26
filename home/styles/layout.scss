@@ -1,18 +1,18 @@
 @import './variables.scss';
 
 .aside{
-  width: $asideWidth;
-  height: 100%;
   position: fixed;
   top: 0;
   left: 0;
   z-index: 999;
+  width: $asideWidth;
+  height: 100%;
   background-color: #F2F6FC;
   box-shadow: 2px 0 10px rgba(0,0,0,.1);
   transition: width 0.3s;
   &-logo{
-    text-align: center;
     padding: 15px 0 10px;
+    text-align: center;
     &__img{
       width: 100px;
       height: 100px;
@@ -20,13 +20,13 @@
       transition: all .3s;
     }
     &__name{
-      font-family: 'Neo', '黑体';
-      font-size: 22px;
+      overflow: hidden;
       padding-top: 5px;
       color: $primary;
+      font-family: 'Neo', '黑体';
+      font-size: 22px;
+      white-space: nowrap;
       transition: width 0.3;
-      white-space: nowrap;;
-      overflow: hidden;
     }
     &--collapse &__img{
       width: 50px;
@@ -44,16 +44,16 @@
     height: 100%;
     border-right: none !important;
     a{
+      overflow: hidden;
       display: inline-block;
       width: 100%;
-      overflow: hidden;
     }
     &__icon{
-      vertical-align: middle;
-      margin-right: 5px;
       width: 24px;
-      text-align: center;
+      margin-right: 5px;
       font-size: 18px;
+      text-align: center;
+      vertical-align: middle;
     }
     .el-menu-item{
       &:focus,&:hover{
@@ -82,10 +82,10 @@
       display: inline-block;
       width: 30px;
       height: 30px;
-      line-height: 30px;
-      font-size: 22px;
-      color: #606266;
       margin: 0 10px;
+      color: #606266;
+      font-size: 22px;
+      line-height: 30px;
       vertical-align: middle;
       cursor: pointer;
       &:hover{
@@ -99,16 +99,16 @@
 }
 
 .header{
-  width: calc(100% - #{$asideWidth});
-  padding: 0 15px;
-  height: 60px;
   position: fixed;
   top: 0;
   right: 0;
   z-index: 998;
+  width: calc(100% - #{$asideWidth});
+  height: 60px;
+  padding: 0 15px;
   line-height: 50px;
-  background-color: #fff;
   border-bottom: 1px solid #EBEEF5;
+  background-color: #fff;
   box-sizing: border-box;
   transition: width 0.3s;
   &-logo{
@@ -118,14 +118,14 @@
     }
   }
   &-menus{
-    text-align: right;
     height: 60px;
     line-height: 60px;
+    text-align: right;
     &__btn{
-      font-size: 18px;
-      color: #606266;
-      padding: 3px;
       margin-left: 5px;
+      padding: 3px;
+      color: #606266;
+      font-size: 18px;
       user-select: none;
       cursor: pointer;
       &:hover{
@@ -136,8 +136,8 @@
 }
 
 .search{
-  padding-bottom: 32px;
   clear: both;
+  padding-bottom: 32px;
   &-drawer{
     height: auto;
     outline: none;
@@ -152,20 +152,20 @@
     float: left;
   }
   &-input{
-    display: block;
     overflow: hidden;
-    padding-left: 15px;
+    display: block;
     width: auto;
+    padding-left: 15px;
   }
   &__button{
     display: inline-block;
-    width: 40px;
-    line-height: 40px;
-    text-align: center;
-    color: #606266;
     position: absolute;
     right: 0;
     top: 0;
+    width: 40px;
+    color: #606266;
+    line-height: 40px;
+    text-align: center;
     cursor: pointer;
     &:hover{
       color: $primary;
@@ -174,25 +174,25 @@
   &-hot{
     padding-top: 25px;
     &-header{
-      font-size: 18px;
       padding-bottom: 15px;
+      font-size: 18px;
     }
     &__icon{
       color: #F56C6C;
     }
     &__title{
-      font-weight: normal;
       color: #606266;
+      font-weight: normal;
     }
     &__link{
       display: inline-block;
-      padding: 7px 15px;
-      border-radius: 15px;
-      font-size: 13px;
-      color: #606266;
-      background-color: #E4E7ED;
       margin-bottom: 10px;
       margin-right: 10px;
+      padding: 7px 15px;
+      background-color: #E4E7ED;
+      color: #606266;
+      font-size: 13px;
+      border-radius: 15px;
       cursor: pointer;
       &:hover{
         background-color: #ecf5ff;
@@ -203,26 +203,26 @@
 }
 
 .app-main{
+  max-width: calc(100% - #{$asideWidth});
   margin-left: $asideWidth;
   padding-top: 60px;
   transition: margin 0.3s;
-  max-width: calc(100% - #{$asideWidth});
   &__title{
     position: relative;
-    font-weight: normal;
-    font-size: 24px;
-    line-height: 1em;
+    margin: 15px 0;
     padding-left: 15px;
     color: #303133;
-    margin: 15px 0;
+    font-size: 24px;
+    font-weight: normal;
+    line-height: 1em;
     &:before{
       content: '';
       display: block;
       position: absolute;
-      width: 3px;
-      height: 100%;
       left: 0;
       top: 0;
+      width: 3px;
+      height: 100%;
       background-color: $primary;
     }
   }
@@ -230,11 +230,11 @@
 
 .app-container {
   width: 100%;
+  min-height: calc(100vh - 150px);
   padding-right: 15px;
   padding-left: 15px;
   margin-right: auto;
   margin-left: auto;
-  min-height: calc(100vh - 150px);
   box-sizing: border-box;
   @media (min-width: 576px) {
     max-width: 540px;
@@ -254,23 +254,23 @@
 }
 
 .footer{
-  font-size: 14px;
-  color: #909399;
-  line-height: 1.3;
   padding: 20px 0;
+  color: #909399;
+  font-size: 14px;
+  line-height: 1.3;
   &__icon{
-    vertical-align: text-bottom;
     padding: 0 3px;
+    vertical-align: text-bottom;
   }
   &-info{
-    text-align: center;
     margin-bottom: 5px;
+    text-align: center;
   }
   &-copyright{
     text-align: center;
     &__link{
-      color: $primary;
       margin-left: 10px;
+      color: $primary;
     }
   }
 }
@@ -299,19 +299,19 @@
       .el-submenu {
         &>.el-submenu__title {
           &>span {
-            height: 0;
-            width: 0;
             overflow: hidden;
-            visibility: hidden;
             display: inline-block;
+            visibility: hidden;
+            width: 0;
+            height: 0;
           }
         }
       }
     }
   }
   .app-main{
-    margin-left: 64px;
     max-width: calc(100% - 64px);
+    margin-left: 64px;
   }
   .header {
     width: calc(100% - 64px)

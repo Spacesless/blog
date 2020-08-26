@@ -6,7 +6,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/GitProQ/tl-blog.git"
+    "url": "https://github.com/Splacesless/tl-blog.git"
   },
   "scripts": {
     "start": "node development.js",

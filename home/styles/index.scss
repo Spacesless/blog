@@ -37,13 +37,13 @@ $tagColor:(
 
 //background
 .background{
-  width: 100%;
-  height: 100%;
   overflow: hidden;
   position: fixed;
   top: 0;
   left: 0;
   z-index: -1;
+  width: 100%;
+  height: 100%;
   background: url('/static/music-background.webp') no-repeat;
   background-position: right center;
   background-size: contain;
@@ -54,8 +54,8 @@ $tagColor:(
   }
 }
 .filter{
-  padding: 30px 0 12px;
   position: relative;
+  padding: 30px 0 12px;
   .el-form-item{
     &__content{
       overflow: hidden;
@@ -66,30 +66,6 @@ $tagColor:(
   }
   .el-tag{
     margin-right: 10px;
-  }
-  &-btn{
-    position: absolute;
-    right: 0;
-    top: -44px;
-    opacity: 0;
-    transition: opacity .3s;
-    &__item{
-      float: left;
-      font-size: 12px;
-      color: #606266;
-      padding: 7px 15px;
-      background-color:#ecf5ff;
-      cursor: pointer;
-      &--reset{
-        border-bottom-left-radius: 4px;
-      }
-      &--confirm{
-        border-top-right-radius: 4px;
-      }
-      &:hover{
-        background-color: #d9ecff;
-      }
-    }
   }
 }
 // pagination
@@ -108,37 +84,37 @@ $tagColor:(
 // content
 .Tinymce{
   padding: 15px;
+  color: #606266;
   font-size: 15px;
   line-height: 1.7;
-  color: #606266;
   letter-spacing: 1px;
   p{
     margin: 12px 0;
   }
   h2,h3,h4,h5{
-    font-weight: 100;
     color: #303133;
+    font-weight: 100;
   }
   h2{
-    font-size: 24px;
     margin: 4px 0 6px;
+    font-size: 24px;
   }
   h3{
-    font-size: 22px;
     margin: 3px 0 5px;
+    font-size: 22px;
   }
   h4{
-    font-size: 20px;
     margin: 2px 0 4px;
+    font-size: 20px;
   }
   h5{
-    font-size: 18px;
     margin: 1px 0 3px;
+    font-size: 18px;
   }
   img{
+    height: auto !important;
     max-width: 100%;
     margin: 12px 0;
-    height: auto !important;
     cursor: pointer;
   }
   a{
@@ -150,14 +126,14 @@ $tagColor:(
   p{
     & > code{
       display: inline-block;
+      padding: 3px 6px;
+      margin: 0 3px;
+      background-color: #ecf5ff;
+      color: $primary;
       font-size: 90%;
       font-family: Consolas,Menlo,Courier,monospace;
-      color: $primary;
-      margin: 0 3px;
       line-height: 1em;
-      padding: 3px 6px;
       border-radius: 4px;
-      background-color: #ecf5ff;
     }
   }
 }

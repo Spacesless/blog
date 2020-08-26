@@ -1,19 +1,19 @@
 <template>
   <div class="bangumi">
     <el-form class="filter">
-      <el-form-item label="列表排序" label-width="70px">
-        <el-select v-model="search.sortBy" placeholder="请选择排序方式" @change="handleSearch('sortBy')">
-          <el-option label="更新时间" value="updatetime" />
+      <el-form-item label="列表排序" label-width="70px" label-position="left">
+        <el-select v-model="filters.sortBy" placeholder="请选择排序方式" @change="handleSearch">
+          <el-option label="更新时间" value="" />
           <el-option label="发布时间" value="addtime" />
           <el-option label="推荐指数" value="ratings" />
         </el-select>
-        <el-radio-group v-model="search.orderBy" @change="handleSearch('orderBy')">
+        <el-radio-group v-model="filters.orderBy" @change="handleSearch">
+          <el-radio-button label="">降序</el-radio-button>
           <el-radio-button label="asc">升序</el-radio-button>
-          <el-radio-button label="desc">降序</el-radio-button>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="放送状态">
-        <el-radio-group v-model="search.status" @change="handleSearch('status')">
+        <el-radio-group v-model="filters.status" @change="handleSearch">
           <el-radio-button label="">全部</el-radio-button>
           <el-radio-button label="0">未上映</el-radio-button>
           <el-radio-button label="1">连载中</el-radio-button>
@@ -21,7 +21,7 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item label="追剧进度">
-        <el-radio-group v-model="search.progress" @change="handleSearch('progress')">
+        <el-radio-group v-model="filters.progress" @change="handleSearch">
           <el-radio-button label="">全部</el-radio-button>
           <el-radio-button label="0">在看</el-radio-button>
           <el-radio-button label="1">看过</el-radio-button>
@@ -34,9 +34,7 @@
           closable
           :disable-transitions="false"
           @close="handleDeleteTag(tag)"
-        >
-          {{ tag }}
-        </el-tag>
+        >{{ tag }}</el-tag>
       </el-form-item>
     </el-form>
     <!--bangumi list-->
@@ -81,7 +79,7 @@
       </el-row>
       <!--list paper-->
       <div class="list-page">
-        <pagination v-show="total>0" :total="total" :page.sync="listPage.page" :limit="listPage.limit" @pagination="changeListPage" />
+        <pagination :total="total" :page.sync="listPage.page" :limit="listPage.pageSize" @pagination="changeListPage" />
       </div>
     </div>
   </div>
@@ -115,21 +113,23 @@ export default {
       seo,
       listPage: {
         page: +page || 1,
-        limit: list.pageSize
+        pageSize: list.pageSize
       },
       total: list.count,
-      bangumiList: list.data,
-      search: {
-        sortBy: sortBy || 'updatetime',
-        orderBy: orderBy || 'desc',
-        status: status || '',
-        progress: progress || '',
-        tags: tags || ''
-      },
-      dynamicTags: tags ? tags.split(',') : []
+      bangumiList: list.data
     }
   },
-  watchQuery: ['sortBy', 'orderBy', 'status', 'progress', 'tags'],
+  created() {
+    const { sortBy, orderBy, status, progress, tags } = this.$route.query
+    this.search = {
+      sortBy: sortBy || '',
+      orderBy: orderBy || '',
+      status: status || '',
+      progress: progress || '',
+      tags: tags || ''
+    }
+    this.dynamicTags = tags ? tags.split(',') : []
+  },
   head() {
     return {
       title: this.seo.title,

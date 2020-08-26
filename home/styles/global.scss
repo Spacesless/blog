@@ -8,8 +8,8 @@ body,dl,dd,h1,h2,h3,h4,h5,h6,p,form,ul,ol{
   margin:0;
 }
 ul,ol{
-  list-style:none;
   padding:0;
+  list-style:none;
 }
 img{
   border:0;
@@ -25,11 +25,11 @@ i,s,b,em{
 .clearfix:before,
 .clearfix:after{
   content:"";
+  visibility:hidden;
+  clear:both;
+  display:block;
   height:0;
   line-height:0;
-  display:block;
-  clear:both;
-  visibility:hidden;
 }
 .clearfix{
   zoom:1;
@@ -53,9 +53,9 @@ a,a:hover,a:active,a:focus,a:visited{
   font-weight: 400;
   font-variant: normal;
   font-display: fallback;
-  text-transform: none;
   line-height: 1;
   vertical-align: baseline;
+  text-transform: none;
 }
 .img-fluid{
   display: block;
@@ -94,14 +94,14 @@ a,a:hover,a:active,a:focus,a:visited{
 }
 //waifu
 .waifu {
-  width: 290px;
-  height: 280px;
   position: fixed;
   bottom: 0;
   right: 0;
   z-index: 999;
-  transition: margin-top .3s ease-in-out;
+  width: 290px;
+  height: 280px;
   margin-top: 3px;
+  transition: margin-top .3s ease-in-out;
   transform-origin: bottom center;
   &:hover{
     margin-top: 0;
@@ -111,6 +111,9 @@ a,a:hover,a:active,a:focus,a:visited{
     }
   }
   &-tips {
+    overflow: hidden;
+    position: absolute;
+    top: 20px;
     width: 250px;
     height: 70px;
     margin: -20px 10px;
@@ -118,29 +121,26 @@ a,a:hover,a:active,a:focus,a:visited{
     border: 1px solid $primary;
     border-radius: 12px;
     background-color: rgba(255, 255, 255, 0.8);
-    box-shadow: 0 1px 3px #66ccff;
     font-size: 12px;
     text-overflow: ellipsis;
-    overflow: hidden;
-    position: absolute;
-    top: 20px;
+    box-shadow: 0 1px 3px #66ccff;
     animation: shake 25s ease-in-out 2s infinite;
   }
   &-tool {
     display: none;
-    color: #aaa;
-    font-size: 14px;
     position: absolute;
     top: 50%;
     left: 10px;
     margin-top: -75px;
+    color: #aaa;
+    font-size: 14px;
     span {
       display: block;
-      font-size: 20px;
       margin-bottom: 5px;
-      cursor: pointer;
       color: $primary;
+      font-size: 20px;
       line-height: 20px;
+      cursor: pointer;
       transition: 0.2s;
       &:hover{
         color: #fba100;
@@ -194,9 +194,9 @@ a,a:hover,a:active,a:focus,a:visited{
 }
 @media (pointer: fine) {
   ::-webkit-scrollbar {
-    background-color: transparent;
     height: 8px;
     width: 8px;
+    background-color: transparent;
   }
   ::-webkit-scrollbar-button {
     width: 0;

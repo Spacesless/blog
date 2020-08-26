@@ -1,16 +1,16 @@
 <template>
   <div class="blog">
     <!-- filter -->
-    <el-form class="filter">
+    <el-form class="filter" label-width="70px" label-position="left">
       <el-form-item label="列表排序">
-        <el-select v-model="search.sortBy" placeholder="请选择排序方式" @change="handleSearch('sortBy')">
-          <el-option label="更新时间" value="updatetime" />
+        <el-select v-model="filters.sortBy" placeholder="请选择排序方式" @change="handleSearch">
+          <el-option label="更新时间" value="" />
           <el-option label="发布时间" value="addtime" />
           <el-option label="浏览次数" value="hits" />
         </el-select>
-        <el-radio-group v-model="search.orderBy" @change="handleSearch('orderBy')">
+        <el-radio-group v-model="filters.orderBy" @change="handleSearch">
+          <el-radio-button label="">降序</el-radio-button>
           <el-radio-button label="asc">升序</el-radio-button>
-          <el-radio-button label="desc">降序</el-radio-button>
         </el-radio-group>
       </el-form-item>
       <el-form-item v-if="dynamicTags.length" label="标签">
@@ -20,9 +20,7 @@
           closable
           :disable-transitions="false"
           @close="handleDeleteTag(tag)"
-        >
-          {{ tag }}
-        </el-tag>
+        >{{ tag }}</el-tag>
       </el-form-item>
     </el-form>
     <!--blog list-->
@@ -64,7 +62,7 @@
       </el-row>
       <!--list paper-->
       <div class="list-page">
-        <pagination v-show="total>0" :total="total" :page.sync="listPage.page" :limit="listPage.limit" @pagination="changeListPage" />
+        <pagination :total="total" :page.sync="listPage.page" :limit="listPage.pageSize" @pagination="changeListPage" />
       </div>
     </div>
   </div>
@@ -95,19 +93,18 @@ export default {
       seo,
       listPage: {
         page: +page || 1,
-        limit: list.pageSize
+        pageSize: list.pageSize
       },
       total: list.count,
       blogList: list.data,
       search: {
-        sortBy: sortBy || 'updatetime',
-        orderBy: orderBy || 'desc',
+        sortBy: sortBy || '',
+        orderBy: orderBy || '',
         tags: tags || ''
       },
       dynamicTags: tags ? tags.split(',') : []
     }
   },
-  watchQuery: ['sortBy', 'orderBy'],
   head() {
     return {
       title: this.seo.title,

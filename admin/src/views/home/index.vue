@@ -88,10 +88,10 @@ export default {
   background: #fff;
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
   .home-avatar{
+    overflow: hidden;
+    float: left;
     width: 100px;
     height: 100px;
-    float: left;
-    overflow: hidden;
     border-radius: 50px;
     img{
       display: block;
@@ -103,17 +103,17 @@ export default {
     float: left;
     padding: 23px 30px;
     h3{
-      font-size: 18px;
-      line-height: 2em;
       color: #606266;
+      font-size: 18px;
       font-weight: normal;
+      line-height: 2em;
     }
     .username{
       color: #303133;
     }
     p{
-      font-size: 15px;
       color: #909399;
+      font-size: 15px;
     }
   }
   .home-community{
@@ -132,9 +132,9 @@ export default {
       p{
         color: rgba(0, 0, 0, 0.85);
         font-size: 30px;
+        font-family: -apple-system,BlinkMacSystemFont,Segoe UI;
         line-height: 38px;
         text-align: center;
-        font-family: -apple-system,BlinkMacSystemFont,Segoe UI;
       }
     }
   }
