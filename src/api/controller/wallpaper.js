@@ -41,7 +41,7 @@ module.exports = class extends Base {
       if (!think.isEmpty(expectHeight)) where.imgheight = [logic, expectHeight]
     }
     // tag标签
-    if (tags) where.tag = ['like', tags.split().map(item => `%${item}%`)]
+    if (tags) where.tag = ['like', tags.split(',').map(item => `%${item}%`)]
     const list = await this.modelInstance
       .where(where)
       .field(field)
@@ -51,8 +51,9 @@ module.exports = class extends Base {
 
     const { thumb_image_x: imageX, thumb_image_y: imageY, thumb_kind: thumbKind } = this.options
     for (const item of list.data) {
-      item.imgurl = await this.thumbImage(item.imgurl, imageX, imageY, thumbKind)
-      item.tag = item.tag.split('|')
+      const { imgurl, tag } = item
+      item.imgurl = await this.thumbImage(imgurl, imageX, imageY, thumbKind)
+      item.tag = tag ? tag.split('|') : []
     }
 
     return this.success({

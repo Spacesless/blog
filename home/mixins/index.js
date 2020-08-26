@@ -64,7 +64,7 @@ export const listQuery = {
     filterParams(data) {
       const target = {}
       for (const key in data) {
-        if (data[key] === '') {
+        if (data[key] !== '') {
           target[key] = data[key]
         }
       }

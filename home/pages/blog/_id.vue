@@ -18,6 +18,7 @@
           v-for="tag in dynamicTags"
           :key="tag"
           closable
+          size="medium"
           :disable-transitions="false"
           @close="handleDeleteTag(tag)"
         >{{ tag }}</el-tag>
@@ -97,7 +98,7 @@ export default {
       },
       total: list.count,
       blogList: list.data,
-      search: {
+      filters: {
         sortBy: sortBy || '',
         orderBy: orderBy || '',
         tags: tags || ''
@@ -113,7 +114,8 @@ export default {
         { hid: 'keyword', name: 'keyword', content: this.seo.keyword }
       ]
     }
-  }
+  },
+  watchQuery: ['sortBy', 'orderBy', 'tags']
 }
 </script>
 

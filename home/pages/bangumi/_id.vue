@@ -1,7 +1,7 @@
 <template>
   <div class="bangumi">
-    <el-form class="filter">
-      <el-form-item label="列表排序" label-width="70px" label-position="left">
+    <el-form class="filter" label-width="70px" label-position="left">
+      <el-form-item label="列表排序">
         <el-select v-model="filters.sortBy" placeholder="请选择排序方式" @change="handleSearch">
           <el-option label="更新时间" value="" />
           <el-option label="发布时间" value="addtime" />
@@ -32,6 +32,7 @@
           v-for="tag in dynamicTags"
           :key="tag"
           closable
+          size="medium"
           :disable-transitions="false"
           @close="handleDeleteTag(tag)"
         >{{ tag }}</el-tag>
@@ -116,19 +117,16 @@ export default {
         pageSize: list.pageSize
       },
       total: list.count,
-      bangumiList: list.data
+      bangumiList: list.data,
+      filters: {
+        sortBy: sortBy || '',
+        orderBy: orderBy || '',
+        status: status || '',
+        progress: progress || '',
+        tags: tags || ''
+      },
+      dynamicTags: tags ? tags.split(',') : []
     }
-  },
-  created() {
-    const { sortBy, orderBy, status, progress, tags } = this.$route.query
-    this.search = {
-      sortBy: sortBy || '',
-      orderBy: orderBy || '',
-      status: status || '',
-      progress: progress || '',
-      tags: tags || ''
-    }
-    this.dynamicTags = tags ? tags.split(',') : []
   },
   head() {
     return {
@@ -138,7 +136,8 @@ export default {
         { hid: 'keyword', name: 'keyword', content: this.seo.keyword }
       ]
     }
-  }
+  },
+  watchQuery: ['sortBy', 'orderBy', 'status', 'progress', 'tags']
 }
 </script>
 

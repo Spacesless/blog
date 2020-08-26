@@ -49,6 +49,7 @@
           v-for="tag in dynamicTags"
           :key="tag"
           closable
+          size="medium"
           :disable-transitions="false"
           @close="handleDeleteTag(tag)"
         >{{ tag }}</el-tag>
@@ -57,27 +58,27 @@
     <!--wallpaper list-->
     <div class="wallpaper-list">
       <el-row :gutter="15">
-        <el-col v-for="item in imageList" :key="item.id" :md="12" :lg="8" :xl="6">
+        <el-col v-for="item in imageList" :key="item.id" :sm="12" :lg="8">
           <div class="wallpaper-list-item">
             <nuxt-link :to="'/wallpaper/content/' + item.id" :title="item.title">
               <img class="img-fluid" :src="item.imgurl" :alt="item.title">
             </nuxt-link>
             <div class="wallpaper-list__detail">
               <nuxt-link class="wallpaper-list__title" :to="'/wallpaper/content/' + item.id" :title="item.title">{{ item.title }}</nuxt-link>
+              <p class="wallpaper-list-info">
+                <span><i class="tl-icon">&#xe70b;</i>{{ item.updatetime }}</span>
+                <span><i class="tl-icon">&#xe601;</i>{{ item.hits }}</span>
+                <span><i class="tl-icon">&#xe695;</i>{{ item.imgwidth }}x{{ item.imgheight }}</span>
+              </p>
               <div class="wallpaper-list-tag">
                 <span
-                  v-for="(tag,index) in tag"
+                  v-for="(tag,index) in item.tag"
                   :key="index"
                   class="tl-tag"
                   :class="tag | tagClassName"
                   @click="handleAddTag(tag)"
                 >{{ tag }}</span>
               </div>
-              <p class="wallpaper-list-info">
-                <span><i class="tl-icon">&#xe70b;</i>{{ item.updatetime }}</span>
-                <span><i class="tl-icon">&#xe601;</i>{{ item.hits }}</span>
-                <span><i class="tl-icon">&#xe695;</i>{{ item.imgwidth }}x{{ item.imgheight }}</span>
-              </p>
             </div>
           </div>
         </el-col>
@@ -121,7 +122,7 @@ export default {
       },
       total: list.count,
       imageList: list.data,
-      search: {
+      filters: {
         sortBy: sortBy || '',
         orderBy: orderBy || '',
         resolutions: resolutions || '',
@@ -139,7 +140,8 @@ export default {
         { hid: 'keyword', name: 'keyword', content: this.seo.keyword }
       ]
     }
-  }
+  },
+  watchQuery: ['sortBy', 'orderBy', 'resolutions', 'resolutionBy', 'tags']
 }
 </script>
 
@@ -149,7 +151,7 @@ export default {
     overflow: hidden;
     position: relative;
     margin-bottom: 15px;
-    border: 4px solid #303133;
+    border: 4px solid #606266;
     background-color: #fff;
     box-shadow: 4px 4px 0 #66ccff;
     border-radius: 4px;
