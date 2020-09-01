@@ -30,6 +30,7 @@ app/
 .nuxt/
 view/admin
 www/cms
+www/assets
 www/upload
 www/static
 

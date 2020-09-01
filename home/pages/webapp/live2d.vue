@@ -48,7 +48,7 @@ export default {
   data() {
     return {
       apiurl: '//api.timelessq.com/live2d', // apiurl {string} 模型后端接口
-      modelId: 10, // 模型 ID
+      modelId: 100, // 模型 ID
       modelTexturesId: 1, // 材质 ID
       tips: '',
       tipsShow: false,

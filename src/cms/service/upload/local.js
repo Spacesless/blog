@@ -2,7 +2,6 @@ const url = require('url')
 const path = require('path')
 const fs = require('fs-extra')
 const Base = require('./base')
-const renameAsync = think.promisify(fs.rename, fs)
 const readdirSync = think.promisify(fs.readdir, fs)
 
 module.exports = class extends Base {
@@ -49,7 +48,7 @@ module.exports = class extends Base {
    * @param {Number} pageSize 每页个数
    * @param {String} keyword 搜索关键词
    */
-  async getFileList(src, page = 1, pageSize = 32, keyword) {
+  async getFileList(src = 'upload/', page = 1, pageSize = 20, keyword) {
     const targetPath = path.join(think.RESOURCE_PATH, src)
     if (think.isDirectory(targetPath)) {
       const filesAndDirs = await readdirSync(targetPath)
@@ -63,13 +62,12 @@ module.exports = class extends Base {
             type: 1 // 目录
           })
         } else {
-          const { size, mtime } = await fs.stat(itempath)
-            .catch(() => {
-              return {
-                size: 0,
-                mtime: ''
-              }
-            })
+          const { size, mtime } = await fs.stat(itempath).catch(() => {
+            return {
+              size: 0,
+              mtime: ''
+            }
+          })
           const extname = path.extname(item).replace('.', '')
           list.push({
             name: item,
@@ -94,46 +92,5 @@ module.exports = class extends Base {
         data: list
       }
     }
-  }
-
-  /**
-   * 更改文件?夹
-   * @param {*} src
-   * @param {*} newPath
-   * @param {*} action
-   */
-  async modifyDirFile(src, newPath = '', action) {
-    if (!src.includes('/upload')) return
-    const srcPath = path.join(think.RESOURCE_PATH, src)
-    let result
-    switch (action) {
-      case 'rename': { // 重命名
-        const dirname = path.dirname(src)
-        const basename = path.basename(newPath)
-        const destPath = path.join(think.UPLOAD_PATH, dirname, basename)
-        await renameAsync(srcPath, destPath).catch(err => {
-          result = err
-        })
-        break
-      }
-      case 'remove': // 移除
-        await fs.remove(srcPath).catch(err => {
-          result = err
-        })
-        break
-      case 'mkdir': // 创建目录
-        result = think.mkdir(srcPath)
-        break
-      case 'copy': { // 复制
-        const newpath = path.join(think.UPLOAD_PATH, newPath)
-        fs.copy(srcPath, newpath).then(() => {
-          result = true
-        }).catch(err => {
-          result = err
-        })
-        break
-      }
-    }
-    return result
   }
 }

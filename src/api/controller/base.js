@@ -1,5 +1,4 @@
-const isDev = think.env.includes('development')
-const path = require('path')
+const isDev = think.env === 'development'
 
 module.exports = class extends think.Controller {
   constructor(...arg) {
@@ -112,7 +111,6 @@ module.exports = class extends think.Controller {
       return null
     }
 
-    const id = column.id
     // meta信息
     const { name: title, keywords, description } = column
     const seo = {
@@ -206,7 +204,6 @@ module.exports = class extends think.Controller {
           if (capture.includes('upload')) { temp.push(capture) }
         })
       })
-      const ext = '.webp'
       for (let i = 0; i < temp.length; i++) {
         const src = temp[i]
         if (think.isEmpty(src)) continue

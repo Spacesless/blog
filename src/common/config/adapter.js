@@ -3,7 +3,7 @@ const mysql = require('think-model-mysql')
 const fileSession = require('think-session-file')
 const { Console, File, DateFile } = require('think-logger3')
 const path = require('path')
-const isDev = think.env.includes('development')
+const isDev = think.env === 'development'
 
 /**
  * cache adapter config

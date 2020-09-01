@@ -3,7 +3,6 @@ const isPro = process.env.NODE_ENV === 'production'
 module.exports = {
   mode: 'universal',
   modern: isPro,
-  // dev: false,
   srcDir: 'home/',
   offline: true,
   telemetry: false,
@@ -37,8 +36,7 @@ module.exports = {
     scss: ['@/styles/variables.scss']
   },
   build: {
-    publicPath: isPro ? '//cdn.timelessq.com/assets' : '/_nuxt/',
-    transpile: [/^element-ui/],
+    publicPath: isPro ? '//cdn.timelessq.com/assets/dist/client' : '/_nuxt/',
     babel: {
       presets({ isServer }) {
         return [
@@ -107,6 +105,7 @@ module.exports = {
       runtimeChunk: false
     }
   },
+  buildDir: 'www/assets',
   render: {
     compressor: false
     // resourceHints: false

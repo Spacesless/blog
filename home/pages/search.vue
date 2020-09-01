@@ -43,7 +43,6 @@
 <script>
 import { mapGetters } from 'vuex'
 import Pagination from '@/components/Pagination'
-import { GetSearchList } from '@/api/list'
 
 export default {
   components: {
@@ -77,7 +76,7 @@ export default {
   },
   methods: {
     fetchList() {
-      GetSearchList(this.listQuery).then(res => {
+      this.$axios.$get('/search', { params: this.listQuery }).then(res => {
         const { count, data } = res.data
         this.total = count
         this.searchList = data

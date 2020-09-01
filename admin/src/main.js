@@ -14,15 +14,6 @@ import router from './router'
 import '@/icons' // icon
 import '@/permission' // permission control
 
-/**
- * If you don't want to use mock-server
- * you want to use mockjs for request interception
- * you can execute:
- *
- * import { mockXHR } from '../mock'
- * mockXHR()
- */
-
 // set ElementUI lang to EN
 Vue.use(ElementUI, { size: 'small' })
 

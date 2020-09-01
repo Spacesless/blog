@@ -8,7 +8,6 @@ function resolve(dir) {
 }
 
 const name = defaultSettings.title || 'Timeless`s 管理平台' // page title
-const host = process.env.post || '127.0.0.1' // devServer host
 
 // If your port is set to 80,
 // use administrator privileges to execute the command line.
@@ -30,12 +29,10 @@ module.exports = {
     ? '//cdn.timelessq.com/cms/'
     : '/',
   outputDir: 'www/cms',
-  indexPath: path.join(__dirname, 'view', 'admin', 'index.html'),
   assetsDir: '',
   lintOnSave: process.env.NODE_ENV === 'development',
   productionSourceMap: false,
   devServer: {
-    host: host,
     port: port,
     open: true,
     overlay: {
@@ -43,7 +40,6 @@ module.exports = {
       errors: true
     },
     proxy: {
-      // change xxx-api/login => mock/login
       // detail: https://cli.vuejs.org/config/#devserver-proxy
       [process.env.VUE_APP_BASE_API]: {
         target: `http://127.0.0.1:8360${process.env.VUE_APP_BASE_API}`,
@@ -52,8 +48,7 @@ module.exports = {
           ['^' + process.env.VUE_APP_BASE_API]: ''
         }
       }
-    },
-    after: require('./admin/mock/mock-server.js')
+    }
   },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that

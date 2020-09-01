@@ -1,21 +1,4 @@
-const fs = require('fs')
-const dns = require('dns')
-const path = require('path')
-const { parse } = require('url')
-const axios = require('axios');
-const onFinish = require('on-finished')
 const Base = require('./base')
-
-const writeFileAsync = think.promisify(fs.writeFile, fs)
-const unlinkAsync = think.promisify(fs.unlink, fs)
-const lookupAsync = think.promisify(dns.lookup, dns)
-
-const INTERNAL_AREAS = [
-  ['10.0.0.0', '10.255.255.255'],
-  ['172.16.0.0', '172.31.255.255'],
-  ['192.168.0.0', '192.168.255.255'],
-  ['127.0.0.1', '127.255.255.255']
-]
 
 // 允许上传文件格式
 const ALLOW_EXTS = [
@@ -27,14 +10,6 @@ const ALLOW_EXTS = [
   /\.(txt|xml|json|docx?|xlsx?|pptx?)$/i,
   /\.(zip|rar|pdf|gz)$/i
 ]
-
-function ip2long(ip) {
-  const multi = [0x1000000, 0x10000, 0x100, 1]
-  let longValue = 0
-  ip.split('.').forEach((part, i) => { longValue += part * multi[i] })
-  return longValue
-}
-
 module.exports = class extends Base {
   constructor(...args) {
     super(...args)
@@ -55,29 +30,16 @@ module.exports = class extends Base {
     }
   }
 
+  // 获取文件列表
   async getAction() {
-    const path = this.get('path') || 'upload/'
-    const page = this.get('page') || 1
-    const pageSize = this.get('limit') || 20
-    const keyword = this.get('keyword') || null
+    const { path, page, pageSize, keyword } = this.get()
     const result = await this.fileHelper.getFileList(path, page, pageSize, keyword)
     return this.success(result)
   }
 
   // 文件上传
   async postAction() {
-    let filelist
-
-    /** 处理远程抓取 **/
-    if (this.post('fileUrl')) {
-      try {
-        filelist = await this.getUrlFile(this.post('fileUrl'))
-      } catch (e) {
-        return this.fail(e.message)
-      }
-    } else {
-      filelist = this.file('file')
-    }
+    let filelist = this.file('file')
 
     if (!think.isArray(filelist)) {
       filelist = [filelist]
@@ -101,74 +63,8 @@ module.exports = class extends Base {
     return this.success(fileUrls)
   }
 
-  async modifyAction() {
-    const srcpath = this.post('srcpath') || ''
-    const destpath = this.post('destpath') || ''
-    const action = this.post('action')
-    const result = await this.fileHelper.modifyDirFile(srcpath, destpath, action)
-    if (think.isError(result)) {
-      return this.fail(result.code)
-    }
-    return this.success()
-  }
-
   // MIME过滤
   extWhiteList(file) {
     return ALLOW_EXTS.some(reg => reg.test(file.name))
-  }
-
-  // 获取上传设置
-  async getUploadConfig() {
-    const config = await this.model('config').getConfig()
-    return config
-  }
-
-  /**
-   * 下载远程文件
-   * @param {String} url 远程文件地址
-   */
-  async getUrlFile(url) {
-    let { hostname } = parse(url)
-    if (!/^\d+\.\d+\.\d+\.\d+/i.test(hostname)) {
-      hostname = await lookupAsync(hostname)
-    }
-    const longIP = ip2long(hostname)
-    for (let [start, end] of INTERNAL_AREAS) {
-      start = ip2long(start)
-      end = ip2long(end)
-      if (longIP >= start && longIP <= end) {
-        throw new Error('URL ILLEGAL')
-      }
-    }
-
-    const res = await axios({
-      url,
-      responseType: "arraybuffer"
-    }).catch(() => { throw new Error('UPLOAD_URL_ERROR') })
-
-    if (res.headers['content-type'].indexOf('image') === -1) {
-      throw new Error('UPLOAD_TYPE_ERROR')
-    }
-
-    const uploadDir = think.TMPDIR_PATH
-    if (!think.isDirectory(uploadDir)) {
-      think.mkdir(uploadDir)
-    }
-
-    const uploadName = think.uuid(20) + path.extname(url)
-    const uploadPath = path.join(uploadDir, uploadName)
-    await writeFileAsync(uploadPath, res.data, 'binary')
-
-    // after upload delete file
-    onFinish(this.ctx.res, () =>
-      think.isExist(uploadPath) && unlinkAsync(uploadPath)
-    )
-
-    return {
-      name: path.basename(url),
-      path: uploadPath,
-      size: res.headers['content-length'],
-      type: res.headers['content-type']
-    }
   }
 }
