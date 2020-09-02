@@ -14,7 +14,6 @@
     "dev:admin": "vue-cli-service serve",
     "build:admin": "vue-cli-service build --modern",
     "build:home": "nuxt build ",
-    "production": "nuxt start",
     "lint:admin": "eslint --ext .js,.vue admin/src",
     "lint:thinkjs": "eslint --fix src/",
     "test:thinkjs": "THINK_UNIT_TEST=1 nyc ava test/ && nyc report --reporter=html",

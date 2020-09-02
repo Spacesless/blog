@@ -36,7 +36,7 @@ module.exports = {
     scss: ['@/styles/variables.scss']
   },
   build: {
-    publicPath: isPro ? '//cdn.timelessq.com/assets/dist/client' : '/_nuxt/',
+    publicPath: isPro ? '//cdn.timelessq.com/assets/dist/client' : '/_nuxt/', // 只需将dist/client上传cdn
     babel: {
       presets({ isServer }) {
         return [

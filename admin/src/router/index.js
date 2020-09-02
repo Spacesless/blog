@@ -187,20 +187,6 @@ export const constantRoutes = [
         meta: { title: '评论详情', noCache: true }
       },
       {
-        path: 'message',
-        name: 'Message',
-        component: () => import('@/views/community/message/index'),
-        meta: { title: '在线留言' }
-      },
-      {
-        path: '/message/:id',
-        name: 'MessageContent',
-        props: true,
-        hidden: true,
-        component: () => import('@/views/community/message/content'),
-        meta: { title: '留言详情', noCache: true }
-      },
-      {
         path: 'link',
         name: 'Link',
         component: () => import('@/views/community/links/index'),
@@ -251,22 +237,16 @@ export const constantRoutes = [
         meta: { title: '常规配置', noCache: true }
       },
       {
-        path: 'options-media',
-        name: 'OptionsMedia',
-        component: () => import('@/views/system/options-media/index'),
-        meta: { title: '媒体配置', noCache: true }
-      },
-      {
         path: 'banners',
         name: 'Banners',
         component: () => import('@/views/system/banners/index'),
         meta: { title: 'Banner管理' }
       },
       {
-        path: 'customize',
-        name: 'Customize',
-        component: () => import('@/views/system/customize/index'),
-        meta: { title: '外观配置', noCache: true }
+        path: 'options-reading',
+        name: 'OptionsReading',
+        component: () => import('@/views/system/options-reading/index'),
+        meta: { title: '阅读设置', noCache: true }
       }
     ]
   },

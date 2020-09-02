@@ -45,6 +45,21 @@
       <el-form-item label="网站logo">
         <upload-image :file-list="formData.weblogo" />
       </el-form-item>
+      <el-form-item label="工信备案">
+        <el-input v-model="formData.icp_beian" />
+      </el-form-item>
+      <el-form-item label="公网安备">
+        <el-input v-model="formData.police_beian" />
+      </el-form-item>
+      <el-form-item label="沉寂模式">
+        <el-switch v-model="formData.is_silent " />
+      </el-form-item>
+      <el-form-item label="Live2d模型">
+        <el-input v-model="formData.live2d_model" />
+      </el-form-item>
+      <el-form-item label="Live2d材质">
+        <el-input v-model="formData.live2d_texture" />
+      </el-form-item>
       <el-form-item class="text-right">
         <el-button type="primary" :loading="confirmLoading" @click="handleSubmit">保存</el-button>
       </el-form-item>
@@ -72,8 +87,8 @@ export default {
     }
   },
   created() {
-    const { sitename, siteurl, keywords, description, seo_title_type, logo, icp_beian, police_beian } = this.configs
-    this.formData = { sitename, siteurl, keywords, description, seo_title_type, logo, icp_beian, police_beian }
+    const { sitename, siteurl, keywords, description, seo_title_type, logo, icp_beian, police_beian, live2d_model, live2d_texture } = this.configs
+    this.formData = { sitename, siteurl, keywords, description, seo_title_type, logo, icp_beian, police_beian, live2d_model, live2d_texture }
   },
   methods: {
     async handleSubmit() {
