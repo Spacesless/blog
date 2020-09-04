@@ -29,10 +29,10 @@ runtime/
 app/
 .nuxt/
 view/admin
-www/cms
+www/admin
 www/assets
-www/upload
 www/static
+www/upload
 
 config.development.js
 adapter.development.js

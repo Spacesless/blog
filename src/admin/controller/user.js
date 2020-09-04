@@ -1,4 +1,5 @@
 const Base = require('./base')
+
 // session过期时间 = 记录登录状态?15天:1天
 const rememberSessionOpt = {
   maxAge: 15 * 24 * 3600 * 1000
@@ -14,13 +15,13 @@ module.exports = class extends Base {
   }
   /**
    * login 登录
-   * @return {Object} { userInfo: 用户, token: jwt验证 }
+   * @return {Object} { token: access_token, expires: 令牌有效期 }
    */
   async loginAction() {
     const { username, password, captcha, remember } = this.post()
     const userInfo = await this.modelInstance.where({ username: username }).find()
     // 校验验证码 不区分大小写
-    const svgcaptcha = await this.session('captcha') || ''
+    const svgcaptcha = await this.cookie('captcha') || ''
     if (think.isEmpty(captcha) || captcha.toUpperCase() !== svgcaptcha.toUpperCase()) {
       return this.fail('验证码不正确')
     }
@@ -35,41 +36,26 @@ module.exports = class extends Base {
     const IP = this.ctx.ip
     userInfo.login_ip = IP.indexOf('::ffff:') !== -1 ? IP.substring(7) : IP
     await this.modelInstance.updateLoginInfo(userInfo)
+
     delete userInfo.password
     const expires = remember ? rememberSessionOpt : normalSessionOpt
-    await this.session(
-      'userInfo',
-      userInfo,
-      expires
-    )
-    return this.success({ token: this.cookie('thinkjs'), expires })
-  }
+    const token = await this.session('userInfo', {
+      id: userInfo.id,
+      username: userInfo.username
+    }, expires)
 
-  /**
-   * 获取管理员信息
-   */
-  async getAdminAction() {
-    const id = this.get('id')
-    if (id) {
-      const data = await this.modelInstance.where({ id }).find()
-      return this.success(data)
-    } else {
-      const where = {}
-      // const field = 'id,title,hits,updatetime,display';
-      const list = await this.modelInstance.where(where)
-        // .field(field)
-        .order('id DESC')
-        .page(this.get('page'), this.get('pageSize'))
-        .countSelect()
-      return this.success(list)
-    }
+    return this.success({ token, expires })
   }
 
   /**
    * getInfo 获取登录用户的信息
    */
   async getInfoAction() {
-    const userInfo = await this.session('userInfo') || {}
+    const { id } = await this.session('userInfo') || {}
+    let userInfo = {}
+    if (id) {
+      userInfo = await this.modelInstance.where({ id }).find()
+    }
     return this.success(userInfo)
   }
 
@@ -78,23 +64,8 @@ module.exports = class extends Base {
    * @return {}
    */
   async logoutAction() {
-    await this.session('userInfo', '')
+    await this.session('userInfo', null)
     return this.success()
-  }
-
-  async deleteAdminAction() {
-    const id = this.post('id')
-    const queryRow = await this.modelInstance.where({ id }).find()
-    if (queryRow) {
-      return this.fail('不能删除超级管理员')
-    }
-    const influenceRow = await this.modelInstance.where({ id }).delete()
-
-    if (influenceRow) {
-      return this.success()
-    } else {
-      return this.fail()
-    }
   }
 
   /**
@@ -187,7 +158,9 @@ module.exports = class extends Base {
     const options = this.get()
     const Svg = think.service('captcha', 'common', options)
     const { text, data } = Svg.createCaptcha()
-    await this.session('captcha', text)
+    await this.cookie('captcha', text, { // 设定 cookie 时指定额外的配置
+      maxAge: 60 * 60 * 1000 // 1小时超时时间
+    })
     this.success(data)
   }
 }

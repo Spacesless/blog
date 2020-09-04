@@ -2,6 +2,10 @@ const nunjucks = require('think-view-nunjucks')
 const moment = require('moment')
 const path = require('path')
 
+/**
+ * view adapter config
+ * @type {Object}
+ */
 module.exports = {
   type: 'nunjucks',
   common: {

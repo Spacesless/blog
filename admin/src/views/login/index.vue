@@ -1,86 +1,79 @@
 <template>
   <div class="login">
-    <el-row>
-      <el-col class="login-info hidden-sm-only" :md="12" :lg="14">
-        <img src="" alt="">
-      </el-col>
-      <el-col class="login-wrap" :sm="24" :md="12" :lg="10">
-        <el-form
-          ref="loginForm"
-          size="large"
-          :model="loginForm"
-          :rules="loginRules"
-          class="login-form"
-          label-position="left"
-          @submit.native.prevent
-        >
-          <div class="login-form-title">
-            123
-          </div>
-          <el-form-item prop="username">
-            <span class="login-form-label">
-              <i class="el-icon-user" />
-            </span>
-            <el-input
-              ref="username"
-              v-model="loginForm.username"
-              placeholder="用户名"
-              tabindex="1"
-              auto-complete="on"
-              clearable
-            />
-          </el-form-item>
-          <el-form-item prop="password">
-            <span class="login-form-label">
-              <i class="el-icon-lock" />
-            </span>
-            <el-input
-              :key="passwordType"
-              ref="password"
-              v-model="loginForm.password"
-              :type="passwordType"
-              placeholder="密码"
-              tabindex="2"
-              auto-complete="on"
-            />
-            <span class="show-pwd" @click="showPwd">
-              <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
-            </span>
-          </el-form-item>
-          <el-form-item class="login-form-captcha" prop="captcha">
-            <span class="login-form-label">
-              <i class="el-icon-picture-outline-round" />
-            </span>
-            <el-input
-              ref="captcha"
-              v-model="loginForm.captcha"
-              placeholder="验证码"
-              tabindex="3"
-              clearable
-              @keyup.enter.native="handleLogin"
-            />
-            <!-- svg图片验证码 -->
-            <div v-loading="captchaLoading" class="login-form-captcha__svg" @click="fetchCaptcha" v-html="svgCaptcha" />
-          </el-form-item>
-          <!-- session有效期：不记录为1天，记录为15天 -->
-          <el-form-item class="login-form-remember">
-            <el-checkbox v-model="loginForm.remember">记住登录状态</el-checkbox>
-          </el-form-item>
-          <el-button class="login-form-submit" :loading="loginLoading" type="primary" size="large" native-type="submit" @click="handleLogin">登录</el-button>
-        </el-form>
-      </el-col>
-    </el-row>
+    <el-form
+      ref="loginForm"
+      size="large"
+      :model="loginForm"
+      :rules="loginRules"
+      class="login-form"
+      label-position="left"
+      @submit.native.prevent
+    >
+      <h1 class="login-form__title">Welcome home</h1>
+      <el-form-item prop="username">
+        <span class="login-form-label">
+          <i class="el-icon-user" />
+        </span>
+        <el-input
+          ref="username"
+          v-model="loginForm.username"
+          placeholder="用户名"
+          tabindex="1"
+          auto-complete="on"
+          clearable
+        />
+      </el-form-item>
+      <el-form-item prop="password">
+        <span class="login-form-label">
+          <i class="el-icon-lock" />
+        </span>
+        <el-input
+          :key="passwordType"
+          ref="password"
+          v-model="loginForm.password"
+          :type="passwordType"
+          placeholder="密码"
+          tabindex="2"
+          auto-complete="on"
+        />
+        <span class="show-pwd" @click="showPwd">
+          <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
+        </span>
+      </el-form-item>
+      <el-form-item class="login-form-captcha" prop="captcha">
+        <span class="login-form-label">
+          <i class="el-icon-picture-outline-round" />
+        </span>
+        <el-input
+          ref="captcha"
+          v-model="loginForm.captcha"
+          placeholder="验证码"
+          tabindex="3"
+          clearable
+          @keyup.enter.native="handleLogin"
+        />
+        <!-- svg图片验证码 -->
+        <div v-loading="captchaLoading" class="login-form-captcha__svg" @click="fetchCaptcha" v-html="svgCaptcha" />
+      </el-form-item>
+      <!-- session有效期：不记录为1天，记录为15天 -->
+      <el-form-item class="login-form-remember">
+        <el-checkbox v-model="loginForm.remember">记住登录状态</el-checkbox>
+      </el-form-item>
+      <el-button class="login-form-submit" :loading="loginLoading" type="primary" size="large" native-type="submit" @click="handleLogin">登录</el-button>
+    </el-form>
   </div>
 </template>
 
 <script>
-import { GetCaptcha } from '@/api/user'
+import { GetCaptcha } from '@/api/common'
 
 export default {
   name: 'Login',
   data() {
     const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {
+      if (value === '') {
+        callback(new Error('请输入密码'))
+      } else if (value && value.length < 6) {
         callback(new Error('密码不能少于8位'))
       } else {
         callback()
@@ -143,11 +136,7 @@ export default {
           this.loginLoading = true
           await this.$store.dispatch('user/login', this.loginForm).then(() => {
             this.$router.push({ path: this.redirect || '/' })
-          }).catch((error) => {
-            if (error === '验证码不正确') { // 验证码不正确自动刷新
-              this.fetchCaptcha()
-            }
-          })
+          }).catch(() => {})
           this.loginLoading = false
         }
       })
@@ -158,23 +147,19 @@ export default {
 
 <style lang="scss" scoped>
 .login{
-  &,.el-row,.el-col {
-    height: 100%;
-  }
-  .el-col {
-    position: relative;
-  }
-  &-info {
-    background-color: #0f0f0f;
-  }
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: url(~@/assets/login-background.svg) no-repeat center;
+  background-size: cover;
   &-form{
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 350px;
-    height: 340px;
-    margin-top: -200px;
-    margin-left: -175px;
+    width: 360px;
+    height: 350px;
+    margin-top: -220px;
+    margin-left: -180px;
     .el-input{
       ::v-deep input{
         padding-left: 40px;
@@ -183,10 +168,12 @@ export default {
         }
       }
     }
-    &-title{
+    &__title{
       height: 50px;
-      margin-bottom: 20px;
-      line-height: 50px;
+      margin-bottom: 30px;
+      color: #606266;
+      font: normal 32px/50px eafont,Hiragino Sans GB,Hiragino Sans GB W3,Microsoft YaHei;
+      text-align: center;
     }
     &-label{
       position: absolute;
@@ -235,7 +222,7 @@ export default {
     right: 10px;
     top: 0;
     color: #909399;
-    font-size: 16px;
+    font-size: 14px;
     cursor: pointer;
     user-select: none;
   }

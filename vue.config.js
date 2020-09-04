@@ -26,9 +26,9 @@ module.exports = {
    * Detail: https://cli.vuejs.org/config/#publicpath
    */
   publicPath: process.env.NODE_ENV === 'production'
-    ? '//cdn.timelessq.com/cms/'
+    ? '//cdn.timelessq.com/admin/'
     : '/',
-  outputDir: 'www/cms',
+  outputDir: 'www/admin',
   assetsDir: '',
   lintOnSave: process.env.NODE_ENV === 'development',
   productionSourceMap: false,

@@ -9,7 +9,7 @@ module.exports = class extends think.Service {
       ignoreChars: '0oO1i', // 过滤字符
       noise: 2, // 噪点线条数量
       color: '#409eff', // default grey, true if background option is set
-      background: '#ecf5ff', // svg image 背景颜色
+      background: '#f3f3f3', // svg image 背景颜色
       width: 120, // captcha 宽度
       height: 40, // captcha 高度
       fontPath: path.join(think.RESOURCE_PATH, '/fonts/NeoSansStd.ttf'), // 字体文件路径
@@ -24,8 +24,8 @@ module.exports = class extends think.Service {
    * @returns {Object} {data: 'svg path data', text: 'captcha text'}
    */
   createCaptcha() {
-    const captcha = new ThinkSvgCaptcha(this.options)
-    const captchaData = captcha.create()
+    const captchaInstance = new ThinkSvgCaptcha(this.options)
+    const captchaData = captchaInstance.create()
     return captchaData
   }
 }

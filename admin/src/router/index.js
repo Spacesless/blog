@@ -167,13 +167,12 @@ export const constantRoutes = [
   },
 
   {
-    path: '/community',
+    path: '/comment',
     component: Layout,
-    redirect: '/community/comment',
-    meta: { title: '社区中心', icon: 'community' },
+    meta: { title: '评论系统', icon: 'community' },
     children: [
       {
-        path: 'comment',
+        path: '',
         name: 'Comment',
         component: () => import('@/views/community/comment/index'),
         meta: { title: '评论系统' }
@@ -185,9 +184,17 @@ export const constantRoutes = [
         hidden: true,
         component: () => import('@/views/community/comment/content'),
         meta: { title: '评论详情', noCache: true }
-      },
+      }
+    ]
+  },
+
+  {
+    path: '/link',
+    component: Layout,
+    meta: { title: '评论系统', icon: 'community' },
+    children: [
       {
-        path: 'link',
+        path: '',
         name: 'Link',
         component: () => import('@/views/community/links/index'),
         meta: { title: '友情链接' }
@@ -196,38 +203,8 @@ export const constantRoutes = [
   },
 
   {
-    path: '/user',
-    component: Layout,
-    redirect: '/user',
-    meta: { title: '管理员', icon: 'member' },
-    children: [
-      {
-        path: '',
-        name: 'Admin',
-        component: () => import('@/views/user/admin/index'),
-        meta: { title: '管理员' }
-      },
-      {
-        path: 'profile/create',
-        name: 'CreateAdmin',
-        hidden: true,
-        component: () => import('@/views/user/profile/create'),
-        meta: { title: '添加管理员' }
-      },
-      {
-        path: 'profile/edit/:id',
-        name: 'EditAdmin',
-        hidden: true,
-        component: () => import('@/views/user/profile/edit'),
-        meta: { title: '管理员信息' }
-      }
-    ]
-  },
-
-  {
     path: '/system',
     component: Layout,
-    redirect: '/system/information',
     meta: { title: '系统管理', icon: 'system' },
     children: [
       {
@@ -237,9 +214,15 @@ export const constantRoutes = [
         meta: { title: '常规配置', noCache: true }
       },
       {
-        path: 'banners',
-        name: 'Banners',
-        component: () => import('@/views/system/banners/index'),
+        path: 'options-profile',
+        name: 'OptionsProfile',
+        component: () => import('@/views/system/options-profile/index'),
+        meta: { title: '个人资料', noCache: true }
+      },
+      {
+        path: 'options-banner',
+        name: 'OptionsBanner',
+        component: () => import('@/views/system/options-banner/index'),
         meta: { title: 'Banner管理' }
       },
       {

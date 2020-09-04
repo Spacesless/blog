@@ -6,7 +6,7 @@ import request from '@/utils/request'
  */
 export function Login(data) {
   return request({
-    url: '/admin/login',
+    url: '/user/login',
     method: 'post',
     data
   })
@@ -18,7 +18,7 @@ export function Login(data) {
  */
 export function GetInfo() {
   return request({
-    url: '/admin/getInfo',
+    url: '/user/getInfo',
     method: 'get'
   })
 }
@@ -26,21 +26,8 @@ export function GetInfo() {
 // 注销
 export function Logout() {
   return request({
-    url: '/admin/logout',
+    url: '/user/logout',
     method: 'post'
-  })
-}
-
-/**
- * 获取图片验证码
- * @param {Object} params 图片验证码参数
- * @returns {Element} svg图片
- */
-export function GetCaptcha(params) {
-  return request({
-    url: '/admin/captcha',
-    method: 'get',
-    params
   })
 }
 
@@ -50,7 +37,7 @@ export function GetCaptcha(params) {
  */
 export function GetAdminList(query) {
   return request({
-    url: '/admin/getAdmin',
+    url: '/user/getAdmin',
     method: 'get',
     params: query
   })
@@ -58,7 +45,7 @@ export function GetAdminList(query) {
 
 export function UpdateAdminInfo(data) {
   return request({
-    url: '/admmin/update',
+    url: '/user/update',
     method: 'post',
     data
   })

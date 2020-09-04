@@ -32,3 +32,16 @@ export function GetPathList(query) {
     params: query
   })
 }
+
+/**
+ * 获取图片验证码
+ * @param {Object} params 图片验证码参数
+ * @returns {Element} svg图片
+ */
+export function GetCaptcha(params) {
+  return request({
+    url: '/admin/captcha',
+    method: 'get',
+    params
+  })
+}

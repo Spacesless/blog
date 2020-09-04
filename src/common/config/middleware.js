@@ -16,7 +16,7 @@ const middleware = [
     enable: isDev,
     options: {
       root: path.join(think.ROOT_PATH, 'www'),
-      publicPath: /^\/(assets|static|upload|favicon\.ico)/
+      publicPath: /^\/(static|upload|favicon\.ico)/
     }
   },
   {
@@ -49,7 +49,7 @@ if (!process.argv.includes('--api')) {
     handle: nuxt,
     options: {
       config: nuxtConfig,
-      unless: [/^\/cms?/, /^\/tl-admin?/, /^\/api?/, 'sitemap', 'rss', 'download'],
+      unless: [/^\/admin?/, /^\/web?/, 'sitemap', 'rss', 'download'],
       isDev
     }
   })

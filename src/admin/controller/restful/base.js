@@ -2,9 +2,9 @@ const BaseRest = require('../rest')
 
 module.exports = class extends BaseRest {
   async __before() {
-    const userInfo = await this.session('userInfo') || {}
+    const userInfo = await this.session('userInfo')
     if (think.isEmpty(userInfo)) {
-      return this.fail(401, '未授权，请登录后再操作！')
+      return this.fail(401, '请登录后再操作！')
     }
 
     this.siteurl = this.ctx.origin.replace(/http:|https:/, '')

@@ -34,35 +34,13 @@ module.exports = class extends Base {
     if (think.isEmpty(info)) {
       return Promise.reject(new Error('UESR_NOT_EXIST'))
     }
-    const password = data.password
+    const { id, password } = data
     if (password) {
       data.password = this.getEncryptPassword(password)
     }
     data.login_ip = ip
     data.login_time = think.datetime()
-    return this.where({ id: data.id }).update(data)
-  }
-
-  /**
-   * 添加用户
-   * @param {[type]} data [description]
-   * @param {[type]} ip   [description]
-   */
-  addAdmin(data, ip) {
-    const createTime = think.datetime()
-    const encryptPassword = this.getEncryptPassword(data.password)
-    return this.where({ name: data.username, email: data.email, _logic: 'OR' }).thenAdd({
-      name: data.username,
-      email: data.email,
-      display_name: data.display_name,
-      password: encryptPassword,
-      create_time: createTime,
-      last_login_time: createTime,
-      create_ip: ip,
-      last_login_ip: ip,
-      type: data.type,
-      status: data.status
-    })
+    return this.where({ id }).update(data)
   }
 
   /**

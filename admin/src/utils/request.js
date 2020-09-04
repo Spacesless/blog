@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { Message } from 'element-ui'
 import store from '@/store'
+// import { getToken } from '@/utils/auth'
 
 let networkErrorMsg = false
 let invalidTokenMsg = false
@@ -17,6 +18,14 @@ const service = axios.create({
 service.interceptors.request.use(
   config => {
     // do something before request is sent
+
+    // if (store.getters.accessToken) {
+    //   // let each request carry token
+    //   // ['X-Token'] is a custom headers key
+    //   // please modify it according to the actual situation
+    //   const token = getToken()
+    //   config.headers['Authorization'] = token ? `Bearer ${token}` : ''
+    // }
 
     return config
   },
