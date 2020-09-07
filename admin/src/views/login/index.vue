@@ -9,7 +9,7 @@
       label-position="left"
       @submit.native.prevent
     >
-      <h1 class="login-form__title">Welcome home</h1>
+      <h1 class="login-form__title">Welcome Home</h1>
       <el-form-item prop="username">
         <span class="login-form-label">
           <i class="el-icon-user" />
@@ -71,10 +71,8 @@ export default {
   name: 'Login',
   data() {
     const validatePassword = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('请输入密码'))
-      } else if (value && value.length < 6) {
-        callback(new Error('密码不能少于8位'))
+      if (value.length < 6 || value.length > 20) {
+        callback(new Error('请输入6-20位密码'))
       } else {
         callback()
       }
@@ -156,10 +154,16 @@ export default {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 360px;
+    width: 380px;
     height: 350px;
-    margin-top: -220px;
-    margin-left: -180px;
+    margin-top: -210px;
+    margin-left: -190px;
+    @media (max-width: 576px){
+      width: 100%;
+      padding: 0 20px;
+      left: 0;
+      margin-left: 0;
+    }
     .el-input{
       ::v-deep input{
         padding-left: 40px;

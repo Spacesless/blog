@@ -86,37 +86,33 @@ module.exports = class extends Base {
    * 忘记密码发验证邮件
    */
   async forgotAction() {
-    const username = this.post('username')
     const email = this.post('email')
-    const user = await this.modelInstance.where({
-      username: username,
-      email: email
-    }).find()
+    const user = await this.modelInstance.where({ email }).find()
 
     if (think.isEmpty(user)) {
-      return this.fail('查无此人')
-    }
-    if (!user.email) {
-      return this.fail('该用户未设置邮箱，不能使用找回密码功能')
+      return this.fail('该邮箱没有绑定用户')
     }
 
     const config = await this.model('config').getConfig()
 
     const Transporter = think.service('nodemailer', 'common', config)
-
     const resetTime = Date.now()
-    const resetToken = think.md5(user.email + resetTime + Math.random())
-    const resetUrl = config.siteurl + `admin/login?reset=1&token=${resetToken}`
+    const resetCode = think.md5(user.email + resetTime + Math.random()).substr(8, 16)
     const options = {
       from: config.email_usename, // sender address
       to: user.email, // list of receivers
       subject: `😋【${config.sitename}】密码重置`, // 邮件主题
-      html: `你好，${user.username}，点击 ${resetUrl} 进行密码重置，该地址有效期为 1 小时，请及时修改密码。如果您没有申请过密码重置，请忽略该邮件！`
+      html: `你好 ${user.username}，您的密码重置验证码为 【${resetCode}】，该验证码有效期为 1 小时，请及时修改密码。如果您没有申请过密码重置，请忽略该邮件！`
     }
 
     const info = await Transporter.sendMail(options)
     if (info.messageId) {
-      this.success('重置密码邮件发送成功')
+      // 以验证码为key缓存1小时
+      await think.cache(resetCode, user.id, {
+        timeout: 60 * 60 * 1000
+      })
+
+      this.success()
     } else {
       this.fail('邮件发送失败')
     }
@@ -126,32 +122,29 @@ module.exports = class extends Base {
    * 重置密码
    */
   async resetAction() {
-    const userInfo = await this.session('userInfo') || {}
-    if (!think.isEmpty(userInfo)) {
-      return this.success()
+    const { password, resetCode } = this.post()
+    // 通过验证码取缓存
+    const user = await think.cache(resetCode)
+    if (think.isEmpty(user)) {
+      return this.fail('验证码不正确')
     }
 
-    if (this.isPost) {
-      const { password, token } = this.post()
-
-      const user = await think.cache(token)
-      if (think.isEmpty(user)) {
-        return this.fail('查无此人')
-      }
-
-      const findUser = await this.modelInstance.where({ name: user }).find()
-      if (think.isEmpty(findUser)) {
-        return this.fail('查无此人')
-      }
-
-      const rows = await this.modelInstance.saveAdmin({
-        password,
-        id: findUser.id
-      }, this.ctx.ip)
-      await think.cache(token, null)
-      return this.success(rows)
+    const findUser = await this.modelInstance.where({ id: user }).find()
+    if (think.isEmpty(findUser)) {
+      return this.fail('未找到对应用户')
     }
-    return this.success()
+
+    const row = await this.modelInstance.saveAdmin({
+      id: findUser.id,
+      password
+    }, this.ctx.ip)
+
+    if (row) {
+      await think.cache(resetCode, null)
+      return this.success(row)
+    } else {
+      return this.fail('重置失败，请重试')
+    }
   }
 
   async captchaAction() {

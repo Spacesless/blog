@@ -1,145 +1,99 @@
 <template>
-  <div class="home-container">
-    <div class="home-header">
-      <el-row>
-        <el-col :xs="24" :md="12">
-          <div class="home-avatar">
-            <img src="https://www.timelessq.com/static/avatar.jpg" alt="">
-          </div>
-          <div class="home-hello">
-            <h3>嗨多磨，<span class="username">{{ userinfo.nickname }}</span>，祝你开心每一天！</h3>
-            <p>做你说过的，说你能做的</p>
-          </div>
-        </el-col>
-        <el-col :xs="24" :md="12">
-          <div class="home-community">
-            <div class="divider-item">
-              <span>用户</span>
-              <p>{{ count.member }}</p>
-            </div>
-            <el-divider direction="vertical" />
-            <div class="divider-item">
-              <span>留言</span>
-              <p>{{ count.message }}</p>
-            </div>
-            <el-divider direction="vertical" />
-            <div class="divider-item">
-              <span>评论</span>
-              <p>{{ count.comment }}</p>
-            </div>
-          </div>
-        </el-col>
-      </el-row>
+  <div v-loading="fetchLoading" class="app-container home">
+    <div class="home-card">
+      <h2 class="home-card__title">Environment</h2>
+      <div class="home-body">
+        <ul>
+          <li>Nodejs：{{ version.nodeVersion }}</li>
+          <li>V8：{{ version.v8Version }}</li>
+          <li>Web Server：{{ version.platform }}</li>
+          <li>Thinkjs：{{ version.thinkjsVersion }}</li>
+          <li>Mysql：{{ version.mysqlVersion }}</li>
+        </ul>
+      </div>
     </div>
-    <div class="home-board">
-      <el-row :gutter="20">
-        <el-col :xs="24" :md="16">
-          <panel-group :count="count" />
-        </el-col>
-        <el-col :xs="24" :md="8">
-          <dash-board :version="version" />
-        </el-col>
-      </el-row>
+    <div class="home-card" @click="navigateTo('Column')">
+      <h2 class="home-card__title">CATEGORY</h2>
+      <div class="home-body">
+        <strong>{{ count.column }}</strong>
+        <p />
+      </div>
+    </div>
+    <div class="home-card" @click="navigateTo('Blog')">
+      <h2 class="home-card__title">ARTICLE</h2>
+      <div class="home-body">
+        <strong>{{ count.article }}</strong>
+        <p />
+      </div>
+    </div>
+    <div class="home-card" @click="navigateTo('Image')">
+      <h2 class="home-card__title">IMAGE</h2>
+      <div class="home-body">
+        <strong>{{ count.image }}</strong>
+        <p />
+      </div>
+    </div>
+    <div class="home-card" @click="navigateTo('Bangumi')">
+      <h2 class="home-card__title">BANGUMI</h2>
+      <div class="home-body">
+        <strong>{{ count.bangumi }}</strong>
+        <p />
+      </div>
+    </div>
+    <div class="home-card" @click="navigateTo('Comment')">
+      <h2 class="home-card__title">COMMENT</h2>
+      <div class="home-body">
+        <strong>{{ count.comment }}</strong>
+        <p />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import { getPanelInfo } from '@/api/home'
-import PanelGroup from './components/PanelGroup'
-import DashBoard from './components/DashBoard'
+import { GetGeneral } from '@/api/home'
 
 export default {
   name: 'Home',
-  components: {
-    PanelGroup,
-    DashBoard
-  },
   data() {
     return {
-      count: {},
-      version: {}
+      generals: {},
+      fetchLoading: false
     }
   },
   computed: {
-    ...mapGetters([
-      'userinfo'
-    ])
+    version() {
+      return this.generals.version || {}
+    },
+    count() {
+      return this.generals.count || {}
+    }
   },
   created() {
-    this.getList()
+    this.fetchData()
   },
   methods: {
-    getList() {
-      getPanelInfo().then(response => {
-        const { count, version } = response.data
-        this.count = count
-        this.version = version
-      })
+    /**
+     * 获取运行环境、统计数据
+     */
+    async fetchData() {
+      this.fetchLoading = true
+      await GetGeneral().then(res => {
+        this.generals = res.data
+      }).catch(() => {})
+      this.fetchLoading = false
+    },
+    /**
+     * 跳转到对应名称的路由
+     * @param {String} 路由名称
+     */
+    navigateTo(name) {
+      this.$router.push({ name })
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.home-header{
-  padding: 15px 20px;
-  background: #fff;
-  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
-  .home-avatar{
-    overflow: hidden;
-    float: left;
-    width: 100px;
-    height: 100px;
-    border-radius: 50px;
-    img{
-      display: block;
-      width: 100%;
-      height: 100%;
-    }
-  }
-  .home-hello{
-    float: left;
-    padding: 23px 30px;
-    h3{
-      color: #606266;
-      font-size: 18px;
-      font-weight: normal;
-      line-height: 2em;
-    }
-    .username{
-      color: #303133;
-    }
-    p{
-      color: #909399;
-      font-size: 15px;
-    }
-  }
-  .home-community{
-    padding: 20px 0;
-    text-align: right;
-    .divider-item{
-      display: inline-block;
-      padding: 0 15px;
-      vertical-align: middle;
-      span{
-        margin-bottom: 4px;
-        color: rgba(0, 0, 0, 0.45);
-        font-size: 14px;
-        line-height: 22px;
-      }
-      p{
-        color: rgba(0, 0, 0, 0.85);
-        font-size: 30px;
-        font-family: -apple-system,BlinkMacSystemFont,Segoe UI;
-        line-height: 38px;
-        text-align: center;
-      }
-    }
-  }
-}
-.home-board{
-  padding: 20px;
-}
+
 </style>

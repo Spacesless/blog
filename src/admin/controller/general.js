@@ -1,7 +1,7 @@
 const Base = require('./base.js')
 
 module.exports = class extends Base {
-  async getPanelAction() {
+  async indexAction() {
     const mysql = await this.model('config').query('SELECT VERSION() as version')
     const data = {
       nodeVersion: process.versions.node,
@@ -15,12 +15,9 @@ module.exports = class extends Base {
       version: data,
       count: {
         column: await this.model('column').count('id'),
-        blog: await this.model('blog').count('id'),
+        article: await this.model('blog').count('id'),
         image: await this.model('image').count('id'),
         bangumi: await this.model('bangumi').count('id'),
-        webapp: await this.model('webapp').count('id'),
-        member: await this.model('member').count('id'),
-        message: await this.model('message').count('id'),
         comment: await this.model('comment').count('id')
       }
     })

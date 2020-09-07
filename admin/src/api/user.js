@@ -32,18 +32,39 @@ export function Logout() {
 }
 
 /**
- * 获取管理员列表
- * @param {Object} query 查询条件
+ * 通过邮箱找回密码
+ * @param {String} email 邮箱地址
  */
-export function GetAdminList(query) {
+export function ForgotPassword(email) {
   return request({
-    url: '/user/getAdmin',
-    method: 'get',
-    params: query
+    url: '/user/forgot',
+    method: 'post',
+    data: {
+      email
+    }
   })
 }
 
-export function UpdateAdminInfo(data) {
+/**
+ * 重置密码
+ * @param {String} password md5密码
+ * @param {String} resetCode 邮件验证码
+ */
+export function ResetPassword(password, resetCode) {
+  return request({
+    url: '/user/reset',
+    method: 'post',
+    data: {
+      password, resetCode
+    }
+  })
+}
+
+/**
+ * 更新用户信息
+ * @param {Object} data
+ */
+export function UpdateAdmin(data) {
   return request({
     url: '/user/update',
     method: 'post',

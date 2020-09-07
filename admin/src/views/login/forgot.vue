@@ -18,7 +18,7 @@
     <div class="forgot-header">
       <el-row>
         <el-col :span="12">
-          <h2 class="forgot-header__title">{{ $t('forgot.retrievePassword') }}</h2>
+          <h2 class="forgot-header__title">找回密码</h2>
         </el-col>
         <el-col :span="12" class="text-right">
           <router-link to="/login" class="forgot-header-link">
@@ -31,51 +31,40 @@
 
     <div class="forgot-form">
       <template v-if="!isVerify">
-        <el-form size="medium">
-          <!-- 手机号码 -->
-          <el-form-item>
-            <span class="forgot-form__icon phone el-icon-mobile" />
-            <el-input v-model="forgotForm.email" placeholder="" />
-          </el-form-item>
-          <!-- 图形验证码 -->
-          <el-form-item class="forgot-form-captcha">
-            <span class="forgot-form__icon">
-              <svg-icon icon-class="captcha" />
-            </span>
-            <el-input v-model="forgotForm.captcha" />
-            <div id="captcha" @click="changeCaptcha" />
-          </el-form-item>
-          <!-- 手机验证码 -->
-          <el-form-item class="forgot-form-sms">
-            <span class="forgot-form__icon">
-              <svg-icon icon-class="captcha" />
-            </span>
-            <el-input v-model="forgotForm.verifyCode" />
-            <el-button type="primary" class="forgot-form-sms__button" plain :loading="captchaLoading" @click="getSMScode">{{ captchaText }}</el-button>
+        <el-form ref="checkForm" :model="checkForm" size="large" :rules="checkRules">
+          <!-- 邮箱地址 -->
+          <el-form-item prop="email">
+            <span class="forgot-form__icon el-icon-message" />
+            <el-input v-model="checkForm.email" placeholder="请输入邮箱地址" />
           </el-form-item>
           <el-form-item>
-            <el-button class="forgot-form__sumbit" type="primary" @click="checkCaptcha">找回密码</el-button>
+            <el-button class="forgot-form__sumbit" type="primary" :loading="codeLoading" @click="getEmailCode">找回密码</el-button>
           </el-form-item>
         </el-form>
       </template>
       <template v-else>
-        <el-form size="medium" :rules="passwordRules">
+        <el-form ref="resetForm" :model="resetForm" size="large" :rules="passwordRules">
+          <!-- 邮件验证码 -->
+          <el-form-item class="forgot-form-sms" prop="resetCode">
+            <span class="forgot-form__icon el-icon-picture-outline-round" />
+            <el-input v-model="resetForm.resetCode" placeholder="请输入邮件验证码" />
+          </el-form-item>
           <!-- 新密码 -->
           <el-form-item prop="password">
             <span class="forgot-form__icon password">
               <i class="el-icon-lock" />
             </span>
-            <el-input v-model="passwordForm.password" type="password" />
+            <el-input v-model="resetForm.password" type="password" placeholder="请输入新密码" />
           </el-form-item>
           <!-- 重新输入密码 -->
-          <el-form-item prop="againPsw">
+          <el-form-item prop="againPassword">
             <span class="forgot-form__icon password">
               <i class="el-icon-lock" />
             </span>
-            <el-input v-model="passwordForm.againPsw" type="password" />
+            <el-input v-model="resetForm.againPassword" type="password" placeholder="请再次输入新密码" />
           </el-form-item>
           <el-form-item>
-            <el-button class="forgot-form__sumbit" type="primary" @click="resetPassword">重置密码</el-button>
+            <el-button class="forgot-form__sumbit" type="primary" :loading="resetLoading" @click="resetPassword">重置密码</el-button>
           </el-form-item>
         </el-form>
       </template>
@@ -84,15 +73,13 @@
 </template>
 
 <script>
-import { Captcha } from './captcha.js'
-import { SendSms, ValidateVerifyCode, ResetPassword } from '@/api/user'
-import { validPassword } from '@/utils/validate'
+import { ForgotPassword, ResetPassword } from '@/api/user'
 
 export default {
   data() {
     const validatePassword = (rule, value, callback) => {
-      if (!validPassword(value)) {
-        callback(new Error('密码大于8位'))
+      if (value.length < 6 || value.length > 20) {
+        callback(new Error('请输入6-20位密码'))
       } else {
         callback()
       }
@@ -108,78 +95,54 @@ export default {
       }
     }
     return {
-      captcha: null,
-      forgotForm: {},
-      passwordForm: {},
-      captchaText: '获取验证码',
-      captchaLoading: false,
+      checkForm: {},
+      resetForm: {},
       isVerify: false,
-      passwordRules: {
+      codeLoading: false,
+      resetLoading: false,
+      checkRules: {
+        email: [
+          { required: true, trigger: 'blur', message: '请输入邮箱地址' },
+          { type: 'email', trigger: 'change', message: '请输入正确的邮箱地址' }
+        ]
+      },
+      resetRules: {
+        resetCode: [{ required: true, trigger: 'blur', message: '请输入邮件验证码' }],
         password: [{ required: true, trigger: 'blur', validator: validatePassword }],
-        againPsw: [{ required: true, trigger: 'blur', validator: validateAgainPsw }]
+        againPassword: [{ required: true, trigger: 'blur', validator: validateAgainPsw }]
       }
     }
   },
-  mounted() {
-    this.renderCaptcha()
-  },
   methods: {
-    renderCaptcha() {
-      this.captcha = new Captcha({
-        id: 'captcha',
-        width: 150,
-        height: 36,
-        fontSize: 36,
-        noise: 15,
-        ignoreChars: '0o1i' // 忽略难分辨的字符
+    getEmailCode() {
+      this.$refs.forgotForm.validate(async(valid) => {
+        if (!valid) return
+        this.codeLoading = true
+        const { email } = this.forgotForm
+        await ForgotPassword(email).then(res => {
+          this.$message({
+            message: '密码重置邮件已发送到：' + email,
+            type: 'success'
+          })
+          this.isVerify = true
+        }).catch(() => {})
+        this.codeLoading = false
       })
-    },
-    changeCaptcha() {
-      this.captcha.refresh()
-    },
-    getSMScode() {
-      if (this.captcha.validate(this.forgotForm.captcha)) {
-        SendSms().then(res => {
-          this.countDown()
-        })
-        this.countDown()
-      } else {
-        this.captcha.refresh()
-        this.$message({
-          message: '验证码出错',
-          type: 'warning'
-        })
-      }
-    },
-    countDown() {
-      let total = 60
-      this.captchaText = '60 S'
-      this.captchaLoading = true
-      const timer = setInterval(() => {
-        total--
-        if (total < 0) {
-          clearInterval(timer)
-          this.captchaLoading = false
-          this.captchaText = '获取验证码'
-          return
-        }
-        this.captchaText = `${total} S`
-      }, 1000)
-    },
-    checkCaptcha() {
-      const { phoneNumber: sendPhone, verifyCode } = this.forgotForm
-      ValidateVerifyCode(sendPhone, verifyCode).then(res => {
-
-      })
-      this.isVerify = true
     },
     resetPassword() {
-      ResetPassword(this.forgotForm.phoneNumber, this.passwordForm.password).then(res => {
-
-      })
-      this.isVerify = false
-      this.$nextTick(() => {
-        this.renderCaptcha()
+      this.$refs.forgotForm.validate(async(valid) => {
+        if (!valid) return
+        this.resetLoading = true
+        await ResetPassword(this.resetForm).then(res => {
+          this.$message({
+            message: '密码重置成功，请使用新密码登录',
+            type: 'success'
+          })
+          setTimeout(() => {
+            this.$router.push({ path: '/login' })
+          }, 1000)
+        })
+        this.resetLoading = false
       })
     }
   }
@@ -287,19 +250,25 @@ export default {
   }
   &-form{
     position: absolute;
-    width: 420px;
     top: 50%;
-    margin-top: -155px;
     left: 50%;
-    margin-left: -210px;
+    width: 380px;
+    margin-top: -100px;
+    margin-left: -190px;
+    @media (max-width: 576px){
+      width: 100%;
+      padding: 0 20px;
+      left: 0;
+      margin-left: 0;
+    }
     &__icon{
       position: absolute;
-      left: 0;
+      left: 1px;
       top: 0;
       z-index: 5;
-      line-height: 36px;
+      line-height: 40px;
       font-size: 22px;
-      color: #606266;
+      color: #909399;
       padding: 0 6px;
       &.phone, &.password{
         font-size: 20px;
@@ -307,7 +276,7 @@ export default {
     }
     .el-input{
       ::v-deep &__inner{
-        padding: 0 15px 0 30px;
+        padding: 0 15px 0 35px;
       }
     }
     &-captcha{

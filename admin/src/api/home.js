@@ -1,8 +1,8 @@
 import request from '@/utils/request'
 
-export function getPanelInfo() {
+export function GetGeneral() {
   return request({
-    url: '/index/getPanel',
+    url: '/general',
     method: 'get'
   })
 }

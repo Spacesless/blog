@@ -13,7 +13,7 @@ module.exports = class extends think.Logic {
       },
       password: {
         required: true,
-        length: { min: 8 }
+        length: { min: 6, max: 20 }
       },
       captcha: {
         required: true
@@ -28,10 +28,21 @@ module.exports = class extends think.Logic {
     this.allowMethods = 'post'
 
     this.rules = {
-      username: {
-        required: true
-      },
       email: {
+        required: true
+      }
+    }
+  }
+
+  resetAction() {
+    this.allowMethods = 'post'
+
+    this.rules = {
+      password: {
+        required: true,
+        length: { min: 6, max: 20 }
+      },
+      resetCode: {
         required: true
       }
     }

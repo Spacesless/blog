@@ -19,7 +19,7 @@ module.exports = class extends Base {
   async upload(file) {
     const ext = /^\.\w+$/.test(path.extname(file.path)) ? path.extname(file.path) : '.png'
     // 文件命名16位MD5后的通用唯一识别码(think.md5是32位~太长)
-    let basename = think.md5(think.uuid('v4')).substr(0, 16) + ext
+    let basename = think.md5(think.uuid('v4')).substr(8, 16) + ext
     // 过滤 ../../
     basename = basename.replace(/[\\/]/g, '')
 
