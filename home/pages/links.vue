@@ -4,17 +4,17 @@
     <h1 class="links__title">友情链接</h1>
     <el-row class="links-wrap" :gutter="15">
       <el-col v-for="item in linkList" :key="item.id" :sm="12" :md="8" :lg="6" :xl="4">
-        <a class="links-item" :href="item.weburl" :title="item.webname" target="_blank">
+        <a class="links-item" :href="item.website" :title="item.name" target="_blank">
           <div class="links-logo">
-            <el-image class="links-logo__picture" :src="item.weblogo">
+            <el-image class="links-logo__picture" :src="item.logo">
               <div slot="error" class="image-slot">
                 <i class="el-icon-picture-outline" />
               </div>
             </el-image>
           </div>
           <div class="links-info">
-            <p class="links-info__name">{{ item.webname }}</p>
-            <p class="links-info__desc">{{ item.info }}</p>
+            <p class="links-info__name">{{ item.name }}</p>
+            <p class="links-info__desc">{{ item.description }}</p>
           </div>
         </a>
       </el-col>

@@ -45,16 +45,16 @@ if (process.client) {
 
 export default {
   layout: 'app',
-  async asyncData({ app, params, $axios }) {
-    const { seo } = await $axios.$get('/webapp/content', {
-      params: {
-        id: params.id
-      }
-    })
-    return {
-      seo
-    }
-  },
+  // async asyncData({ app, params, $axios }) {
+  //   const { seo } = await $axios.$get('/webapp/content', {
+  //     params: {
+  //       id: params.id
+  //     }
+  //   })
+  //   return {
+  //     seo
+  //   }
+  // },
   data() {
     return {
       apiurl: '//api.timelessq.com/live2d', // apiurl {string} 模型后端接口
@@ -272,16 +272,16 @@ export default {
       window.Live2D.captureName = 'Pio.png'
       window.Live2D.captureFrame = true
     }
-  },
-  head() {
-    return {
-      title: this.seo.title,
-      meta: [
-        { hid: 'description', name: 'description', content: this.seo.description },
-        { hid: 'keyword', name: 'keyword', content: this.seo.keyword }
-      ]
-    }
   }
+  // head() {
+  //   return {
+  //     title: this.seo.title,
+  //     meta: [
+  //       { hid: 'description', name: 'description', content: this.seo.description },
+  //       { hid: 'keyword', name: 'keyword', content: this.seo.keyword }
+  //     ]
+  //   }
+  // }
 }
 </script>
 

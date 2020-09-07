@@ -179,7 +179,7 @@ export const constantRoutes = [
       {
         path: '',
         name: 'Comment',
-        component: () => import('@/views/community/comment/index'),
+        component: () => import('@/views/comment/index'),
         meta: { title: '评论系统' }
       },
       {
@@ -187,7 +187,7 @@ export const constantRoutes = [
         name: 'CommentContent',
         props: true,
         hidden: true,
-        component: () => import('@/views/community/comment/content'),
+        component: () => import('@/views/comment/content'),
         meta: { title: '评论详情', noCache: true }
       }
     ]
@@ -196,12 +196,12 @@ export const constantRoutes = [
   {
     path: '/link',
     component: Layout,
-    meta: { title: '评论系统', icon: 'community' },
+    meta: { title: '评论系统', icon: 'seo' },
     children: [
       {
         path: '',
         name: 'Link',
-        component: () => import('@/views/community/links/index'),
+        component: () => import('@/views/links/index'),
         meta: { title: '友情链接' }
       }
     ]

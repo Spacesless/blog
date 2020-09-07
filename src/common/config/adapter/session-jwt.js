@@ -18,7 +18,7 @@ module.exports = {
     handle: JWTSession,
     secret: 'timeless', // secret is reqired
     tokenType: 'header', // ['query', 'body', 'header', 'cookie'], 'cookie' is default
-    tokenName: 'Authorization', // if tokenType not 'cookie', this will be token name, 'jwt' is default
+    tokenName: 'authorization', // if tokenType not 'cookie', this will be token name, 'jwt' is default
     sign: {
       expiresIn: 24 * 60 * 60 * 1000
     }

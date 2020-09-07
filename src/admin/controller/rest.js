@@ -91,7 +91,4 @@ module.exports = class extends think.Controller {
     const rows = await this.modelInstance.where({ [pk]: this.id }).update(data)
     return this.success({ affectedRows: rows })
   }
-  __call() {
-
-  }
 }

@@ -35,8 +35,4 @@ module.exports = class extends BaseRest {
 
     return dest ? this.siteurl + dest : ''
   }
-
-  async __call() {
-    return this.fail(404, '该功能未开发 || 本就没有')
-  }
 }

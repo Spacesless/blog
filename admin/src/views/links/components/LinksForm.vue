@@ -11,19 +11,19 @@
 
     <el-form ref="form" v-loading="fetchLoading" :model="formData" :rules="rules" label-width="80px">
       <el-form-item label="网站标题" prop="webname">
-        <el-input v-model="formData.webname" />
+        <el-input v-model="formData.name" />
       </el-form-item>
       <el-form-item label="网站地址" prop="weburl">
-        <el-input v-model="formData.weburl" />
+        <el-input v-model="formData.website" />
       </el-form-item>
       <el-form-item label="网站logo" prop="weblogo">
-        <el-input v-model="formData.weblogo" />
+        <el-input v-model="formData.logo" />
       </el-form-item>
       <el-form-item label="网站描述">
-        <el-input v-model="formData.webdesc" type="textarea" />
+        <el-input v-model="formData.description" type="textarea" rows="3" />
       </el-form-item>
       <el-form-item label="排序">
-        <el-input-number v-model="formData.sort" controls-position="right" />
+        <el-input-number v-model="formData.no_order" controls-position="right" />
       </el-form-item>
       <el-form-item label="状态修改">
         <el-select v-model="formData.is_show">
@@ -74,6 +74,7 @@ export default {
       this.formData = {
         is_show: 1
       }
+      this.dialogTitle = this.currentId ? '编辑友链' : '添加友链'
       this.currentId && this.fetchData()
     },
     async fetchData() {

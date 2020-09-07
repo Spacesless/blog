@@ -154,16 +154,16 @@ export default {
       return lifestyleMap[style] + '指数'
     }
   },
-  async asyncData({ app, params, $axios }) {
-    const { seo } = await $axios.$get('/webapp/content', {
-      params: {
-        id: params.id
-      }
-    })
-    return {
-      seo
-    }
-  },
+  // async asyncData({ app, params, $axios }) {
+  //   const { seo } = await $axios.$get('/webapp/content', {
+  //     params: {
+  //       id: params.id
+  //     }
+  //   })
+  //   return {
+  //     seo
+  //   }
+  // },
   data() {
     return {
       baseUrl: 'https://free-api.heweather.net/s6',
@@ -335,16 +335,16 @@ export default {
       this.location = areas ? areas[areas.length - 1].replace(/市|区/, '') : ''
       if (this.location) this.fetchData()
     }
-  },
-  head() {
-    return {
-      title: this.seo.title,
-      meta: [
-        { hid: 'description', name: 'description', content: this.seo.description },
-        { hid: 'keyword', name: 'keyword', content: this.seo.keyword }
-      ]
-    }
   }
+  // head() {
+  //   return {
+  //     title: this.seo.title,
+  //     meta: [
+  //       { hid: 'description', name: 'description', content: this.seo.description },
+  //       { hid: 'keyword', name: 'keyword', content: this.seo.keyword }
+  //     ]
+  //   }
+  // }
 }
 </script>
 

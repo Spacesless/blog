@@ -19,22 +19,28 @@
       @selection-change="onSelectionChange"
     >
       <el-table-column type="selection" width="50" align="center" />
-      <el-table-column label="网站Logo" width="100" align="center">
+      <el-table-column label="Logo" width="100" align="center">
         <template #default="scope">
-          <el-image class="links-list-logo" :src="scope.row.weblogo" lazy>
+          <el-image class="links-list-logo" :src="scope.row.logo" lazy>
             <div slot="error" class="image-slot">
               <i class="el-icon-picture-outline-round" />
             </div>
           </el-image>
         </template>
       </el-table-column>
-      <el-table-column label="网站标题" prop="webname" />
+      <el-table-column label="网站标题" prop="name" />
       <el-table-column label="网站地址">
         <template #default="scope">
-          <el-link :underline="false" :href="scope.row.weburl" target="_blank">{{ scope.row.weburl }}</el-link>
+          <el-link :underline="false" :href="scope.row.website" target="_blank">{{ scope.row.website }}</el-link>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="排序" prop="no_order" width="50" />
+      <el-table-column align="center" label="排序" prop="no_order" width="60" />
+      <el-table-column label="前台显示" width="120" align="center">
+        <template #default="scope">
+          <el-tag v-if="scope.row.is_show">显示</el-tag>
+          <el-tag v-else type="info">隐藏</el-tag>
+        </template>
+      </el-table-column>
       <el-table-column align="center" label="添加时间" prop="addtime" width="200" />
       <el-table-column align="center" label="操作" width="200">
         <template #default="scope">
@@ -84,12 +90,6 @@ export default {
         this.total = count
       }).catch(() => {})
       this.listLoading = false
-    },
-    handleEdit(id) {
-      this.$router.push({
-        name: 'EditLinks',
-        params: { id: id }
-      })
     },
     deleteSingle(id) {
       DeleteList('links', [id]).then(res => {

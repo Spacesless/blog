@@ -42,7 +42,7 @@ module.exports = class extends Base {
     const token = await this.session('userInfo', {
       id: userInfo.id,
       username: userInfo.username
-    }, expires)
+    })
 
     return this.success({ token, expires })
   }
@@ -55,6 +55,7 @@ module.exports = class extends Base {
     let userInfo = {}
     if (id) {
       userInfo = await this.modelInstance.where({ id }).find()
+      delete userInfo.password
     }
     return this.success(userInfo)
   }

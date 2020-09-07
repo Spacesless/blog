@@ -2,7 +2,7 @@
   <div class="webapp">
     <el-row :gutter="15">
       <el-col v-for="item in webappList" :key="item.id" :sm="12" :md="8" :xl="6">
-        <a class="webapp-card" :href="item.filename" :title="item.name" target="_blank">
+        <a class="webapp-card" :href="item.filename" :title="item.name">
           <div class="webapp-card__header">{{ item.name }}</div>
           <div class="webapp-card__body">
             <div class="clearfix">

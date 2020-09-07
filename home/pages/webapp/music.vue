@@ -162,16 +162,16 @@ export default {
   components: {
     // Pagination
   },
-  async asyncData({ app, params, $axios }) {
-    const { seo } = await $axios.$get('/webapp/content', {
-      params: {
-        id: params.id
-      }
-    })
-    return {
-      seo
-    }
-  },
+  // async asyncData({ app, params, $axios }) {
+  //   const { seo } = await $axios.$get('/webapp/content', {
+  //     params: {
+  //       id: params.id
+  //     }
+  //   })
+  //   return {
+  //     seo
+  //   }
+  // },
   data() {
     return {
       ap: null,
@@ -505,15 +505,15 @@ export default {
       this.ap.toggle()
     }
   },
-  head() {
-    return {
-      title: this.seo.title,
-      meta: [
-        { hid: 'description', name: 'description', content: this.seo.description },
-        { hid: 'keyword', name: 'keyword', content: this.seo.keyword }
-      ]
-    }
-  },
+  // head() {
+  //   return {
+  //     title: this.seo.title,
+  //     meta: [
+  //       { hid: 'description', name: 'description', content: this.seo.description },
+  //       { hid: 'keyword', name: 'keyword', content: this.seo.keyword }
+  //     ]
+  //   }
+  // },
   layout: 'app'
 }
 </script>

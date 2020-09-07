@@ -88,6 +88,7 @@ export default {
     }
   },
   mounted() {
+    console.log(this.$router)
     this.handleResize()
     this.__resizeHandler = debounce(() => {
       this.handleResize()

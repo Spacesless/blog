@@ -12,8 +12,7 @@ module.exports = class extends think.Logic {
         length: { min: 5 }
       },
       password: {
-        required: true,
-        length: { min: 6, max: 20 }
+        required: true
       },
       captcha: {
         required: true
@@ -39,8 +38,7 @@ module.exports = class extends think.Logic {
 
     this.rules = {
       password: {
-        required: true,
-        length: { min: 6, max: 20 }
+        required: true
       },
       resetCode: {
         required: true

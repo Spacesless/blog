@@ -40,7 +40,7 @@ export function GetPathList(query) {
  */
 export function GetCaptcha(params) {
   return request({
-    url: '/admin/captcha',
+    url: '/user/captcha',
     method: 'get',
     params
   })
