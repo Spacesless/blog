@@ -6,13 +6,6 @@ const WIDTH = 992 // refer to Bootstrap's responsive design
 const MDWIDTH = 1280
 
 export default {
-  // watch: {
-  //   $route(route) {
-  //     if (this.device === 'mobile' && this.sidebar.opened) {
-  //       this.$store.dispatch('closeSideBar', { withoutAnimation: false })
-  //     }
-  //   }
-  // },
   beforeMount() {
     window.addEventListener('resize', this.$_resizeHandler)
   },

@@ -45,6 +45,16 @@ if (process.client) {
 
 export default {
   layout: 'app',
+  async asyncData({ app, params, $axios }) {
+    const { seo } = await $axios.$get('/webapp/content', {
+      params: {
+        id: params.id
+      }
+    })
+    return {
+      seo
+    }
+  },
   data() {
     return {
       apiurl: '//api.timelessq.com/live2d', // apiurl {string} 模型后端接口
@@ -261,6 +271,15 @@ export default {
       this.showMessage('照好了嘛，是不是很可爱呢？', 3000)
       window.Live2D.captureName = 'Pio.png'
       window.Live2D.captureFrame = true
+    }
+  },
+  head() {
+    return {
+      title: this.seo.title,
+      meta: [
+        { hid: 'description', name: 'description', content: this.seo.description },
+        { hid: 'keyword', name: 'keyword', content: this.seo.keyword }
+      ]
     }
   }
 }

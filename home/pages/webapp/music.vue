@@ -159,9 +159,18 @@ export default {
       return (Math.floor(time / 60) < 10 ? '0' + Math.floor(time / 60) : Math.floor(time / 60)) + ':' + (time % 60 < 10 ? '0' + time % 60 : time % 60)
     }
   },
-  layout: 'app',
   components: {
     // Pagination
+  },
+  async asyncData({ app, params, $axios }) {
+    const { seo } = await $axios.$get('/webapp/content', {
+      params: {
+        id: params.id
+      }
+    })
+    return {
+      seo
+    }
   },
   data() {
     return {
@@ -495,7 +504,17 @@ export default {
     handleTogglePlay() {
       this.ap.toggle()
     }
-  }
+  },
+  head() {
+    return {
+      title: this.seo.title,
+      meta: [
+        { hid: 'description', name: 'description', content: this.seo.description },
+        { hid: 'keyword', name: 'keyword', content: this.seo.keyword }
+      ]
+    }
+  },
+  layout: 'app'
 }
 </script>
 

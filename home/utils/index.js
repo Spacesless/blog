@@ -89,37 +89,43 @@ export function formatTime(time, option) {
   }
 }
 
-export function debounce(func, wait, immediate) {
-  let timeout, args, context, timestamp, result
-
-  const later = function() {
-    // 据上一次触发时间间隔
-    const last = +new Date() - timestamp
-
-    // 上次被包装函数被调用时间间隔last小于设定时间间隔wait
-    if (last < wait && last > 0) {
-      timeout = setTimeout(later, wait - last)
-    } else {
-      timeout = null
-      // 如果设定为immediate===true，因为开始边界已经调用过了此处无需调用
-      if (!immediate) {
-        result = func.apply(context, args)
-        if (!timeout) context = args = null
-      }
-    }
+/**
+ * 获取localStorage
+ * @param {String} key localStorage键名
+ * @returns {Object} 格式化的json数据
+ */
+export function getLocalStorage(key) {
+  const data = localStorage.getItem(key)
+  let result
+  try {
+    result = data ? JSON.parse(data) : {}
+  } catch {
+    result = ''
   }
+  return result
+}
 
-  return function(...args) {
-    context = this
-    timestamp = +new Date()
-    const callNow = immediate && !timeout
-    // 如果延时不存在，重新设定延时
-    if (!timeout) timeout = setTimeout(later, wait)
-    if (callNow) {
-      result = func.apply(context, args)
-      context = args = null
-    }
+/**
+ * 设置localStorage
+ * @param {String} key localStorage键名
+ * @param {Object} data 数据
+ */
+export function setLocalStorage(key, data) {
+  const format = typeof data === 'object' ? JSON.stringify(data) : data
+  localStorage.setItem(key, format)
+}
 
-    return result
+/**
+ * 更新localStorage
+ * @param {String} key localStorage键名
+ * @param {Object} data 数据
+ */
+export function updateLocalStorage(key, data) {
+  const source = JSON.parse(localStorage.getItem(key))
+  if (typeof source === 'object' && typeof data === 'object') {
+    const format = Object.assign(source, data)
+    localStorage.setItem(key, JSON.stringify(format))
+  } else {
+    localStorage.setItem(key, data)
   }
 }

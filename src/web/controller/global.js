@@ -7,15 +7,18 @@ module.exports = class extends Base {
     const isNav = cloneColumn.filter(item => item.is_nav === 1)
     const navigation = this.convertToTree(isNav)
     // 配置信息
+    const { sitename, is_silent, live2d_model, live2d_texture, icp_beian, police_beian } = this.options
     const configs = {
       siteurl: this.siteurl,
-      sitename: this.options.sitename,
-      keywords: this.options.keywords,
-      description: this.options.description,
-      icpBeian: this.options.icp_beian,
-      policeBeian: this.options.police_beian,
       currentYear: new Date().getFullYear(),
-      timeless: Math.ceil((new Date() - new Date('2018/03/15')) / 86400000)
+      timeless: Math.ceil((new Date() - new Date('2018/03/15')) / 86400000),
+      police_beian_code: police_beian ? police_beian.replace(/[^0-9]/ig, '') : '',
+      sitename,
+      is_silent,
+      live2d_model,
+      live2d_texture,
+      icp_beian,
+      police_beian
     }
     return this.success({ navigation, configs })
   }

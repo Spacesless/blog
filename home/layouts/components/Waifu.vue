@@ -1,32 +1,30 @@
 <template>
-  <div v-if="isShow" ref="waifu" class="waifu" @mousedown="drag">
+  <div v-if="isShow" ref="waifu" class="waifu" @mousedown="dragMove">
     <transition name="fade-transform" mode="out-in">
       <div v-show="tipsShow" class="waifu-tips" v-html="tips" />
     </transition>
     <canvas id="live2d" ref="live2d" width="280" height="250" class="live2d" />
     <div class="waifu-tool">
-      <span ref="home" class="tl-icon" @click="goToHome">&#xe76f;</span>
-      <span ref="feedback" class="tl-icon" @click="openFeedback">&#xe745;</span>
+      <span ref="home" class="tl-icon" @click="navigatorToHome">&#xe76f;</span>
       <span ref="model" class="tl-icon" @click="loadOtherModel">&#xe6ed;</span>
       <span ref="textures" class="tl-icon" @click="loadOtherTexture">&#xe646;</span>
       <span ref="photo" class="tl-icon" @click="handleTakePhoto">&#xe704;</span>
-      <span ref="close" class="tl-icon" @click="handleCloseLive2d">&#xe602;</span>
+      <span ref="close" class="tl-icon" @click="handleHideLive2d">&#xe602;</span>
     </div>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-import axios from 'axios'
+import { getLocalStorage, updateLocalStorage } from '@/utils/index'
 if (process.client) {
   require('@/utils/live2d')
 }
+
 export default {
   data() {
     return {
       apiurl: '//api.timelessq.com/live2d/', // apiurl {string} 模型后端接口
-      modelId: 100, // 模型 ID
-      modelTexturesId: 7, // 材质 ID
       tips: '',
       isShow: true,
       tipsShow: false,
@@ -34,10 +32,6 @@ export default {
         {
           'selector': 'home',
           'text': ['点击前往首页，想回到上一页可以使用浏览器的后退功能哦']
-        },
-        {
-          'selector': 'feedback',
-          'text': ['啊呀 我哪里做错了 你要去投诉我么~']
         },
         {
           'selector': 'model',
@@ -58,56 +52,58 @@ export default {
         {
           'selector': 'live2d',
           'text': [
-            '干嘛呢你，快把手拿开',
-            '鼠…鼠标放错地方了！',
-            '我生气了啊~~( ﹁ ﹁ ) ~~~ 哄不回来的那种',
-            ' 怕帕(๑⁼̴̀д⁼̴́๑)'
+            '(๑•́ ₃ •̀๑)',
+            '.^◡^.',
+            'ᖗ乛◡乛ᖘ'
           ]
         }
       ],
       click: [
-        '是…是不小心碰到了吧',
         '萝莉控是什么呀',
-        '喵喵喵(๑•́ ∀ •̀๑)',
+        '(๑•́ ∀ •̀๑)',
         '๑乛◡乛๑嘿嘿',
-        '你看到我的小熊了吗',
-        '再摸的话我可要报警了！⌇●﹏●⌇',
-        '妖妖零吗，这里有个家伙一直在摸我(ó﹏ò｡)'
+        '！⌇●﹏●⌇',
+        '(ó﹏ò｡)'
       ]
     }
   },
   computed: {
-    ...mapGetters(['live2dShow'])
+    ...mapGetters(['live2dShow', 'configs']),
+    modelId() { // 模型 ID
+      const { modelId } = getLocalStorage('waifu')
+      return modelId || this.configs.live2d_model || 100
+    },
+    texturesId() { // 材质 ID
+      const { texturesId } = getLocalStorage('waifu')
+      return texturesId || this.configs.live2d_texture || 1
+    }
   },
   watch: {
     live2dShow(isShow) {
       if (isShow) {
-        this.handleOpenLive2d()
+        this.handleShowLive2d()
       } else {
-        this.handleCloseLive2d()
+        this.handleHideLive2d()
       }
     }
   },
   mounted() {
-    let { isShow } = this.getLocalStorage()
-    if (isShow === undefined) isShow = true
-    this.$store.commit('tools/SET_LIVE2D', isShow)
-    this.isShow = isShow
-    if (isShow) {
+    if (this.isShow) {
       this.initModel()
-    }
-    /** 开启开发者工具 */
-    var re = /x/
-    re.toString = function() {
-      this.showMessage('哈哈，你打开了控制台，是想要看看我的秘密吗？', 3000, true)
-      return ''
-    }
-    document.body.oncopy = () => {
-      this.showMessage('你都复制了些什么呀，转载要记得加上出处哦', 3000, true)
+
+      /** 开启开发者工具 */
+      const re = /x/
+      re.toString = function() {
+        this.showMessage('哈哈，你打开了控制台，是想要看看我的秘密吗？', 3000, true)
+        return ''
+      }
+      document.addEventListener('copy', () => {
+        this.showMessage('你都复制了些什么呀，转载要记得加上出处哦', 3000, true)
+      })
     }
   },
   methods: {
-    drag(e) {
+    dragMove(e) {
       const odiv = this.$refs.waifu // 获取目标元素
       // 算出鼠标相对元素的位置
       const disX = e.clientX - odiv.offsetLeft
@@ -130,10 +126,6 @@ export default {
           top = clientHeight - odiv.clientHeight
         }
 
-        // 绑定元素位置到positionX和positionY上面
-        this.positionX = top
-        this.positionY = left
-
         // 移动当前元素
         odiv.style.left = left + 'px'
         odiv.style.top = top + 'px'
@@ -146,76 +138,76 @@ export default {
         document.body.style.userSelect = 'text'
       }
     },
-    /** 提示框 */
-    showMessage(text, timeout) {
+    /**
+     * 提示信息
+     * @param {String} text tips信息
+     * @param {Number [int]} duration 持续时间
+     */
+    showMessage(text, duration = 3000) {
       if (Array.isArray(text)) text = text[Math.floor(Math.random() * text.length + 1) - 1]
       this.tips = text
       this.tipsShow = true
-      if (timeout === undefined) timeout = 3000
-      this.hideMessage(timeout)
-    },
-    hideMessage(timeout) {
-      if (timeout === undefined) timeout = 3000
       clearTimeout(this.timer)
       this.timer = setTimeout(() => {
         this.tipsShow = false
-      }, timeout)
+      }, duration)
     },
-    /** 初始化模型 */
-    initModel(waifuPath) {
-      if (waifuPath === undefined) waifuPath = ''
-      let { modelId, modelTexturesId } = this.getLocalStorage()
-      if (modelId == null) {
-        /* 首次访问加载 指定模型 的 指定材质 */
-        modelId = this.modelId
-        modelTexturesId = this.modelTexturesId
-      }
-      this.loadModel(modelId, modelTexturesId)
-      this.welcome()
-      this.interaction()
+    // 初始化模型
+    initModel() {
+      this.loadModel(this.modelId, this.texturesId)
+      this.onBrowsing()
+      this.addInteraction()
     },
-    loadModel(modelId, modelTexturesId) {
-      if (modelTexturesId === undefined) modelTexturesId = 1
-      this.setLocalStorage({
-        modelId, modelTexturesId
-      })
+    /**
+     * 加载指定模型
+     * @param {Number [int]} modelId 模型id
+     * @param {Number [int]} texturesId 材质id
+     */
+    loadModel(modelId, texturesId = 1) {
+      updateLocalStorage('waifu', { modelId, texturesId })
       window.loadlive2d(
-        'live2d', this.apiurl + 'models?id=' + modelId + '&texture=' + modelTexturesId,
-        console.log('live2d', '模型 ' + modelId + '-' + modelTexturesId + ' 加载完成')
+        'live2d', this.apiurl + 'models?id=' + modelId + '&texture=' + texturesId,
+        console.log('live2d', '模型 ' + modelId + '-' + texturesId + ' 加载完成')
       )
     },
-    /** 更换模型*/
+    // 更换模型
     loadOtherModel() {
-      const { modelId } = this.getLocalStorage()
-      axios.get(this.apiurl + 'models/switch?id=' + modelId)
-        .then(response => {
-          const { id, message } = response.data.data
-          if (id) {
-            this.showMessage(message, 3000)
-            this.loadModel(id)
-          } else {
-            this.showMessage('哎呀 还没有其它的小伙伴呢', 3000)
-          }
-        })
+      this.$axios.get(this.apiurl + 'models/switch', {
+        params: {
+          id: this.modelId
+        }
+      }).then(res => {
+        const { id, message } = res.data
+        if (id) {
+          this.showMessage(message, 3000)
+          this.loadModel(id)
+        } else {
+          this.showMessage('哎呀 还没有其它的小伙伴呢', 3000)
+        }
+      })
     },
+    // 更换衣服
     loadOtherTexture() {
-      const { modelId, modelTexturesId } = this.getLocalStorage()
-      axios.get(this.apiurl + 'textures/random?id=' + modelId + '&texture=' + modelTexturesId)
-        .then(response => {
-          const { id, texture } = response.data.data
-          if (id) {
-            this.showMessage('我的新衣服好看嘛', 3000)
-            this.loadModel(id, texture)
-          } else {
-            this.showMessage('我还没有其他衣服呢', 3000)
-          }
-        })
+      this.$axios.get(this.apiurl + 'textures/random', {
+        params: {
+          id: this.modelId,
+          texture: this.texturesId
+        }
+      }).then(res => {
+        const { id, texture } = res.data
+        if (id) {
+          this.showMessage('我的新衣服好看嘛', 3000)
+          this.loadModel(id, texture)
+        } else {
+          this.showMessage('我还没有其他衣服呢', 3000)
+        }
+      })
     },
-    welcome() {
-      var text
-      var SiteIndexUrl = window.location.protocol + '//' + window.location.hostname + '/' // 自动获取主页
+    onBrowsing() {
+      let text
+      const SiteIndexUrl = window.location.protocol + '//' + window.location.hostname + '/' // 自动获取主页
       if (window.location.href === SiteIndexUrl) { // 如果是主页
-        var now = (new Date()).getHours()
+        const now = (new Date()).getHours()
         if (now > 23 || now <= 5) {
           text = '你是夜猫子呀？这么晚还不睡觉，明天起的来嘛'
         } else if (now > 5 && now <= 7) {
@@ -237,9 +229,9 @@ export default {
         }
       } else {
         if (document.referrer !== '') {
-          var referrer = document.createElement('a')
+          const referrer = document.createElement('a')
           referrer.href = document.referrer
-          var domain = referrer.hostname.split('.')[1]
+          const domain = referrer.hostname.split('.')[1]
           if (window.location.hostname === referrer.hostname) {
             text = '欢迎阅读<span style="color:#0099cc;">『' + document.title.split(' - ')[0] + '』</span>'
           } else if (domain === 'baidu') {
@@ -257,65 +249,61 @@ export default {
       }
       this.showMessage(text, 3000)
     },
-    /** 交互时间 */
-    interaction() {
-      const refs = this.$refs
-      for (const key in refs) {
-        refs[key].addEventListener('mouseover', (e) => {
-          const rows = this.mouseover.find(item => item.selector === key)
-          if (!rows) return
-          let text = ''
-          if (Array.isArray(rows.text)) {
-            text = rows.text[Math.floor(Math.random() * rows.text.length + 1) - 1]
-          } else {
-            text = rows.text
-          }
-          this.showMessage(text, 3000)
-        })
+    // 鼠标交互
+    addInteraction() {
+      this.__mouseoverHandler = (selector) => {
+        const rows = this.mouseover.find(item => item.selector === selector)
+        if (!rows) return
+        let text = ''
+        if (Array.isArray(rows.text)) {
+          text = rows.text[Math.floor(Math.random() * rows.text.length + 1) - 1]
+        } else {
+          text = rows.text
+        }
+        this.showMessage(text, 3000)
       }
-      this.$refs.live2d.addEventListener('click', () => {
+      this.__clickHandler = () => {
         const text = this.click[Math.floor(Math.random() * this.click.length + 1) - 1]
         this.showMessage(text, 3000, true)
-      })
+      }
+
+      const refs = this.$refs
+      for (const key in refs) {
+        refs[key].addEventListener('mouseover', this.__mouseoverHandler(key))
+      }
+      this.$refs.live2d.addEventListener('click', this.__clickHandler)
     },
-    goToHome() {
-      window.location = window.location.protocol + '//' + window.location.hostname + '/'
+    // 移除交互
+    removeInteraction() {
+      const refs = this.$refs
+      for (const key in refs) {
+        refs[key].removeEventListener('mouseover', this.__mouseoverHandler(key))
+      }
+      this.$refs.live2d.removeEventListener('click', this.__clickHandler)
     },
-    handleOpenLive2d() {
+    navigatorToHome() {
+      this.$router.push({ path: '/' })
+    },
+    handleShowLive2d() {
       this.isShow = true
       this.$nextTick(() => {
+        this.addInteraction()
         this.initModel()
         this.showMessage('锵锵锵锵~ 本宝宝又回来了', 1500)
       })
-      this.setLocalStorage({
-        isShow: true
-      })
     },
-    handleCloseLive2d() {
-      this.setLocalStorage({
-        isShow: false
-      })
+    handleHideLive2d() {
+      this.removeInteraction()
       this.showMessage('愿你有一天能与重要的人重逢', 1500)
       window.setTimeout(() => {
+        this.$store.commit('tools/SET_LIVE2D', false)
         this.isShow = false
       }, 1500)
     },
-    openFeedback() {
-      window.open(`${location.protocol}//${location.host}/feedback/`)
-    },
     handleTakePhoto() {
-      this.showMessage('照好了嘛，是不是很可爱呢？', 3000)
+      this.showMessage('照好了嘛，是不是很可爱呐？', 3000)
       window.Live2D.captureName = 'Pio.png'
       window.Live2D.captureFrame = true
-    },
-    getLocalStorage() {
-      const local = localStorage.getItem('waifu')
-      return local ? JSON.parse(local) : {}
-    },
-    setLocalStorage(opts) {
-      const local = this.getLocalStorage()
-      const target = Object.assign(local, opts)
-      localStorage.setItem('waifu', JSON.stringify(target))
     }
   }
 }

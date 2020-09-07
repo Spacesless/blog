@@ -52,21 +52,16 @@ module.exports = class extends Base {
       return this.ctx.throw(404)
     }
 
-    const { name: title, keywords, description, content } = rows
+    const { name: title, keywords, description } = rows
     const seo = {
       title: title + this.title,
       keywords,
       description
     }
 
-    const options = await this.modelInstance
+    const data = await this.modelInstance
       .where({ id })
       .select()
-    const data = {
-      content
-    }
-    Object.assign(data, options)
-    this.assign('data', data)
 
     return this.success({
       seo,
