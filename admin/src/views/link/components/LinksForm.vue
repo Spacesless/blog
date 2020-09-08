@@ -66,9 +66,6 @@ export default {
       }
     }
   },
-  created() {
-    this.fetchData()
-  },
   methods: {
     onOpen() {
       this.formData = {
@@ -79,7 +76,7 @@ export default {
     },
     async fetchData() {
       this.fetchLoading = true
-      await GetContent('links', this.currentId).then(res => {
+      await GetContent('link', this.currentId).then(res => {
         this.formData = res.data
       }).catch(() => {})
       this.fetchLoading = false

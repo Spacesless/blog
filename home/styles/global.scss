@@ -103,6 +103,12 @@ a,a:hover,a:active,a:focus,a:visited{
   margin-top: 3px;
   transition: margin-top .3s ease-in-out;
   transform-origin: bottom center;
+  @media (max-width:1600px) {
+    transform: scale(0.85);
+  }
+  @media (max-width:768px) {
+    display: none;
+  }
   &:hover{
     margin-top: 0;
     cursor: grab;
@@ -187,11 +193,6 @@ a,a:hover,a:active,a:focus,a:visited{
 }
 
 //media query
-@media (max-width:1600px) {
-  .waifu{
-    transform: scale(0.85);
-  }
-}
 @media (pointer: fine) {
   ::-webkit-scrollbar {
     height: 8px;

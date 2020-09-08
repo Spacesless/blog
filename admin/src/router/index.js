@@ -190,12 +190,12 @@ export const constantRoutes = [
   {
     path: '/link',
     component: Layout,
-    meta: { title: '评论系统', icon: 'seo' },
+    meta: { title: '友情链接', icon: 'member' },
     children: [
       {
         path: '',
         name: 'Link',
-        component: () => import('@/views/links/index'),
+        component: () => import('@/views/link/index'),
         meta: { title: '友情链接' }
       }
     ]

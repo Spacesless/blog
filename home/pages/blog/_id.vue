@@ -1,8 +1,8 @@
 <template>
   <div class="blog">
     <!-- filter -->
-    <el-form class="filter" label-width="70px" label-position="left">
-      <el-form-item label="列表排序">
+    <el-form class="filter" label-width="40px" label-position="left">
+      <el-form-item label="排序">
         <el-select v-model="filters.sortBy" placeholder="请选择排序方式" @change="handleSearch">
           <el-option label="更新时间" value="" />
           <el-option label="发布时间" value="addtime" />

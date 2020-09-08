@@ -126,7 +126,6 @@
 import { mapGetters } from 'vuex'
 import UploadImage from '@/components/Upload/index'
 import Tinymce from '@/components/Tinymce'
-import ImageParam from './parameter/ImageParam'
 import BangumiParam from './parameter/BangumiParam'
 import { getIDByClass, getPathName } from '@/utils'
 import { GetContent, CreateContent, UpdateContent } from '@/api/content'
@@ -135,7 +134,6 @@ export default {
   components: {
     UploadImage,
     Tinymce,
-    ImageParam,
     BangumiParam
   },
   props: {
@@ -183,7 +181,6 @@ export default {
     },
     paramComponent() {
       const moduleEnum = {
-        image: 'ImageParam',
         bangumi: 'BangumiParam'
       }
       return moduleEnum[this.currentModule] || ''

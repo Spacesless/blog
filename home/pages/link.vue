@@ -48,7 +48,7 @@ export default {
     Comment
   },
   async asyncData({ $axios }) {
-    const linkList = await $axios.$get('/links')
+    const linkList = await $axios.$get('/link')
     return { linkList }
   },
   computed: {

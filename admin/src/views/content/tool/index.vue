@@ -30,7 +30,7 @@ import { GetList } from '@/api/list'
 export default {
   data() {
     return {
-      currentModule: 'webapp',
+      currentModule: 'tool',
       appList: [],
       listLoading: false
     }

@@ -84,7 +84,7 @@ export default {
   methods: {
     async fetchList() {
       this.listLoading = true
-      await GetList('links', this.listQuery).then(res => {
+      await GetList('link', this.listQuery).then(res => {
         const { data, count } = res.data
         this.linkList = data
         this.total = count
@@ -92,7 +92,7 @@ export default {
       this.listLoading = false
     },
     deleteSingle(id) {
-      DeleteList('links', [id]).then(res => {
+      DeleteList('link', [id]).then(res => {
         this.$message({
           type: 'success',
           message: '删除成功'
@@ -110,7 +110,7 @@ export default {
       const list = this.multipleSelection.map(item => {
         return item.id
       })
-      DeleteList('bangumi', list).then(res => {
+      DeleteList('link', list).then(res => {
         this.$message({
           type: 'success',
           message: '删除成功'

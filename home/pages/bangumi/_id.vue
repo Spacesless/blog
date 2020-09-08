@@ -1,7 +1,7 @@
 <template>
   <div class="bangumi">
-    <el-form class="filter" label-width="70px" label-position="left">
-      <el-form-item label="列表排序">
+    <el-form class="filter" label-width="40px" label-position="left">
+      <el-form-item label="排序">
         <el-select v-model="filters.sortBy" placeholder="请选择排序方式" @change="handleSearch">
           <el-option label="更新时间" value="" />
           <el-option label="发布时间" value="addtime" />
@@ -12,7 +12,7 @@
           <el-radio-button label="asc">升序</el-radio-button>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="放送状态">
+      <el-form-item label="状态">
         <el-radio-group v-model="filters.status" @change="handleSearch">
           <el-radio-button label="">全部</el-radio-button>
           <el-radio-button label="0">未上映</el-radio-button>
@@ -20,7 +20,7 @@
           <el-radio-button label="2">已完结</el-radio-button>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="追剧进度">
+      <el-form-item label="进度">
         <el-radio-group v-model="filters.progress" @change="handleSearch">
           <el-radio-button label="">全部</el-radio-button>
           <el-radio-button label="0">在看</el-radio-button>
@@ -41,7 +41,7 @@
     <!--bangumi list-->
     <div class="bangumi-list">
       <el-row :gutter="15">
-        <el-col v-for="item in bangumiList" :key="item.id" :xs="8" :sm="12">
+        <el-col v-for="item in bangumiList" :key="item.id" :xs="24" :sm="12">
           <el-row class="bangumi-list__item">
             <el-col class="bangumi-list-cover" :span="8" :xl="10">
               <nuxt-link :to="'/bangumi/content/' + item.id">

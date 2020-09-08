@@ -66,6 +66,9 @@ export default {
   right: 15px;
   bottom: 15px;
   z-index: 1000;
+  @media (max-width:768px) {
+    display: none;
+  }
   .fixbar-item{
     width: 40px;
     height: 40px;

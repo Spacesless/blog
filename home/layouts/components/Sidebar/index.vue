@@ -24,8 +24,8 @@
         </div>
         <sidebar-item v-for="route in menus" :key="route.path" :item="route" />
         <div class="aside-item">
-          <nuxt-link to="/links">
-            <el-menu-item index="/links">
+          <nuxt-link to="/link">
+            <el-menu-item index="/link">
               <i class="aside-menu__icon tl-icon">&#xe6f5;</i>
               <span slot="title">友情链接</span>
             </el-menu-item>

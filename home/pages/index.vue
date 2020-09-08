@@ -41,7 +41,7 @@
         <nuxt-link class="home-head__more" to="/bangumi">more+</nuxt-link>
       </div>
       <el-row class="bangumi-list" :gutter="15">
-        <el-col v-for="item in bangumis" :key="item.id" :xs="8" :sm="12">
+        <el-col v-for="item in bangumis" :key="item.id" :xs="24" :sm="12">
           <el-row class="bangumi-list-item">
             <el-col :span="8" :xl="10">
               <nuxt-link :to="'/bangumi/content/' + item.id" :title="item.title">
@@ -88,8 +88,9 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$router)
-    this.handleResize()
+    setTimeout(() => {
+      this.handleResize()
+    }, 100)
     this.__resizeHandler = debounce(() => {
       this.handleResize()
     }, 100)
@@ -101,7 +102,7 @@ export default {
   methods: {
     handleResize() {
       const carouselWidth = this.$refs.carousel.$el.clientWidth
-      this.bannerHeight = 420 * carouselWidth / 1280 + 'px'
+      this.bannerHeight = 450 * carouselWidth / 1280 + 'px'
     }
   },
   head() {

@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <div class="header-logo hidden-sm-and-up">
-      <img class="header-logo__avatar" src="" alt="logo">
+      <img class="header-logo__avatar" src="/static/avatar.jpg" alt="logo">
     </div>
     <div class="header-menus">
       <span class="hidden-sm-and-down">

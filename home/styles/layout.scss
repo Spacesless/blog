@@ -112,12 +112,16 @@
   box-sizing: border-box;
   transition: width 0.3s;
   &-logo{
+    float: left;
+    line-height: 60px;
     &__avatar{
       height: 40px;
       vertical-align: middle;
+      border-radius: 20px;
     }
   }
   &-menus{
+    float: right;
     height: 60px;
     line-height: 60px;
     text-align: right;
@@ -324,6 +328,7 @@
   }
   .app-main{
     margin-left: 0;
+    max-width: 100%;
   }
   &.hideAside {
     .aside{
