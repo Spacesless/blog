@@ -70,7 +70,7 @@ export default {
       }, 0)
     },
     toggleSidebar() {
-      this.$store.dispatch('toggleSideBar')
+      this.$store.dispatch('tools/toggleSideBar')
     },
     handleSearch() {
       this.$router.push({

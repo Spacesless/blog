@@ -19,9 +19,9 @@ export default {
       this.$store.dispatch('toggleDevice', 'mobile')
     }
     if (isMiddleWidth) {
-      this.$store.dispatch('closeSideBar', { withoutAnimation: true })
+      this.$store.dispatch('tools/closeSideBar', { withoutAnimation: true })
     } else {
-      this.$store.dispatch('openSideBar', { withoutAnimation: true })
+      this.$store.dispatch('tools/openSideBar', { withoutAnimation: true })
     }
   },
   methods: {
@@ -43,9 +43,9 @@ export default {
         this.$store.dispatch('toggleDevice', isMobile ? 'mobile' : 'desktop')
 
         if (isMiddleWidth) {
-          this.$store.dispatch('closeSideBar', { withoutAnimation: true })
+          this.$store.dispatch('tools/closeSideBar', { withoutAnimation: true })
         } else {
-          this.$store.dispatch('openSideBar', { withoutAnimation: true })
+          this.$store.dispatch('tools/openSideBar', { withoutAnimation: true })
         }
       }
     }

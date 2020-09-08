@@ -91,29 +91,23 @@ export const constantRoutes = [
         meta: { title: '文章模块' }
       },
       {
-        path: 'image',
-        name: 'Image',
-        component: () => import('@/views/content/image'),
-        meta: { title: '图片模块' }
-      },
-      {
         path: 'bangumi',
         name: 'Bangumi',
         component: () => import('@/views/content/bangumi'),
         meta: { title: '番剧模块' }
       },
       {
-        path: 'webapp',
-        name: 'Webapp',
-        component: () => import('@/views/content/webapp/index'),
-        meta: { title: 'web应用' }
+        path: 'tool',
+        name: 'Tool',
+        component: () => import('@/views/content/tool/index'),
+        meta: { title: '小工具' }
       },
       {
-        path: 'webapp/:id',
-        name: 'AppContent',
+        path: 'tool/:id',
+        name: 'ToolContent',
         hidden: true,
-        component: () => import('@/views/content/webapp/content'),
-        meta: { title: 'web应用详情' }
+        component: () => import('@/views/content/tool/content'),
+        meta: { title: '工具详情' }
       },
       {
         path: 'create',

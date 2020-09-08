@@ -1,9 +1,34 @@
+import Cookies from 'js-cookie'
+
 const state = () => ({
+  sidebar: {
+    opened: Cookies.get('sidebarStatus') ? !!+Cookies.get('sidebarStatus') : true,
+    withoutAnimation: false
+  },
   bubbleActive: true,
   live2dShow: true
 })
 
 const mutations = {
+  TOGGLE_SIDEBAR: state => {
+    state.sidebar.opened = !state.sidebar.opened
+    state.sidebar.withoutAnimation = false
+    if (state.sidebar.opened) {
+      Cookies.set('sidebarStatus', 1)
+    } else {
+      Cookies.set('sidebarStatus', 0)
+    }
+  },
+  OPEN_SIDEBAR: (state, withoutAnimation) => {
+    Cookies.set('sidebarStatus', 1)
+    state.sidebar.opened = true
+    state.sidebar.withoutAnimation = withoutAnimation
+  },
+  CLOSE_SIDEBAR: (state, withoutAnimation) => {
+    Cookies.set('sidebarStatus', 0)
+    state.sidebar.opened = false
+    state.sidebar.withoutAnimation = withoutAnimation
+  },
   TOGGLE_BUBBLE: state => {
     state.bubbleActive = !state.bubbleActive
   },
@@ -15,8 +40,21 @@ const mutations = {
   }
 }
 
+const actions = {
+  toggleSideBar({ commit }) {
+    commit('TOGGLE_SIDEBAR')
+  },
+  openSideBar({ commit }, { withoutAnimation }) {
+    commit('OPEN_SIDEBAR', withoutAnimation)
+  },
+  closeSideBar({ commit }, { withoutAnimation }) {
+    commit('CLOSE_SIDEBAR', withoutAnimation)
+  }
+}
+
 export default {
   namespaced: true,
   state,
-  mutations
+  mutations,
+  actions
 }

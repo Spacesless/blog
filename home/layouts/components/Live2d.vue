@@ -16,7 +16,6 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { getLocalStorage, updateLocalStorage } from '@/utils/index'
 if (process.client) {
   require('@/utils/live2d')
 }
@@ -70,12 +69,10 @@ export default {
   computed: {
     ...mapGetters(['live2dShow', 'configs']),
     modelId() { // 模型 ID
-      const { modelId } = getLocalStorage('waifu')
-      return modelId || this.configs.live2d_model || 100
+      return this.configs.live2d_model || 100
     },
     texturesId() { // 材质 ID
-      const { texturesId } = getLocalStorage('waifu')
-      return texturesId || this.configs.live2d_texture || 1
+      return this.configs.live2d_texture || 1
     }
   },
   watch: {
@@ -164,7 +161,6 @@ export default {
      * @param {Number [int]} texturesId 材质id
      */
     loadModel(modelId, texturesId = 1) {
-      updateLocalStorage('waifu', { modelId, texturesId })
       window.loadlive2d(
         'live2d', this.apiurl + 'models?id=' + modelId + '&texture=' + texturesId,
         console.log('live2d', '模型 ' + modelId + '-' + texturesId + ' 加载完成')

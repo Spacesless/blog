@@ -15,8 +15,8 @@
     <div class="tools">
       <!-- fixbar -->
       <fixbar />
-      <!--my wife-->
-      <waifu />
+      <!--live2d-->
+      <live-2d />
     </div>
     <!--background start-->
     <div v-show="bubbleActive" class="background">
@@ -30,7 +30,7 @@ import { mapGetters } from 'vuex'
 import Sidebar from './components/Sidebar/index.vue'
 import AppHeader from './components/AppHeader'
 import Fixbar from './components/Fixbar'
-import Waifu from './components/Waifu'
+import Live2d from './components/Live2d'
 import AppFooter from './components/AppFooter'
 // 落花canvas
 import ParticleCanvas from '@/utils/particle'
@@ -41,7 +41,7 @@ export default {
     Sidebar,
     AppHeader,
     Fixbar,
-    Waifu,
+    Live2d,
     AppFooter
   },
   mixins: [ResizeMixin],
