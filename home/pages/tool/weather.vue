@@ -155,7 +155,7 @@ export default {
     }
   },
   // async asyncData({ app, params, $axios }) {
-  //   const { seo } = await $axios.$get('/webapp/content', {
+  //   const { seo } = await $axios.$get('/tool/content', {
   //     params: {
   //       id: params.id
   //     }

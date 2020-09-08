@@ -8,10 +8,7 @@ module.exports = {
   type: 'jwt',
   common: {
     cookie: {
-      name: 'thinkjs',
-      httponly: true,
-      keys: ['timeless'],
-      signed: true
+      name: 'thinkjs'
     }
   },
   jwt: {

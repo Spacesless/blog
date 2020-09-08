@@ -12,24 +12,10 @@
         </ul>
       </div>
     </div>
-    <div class="home-card" @click="navigateTo('Column')">
-      <h2 class="home-card__title">CATEGORY</h2>
-      <div class="home-body">
-        <strong>{{ count.column }}</strong>
-        <p />
-      </div>
-    </div>
     <div class="home-card" @click="navigateTo('Blog')">
       <h2 class="home-card__title">ARTICLE</h2>
       <div class="home-body">
         <strong>{{ count.article }}</strong>
-        <p />
-      </div>
-    </div>
-    <div class="home-card" @click="navigateTo('Image')">
-      <h2 class="home-card__title">IMAGE</h2>
-      <div class="home-body">
-        <strong>{{ count.image }}</strong>
         <p />
       </div>
     </div>

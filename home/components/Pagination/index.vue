@@ -4,7 +4,7 @@
       :background="background"
       :current-page.sync="currentPage"
       :page-size.sync="pageSize"
-      :layout="layout"
+      :layout="pageLayout"
       :page-sizes="pageSizes"
       :total="total"
       v-bind="$attrs"
@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Pagination',
@@ -39,7 +40,7 @@ export default {
     },
     layout: {
       type: String,
-      default: 'total, prev, pager, next, jumper'
+      default: ''
     },
     background: {
       type: Boolean,
@@ -51,6 +52,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['device']),
     currentPage: {
       get() {
         return this.page
@@ -66,6 +68,11 @@ export default {
       set(val) {
         this.$emit('update:limit', val)
       }
+    },
+    pageLayout() {
+      return this.layout ? this.layout : (this.device === 'desktop'
+        ? 'total, prev, pager, next, jumper'
+        : 'prev, pager, next')
     }
   },
   methods: {

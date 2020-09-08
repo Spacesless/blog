@@ -3,7 +3,7 @@ const Base = require('./base.js')
 module.exports = class extends Base {
   constructor(...arg) {
     super(...arg)
-    this.modelInstance = this.model('webapp')
+    this.modelInstance = this.model('tool')
   }
 
   async listAction() {
@@ -27,7 +27,7 @@ module.exports = class extends Base {
     const list = await this.model('column')
       .where({ is_show: 1 })
       .join({
-        table: 'webapp',
+        table: 'tool',
         join: 'inner', // join 方式，有 left, right, inner 3 种方式
         on: ['id', 'column_id'] // ON 条件
       }).select()

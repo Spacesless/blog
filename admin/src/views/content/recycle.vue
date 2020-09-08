@@ -3,9 +3,8 @@
     <el-row class="app-header">
       <el-col :xs="24" :sm="12">
         <el-select v-model="listQuery.module" clearable placeholder="请选择模块" @change="handleSelect">
-          <el-option label="文章模块" value="2" />
-          <el-option label="壁纸模块" value="3" />
-          <el-option label="追番模块" value="4" />
+          <el-option label="文章模块" value="blog" />
+          <el-option label="追番模块" value="bangumi" />
         </el-select>
       </el-col>
       <el-col :xs="24" :sm="12" class="text-right">
