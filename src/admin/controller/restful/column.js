@@ -1,6 +1,6 @@
-const Base = require('./base.js')
+const Rest = require('../rest')
 
-module.exports = class extends Base {
+module.exports = class extends Rest {
   async getAction() {
     if (this.id) {
       const data = await this.modelInstance.where({ id: this.id }).find()

@@ -16,7 +16,6 @@ module.exports = class extends Base {
       count: {
         column: await this.model('column').count('id'),
         article: await this.model('blog').count('id'),
-        image: await this.model('image').count('id'),
         bangumi: await this.model('bangumi').count('id'),
         comment: await this.model('comment').count('id')
       }

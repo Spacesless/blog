@@ -58,6 +58,7 @@
       <!-- session有效期：不记录为1天，记录为15天 -->
       <el-form-item class="login-form-remember">
         <el-checkbox v-model="loginForm.remember">记住登录状态</el-checkbox>
+        <router-link class="login-form-forgot" to="/forgot">忘记密码?</router-link>
       </el-form-item>
       <el-button class="login-form-submit" :loading="loginLoading" type="primary" size="large" native-type="submit" @click="handleLogin">登录</el-button>
     </el-form>
@@ -212,9 +213,17 @@ export default {
       }
     }
     &-remember{
-      text-align: right;
+      position: relative;
       ::v-deep .el-form-item__content{
         line-height: 19px;
+      }
+      &-forgot{
+        position: absolute;
+        right: 0;
+        color: #606266;
+        &:hover{
+          color: #409EFF;
+        }
       }
     }
     &-submit{

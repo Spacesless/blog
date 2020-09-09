@@ -49,7 +49,7 @@ if (!process.argv.includes('--api')) {
     handle: nuxt,
     options: {
       config: nuxtConfig,
-      unless: [/^\/admin?/, /^\/web?/, 'sitemap', 'rss', 'download'],
+      unless: [/^\/admin?/, /^\/web?/, 'sitemap', 'rss'],
       isDev
     }
   })

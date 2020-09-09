@@ -1,42 +1,55 @@
 <template>
   <div v-loading="fetchLoading" class="app-container home">
-    <div class="home-card">
-      <h2 class="home-card__title">Environment</h2>
-      <div class="home-body">
-        <ul>
-          <li>Nodejs：{{ version.nodeVersion }}</li>
-          <li>V8：{{ version.v8Version }}</li>
-          <li>Web Server：{{ version.platform }}</li>
-          <li>Thinkjs：{{ version.thinkjsVersion }}</li>
-          <li>Mysql：{{ version.mysqlVersion }}</li>
-        </ul>
-      </div>
+    <div class="home-welcome">
+      123
     </div>
-    <div class="home-card" @click="navigateTo('Blog')">
-      <h2 class="home-card__title">ARTICLE</h2>
-      <div class="home-body">
-        <strong>{{ count.article }}</strong>
-        <p />
+    <div class="home-general">
+      <div class="home-card">
+        <h2 class="home-card__title">Environment</h2>
+        <div class="home-body">
+          <!-- <ul>
+            <li>Nodejs：{{ version.nodeVersion }}</li>
+            <li>V8：{{ version.v8Version }}</li>
+            <li>Web Server：{{ version.platform }}</li>
+            <li>Thinkjs：{{ version.thinkjsVersion }}</li>
+            <li>Mysql：{{ version.mysqlVersion }}</li>
+          </ul> -->
+        </div>
       </div>
-    </div>
-    <div class="home-card" @click="navigateTo('Bangumi')">
-      <h2 class="home-card__title">BANGUMI</h2>
-      <div class="home-body">
-        <strong>{{ count.bangumi }}</strong>
-        <p />
+      <div class="home-card" @click="navigateTo('Cloumn')">
+        <h2 class="home-card__title">CLOUMN</h2>
+        <div class="home-body">
+          <strong>{{ count.cloumn }}</strong>
+          <p />
+        </div>
       </div>
-    </div>
-    <div class="home-card" @click="navigateTo('Comment')">
-      <h2 class="home-card__title">COMMENT</h2>
-      <div class="home-body">
-        <strong>{{ count.comment }}</strong>
-        <p />
+      <div class="home-card" @click="navigateTo('Blog')">
+        <h2 class="home-card__title">ARTICLE</h2>
+        <div class="home-body">
+          <strong>{{ count.article }}</strong>
+          <p />
+        </div>
+      </div>
+      <div class="home-card" @click="navigateTo('Bangumi')">
+        <h2 class="home-card__title">BANGUMI</h2>
+        <div class="home-body">
+          <strong>{{ count.bangumi }}</strong>
+          <p />
+        </div>
+      </div>
+      <div class="home-card" @click="navigateTo('Comment')">
+        <h2 class="home-card__title">COMMENT</h2>
+        <div class="home-body">
+          <strong>{{ count.comment }}</strong>
+          <p />
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import { GetGeneral } from '@/api/home'
 
 export default {
@@ -48,6 +61,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['userinfo']),
     version() {
       return this.generals.version || {}
     },

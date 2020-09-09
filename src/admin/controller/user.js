@@ -18,11 +18,11 @@ module.exports = class extends Base {
    * @return {Object} { token: access_token, expires: 令牌有效期 }
    */
   async loginAction() {
-    const { username, password, captcha, remember } = this.post()
+    const { username, password, , remember } = this.post()
     const userInfo = await this.modelInstance.where({ username: username }).find()
     // 校验验证码 不区分大小写
     const svgcaptcha = await this.cookie('captcha') || ''
-    if (think.isEmpty(captcha) || captcha.toUpperCase() !== svgcaptcha.toUpperCase()) {
+    if (think.isEmpty(captcha) || think.md5(captcha) !== svgcaptcha) {
       return this.fail('验证码不正确')
     }
     // 校验用户名
@@ -152,9 +152,7 @@ module.exports = class extends Base {
     const options = this.get()
     const Svg = think.service('captcha', 'common', options)
     const { text, data } = Svg.createCaptcha()
-    await this.cookie('captcha', text, { // 设定 cookie 时指定额外的配置
-      maxAge: 60 * 60 * 1000 // 1小时超时时间
-    })
+    await this.cookie('captcha', think.md5(text.toUpperCase()))
     this.success(data)
   }
 }
