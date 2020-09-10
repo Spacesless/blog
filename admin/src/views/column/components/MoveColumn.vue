@@ -29,7 +29,7 @@
 
 <script>
 import { dialogForm } from '@/mixins'
-import { getColumnByModule } from '@/utils'
+import { getColumnByType } from '@/utils'
 import { UpdateContent } from '@/api/content'
 
 export default {
@@ -54,8 +54,8 @@ export default {
   },
   computed: {
     columnOptions() {
-      const { module } = this.currentRow
-      return getColumnByModule(this.columns, module)
+      const { type } = this.currentRow
+      return getColumnByType(this.columns, type)
     }
   },
   methods: {

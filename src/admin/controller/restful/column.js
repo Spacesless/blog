@@ -6,7 +6,7 @@ module.exports = class extends Rest {
       const data = await this.modelInstance.where({ id: this.id }).find()
       return this.success(data)
     } else {
-      const field = 'id,name,folder_name,parent_id AS parentid,classtype,module,no_order,is_nav'
+      const field = 'id,name,folder_name,parent_id AS parentid,classtype,type,no_order,is_nav'
       const list = await this.modelInstance
         .field(field)
         .select()
@@ -46,7 +46,7 @@ module.exports = class extends Rest {
     const promises = []
     list.forEach(async(item) => {
       const id = item.id
-      const exist = await this.model(module).where({ id }).count('id')
+      const exist = await this.model(item.type).where({ id }).count('id')
       let step
       if (exist) {
         step = this.modelInstance.deleteColumn(id)

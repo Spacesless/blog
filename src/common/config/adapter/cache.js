@@ -3,7 +3,7 @@ const fileCache = require('think-cache-file')
 
 /**
  * cache adapter config
- * @type {Object}
+ * @returns {Object}
  */
 module.exports = {
   type: 'file',

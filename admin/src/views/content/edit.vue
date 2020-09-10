@@ -9,7 +9,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import ArticleContent from './components/ArticleContent'
-import { getColumnByModule } from '@/utils/index'
+import { getColumnByType } from '@/utils/index'
 
 export default {
   name: 'ContentEdit',
@@ -19,8 +19,8 @@ export default {
   computed: {
     ...mapGetters(['columns']),
     columnOptions() {
-      const currentModule = this.$route.query.module
-      const result = getColumnByModule(this.columns, currentModule)
+      const currentType = this.$route.query.type
+      const result = getColumnByType(this.columns, currentType)
       return result
     }
   }

@@ -3,20 +3,16 @@ const Base = require('./base.js')
 module.exports = class extends Base {
   async getListAction() {
     const field = 'id,title,class1,class2,class3,updatetime'
-    const module = +this.get('module')
-    const blog = module && module !== 2 ? [] : await this.model('blog')
-      .field(`${field},'blog' as module`)
+    const type = +this.get('type')
+    const blog = type && type !== 'blog' ? [] : await this.model('blog')
+      .field(`${field},'blog' as type`)
       .where({ is_recycle: 1 })
       .select()
-    const image = module && module !== 3 ? [] : await this.model('image')
-      .field(`${field},'image' as module`)
+    const bangumi = type && type !== 'bangumi' ? [] : await this.model('bangumi')
+      .field(`${field},'bangumi' as type`)
       .where({ is_recycle: 1 })
       .select()
-    const bangumi = module && module !== 4 ? [] : await this.model('bangumi')
-      .field(`${field},'bangumi' as module`)
-      .where({ is_recycle: 1 })
-      .select()
-    const list = [...blog, ...image, ...bangumi]
+    const list = [...blog, ...bangumi]
     const page = this.get('page') ? this.get('page') : 1
     const pageSize = this.get('limit') ? this.get('limit') : 20
     const result = list.slice((page - 1) * pageSize, page * pageSize)
@@ -35,8 +31,8 @@ module.exports = class extends Base {
     const promises = []
     list.forEach(item => {
       const id = item.id
-      const module = item.module
-      const step = this.model(module).foreverDelete(id)
+      const type = item.type
+      const step = this.model(type).foreverDelete(id)
       promises.push(step)
     })
 
@@ -52,8 +48,8 @@ module.exports = class extends Base {
     const promises = []
     list.forEach(item => {
       const id = item.id
-      const module = item.module
-      const step = this.model(module).where({ id }).update({ is_recycle: 0 })
+      const type = item.type
+      const step = this.model(type).where({ id }).update({ is_recycle: 0 })
       promises.push(step)
     })
 

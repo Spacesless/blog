@@ -30,7 +30,7 @@ import { GetList } from '@/api/list'
 export default {
   data() {
     return {
-      currentModule: 'tool',
+      currentType: 'tool',
       appList: [],
       listLoading: false
     }
@@ -41,7 +41,7 @@ export default {
   methods: {
     async fetchList() {
       this.listLoading = true
-      await GetList(this.currentModule).then(response => {
+      await GetList(this.currentType).then(response => {
         const { data } = response
         this.appList = data
       }).catch(() => {})

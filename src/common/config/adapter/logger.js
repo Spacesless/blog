@@ -4,7 +4,7 @@ const isDev = think.env === 'development'
 
 /**
  * logger adapter config
- * @type {Object}
+ * @returns {Object}
  */
 module.exports = {
   type: isDev ? 'console' : 'dateFile',

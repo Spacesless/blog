@@ -13,16 +13,17 @@ module.exports = class extends Base {
     super(...arg)
     this.modelInstance = this.model('user')
   }
+
   /**
    * login 登录
    * @return {Object} { token: access_token, expires: 令牌有效期 }
    */
   async loginAction() {
-    const { username, password, , remember } = this.post()
+    const { username, password, captcha, remember } = this.post()
     const userInfo = await this.modelInstance.where({ username: username }).find()
     // 校验验证码 不区分大小写
-    const svgcaptcha = await this.cookie('captcha') || ''
-    if (think.isEmpty(captcha) || think.md5(captcha) !== svgcaptcha) {
+    const svgcaptcha = await this.session('captcha') || ''
+    if (captcha.toUpperCase() !== svgcaptcha.toUpperCase()) {
       return this.fail('验证码不正确')
     }
     // 校验用户名
@@ -39,24 +40,18 @@ module.exports = class extends Base {
 
     delete userInfo.password
     const expires = remember ? rememberSessionOpt : normalSessionOpt
-    const token = await this.session('userInfo', {
-      id: userInfo.id,
-      username: userInfo.username
-    })
+    // const token = await this.session('userInfo', userInfo, expires) // jwt
+    await this.session('userInfo', userInfo, expires)
 
-    return this.success({ token, expires })
+    return this.success({ token: this.cookie('thinkjs'), expires })
   }
 
   /**
    * getInfo 获取登录用户的信息
+   * @summary jwt 需要根据简要的userInfo，重新查数据库
    */
   async getInfoAction() {
-    const { id } = await this.session('userInfo') || {}
-    let userInfo = {}
-    if (id) {
-      userInfo = await this.modelInstance.where({ id }).find()
-      delete userInfo.password
-    }
+    const userInfo = await this.session('userInfo') || {}
     return this.success(userInfo)
   }
 
@@ -148,11 +143,14 @@ module.exports = class extends Base {
     }
   }
 
+  // 生成图片验证码
   async captchaAction() {
     const options = this.get()
     const Svg = think.service('captcha', 'common', options)
     const { text, data } = Svg.createCaptcha()
-    await this.cookie('captcha', think.md5(text.toUpperCase()))
+
+    await this.session('captcha', text) // 将图片验证码存到session
+
     this.success(data)
   }
 }

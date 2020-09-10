@@ -176,14 +176,14 @@ export default {
   },
   computed: {
     ...mapGetters(['userinfo']),
-    currentModule() {
-      return this.$route.query && this.$route.query.module
+    currentType() {
+      return this.$route.query && this.$route.query.type
     },
     paramComponent() {
       const moduleEnum = {
         bangumi: 'BangumiParam'
       }
-      return moduleEnum[this.currentModule] || ''
+      return moduleEnum[this.currentType] || ''
     }
   },
   created() {
@@ -205,7 +205,7 @@ export default {
   methods: {
     async fetchData(id) {
       this.fetchLoading = true
-      await GetContent(this.currentModule, id).then(res => {
+      await GetContent(this.currentType, id).then(res => {
         this.formData = res.data
         const { class1, class2, class3, imgurl, tag } = this.formData
         this.formData.column = getIDByClass(this.columns, class1, class2, class3)
@@ -255,12 +255,12 @@ export default {
         }
 
         const SubmitHandler = this.isEdit ? UpdateContent : CreateContent
-        await SubmitHandler(this.currentModule, postData).then(res => {
+        await SubmitHandler(this.currentType, postData).then(res => {
           this.$message({
             type: 'success',
             message: this.isEdit ? '更新成功' : '添加成功'
           })
-          this.$store.commit('list/SET_UPDATELIST', this.currentModule)
+          this.$store.commit('list/SET_UPDATELIST', this.currentType)
           this.handleCancel()
         }).catch(() => {
           this.$message({
@@ -273,7 +273,7 @@ export default {
     },
     handleCancel() {
       this.$store.dispatch('tagsView/delView', this.$route).then(() => {
-        this.$router.push({ name: this.currentModule.charAt(0).toUpperCase() + this.currentModule.slice(1) })
+        this.$router.push({ name: this.currentType.charAt(0).toUpperCase() + this.currentType.slice(1) })
       })
     }
   }

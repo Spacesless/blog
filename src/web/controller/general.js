@@ -24,9 +24,9 @@ module.exports = class extends Base {
   }
 
   async accessAction() {
-    const { module, id } = this.post()
+    const { type, id } = this.post()
     const moduleEnum = ['', 'blog', 'image', 'bangumi']
-    const hasModule = moduleEnum[+module] || null
+    const hasModule = moduleEnum[+type] || null
 
     if (hasModule) {
       await this.model(hasModule)

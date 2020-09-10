@@ -109,7 +109,7 @@
 import { mapGetters } from 'vuex'
 import Tinymce from '@/components/Tinymce'
 import { GetContent, CreateContent, UpdateContent } from '@/api/content'
-import { getColumnByModule } from '@/utils'
+import { getColumnByType } from '@/utils'
 
 export default {
   components: {
@@ -139,8 +139,8 @@ export default {
   computed: {
     ...mapGetters(['columns']),
     columnOptions() {
-      const currentModule = this.$route.query.module
-      const result = getColumnByModule(this.columns, currentModule)
+      const currentType = this.$route.query.type
+      const result = getColumnByType(this.columns, currentType)
       return result
     }
   },

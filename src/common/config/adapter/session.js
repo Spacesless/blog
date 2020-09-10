@@ -1,10 +1,15 @@
 const path = require('path')
 const fileSession = require('think-session-file')
 
-exports.session = {
+/**
+ * file session adapter config
+ * @returns {Object}
+ * @summary 该方案为session-cookie模式
+ */
+module.exports = {
   type: 'file',
   common: {
-    secret: '!N71PV5J',
+    secret: 'timeless',
     cookie: {
       name: 'thinkjs',
       length: 32,

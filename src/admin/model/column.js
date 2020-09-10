@@ -10,7 +10,7 @@ module.exports = class extends think.Model {
    */
   async deleteColumn(id) {
     const row = await this.where({ id }).find()
-    const _model = this.modelMap[row.module]
+    const _model = this.modelMap[row.type]
     const classtype = this.classMap[row.classtype]
     const content = await this.model(_model).where(`${classtype} = ${id}`).select()
     const data = content.map(item => {

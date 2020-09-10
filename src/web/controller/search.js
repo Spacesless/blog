@@ -15,13 +15,13 @@ module.exports = class extends Base {
         const moduleList = ['', 'blog', 'image', 'bangumi']
         const moduleName = moduleList[+classify] || ''
         SQL = `
-          SELECT ${field},'${moduleName}' as module FROM ${className} ${where}
+          SELECT ${field},'${moduleName}' as type FROM ${className} ${where}
         `
       } else {
         SQL = `
-          SELECT ${field},'blog' as module FROM tl_blog ${where} UNION ALL
-          SELECT ${field},'image' as module FROM tl_image ${where} UNION ALL
-          SELECT ${field},'bangumi' as module FROM tl_bangumi ${where}
+          SELECT ${field},'blog' as type FROM tl_blog ${where} UNION ALL
+          SELECT ${field},'image' as type FROM tl_image ${where} UNION ALL
+          SELECT ${field},'bangumi' as type FROM tl_bangumi ${where}
         `
       }
 
@@ -43,7 +43,7 @@ module.exports = class extends Base {
       }
 
       for (const element of list.data) {
-        const { id, title, class1, class2, class3, module: _module, imgurl } = element
+        const { id, title, class1, class2, class3, type, imgurl } = element
         let content = element.content
         const _id = class3 || class2 || class1
         const rows = this.columns.find(item => item.id === _id)
@@ -58,11 +58,7 @@ module.exports = class extends Base {
 
         let thumbX
         let thumbY
-        switch (_module) {
-          case 'image':
-            thumbX = this.options.thumb_image_x
-            thumbY = this.options.thumb_image_y
-            break
+        switch (type) {
           case 'bangumi':
             thumbX = this.options.thumb_bangumi_x
             thumbY = this.options.thumb_bangumi_y

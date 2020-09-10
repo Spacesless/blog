@@ -3,7 +3,7 @@ const isDev = think.env === 'development'
 
 /**
  * model adapter config
- * @type {Object}
+ * @return {Object}
  */
 module.exports = {
   type: 'mysql',

@@ -2,7 +2,7 @@
   <div class="app-container bangumi">
     <header-menu
       :columns="currentColumns"
-      :current-module="currentModule"
+      :current-type="currentType"
       @onSearchKeyword="handleSearch"
       @onColumnChange="handleChangeColumn"
     />
@@ -78,7 +78,7 @@ import FooterMenu from './components/FooterMenu'
 import Pagination from '@/components/Pagination'
 import elHeightAdaptiveTable from '@/directive/el-table'
 import { multipleTable } from '@/mixins'
-import { getColumnByModule } from '@/utils'
+import { getColumnByType } from '@/utils'
 import { GetList, DeleteList, UpdateList } from '@/api/list'
 import { UpdateContent } from '@/api/content'
 
@@ -94,20 +94,20 @@ export default {
   mixins: [multipleTable],
   data() {
     return {
-      currentModule: 'bangumi',
+      currentType: 'bangumi',
       list: []
     }
   },
   computed: {
     ...mapGetters(['columns', 'updateRoute']),
     currentColumns() {
-      const result = getColumnByModule(this.columns, this.currentModule)
+      const result = getColumnByType(this.columns, this.currentType)
       return result
     }
   },
   watch: {
     async updateRoute(val) {
-      if (val === this.currentModule) {
+      if (val === this.currentType) {
         await this.fetchList()
         this.$store.commit('list/SET_UPDATELIST', '')
       }
@@ -119,7 +119,7 @@ export default {
   methods: {
     async fetchList() {
       this.listLoading = true
-      await GetList(this.currentModule, this.listQuery).then(res => {
+      await GetList(this.currentType, this.listQuery).then(res => {
         const { data, count } = res.data
         this.list = data
         this.total = count
@@ -129,7 +129,7 @@ export default {
     async handleUpdate(row) {
       const { id, total, current } = row
       this.$set(row, 'updateLoading', true)
-      await UpdateContent(this.currentModule, { id, total, current }).then(res => {
+      await UpdateContent(this.currentType, { id, total, current }).then(res => {
         this.$message({
           type: 'success',
           message: '更新成功'
@@ -147,11 +147,11 @@ export default {
       this.$router.push({
         name: 'ContentEdit',
         params: { id: id },
-        query: { module: this.currentModule }
+        query: { type: this.currentType }
       })
     },
     deleteSingle(id) {
-      return DeleteList(this.currentModule, [id]).then(res => {
+      return DeleteList(this.currentType, [id]).then(res => {
         this.$message({
           type: 'success',
           message: '删除成功'
@@ -167,7 +167,7 @@ export default {
     },
     deleteSelection(listCount) {
       const lists = this.multipleSelection.map(item => item.id)
-      return DeleteList(this.currentModule, lists).then(res => {
+      return DeleteList(this.currentType, lists).then(res => {
         this.$message({
           type: 'success',
           message: '删除成功'
@@ -182,7 +182,7 @@ export default {
       })
     },
     handleUpdateSelection(data) {
-      return UpdateList(this.currentModule, data).then(res => {
+      return UpdateList(this.currentType, data).then(res => {
         this.$message({
           type: 'success',
           message: '更新成功'

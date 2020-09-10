@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-row class="app-header">
       <el-col :xs="24" :sm="12">
-        <el-select v-model="listQuery.module" clearable placeholder="请选择模块" @change="handleSelect">
+        <el-select v-model="listQuery.type" clearable placeholder="请选择模块" @change="handleSelect">
           <el-option label="文章模块" value="blog" />
           <el-option label="追番模块" value="bangumi" />
         </el-select>
@@ -94,12 +94,12 @@ export default {
       this.fetchList()
     },
     handleRestore(row) {
-      const { id, module } = row
+      const { id, type } = row
       this.$confirm('确定要还原该内容?', '提示', {
         type: 'success'
       }).then(async() => {
         this.$set(row, 'restoreLoading', true)
-        await RestoreRecycleList([{ id, module }]).then(response => {
+        await RestoreRecycleList([{ id, type }]).then(response => {
           this.$message({
             type: 'success',
             message: '还原成功'
@@ -116,8 +116,8 @@ export default {
       })
     },
     deleteSingle(row) {
-      const { id, module } = row
-      return DeleteRecyleList([{ id, module }]).then(res => {
+      const { id, type } = row
+      return DeleteRecyleList([{ id, type }]).then(res => {
         this.$message({
           type: 'success',
           message: '删除成功'
@@ -133,8 +133,8 @@ export default {
     },
     deleteSelection(listCount) {
       const lists = this.multipleSelection.map(item => {
-        const { id, module } = item
-        return { id, module }
+        const { id, type } = item
+        return { id, type }
       })
       return DeleteRecyleList(lists).then(res => {
         this.$message({
@@ -156,8 +156,8 @@ export default {
         type: 'warning'
       }).then(async() => {
         const list = this.multipleSelection.map(item => {
-          const { id, module } = item
-          return { id, module }
+          const { id, type } = item
+          return { id, type }
         })
         this.restoreLoading = true
         await RestoreRecycleList(list).then(response => {

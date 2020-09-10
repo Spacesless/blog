@@ -121,8 +121,8 @@ export const globalFilter = {
 
 export const contentPage = {
   methods: {
-    accessStatistics(module, id) {
-      this.$axios.post('/global/access', { module, id })
+    accessStatistics(type, id) {
+      this.$axios.post('/global/access', { type, id })
     }
   }
 }

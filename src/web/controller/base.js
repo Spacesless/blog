@@ -50,10 +50,10 @@ module.exports = class extends think.Controller {
 
   formatNavigation(columns) {
     columns.forEach(item => {
-      const { id, folderName, filename, classtype, module: _module } = item
+      const { id, folderName, filename, classtype, type } = item
       let path = ''
       if (think.isEmpty(filename)) {
-        switch (_module) {
+        switch (type) {
           case 5:
             path = classtype === 1 ? '' : id
             break

@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Message } from 'element-ui'
 import store from '@/store'
-import { getToken } from '@/utils/auth'
+// import { getToken } from '@/utils/auth'
 
 let networkErrorMsg = false
 let invalidTokenMsg = false
@@ -19,13 +19,14 @@ service.interceptors.request.use(
   config => {
     // do something before request is sent
 
-    if (store.getters.token) {
-      // let each request carry token
-      // ['X-Token'] is a custom headers key
-      // please modify it according to the actual situation
-      const token = getToken()
-      config.headers['Authorization'] = token || ''
-    }
+    // jwt代替session，需要在头部携带token
+    // if (store.getters.token) {
+    //   // let each request carry token
+    //   // ['X-Token'] is a custom headers key
+    //   // please modify it according to the actual situation
+    //   const token = getToken()
+    //   config.headers['Authorization'] = token || ''
+    // }
 
     return config
   },

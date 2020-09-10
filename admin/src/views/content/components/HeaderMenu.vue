@@ -35,7 +35,7 @@ export default {
       type: Array,
       default: () => []
     },
-    currentModule: {
+    currentType: {
       type: String,
       default: ''
     }
@@ -51,7 +51,7 @@ export default {
       const columnToStr = this.selectedColumn.length ? this.selectedColumn.join(',') : null
       this.$router.push({
         name: 'ContentCreate',
-        query: { module: this.currentModule, column: columnToStr }
+        query: { type: this.currentType, column: columnToStr }
       })
     },
     onColumnChange() {

@@ -134,13 +134,13 @@ export function formatColumn(columns, parentid = 0) {
 /**
  * 根据module获取对应类型的栏目树形结构数组
  * @param {Array} columns 栏目数组
- * @param {Number(Int)} module 栏目模型
+ * @param {Number(Int)} type 栏目模型
  * @returns {Array} 栏目树形结果数组
  */
-export function getColumnByModule(columns, module) {
+export function getColumnByType(columns, type) {
   const columnEnum = ['', '', 'blog', 'image', 'bangumi']
-  const findIndex = columnEnum.findIndex(item => item === module)
-  const filterColumn = columns.filter(item => item.module === findIndex)
+  const findIndex = columnEnum.findIndex(item => item === type)
+  const filterColumn = columns.filter(item => item.type === findIndex)
   filterColumn.forEach(element => {
     element.value = element.id
     element.label = element.name
