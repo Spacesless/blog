@@ -10,8 +10,8 @@ module.exports = class extends Base {
     const { id, page, sortBy, orderBy, tags } = this.get()
 
     // 当前栏目
-    const { column, seo } = this.getListInfo(id)
-    if (think.isEmpty(column)) {
+    const { category, seo } = this.getListInfo(id)
+    if (think.isEmpty(category)) {
       return this.ctx.throw(404)
     }
 
@@ -20,19 +20,13 @@ module.exports = class extends Base {
     const field = 'id,title,description,imgurl,updatetime,hits,tag'
     const sort = sortBy || 'updatetime'
     const order = orderBy ? orderBy.toUpperCase() : 'DESC'
+
     const where = { is_show: 1, is_recycle: 0 }
-    switch (column.classtype) {
-      case 2:
-        where.class2 = column.id
-        break
-      case 3:
-        where.class3 = column.id
-        break
-      default:
-        where.class1 = column.id
-    }
+    const findCategory = await this.model('category').getChildrenCategory(this.category, category.id)
+    where.category_id = ['IN', findCategory]
     // tag标签
     if (tags) where.tag = ['like', tags.split(',').map(item => `%${item}%`)]
+
     const list = await this.modelInstance
       .where(where)
       .field(field)
@@ -49,12 +43,12 @@ module.exports = class extends Base {
 
     return this.success({
       seo,
-      column,
+      category,
       list
     })
   }
 
-  async contentAction() {
+  async detailAction() {
     const { id } = this.get()
     if (!think.isInt(+id)) {
       return this.ctx.throw(404)
@@ -68,12 +62,8 @@ module.exports = class extends Base {
       return this.ctx.throw(404)
     }
 
-    const { column, seo } = this.getDetailInfo(content)
+    const { category, seo } = this.getDetailInfo(content)
     content.content = await this.compressContent(content.content)
-
-    // 面包屑导航信息
-    const subNavigation = this.findAllParent(column.id)
-    this.assign('subnav', subNavigation)
 
     // 详情分页
     const field = 'id,title'
@@ -97,23 +87,9 @@ module.exports = class extends Base {
 
     return this.success({
       seo,
-      column,
+      category,
       content,
       page
     })
-  }
-
-  async sameAction() {
-    // const { id } = this.get()
-    // const { column } = this.getList(id)
-    // const { class1, class2, class3, classtype } = column
-    const field = 'id,title,description,total,current,ratings,imgurl,showtime,status'
-    const where = { is_show: 1, is_recycle: 0 }
-    const list = await this.modelInstance
-      .where(where)
-      .field(field)
-      .select()
-
-    return this.success(list)
   }
 }

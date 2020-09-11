@@ -9,11 +9,14 @@
     @closed="onClosed"
   >
     <el-form ref="form" :model="formData" :rules="rules">
-      <el-form-item label="移动到" prop="column">
+      <el-form-item label="移动到" prop="category">
         <el-cascader
-          v-model="formData.column"
-          :options="columnOptions"
-          :props="{ checkStrictly: true }"
+          v-model="formData.category"
+          :options="categoryOptions"
+          :props="{
+            checkStrictly: true,
+            emitPath: false
+          }"
           placeholder="请选择栏目"
           clearable
         />
@@ -29,7 +32,7 @@
 
 <script>
 import { dialogForm } from '@/mixins'
-import { getColumnByType } from '@/utils'
+import { getCategoryByType } from '@/utils'
 import { UpdateContent } from '@/api/content'
 
 export default {
@@ -39,7 +42,7 @@ export default {
       type: Object,
       default: () => {}
     },
-    columns: {
+    categorys: {
       type: Array,
       default: () => []
     }
@@ -48,14 +51,14 @@ export default {
     return {
       formData: {},
       rules: {
-        column: [{ required: true, message: '请选择栏目', trigger: 'change' }]
+        category: [{ required: true, message: '请选择栏目', trigger: 'change' }]
       }
     }
   },
   computed: {
-    columnOptions() {
+    categoryOptions() {
       const { type } = this.currentRow
-      return getColumnByType(this.columns, type)
+      return getCategoryByType(this.categorys, type)
     }
   },
   methods: {
@@ -66,14 +69,11 @@ export default {
       this.$refs.form.validate(async(valid) => {
         if (!valid) return
         this.dialogLoading = true
-        const [class1, class2, class3] = this.formData.column || []
         const postData = {
           id: this.currentRow.id,
-          class1,
-          class2,
-          class3
+          category_id: this.formData.category
         }
-        await UpdateContent('column', postData).then(res => {
+        await UpdateContent('category', postData).then(res => {
 
         }).catch(() => {
 

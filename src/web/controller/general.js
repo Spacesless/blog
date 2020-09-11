@@ -3,7 +3,7 @@ const Base = require('./base.js')
 module.exports = class extends Base {
   indexAction() {
     // 主导航信息
-    const cloneColumn = JSON.parse(JSON.stringify(this.columns))
+    const cloneColumn = JSON.parse(JSON.stringify(this.category))
     const isNav = cloneColumn.filter(item => item.is_nav === 1)
     const navigation = this.convertToTree(isNav)
     // 配置信息

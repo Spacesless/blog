@@ -90,7 +90,7 @@ export default {
   mixins: [globalFilter, contentPage],
   async asyncData({ params, $axios }) {
     const id = params.id
-    const { seo, content: data } = await $axios.$get('/bangumi/content', {
+    const { seo, content: data } = await $axios.$get('/bangumi/detail', {
       params: { id }
     })
     return { seo, data }

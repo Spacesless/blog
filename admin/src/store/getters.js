@@ -5,7 +5,7 @@ const getters = {
   cachedViews: state => state.tagsView.cachedViews,
   token: state => state.user.token,
   userinfo: state => state.user.userinfo,
-  columns: state => state.list.columns,
+  categorys: state => state.list.categorys,
   configs: state => state.config.configs,
   updateRoute: state => state.list.updateRoute
 }

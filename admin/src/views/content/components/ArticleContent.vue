@@ -9,11 +9,14 @@
       label-width="100px"
       class="form-container is-bottom"
     >
-      <el-form-item label="所属栏目" prop="column">
+      <el-form-item label="所属栏目" prop="category">
         <el-cascader
-          v-model="formData.column"
-          :options="columnOptions"
-          :props="{ checkStrictly: true }"
+          v-model="formData.category_id"
+          :options="categoryOptions"
+          :props="{
+            checkStrictly: true,
+            emitPath: false
+          }"
           placeholder="请选择栏目"
           clearable
         />
@@ -127,7 +130,7 @@ import { mapGetters } from 'vuex'
 import UploadImage from '@/components/Upload/index'
 import Tinymce from '@/components/Tinymce'
 import BangumiParam from './parameter/BangumiParam'
-import { getIDByClass, getPathName } from '@/utils'
+import { getPathName } from '@/utils'
 import { GetContent, CreateContent, UpdateContent } from '@/api/content'
 
 export default {
@@ -141,17 +144,17 @@ export default {
       type: Boolean,
       default: false
     },
-    columns: {
+    categorys: {
       type: Array,
       default: () => []
     },
-    columnOptions: {
+    categoryOptions: {
       type: Array,
       default: () => []
     },
-    currentColumn: {
-      type: Array,
-      default: () => []
+    currentCategory: {
+      type: Number,
+      default: 0
     }
   },
   data() {
@@ -164,7 +167,7 @@ export default {
       fetchLoading: false,
       confirmLoading: false,
       rules: {
-        column: [{ required: true, message: '请选择栏目', trigger: 'change' }],
+        category: [{ required: true, message: '请选择栏目', trigger: 'change' }],
         title: [{ required: true, message: '请输入标题', trigger: 'blur' }],
         addtime: [{ required: true, message: '请选择发布时间', trigger: 'change' }],
         updatetime: [{ required: true, message: '请选择更新时间', trigger: 'change' }],
@@ -192,7 +195,7 @@ export default {
       this.fetchData(id)
     } else {
       this.formData = {
-        column: this.currentColumn,
+        category_id: this.currentCategory,
         addtime: new Date(),
         updatetime: new Date(),
         is_show: 1,
@@ -207,8 +210,7 @@ export default {
       this.fetchLoading = true
       await GetContent(this.currentType, id).then(res => {
         this.formData = res.data
-        const { class1, class2, class3, imgurl, tag } = this.formData
-        this.formData.column = getIDByClass(this.columns, class1, class2, class3)
+        const { imgurl, tag } = this.formData
         if (imgurl) {
           const { basename } = getPathName(imgurl)
           this.fileList = [{
@@ -242,13 +244,9 @@ export default {
       this.$refs.form.validate(async(valid) => {
         if (!valid) return
         this.confirmLoading = true
-        const [class1, class2, class3] = this.formData.column || []
         const postData = {
           ...this.formData,
           ...{
-            class1,
-            class2,
-            class3,
             imgurl: this.fileList.length ? this.fileList[0].url : '',
             tag: this.tags.join('|')
           }

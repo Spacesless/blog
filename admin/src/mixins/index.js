@@ -110,8 +110,8 @@ export const multipleTable = {
       this.listQuery.keyword = keyword
       this.handleSearch()
     },
-    handleChangeColumn(columns) {
-      this.listQuery = { ...this.listQuery, ...columns, page: 1 }
+    handleChangeColumn(category) {
+      this.listQuery = { ...this.listQuery, ...category, page: 1 }
       this.handleSearch()
     },
     /**

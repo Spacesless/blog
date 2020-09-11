@@ -4,7 +4,7 @@ module.exports = class extends Base {
   async indexAction() {
     const classifyList = ['', 'tl_blog', 'tl_image', 'tl_bangumi']
     const { classify, keyword } = this.get()
-    const field = 'id,title,class1,class2,class3,content,updatetime,imgurl'
+    const field = 'id,title,content,updatetime,imgurl'
     let SQL
     let where = ''
     let list
@@ -43,10 +43,9 @@ module.exports = class extends Base {
       }
 
       for (const element of list.data) {
-        const { id, title, class1, class2, class3, type, imgurl } = element
+        const { id, title, category_id, type, imgurl } = element
         let content = element.content
-        const _id = class3 || class2 || class1
-        const rows = this.columns.find(item => item.id === _id)
+        const rows = this.category.find(item => item.id === category_id)
 
         const _title = title.indexOf(keyword) > -1 ? title.replace(new RegExp(keyword, 'gi'), `<em>${keyword}</em>`) : title
         content = content.replace(/<.*?>/g, '')
@@ -68,11 +67,7 @@ module.exports = class extends Base {
             thumbY = this.options.thumb_blog_y
         }
 
-        const classList = this.columns.filter(item => {
-          return item.id === element.class1 ||
-          item.id === element.class2 ||
-          item.id === element.class3
-        }).map(item => {
+        const classList = this.category.filter(item => item.id === category_id).map(item => {
           return {
             name: item.name,
             url: `/${item.folderName}/${item.id}`

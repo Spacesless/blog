@@ -10,7 +10,7 @@ module.exports = class extends Base {
     const { id, page, sortBy, orderBy, status, progress, tags } = this.get()
 
     // 当前栏目
-    const { column, seo } = this.getListInfo(id)
+    const { category, seo } = this.getListInfo(id)
     if (think.isEmpty(column)) {
       return this.ctx.throw(404)
     }
@@ -20,17 +20,10 @@ module.exports = class extends Base {
     const field = 'id,title,description,total,current,ratings,imgurl,showtime,status,tag'
     const sort = sortBy || 'updatetime'
     const order = orderBy ? orderBy.toUpperCase() : 'DESC'
+
     const where = { is_show: 1, is_recycle: 0 }
-    switch (column.classtype) {
-      case 2:
-        where.class2 = column.id
-        break
-      case 3:
-        where.class3 = column.id
-        break
-      default:
-        where.class1 = column.id
-    }
+    const findCategory = await this.model('category').getChildrenCategory(this.category, category.id)
+    where.category_id = ['IN', findCategory]
     // 番剧状态
     if (status) where.status = status
     // 追剧进度
@@ -44,6 +37,7 @@ module.exports = class extends Base {
     }
     // tag标签
     if (tags) where.tag = ['like', tags.split(',').map(item => `%${item}%`)]
+
     const list = await this.modelInstance
       .where(where)
       .field(field)
@@ -61,12 +55,12 @@ module.exports = class extends Base {
 
     return this.success({
       seo,
-      column,
+      category,
       list
     })
   }
 
-  async contentAction() {
+  async detailAction() {
     const { id } = this.get()
     if (!think.isInt(+id)) {
       return this.ctx.throw(404)
@@ -81,11 +75,11 @@ module.exports = class extends Base {
     }
 
     content.players = content.players ? JSON.parse(content.players) : []
-    const { column, seo } = this.getDetailInfo(content)
+    const { category, seo } = this.getDetailInfo(content)
 
     return this.success({
       seo,
-      column,
+      category,
       content
     })
   }

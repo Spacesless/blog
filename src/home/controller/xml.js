@@ -30,11 +30,10 @@ module.exports = class extends Base {
     const lastmod = list.length ? list[0].updatetime : think.datetime(new Date(), 'YYYY-MM-DD')
     this.assign('lastmod', lastmod)
 
-    const _columns = JSON.parse(JSON.stringify(this.columns))
-    const columns = _columns.map(item => {
-      const { id, url, classtype } = item
-      const classMap = ['', 'class1', 'class2', 'class3']
-      let rows = list.filter(element => element[classMap[classtype]] === id)
+    const _columns = JSON.parse(JSON.stringify(this.category))
+    const category = _columns.map(item => {
+      const { id, url, level } = item
+      let rows = list.filter(element => element.category_id === id)
       let lastmod
       if (rows.length) {
         rows = rows.sort((a, b) => {
@@ -45,10 +44,10 @@ module.exports = class extends Base {
       return {
         url: `${this.baseUrl}${url}`,
         lastmod: lastmod || think.datetime(new Date(), 'YYYY-MM-DD'),
-        priority: classtype === 1 ? 0.9 : (classtype === 2 ? 0.8 : 0.7)
+        priority: level === 1 ? 0.9 : (level === 2 ? 0.8 : 0.7)
       }
     })
-    this.assign('columns', columns)
+    this.assign('category', category)
 
     this.ctx.type = 'text/xml'
     return super.display('home/sitemap.xml')
@@ -59,7 +58,7 @@ module.exports = class extends Base {
    * @returns {Array} 文章列表
    */
   async getArchives() {
-    const field = 'id,title,description,updatetime,class1,class2,class3'
+    const field = 'id,title,description,updatetime,category_id'
     const where = 'where is_show = 1'
     const SQL = `
       SELECT ${field} FROM tl_blog ${where} UNION ALL
@@ -80,9 +79,8 @@ module.exports = class extends Base {
       return new Date(b.updatetime) - new Date(a.updatetime)
     }).slice(0, 6)
     Rss.forEach(item => {
-      const { id, class1, class2, class3 } = item
-      const _class = class1 || (class2 || class3)
-      const row = this.columns.find(element => element.id === _class)
+      const { id, category_id } = item
+      const row = this.category.find(element => element.id === category_id)
       item.url = row ? `${this.baseUrl}/${row.folderName}/content/${id}` : ''
     })
     return Rss
@@ -98,9 +96,8 @@ module.exports = class extends Base {
       return new Date(b.updatetime) - new Date(a.updatetime)
     })
     Sitemap.forEach(item => {
-      const { id, class1, class2, class3 } = item
-      const _class = class1 || (class2 || class3)
-      const row = this.columns.find(element => element.id === _class)
+      const { id, category_id } = item
+      const row = this.category.find(element => element.id === category_id)
       item.url = row ? `${this.baseUrl}/${row.folderName}/content/${id}` : ''
       item.priority = 0.6
     })

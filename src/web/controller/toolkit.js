@@ -9,7 +9,7 @@ module.exports = class extends Base {
   async listAction() {
     // 当前栏目
     const path = this.ctx.path
-    const rows = this.columns.find(item => item.classtype === 1 && path.indexOf(item.folderName) > -1)
+    const rows = this.category.find(item => item.classtype === 1 && path.indexOf(item.folderName) > -1)
 
     if (!rows) {
       return this.ctx.throw(404)
@@ -46,7 +46,7 @@ module.exports = class extends Base {
 
   async contentAction() {
     const { id } = this.get()
-    const rows = this.columns.find(item => item.id === +id || item.filename === +id)
+    const rows = this.category.find(item => item.id === +id || item.filename === +id)
 
     if (!rows) {
       return this.ctx.throw(404)

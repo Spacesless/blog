@@ -111,17 +111,17 @@ export function param2Obj(url) {
 
 /**
  * 栏目数组转换成树形结构
- * @param {Array} columns 栏目数组
+ * @param {Array} category 栏目数组
  * @returns {Array} 栏目树形结果数组
  */
-export function formatColumn(columns, parentid = 0) {
+export function formatCategory(categorys, parentid = 0) {
   const tree = []
   let temp
-  const cloneColumn = JSON.parse(JSON.stringify(columns))
-  for (let i = 0; i < cloneColumn.length; i++) {
-    if (cloneColumn[i].parentid === parentid) {
-      const item = cloneColumn[i]
-      temp = formatColumn(cloneColumn, cloneColumn[i].id)
+  const cloneCategory = JSON.parse(JSON.stringify(categorys))
+  for (let i = 0; i < cloneCategory.length; i++) {
+    if (cloneCategory[i].parentid === parentid) {
+      const item = cloneCategory[i]
+      temp = formatCategory(cloneCategory, cloneCategory[i].id)
       if (temp.length > 0) {
         item.children = temp
       }
@@ -133,32 +133,19 @@ export function formatColumn(columns, parentid = 0) {
 
 /**
  * 根据module获取对应类型的栏目树形结构数组
- * @param {Array} columns 栏目数组
+ * @param {Array} category 栏目数组
  * @param {Number(Int)} type 栏目模型
  * @returns {Array} 栏目树形结果数组
  */
-export function getColumnByType(columns, type) {
+export function getCategoryByType(categorys, type) {
   const columnEnum = ['', '', 'blog', 'image', 'bangumi']
   const findIndex = columnEnum.findIndex(item => item === type)
-  const filterColumn = columns.filter(item => item.type === findIndex)
+  const filterColumn = categorys.filter(item => item.type === findIndex)
   filterColumn.forEach(element => {
     element.value = element.id
     element.label = element.name
   })
-  return formatColumn(filterColumn)
-}
-
-/**
- * 根据class获取对应类型的栏目树形结构数组
- * @param {Array} columns 栏目数组
- * @param {Nubmer [int]} class1 一级栏目
- * @param {Nubmer [int]} class2 二级栏目
- * @param {Nubmer [int]} class3 三级栏目
- * @returns {Array} 栏目id数组
- */
-export function getIDByClass(columns, class1 = 0, class2 = 0, class3 = 0) {
-  const filterColumn = columns.filter(item => [class1, class2, class3].includes(item.id))
-  return filterColumn.map(item => item.id)
+  return formatCategory(filterColumn)
 }
 
 /**

@@ -9,14 +9,19 @@ module.exports = class extends Rest {
       data.content = data.content.replace(/upload/gi, this.siteurl + '/upload')
       return this.success(data)
     } else {
-      const { keyword, class1, class2, class3, page, pageSize } = this.get()
+      const { keyword, category, page, pageSize } = this.get()
+
       const where = { is_recycle: 0 }
       if (keyword) {
         where.title = ['like', `%${keyword}%`]
       }
-      if (class1) where.class1 = class1
-      if (class2) where.class2 = class2
-      if (class3) where.class3 = class3
+      if (category) {
+        const categorys = await this.model('category').getCategory()
+        const categoryId = parseInt(category)
+        const findCategory = await this.model('category').getChildrenCategory(categorys, categoryId)
+        where.category_id = ['IN', findCategory]
+      }
+
       const field = 'id,title,total,current,imgurl,is_show'
       const list = await this.modelInstance.where(where)
         .field(field)

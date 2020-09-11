@@ -63,7 +63,7 @@ export default {
           type: 'success',
           message: '清除缓存成功'
         })
-        this.$store.dispatch('list/getColumns')
+        this.$store.dispatch('list/getCategory')
         this.$store.dispatch('config/getConfigs')
       }).catch(() => {
         this.$message({

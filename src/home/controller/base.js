@@ -4,7 +4,7 @@ module.exports = class extends think.Controller {
     this.siteurl = ''
     this.title = ''
     this.options = null
-    this.columns = null
+    this.category = null
   }
 
   async __before() {
@@ -29,12 +29,12 @@ module.exports = class extends think.Controller {
     }
 
     // 主导航信息
-    const allColumns = await this.model('column').getColumn()
-    this.columns = this.formatNavigation(allColumns)
+    const allColumns = await this.model('column').getCategory()
+    this.category = this.formatNavigation(allColumns)
   }
 
-  formatNavigation(columns) {
-    columns.forEach(item => {
+  formatNavigation(category) {
+    category.forEach(item => {
       const { id, folderName, filename, classtype, type } = item
       let path = ''
       if (think.isEmpty(filename)) {
@@ -53,7 +53,7 @@ module.exports = class extends think.Controller {
       }
       item.url = `/${folderName}/${path}`
     })
-    return columns
+    return category
   }
 
   __cell() {

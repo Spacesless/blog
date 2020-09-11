@@ -2,10 +2,13 @@
   <el-row class="app-header">
     <el-col :xs="24" :sm="12">
       <el-cascader
-        v-model="selectedColumn"
+        v-model="selectedCategory"
         class="app-header-select"
-        :options="columns"
-        :props="{ checkStrictly: true }"
+        :options="categoryOptions"
+        :props="{
+          checkStrictly: true,
+          emitPath: false
+        }"
         placeholder="请选择栏目"
         clearable
         @change="onColumnChange"
@@ -31,7 +34,7 @@ import { debounce } from 'lodash-es'
 
 export default {
   props: {
-    columns: {
+    categoryOptions: {
       type: Array,
       default: () => []
     },
@@ -43,20 +46,20 @@ export default {
   data() {
     return {
       keyword: '',
-      selectedColumn: []
+      selectedCategory: null
     }
   },
   methods: {
     handleAdd() {
-      const columnToStr = this.selectedColumn.length ? this.selectedColumn.join(',') : null
       this.$router.push({
         name: 'ContentCreate',
-        query: { type: this.currentType, column: columnToStr }
+        query: { type: this.currentType, category: this.selectedCategory }
       })
     },
     onColumnChange() {
-      const [class1, class2, class3] = this.selectedColumn || []
-      this.$emit('onColumnChange', { class1, class2, class3 })
+      this.$emit('onColumnChange', {
+        category: this.selectedCategory
+      })
     },
     handleSearch: debounce(function() {
       this.$emit('onSearchKeyword', this.keyword)

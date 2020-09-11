@@ -1,11 +1,11 @@
 <template>
-  <article-content :is-edit="false" :column-options="columnOptions" :current-column="currentColumn" />
+  <article-content :is-edit="false" :category-options="categoryOptions" :current-category="currentCategory" />
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
 import ArticleContent from './components/ArticleContent'
-import { getColumnByType } from '@/utils'
+import { getCategoryByType } from '@/utils'
 
 export default {
   name: 'ContentCreate',
@@ -13,15 +13,15 @@ export default {
     ArticleContent
   },
   computed: {
-    ...mapGetters(['columns']),
-    columnOptions() {
+    ...mapGetters(['categorys']),
+    categoryOptions() {
       const currentType = this.$route.query.type
-      const result = getColumnByType(this.columns, currentType)
+      const result = getCategoryByType(this.categorys, currentType)
       return result
     },
-    currentColumn() {
-      const result = this.$route.query.column ? this.$route.query.column.split(',').map(Number) : []
-      return result
+    currentCategory() {
+      const category = this.$route.query && +this.$route.query.category
+      return category
     }
   }
 }

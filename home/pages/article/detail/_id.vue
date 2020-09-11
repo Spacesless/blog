@@ -57,7 +57,7 @@ export default {
   },
   async asyncData({ params, $axios }) {
     const id = params.id
-    const { seo, content: data } = await $axios.$get('/blog/content', {
+    const { seo, content: data } = await $axios.$get('/article/detail', {
       params: { id }
     })
     return { seo, data }

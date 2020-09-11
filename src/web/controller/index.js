@@ -21,7 +21,7 @@ module.exports = class extends Base {
     }
 
     // 最新动态文章
-    const blogField = 'id,class1,class2,class3,imgurl,title,description,hits,updatetime'
+    const blogField = 'id,imgurl,title,description,hits,updatetime'
     const blogWhere = { is_show: 1 }
     const blogs = await this.model('blog')
       .field(blogField)
@@ -31,10 +31,9 @@ module.exports = class extends Base {
       .select()
 
     for (const element of blogs) {
-      const { class1, class2, class3, description } = element
+      const { category_id, description } = element
       element.description = this.substr(description, 0, 80)
-      const currentClass = class3 || class2 || class1
-      const currentColumn = this.columns.find(item => item.id === currentClass)
+      const currentColumn = this.category.find(item => item.id === category_id)
       const folder = currentColumn ? currentColumn.folderName : 'blog'
       element.column = {
         name: currentColumn.name,
@@ -43,7 +42,7 @@ module.exports = class extends Base {
     }
 
     // 最新追番
-    const bangumiField = 'id,class1,title,description,total,current,imgurl,showtime,status'
+    const bangumiField = 'id,title,description,total,current,imgurl,showtime,status'
     const bangumiWhere = { is_show: 1, current: ['EXP', '< `total`'] }
     const bangumis = await this.model('bangumi')
       .field(bangumiField)

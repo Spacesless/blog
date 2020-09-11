@@ -13,10 +13,10 @@
         <el-input v-model="formData.name" class="form-container-input" />
       </el-form-item>
       <template v-if="!isEdit">
-        <el-form-item label="所属栏目" prop="column">
+        <el-form-item label="所属栏目">
           <el-cascader
             v-model="formData.column"
-            :options="columnOptions"
+            :options="categoryOptions"
             :props="{ checkStrictly: true }"
             placeholder="请选择栏目"
             clearable
@@ -109,7 +109,7 @@
 import { mapGetters } from 'vuex'
 import Tinymce from '@/components/Tinymce'
 import { GetContent, CreateContent, UpdateContent } from '@/api/content'
-import { getColumnByType } from '@/utils'
+import { getCategoryByType } from '@/utils'
 
 export default {
   components: {
@@ -131,16 +131,15 @@ export default {
       fetchLoading: false,
       confirmLoading: false,
       rules: {
-        name: [{ required: true, message: '请输入栏目名称', trigger: 'blur' }],
-        column: [{ required: true, message: '请选择栏目', trigger: 'change' }]
+        name: [{ required: true, message: '请输入栏目名称', trigger: 'blur' }]
       }
     }
   },
   computed: {
-    ...mapGetters(['columns']),
-    columnOptions() {
+    ...mapGetters(['categorys']),
+    categoryOptions() {
       const currentType = this.$route.query.type
-      const result = getColumnByType(this.columns, currentType)
+      const result = getCategoryByType(this.categorys, currentType)
       return result
     }
   },
@@ -154,7 +153,7 @@ export default {
   methods: {
     async fetchData(id) {
       this.fetchLoading = true
-      await GetContent('column', id).then(response => {
+      await GetContent('category', id).then(response => {
         const { data } = response
         this.formData = data
       }).catch(() => {})
@@ -166,12 +165,12 @@ export default {
           this.confirmLoading = true
 
           const SubmitHander = this.isEdit ? UpdateContent : CreateContent
-          await SubmitHander('column', this.formData).then(res => {
+          await SubmitHander('category', this.formData).then(res => {
             this.$message({
               type: 'success',
               message: this.isEdit ? '更新栏目成功' : '添加栏目成功'
             })
-            this.$store.commit('list/SET_UPDATELIST', 'Column')
+            this.$store.commit('list/SET_UPDATELIST', 'Category')
             this.handleCancel()
           }).catch(() => {
             this.$message({
@@ -189,7 +188,7 @@ export default {
     handleCancel() {
       const { path } = this.$route
       this.$store.dispatch('tagsView/delView', { path }).then(() => {
-        this.$router.push({ name: 'Column' })
+        this.$router.push({ name: 'Category' })
       })
     }
   }

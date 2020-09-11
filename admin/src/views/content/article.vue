@@ -1,7 +1,7 @@
 <template>
   <div class="app-container blog">
     <header-menu
-      :columns="currentColumns"
+      :category-options="categoryOptions"
       :current-type="currentType"
       @onSearchKeyword="handleSearchTitle"
       @onColumnChange="handleChangeColumn"
@@ -43,7 +43,7 @@
     </el-table>
 
     <footer-menu
-      :columns="currentColumns"
+      :category-options="categoryOptions"
       :delete-loading="deleteLoading"
       :multiple-selection="multipleSelection"
     />
@@ -59,7 +59,7 @@ import FooterMenu from './components/FooterMenu'
 import Pagination from '@/components/Pagination'
 import elHeightAdaptiveTable from '@/directive/el-table'
 import { multipleTable } from '@/mixins'
-import { getColumnByType } from '@/utils'
+import { getCategoryByType } from '@/utils'
 import { GetList, DeleteList, UpdateList } from '@/api/list'
 
 export default {
@@ -74,14 +74,14 @@ export default {
   mixins: [multipleTable],
   data() {
     return {
-      currentType: 'blog',
+      currentType: 'article',
       list: null
     }
   },
   computed: {
-    ...mapGetters(['columns', 'updateRoute']),
-    currentColumns() {
-      const result = getColumnByType(this.columns, this.currentType)
+    ...mapGetters(['categorys', 'updateRoute']),
+    categoryOptions() {
+      const result = getCategoryByType(this.categorys, this.currentType)
       return result
     }
   },

@@ -1,13 +1,13 @@
 import { GetList } from '@/api/list'
 
 const state = {
-  columns: [],
+  categorys: [],
   updateRoute: ''
 }
 
 const mutations = {
-  SET_COLUMNS: (state, columns) => {
-    state.columns = columns
+  SET_CATEGORY: (state, categorys) => {
+    state.categorys = categorys
   },
   SET_UPDATELIST: (state, module) => {
     state.updateRoute = module
@@ -16,10 +16,10 @@ const mutations = {
 
 const actions = {
   // 获取栏目列表
-  getColumns({ commit }) {
+  getCategory({ commit }) {
     return new Promise((resolve, reject) => {
-      GetList('column').then(res => {
-        commit('SET_COLUMNS', res.data)
+      GetList('category').then(res => {
+        commit('SET_CATEGORY', res.data)
         resolve(res.data)
       }).catch(error => {
         reject(error)

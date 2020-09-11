@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container columns">
+  <div class="app-container category">
     <el-row class="app-header">
       <el-col :xs="24" :sm="12">
         <el-button type="primary" icon="el-icon-plus" @click="handleAdd">添加栏目</el-button>
@@ -55,7 +55,7 @@
       <el-table-column label="目录" prop="folder_name" min-width="160" />
       <el-table-column label="操作" align="center" width="250">
         <template #default="scope">
-          <el-button class="columns-tools-edit" type="primary" @click="handleEdit(scope.row)">编辑</el-button>
+          <el-button class="category-tools-edit" type="primary" @click="handleEdit(scope.row)">编辑</el-button>
           <el-dropdown>
             <el-button type="primary" plain :loading="scope.row.deleteLoading">
               更多操作<i class="el-icon-arrow-down el-icon--right" />
@@ -70,22 +70,22 @@
       </el-table-column>
     </el-table>
 
-    <move-column :visible="dialogVisible" :current-row="currentRow" :columns="columns" @onConfirm="onConfirm" />
+    <move-category :visible="dialogVisible" :current-row="currentRow" :categorys="categorys" @onConfirm="onConfirm" />
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-import MoveColumn from './components/MoveColumn'
+import MoveCategory from './components/MoveCategory'
 import elHeightAdaptiveTable from '@/directive/el-table'
 import { multipleTable, listDialog } from '@/mixins'
-import { formatColumn } from '@/utils'
+import { formatCategory } from '@/utils'
 import { UpdateList, DeleteList } from '@/api/list'
 
 export default {
-  name: 'Column',
+  name: 'Category',
   components: {
-    MoveColumn
+    MoveCategory
   },
   directives: {
     elHeightAdaptiveTable
@@ -101,7 +101,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['columns'])
+    ...mapGetters(['categorys'])
   },
   created() {
     this.fetchList()
@@ -109,25 +109,25 @@ export default {
   methods: {
     async fetchList() {
       this.listLoading = true
-      if (!this.columns.length) {
-        await this.$store.dispatch('list/getColumns').catch(() => {})
+      if (!this.category.length) {
+        await this.$store.dispatch('list/getCategory').catch(() => {})
       }
-      const columns = formatColumn(this.columns)
-      this.columnlist = JSON.parse(JSON.stringify(columns))
+      const category = formatCategory(this.categorys)
+      this.columnlist = JSON.parse(JSON.stringify(category))
       this.listLoading = false
     },
     handleAdd() {
-      this.$router.push({ name: 'ColumnAdd' })
+      this.$router.push({ name: 'CategoryAdd' })
     },
     handleEdit(id) {
       this.$router.push({
-        name: 'ColumnEdit',
+        name: 'CategoryEdit',
         params: { id }
       })
     },
     handleAddChild(id) {
       this.$router.push({
-        name: 'ColumnAdd',
+        name: 'CategoryAdd',
         query: { class: id }
       })
     },
@@ -136,7 +136,7 @@ export default {
       this.dialogVisible = true
     },
     deleteSingle(id) {
-      DeleteList('column', [id]).then(response => {
+      DeleteList('category', [id]).then(response => {
         this.$message({
           type: 'success',
           message: '删除成功'
@@ -152,7 +152,7 @@ export default {
     },
     deleteSelection(listCount) {
       const lists = this.multipleSelection.map(item => item.id)
-      DeleteList('column', lists).then(res => {
+      DeleteList('category', lists).then(res => {
         this.$message({
           type: 'success',
           message: '删除成功'
@@ -168,7 +168,7 @@ export default {
     },
     async handleSave() {
       this.saveLoading = true
-      await UpdateList('column', this.columnlist).then(response => {
+      await UpdateList('category', this.columnlist).then(response => {
         this.$message({
           type: 'success',
           message: response.data
@@ -186,8 +186,13 @@ export default {
      * @param {Number [int]} cellValue 当前行所属模块
      */
     formatModuleName(row, column, cellValue) {
-      const moduleEnum = ['', '简介模块', '文章模块', '图片模块', '追番模块', 'webapp']
-      return moduleEnum[cellValue] || ''
+      const typeEnum = {
+        article: '文章模块',
+        bangumi: '追番模块',
+        toolkit: '小工具',
+        other: '其它模块'
+      }
+      return typeEnum[cellValue] || ''
     }
   }
 }
@@ -199,7 +204,7 @@ export default {
     padding-left: 15px;
   }
 }
-.columns{
+.category{
   &-tools{
     &-edit{
       margin-right: 15px;

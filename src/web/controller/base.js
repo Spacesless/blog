@@ -6,12 +6,18 @@ module.exports = class extends think.Controller {
     this.siteurl = ''
     this.title = ''
     this.options = null
-    this.columns = null
+    this.category = null
   }
 
   async __before() {
     // 配置信息
     this.siteurl = this.ctx.origin.replace(/http:|https:/, '')
+
+    this.getConfigs()
+    this.getCategory()
+  }
+
+  async getConfigs() {
     this.options = await this.model('config').getConfig()
 
     // SEO
@@ -29,27 +35,16 @@ module.exports = class extends think.Controller {
         this.title = ` - ${this.options.keywords} | ${this.options.sitename}`
         break
     }
-
-    // 主导航信息
-    const allColumns = await this.model('column').getColumn()
-    this.columns = this.formatNavigation(allColumns)
   }
 
-  findAllParent(id, parentNodes = []) {
-    const row = this.columns.find(item => item.id === id)
-    if (!row) return
-    const { parentid } = row
-    parentNodes.push(row)
-    if (parentid) {
-      return this.findAllParent(parentid, parentNodes)
-    }
-    return parentNodes.sort((a, b) => {
-      return a.classtype - b.classtype
-    })
+  // 主导航信息
+  async getCategory() {
+    const allColumns = await this.model('column').getCategory()
+    this.category = this.formatNavigation(allColumns)
   }
 
-  formatNavigation(columns) {
-    columns.forEach(item => {
+  formatNavigation(categorys) {
+    categorys.forEach(item => {
       const { id, folderName, filename, classtype, type } = item
       let path = ''
       if (think.isEmpty(filename)) {
@@ -68,7 +63,7 @@ module.exports = class extends think.Controller {
       }
       item.url = `/${folderName}/${path}`
     })
-    return columns
+    return categorys
   }
 
   /**
@@ -98,21 +93,21 @@ module.exports = class extends think.Controller {
    * @param {Number} Id 期望栏目id
    */
   getListInfo(Id) {
-    let column
+    let category
     // 当前栏目
     if (think.isEmpty(Id)) {
       const path = this.ctx.path
-      column = this.columns.find(item => item.classtype === 1 && path.indexOf(item.folderName) > -1)
+      category = this.category.find(item => item.classtype === 1 && path.indexOf(item.folderName) > -1)
     } else {
-      column = this.columns.find(item => item.id === +Id)
+      category = this.category.find(item => item.id === +Id)
     }
 
-    if (!column) {
+    if (!category) {
       return null
     }
 
     // meta信息
-    const { name: title, keywords, description } = column
+    const { name: title, keywords, description } = category
     const seo = {
       title: title + this.title,
       keywords,
@@ -120,7 +115,7 @@ module.exports = class extends think.Controller {
     }
 
     return {
-      column,
+      category,
       seo
     }
   }
@@ -130,12 +125,11 @@ module.exports = class extends think.Controller {
    * @param {Object} content 详情
    */
   getDetailInfo(content) {
-    const { title, keywords, description, class1, class2, class3 } = content
+    const { title, keywords, description, category_id } = content
 
     // meta信息
-    const currentClass = class3 || class2 || class1
-    const column = this.columns.find(item => item.id === currentClass)
-    const { keywords: columnKeywords, description: columnDescription } = column
+    const category = this.category.find(item => item.id === category_id)
+    const { keywords: columnKeywords, description: columnDescription } = category
 
     const seo = {
       title: title + this.title,
@@ -144,7 +138,7 @@ module.exports = class extends think.Controller {
     }
 
     return {
-      column,
+      category,
       seo
     }
   }

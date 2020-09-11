@@ -22,19 +22,10 @@
       border
       @selection-change="onSelectionChange"
     >
-      <el-table-column type="selection" width="50" align="center" />
+      <el-table-column align="center" type="selection" width="50" />
       <el-table-column label="标题" prop="title" />
-      <el-table-column label="所属栏目" width="200" align="center">
-        <template #default="scope">
-          <span>{{ getClassName(scope.row) }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column align="center" label="删除时间" width="200">
-        <template #default="scope">
-          <i class="el-icon-time" />
-          <span>{{ scope.row.updatetime }}</span>
-        </template>
-      </el-table-column>
+      <el-table-column align="center" label="所属栏目" prop="category_id" width="200" formatter="formatCategory" />
+      <el-table-column align="center" label="删除时间" prop="updatetime" width="200" />
       <el-table-column align="center" label="操作" width="180">
         <template #default="scope">
           <el-button type="primary" :loading="scope.row.restoreLoading" @click="handleRestore(scope.row)">还原</el-button>
@@ -68,7 +59,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['columns'])
+    ...mapGetters(['categorys'])
   },
   created() {
     this.fetchList()
@@ -83,10 +74,8 @@ export default {
       }).catch(() => {})
       this.listLoading = false
     },
-    getClassName(row) {
-      const { class1, class2, class3 } = row
-      const id = class2 ? (class3 || class2) : class1
-      const findColumn = this.columns.find(item => item.id === id)
+    formatCategory(row, column, cellValue) {
+      const findColumn = this.categorys.find(item => item.category_id === cellValue)
       return findColumn ? findColumn.name : ''
     },
     handleSelect() {

@@ -81,13 +81,13 @@ export const constantRoutes = [
   {
     path: '/content',
     component: Layout,
-    redirect: '/content/blog',
+    redirect: '/content/article',
     meta: { title: '内容管理', icon: 'content' },
     children: [
       {
-        path: 'blog',
-        name: 'Blog',
-        component: () => import('@/views/content/blog'),
+        path: 'article',
+        name: 'Article',
+        component: () => import('@/views/content/article'),
         meta: { title: '文章模块' }
       },
       {
@@ -97,16 +97,16 @@ export const constantRoutes = [
         meta: { title: '番剧模块' }
       },
       {
-        path: 'tool',
-        name: 'Tool',
-        component: () => import('@/views/content/tool/index'),
+        path: 'toolkit',
+        name: 'Toolkit',
+        component: () => import('@/views/content/toolkit/index'),
         meta: { title: '小工具' }
       },
       {
-        path: 'tool/:id',
-        name: 'ToolContent',
+        path: 'toolkit/:id',
+        name: 'ToolkitContent',
         hidden: true,
-        component: () => import('@/views/content/tool/content'),
+        component: () => import('@/views/content/toolkit/content'),
         meta: { title: '工具详情' }
       },
       {
@@ -135,31 +135,31 @@ export const constantRoutes = [
   },
 
   {
-    path: '/column',
+    path: '/category',
     component: Layout,
-    meta: { title: '栏目管理', icon: 'column' },
+    meta: { title: '栏目管理', icon: 'category' },
     children: [
       {
         path: '',
-        name: 'Column',
+        name: 'Category',
         hidden: true,
-        component: () => import('@/views/column/index'),
+        component: () => import('@/views/category/index'),
         meta: { title: '栏目列表' }
       },
       {
         path: 'edit/:id',
-        name: 'ColumnEdit',
+        name: 'CategoryEdit',
         props: true,
         hidden: true,
-        component: () => import('@/views/column/edit'),
+        component: () => import('@/views/category/edit'),
         meta: { title: '栏目内容', noCache: true }
       },
       {
         path: 'create',
-        name: 'ColumnAdd',
+        name: 'CategoryAdd',
         props: true,
         hidden: true,
-        component: () => import('@/views/column/create'),
+        component: () => import('@/views/category/create'),
         meta: { title: '栏目内容', noCache: true }
       }
     ]

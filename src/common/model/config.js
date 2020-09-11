@@ -5,35 +5,36 @@ module.exports = class extends think.Model {
    */
   async getConfig() {
     const rows = await this.cache('config', { timeout: 30 * 24 * 3600 * 1000 }).select()
-    const ret = {}
+    const result = {}
     rows.forEach(item => {
-      ret[item.name] = item.value
+      result[item.key] = item.value
     })
 
-    return ret
+    return result
   }
+
   /**
    * 更新config表配置
    * @return {Object} config表配置信息
    */
   async updateConfig(data) {
     const promises = []
-    for (const name in data) {
-      const value = data[name]
-      const exist = await this.where({ name }).count('name')
+    for (const key in data) {
+      const value = data[key]
+      const exist = await this.where({ key }).count('key')
       let step
       if (exist) {
-        step = this.where({ name }).update({ value })
+        step = this.where({ key }).update({ value })
       }
       promises.push(step)
     }
     const rows = await Promise.all(promises)
-    const ret = {}
+    const result = {}
     rows.forEach(item => {
-      ret[item.name] = item.value
+      result[item.key] = item.value
     })
 
     await think.cache('config', null)
-    return ret
+    return result
   }
 }

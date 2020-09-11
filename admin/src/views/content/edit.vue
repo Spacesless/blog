@@ -1,15 +1,15 @@
 <template>
   <article-content
     :is-edit="true"
-    :columns="columns"
-    :column-options="columnOptions"
+    :categorys="categorys"
+    :category-options="categoryOptions"
   />
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
 import ArticleContent from './components/ArticleContent'
-import { getColumnByType } from '@/utils/index'
+import { getCategoryByType } from '@/utils/index'
 
 export default {
   name: 'ContentEdit',
@@ -17,10 +17,10 @@ export default {
     ArticleContent
   },
   computed: {
-    ...mapGetters(['columns']),
-    columnOptions() {
+    ...mapGetters(['categorys']),
+    categoryOptions() {
       const currentType = this.$route.query.type
-      const result = getColumnByType(this.columns, currentType)
+      const result = getCategoryByType(this.categorys, currentType)
       return result
     }
   }

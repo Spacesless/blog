@@ -33,7 +33,7 @@ router.beforeEach(async(to, from, next) => {
         try {
           // get user info
           await store.dispatch('user/getInfo')
-          await store.dispatch('list/getColumns')
+          await store.dispatch('list/getCategory')
           await store.dispatch('config/getConfigs')
           next()
         } catch (error) {

@@ -82,7 +82,7 @@ export default {
     const paramId = params.id
     const [id, page] = paramId ? paramId.split('-') : []
     const { sortBy, orderBy, tags } = query
-    const { seo, list } = await $axios.$get('/blog/list', {
+    const { seo, list } = await $axios.$get('/article/list', {
       params: {
         id: id === 'list' ? null : id,
         page,

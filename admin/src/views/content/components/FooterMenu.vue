@@ -2,9 +2,12 @@
   <el-row class="app-footer">
     <el-col :xs="24" :sm="12">
       <el-cascader
-        v-model="moveToColumn"
-        :options="columns"
-        :props="{ checkStrictly: true }"
+        v-model="targetCategory"
+        :options="categoryOptions"
+        :props="{
+          checkStrictly: true,
+          emitPath: false
+        }"
         placeholder="请选择所移动到的栏目"
         clearable
       />
@@ -28,7 +31,7 @@
 <script>
 export default {
   props: {
-    columns: {
+    categoryOptions: {
       type: Array,
       default: () => []
     },
@@ -43,7 +46,7 @@ export default {
   },
   data() {
     return {
-      moveToColumn: [],
+      targetCategory: [],
       moveLoading: false,
       changeLoading: false
     }
@@ -60,12 +63,9 @@ export default {
       this.$confirm(`确定要将${listCount}条内容移动到该栏目`, '提示', {
         type: 'warning'
       }).then(async() => {
-        const class1 = this.moveToColumn[0] || 0
-        const class2 = this.moveToColumn[1] || 0
-        const class3 = this.moveToColumn[2] || 0
         const passData = this.multipleSelection.map(item => {
           const { id } = item
-          return { class1, class2, class3, id }
+          return { id, category: this.targetCategory }
         })
         this.moveLoading = true
         await this.$parent.handleUpdateSelection(passData)
