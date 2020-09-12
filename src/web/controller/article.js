@@ -3,11 +3,14 @@ const Base = require('./base.js')
 module.exports = class extends Base {
   constructor(...arg) {
     super(...arg)
-    this.modelInstance = this.model('blog')
+    this.modelInstance = this.model('article')
   }
 
   async listAction() {
     const { id, page, sortBy, orderBy, tags } = this.get()
+
+    await this.getConfigs()
+    await this.getCategory()
 
     // 当前栏目
     const { category, seo } = this.getListInfo(id)
@@ -34,10 +37,10 @@ module.exports = class extends Base {
       .page(page, pageSize)
       .countSelect()
 
-    const { thumb_blog_x: blogX, thumb_blog_y: blogY, thumb_kind: thumbKind } = this.options
+    const { thumb_article_x, thumb_article_y, thumb_kind } = this.options
     for (const item of list.data) {
       const { imgurl, tag } = item
-      item.imgurl = await this.thumbImage(imgurl, blogX, blogY, thumbKind)
+      item.imgurl = await this.thumbImage(imgurl, thumb_article_x, thumb_article_y, thumb_kind)
       item.tag = tag ? tag.split('|') : []
     }
 
@@ -61,6 +64,9 @@ module.exports = class extends Base {
     if (think.isEmpty(content)) {
       return this.ctx.throw(404)
     }
+
+    await this.getConfigs()
+    await this.getCategory()
 
     const { category, seo } = this.getDetailInfo(content)
     content.content = await this.compressContent(content.content)

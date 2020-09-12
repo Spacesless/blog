@@ -37,9 +37,10 @@ router.beforeEach(async(to, from, next) => {
           await store.dispatch('config/getConfigs')
           next()
         } catch (error) {
+          console.error(error)
           // remove token and go to login page to re-login
           await store.dispatch('user/resetToken')
-          Message.error(error || 'Has Error')
+          Message.error('Permission Has Error')
           next(`/login?redirect=${to.path}`)
           NProgress.done()
         }

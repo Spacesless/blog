@@ -35,18 +35,18 @@ module.exports = class extends think.Controller {
 
   formatNavigation(category) {
     category.forEach(item => {
-      const { id, folderName, filename, classtype, type } = item
+      const { id, folderName, filename, level, type } = item
       let path = ''
       if (think.isEmpty(filename)) {
         switch (type) {
           case 5:
-            path = classtype === 1 ? '' : id
+            path = level === 1 ? '' : id
             break
           case 7:
             path = ''
             break
           default:
-            path = classtype === 1 ? '' : id
+            path = level === 1 ? '' : id
         }
       } else {
         path = `${filename}`

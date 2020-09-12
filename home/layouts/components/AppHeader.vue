@@ -30,11 +30,10 @@
       <div class="search">
         <div class="app-container">
           <div class="search-wrap clearfix">
-            <el-select v-model="classify" size="large" class="search-classify">
-              <el-option label="全部" :value="0" />
-              <el-option label="文章" :value="2" />
-              <el-option label="壁纸" :value="2" />
-              <el-option label="番剧" :value="2" />
+            <el-select v-model="type" size="large" class="search-classify">
+              <el-option label="全部" value="" />
+              <el-option label="文章" value="article" />
+              <el-option label="番剧" value="bangumi" />
             </el-select>
             <el-input ref="searchKeyword" v-model="keyword" class="search-input" size="large" placeholder="请输入关键字" />
             <span class="el-icon-search search__button" @click="handleSearch" />
@@ -58,7 +57,7 @@ export default {
   data() {
     return {
       searchVisible: false,
-      classify: 0,
+      type: '',
       keyword: ''
     }
   },
@@ -75,7 +74,7 @@ export default {
     handleSearch() {
       this.$router.push({
         name: 'search',
-        query: { keyword: this.keyword, classify: this.classify }
+        query: { keyword: this.keyword, type: this.type }
       })
       this.searchVisible = false
     },

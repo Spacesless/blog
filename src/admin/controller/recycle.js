@@ -4,15 +4,15 @@ module.exports = class extends Base {
   async getListAction() {
     const field = 'id,title,category_id,updatetime'
     const type = +this.get('type')
-    const blog = type && type !== 'blog' ? [] : await this.model('blog')
-      .field(`${field},'blog' as type`)
+    const article = type && type !== 'blog' ? [] : await this.model('article')
+      .field(`${field},'article' as type`)
       .where({ is_recycle: 1 })
       .select()
     const bangumi = type && type !== 'bangumi' ? [] : await this.model('bangumi')
       .field(`${field},'bangumi' as type`)
       .where({ is_recycle: 1 })
       .select()
-    const list = [...blog, ...bangumi]
+    const list = [...article, ...bangumi]
     const page = this.get('page') ? this.get('page') : 1
     const pageSize = this.get('pagesize') ? this.get('pagesize') : 20
     const result = list.slice((page - 1) * pageSize, page * pageSize)

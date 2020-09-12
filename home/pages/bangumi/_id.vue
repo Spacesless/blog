@@ -44,13 +44,13 @@
         <el-col v-for="item in bangumiList" :key="item.id" :xs="24" :sm="12">
           <el-row class="bangumi-list__item">
             <el-col class="bangumi-list-cover" :span="8" :xl="10">
-              <nuxt-link :to="'/bangumi/content/' + item.id">
+              <nuxt-link :to="'/bangumi/detail/' + item.id">
                 <img class="img-fluid" :src="item.imgurl" :alt="item.title">
                 <span class="bangumi-list__ratings">{{ item.ratings }}</span>
               </nuxt-link>
             </el-col>
             <el-col class="bangumi-list-info" :span="16" :xl="14">
-              <nuxt-link class="bangumi-list__title" :to="'/bangumi/content/' + item.id">{{ item.title }}</nuxt-link>
+              <nuxt-link class="bangumi-list__title" :to="'/bangumi/detail/' + item.id">{{ item.title }}</nuxt-link>
               <p><span class="para-name">时间：</span>{{ item.showtime }}</p>
               <p><span class="para-name">状态：</span>{{ item.status | bangumiStatus }}</p>
               <p class="hidden-xs-only"><span class="para-name">简介：</span>{{ item.description | substr(0, 60) }}……</p>

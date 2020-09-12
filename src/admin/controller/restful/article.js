@@ -29,15 +29,11 @@ module.exports = class extends Rest {
         .countSelect()
 
       const configs = await this.model('config').getConfig()
-      const {
-        thumb_kind: fit,
-        thumb_blog_x: width,
-        thumb_blog_y: height
-      } = configs
+      const { thumb_kind, thumb_article_x, thumb_article_y } = configs
       const { data } = list
       for (const item of data) {
         const { imgurl } = item
-        item.imgurl = await this.thumbImage(imgurl, width, height, fit)
+        item.imgurl = await this.thumbImage(imgurl, thumb_article_x, thumb_article_y, thumb_kind)
       }
       list.data = data
 

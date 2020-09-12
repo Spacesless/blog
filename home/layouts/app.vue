@@ -13,7 +13,7 @@ export default {
     ...mapGetters(['configs']),
     classObj() {
       return {
-        silent: this.configs.is_silent
+        silent: parseInt(this.configs.is_silent)
       }
     }
   }

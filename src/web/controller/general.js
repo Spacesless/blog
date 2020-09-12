@@ -1,8 +1,10 @@
 const Base = require('./base.js')
 
 module.exports = class extends Base {
-  indexAction() {
+  async indexAction() {
     // 主导航信息
+    await this.getConfigs()
+    await this.getCategory()
     const cloneColumn = JSON.parse(JSON.stringify(this.category))
     const isNav = cloneColumn.filter(item => item.is_nav === 1)
     const navigation = this.convertToTree(isNav)

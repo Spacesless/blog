@@ -26,7 +26,12 @@
         </template>
       </el-table-column>
       <el-table-column label="标题" prop="title" />
-      <el-table-column label="描述" prop="mark" />
+      <el-table-column class-name="status-col" label="前台展示" width="120" align="center">
+        <template #default="scope">
+          <el-tag v-if="scope.row.is_show">显示</el-tag>
+          <el-tag v-else type="info">隐藏</el-tag>
+        </template>
+      </el-table-column>
       <el-table-column align="center" label="排序" prop="sort" width="100" />
       <el-table-column align="center" label="操作" width="230">
         <template #default="scope">

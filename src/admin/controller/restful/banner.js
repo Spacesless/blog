@@ -7,7 +7,7 @@ module.exports = class extends Rest {
       data.imgurl = data.imgurl ? this.siteurl + data.imgurl : ''
       return this.success(data)
     } else {
-      const field = 'id,title,description,imgurl,sort'
+      const field = 'id,title,imgurl,sort,is_show'
       const list = await this.modelInstance
         .field(field)
         .order('sort ASC')

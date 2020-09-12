@@ -2,25 +2,29 @@ const Base = require('./base.js')
 
 module.exports = class extends Base {
   async indexAction() {
-    const classifyList = ['', 'tl_blog', 'tl_image', 'tl_bangumi']
-    const { classify, keyword } = this.get()
-    const field = 'id,title,content,updatetime,imgurl'
+    const { type, keyword } = this.get()
+
+    await this.getConfigs()
+    await this.getCategory()
+
+    const typpeEnum = [{
+      article: 'article',
+      bangumi: 'bangumi'
+    }]
+    const field = 'id,title,content,category_id,updatetime,imgurl'
     let SQL
     let where = ''
     let list
-    const className = classifyList[+classify]
+    const modelName = typpeEnum[type]
     if (keyword) {
       where += `where ((title LIKE '%${keyword}%') OR (content LIKE '%${keyword}%'))`
-      if (!think.isEmpty(className)) {
-        const moduleList = ['', 'blog', 'image', 'bangumi']
-        const moduleName = moduleList[+classify] || ''
+      if (!think.isEmpty(modelName)) {
         SQL = `
-          SELECT ${field},'${moduleName}' as type FROM ${className} ${where}
+          SELECT ${field},'${modelName}' as type FROM tl_${modelName} ${where}
         `
       } else {
         SQL = `
-          SELECT ${field},'blog' as type FROM tl_blog ${where} UNION ALL
-          SELECT ${field},'image' as type FROM tl_image ${where} UNION ALL
+          SELECT ${field},'article' as type FROM tl_article ${where} UNION ALL
           SELECT ${field},'bangumi' as type FROM tl_bangumi ${where}
         `
       }
@@ -34,18 +38,11 @@ module.exports = class extends Base {
         return new Date(b.updatetime) - new Date(a.updatetime)
       })
       data = data.slice((page - 1) * pageSize, page * pageSize)
-      list = {
-        pageSize,
-        currentPage: +page,
-        count,
-        totalPages: Math.ceil(allData.length / pageSize),
-        data
-      }
 
-      for (const element of list.data) {
+      for (const element of data) {
         const { id, title, category_id, type, imgurl } = element
         let content = element.content
-        const rows = this.category.find(item => item.id === category_id)
+        const findCategory = this.category.find(item => item.id === category_id)
 
         const _title = title.indexOf(keyword) > -1 ? title.replace(new RegExp(keyword, 'gi'), `<em>${keyword}</em>`) : title
         content = content.replace(/<.*?>/g, '')
@@ -63,24 +60,32 @@ module.exports = class extends Base {
             thumbY = this.options.thumb_bangumi_y
             break
           default:
-            thumbX = this.options.thumb_blog_x
-            thumbY = this.options.thumb_blog_y
+            thumbX = this.options.thumb_article_x
+            thumbY = this.options.thumb_article_y
         }
 
         const classList = this.category.filter(item => item.id === category_id).map(item => {
           return {
             name: item.name,
-            url: `/${item.folderName}/${item.id}`
+            url: `/${item.folder_name}/${item.id}`
           }
         })
 
         Object.assign(element, {
           title: _title,
           content: _content,
-          url: `/${rows.folderName}/content/${id}`,
+          url: `/${findCategory.folder_name}/detail/${id}`,
           imgurl: await this.thumbImage(imgurl, thumbX, thumbY, this.options.thumb_kind),
           classList
         })
+      }
+
+      list = {
+        pageSize,
+        currentPage: +page,
+        count,
+        totalPages: Math.ceil(allData.length / pageSize),
+        data
       }
     } else {
       list = []

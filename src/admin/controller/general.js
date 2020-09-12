@@ -14,8 +14,8 @@ module.exports = class extends Base {
     return this.success({
       version: data,
       count: {
-        column: await this.model('column').count('id'),
-        article: await this.model('blog').count('id'),
+        column: await this.model('category').count('id'),
+        article: await this.model('article').count('id'),
         bangumi: await this.model('bangumi').count('id'),
         comment: await this.model('comment').count('id')
       }
@@ -23,7 +23,7 @@ module.exports = class extends Base {
   }
 
   async refreshAction() {
-    await think.cache('column', null)
+    await think.cache('category', null)
     await think.cache('config', null)
   }
 }

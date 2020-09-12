@@ -1,8 +1,8 @@
 <template>
   <div class="search">
     <div class="search-wrap clearfix">
-      <el-select v-model="listQuery.classify" size="large" class="search-classify">
-        <el-option v-for="(item,index) in classifyOptions" :key="index" :label="item" :value="index" />
+      <el-select v-model="listQuery.type" size="large" class="search-classify">
+        <el-option v-for="item in typeOptions" :key="item.value" :label="item.label" :value="item.value" />
       </el-select>
       <el-input ref="searchKeyword" v-model="listQuery.keyword" class="search-input" size="large" placeholder="请输入关键字" />
       <span class="el-icon-search search__button" @click="handleSearch" />
@@ -16,7 +16,7 @@
       <a class="search-hot__link" @click="handleSearchHot('二次元')">二次元</a>
     </div>
     <ol v-if="total > 0" class="search-list">
-      <h3 class="search-list__result">检索到包含 {{ resultInfo.keyword }} 的{{ resultInfo.classify }} {{ total }} 篇</h3>
+      <h3 class="search-list__result">检索到包含 {{ resultInfo.keyword }} 的{{ resultInfo.type }} {{ total }} 篇</h3>
       <li v-for="item in searchList" :key="item.id" class="search-list-item el-row">
         <div class="search-list__thumb el-col el-col el-col-sm-10 el-col-md-6 el-col-lg-8">
           <nuxt-link :to="item.url">
@@ -35,7 +35,7 @@
     <div v-else class="search-noData">暂无数据</div>
     <!-- list page -->
     <div class="list-page">
-      <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit="20" @pagination="fetchList" />
+      <pagination v-show="total > 0" :total="total" :page.sync="listQuery.page" :limit="20" @pagination="fetchList" />
     </div>
   </div>
 </template>
@@ -51,10 +51,21 @@ export default {
   data() {
     return {
       searchList: [],
-      classifyOptions: ['全部', '文章', '壁纸', '番剧'],
+      typeOptions: [{
+        label: '全部',
+        value: ''
+      },
+      {
+        label: '文章',
+        value: 'article'
+      },
+      {
+        label: '番剧',
+        value: 'bangumi'
+      }],
       listQuery: {
         page: 1,
-        classify: 0,
+        type: '',
         keyword: ''
       },
       resultInfo: {},
@@ -65,11 +76,11 @@ export default {
     ...mapGetters(['configs'])
   },
   mounted() {
-    const { keyword, classify } = this.$route.query
+    const { keyword, type } = this.$route.query
 
     if (keyword) {
       this.listQuery.keyword = keyword
-      this.listQuery.classify = classify || 0
+      this.listQuery.classify = type || ''
 
       this.fetchList()
     }
@@ -77,14 +88,15 @@ export default {
   methods: {
     fetchList() {
       this.$axios.$get('/search', { params: this.listQuery }).then(res => {
-        const { count, data } = res.data
+        const { count, data } = res
         this.total = count
         this.searchList = data
 
-        const { keyword, classify } = this.listQuery
+        const { keyword, type } = this.listQuery
+        const findType = this.typeOptions.find(item => item.value === type)
         this.resultInfo = {
           keyword,
-          classify: this.classifyOptions[classify] || '文章'
+          type: findType ? findType.value : '文章'
         }
       })
     },

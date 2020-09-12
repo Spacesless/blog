@@ -30,7 +30,7 @@ import { GetList } from '@/api/list'
 export default {
   data() {
     return {
-      currentType: 'tool',
+      currentType: 'toolkit',
       appList: [],
       listLoading: false
     }

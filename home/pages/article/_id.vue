@@ -35,7 +35,7 @@
           :sm="index % 2 === 0 ? 12 : { span: 12, push: 12 }"
           :md="index % 2 === 0 ? 10 : { span: 10, push: 14 }"
         >
-          <nuxt-link :to="'/blog/content/' + item.id" :title="item.title">
+          <nuxt-link :to="'/article/detail/' + item.id" :title="item.title">
             <img class="img-full" :src="item.imgurl" :alt="item.title">
           </nuxt-link>
         </el-col>
@@ -44,7 +44,7 @@
           :sm="index % 2 === 0 ? 12 : { span: 12, pull: 12 }"
           :md="index % 2 === 0 ? 14 : { span: 14, pull: 10 }"
         >
-          <nuxt-link class="blog-list__title" :to="'/blog/content/' + item.id" :title="item.title">{{ item.title }}</nuxt-link>
+          <nuxt-link class="blog-list__title" :to="'/article/detail/' + item.id" :title="item.title">{{ item.title }}</nuxt-link>
           <div class="blog-list-info">
             <span><i class="tl-icon">&#xe70b;</i>{{ item.updatetime }}</span>
             <span><i class="tl-icon">&#xe601;</i>{{ item.hits }}</span>

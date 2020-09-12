@@ -12,9 +12,6 @@ module.exports = class extends think.Controller {
   async __before() {
     // 配置信息
     this.siteurl = this.ctx.origin.replace(/http:|https:/, '')
-
-    this.getConfigs()
-    this.getCategory()
   }
 
   async getConfigs() {
@@ -39,29 +36,29 @@ module.exports = class extends think.Controller {
 
   // 主导航信息
   async getCategory() {
-    const allColumns = await this.model('column').getCategory()
+    const allColumns = await this.model('category').getCategory()
     this.category = this.formatNavigation(allColumns)
   }
 
   formatNavigation(categorys) {
     categorys.forEach(item => {
-      const { id, folderName, filename, classtype, type } = item
+      const { id, folder_name, filename, level, type } = item
       let path = ''
       if (think.isEmpty(filename)) {
         switch (type) {
-          case 5:
-            path = classtype === 1 ? '' : id
+          case 'other':
+            path = ''
             break
-          case 7:
+          case 'toolkit':
             path = ''
             break
           default:
-            path = classtype === 1 ? '' : id
+            path = level === 1 ? '' : id
         }
       } else {
         path = `${filename}`
       }
-      item.url = `/${folderName}/${path}`
+      item.url = `/${folder_name}/${path}`
     })
     return categorys
   }
@@ -69,14 +66,14 @@ module.exports = class extends think.Controller {
   /**
    * 二维数组转树形数组
    * @param {Array} data 原二维数组
-   * @param {Number} parentid 父节点id
+   * @param {Number} parent_id 父节点id
    * @returns {Array} 树形数组 [{id:1,children:[{id:2},{id:3,children:[{id:4}]}]}]
    */
-  convertToTree(data, parentid = 0) {
+  convertToTree(data, parent_id = 0) {
     const tree = []
     let temp
     for (let i = 0; i < data.length; i++) {
-      if (data[i].parentid === parentid) {
+      if (data[i].parent_id === parent_id) {
         const obj = data[i]
         temp = this.convertToTree(data, data[i].id)
         if (temp.length > 0) {
@@ -97,7 +94,7 @@ module.exports = class extends think.Controller {
     // 当前栏目
     if (think.isEmpty(Id)) {
       const path = this.ctx.path
-      category = this.category.find(item => item.classtype === 1 && path.indexOf(item.folderName) > -1)
+      category = this.category.find(item => item.level === 1 && path.includes(item.folder_name))
     } else {
       category = this.category.find(item => item.id === +Id)
     }

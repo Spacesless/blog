@@ -58,7 +58,7 @@ export default {
         openAside: this.sidebar.opened,
         withoutAnimation: this.sidebar.withoutAnimation,
         mobile: this.device === 'mobile',
-        silent: this.configs.is_silent
+        silent: parseInt(this.configs.is_silent)
       }
     }
   },

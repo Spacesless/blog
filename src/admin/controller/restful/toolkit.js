@@ -10,9 +10,9 @@ module.exports = class extends Rest {
       // const field = 'id,name';
       const list = await this.modelInstance
         .join({
-          table: 'column',
+          table: 'category',
           join: 'inner', // join 方式，有 left, right, inner 3 种方式
-          on: ['column_id', 'id'] // ON 条件
+          on: ['category_id', 'id'] // ON 条件
         }).select()
       return this.success(list)
     }

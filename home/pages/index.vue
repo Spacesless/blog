@@ -14,10 +14,10 @@
         <nuxt-link class="home-head__more" to="/blog">more+</nuxt-link>
       </div>
       <el-row class="articles-list" :gutter="15">
-        <el-col v-for="item in blogs" :key="item.id" :md="12">
+        <el-col v-for="item in articleList" :key="item.id" :md="12">
           <div class="articles-item">
             <p class="articles-title">
-              <nuxt-link :to="'/blog/content/' + item.id" :title="item.title">{{ item.title }}</nuxt-link>
+              <nuxt-link :to="'/article/detail/' + item.id" :title="item.title">{{ item.title }}</nuxt-link>
             </p>
             <div class="articles-meta">
               <span class="articles-meta__date"><i class="tl-icon">&#xe70b;</i>{{ item.updatetime | moment('{y}-{m}-{d}') }}</span>
@@ -41,15 +41,15 @@
         <nuxt-link class="home-head__more" to="/bangumi">more+</nuxt-link>
       </div>
       <el-row class="bangumi-list" :gutter="15">
-        <el-col v-for="item in bangumis" :key="item.id" :xs="24" :sm="12">
+        <el-col v-for="item in bangumiList" :key="item.id" :xs="24" :sm="12">
           <el-row class="bangumi-list-item">
             <el-col :span="8" :xl="10">
-              <nuxt-link :to="'/bangumi/content/' + item.id" :title="item.title">
+              <nuxt-link :to="'/bangumi/detail/' + item.id" :title="item.title">
                 <img class="img-fluid" :src="item.imgurl" :alt="item.title">
               </nuxt-link>
             </el-col>
             <el-col class="bangumi-list-info" :span="16" :xl="14">
-              <nuxt-link class="bangumi-list__title" :to="'/bangumi/content/' + item.id" :title="item.title">{{ item.title }}</nuxt-link>
+              <nuxt-link class="bangumi-list__title" :to="'/bangumi/detail/' + item.id" :title="item.title">{{ item.title }}</nuxt-link>
               <p><span class="para-name">时间：</span>{{ item.showtime }}</p>
               <p><span class="para-name">状态：</span>{{ item.status | bangumiStatus }}</p>
               <p class="hidden-xs-only"><span class="para-name">简介：</span>{{ item.description }}</p>
@@ -79,8 +79,8 @@ import { globalFilter } from '@/mixins'
 export default {
   mixins: [globalFilter],
   async asyncData({ $axios }) {
-    const { seo, banners: bannerList, blogs, bangumis } = await $axios.$get('/index')
-    return { seo, bannerList, blogs, bangumis }
+    const { seo, bannerList, articleList, bangumiList } = await $axios.$get('/index')
+    return { seo, bannerList, articleList, bangumiList }
   },
   data() {
     return {

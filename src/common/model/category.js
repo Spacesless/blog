@@ -5,8 +5,8 @@ module.exports = class extends think.Model {
    */
   async getCategory() {
     // 设置缓存 key 为 column，有效期为 30 天
-    const field = 'id,name,keywords,description,folder_name AS folderName,filename,parent_id AS parentid,classtype,type,no_order,is_nav,mark_name AS markName,icon,is_show'
-    const list = await this.cache('column', { timeout: 30 * 24 * 3600 * 1000 })
+    const field = 'id,name,keywords,description,folder_name,filename,parent_id,type,level,no_order,is_nav,mark_name,icon,is_show'
+    const list = await this.cache('category', { timeout: 30 * 24 * 3600 * 1000 })
       .where({ is_show: 1 })
       .field(field)
       .order('no_order ASC')
@@ -15,10 +15,7 @@ module.exports = class extends think.Model {
   }
 
   async getChildrenCategory(categorys, id) {
-    // const categoryTree = this.convertToTree(categorys)
-    // const flattenCategory = this.flattenDeep(categoryTree)
-    // const findCategory = flattenCategory.find(item => item.includes(id))
-    const flattenCategory = this.flattenDeep(categorys)
+    const flattenCategory = this.flattenDeep(categorys, [id])
     const findCategory = Array.from(new Set(flattenCategory))
     return findCategory
   }
@@ -29,25 +26,9 @@ module.exports = class extends think.Model {
     target = [...target, ...findCategory, ...childrenCategory]
 
     if (childrenCategory.length) {
-      return this.fettlen(data, childrenCategory, target)
+      return this.flattenDeep(data, childrenCategory, target)
     } else {
       return target
     }
   }
-
-  // flattenDeep(nodes, target = []) {
-  //   // 如果已经没有节点了，结束递归
-  //   if (!(nodes && nodes.length)) {
-  //     return []
-  //   }
-
-  //   nodes.forEach(item => {
-  //     target.push(item.id)
-
-  //     if (item.children) {
-  //       this.flattenDeep(item.children, target)
-  //     }
-  //   })
-  //   return target
-  // }
 }

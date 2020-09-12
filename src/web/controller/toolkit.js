@@ -3,20 +3,23 @@ const Base = require('./base.js')
 module.exports = class extends Base {
   constructor(...arg) {
     super(...arg)
-    this.modelInstance = this.model('tool')
+    this.modelInstance = this.model('toolkit')
   }
 
   async listAction() {
+    await this.getConfigs()
+    await this.getCategory()
     // 当前栏目
     const path = this.ctx.path
-    const rows = this.category.find(item => item.classtype === 1 && path.indexOf(item.folderName) > -1)
+    const findCategory = this.category.find(item => item.level === 1 && path.includes(item.folder_name))
+    console.log(findCategory)
 
-    if (!rows) {
+    if (!findCategory) {
       return this.ctx.throw(404)
     }
 
     // meta信息
-    const { name: title, keywords, description } = rows
+    const { name: title, keywords, description } = findCategory
     const seo = {
       title: title + this.title,
       keywords,
@@ -24,17 +27,17 @@ module.exports = class extends Base {
     }
 
     // webapp列表
-    const list = await this.model('column')
+    const list = await this.model('category')
       .where({ is_show: 1 })
       .join({
-        table: 'tool',
+        table: 'toolkit',
         join: 'inner', // join 方式，有 left, right, inner 3 种方式
-        on: ['id', 'column_id'] // ON 条件
+        on: ['id', 'category_id'] // ON 条件
       }).select()
     list.forEach(item => {
-      const { column_id: columnId, folder_name: folderName } = item
-      item.id = columnId
-      item.folderName = folderName
+      const { category_id, folder_name } = item
+      item.id = category_id
+      item.folderName = folder_name
     })
     const webapps = this.formatNavigation(list)
 

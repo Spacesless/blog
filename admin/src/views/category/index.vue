@@ -20,7 +20,7 @@
       ref="columnTable"
       v-el-height-adaptive-table="{bottomOffset: 15}"
       v-loading="listLoading"
-      :data="columnlist"
+      :data="categoryList"
       :default-expand-all="expandAll"
       row-key="id"
       height="233"
@@ -51,7 +51,7 @@
           </el-select>
         </template>
       </el-table-column>
-      <el-table-column label="所属模块" min-width="160" :formatter="formatModuleName" />
+      <el-table-column label="所属模块" prop="type" min-width="160" :formatter="formatModuleName" />
       <el-table-column label="目录" prop="folder_name" min-width="160" />
       <el-table-column label="操作" align="center" width="250">
         <template #default="scope">
@@ -94,7 +94,7 @@ export default {
   data() {
     return {
       expandAll: true,
-      columnlist: [],
+      categoryList: [],
       multipleSelection: [],
       currentRow: {},
       saveLoading: false
@@ -109,11 +109,11 @@ export default {
   methods: {
     async fetchList() {
       this.listLoading = true
-      if (!this.category.length) {
+      if (!this.categorys.length) {
         await this.$store.dispatch('list/getCategory').catch(() => {})
       }
       const category = formatCategory(this.categorys)
-      this.columnlist = JSON.parse(JSON.stringify(category))
+      this.categoryList = JSON.parse(JSON.stringify(category))
       this.listLoading = false
     },
     handleAdd() {
@@ -168,7 +168,7 @@ export default {
     },
     async handleSave() {
       this.saveLoading = true
-      await UpdateList('category', this.columnlist).then(response => {
+      await UpdateList('category', this.categoryList).then(response => {
         this.$message({
           type: 'success',
           message: response.data

@@ -2,6 +2,8 @@ const Base = require('./base.js')
 
 module.exports = class extends Base {
   async indexAction() {
+    await this.getConfigs()
+    await this.getCategory()
     const { title, keywords, description } = this.options
     const seo = {
       title,
@@ -10,41 +12,41 @@ module.exports = class extends Base {
     }
 
     // 正在做 banner
-    const bannerField = 'id,imgurl,title,description'
-    const banners = await this.model('banner')
+    const bannerField = 'id,imgurl,title'
+    const bannerList = await this.model('banner')
       .field(bannerField)
-      .where({ isShow: 1 })
+      .where({ is_show: 1 })
       .order('sort ASC')
       .select()
-    for (const element of banners) {
+    for (const element of bannerList) {
       element.imgurl = await this.convertToWebp(element.imgurl)
     }
 
     // 最新动态文章
-    const blogField = 'id,imgurl,title,description,hits,updatetime'
-    const blogWhere = { is_show: 1 }
-    const blogs = await this.model('blog')
-      .field(blogField)
-      .where(blogWhere)
+    const articleField = 'id,imgurl,title,description,category_id,hits,updatetime'
+    const articleWhere = { is_show: 1 }
+    const articleList = await this.model('article')
+      .field(articleField)
+      .where(articleWhere)
       .limit(10)
       .order('updatetime DESC')
       .select()
 
-    for (const element of blogs) {
+    for (const element of articleList) {
       const { category_id, description } = element
       element.description = this.substr(description, 0, 80)
-      const currentColumn = this.category.find(item => item.id === category_id)
-      const folder = currentColumn ? currentColumn.folderName : 'blog'
+      const currentCategory = this.category.find(item => item.id === category_id)
+      const folder = currentCategory ? currentCategory.folder_name : 'article'
       element.column = {
-        name: currentColumn.name,
-        url: `/${folder}/${currentColumn.id}`
+        name: currentCategory.name,
+        url: `/${folder}/${currentCategory.id}`
       }
     }
 
     // 最新追番
     const bangumiField = 'id,title,description,total,current,imgurl,showtime,status'
     const bangumiWhere = { is_show: 1, current: ['EXP', '< `total`'] }
-    const bangumis = await this.model('bangumi')
+    const bangumiList = await this.model('bangumi')
       .field(bangumiField)
       .where(bangumiWhere)
       .limit(6)
@@ -52,16 +54,16 @@ module.exports = class extends Base {
       .select()
 
     const { thumb_bangumi_x: bangumiX, thumb_bangumi_y: bangumiY, thumb_kind: thumbKind } = this.options
-    for (const element of bangumis) {
+    for (const element of bangumiList) {
       element.description = this.substr(element.description, 0, 60)
       element.imgurl = await this.thumbImage(element.imgurl, bangumiX, bangumiY, thumbKind)
     }
 
     return this.success({
       seo,
-      banners,
-      blogs,
-      bangumis
+      bannerList,
+      articleList,
+      bangumiList
     })
   }
 }

@@ -6,10 +6,7 @@ module.exports = class extends Rest {
       const data = await this.modelInstance.where({ id: this.id }).find()
       return this.success(data)
     } else {
-      const field = 'id,name,folder_name,parent_id AS parentid,classtype,type,no_order,is_nav'
-      const list = await this.modelInstance
-        .field(field)
-        .select()
+      const list = await this.modelInstance.getCategory()
       return this.success(list)
     }
   }

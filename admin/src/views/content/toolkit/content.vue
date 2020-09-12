@@ -65,7 +65,7 @@ export default {
     async fetchData() {
       this.fetchLoading = true
       const id = this.$route.params && this.$route.params.id
-      await GetContent('webapp', id).then(res => {
+      await GetContent('toolkit', id).then(res => {
         this.formData = res.data
       }).catch(() => {})
       this.fetchLoading = false

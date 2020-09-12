@@ -9,9 +9,12 @@ module.exports = class extends Base {
   async listAction() {
     const { id, page, sortBy, orderBy, status, progress, tags } = this.get()
 
+    await this.getConfigs()
+    await this.getCategory()
+
     // 当前栏目
     const { category, seo } = this.getListInfo(id)
-    if (think.isEmpty(column)) {
+    if (think.isEmpty(category)) {
       return this.ctx.throw(404)
     }
 
@@ -46,10 +49,10 @@ module.exports = class extends Base {
       .countSelect()
 
     // 裁剪图片
-    const { thumb_bangumi_x: bangumiX, thumb_bangumi_y: bangumiY, thumb_kind: thumbKind } = this.options
+    const { thumb_bangumi_x, thumb_bangumi_y, thumb_kind } = this.options
     for (const item of list.data) {
       const { imgurl, tag } = item
-      item.imgurl = await this.thumbImage(imgurl, bangumiX, bangumiY, thumbKind)
+      item.imgurl = await this.thumbImage(imgurl, thumb_bangumi_x, thumb_bangumi_y, thumb_kind)
       item.tag = tag ? tag.split('|') : []
     }
 
@@ -73,6 +76,9 @@ module.exports = class extends Base {
     if (think.isEmpty(content)) {
       return this.ctx.throw(404)
     }
+
+    await this.getConfigs()
+    await this.getCategory()
 
     content.players = content.players ? JSON.parse(content.players) : []
     const { category, seo } = this.getDetailInfo(content)

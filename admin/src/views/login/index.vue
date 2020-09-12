@@ -217,13 +217,13 @@ export default {
       ::v-deep .el-form-item__content{
         line-height: 19px;
       }
-      &-forgot{
-        position: absolute;
-        right: 0;
-        color: #606266;
-        &:hover{
-          color: #409EFF;
-        }
+    }
+    &-forgot{
+      position: absolute;
+      right: 0;
+      color: #606266;
+      &:hover{
+        color: #409EFF;
       }
     }
     &-submit{

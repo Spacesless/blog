@@ -114,12 +114,12 @@ export function param2Obj(url) {
  * @param {Array} category 栏目数组
  * @returns {Array} 栏目树形结果数组
  */
-export function formatCategory(categorys, parentid = 0) {
+export function formatCategory(categorys, parent_id = 0) {
   const tree = []
   let temp
   const cloneCategory = JSON.parse(JSON.stringify(categorys))
   for (let i = 0; i < cloneCategory.length; i++) {
-    if (cloneCategory[i].parentid === parentid) {
+    if (cloneCategory[i].parent_id === parent_id) {
       const item = cloneCategory[i]
       temp = formatCategory(cloneCategory, cloneCategory[i].id)
       if (temp.length > 0) {
@@ -138,9 +138,7 @@ export function formatCategory(categorys, parentid = 0) {
  * @returns {Array} 栏目树形结果数组
  */
 export function getCategoryByType(categorys, type) {
-  const columnEnum = ['', '', 'blog', 'image', 'bangumi']
-  const findIndex = columnEnum.findIndex(item => item === type)
-  const filterColumn = categorys.filter(item => item.type === findIndex)
+  const filterColumn = categorys.filter(item => item.type === type)
   filterColumn.forEach(element => {
     element.value = element.id
     element.label = element.name

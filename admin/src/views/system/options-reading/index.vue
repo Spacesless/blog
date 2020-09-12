@@ -23,13 +23,13 @@
       </el-form-item>
       <el-form-item class="form-title">文章模块</el-form-item>
       <el-form-item label="宽度">
-        <el-input v-model="formData.thumb_blog_x" class="form-container-input" />
+        <el-input v-model="formData.thumb_article_x" class="form-container-input" />
       </el-form-item>
       <el-form-item label="高度">
-        <el-input v-model="formData.thumb_blog_y" class="form-container-input" />
+        <el-input v-model="formData.thumb_article_y" class="form-container-input" />
       </el-form-item>
       <el-form-item label="列表数量">
-        <el-input-number v-model="formData.blog_size" :min="1" controls-position="right" />
+        <el-input-number v-model="formData.list_article" :min="1" controls-position="right" />
       </el-form-item>
 
       <el-form-item class="form-title">追番模块</el-form-item>
@@ -40,7 +40,7 @@
         <el-input v-model="formData.thumb_bangumi_y" class="form-container-input" />
       </el-form-item>
       <el-form-item label="列表数量">
-        <el-input-number v-model="formData.bangumi_size" :min="1" controls-position="right" />
+        <el-input-number v-model="formData.list_bangumi" :min="1" controls-position="right" />
       </el-form-item>
       <el-form-item class="text-right">
         <el-button type="primary" :loading="confirmLoading" @click="handleSubmit">保存</el-button>
@@ -68,8 +68,8 @@ export default {
     }
   },
   created() {
-    const { thumb_kind, thumb_blog_x, thumb_blog_y, thumb_image_x, thumb_image_y, thumb_bangumi_x, thumb_bangumi_y } = this.configs
-    this.formData = { thumb_kind, thumb_blog_x, thumb_blog_y, thumb_image_x, thumb_image_y, thumb_bangumi_x, thumb_bangumi_y }
+    const { thumb_kind, thumb_article_x, thumb_article_y, thumb_bangumi_x, thumb_bangumi_y, list_article, list_bangumi } = this.configs
+    this.formData = { thumb_kind, thumb_article_x, thumb_article_y, thumb_bangumi_x, thumb_bangumi_y, list_article, list_bangumi }
   },
   methods: {
     async handleSubmit() {
