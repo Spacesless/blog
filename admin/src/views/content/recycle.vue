@@ -24,7 +24,7 @@
     >
       <el-table-column align="center" type="selection" width="50" />
       <el-table-column label="标题" prop="title" />
-      <el-table-column align="center" label="所属栏目" prop="category_id" width="200" formatter="formatCategory" />
+      <el-table-column align="center" label="所属栏目" prop="type" width="200" :formatter="formatCategory" />
       <el-table-column align="center" label="删除时间" prop="updatetime" width="200" />
       <el-table-column align="center" label="操作" width="180">
         <template #default="scope">
@@ -75,7 +75,7 @@ export default {
       this.listLoading = false
     },
     formatCategory(row, column, cellValue) {
-      const findColumn = this.categorys.find(item => item.category_id === cellValue)
+      const findColumn = this.categorys.find(item => item.type === cellValue)
       return findColumn ? findColumn.name : ''
     },
     handleSelect() {

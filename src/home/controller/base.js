@@ -2,47 +2,37 @@ module.exports = class extends think.Controller {
   constructor(...arg) {
     super(...arg)
     this.siteurl = ''
-    this.title = ''
-    this.options = null
-    this.category = null
   }
 
   async __before() {
     // 配置信息
     this.siteurl = this.ctx.origin.replace(/http:|https:/, '')
-    this.options = await this.model('config').getConfig()
-
-    // SEO
-    switch (this.options.seo_title_type) {
-      case '1':
-        this.title = ''
-        break
-      case '2':
-        this.title = ` - ${this.options.keywords}`
-        break
-      case '3':
-        this.title = ` - ${this.options.sitename}`
-        break
-      case '4':
-        this.title = ` - ${this.options.keywords} | ${this.options.sitename}`
-        break
-    }
-
-    // 主导航信息
-    const allColumns = await this.model('column').getCategory()
-    this.category = this.formatCategoryUrl(allColumns)
   }
 
-  formatCategoryUrl(category) {
-    category.forEach(item => {
-      const { id, folderName, filename, level, type } = item
+  /**
+   * 获取导航菜单数据
+   * @returns {Array}
+   */
+  async getCategory() {
+    let categorys = await this.model('category').getCategory()
+    categorys = this.formatCategoryUrl(categorys)
+    return categorys
+  }
+
+  /**
+   * 格式化导航菜单地址
+   * @param {Array} categorys
+   */
+  formatCategoryUrl(categorys) {
+    categorys.forEach(item => {
+      const { id, folder_name, filename, level, type } = item
       let path = ''
       if (think.isEmpty(filename)) {
         switch (type) {
-          case 5:
-            path = level === 1 ? '' : id
+          case 'other':
+            path = ''
             break
-          case 7:
+          case 'toolkit':
             path = ''
             break
           default:
@@ -51,9 +41,9 @@ module.exports = class extends think.Controller {
       } else {
         path = `${filename}`
       }
-      item.url = `/${folderName}/${path}`
+      item.url = `/${folder_name}/${path}`
     })
-    return category
+    return categorys
   }
 
   __cell() {

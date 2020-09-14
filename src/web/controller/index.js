@@ -54,7 +54,7 @@ module.exports = class extends Base {
       .order('updatetime DESC')
       .select()
 
-    const { thumb_bangumi_x: bangumiX, thumb_bangumi_y: bangumiY, thumb_kind: thumbKind } = this.options
+    const { thumb_bangumi_x: bangumiX, thumb_bangumi_y: bangumiY, thumb_kind: thumbKind } = configs
     for (const element of bangumiList) {
       element.description = this.substr(element.description, 0, 60)
       element.imgurl = await this.thumbImage(element.imgurl, bangumiX, bangumiY, thumbKind)

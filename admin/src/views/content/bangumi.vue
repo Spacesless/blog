@@ -3,7 +3,7 @@
     <header-menu
       :category-options="categoryOptions"
       :current-type="currentType"
-      @onSearchKeyword="handleSearch"
+      @onSearchKeyword="handleSearchTitle"
       @onColumnChange="handleChangeColumn"
     />
 
@@ -83,6 +83,7 @@ import { GetList, DeleteList, UpdateList } from '@/api/list'
 import { UpdateContent } from '@/api/content'
 
 export default {
+  name: 'Bangumi',
   components: {
     HeaderMenu,
     FooterMenu,

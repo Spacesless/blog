@@ -10,7 +10,10 @@ module.exports = class extends Base {
   // rss订阅
   async rssAction() {
     this.assign('siteurl', this.baseUrl)
-    this.assign('options', this.options)
+
+    const configs = await this.model('config').getConfig()
+    this.assign('options', configs)
+
     this.assign('currentTime', (new Date()).toUTCString())
 
     const list = await this.getRssList()
@@ -24,13 +27,14 @@ module.exports = class extends Base {
   async sitemapAction() {
     this.assign('siteurl', this.baseUrl)
 
-    const list = await this.getSitemapList()
+    const categorys = await this.getCategory()
+    const list = await this.getSitemapList(categorys)
     this.assign('list', list)
 
     const lastmod = list.length ? list[0].updatetime : think.datetime(new Date(), 'YYYY-MM-DD')
     this.assign('lastmod', lastmod)
 
-    const _columns = JSON.parse(JSON.stringify(this.category))
+    const _columns = JSON.parse(JSON.stringify(categorys))
     const category = _columns.map(item => {
       const { id, url, level } = item
       let rows = list.filter(element => element.category_id === id)
@@ -61,8 +65,7 @@ module.exports = class extends Base {
     const field = 'id,title,description,updatetime,category_id'
     const where = 'where is_show = 1'
     const SQL = `
-      SELECT ${field} FROM tl_blog ${where} UNION ALL
-      SELECT ${field} FROM tl_image ${where} UNION ALL
+      SELECT ${field} FROM tl_article ${where} UNION ALL
       SELECT ${field} FROM tl_bangumi ${where}
     `
     const rows = await this.model('config').query(SQL)
@@ -74,14 +77,16 @@ module.exports = class extends Base {
    * @returns {Array} 文章列表 {...url}
    */
   async getRssList() {
+    const categorys = await this.getCategory()
+
     const archives = JSON.parse(JSON.stringify(this.archives))
     const Rss = archives.sort((a, b) => {
       return new Date(b.updatetime) - new Date(a.updatetime)
     }).slice(0, 6)
     Rss.forEach(item => {
       const { id, category_id } = item
-      const row = this.category.find(element => element.id === category_id)
-      item.url = row ? `${this.baseUrl}/${row.folderName}/content/${id}` : ''
+      const findCategory = categorys.find(element => element.id === category_id)
+      item.url = findCategory ? `${this.baseUrl}/${findCategory.folder_name}/detail/${id}` : ''
     })
     return Rss
   }
@@ -90,15 +95,15 @@ module.exports = class extends Base {
    * 获取sitemap列表
    * @returns {Array} 文章列表 {...url,...priority}
    */
-  async getSitemapList() {
+  async getSitemapList(categorys) {
     const archives = JSON.parse(JSON.stringify(this.archives))
     const Sitemap = archives.sort((a, b) => {
       return new Date(b.updatetime) - new Date(a.updatetime)
     })
     Sitemap.forEach(item => {
       const { id, category_id } = item
-      const row = this.category.find(element => element.id === category_id)
-      item.url = row ? `${this.baseUrl}/${row.folderName}/content/${id}` : ''
+      const findCategory = categorys.find(element => element.id === category_id)
+      item.url = findCategory ? `${this.baseUrl}/${findCategory.folder_name}/detail/${id}` : ''
       item.priority = 0.6
     })
     return Sitemap

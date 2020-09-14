@@ -63,6 +63,7 @@ import { getCategoryByType } from '@/utils'
 import { GetList, DeleteList, UpdateList } from '@/api/list'
 
 export default {
+  name: 'Article',
   components: {
     HeaderMenu,
     FooterMenu,

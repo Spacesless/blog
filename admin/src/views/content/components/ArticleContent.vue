@@ -9,7 +9,7 @@
       label-width="100px"
       class="form-container is-bottom"
     >
-      <el-form-item label="所属栏目" prop="category">
+      <el-form-item label="所属栏目" prop="category_id">
         <el-cascader
           v-model="formData.category_id"
           :options="categoryOptions"
@@ -167,7 +167,7 @@ export default {
       fetchLoading: false,
       confirmLoading: false,
       rules: {
-        category: [{ required: true, message: '请选择栏目', trigger: 'change' }],
+        category_id: [{ required: true, message: '请选择栏目', trigger: 'change' }],
         title: [{ required: true, message: '请输入标题', trigger: 'blur' }],
         addtime: [{ required: true, message: '请选择发布时间', trigger: 'change' }],
         updatetime: [{ required: true, message: '请选择更新时间', trigger: 'change' }],

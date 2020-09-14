@@ -21,7 +21,7 @@ var requestAnimFrame = (function() {
  * @param {number} amount
  * @summary element不传则body滚动
  */
-function move(element, amount) {
+function move(amount, element) {
   if (element) {
     element.scrollTop = amount
   } else {
