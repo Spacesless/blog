@@ -2,9 +2,10 @@ const Base = require('./base.js')
 
 module.exports = class extends Base {
   async indexAction() {
-    await this.getConfigs()
-    await this.getCategory()
-    const { title, keywords, description } = this.options
+    const configs = await this.getConfigs()
+    const categorys = await this.getCategory()
+
+    const { title, keywords, description } = configs
     const seo = {
       title,
       keywords,
@@ -35,7 +36,7 @@ module.exports = class extends Base {
     for (const element of articleList) {
       const { category_id, description } = element
       element.description = this.substr(description, 0, 80)
-      const currentCategory = this.category.find(item => item.id === category_id)
+      const currentCategory = categorys.find(item => item.id === category_id)
       const folder = currentCategory ? currentCategory.folder_name : 'article'
       element.column = {
         name: currentCategory.name,

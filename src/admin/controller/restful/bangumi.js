@@ -2,13 +2,13 @@ const Rest = require('../rest')
 
 module.exports = class extends Rest {
   async getAction() {
-    if (this.id) {
+    if (this.id) { // 番剧详情
       const data = await this.modelInstance.where({ id: this.id }).find()
       data.imgurl = data.imgurl ? this.siteurl + data.imgurl : ''
       data.players = data.players ? JSON.parse(data.players) : []
       data.content = data.content.replace(/upload/gi, this.siteurl + '/upload')
       return this.success(data)
-    } else {
+    } else { // 番剧列表
       const { keyword, category, page, pageSize } = this.get()
 
       const where = { is_recycle: 0 }

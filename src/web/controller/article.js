@@ -9,23 +9,24 @@ module.exports = class extends Base {
   async listAction() {
     const { id, page, sortBy, orderBy, tags } = this.get()
 
-    await this.getConfigs()
-    await this.getCategory()
+    const configs = await this.getConfigs()
+    const categorys = await this.getCategory()
 
     // 当前栏目
-    const { category, seo } = this.getListInfo(id)
+    const { category, seo } = this.getListInfo(id, categorys, configs)
     if (think.isEmpty(category)) {
       return this.ctx.throw(404)
     }
 
     // 当前列表
-    const { list_blog: pageSize } = this.options
+    const { list_blog: pageSize, thumb_article_x, thumb_article_y, thumb_kind } = configs
+
     const field = 'id,title,description,imgurl,updatetime,hits,tag'
     const sort = sortBy || 'updatetime'
     const order = orderBy ? orderBy.toUpperCase() : 'DESC'
 
     const where = { is_show: 1, is_recycle: 0 }
-    const findCategory = await this.model('category').getChildrenCategory(this.category, category.id)
+    const findCategory = await this.model('category').getChildrenCategory(categorys, category.id)
     where.category_id = ['IN', findCategory]
     // tag标签
     if (tags) where.tag = ['like', tags.split(',').map(item => `%${item}%`)]
@@ -37,7 +38,6 @@ module.exports = class extends Base {
       .page(page, pageSize)
       .countSelect()
 
-    const { thumb_article_x, thumb_article_y, thumb_kind } = this.options
     for (const item of list.data) {
       const { imgurl, tag } = item
       item.imgurl = await this.thumbImage(imgurl, thumb_article_x, thumb_article_y, thumb_kind)
@@ -57,19 +57,19 @@ module.exports = class extends Base {
       return this.ctx.throw(404)
     }
 
-    const content = await this.modelInstance
+    const data = await this.modelInstance
       .where({ id, is_recycle: 0 })
       .find()
 
-    if (think.isEmpty(content)) {
+    if (think.isEmpty(data)) {
       return this.ctx.throw(404)
     }
 
-    await this.getConfigs()
-    await this.getCategory()
+    const configs = await this.getConfigs()
+    const categorys = await this.getCategory()
 
-    const { category, seo } = this.getDetailInfo(content)
-    content.content = await this.compressContent(content.content)
+    const { category, seo } = this.getDetailInfo(data, categorys, configs)
+    data.content = await this.compressContent(data.content)
 
     // 详情分页
     const field = 'id,title'
@@ -94,7 +94,7 @@ module.exports = class extends Base {
     return this.success({
       seo,
       category,
-      content,
+      content: data,
       page
     })
   }

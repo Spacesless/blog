@@ -4,9 +4,6 @@ module.exports = class extends think.Controller {
   constructor(...arg) {
     super(...arg)
     this.siteurl = ''
-    this.title = ''
-    this.options = null
-    this.category = null
   }
 
   async __before() {
@@ -14,33 +11,48 @@ module.exports = class extends think.Controller {
     this.siteurl = this.ctx.origin.replace(/http:|https:/, '')
   }
 
+  /**
+   * 获取系统配置
+   * @returns {Object}
+   */
   async getConfigs() {
-    this.options = await this.model('config').getConfig()
+    const configs = await this.model('config').getConfig()
 
+    const { seo_title_type, sitename, keywords } = configs
     // SEO
-    switch (this.options.seo_title_type) {
+    switch (seo_title_type) {
       case '1':
-        this.title = ''
+        configs.metaTitle = ''
         break
       case '2':
-        this.title = ` - ${this.options.keywords}`
+        configs.metaTitle = ` - ${keywords}`
         break
       case '3':
-        this.title = ` - ${this.options.sitename}`
+        configs.metaTitle = ` - ${sitename}`
         break
       case '4':
-        this.title = ` - ${this.options.keywords} | ${this.options.sitename}`
+        configs.metaTitle = ` - ${keywords} | ${sitename}`
         break
     }
+
+    return configs
   }
 
-  // 主导航信息
+  /**
+   * 获取导航菜单数据
+   * @returns {Array}
+   */
   async getCategory() {
-    const allColumns = await this.model('category').getCategory()
-    this.category = this.formatNavigation(allColumns)
+    let categorys = await this.model('category').getCategory()
+    categorys = this.formatCategoryUrl(categorys)
+    return categorys
   }
 
-  formatNavigation(categorys) {
+  /**
+   * 格式化导航菜单地址
+   * @param {Array} categorys
+   */
+  formatCategoryUrl(categorys) {
     categorys.forEach(item => {
       const { id, folder_name, filename, level, type } = item
       let path = ''
@@ -87,55 +99,55 @@ module.exports = class extends think.Controller {
 
   /**
    * 设置列表页公共信息
-   * @param {Number} Id 期望栏目id
+   * @param {Number} id 期望栏目id
    */
-  getListInfo(Id) {
-    let category
+  getListInfo(id, categorys, configs) {
+    let findCategory
     // 当前栏目
-    if (think.isEmpty(Id)) {
+    if (think.isEmpty(id)) {
       const path = this.ctx.path
-      category = this.category.find(item => item.level === 1 && path.includes(item.folder_name))
+      findCategory = categorys.find(item => item.level === 1 && path.includes(item.folder_name))
     } else {
-      category = this.category.find(item => item.id === +Id)
+      findCategory = categorys.find(item => item.id === +id)
     }
 
-    if (!category) {
+    if (!findCategory) {
       return null
     }
 
     // meta信息
-    const { name: title, keywords, description } = category
+    const { name: title, keywords, description } = findCategory
     const seo = {
-      title: title + this.title,
+      title: title + configs.metaTitle,
       keywords,
       description
     }
 
     return {
-      category,
+      category: findCategory,
       seo
     }
   }
 
   /**
    * 获取详情的栏目以及seo信息
-   * @param {Object} content 详情
+   * @param {Object} data 详情
    */
-  getDetailInfo(content) {
-    const { title, keywords, description, category_id } = content
+  getDetailInfo(data, categorys, configs) {
+    const { title, keywords, description, category_id } = data
 
     // meta信息
-    const category = this.category.find(item => item.id === category_id)
-    const { keywords: columnKeywords, description: columnDescription } = category
+    const findCategory = categorys.find(item => item.id === category_id)
+    const { keywords: categoryKeywords, description: categoryDescription } = findCategory
 
     const seo = {
-      title: title + this.title,
-      keywords: keywords || columnKeywords,
-      description: description || columnDescription
+      title: title + configs.metaTitle,
+      keywords: keywords || categoryKeywords,
+      description: description || categoryDescription
     }
 
     return {
-      category,
+      category: findCategory,
       seo
     }
   }

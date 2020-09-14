@@ -13,16 +13,9 @@ module.exports = class extends Rest {
         .order('sort ASC')
         .select()
 
-      // const configs = await this.model('config').getConfig()
-      // const {
-      //   thumb_kind: fit,
-      //   thumb_banner_x: width,
-      //   thumb_banner_y: height
-      // } = configs
       for (const item of list) {
         const { imgurl } = item
         item.imgurl = this.siteurl + imgurl
-        // item.imgurl = await this.thumbImage(imgurl, width, height, fit)
       }
       return this.success(list)
     }

@@ -4,8 +4,8 @@ module.exports = class extends Base {
   async indexAction() {
     const { type, keyword } = this.get()
 
-    await this.getConfigs()
-    await this.getCategory()
+    const configs = await this.getConfigs()
+    const categorys = await this.getCategory()
 
     const typpeEnum = [{
       article: 'article',
@@ -42,7 +42,7 @@ module.exports = class extends Base {
       for (const element of data) {
         const { id, title, category_id, type, imgurl } = element
         let content = element.content
-        const findCategory = this.category.find(item => item.id === category_id)
+        const findCategory = categorys.find(item => item.id === category_id)
 
         const _title = title.indexOf(keyword) > -1 ? title.replace(new RegExp(keyword, 'gi'), `<em>${keyword}</em>`) : title
         content = content.replace(/<.*?>/g, '')
@@ -56,15 +56,15 @@ module.exports = class extends Base {
         let thumbY
         switch (type) {
           case 'bangumi':
-            thumbX = this.options.thumb_bangumi_x
-            thumbY = this.options.thumb_bangumi_y
+            thumbX = configs.thumb_bangumi_x
+            thumbY = configs.thumb_bangumi_y
             break
           default:
-            thumbX = this.options.thumb_article_x
-            thumbY = this.options.thumb_article_y
+            thumbX = configs.thumb_article_x
+            thumbY = configs.thumb_article_y
         }
 
-        const classList = this.category.filter(item => item.id === category_id).map(item => {
+        const classList = categorys.filter(item => item.id === category_id).map(item => {
           return {
             name: item.name,
             url: `/${item.folder_name}/${item.id}`
@@ -75,7 +75,7 @@ module.exports = class extends Base {
           title: _title,
           content: _content,
           url: `/${findCategory.folder_name}/detail/${id}`,
-          imgurl: await this.thumbImage(imgurl, thumbX, thumbY, this.options.thumb_kind),
+          imgurl: await this.thumbImage(imgurl, thumbX, thumbY, configs.thumb_kind),
           classList
         })
       }

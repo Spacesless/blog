@@ -2,15 +2,16 @@ const Rest = require('../rest')
 
 module.exports = class extends Rest {
   async getAction() {
-    if (this.id) {
+    if (this.id) { // 栏目详情
       const data = await this.modelInstance.where({ id: this.id }).find()
       return this.success(data)
-    } else {
+    } else { // 栏目列表
       const list = await this.modelInstance.getCategory()
       return this.success(list)
     }
   }
 
+  // 添加栏目
   async postAction() {
     const data = this.post()
     const rows = await this.modelInstance.add(data)
@@ -21,6 +22,7 @@ module.exports = class extends Rest {
     }
   }
 
+  // 更新栏目
   async putAction() {
     if (!this.id) {
       return this.fail('COLUMN_NOT_EXIST')

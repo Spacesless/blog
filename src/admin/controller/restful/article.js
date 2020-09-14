@@ -2,19 +2,19 @@ const Rest = require('../rest')
 
 module.exports = class extends Rest {
   async getAction() {
-    if (this.id) {
+    if (this.id) { // 文章详情
       const data = await this.modelInstance.where({ id: this.id }).find()
       data.imgurl = data.imgurl ? this.siteurl + data.imgurl : ''
       data.content = data.content.replace(/upload/gi, this.siteurl + '/upload')
       return this.success(data)
-    } else {
+    } else { // 文章列表
       const { keyword, category, page, pageSize } = this.get()
 
       const where = { is_recycle: 0 }
       if (keyword) {
         where.title = ['like', `%${keyword}%`]
       }
-      if (category) {
+      if (category) { // 选择栏目
         const categorys = await this.model('category').getCategory()
         const categoryId = parseInt(category)
         const findCategory = await this.model('category').getChildrenCategory(categorys, categoryId)
@@ -41,6 +41,7 @@ module.exports = class extends Rest {
     }
   }
 
+  // 添加文章
   async postAction() {
     const data = this.post()
     const insertId = await this.modelInstance.addContent(data, this.siteurl)
@@ -51,6 +52,7 @@ module.exports = class extends Rest {
     }
   }
 
+  // 更新文章
   async putAction() {
     // 列表页更新
     const list = this.post('list')
@@ -75,6 +77,7 @@ module.exports = class extends Rest {
     }
   }
 
+  // 删除文章
   async deleteAction() {
     const list = this.post('list')
     if (!list.length) {

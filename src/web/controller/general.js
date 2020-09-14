@@ -3,14 +3,14 @@ const Base = require('./base.js')
 module.exports = class extends Base {
   async indexAction() {
     // 主导航信息
-    await this.getConfigs()
-    await this.getCategory()
-    const cloneColumn = JSON.parse(JSON.stringify(this.category))
-    const isNav = cloneColumn.filter(item => item.is_nav === 1)
-    const navigation = this.convertToTree(isNav)
+    const configs = await this.getConfigs()
+    const categorys = await this.getCategory()
+    const cloneCategory = JSON.parse(JSON.stringify(categorys))
+    const filterCategory = cloneCategory.filter(item => item.is_nav === 1) // isNav 在导航中的菜单
+    const navigation = this.convertToTree(filterCategory)
     // 配置信息
-    const { sitename, is_silent, live2d_model, live2d_texture, icp_beian, police_beian } = this.options
-    const configs = {
+    const { sitename, is_silent, live2d_model, live2d_texture, icp_beian, police_beian } = configs
+    const targetConfigs = {
       siteurl: this.siteurl,
       currentYear: new Date().getFullYear(),
       timeless: Math.ceil((new Date() - new Date('2018/03/15')) / 86400000),
@@ -22,7 +22,7 @@ module.exports = class extends Base {
       icp_beian,
       police_beian
     }
-    return this.success({ navigation, configs })
+    return this.success({ navigation, configs: targetConfigs })
   }
 
   async accessAction() {

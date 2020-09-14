@@ -7,24 +7,19 @@ module.exports = class extends Base {
   }
 
   async listAction() {
-    await this.getConfigs()
-    await this.getCategory()
+    const categorys = await this.getCategory()
+
     // 当前栏目
     const path = this.ctx.path
-    const findCategory = this.category.find(item => item.level === 1 && path.includes(item.folder_name))
-    console.log(findCategory)
+    const findCategory = categorys.find(item => item.level === 1 && path.includes(item.folder_name))
 
     if (!findCategory) {
       return this.ctx.throw(404)
     }
 
     // meta信息
-    const { name: title, keywords, description } = findCategory
-    const seo = {
-      title: title + this.title,
-      keywords,
-      description
-    }
+    const configs = await this.getConfigs()
+    const { seo } = this.getListInfo(findCategory.id, categorys, configs)
 
     // webapp列表
     const list = await this.model('category')
@@ -39,7 +34,7 @@ module.exports = class extends Base {
       item.id = category_id
       item.folderName = folder_name
     })
-    const webapps = this.formatNavigation(list)
+    const webapps = this.formatCategoryUrl(list)
 
     return this.success({
       seo,
@@ -49,18 +44,17 @@ module.exports = class extends Base {
 
   async contentAction() {
     const { id } = this.get()
-    const rows = this.category.find(item => item.id === +id || item.filename === +id)
 
-    if (!rows) {
+    const categorys = await this.getCategory()
+
+    const findCategory = categorys.find(item => item.id === +id || item.filename === +id)
+
+    if (!findCategory) {
       return this.ctx.throw(404)
     }
 
-    const { name: title, keywords, description } = rows
-    const seo = {
-      title: title + this.title,
-      keywords,
-      description
-    }
+    const configs = await this.getConfigs()
+    const { seo } = this.getListInfo(findCategory.id, categorys, configs)
 
     const data = await this.modelInstance
       .where({ id })

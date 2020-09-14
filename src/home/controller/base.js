@@ -30,10 +30,10 @@ module.exports = class extends think.Controller {
 
     // 主导航信息
     const allColumns = await this.model('column').getCategory()
-    this.category = this.formatNavigation(allColumns)
+    this.category = this.formatCategoryUrl(allColumns)
   }
 
-  formatNavigation(category) {
+  formatCategoryUrl(category) {
     category.forEach(item => {
       const { id, folderName, filename, level, type } = item
       let path = ''
