@@ -5,35 +5,16 @@ module.exports = class extends think.Model {
   }
 
   /**
-   * get column
+   * get category
    * @return {Array} 栏目数组
    */
   async getCategory() {
-    // 设置缓存 key 为 column，有效期为 30 天
     const field = 'id,name,folder_name,parent_id,level,type,no_order,is_nav'
     const list = await this.where({ is_show: 1 })
       .field(field)
       .order('no_order ASC')
       .select()
     return list
-  }
-
-  async getChildrenCategory(categorys, id) {
-    const flattenCategory = this.flattenDeep(categorys, [id])
-    const findCategory = Array.from(new Set(flattenCategory))
-    return findCategory
-  }
-
-  flattenDeep(data, predicate, target = []) {
-    const findCategory = data.filter(item => predicate.includes(item.id)).map(item => item.id)
-    const childrenCategory = data.filter(item => predicate.includes(item.parent_id)).map(item => item.id)
-    target = [...target, ...findCategory, ...childrenCategory]
-
-    if (childrenCategory.length) {
-      return this.flattenDeep(data, childrenCategory, target)
-    } else {
-      return target
-    }
   }
 
   /**

@@ -53,6 +53,7 @@
 import { mapGetters } from 'vuex'
 
 export default {
+  name: 'OptionsReading',
   data() {
     return {
       formData: {},

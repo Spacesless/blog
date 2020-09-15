@@ -64,7 +64,7 @@ import { multipleTable, listDialog } from '@/mixins'
 import { GetList, DeleteList } from '@/api/list'
 
 export default {
-  name: 'Links',
+  name: 'Link',
   components: {
     Pagination,
     LinksForm

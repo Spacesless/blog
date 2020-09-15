@@ -28,6 +28,7 @@
 import { GetList } from '@/api/list'
 
 export default {
+  name: 'Toolkit',
   data() {
     return {
       currentType: 'toolkit',

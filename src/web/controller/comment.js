@@ -4,15 +4,18 @@ module.exports = class extends Base {
   async indexAction() {
     const { id, page, pageSize } = this.get()
     // 查询主评论
+    // const field = ''
     const list = await this.model('comment')
-      .where({ page_id: id, is_reply: 0 })
+      // .field(field)
+      .where({ topic_id: id, type: 1 })
       .page(page, pageSize)
       .select()
     // 查询回复
     const parentIds = list.map(item => item.id)
     const replyList = await this.model('comment')
+      // .field(field)
       .where({
-        parentId: ['IN', parentIds]
+        parent_id: ['IN', parentIds]
       })
       .select()
 
@@ -25,13 +28,13 @@ module.exports = class extends Base {
     let result
     const data = this.post()
 
-    const { ip, content } = data
     const isExist = await this.model('message')
-      .where({ ip, content: ['like', `%${content}%`] })
-      .select()
+      .where({ ip: this.ctx.ip, content: ['like', `%${data.content}%`] })
+      .count()
     if (isExist) {
-      return this.fail()
+      return this.fail('请勿重复评论')
     } else {
+      data.addtime = new Date()
       result = await this.model('comment')
         .add(data)
     }

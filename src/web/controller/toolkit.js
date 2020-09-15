@@ -34,7 +34,7 @@ module.exports = class extends Base {
       item.id = category_id
       item.folderName = folder_name
     })
-    const webapps = this.formatCategoryUrl(list)
+    const webapps = this.model('category').formatCategoryUrl(list)
 
     return this.success({
       seo,

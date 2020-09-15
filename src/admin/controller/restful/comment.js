@@ -18,12 +18,16 @@ module.exports = class extends Rest {
   }
 
   async postAction() {
-    const list = this.post('list')
-    if (!list.length) {
-      return this.fail('CONTENT_NOT_EXIST')
+    let data = this.post()
+    data = {
+      ...data,
+      ...{
+        addtime: new Date(),
+        is_admin: 1
+      }
     }
-    const rows = await this.modelInstance.updateMany(list)
-    if (rows) {
+    const insertId = await this.modelInstance.add(data)
+    if (insertId) {
       return this.success()
     } else {
       return this.fail()

@@ -51,6 +51,7 @@
 import { GetContent } from '@/api/content'
 
 export default {
+  name: 'ToolkitContent',
   data() {
     return {
       formData: {},

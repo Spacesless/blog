@@ -17,7 +17,7 @@ module.exports = class extends Rest {
       if (category) { // 选择栏目
         const categorys = await this.model('category').getCategory()
         const categoryId = parseInt(category)
-        const findCategory = await this.model('category').getChildrenCategory(categorys, categoryId)
+        const findCategory = await this.model('category', {}, 'common').getChildrenCategory(categorys, categoryId)
         where.category_id = ['IN', findCategory]
       }
 

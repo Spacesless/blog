@@ -6,6 +6,7 @@
 import CategoryContent from './components/CategoryContent'
 
 export default {
+  name: 'CategoryCreate',
   components: { CategoryContent }
 }
 </script>

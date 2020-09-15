@@ -52,7 +52,7 @@ import { multipleTable, listDialog } from '@/mixins'
 import { GetList } from '@/api/list'
 
 export default {
-  name: 'Banners',
+  name: 'OptionsBanner',
   components: {
     BannerForm
   },

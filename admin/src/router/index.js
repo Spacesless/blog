@@ -156,7 +156,7 @@ export const constantRoutes = [
       },
       {
         path: 'create',
-        name: 'CategoryAdd',
+        name: 'CategoryCreate',
         props: true,
         hidden: true,
         component: () => import('@/views/category/create'),

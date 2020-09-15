@@ -32,6 +32,7 @@
 import { UpdateAdminInfo } from '@/api/user'
 
 export default {
+  name: 'OptionsProfile',
   data() {
     const validatePassword = (rule, value, callback) => {
       if (value && value.length < 6) {

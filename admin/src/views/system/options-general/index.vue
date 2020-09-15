@@ -17,6 +17,7 @@ import Info from './components/Info'
 import Email from './components/Email'
 
 export default {
+  name: 'OptionsGeneral',
   components: {
     Info,
     Email

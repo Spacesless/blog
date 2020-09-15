@@ -1,13 +1,11 @@
 <template>
-  <div>
-    <div v-if="!item.children" class="aside-item">
-      <nuxt-link :to="item.url" :title="item.name">
-        <el-menu-item :index="item.url">
-          <i v-if="!isNest" class="aside-menu__icon tl-icon" v-html="item.icon" />
-          <span slot="title">{{ item.name }}</span>
-        </el-menu-item>
-      </nuxt-link>
-    </div>
+  <div class="aside-item">
+    <nuxt-link v-if="!item.children" :to="item.url" :title="item.name">
+      <el-menu-item :index="item.url">
+        <i v-if="!isNest" class="aside-menu__icon tl-icon" v-html="item.icon" />
+        <span slot="title">{{ item.name }}</span>
+      </el-menu-item>
+    </nuxt-link>
 
     <el-submenu v-else :index="item.url">
       <template slot="title">
