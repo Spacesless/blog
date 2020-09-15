@@ -2,8 +2,8 @@
 @import './variables.scss';
 
 @font-face {
-  font-family: 'Neo';
-  src: url('~@/assets/fonts/NeoSansStd.ttf');
+  font-family: 'Bega';
+  src: url('~@/assets/fonts/Bega-Light.ttf');
 }
 .tl{
   &-tag{
@@ -47,7 +47,7 @@ $tagColor:(
   background: url('/static/music-background.webp') no-repeat;
   background-position: right center;
   background-size: contain;
-  opacity: .2;
+  opacity: .3;
   #flower{
     width: 100%;
     height: 100%;
@@ -55,7 +55,7 @@ $tagColor:(
 }
 .filter{
   position: relative;
-  padding: 30px 0 12px;
+  padding: 15px 0 12px;
   .el-form-item{
     &__content{
       overflow: hidden;

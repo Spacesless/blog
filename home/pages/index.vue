@@ -13,7 +13,7 @@
         <h2 class="home-head__title">最新博文</h2>
         <nuxt-link class="home-head__more" to="/blog">more+</nuxt-link>
       </div>
-      <el-row class="articles-list" :gutter="15">
+      <el-row class="articles-list" :gutter="20">
         <el-col v-for="item in articleList" :key="item.id" :md="12">
           <div class="articles-item">
             <p class="articles-title">
@@ -40,7 +40,7 @@
         <h2 class="home-head__title">最近追番</h2>
         <nuxt-link class="home-head__more" to="/bangumi">more+</nuxt-link>
       </div>
-      <el-row class="bangumi-list" :gutter="15">
+      <el-row class="bangumi-list" :gutter="20">
         <el-col v-for="item in bangumiList" :key="item.id" :xs="24" :sm="12">
           <el-row class="bangumi-list-item">
             <el-col :span="8" :xl="10">
@@ -121,7 +121,7 @@ export default {
 .home{
   &-head{
     position: relative;
-    padding: 30px 0;
+    padding: 15px 0 30px;
     &__title{
       color: $primary;
       font-size: 24px;
@@ -131,7 +131,7 @@ export default {
     &__more{
       position: absolute;
       right: 0;
-      top: 30px;
+      top: 15px;
       color: #909399;
       font-size: 14px;
       line-height: 24px;
@@ -143,7 +143,7 @@ export default {
 }
 .banner {
   overflow: hidden;
-  margin-top: 15px;
+  margin-bottom: 15px;
   border-radius: 4px;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   &-item{
@@ -164,11 +164,8 @@ export default {
   }
 }
 .articles{
-  .el-row{
-    margin-top: -15px;
-  }
   &-item {
-    margin-top: 15px;
+    margin-bottom: 20px;
     padding: 10px 15px;
     background: #fff;
     border: 1px solid #EBEEF5;
@@ -226,9 +223,8 @@ export default {
 }
 .bangumi{
   &-list{
-    margin-top: -15px;
     &-item{
-      margin-top: 15px;
+      margin-bottom: 20px;
       border: 1px dashed #EBEEF5;
       background-color: #fff;
       border-radius: 4px;

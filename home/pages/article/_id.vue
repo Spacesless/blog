@@ -122,7 +122,7 @@ export default {
 <style lang="scss" scoped>
 .blog-list{
   &-item{
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     border: 1px solid #EBEEF5;
     background: #fff;
     font-size: 15px;

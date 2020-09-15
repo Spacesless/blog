@@ -1,29 +1,3 @@
-// (function() {
-//   /* 设置requestAnimationFrame兼容性*/
-//   var lastTime = 0
-//   var vendors = ['webkit', 'moz']
-//   for (var xx = 0; xx < vendors.length && !window.requestAnimationFrame; ++xx) {
-//     window.requestAnimationFrame = window[vendors[xx] + 'RequestAnimationFrame']
-//     window.cancelAnimationFrame = window[vendors[xx] + 'CancelAnimationFrame'] || window[vendors[xx] + 'CancelRequestAnimationFrame']
-//   }
-//   if (!window.requestAnimationFrame) {
-//     window.requestAnimationFrame = function(callback, element) {
-//       var currTime = new Date().getTime()
-//       var timeToCall = Math.max(0, 16.7 - (currTime - lastTime))
-//       var id = window.setTimeout(function() {
-//         callback(currTime + timeToCall)
-//       }, timeToCall)
-//       lastTime = currTime + timeToCall
-//       return id
-//     }
-//   }
-//   if (!window.cancelAnimationFrame) {
-//     window.cancelAnimationFrame = function(id) {
-//       clearTimeout(id)
-//     }
-//   }
-// })()
-
 class Point {
   constructor(param, canvas) {
     // 点原形

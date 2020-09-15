@@ -11,7 +11,7 @@
   box-shadow: 2px 0 10px rgba(0,0,0,.1);
   transition: width 0.3s;
   &-logo{
-    padding: 15px 0 10px;
+    padding: 25px 0 15px;
     text-align: center;
     &__img{
       width: 100px;
@@ -23,8 +23,8 @@
       overflow: hidden;
       padding-top: 5px;
       color: $primary;
-      font-family: 'Neo', '黑体';
-      font-size: 22px;
+      font-family: 'Bega';
+      font-size: 24px;
       white-space: nowrap;
       transition: width 0.3;
     }
@@ -107,8 +107,6 @@
   height: 60px;
   padding: 0 15px;
   line-height: 50px;
-  border-bottom: 1px solid #EBEEF5;
-  background-color: #fff;
   box-sizing: border-box;
   transition: width 0.3s;
   &-logo{
@@ -258,7 +256,7 @@
 }
 
 .footer{
-  padding: 20px 0;
+  padding: 15px 0 20px;
   color: #909399;
   font-size: 14px;
   line-height: 1.3;

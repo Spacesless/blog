@@ -1,8 +1,5 @@
 <template>
   <div class="fixbar">
-    <el-tooltip effect="dark" content="绝对不看的在线反馈" placement="left">
-      <nuxt-link to="/feedback"><div class="fixbar-item tl-icon">&#xe745;</div></nuxt-link>
-    </el-tooltip>
     <el-tooltip effect="dark" :content="live2dShow ? '关闭看板娘' : '打开看板娘'" placement="left">
       <div class="fixbar-item tl-icon" :class="live2dShow ? 'active' : ''" @click="toggleWaifu">&#xe703;</div>
     </el-tooltip>

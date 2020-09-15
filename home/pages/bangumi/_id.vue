@@ -40,7 +40,7 @@
     </el-form>
     <!--bangumi list-->
     <div class="bangumi-list">
-      <el-row :gutter="15">
+      <el-row :gutter="20">
         <el-col v-for="item in bangumiList" :key="item.id" :xs="24" :sm="12">
           <el-row class="bangumi-list__item">
             <el-col class="bangumi-list-cover" :span="8" :xl="10">
@@ -167,7 +167,7 @@ export default {
     &__item{
       overflow: hidden;
       position: relative;
-      margin-bottom: 15px;
+      margin-bottom: 20px;
       border: 1px dashed #EBEEF5;
       background-color: #fff;
       border-radius: 4px;
