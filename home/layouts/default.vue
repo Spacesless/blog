@@ -19,7 +19,7 @@
       <live-2d />
     </div>
     <!--background start-->
-    <div v-show="bubbleActive" class="background">
+    <div v-show="particleActive" class="background">
       <canvas id="flower" width="1900" height="1080" />
     </div>
   </div>
@@ -51,7 +51,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['sidebar', 'device', 'configs', 'bubbleActive']),
+    ...mapGetters(['sidebar', 'device', 'configs', 'particleActive']),
     classObj() {
       return {
         hideAside: !this.sidebar.opened,
@@ -63,7 +63,7 @@ export default {
     }
   },
   watch: {
-    bubbleActive(val) {
+    particleActive(val) {
       if (val) {
         this.canvasHelper && this.canvasHelper.draw()
       } else {

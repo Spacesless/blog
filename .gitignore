@@ -31,7 +31,6 @@ app/
 view/admin
 www/admin
 www/assets
-www/static
 www/upload
 
 config.development.js

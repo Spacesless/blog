@@ -1,5 +1,5 @@
 <template>
-  <div class="blog">
+  <div class="article">
     <!-- filter -->
     <el-form class="filter" label-width="40px" label-position="left">
       <el-form-item label="排序">
@@ -24,41 +24,37 @@
         >{{ tag }}</el-tag>
       </el-form-item>
     </el-form>
-    <!--blog list-->
-    <div class="blog-list">
+    <!--article list-->
+    <div class="article-list">
       <el-row
-        v-for="(item, index) in blogList"
+        v-for="(item, index) in articleList"
         :key="item.id"
-        class="blog-list-item"
+        class="article-item article-item--odd"
+        :class="index % 2 === 0 ? 'article-item--even' : 'article-item--odd'"
       >
-        <el-col
-          :sm="index % 2 === 0 ? 12 : { span: 12, push: 12 }"
-          :md="index % 2 === 0 ? 10 : { span: 10, push: 14 }"
-        >
+        <el-col class="article-item-cover" :sm="24" :md="14">
           <nuxt-link :to="'/article/detail/' + item.id" :title="item.title">
             <img class="img-full" :src="item.imgurl" :alt="item.title">
           </nuxt-link>
         </el-col>
-        <el-col
-          class="blog-list-content"
-          :sm="index % 2 === 0 ? 12 : { span: 12, pull: 12 }"
-          :md="index % 2 === 0 ? 14 : { span: 14, pull: 10 }"
-        >
-          <nuxt-link class="blog-list__title" :to="'/article/detail/' + item.id" :title="item.title">{{ item.title }}</nuxt-link>
-          <div class="blog-list-info">
-            <span><i class="tl-icon">&#xe70b;</i>{{ item.updatetime }}</span>
-            <span><i class="tl-icon">&#xe601;</i>{{ item.hits }}</span>
+        <el-col class="article-item-info" :sm="24" :md="10">
+          <p class="article-item__time">{{ item.updatetime | parseTime }}</p>
+          <div class="article-item-title">
+            <nuxt-link :to="item.id" :title="item.title">{{ item.title }}</nuxt-link>
           </div>
-          <div class="blog-list-tag">
+          <p class="article-item__desc">{{ item.description }}</p>
+          <div class="article-item-tags">
             <span
-              v-for="(tag, childIndex) in item.tag"
+              v-for="(tag,childIndex) in item.tag"
               :key="childIndex"
               class="tl-tag"
               :class="tag | tagClassName"
               @click="handleAddTag(tag)"
             >{{ tag }}</span>
           </div>
-          <p class="blog-list__desc">{{ item.description | substr(0, 120) }}</p>
+          <div class="article-item-stuff">
+            <span>icon</span>
+          </div>
         </el-col>
       </el-row>
       <!--list paper-->
@@ -97,7 +93,7 @@ export default {
         pageSize: list.pageSize
       },
       total: list.count,
-      blogList: list.data,
+      articleList: list.data,
       filters: {
         sortBy: sortBy || '',
         orderBy: orderBy || '',
@@ -120,48 +116,63 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.blog-list{
+.arcitle{
   &-item{
-    margin-bottom: 20px;
-    border: 1px solid #EBEEF5;
-    background: #fff;
-    font-size: 15px;
-    border-radius: 4px;
-    transition: all .3s;
-    &:hover{
-      box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+    position: relative;
+    margin-bottom: 100px;
+    &:last-child{
+      margin-bottom: 0;
     }
-  }
-  &-content{
-    padding: 10px 15px;
-  }
-  &-info{
-    color: #909399;
-    font-size: 14px;
-    line-height: 2em;
-    i{
-      margin-right: 3px;
+    @media (max-width: 992px)  {
+      margin-top: 30px;
     }
-    span{
-      margin-right: 5px
+    &-cover{
+      overflow: hidden;
+      display: inline-block;
+      float: none;
+      border: 1px solid #eaeaea;
+      border-radius: 4px;
+      &__picture{
+        display: block;
+        width: 100%;
+      }
     }
-  }
-  &__title{
-    overflow: hidden;
-    display: inline-block;
-    color: #303133;
-    font-size: 24px;
-    max-width: 100%;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    &:hover{
-      color: $primary;
+    &-info{
+      position: absolute;
+      top: 50%;
+      height: 400px;
+      margin-top: -200px;
+      border: 1px solid #eaeaea;
+      @media (max-width: 992px) {
+        position: static;
+        height: auto;
+        border: none;
+      }
+      @media (min-width: 992px) {
+        height: 300px;
+        margin-top: -150px;
+      }
+      @media (min-width: 1200px) {
+        height: 360px;
+        margin-top: -180px;
+      }
     }
-  }
-  &__desc{
-    color: #606266;
-    font-size: 15px;
-    line-height: 1.6em;
+    &--odd &-info{
+      right: 0;
+      border-left: none;
+      border-top-right-radius: 4px;
+      border-bottom-right-radius: 4px;
+    }
+    &--even{
+      text-align: right;
+    }
+    &--even &-info{
+      left: 0;
+      border-right: none;
+      border-top-left-radius: 4px;
+      border-bottom-left-radius: 4px;
+      text-align: left;
+    }
   }
 }
 </style>

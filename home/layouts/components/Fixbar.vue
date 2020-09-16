@@ -3,8 +3,8 @@
     <el-tooltip effect="dark" :content="live2dShow ? '关闭看板娘' : '打开看板娘'" placement="left">
       <div class="fixbar-item tl-icon" :class="live2dShow ? 'active' : ''" @click="toggleWaifu">&#xe703;</div>
     </el-tooltip>
-    <el-tooltip effect="dark" :content="bubbleActive ? '关闭背景动画' : '打开背景动画'" placement="left">
-      <div class="fixbar-item tl-icon" :class="bubbleActive ? 'active' : ''" @click="toggleBubble">&#xe640;</div>
+    <el-tooltip effect="dark" :content="particleActive ? '关闭背景动画' : '打开背景动画'" placement="left">
+      <div class="fixbar-item tl-icon" :class="particleActive ? 'active' : ''" @click="toggleBubble">&#xe640;</div>
     </el-tooltip>
     <el-tooltip effect="dark" content="点我坐电梯" placement="left" :disabled="backTopTips">
       <div v-show="backTopShow" class="fixbar-item tl-icon" @click="backTop">&#xe637;</div>
@@ -27,7 +27,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['bubbleActive', 'live2dShow'])
+    ...mapGetters(['particleActive', 'live2dShow'])
   },
   watch: {
     scrollTop() {
@@ -45,7 +45,7 @@ export default {
       this.$store.commit('tools/TOGGLE_LIVE2D')
     },
     toggleBubble() {
-      this.$store.commit('tools/TOGGLE_BUBBLE')
+      this.$store.commit('tools/TOGGLE_PARTICLE')
     },
     backTop() {
       this.backTopTips = true

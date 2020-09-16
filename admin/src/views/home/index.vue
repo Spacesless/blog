@@ -3,10 +3,11 @@
     <div class="home-welcome">
       123
     </div>
-    <div class="home-general">
-      <div class="home-card">
-        <h2 class="home-card__title">Environment</h2>
-        <div class="home-body">
+    <el-row class="home-general" :gutter="30">
+      <el-col :sm="24" :md="12" :lg="8">
+        <div class="home-card">
+          <h2 class="home-card__title">ENVIRONMENT</h2>
+          <div class="home-card-body">
           <!-- <ul>
             <li>Nodejs：{{ version.nodeVersion }}</li>
             <li>V8：{{ version.v8Version }}</li>
@@ -14,37 +15,46 @@
             <li>Thinkjs：{{ version.thinkjsVersion }}</li>
             <li>Mysql：{{ version.mysqlVersion }}</li>
           </ul> -->
+          </div>
         </div>
-      </div>
-      <div class="home-card" @click="navigateTo('Cloumn')">
-        <h2 class="home-card__title">CLOUMN</h2>
-        <div class="home-body">
-          <strong>{{ count.cloumn }}</strong>
-          <p />
+      </el-col>
+      <el-col :sm="24" :md="12" :lg="8" @click="navigateTo('Category')">
+        <div class="home-card">
+          <h2 class="home-card__title">CATEGORY</h2>
+          <div class="home-card-body">
+            <strong class="home-card-body__count">{{ count.category }}</strong>
+            <p class="home-card-body__desc">描述</p>
+          </div>
         </div>
-      </div>
-      <div class="home-card" @click="navigateTo('Blog')">
-        <h2 class="home-card__title">ARTICLE</h2>
-        <div class="home-body">
-          <strong>{{ count.article }}</strong>
-          <p />
+      </el-col>
+      <el-col :sm="24" :md="12" :lg="8" @click="navigateTo('Article')">
+        <div class="home-card">
+          <h2 class="home-card__title">ARTICLE</h2>
+          <div class="home-card-body">
+            <strong class="home-card-body__count">{{ count.article }}</strong>
+            <p class="home-card-body__desc">描述</p>
+          </div>
         </div>
-      </div>
-      <div class="home-card" @click="navigateTo('Bangumi')">
-        <h2 class="home-card__title">BANGUMI</h2>
-        <div class="home-body">
-          <strong>{{ count.bangumi }}</strong>
-          <p />
+      </el-col>
+      <el-col :sm="24" :md="12" :lg="8" @click="navigateTo('Bangumi')">
+        <div class="home-card">
+          <h2 class="home-card__title">BANGUMI</h2>
+          <div class="home-card-body">
+            <strong class="home-card-body__count">{{ count.bangumi }}</strong>
+            <p class="home-card-body__desc">描述</p>
+          </div>
         </div>
-      </div>
-      <div class="home-card" @click="navigateTo('Comment')">
-        <h2 class="home-card__title">COMMENT</h2>
-        <div class="home-body">
-          <strong>{{ count.comment }}</strong>
-          <p />
+      </el-col>
+      <el-col :sm="24" :md="12" :lg="8" @click="navigateTo('Comment')">
+        <div class="home-card">
+          <h2 class="home-card__title">COMMENT</h2>
+          <div class="home-card-body">
+            <strong class="home-card-body__count">{{ count.comment }}</strong>
+            <p class="home-card-body__desc">描述</p>
+          </div>
         </div>
-      </div>
-    </div>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -95,5 +105,40 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.home{
+  &-welcome{
+    height: 150px;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1)
+  }
+  &-general{
+    padding: 30px;
+  }
+  &-card {
+    height: 280px;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+    &__title{
+      display: inline-block;
+      position: relative;
+      margin: 10px 15px;
+      padding-bottom: 5px;
+      color: #409FEF;
+      font-size: 26px;
+      font-weight: normal;
+      &:after{
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: #409FEF;
+      }
+    }
+    &-body{
+      color: #606266;
+    }
+  }
+}
 </style>

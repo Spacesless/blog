@@ -13,27 +13,24 @@
       <el-timeline class="about-introduce-timeline">
         <el-timeline-item timestamp="2020-06-01" placement="top">
           <el-card>
-            <p>使用nuxt.js代替nunjucks实现同构渲染</p>
+            <p>使用nuxt.js代替nunjucks模板引擎实现SSR</p>
           </el-card>
         </el-timeline-item>
         <el-timeline-item timestamp="2019-11-10" placement="top">
           <el-card>
-            <p>使用thinkjs(nodejs)进行完全重构</p>
-          </el-card>
-        </el-timeline-item>
-        <el-timeline-item timestamp="2018-10-19" placement="top">
-          <el-card>
-            <p>后台更换为Metinfo米拓CMS，重新开发主题</p>
+            <p>使用thinkjs(nodejs)+mysql+vue进行完全重构</p>
           </el-card>
         </el-timeline-item>
         <el-timeline-item timestamp="2018-03-02" placement="top">
           <el-card>
-            <p>使用Wordpress做的网站上线</p>
+            <p>使用Wordpress搭建的博客上线</p>
           </el-card>
         </el-timeline-item>
       </el-timeline>
       <h2 class="app-main__title">未来计划</h2>
-      <p>后面看看要不要换egg.js自己写下，并不是thinkjs不好(thinkjs封装了很多，很大程度提高了开发速度)，只想多练下手</p>
+      <ul>
+        <li>1、</li>
+      </ul>
       <h2 class="app-main__title">关于站长</h2>
       <p>Timeless</p>
       <p>大区：广州</p>
