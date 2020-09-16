@@ -192,6 +192,22 @@ a,a:hover,a:active,a:focus,a:visited{
   }
 }
 
+/* fade-transform */
+.fade-transform-leave-active,
+.fade-transform-enter-active {
+  transition: all .3s;
+}
+
+.fade-transform-enter {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+.fade-transform-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
 //media query
 @media (pointer: fine) {
   ::-webkit-scrollbar {

@@ -25,7 +25,7 @@ module.exports = class extends Base {
 
     // 最新动态文章
     const articleField = 'id,imgurl,title,description,category_id,hits,updatetime'
-    const articleWhere = { is_show: 1 }
+    const articleWhere = { is_show: 1, is_recycle: 0 }
     const articleList = await this.model('article')
       .field(articleField)
       .where(articleWhere)
@@ -46,7 +46,7 @@ module.exports = class extends Base {
 
     // 最新追番
     const bangumiField = 'id,title,description,total,current,imgurl,showtime,status'
-    const bangumiWhere = { is_show: 1, current: ['EXP', '< `total`'] }
+    const bangumiWhere = { is_show: 1, is_recycle: 0, current: ['EXP', '< `total`'] }
     const bangumiList = await this.model('bangumi')
       .field(bangumiField)
       .where(bangumiWhere)

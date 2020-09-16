@@ -29,7 +29,7 @@
       <el-row
         v-for="(item, index) in articleList"
         :key="item.id"
-        class="article-item article-item--odd"
+        class="article-item"
         :class="index % 2 === 0 ? 'article-item--even' : 'article-item--odd'"
       >
         <el-col class="article-item-cover" :sm="24" :md="14">
@@ -38,12 +38,12 @@
           </nuxt-link>
         </el-col>
         <el-col class="article-item-info" :sm="24" :md="10">
-          <p class="article-item__time">{{ item.updatetime | parseTime }}</p>
-          <div class="article-item-title">
-            <nuxt-link :to="item.id" :title="item.title">{{ item.title }}</nuxt-link>
+          <p class="article-item-info__time">{{ item.updatetime | parseTime }}</p>
+          <div class="article-item-info-title">
+            <nuxt-link class="article-item-info__url" :to="'/article/detail/' + item.id" :title="item.title">{{ item.title }}</nuxt-link>
           </div>
-          <p class="article-item__desc">{{ item.description }}</p>
-          <div class="article-item-tags">
+          <p class="article-item-info__desc">{{ item.description }}</p>
+          <div class="article-item-info-tags">
             <span
               v-for="(tag,childIndex) in item.tag"
               :key="childIndex"
@@ -52,8 +52,8 @@
               @click="handleAddTag(tag)"
             >{{ tag }}</span>
           </div>
-          <div class="article-item-stuff">
-            <span>icon</span>
+          <div class="article-item-info-stuff">
+            <span><i class="tl-icon">&#xe601;</i>{{ item.hits }}</span>
           </div>
         </el-col>
       </el-row>
@@ -72,6 +72,16 @@ import { listQuery, listPage, globalFilter } from '@/mixins'
 export default {
   components: {
     Pagination
+  },
+  filters: {
+    parseTime(time) {
+      const monthEnum = ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十', '十一', '十二']
+      const dateTime = new Date(time)
+      const year = dateTime.getFullYear()
+      const month = dateTime.getMonth()
+      const date = dateTime.getDate()
+      return `${monthEnum[month]}月 ${date}, ${year}`
+    }
   },
   mixins: [listQuery, listPage, globalFilter],
   async asyncData({ app, params, query, $axios }) {
@@ -116,7 +126,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.arcitle{
+.article{
   &-item{
     position: relative;
     margin-bottom: 100px;
@@ -142,6 +152,7 @@ export default {
       top: 50%;
       height: 400px;
       margin-top: -200px;
+      padding: 70px 60px 0 60px;
       border: 1px solid #eaeaea;
       @media (max-width: 992px) {
         position: static;
@@ -155,6 +166,40 @@ export default {
       @media (min-width: 1200px) {
         height: 360px;
         margin-top: -180px;
+      }
+      &__time{
+        color: #909399;
+        font-size: 14px;
+      }
+      &-title{
+        margin-top: 8px;
+        font-size: 24px;
+        line-height: 30px;
+        word-break: break-all;
+      }
+      &__url{
+        color: #303133;
+        &:hover{
+          color: #409FEF;
+        }
+      }
+      &__desc{
+        margin-top: 10px;
+        color: #606266;
+        font-size: 15px;
+        line-height: 22px;
+      }
+      &-stuff{
+        position: absolute;
+        bottom: 70px;
+        left: 60px;
+        color: #909399;
+        font-size: 14px;
+        .tl-icon{
+          margin-top: -2px;
+          margin-right: 3px;
+          font-size: 17px;
+        }
       }
     }
     &--odd &-info{

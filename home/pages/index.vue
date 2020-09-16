@@ -43,12 +43,12 @@
       <el-row class="bangumi-list" :gutter="20">
         <el-col v-for="item in bangumiList" :key="item.id" :xs="24" :sm="12">
           <el-row class="bangumi-list-item">
-            <el-col :xs="8" :xl="10">
+            <el-col :span="8" :xl="10">
               <nuxt-link :to="'/bangumi/detail/' + item.id" :title="item.title">
                 <img class="img-fluid" :src="item.imgurl" :alt="item.title">
               </nuxt-link>
             </el-col>
-            <el-col class="bangumi-list-info" :xs="16" :xl="14">
+            <el-col class="bangumi-list-info" :span="16" :xl="14">
               <nuxt-link class="bangumi-list__title" :to="'/bangumi/detail/' + item.id" :title="item.title">{{ item.title }}</nuxt-link>
               <p><span class="para-name">时间：</span>{{ item.showtime }}</p>
               <p><span class="para-name">状态：</span>{{ item.status | bangumiStatus }}</p>
@@ -224,6 +224,7 @@ export default {
 .bangumi{
   &-list{
     &-item{
+      overflow: hidden;
       margin-bottom: 20px;
       border: 1px dashed #EBEEF5;
       background-color: #fff;

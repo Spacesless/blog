@@ -247,35 +247,24 @@ export default {
     },
     // 鼠标交互
     addInteraction() {
-      this.__mouseoverHandler = (selector) => {
-        const rows = this.mouseover.find(item => item.selector === selector)
-        if (!rows) return
-        let text = ''
-        if (Array.isArray(rows.text)) {
-          text = rows.text[Math.floor(Math.random() * rows.text.length + 1) - 1]
-        } else {
-          text = rows.text
-        }
-        this.showMessage(text, 3000)
+      const refs = this.$refs
+      for (const key in refs) {
+        refs[key].addEventListener('mouseover', () => {
+          const rows = this.mouseover.find(item => item.selector === key)
+          if (!rows) return
+          let text = ''
+          if (Array.isArray(rows.text)) {
+            text = rows.text[Math.floor(Math.random() * rows.text.length + 1) - 1]
+          } else {
+            text = rows.text
+          }
+          this.showMessage(text, 3000)
+        })
       }
-      this.__clickHandler = () => {
+      this.$refs.live2d.addEventListener('click', () => {
         const text = this.click[Math.floor(Math.random() * this.click.length + 1) - 1]
         this.showMessage(text, 3000, true)
-      }
-
-      const refs = this.$refs
-      for (const key in refs) {
-        refs[key].addEventListener('mouseover', this.__mouseoverHandler(key))
-      }
-      this.$refs.live2d.addEventListener('click', this.__clickHandler)
-    },
-    // 移除交互
-    removeInteraction() {
-      const refs = this.$refs
-      for (const key in refs) {
-        refs[key].removeEventListener('mouseover', this.__mouseoverHandler(key))
-      }
-      this.$refs.live2d.removeEventListener('click', this.__clickHandler)
+      })
     },
     navigatorToHome() {
       this.$router.push({ path: '/' })
@@ -289,7 +278,6 @@ export default {
       })
     },
     handleHideLive2d() {
-      this.removeInteraction()
       this.showMessage('愿你有一天能与重要的人重逢', 1500)
       window.setTimeout(() => {
         this.$store.commit('tools/SET_LIVE2D', false)

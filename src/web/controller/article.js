@@ -19,7 +19,7 @@ module.exports = class extends Base {
     }
 
     // 当前列表
-    const { list_blog: pageSize, thumb_article_x, thumb_article_y, thumb_kind } = configs
+    const { list_article: pageSize, thumb_article_x, thumb_article_y, thumb_kind } = configs
 
     const field = 'id,title,description,imgurl,updatetime,hits,tag'
     const sort = sortBy || 'updatetime'
@@ -40,6 +40,7 @@ module.exports = class extends Base {
 
     for (const item of list.data) {
       const { imgurl, tag } = item
+      item.description = this.substr(item.description, 0, 80)
       item.imgurl = await this.thumbImage(imgurl, thumb_article_x, thumb_article_y, thumb_kind)
       item.tag = tag ? tag.split('|') : []
     }
