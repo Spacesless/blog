@@ -43,16 +43,16 @@
       <el-row class="bangumi-list" :gutter="20">
         <el-col v-for="item in bangumiList" :key="item.id" :xs="24" :sm="12">
           <el-row class="bangumi-list-item">
-            <el-col :span="8" :xl="10">
+            <el-col :lg="8" :xl="10">
               <nuxt-link :to="'/bangumi/detail/' + item.id" :title="item.title">
                 <img class="img-fluid" :src="item.imgurl" :alt="item.title">
               </nuxt-link>
             </el-col>
-            <el-col class="bangumi-list-info" :span="16" :xl="14">
+            <el-col class="bangumi-list-info" :lg="16" :xl="14">
               <nuxt-link class="bangumi-list__title" :to="'/bangumi/detail/' + item.id" :title="item.title">{{ item.title }}</nuxt-link>
               <p><span class="para-name">时间：</span>{{ item.showtime }}</p>
               <p><span class="para-name">状态：</span>{{ item.status | bangumiStatus }}</p>
-              <p class="hidden-sm-and-down"><span class="para-name">简介：</span>{{ item.description }}</p>
+              <p class="hidden-sm-and-down"><span class="para-name">简介：</span>{{ item.description }}……</p>
               <div class="bangumi-progress clearfix">
                 <span class="para-name">进度：</span>
                 <div class="el-progress el-progress--line">

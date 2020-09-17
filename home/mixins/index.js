@@ -76,14 +76,6 @@ export const listQuery = {
 export const globalFilter = {
   filters: {
     /**
-     * 截取字符串
-     * @param {Number [int]} index 开始下标
-     * @param {Number [int]} length 截取长度
-     */
-    substr(str, index, length) {
-      return str.substr(index, length)
-    },
-    /**
      * 格式化时间
      * @param {String} format {y}-{m}-{d} {h}:{i}:{s}
      */

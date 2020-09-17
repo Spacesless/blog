@@ -16,10 +16,6 @@
       <div class="el-col el-col-md-14">
         <div class="live-filter">
           <el-cascader :value="selectModel" :options="options" @change="changeClassify" />
-          <el-radio-group v-show="mixVisible" v-model="isMix" @change="changeMix">
-            <el-radio-button :label="0">套装</el-radio-button>
-            <el-radio-button :label="1">百搭</el-radio-button>
-          </el-radio-group>
         </div>
         <el-scrollbar class="live-wrapper" wrap-class="scroll-warpper">
           <div v-infinite-scroll="loadMore" class="live-list" :infinite-scroll-immediate="false" :infinite-scroll-distance="100">
@@ -64,8 +60,6 @@ export default {
       tipsShow: false,
       selectModel: 10,
       selectTexture: 1,
-      mixVisible: true,
-      isMix: 0,
       options: [],
       modelCount: 0,
       Info: {},
@@ -114,7 +108,7 @@ export default {
     fetchModelList() {
       this.modelCount = 0
       return new Promise(resolve => {
-        axios.get(`${this.apiurl}/lists/model?id=${this.selectModel}&mixins=${this.isMix}`).then(res => {
+        axios.get(`${this.apiurl}/lists/model?id=${this.selectModel}`).then(res => {
           const { id, total, message, from } = res.data.data
           this.total = total
           this.modelCount = total <= 16 ? total : 16
@@ -133,15 +127,12 @@ export default {
       this.selectModel = current
       this.fetchModelList()
     },
-    changeMix() {
-      this.fetchModelList()
-    },
     loadMore() {
       console.log(this.modelCount + 8 > this.total)
       this.modelCount = this.modelCount + 8 > this.total ? this.total : this.modelCount + 8
     },
     thumbFormat(index) {
-      return `/static/live2d/${this.isMix ? 'random' : 'switch'}/${this.selectModel}/${index}.png`
+      return `${this.apiurl}/../model/preview/${this.selectModel}/${index}.png`
     },
     /** 提示框 */
     showMessage(text, timeout) {

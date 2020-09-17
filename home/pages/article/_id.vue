@@ -42,7 +42,7 @@
           <div class="article-item-info-title">
             <nuxt-link class="article-item-info__url" :to="'/article/detail/' + item.id" :title="item.title">{{ item.title }}</nuxt-link>
           </div>
-          <p class="article-item-info__desc">{{ item.description }}</p>
+          <p class="article-item-info__desc">{{ item.description }}……</p>
           <div class="article-item-info-tags">
             <span
               v-for="(tag,childIndex) in item.tag"
