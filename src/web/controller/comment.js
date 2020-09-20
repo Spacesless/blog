@@ -15,13 +15,17 @@ module.exports = class extends Base {
     const replyList = await this.model('comment')
       // .field(field)
       .where({
-        parent_id: ['IN', parentIds]
+        reply_id: ['IN', parentIds]
       })
       .select()
 
-    const treeData = this.convertToTree([...list, ...replyList])
+    const allComment = [...list, ...replyList]
+    const treeData = this.convertToTree(allComment, 'reply_id')
 
-    return this.success(treeData)
+    return this.success({
+      total: allComment.length,
+      data: treeData
+    })
   }
 
   async postAction() {

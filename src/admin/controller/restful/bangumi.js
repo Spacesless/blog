@@ -84,6 +84,7 @@ module.exports = class extends Rest {
     const data = list.map(item => {
       return {
         id: item,
+        updatetime: new Date(),
         is_recycle: 1
       }
     })

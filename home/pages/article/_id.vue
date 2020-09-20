@@ -30,7 +30,7 @@
         v-for="(item, index) in articleList"
         :key="item.id"
         class="article-item"
-        :class="index % 2 === 0 ? 'article-item--even' : 'article-item--odd'"
+        :class="index % 2 === 0 ? 'article-item--odd' : 'article-item--even'"
       >
         <el-col class="article-item-cover" :sm="24" :md="14">
           <nuxt-link :to="'/article/detail/' + item.id" :title="item.title">
@@ -42,7 +42,7 @@
           <div class="article-item-info-title">
             <nuxt-link class="article-item-info__url" :to="'/article/detail/' + item.id" :title="item.title">{{ item.title }}</nuxt-link>
           </div>
-          <p class="article-item-info__desc">{{ item.description }}……</p>
+          <p class="article-item-info__desc">{{ item.description }}</p>
           <div class="article-item-info-tags">
             <span
               v-for="(tag,childIndex) in item.tag"
@@ -53,7 +53,7 @@
             >{{ tag }}</span>
           </div>
           <div class="article-item-info-stuff">
-            <span><i class="tl-icon">&#xe601;</i>{{ item.hits }}</span>
+            <span><i class="tl-icon">&#xe681;</i>{{ item.hits }}</span>
           </div>
         </el-col>
       </el-row>
@@ -141,7 +141,7 @@ export default {
       display: inline-block;
       float: none;
       border: 1px solid #eaeaea;
-      border-radius: 4px;
+      border-radius: 6px;
       &__picture{
         display: block;
         width: 100%;
@@ -205,8 +205,8 @@ export default {
     &--odd &-info{
       right: 0;
       border-left: none;
-      border-top-right-radius: 4px;
-      border-bottom-right-radius: 4px;
+      border-top-right-radius: 6px;
+      border-bottom-right-radius: 6px;
     }
     &--even{
       text-align: right;
@@ -214,8 +214,8 @@ export default {
     &--even &-info{
       left: 0;
       border-right: none;
-      border-top-left-radius: 4px;
-      border-bottom-left-radius: 4px;
+      border-top-left-radius: 6px;
+      border-bottom-left-radius: 6px;
       text-align: left;
     }
   }

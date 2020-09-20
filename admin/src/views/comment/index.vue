@@ -86,7 +86,7 @@ export default {
         params: { id: id }
       })
     },
-    deleteSingle(id) {
+    deleteSingle({ id }) {
       DeleteList('comment', [id]).then(response => {
         this.$message({
           type: 'success',

@@ -4,6 +4,17 @@
       <h1 class="about__title">关于本站</h1>
       <p>本站是个人网站，用来记录工作经验以及生活点滴，主要关注web开发、二次元等方面，用爱发电。</p>
       <p>部分内容(图片、视频)来源于互联网，如果有侵权内容、不妥之处，请联系我删除。</p>
+      <p>Timeless</p>
+      <p>大区：广州</p>
+      <p>职业：练习时长2年半的前端小白</p>
+      <div class="about-connact">
+        <a class="about-connact__links" href="https://space.bilibili.com/315883644/favlist" rel="noopener noreferrer" target="_blank">
+          <i class="tl-icon">&#xe75e;</i>Bilibili
+        </a>
+        <a class="about-connact__links" href="https://github.com/spacesless" rel="noopener noreferrer" target="_blank">
+          <i class="tl-icon">&#xe620;</i>Github
+        </a>
+      </div>
       <h2 class="app-main__title">建站历程</h2>
       <p>服务器：腾讯云学生服务器（1C2G3M）</p>
       <p>内容分发服务：腾讯云CDN，每月白嫖10G够用了，反正没啥流量</p>
@@ -29,24 +40,12 @@
       </el-timeline>
       <h2 class="app-main__title">未来计划</h2>
       <ul>
-        <li>1、</li>
+        <li>1、统一用nuxt写前台、内容管理系统</li>
+        <li>2、研究live2d、spine</li>
       </ul>
-      <h2 class="app-main__title">关于站长</h2>
-      <p>Timeless</p>
-      <p>大区：广州</p>
-      <p>等级：24级萌新</p>
-      <p>职业：练习时长2年半的前端小白</p>
-      <p>爱好：ACG(动漫偏国动、游戏不怎么玩了)、旅行、爬山、看电影，以及和计算机有关的东西（包括但不限于编程）</p>
-      <div class="about-connact">
-        <a class="about-connact__links" href="https://space.bilibili.com/315883644/favlist" rel="noopener noreferrer" target="_blank">
-          <i class="tl-icon">&#xe75e;</i>bilibili
-        </a>
-        并不是阿婆主，不过可以看看收藏~
-        <img class="about-connact__image" src="@/assets/image/about.png" alt="">
-      </div>
     </div>
     <!-- comment start -->
-    <Comment />
+    <Comment :topic-id="'other-5'" />
   </div>
 </template>
 
@@ -93,6 +92,7 @@ export default {
   &-connact{
     &__links{
       display: inline-block;
+      margin-right: 10px;
       padding: 5px 12px;
       border: 1px solid #dcdfe6;
       color: #606266;
@@ -103,6 +103,9 @@ export default {
         border-color: $primary;
         background-color: #ecf5ff;
         color: $primary;
+      }
+      .tl-icon{
+        margin-right: 3px;
       }
     }
     &__image{

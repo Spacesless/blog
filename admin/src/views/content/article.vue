@@ -114,7 +114,7 @@ export default {
         query: { type: this.currentType }
       })
     },
-    deleteSingle(id) {
+    deleteSingle({ id }) {
       DeleteList(this.currentType, [id]).then(response => {
         this.$message({
           type: 'success',

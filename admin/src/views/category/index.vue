@@ -135,7 +135,7 @@ export default {
       this.currentRow = row
       this.dialogVisible = true
     },
-    deleteSingle(id) {
+    deleteSingle({ id }) {
       DeleteList('category', [id]).then(response => {
         this.$message({
           type: 'success',

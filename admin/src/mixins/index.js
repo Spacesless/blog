@@ -76,7 +76,7 @@ export const multipleTable = {
         type: 'warning'
       }).then(() => {
         this.$set(row, 'deleteLoading', false)
-        this.deleteSingle(row.id).catch(() => {
+        this.deleteSingle(row).catch(() => {
           this.$set(row, 'deleteLoading', false)
         })
       })

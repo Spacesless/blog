@@ -60,7 +60,7 @@ module.exports = class extends think.Controller {
     for (let i = 0; i < data.length; i++) {
       if (data[i].parent_id === parent_id) {
         const obj = data[i]
-        temp = this.convertToTree(data, data[i].id)
+        temp = this.convertToTree(data, obj.id)
         if (temp.length > 0) {
           obj.children = temp
         }

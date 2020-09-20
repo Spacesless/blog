@@ -8,7 +8,7 @@
           <div class="links-logo">
             <el-image class="links-logo__picture" :src="item.logo">
               <div slot="error" class="image-slot">
-                <i class="el-icon-picture-outline" />
+                <i class="tl-icon">&#xe695;</i>
               </div>
             </el-image>
           </div>
@@ -96,11 +96,16 @@ export default {
     float: left;
     width: 65px;
     height: 65px;
+    background-color: #f7f7f7;
     border-radius: 50%;
     &__picture{
       display: block;
       width: 65px;
       height: 65px;
+      color: #606266;
+      font-size: 22px;
+      line-height: 65px;
+      text-align: center;
     }
   }
   &-info{

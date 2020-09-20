@@ -129,29 +129,5 @@ module.exports = {
     }
 
     return result ? dest : ''
-  },
-
-  /**
-   * 删除文件?夹
-   * @param {Array} files 文件列表
-   */
-  async removeFile(files) {
-    try {
-      /**
-       * 文件操作
-       * @param {String} service 本地
-       */
-      const service = 'local' // TODO 腾讯云COS
-      this.fileHelper = think.service(`upload/${service}`, 'admin')
-    } catch (e) {
-      return this.fail(e.message || 'FILE_SERVICES_ERROR')
-    }
-
-    const promises = []
-    files.forEach(item => {
-      const step = this.fileHelper.modifyDirFile(item, '', 'remove')
-      promises.push(step)
-    })
-    await Promise.all(promises)
   }
 }

@@ -1,13 +1,13 @@
 <template>
-  <div class="comment">
-    <!-- <h3 class="app-main__title">评论（{{ total }}）</h3> -->
-    <!-- <comment-reply :info="info" />
-    <div v-loading="fetchLoading" class="comment-list">
+  <div v-loading="fetchLoading" class="comment">
+    <!-- <h3 class="app-main__title">评论（{{ total }}）</h3>
+    <comment-reply :info="info" />
+    <div class="comment-list">
       <div v-for="item in commentsList" :key="item.id" class="comment-main">
         <comment-item :info="info" :data="item" :is-reply="isReply" @onreply="handleReply" />
       </div>
     </div>
-    <pagination :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.pageSize" @pagination="fetchList" /> -->
+    <pagination v-show="total > listQuery.pageSize" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.pageSize" @pagination="fetchList" /> -->
   </div>
 </template>
 
@@ -22,6 +22,12 @@ export default {
     // CommentItem,
     // CommentReply
   },
+  props: {
+    topicId: {
+      type: String,
+      default: ''
+    }
+  },
   data() {
     return {
       isReply: 0,
@@ -32,37 +38,24 @@ export default {
         page: 1,
         pageSize: 10
       },
-      comments: []
-    }
-  },
-  computed: {
-    commentsList() {
-      return this.convertToTree(this.comments)
+      commentsList: []
     }
   },
   mounted() {
-    this.info = {
-      page_id: '3-5'
-    }
+    // this.fetchList()
   },
   methods: {
-    fetchList() {
-
-    },
-    convertToTree(data, parent_id = 0) {
-      const tree = []
-      let temp
-      for (let i = 0; i < data.length; i++) {
-        if (data[i].parent_id === parent_id) {
-          const obj = data[i]
-          temp = this.convertToTree(data, data[i].id)
-          if (temp.length > 0) {
-            obj.children = temp
-          }
-          tree.push(obj)
-        }
-      }
-      return tree
+    async fetchList() {
+      this.listQuery.id = this.topicId
+      this.fetchLoading = true
+      this.$axios.$get('/comment', {
+        params: this.listQuery
+      }).then(res => {
+        const { total, data } = res
+        this.total = total
+        this.commentsList = data
+      }).catch(() => {})
+      this.fetchLoading = false
     },
     handleReply(id) {
       this.isReply = id

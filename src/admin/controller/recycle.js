@@ -3,24 +3,24 @@ const Base = require('./base.js')
 module.exports = class extends Base {
   async getListAction() {
     const field = 'id,title,category_id,updatetime'
-    const type = +this.get('type')
-    const article = type && type !== 'blog' ? [] : await this.model('article')
+    const type = this.get('type')
+    const articleList = type && type !== 'article' ? [] : await this.model('article')
       .field(`${field},'article' as type`)
       .where({ is_recycle: 1 })
       .select()
-    const bangumi = type && type !== 'bangumi' ? [] : await this.model('bangumi')
+    const bangumiList = type && type !== 'bangumi' ? [] : await this.model('bangumi')
       .field(`${field},'bangumi' as type`)
       .where({ is_recycle: 1 })
       .select()
-    const list = [...article, ...bangumi]
+    const totalList = [...articleList, ...bangumiList]
     const page = this.get('page') ? this.get('page') : 1
     const pageSize = this.get('pagesize') ? this.get('pagesize') : 20
-    const result = list.slice((page - 1) * pageSize, page * pageSize)
+    const result = totalList.slice((page - 1) * pageSize, page * pageSize)
     result.sort((a, b) => {
       return b.updatetime - a.updatetime
     })
     return this.success({
-      count: list.length,
+      count: totalList.length,
       page: page,
       data: result
     })
@@ -30,8 +30,7 @@ module.exports = class extends Base {
     const list = this.post('list')
     const promises = []
     list.forEach(item => {
-      const id = item.id
-      const type = item.type
+      const { id, type } = item
       const step = this.model(type).foreverDelete(id)
       promises.push(step)
     })
@@ -47,9 +46,11 @@ module.exports = class extends Base {
     const list = this.post('list')
     const promises = []
     list.forEach(item => {
-      const id = item.id
-      const type = item.type
-      const step = this.model(type).where({ id }).update({ is_recycle: 0 })
+      const { id, type } = item
+      const step = this.model(type).where({ id }).update({
+        updatetime: new Date(),
+        is_recycle: 0
+      })
       promises.push(step)
     })
 

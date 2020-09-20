@@ -25,7 +25,7 @@
                 <i class="tl-icon">&#xe652;</i>
                 <nuxt-link :to="item.column.url" :title="item.column.name">{{ item.column.name }}</nuxt-link>
               </span>
-              <span class="articles-meta__view"><i class="tl-icon">&#xe601;</i>{{ item.hits }}</span>
+              <span class="articles-meta__view"><i class="tl-icon">&#xe681;</i>{{ item.hits }}</span>
             </div>
             <div class="articles-desc">
               <p>{{ item.description }}</p>
@@ -43,12 +43,12 @@
       <el-row class="bangumi-list" :gutter="20">
         <el-col v-for="item in bangumiList" :key="item.id" :xs="24" :sm="12">
           <el-row class="bangumi-list-item">
-            <el-col :lg="8" :xl="10">
+            <el-col :span="8" :xl="10">
               <nuxt-link :to="'/bangumi/detail/' + item.id" :title="item.title">
                 <img class="img-fluid" :src="item.imgurl" :alt="item.title">
               </nuxt-link>
             </el-col>
-            <el-col class="bangumi-list-info" :lg="16" :xl="14">
+            <el-col class="bangumi-list-info" :span="16" :xl="14">
               <nuxt-link class="bangumi-list__title" :to="'/bangumi/detail/' + item.id" :title="item.title">{{ item.title }}</nuxt-link>
               <p><span class="para-name">时间：</span>{{ item.showtime }}</p>
               <p><span class="para-name">状态：</span>{{ item.status | bangumiStatus }}</p>
@@ -204,7 +204,7 @@ export default {
     }
     &__cate{
       a{
-        color: #F56C6C;
+        color: #909399;
         &:hover{
           color: $primary;
         }

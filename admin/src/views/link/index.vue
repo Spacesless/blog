@@ -91,7 +91,7 @@ export default {
       }).catch(() => {})
       this.listLoading = false
     },
-    deleteSingle(id) {
+    deleteSingle({ id }) {
       DeleteList('link', [id]).then(res => {
         this.$message({
           type: 'success',

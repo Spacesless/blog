@@ -19,7 +19,7 @@
       <live-2d />
     </div>
     <!--background start-->
-    <div v-show="particleActive" class="background">
+    <div class="background">
       <canvas id="flower" width="1900" height="1080" />
     </div>
   </div>
@@ -65,14 +65,14 @@ export default {
   watch: {
     particleActive(val) {
       if (val) {
-        this.canvasHelper && this.canvasHelper.draw()
+        this.particleInstance && this.particleInstance.draw()
       } else {
-        this.canvasHelper.stopDraw()
+        this.particleInstance.stopDraw()
       }
     }
   },
   mounted() {
-    this.canvasHelper = new ParticleCanvas(
+    this.particleInstance = new ParticleCanvas(
       'flower',
       [
         {

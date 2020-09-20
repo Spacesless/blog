@@ -3,7 +3,7 @@
     <el-row class="app-header">
       <el-col :xs="24" :sm="12">
         <el-select v-model="listQuery.type" clearable placeholder="请选择模块" @change="handleSelect">
-          <el-option label="文章模块" value="blog" />
+          <el-option label="文章模块" value="article" />
           <el-option label="追番模块" value="bangumi" />
         </el-select>
       </el-col>
@@ -24,7 +24,8 @@
     >
       <el-table-column align="center" type="selection" width="50" />
       <el-table-column label="标题" prop="title" />
-      <el-table-column align="center" label="所属栏目" prop="type" width="200" :formatter="formatCategory" />
+      <el-table-column align="center" label="所属栏目" prop="type" width="160" :formatter="formatCategory" />
+      <el-table-column align="center" label="所属模块" prop="type" width="160" :formatter="formatModuleName" />
       <el-table-column align="center" label="删除时间" prop="updatetime" width="200" />
       <el-table-column align="center" label="操作" width="180">
         <template #default="scope">
@@ -78,6 +79,19 @@ export default {
       const findColumn = this.categorys.find(item => item.type === cellValue)
       return findColumn ? findColumn.name : ''
     },
+    /**
+     * 格式化模块名称
+     * @param {Number [int]} cellValue 当前行所属模块
+     */
+    formatModuleName(row, column, cellValue) {
+      const typeEnum = {
+        article: '文章模块',
+        bangumi: '追番模块',
+        toolkit: '小工具',
+        other: '其它模块'
+      }
+      return typeEnum[cellValue] || ''
+    },
     handleSelect() {
       this.listQuery.page = 1
       this.fetchList()
@@ -104,8 +118,7 @@ export default {
         this.$set(row, 'restoreLoading', false)
       })
     },
-    deleteSingle(row) {
-      const { id, type } = row
+    deleteSingle({ id, type }) {
       return DeleteRecyleList([{ id, type }]).then(res => {
         this.$message({
           type: 'success',

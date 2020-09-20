@@ -75,7 +75,7 @@ export function RestoreRecycleList(list) {
  */
 export function DeleteRecyleList(list) {
   return request({
-    url: '/recycle/delate',
+    url: '/recycle/delete',
     method: 'post',
     data: {
       list

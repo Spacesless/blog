@@ -5,9 +5,6 @@
     </div>
     <div class="header-menus">
       <span class="hidden-sm-and-down">
-        <el-tooltip effect="dark" content="网站地图" placement="bottom">
-          <a class="header-menus__btn tl-icon" href="/sitemap" target="_blank">&#xe600;</a>
-        </el-tooltip>
         <el-tooltip effect="dark" content="RSS" placement="bottom">
           <a class="header-menus__btn tl-icon" href="/rss" target="_blank">&#xe6d0;</a>
         </el-tooltip>
