@@ -163,7 +163,7 @@ export default {
     loadModel(modelId, texturesId = 1) {
       window.loadlive2d(
         'live2d', `${this.apiurl}models?id=${modelId}&texture=${texturesId}`,
-        console.log('live2d', '模型 ' + modelId + '-' + texturesId + ' 加载完成')
+        console.log('live2d', `模型 ${modelId}-${texturesId} 加载完成`)
       )
     },
     // 更换模型

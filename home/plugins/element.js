@@ -38,7 +38,6 @@ import {
   Timeline,
   TimelineItem,
   Card,
-  InfiniteScroll,
   Loading,
   Notification,
   Message,
@@ -82,7 +81,6 @@ Vue.use(Timeline)
 Vue.use(TimelineItem)
 Vue.use(Card)
 Vue.use(Drawer)
-Vue.use(InfiniteScroll)
 Vue.use(Loading)
 
 Vue.prototype.$ELEMENT = {

@@ -1,6 +1,27 @@
 <template>
   <div class="comment-reply">
-    <el-input ref="textarea" v-model="message" type="textarea" :rows="5" resize="none" placeholder="请输入内容" />
+    <el-form ref="form" :model="info" :rules="rules">
+      <el-row :gutter="10">
+        <el-col :sm="24" :md="8">
+          <el-form-item prop="name">
+            <el-input v-model="info.name" placeholder="Name" />
+          </el-form-item>
+        </el-col>
+        <el-col :sm="24" :md="8">
+          <el-form-item prop="email">
+            <el-input v-model="info.email" placeholder="" />
+          </el-form-item>
+        </el-col>
+        <el-col :sm="24" :md="8">
+          <el-form-item prop="website">
+            <el-input v-model="info.website" placeholder="" />
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-form-item prop="content">
+        <el-input ref="textarea" v-model="info.content" type="textarea" :rows="5" resize="none" placeholder="What do you want to say..." />
+      </el-form-item>
+    </el-form>
     <div class="reply-tools">
       <el-button type="primary" icon="el-icon-position" @click="handleSubmit">123</el-button>
     </div>
@@ -21,41 +42,39 @@ export default {
     }
   },
   data() {
+    const validateEmail = (rule, value, callback) => {
+      if (value === '804093032@qq.com') {
+        callback(new Error('请不要拿站长的破邮箱来充数哦'))
+      } else {
+        callback()
+      }
+    }
     return {
-      message: ''
+      rules: {
+        name: [{ required: true, trigger: 'blur', message: '你还没告诉我你叫什么呢' }],
+        email: [
+          { required: true, message: '要不留个邮箱', trigger: 'blur' },
+          { type: 'email', message: '请输入正确的邮箱', trigger: 'change' },
+          { trigger: 'change', validator: validateEmail }
+        ],
+        website: [{ type: 'url', message: '噫，这个网址好像不对哦', trigger: 'change' }],
+        content: [{ required: true, trigger: 'blur', message: '确定不说点什么?' }]
+      }
     }
   },
   methods: {
-    initOwO() {
-      // new OwO({
-      //   logo: 'OωO',
-      //   container: this.$refs.OwO,
-      //   target: this.$refs.textarea,
-      //   api: './OwO.json',
-      //   position: 'down',
-      //   width: '100%',
-      //   maxHeight: '250px'
-      // })
-    },
     handleSubmit() {
-      const postData = Object.assign(this.info, {
-        parent_id: this.parentid,
-        content: this.respond
+      this.$refs.form.validate(async(valid) => {
+        if (!valid) return
+        const postData = Object.assign(this.info, {
+          parent_id: this.parentid
+        })
+        this.$axios.$post('/comment/post', postData).then(response => {
+
+        }).catch(error => {
+          console.log(error)
+        })
       })
-      this.$axios.$post('/comment/post', postData).then(response => {
-
-      }).catch(error => {
-        console.log(error)
-      })
-    },
-    handleInsertCode() {
-      this.message += '<pre>\n请输入代码...\n</pre>\n'
-    },
-    handleInsertPicture() {
-
-    },
-    handleInsertLink() {
-
     }
   }
 }

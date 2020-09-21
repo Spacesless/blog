@@ -18,12 +18,10 @@
           <el-cascader :value="selectModel" :options="options" @change="changeClassify" />
         </div>
         <el-scrollbar class="live-wrapper" wrap-class="scroll-warpper">
-          <div v-infinite-scroll="loadMore" class="live-list" :infinite-scroll-immediate="false" :infinite-scroll-distance="100">
-            <div class="el-row">
-              <div v-for="item in modelCount" :key="item" class="el-col-12 el-col-sm-8 el-col-md-6">
-                <div class="live-list__item" :class="{ 'live-list__item--active': selectModel === modelId && selectTexture === item }">
-                  <el-image :src="thumbFormat(item)" @click="loadModel(selectModel, item)" />
-                </div>
+          <div class="el-row">
+            <div v-for="item in modelCount" :key="item" class="el-col-12 el-col-sm-8 el-col-md-6">
+              <div class="live-list__item" :class="{ 'live-list__item--active': selectModel === modelId && selectTexture === item }">
+                <el-image :src="thumbFormat(item)" lazy @click="loadModel(selectModel, item)" />
               </div>
             </div>
           </div>
@@ -111,7 +109,7 @@ export default {
         axios.get(`${this.apiurl}/lists/model?id=${this.selectModel}`).then(res => {
           const { id, total, message, from } = res.data.data
           this.total = total
-          this.modelCount = total <= 16 ? total : 16
+          this.modelCount = total
           this.Info = {
             id,
             message,
@@ -126,10 +124,6 @@ export default {
       if (current === this.selectModel) return
       this.selectModel = current
       this.fetchModelList()
-    },
-    loadMore() {
-      console.log(this.modelCount + 8 > this.total)
-      this.modelCount = this.modelCount + 8 > this.total ? this.total : this.modelCount + 8
     },
     thumbFormat(index) {
       return `${this.apiurl}/../model/preview/${this.selectModel}/${index}.png`

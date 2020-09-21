@@ -54,17 +54,17 @@ module.exports = class extends think.Controller {
    * @param {Number} parent_id 父节点id
    * @returns {Array} 树形数组 [{id:1,children:[{id:2},{id:3,children:[{id:4}]}]}]
    */
-  convertToTree(data, parent_id = 0) {
+  convertToTree(data, key = 'parent_id', value = 0) {
     const tree = []
     let temp
     for (let i = 0; i < data.length; i++) {
-      if (data[i].parent_id === parent_id) {
-        const obj = data[i]
-        temp = this.convertToTree(data, obj.id)
+      const item = data[i]
+      if (item[key] === value) {
+        temp = this.convertToTree(data, key, item.id)
         if (temp.length > 0) {
-          obj.children = temp
+          item.children = temp
         }
-        tree.push(obj)
+        tree.push(item)
       }
     }
     return tree

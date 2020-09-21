@@ -44,7 +44,7 @@
     "think-view-nunjucks": "^1.0.9",
     "thinkjs": "^3.0.0",
     "vue-router": "3.3.4",
-    "js-cookie": "2.2.1",
+    "js-cookie": "2.2.1"
   },
   "devDependencies": {
     "@babel/register": "7.9.0",
