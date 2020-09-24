@@ -162,13 +162,13 @@ export default {
      */
     loadModel(modelId, texturesId = 1) {
       window.loadlive2d(
-        'live2d', `${this.apiurl}models?id=${modelId}&texture=${texturesId}`,
+        'live2d', `${this.apiurl}?id=${modelId}&texture=${texturesId}&isuseCDN=true`,
         console.log('live2d', `模型 ${modelId}-${texturesId} 加载完成`)
       )
     },
     // 更换模型
     loadOtherModel() {
-      this.$axios.get(this.apiurl + 'models/switch', {
+      this.$axios.get(this.apiurl + 'model/switch', {
         params: {
           id: this.modelId
         }
@@ -184,7 +184,7 @@ export default {
     },
     // 更换衣服
     loadOtherTexture() {
-      this.$axios.get(this.apiurl + 'textures/random', {
+      this.$axios.get(this.apiurl + 'texture/random', {
         params: {
           id: this.modelId,
           texture: this.texturesId

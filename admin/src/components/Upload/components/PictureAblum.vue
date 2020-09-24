@@ -49,7 +49,7 @@
             :class="{active:item.checked}"
             @click="toggleSelect(item)"
           >
-            <el-image :src="item.url" fit="contain" lazy scroll-container=".scrollbar-wrapper">
+            <el-image :src="item.url" fit="contain">
               <div slot="error" class="image-slot">
                 <i class="el-icon-picture-outline-round" />
               </div>

@@ -275,7 +275,7 @@ export default {
     getCdLists(qquin) {
       const word = qquin || this.keyword
       this.listLoading = true
-      axios.get(`${APIURL}/dissts?qquin=${word}`).then(response => {
+      axios.get(`${APIURL}/cdList?qquin=${word}`).then(response => {
         const { hostname, hostuin, totoal, disslist } = response.data.data
         this.userinfo = { hostname, hostuin, totoal }
         disslist.sort((a, b) => b.listen_num - a.listen_num)
@@ -288,7 +288,7 @@ export default {
     getSongLists(id) {
       this.listType = 2
       this.listLoading = true
-      axios.get(`${APIURL}/lists?disstid=${id}`).then(response => {
+      axios.get(`${APIURL}/songList?disstid=${id}`).then(response => {
         const { nickname, desc, dissname, logo, songlist, songnum, tags, visitnum } = response.data.data
         this.cdinfo = { nickname, desc, dissname, logo, songlist, songnum, tags, visitnum }
         this.songlist = songlist
@@ -344,7 +344,7 @@ export default {
       }
     },
     async getSongs(songmid) {
-      const response = await axios.get(`${APIURL}/songs?songmid=${songmid}`)
+      const response = await axios.get(`${APIURL}/songUrl?songmid=${songmid}`)
       let result = {}
       if (!response.data.errno) {
         result = response.data.data

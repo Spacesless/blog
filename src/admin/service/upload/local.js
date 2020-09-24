@@ -48,8 +48,8 @@ module.exports = class extends Base {
    * @param {Number} pageSize 每页个数
    * @param {String} keyword 搜索关键词
    */
-  async getFileList(src = 'upload/', page = 1, pageSize = 20, keyword) {
-    const targetPath = path.join(think.RESOURCE_PATH, src)
+  async getFileList(src = '', page = 1, pageSize = 20, keyword) {
+    const targetPath = path.join(think.UPLOAD_PATH, src)
     if (think.isDirectory(targetPath)) {
       const filesAndDirs = await readdirSync(targetPath)
       let list = []
@@ -58,7 +58,7 @@ module.exports = class extends Base {
         if (think.isDirectory(itempath)) {
           list.push({
             name: item,
-            url: url.resolve('', itempath.replace(think.RESOURCE_PATH, '')),
+            url: url.resolve('', itempath.replace(think.UPLOAD_PATH, '')),
             type: 1 // 目录
           })
         } else {

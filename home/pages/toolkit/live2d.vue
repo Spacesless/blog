@@ -153,7 +153,7 @@ export default {
       this.modelId = modelId
       this.selectTexture = modelTexturesId
       window.loadlive2d(
-        'live2d', `${this.apiurl}/models?id=${modelId}&texture=${modelTexturesId}&mixins=${this.isMix}`,
+        'live2d', `${this.apiurl}?id=${modelId}&texture=${modelTexturesId}&isuseCDN=true`,
         console.log('live2d', '模型 ' + modelId + '-' + modelTexturesId + ' 加载完成')
       )
       this.currentInfo = this.modelId === this.Info.id ? this.Info : {}
@@ -161,7 +161,7 @@ export default {
     /** 更换模型*/
     loadOtherModel() {
       const { modelId } = this.getLocalStorage()
-      axios.get(this.apiurl + '/models/switch?id=' + modelId)
+      axios.get(this.apiurl + '/model/switch?id=' + modelId)
         .then(response => {
           const { id, message } = response.data.data
           if (id) {
@@ -174,7 +174,7 @@ export default {
     },
     loadOtherTexture() {
       const { modelId, modelTexturesId } = this.getLocalStorage()
-      axios.get(this.apiurl + '/textures/random?id=' + modelId + '&texture=' + modelTexturesId)
+      axios.get(this.apiurl + '/texture/random?id=' + modelId + '&texture=' + modelTexturesId)
         .then(response => {
           const { id, texture } = response.data.data
           if (id) {
