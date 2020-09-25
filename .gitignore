@@ -32,6 +32,7 @@ view/admin
 www/admin
 www/assets
 www/upload
+www/static/thumb
 
 config.development.js
 adapter.development.js

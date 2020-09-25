@@ -1,4 +1,4 @@
-import Cookies from 'js-cookie'
+const Cookies = process.client ? require('js-cookie') : undefined
 
 const state = () => ({
   sidebar: {

@@ -521,12 +521,10 @@ export default {
 <style lang="scss" scoped>
 .music{
   position: fixed;
-  top: 5%;
-  bottom: 5%;
-  left: 10%;
-  right: 10%;
-  border-radius: 4px;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   &-background {
     position: fixed;
     width: 100%;
