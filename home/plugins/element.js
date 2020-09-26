@@ -8,6 +8,7 @@ import {
   DropdownMenu,
   DropdownItem,
   Scrollbar,
+  Slider,
   Menu,
   Submenu,
   MenuItem,
@@ -50,6 +51,7 @@ Vue.use(Dropdown)
 Vue.use(DropdownMenu)
 Vue.use(DropdownItem)
 Vue.use(Scrollbar)
+Vue.use(Slider)
 Vue.use(Menu)
 Vue.use(Submenu)
 Vue.use(MenuItem)

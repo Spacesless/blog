@@ -16,9 +16,9 @@
     </el-form-item>
     <el-form-item label="状态">
       <el-select v-model="params.status" placeholder="请选择状态">
+        <el-option label="未上映" :value="0" />
         <el-option label="连载中" :value="1" />
         <el-option label="已完结" :value="2" />
-        <el-option label="未上映" :value="3" />
       </el-select>
     </el-form-item>
     <el-form-item label="推荐指数">
@@ -37,13 +37,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.form-para{
-  &__players{
-    .el-col{
-      margin-right: 15px;
-    }
-  }
-}
-</style>

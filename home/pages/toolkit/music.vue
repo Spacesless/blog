@@ -1,135 +1,105 @@
 <template>
-  <div class="music">
-    <div class="music-background" style="background-image: url({$ '/static/music-background.png' | static(config.thumbFormat) $})">
-      <ul class="bg-bubbles">
-        <li />
-        <li />
-        <li />
-        <li />
-        <li />
-        <li />
-        <li />
-        <li />
-        <li />
-        <li />
-      </ul>
+  <div ref="wrap" class="music">
+    <div class="music-disst">
+      <div class="music-user">
+        <el-image :src="'//q1.qlogo.cn/g?b=qq&s=100&nk=' + userinfo.hostuin" />
+        <p class="music-user__name">{{ userinfo.hostname }}</p>
+      </div>
+      <template v-for="item in disslist">
+        <p
+          v-if="item.tid && item.diss_name !== '我喜欢'"
+          :key="item.tid"
+          class="music-disst__item"
+          @click="getSongLists(item.tid)"
+        >
+          {{ item.diss_name }}
+        </p>
+      </template>
     </div>
-    <div ref="wrap" class="music">
-      <div class="el-row music-wrap">
-        <div class="el-col el-col-md-5 music-disst">
-          <div class="music-user">
-            <el-image :src="'//q1.qlogo.cn/g?b=qq&s=100&nk=' + userinfo.hostuin" />
-            <p class="music-user__name">{{ userinfo.hostname }}</p>
+    <div class="music-content">
+      <div class="music-search">
+        <el-select v-model="searchType" placeholder="请选择">
+          <el-option label="歌曲" :value="1" />
+          <el-option label="用户" :value="2" />
+        </el-select>
+        <el-input v-model="keyword" placeholder="请输入内容" size="medium" />
+        <i class="music-search__btn el-icon-search" @click="handleSearch(true)" />
+      </div>
+      <div class="music-list">
+        <div ref="header" class="music-list-header">
+          <div v-show="cdinfo.dissname" key="cdinfo" class="music-info clearfix">
+            <div class="music-info-logo">
+              <el-image :src="cdinfo.logo" />
+            </div>
+            <div class="music-info-text">
+              <h2>{{ cdinfo.dissname }}</h2>
+              <p>{{ cdinfo.desc }}</p>
+              <p><span class="para-name">标签：</span>{{ cdinfo.tags | tagsFilter }}</p>
+              <p><span class="para-name">歌曲数：</span>{{ cdinfo.songnum }}、<span class="para-name">播放数：</span>{{ cdinfo.visitnum }}</p>
+            </div>
           </div>
-          <!-- <span>我的音乐</span>
-          <template v-for="item in disslist">
-            <p
-              v-if="item.diss_name === '我喜欢'"
-              :key="item.tid"
-              class="music-disst__item"
-              @click="getSongLists(item.tid)"
-            >
-              {{ item.diss_name }}
-            </p>
-          </template> -->
-          <span>创建的歌单</span>
-          <template v-for="item in disslist">
-            <p
-              v-if="item.tid && item.diss_name !== '我喜欢'"
-              :key="item.tid"
-              class="music-disst__item"
-              @click="getSongLists(item.tid)"
-            >
-              {{ item.diss_name }}
-            </p>
-          </template>
+          <div class="music-list-menu">
+            <el-button type="primary" @click="handlePlayAll">播放全部</el-button>
+            <el-dropdown split-button @click="handleJoinAll">
+              添加到列表
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item @click.native="handlePlaySelect">播放选中</el-dropdown-item>
+                <el-dropdown-item @click.native="handleJoinSelect">添加选中</el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+          </div>
         </div>
-        <div class="el-col el-col-md-19 music-content">
-          <div class="music-search">
-            <el-select v-model="searchType" placeholder="请选择">
-              <el-option label="歌曲" :value="1" />
-              <el-option label="用户" :value="2" />
-            </el-select>
-            <el-input v-model="keyword" placeholder="请输入内容" size="medium" />
-            <i class="music-search__btn el-icon-search" @click="handleSearch(true)" />
-          </div>
-          <div class="music-list">
-            <div ref="header" class="music-list-header">
-              <div v-show="cdinfo.dissname" key="cdinfo" class="music-info clearfix">
-                <div class="music-info-logo">
-                  <el-image :src="cdinfo.logo" />
-                </div>
-                <div class="music-info-text">
-                  <h2>{{ cdinfo.dissname }}</h2>
-                  <p>{{ cdinfo.desc }}</p>
-                  <p><span class="para-name">标签：</span>{{ cdinfo.tags | tagsFilter }}</p>
-                  <p><span class="para-name">歌曲数：</span>{{ cdinfo.songnum }}、<span class="para-name">播放数：</span>{{ cdinfo.visitnum }}</p>
-                </div>
+        <el-table
+          ref="lists"
+          v-loading="listLoading"
+          :data="songlist"
+          :height="listHeight"
+          @selection-change="handleSelection"
+        >
+          <el-table-column type="selection" width="45" align="center" />
+          <el-table-column type="index" width="45" align="center" />
+          <el-table-column label="歌曲" min-width="220">
+            <template slot-scope="scope">
+              <span class="music-list__songname">{{ scope.row.songname }}</span>
+              <span class="music-list__albumdesc">{{ scope.row.albumdesc }}</span>
+              <div class="music-list-operate">
+                <el-button
+                  icon="tl-icon-play"
+                  circle
+                  :disabled="scope.row.pay.payplay === 1"
+                  @click="handlePlaySingle(scope.row)"
+                />
+                <el-button
+                  icon="tl-icon-add"
+                  :disabled="scope.row.pay.payplay === 1"
+                  circle
+                  @click="handleJoinSingle(scope.row)"
+                />
               </div>
-              <div class="music-list-menu">
-                <el-button type="primary" @click="handlePlayAll">播放全部</el-button>
-                <el-dropdown split-button @click="handleJoinAll">
-                  添加到列表
-                  <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item @click.native="handlePlaySelect">播放选中</el-dropdown-item>
-                    <el-dropdown-item @click.native="handleJoinSelect">添加选中</el-dropdown-item>
-                  </el-dropdown-menu>
-                </el-dropdown>
-              </div>
-            </div>
-            <el-table
-              ref="lists"
-              v-loading="listLoading"
-              :data="songlist"
-              :height="listHeight"
-              @selection-change="handleSelection"
-            >
-              <el-table-column type="selection" width="45" align="center" />
-              <el-table-column type="index" width="45" align="center" />
-              <el-table-column label="歌曲" min-width="220">
-                <template slot-scope="scope">
-                  <span class="music-list__songname">{{ scope.row.songname }}</span>
-                  <span class="music-list__albumdesc">{{ scope.row.albumdesc }}</span>
-                  <div class="music-list-operate">
-                    <el-button
-                      icon="tl-icon-play"
-                      circle
-                      :disabled="scope.row.pay.payplay === 1"
-                      @click="handlePlaySingle(scope.row)"
-                    />
-                    <el-button
-                      icon="tl-icon-add"
-                      :disabled="scope.row.pay.payplay === 1"
-                      circle
-                      @click="handleJoinSingle(scope.row)"
-                    />
-                  </div>
-                </template>
-              </el-table-column>
-              <el-table-column label="歌手" min-width="150">
-                <template slot-scope="scope">
-                  <span class="music-list__singer">{{ scope.row.singer | singerFilter }}</span>
-                </template>
-              </el-table-column>
-              <el-table-column prop="albumname" label="专辑" min-width="150" />
-              <el-table-column label="时长" width="80" align="center">
-                <template slot-scope="scope">
-                  <span class="music-list__interval">{{ scope.row.interval | intervalFilter }}</span>
-                </template>
-              </el-table-column>
-            </el-table>
-          </div>
-          <div id="music-player" class="music-player">
-            <div ref="aplayer" />
-            <div class="music-player-control">
-              <span class="tl-icon" @click="handleSwitch">&#xe78a;</span>
-              <span @click="handleTogglePlay">
-                <i v-show="isPlaying" key="play" class="tl-icon">&#xe7af;</i>
-                <i v-show="!isPlaying" class="tl-icon">&#xe769;</i>
-              </span>
-              <span class="tl-icon" @click="handleSwitch(-1)">&#xe7a5;</span>
-            </div>
-          </div>
+            </template>
+          </el-table-column>
+          <el-table-column label="歌手" min-width="150">
+            <template slot-scope="scope">
+              <span class="music-list__singer">{{ scope.row.singer | singerFilter }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column prop="albumname" label="专辑" min-width="150" />
+          <el-table-column label="时长" width="80" align="center">
+            <template slot-scope="scope">
+              <span class="music-list__interval">{{ scope.row.interval | intervalFilter }}</span>
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
+      <div id="music-player" class="music-player">
+        <div ref="aplayer" />
+        <div class="music-player-control">
+          <span class="tl-icon" @click="handleSwitch">&#xe78a;</span>
+          <span @click="handleTogglePlay">
+            <i v-show="isPlaying" key="play" class="tl-icon">&#xe7af;</i>
+            <i v-show="!isPlaying" class="tl-icon">&#xe769;</i>
+          </span>
+          <span class="tl-icon" @click="handleSwitch(-1)">&#xe7a5;</span>
         </div>
       </div>
     </div>
@@ -138,7 +108,6 @@
 
 <script>
 import axios from 'axios'
-// import Pagination from '@/components/Pagination'
 import { differenceBy } from 'lodash/array'
 
 const APIURL = '//api.timelessq.com/music'
@@ -159,19 +128,17 @@ export default {
       return (Math.floor(time / 60) < 10 ? '0' + Math.floor(time / 60) : Math.floor(time / 60)) + ':' + (time % 60 < 10 ? '0' + time % 60 : time % 60)
     }
   },
-  components: {
-    // Pagination
+  async asyncData({ app, route, $axios }) {
+    const filename = route.path.split('/')
+    const { seo } = await $axios.$get('/toolkit/content', {
+      params: {
+        path: filename[filename.length - 1] || 'music'
+      }
+    })
+    return {
+      seo
+    }
   },
-  // async asyncData({ app, params, $axios }) {
-  //   const { seo } = await $axios.$get('/tool/content', {
-  //     params: {
-  //       id: params.id
-  //     }
-  //   })
-  //   return {
-  //     seo
-  //   }
-  // },
   data() {
     return {
       ap: null,
@@ -231,7 +198,7 @@ export default {
       this.ap = new APlayer({
         container: this.$refs.aplayer,
         autoplay: true,
-        theme: '#66ccff',
+        theme: '#409EFF',
         loop: 'all',
         order: 'list',
         preload: 'auto',
@@ -505,15 +472,15 @@ export default {
       this.ap.toggle()
     }
   },
-  // head() {
-  //   return {
-  //     title: this.seo.title,
-  //     meta: [
-  //       { hid: 'description', name: 'description', content: this.seo.description },
-  //       { hid: 'keyword', name: 'keyword', content: this.seo.keyword }
-  //     ]
-  //   }
-  // },
+  head() {
+    return {
+      title: this.seo.title,
+      meta: [
+        { hid: 'description', name: 'description', content: this.seo.description },
+        { hid: 'keyword', name: 'keyword', content: this.seo.keyword }
+      ]
+    }
+  },
   layout: 'app'
 }
 </script>
@@ -525,106 +492,9 @@ export default {
   bottom: 0;
   left: 0;
   right: 0;
-  &-background {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    background-position: right center;
-    background-repeat: no-repeat;
-    background-size: contain;
-    .bg-bubbles {
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 1;
-      width: 100%;
-      height: 100%;
-      li {
-        display: block;
-        position: absolute;
-        bottom: -160px;
-        width: 40px;
-        height: 40px;
-        background-color: rgba($color: $primary, $alpha: 0.15);
-        list-style: none;
-        animation: square 25s infinite;
-        transition-timing-function: linear;
-        &:nth-child(1) {
-          left: 10%;
-        }
-        &:nth-child(2) {
-          left: 20%;
-          width: 80px;
-          height: 80px;
-          animation-delay: 2s;
-          animation-duration: 17s;
-        }
-        &:nth-child(3) {
-          left: 25%;
-          animation-delay: 4s;
-        }
-        &:nth-child(4) {
-          left: 40%;
-          width: 60px;
-          height: 60px;
-          background-color: rgba($color: $primary, $alpha: 0.25);
-          animation-duration: 22s;
-        }
-        &:nth-child(5) {
-          left: 70%;
-        }
-        &:nth-child(6) {
-          left: 80%;
-          width: 120px;
-          height: 120px;
-          background-color: rgba($color: $primary, $alpha: 0.2);
-          animation-delay: 3s;
-        }
-        &:nth-child(7) {
-          left: 32%;
-          width: 160px;
-          height: 160px;
-          animation-delay: 7s;
-        }
-        &:nth-child(8) {
-          left: 55%;
-          width: 20px;
-          height: 20px;
-          animation-delay: 15s;
-          animation-duration: 40s;
-        }
-        &:nth-child(9) {
-          left: 25%;
-          width: 10px;
-          height: 10px;
-          background-color: rgba($color: $primary, $alpha: 0.3);
-          animation-delay: 2s;
-          animation-duration: 40s;
-        }
-        &:nth-child(10) {
-          left: 90%;
-          width: 160px;
-          height: 160px;
-          animation-delay: 11s;
-        }
-      }
-    }
-    @keyframes square {
-      0% {
-        transform: translateY(0);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(-800px) rotate(600deg);
-        opacity: 0;
-      }
-    }
-  }
-  &-wrap{
-    height: 100%;
-  }
   &-disst{
-    padding: 15px;
+    float: left;
+    width: 260px;
     &__item{
       margin: 10px 0;
       padding: 10px 0 10px 30px;
@@ -651,9 +521,12 @@ export default {
     }
   }
   &-content{
+    float: left;
     position: relative;
+    width: calc(100% - 260px);
     height: 100%;
     padding-bottom: 90px;
+    box-sizing: border-box;
     border-left: 1px solid #E4E7ED;
     background-color: rgba($color: #fff, $alpha: 0.6);
     .el-scrollbar__bar{
@@ -693,6 +566,7 @@ export default {
     &-header{
       position: relative;
       padding: 0 15px 15px;
+      border-bottom: 1px solid #E4E7ED;
     }
     &-menu{
       position: absolute;

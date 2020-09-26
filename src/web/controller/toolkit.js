@@ -29,11 +29,6 @@ module.exports = class extends Base {
         join: 'inner', // join 方式，有 left, right, inner 3 种方式
         on: ['id', 'category_id'] // ON 条件
       }).select()
-    list.forEach(item => {
-      const { category_id, folder_name } = item
-      item.id = category_id
-      item.folderName = folder_name
-    })
     const webapps = this.model('category').formatCategoryUrl(list)
 
     return this.success({
@@ -43,11 +38,11 @@ module.exports = class extends Base {
   }
 
   async contentAction() {
-    const { id } = this.get()
+    const { path } = this.get()
 
     const categorys = await this.getCategory()
 
-    const findCategory = categorys.find(item => item.id === +id || item.filename === +id)
+    const findCategory = categorys.find(item => item.filename === path)
 
     if (!findCategory) {
       return this.ctx.throw(404)
@@ -57,7 +52,7 @@ module.exports = class extends Base {
     const { seo } = this.getListInfo(findCategory.id, categorys, configs)
 
     const data = await this.modelInstance
-      .where({ id })
+      .where({ id: findCategory.id })
       .select()
 
     return this.success({

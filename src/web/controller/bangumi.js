@@ -80,7 +80,6 @@ module.exports = class extends Base {
     const configs = await this.getConfigs()
     const categorys = await this.getCategory()
 
-    data.players = data.players ? JSON.parse(data.players) : []
     const { category, seo } = this.getDetailInfo(data, categorys, configs)
 
     return this.success({

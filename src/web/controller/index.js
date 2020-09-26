@@ -46,7 +46,7 @@ module.exports = class extends Base {
 
     // 最新追番
     const bangumiField = 'id,title,description,total,current,imgurl,showtime,status'
-    const bangumiWhere = { is_show: 1, is_recycle: 0, current: ['EXP', '< `total`'] }
+    const bangumiWhere = { is_show: 1, is_recycle: 0, status: ['!=', 0], current: ['EXP', '< `total`'] }
     const bangumiList = await this.model('bangumi')
       .field(bangumiField)
       .where(bangumiWhere)

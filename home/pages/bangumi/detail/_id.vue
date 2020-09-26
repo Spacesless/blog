@@ -42,30 +42,13 @@
       <Share />
     </div>
     <div class="bangumi-content">
-      <!--bangumi links-->
-      <div v-if="data.players.length" class="bangumi-links">
-        <h2 class="app-main__title">传送门</h2>
-        <div v-for="item in data.players" :key="item.id">
-          <a v-if="item.url.includes('bilibili')" class="bangumi-links-item" :href="item.url" target="_blank" rel="noopener noreferrer">
-            <el-tooltip class="item" effect="dark" :content="item.url" placement="right">
-              <span class="bangumi-links__logo">
-                <i>哔哩哔哩 (゜-゜)つロ 干杯~-bilibili</i>
-                <img src="/static/bangumi-bilibili.jpg" alt="bilibili">
-              </span>
-            </el-tooltip>
-          </a>
-          <a v-else class="bangumi-links-item" :href="item.url" target="_blank" rel="noopener noreferrer">
-            <el-tooltip class="item" effect="dark" :content="item.url" placement="right">
-              <span class="bangumi-links__logo">
-                <i>腾讯视频</i>
-                <img src="static/bangumi-tencent.jpg" alt="tencent">
-              </span>
-            </el-tooltip>
-          </a>
-        </div>
-      </div>
+      <h2 class="app-main__title">观后感</h2>
       <!--bangumi content-->
-      <div class="Tinymce" v-html="data.content" />
+      <div v-if="data.content" class="Tinymce" v-html="data.content" />
+      <div class="bangumi-none">
+        <img class="bangumi-none__img" src="@/assets/image/no-data.svg" alt="">
+        <p class="bangumi-none__tips">光顾着看了，什么都没留下</p>
+      </div>
       <el-image ref="preview" class="app-preview" :src="previewSrc" :preview-src-list="previewSrcList" />
     </div>
     <!-- Advertisement -->
@@ -171,24 +154,17 @@ export default {
     }
   }
   &-content{
-    margin-top: 15px;
     padding: 15px;
   }
-  &-links{
-    &-item{
-      display: inline-block;
-      margin-bottom: 10px;
-      color: #606266;
-      font-size: 14px;
-      &:hover{
-        color: $primary;
-      }
+  &-none{
+    &__img{
+      display: block;
+      width: 360px;
+      margin: 0 auto;
     }
-    &__logo{
-      i, img{
-        display: inline-block;
-        vertical-align: middle;
-      }
+    &__tips{
+      color: #909399;
+      text-align: center;
     }
   }
 }

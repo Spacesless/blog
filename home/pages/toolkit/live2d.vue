@@ -15,11 +15,11 @@
       </div>
       <div class="el-col el-col-md-14">
         <div class="live-filter">
-          <el-cascader :value="selectModel" :options="options" @change="changeClassify" />
+          <el-cascader :value="selectModel" :options="options" :props="{ emitPath: false }" @change="changeClassify" />
         </div>
         <el-scrollbar class="live-wrapper" wrap-class="scroll-warpper">
           <div class="el-row">
-            <div v-for="item in modelCount" :key="item" class="el-col-12 el-col-sm-8 el-col-md-6">
+            <div v-for="item in currentInfo.total" :key="item" class="el-col-12 el-col-sm-8 el-col-md-6">
               <div class="live-list__item" :class="{ 'live-list__item--active': selectModel === modelId && selectTexture === item }">
                 <el-image :src="thumbFormat(item)" lazy @click="loadModel(selectModel, item)" />
               </div>
@@ -32,23 +32,23 @@
 </template>
 
 <script>
-import axios from 'axios'
 if (process.client) {
   require('@/utils/live2d')
 }
 
 export default {
   layout: 'app',
-  // async asyncData({ app, params, $axios }) {
-  //   const { seo } = await $axios.$get('/tool/content', {
-  //     params: {
-  //       id: params.id
-  //     }
-  //   })
-  //   return {
-  //     seo
-  //   }
-  // },
+  async asyncData({ app, route, $axios }) {
+    const filename = route.path.split('/')
+    const { seo } = await $axios.$get('/toolkit/content', {
+      params: {
+        path: filename[filename.length - 1] || 'live2d'
+      }
+    })
+    return {
+      seo
+    }
+  },
   data() {
     return {
       apiurl: '//api.timelessq.com/live2d', // apiurl {string} 模型后端接口
@@ -56,37 +56,31 @@ export default {
       modelTexturesId: 1, // 材质 ID
       tips: '',
       tipsShow: false,
-      selectModel: 10,
+      selectModel: 100,
       selectTexture: 1,
       options: [],
-      modelCount: 0,
-      Info: {},
       currentInfo: {},
       mouseover: [
         {
           'selector': 'live2d',
           'text': [
-            '干嘛呢你，快把手拿开',
-            '鼠…鼠标放错地方了！',
-            '我生气了啊~~( ﹁ ﹁ ) ~~~ 哄不回来的那种',
-            ' 怕帕(๑⁼̴̀д⁼̴́๑)'
+            '(๑•́ ₃ •̀๑)',
+            '.^◡^.',
+            'ᖗ乛◡乛ᖘ'
           ]
         }
       ],
       click: [
-        '是…是不小心碰到了吧',
         '萝莉控是什么呀',
-        '喵喵喵(๑•́ ∀ •̀๑)',
+        '(๑•́ ∀ •̀๑)',
         '๑乛◡乛๑嘿嘿',
-        '你看到我的小熊了吗',
-        '再摸的话我可要报警了！⌇●﹏●⌇',
-        '妖妖零吗，这里有个家伙一直在摸我(ó﹏ò｡)'
+        '！⌇●﹏●⌇',
+        '(ó﹏ò｡)'
       ]
     }
   },
   async mounted() {
     this.fetchList()
-    await this.fetchModelList()
     this.initModel()
     /** 开启开发者工具 */
     var re = /x/
@@ -97,33 +91,21 @@ export default {
   },
   methods: {
     fetchList() {
-      axios.get(this.apiurl + '/lists').then(res => {
-        let source = res.data.data
+      this.$axios.get(this.apiurl + '/lists').then(res => {
+        let source = res.data
         source = JSON.stringify(source).replace(/id/gi, 'value').replace(/name/gi, 'label')
         this.options = JSON.parse(source)
-      })
-    },
-    fetchModelList() {
-      this.modelCount = 0
-      return new Promise(resolve => {
-        axios.get(`${this.apiurl}/lists/model?id=${this.selectModel}`).then(res => {
-          const { id, total, message, from } = res.data.data
-          this.total = total
-          this.modelCount = total
-          this.Info = {
-            id,
-            message,
-            from
-          }
-          resolve()
+        this.deepOptions = []
+        this.options.forEach(item => {
+          this.deepOptions = [...this.deepOptions, ...item.children]
         })
+        this.currentInfo = this.deepOptions.find(item => item.value === this.selectModel)
       })
     },
     changeClassify(val) {
-      const current = val[val.length - 1]
-      if (current === this.selectModel) return
-      this.selectModel = current
-      this.fetchModelList()
+      if (val === this.selectModel) return
+      this.selectModel = val
+      this.currentInfo = this.deepOptions.find(item => item.value === val)
     },
     thumbFormat(index) {
       return `${this.apiurl}/../model/preview/${this.selectModel}/${index}.png`
@@ -153,17 +135,18 @@ export default {
       this.modelId = modelId
       this.selectTexture = modelTexturesId
       window.loadlive2d(
-        'live2d', `${this.apiurl}?id=${modelId}&texture=${modelTexturesId}&isuseCDN=true`,
+        'live2d', `${this.apiurl}/get?id=${modelId}&texture=${modelTexturesId}&isuseCDN=true`,
         console.log('live2d', '模型 ' + modelId + '-' + modelTexturesId + ' 加载完成')
       )
-      this.currentInfo = this.modelId === this.Info.id ? this.Info : {}
+
+      if (this.deepOptions) this.currentInfo = this.deepOptions.find(item => item.value === modelId)
     },
     /** 更换模型*/
     loadOtherModel() {
       const { modelId } = this.getLocalStorage()
-      axios.get(this.apiurl + '/model/switch?id=' + modelId)
-        .then(response => {
-          const { id, message } = response.data.data
+      this.$axios.get(this.apiurl + '/model/switch?id=' + modelId)
+        .then(res => {
+          const { id, message } = res.data
           if (id) {
             this.showMessage(message, 3000)
             this.loadModel(id)
@@ -174,9 +157,9 @@ export default {
     },
     loadOtherTexture() {
       const { modelId, modelTexturesId } = this.getLocalStorage()
-      axios.get(this.apiurl + '/texture/random?id=' + modelId + '&texture=' + modelTexturesId)
-        .then(response => {
-          const { id, texture } = response.data.data
+      this.$axios.get(this.apiurl + '/texture/random?id=' + modelId + '&texture=' + modelTexturesId)
+        .then(res => {
+          const { id, texture } = res.data
           if (id) {
             this.showMessage('我的新衣服好看嘛', 3000)
             this.loadModel(id, texture)
@@ -257,16 +240,16 @@ export default {
       window.Live2D.captureName = 'Pio.png'
       window.Live2D.captureFrame = true
     }
+  },
+  head() {
+    return {
+      title: this.seo.title,
+      meta: [
+        { hid: 'description', name: 'description', content: this.seo.description },
+        { hid: 'keyword', name: 'keyword', content: this.seo.keyword }
+      ]
+    }
   }
-  // head() {
-  //   return {
-  //     title: this.seo.title,
-  //     meta: [
-  //       { hid: 'description', name: 'description', content: this.seo.description },
-  //       { hid: 'keyword', name: 'keyword', content: this.seo.keyword }
-  //     ]
-  //   }
-  // }
 }
 </script>
 

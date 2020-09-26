@@ -1,66 +1,31 @@
 <template>
-  <div class="spine">
-    <el-row>
-      <el-col :sm="24" :md="12">
-        <div class="spine-tool">
-          <el-select v-model="selectAnimation" placeholder="">
-            <el-option
-              v-for="item in animationOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            />
-          </el-select>
-        </div>
-        <canvas id="canvas" class="spine-canvas" />
-      </el-col>
-      <el-col :sm="24" :md="12">
-        <el-form class="spine-filter">
-          <el-form-item>
-            <el-input v-model="checkboxGroup1" placeholder="" />
-          </el-form-item>
-          <el-form-item label="label">
-            <el-checkbox-group v-model="checkboxGroup1">
-              <el-checkbox-button label="" />
-              <el-checkbox-button label="" />
-              <el-checkbox-button label="" />
-              <el-checkbox-button label="" />
-              <el-checkbox-button label="" />
-              <el-checkbox-button label="" />
-              <el-checkbox-button label="" />
-              <el-checkbox-button label="" />
-            </el-checkbox-group>
-          </el-form-item>
-          <el-form-item label="label">
-            <el-checkbox-group v-model="checkboxGroup1">
-              <el-checkbox-button label="" />
-              <el-checkbox-button label="" />
-              <el-checkbox-button label="" />
-              <el-checkbox-button label="" />
-              <el-checkbox-button label="" />
-              <el-checkbox-button label="" />
-              <el-checkbox-button label="" />
-              <el-checkbox-button label="" />
-              <el-checkbox-button label="" />
-            </el-checkbox-group>
-          </el-form-item>
-          <el-form-item label="label">
-            <el-radio-group v-model="checkboxGroup1">
-              <el-radio :label="3">备选项</el-radio>
-              <el-radio :label="6">备选项</el-radio>
-              <el-radio :label="9">备选项</el-radio>
-            </el-radio-group>
-          </el-form-item>
-        </el-form>
-        <el-scrollbar ref="scrollbar" v-loading="listLoading" class="spine-scroll" wrap-class="scrollbar-wrapper">
-          <ul class="spine-list">
-            <li v-for="(item,index) in skelList" :key="index">
-              <el-image :src="item.thumbnail" lazy />
-            </li>
-          </ul>
-        </el-scrollbar>
-      </el-col>
-    </el-row>
+  <div element-loading-text="拼命加载中" element-loading-background="rgba(0, 0, 0, 0.1)" class="spine">
+    <div class="spine-tool">
+      <el-select v-model="seleteSkeleton" filterable :loading="listLoading" :filter-method="filterSkel" @change="onChangeSkel">
+        <el-option
+          v-for="item in filterOptions"
+          :key="item.value"
+          :label="item.name"
+          :value="item.value"
+        >
+          <span style="float: left">{{ item.jp ? `${item.name}(${item.jp})` : item.name }}</span>
+          <span style="float: right; color: #606266; font-size: 12px">{{ item.remark }}</span>
+        </el-option>
+      </el-select>
+      <el-select v-model="selectAnimation" @change="onChangeAnimation">
+        <el-option
+          v-for="item in animationOptions"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        />
+      </el-select>
+    </div>
+    <canvas id="canvas" class="spine-canvas" />
+    <div v-loading="skelLoading" element-loading-text="拼命加载中" element-loading-background="rgba(0, 0, 0, 0)" class="spine-loading" />
+    <div class="spine-scale">
+      <el-slider v-model="spineScale" :step="0.01" :min="0.5" :max="1.5" @input="onScaleChange" />
+    </div>
   </div>
 </template>
 
@@ -68,21 +33,55 @@
 import { spine } from '@/utils/spine-ts/spine-webgl.js'
 
 export default {
-  data() {
+  async asyncData({ app, route, $axios }) {
+    const filename = route.path.split('/')
+    const { seo } = await $axios.$get('/toolkit/content', {
+      params: {
+        path: filename[filename.length - 1] || 'live2d'
+      }
+    })
     return {
-      activeSkeleton: '',
-      seleteSkeleton: '',
-      skelList: [],
-      selectAnimation: '',
-      animationOptions: [],
-      checkboxGroup1: ''
+      seo
     }
   },
+  data() {
+    return {
+      seleteSkeleton: 'lafei_4',
+      skelOptions: [],
+      listLoading: false,
+      filterOptions: [],
+      selectAnimation: '',
+      animationOptions: [],
+      checkboxGroup1: '',
+      apiUrl: '//api.timelessq.com/spine',
+      spineScale: 1,
+      skelLoading: false
+    }
+  },
+  mounted() {
+    this.initSpine()
+    this.fetchList()
+  },
   methods: {
-    fetchList() {
-
+    async fetchList() {
+      this.listLoading = true
+      await this.$axios.get(this.apiUrl + '/lists').then(res => {
+        this.filterOptions = this.skelOptions = res.data
+      }).catch(() => {})
+      this.listLoading = false
     },
-    initSpine() {
+    fetchAssets() {
+      return this.$axios.get(this.apiUrl, {
+        params: {
+          id: this.seleteSkeleton,
+          isuseCDN: true
+        }
+      }).then(res => {
+        this.assetsData = res.data
+        this.loadAsset()
+      })
+    },
+    async initSpine() {
       // Setup canvas and WebGL context. We pass alpha: false to canvas.getContext() so we don't use premultiplied alpha when
       // loading textures. That is handled separately by PolygonBatcher.
       this.spineCanvas = document.getElementById('canvas')
@@ -98,31 +97,29 @@ export default {
       // Create a simple shader, mesh, model-view-projection matrix, SkeletonRenderer, and AssetManager.
       this.shader = spine.webgl.Shader.newTwoColoredTextured(this.gl)
       this.batcher = new spine.webgl.PolygonBatcher(this.gl)
-      const mvp = new spine.webgl.Matrix4()
-      mvp.ortho2d(0, 0, this.spineCanvas.width - 1, this.spineCanvas.height - 1)
+      this.mvp = new spine.webgl.Matrix4()
+      this.mvp.ortho2d(0, 0, this.spineCanvas.width - 1, this.spineCanvas.height - 1)
       this.skeletonRenderer = new spine.webgl.SkeletonRenderer(this.gl)
       this.assetManager = new spine.webgl.AssetManager(this.gl)
-
+      await this.fetchAssets()
       requestAnimationFrame(this.load)
-
-      this.spineCanvas.addEventListener('mousewheel', (e) => {
-        if (!this.root) return
-
-        if (e.deltaY > 0) {
-          console.log('> 0')
-        } else {
-          console.log('< 0')
-        }
-
-        this.root.scaleX = 1
-        this.root.scaleY = 1
-      })
+    },
+    loadAsset() {
+      const { atlas, skelBinary, skelJson } = this.assetsData
+      if (skelJson) {
+        this.assetManager.loadText(skelJson)
+      } else {
+        this.assetManager.loadBinary(skelBinary)
+      }
+      this.assetManager.loadTextureAtlas(atlas)
     },
     load() {
+      this.skelLoading = true
       // Wait until the AssetManager has loaded all resources, then load the skeletons.
       if (this.assetManager.isLoadingComplete()) {
-        this.activeSkeleton = this.loadSkeleton({}, false)
         this.selectAnimation = 'normal'
+        this.activeSkeleton = this.loadSkeleton(false)
+        this.isChange = false
         this.lastFrameTime = Date.now() / 1000
         this.setupAnimation()
         requestAnimationFrame(this.render)
@@ -130,20 +127,8 @@ export default {
         requestAnimationFrame(this.load)
       }
     },
-    fetchAssets() {
-      return this.$axios.$get('').then(res => {
-        this.loadAsset(res.data)
-      })
-    },
-    loadAsset({ atlas, skelBinary, skelJson }) {
-      if (skelJson) {
-        this.assetManager.loadText(skelJson)
-      } else {
-        this.assetManager.loadBinary(skelBinary)
-      }
-    },
-    loadSkeleton(assets, premultipliedAlpha, skin) {
-      const { atlas, skelBinary, skelJson } = assets
+    loadSkeleton(premultipliedAlpha, skin) {
+      const { atlas, skelBinary, skelJson } = this.assetsData
       if (skin === undefined) skin = 'default'
       // Load the texture atlas using name.atlas from the AssetManager.
       const atlasData = this.assetManager.get(atlas)
@@ -164,10 +149,10 @@ export default {
       this.root = skeletonData.findBone('root')
       skeleton.setSkinByName(skin)
       const bounds = this.calculateBounds(skeleton)
-      // Create an AnimationState, and set the initial animation in looping mode.
+      // // Create an AnimationState, and set the initial animation in looping mode.
       const animationStateData = new spine.AnimationStateData(skeleton.data)
-      var animationState = new spine.AnimationState(animationStateData)
-      if (this.keleton.data.findAnimation(this.selectAnimation) == null) {
+      const animationState = new spine.AnimationState(animationStateData)
+      if (skeleton.data.findAnimation(this.selectAnimation) == null) {
         this.selectAnimation = skeleton.data.animations[0].name
       }
       animationState.setAnimation(0, this.selectAnimation, true)
@@ -182,23 +167,12 @@ export default {
       skeleton.getBounds(offset, size, [])
       return { offset, size }
     },
-    setupAnimation() {
-      const skeleton = this.activeSkeleton.skeleton
-      console.log(skeleton.data.skins)
-      this.animationOptions = skeleton.data.animations.map(item => {
-        return {
-          label: item.name,
-          value: item.name
-        }
-      })
-    },
-    onChangeAnimation(animationName) {
-      const state = this.activeSkeleton.state
-      const skeleton = this.activeSkeleton.skeleton
-      skeleton.setToSetupPose()
-      state.setAnimation(0, animationName, true)
-    },
     render() {
+      this.skelLoading = false
+      if (this.isChange) {
+        this.load()
+        return
+      }
       const now = Date.now() / 1000
       const delta = now - this.lastFrameTime
       this.lastFrameTime = now
@@ -244,11 +218,77 @@ export default {
       const height = this.spineCanvas.height * scale
       this.mvp.ortho2d(centerX - width / 2, centerY - height / 2, width, height)
       this.gl.viewport(0, 0, this.spineCanvas.width, this.spineCanvas.height)
+    },
+    setupAnimation() {
+      const skeleton = this.activeSkeleton.skeleton
+      this.animationOptions = skeleton.data.animations.map(item => {
+        return {
+          label: item.name,
+          value: item.name
+        }
+      })
+    },
+    async onChangeSkel() {
+      await this.fetchAssets()
+      this.isChange = true
+    },
+    onChangeAnimation(animationName) {
+      const state = this.activeSkeleton.state
+      const skeleton = this.activeSkeleton.skeleton
+      skeleton.setToSetupPose()
+      state.setAnimation(0, animationName, true)
+    },
+    onScaleChange(val) {
+      if (!this.root) return
+      this.root.scaleX = this.root.scaleY = val
+    },
+    filterSkel(keyword) {
+      if (keyword) {
+        this.filterOptions = this.skelOptions.filter(item => JSON.stringify(item).includes(keyword))
+      } else {
+        this.filterOptions = this.skelOptions
+      }
     }
-  }
+  },
+  head() {
+    return {
+      title: this.seo.title,
+      meta: [
+        { hid: 'description', name: 'description', content: this.seo.description },
+        { hid: 'keyword', name: 'keyword', content: this.seo.keyword }
+      ]
+    }
+  },
+  layout: 'app'
 }
 </script>
 
-<style lang="sass" scoped>
-
+<style lang="scss" scoped>
+.spine{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  &-tool{
+    position: absolute;
+    top: 30px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+  }
+  &-scale{
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    width: 410px;
+    margin-left: -205px;
+  }
+  &-loading {
+    position: absolute;
+    width: 100px;
+    height: 60px;
+    bottom: 90px;
+    left: 50%;
+    margin-left: -50px;
+  }
+}
 </style>

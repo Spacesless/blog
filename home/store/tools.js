@@ -2,7 +2,7 @@ const Cookies = process.client ? require('js-cookie') : undefined
 
 const state = () => ({
   sidebar: {
-    opened: Cookies.get('sidebarStatus') ? !!+Cookies.get('sidebarStatus') : true,
+    opened: Cookies && Cookies.get('sidebarStatus') ? !!+Cookies.get('sidebarStatus') : true,
     withoutAnimation: false
   },
   particleActive: true,
