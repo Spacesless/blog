@@ -28,16 +28,16 @@ module.exports = class extends Base {
     this.assign('siteurl', this.baseUrl)
 
     const categorys = await this.getCategory()
-    const list = await this.getSitemapList(categorys)
-    this.assign('list', list)
+    const sitemapList = await this.getSitemapList(categorys)
+    this.assign('list', sitemapList)
 
-    const lastmod = list.length ? list[0].updatetime : think.datetime(new Date(), 'YYYY-MM-DD')
+    const lastmod = sitemapList.length ? sitemapList[0].updatetime : think.datetime(new Date(), 'YYYY-MM-DD')
     this.assign('lastmod', lastmod)
 
-    const _columns = JSON.parse(JSON.stringify(categorys))
-    const category = _columns.map(item => {
+    const _categorys = JSON.parse(JSON.stringify(categorys))
+    const targetCategorys = _categorys.map(item => {
       const { id, url, level } = item
-      let rows = list.filter(element => element.category_id === id)
+      let rows = sitemapList.filter(element => element.category_id === id)
       let lastmod
       if (rows.length) {
         rows = rows.sort((a, b) => {
@@ -51,7 +51,7 @@ module.exports = class extends Base {
         priority: level === 1 ? 0.9 : (level === 2 ? 0.8 : 0.7)
       }
     })
-    this.assign('category', category)
+    this.assign('categorys', targetCategorys)
 
     this.ctx.type = 'text/xml'
     return super.display('home/sitemap.xml')

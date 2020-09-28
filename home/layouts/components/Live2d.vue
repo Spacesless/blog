@@ -7,7 +7,7 @@
     <div class="waifu-tool">
       <span ref="home" class="tl-icon" @click="navigatorToHome">&#xe76f;</span>
       <span ref="model" class="tl-icon" @click="loadOtherModel">&#xe6ed;</span>
-      <span ref="textures" class="tl-icon" @click="loadOtherTexture">&#xe646;</span>
+      <span ref="textures" class="tl-icon" @click="loadOtherTexture">&#xe743;</span>
       <span ref="photo" class="tl-icon" @click="handleTakePhoto">&#xe704;</span>
       <span ref="close" class="tl-icon" @click="handleHideLive2d">&#xe602;</span>
     </div>

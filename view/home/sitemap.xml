@@ -6,7 +6,7 @@
     <priority>1.0</priority>
     <changefreq>weekly</changefreq>
   </url>
-  {% for item in category %}
+  {% for item in categorys %}
   <url>
     <loc>{$ item.url $}</loc>
     <lastmod>{$ item.lastmod $}</lastmod>

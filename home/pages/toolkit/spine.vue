@@ -244,7 +244,7 @@ export default {
     },
     filterSkel(keyword) {
       if (keyword) {
-        this.filterOptions = this.skelOptions.filter(item => JSON.stringify(item).includes(keyword))
+        this.filterOptions = this.skelOptions.filter(item => JSON.stringify(item).toLowerCase().includes(keyword))
       } else {
         this.filterOptions = this.skelOptions
       }
@@ -274,6 +274,12 @@ export default {
     left: 0;
     width: 100%;
     text-align: center;
+    .el-select{
+      margin-bottom: 10px;
+    }
+    @media (max-width: 576px) {
+      top: 15px;
+    }
   }
   &-scale{
     position: absolute;
@@ -281,14 +287,24 @@ export default {
     left: 50%;
     width: 410px;
     margin-left: -205px;
+    @media (max-width: 576px) {
+      left: 0;
+      bottom: 15px;
+      width: 100%;
+      padding: 0 15px;
+      margin-left: 0;
+    }
   }
   &-loading {
     position: absolute;
+    left: 50%;
+    bottom: 90px;
     width: 100px;
     height: 60px;
-    bottom: 90px;
-    left: 50%;
     margin-left: -50px;
+    @media (max-width: 576px) {
+      bottom: 75px;
+    }
   }
 }
 </style>
