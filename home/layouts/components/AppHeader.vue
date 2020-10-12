@@ -25,7 +25,7 @@
       :append-to-body="true"
     >
       <div class="search">
-        <div class="app-container">
+        <div class="container">
           <div class="search-wrap clearfix">
             <el-select v-model="type" size="large" class="search-classify">
               <el-option label="全部" value="" />

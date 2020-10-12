@@ -6,12 +6,12 @@ module.exports = class extends Rest {
       const data = await this.modelInstance.where({ id: this.id }).find()
       return this.success(data)
     } else {
-      const where = {}
-      const field = 'id,content,addtime,username'
-      const list = await this.modelInstance.where(where)
+      const { page, pageSize } = this.get()
+      const field = 'id,content,addtime,name'
+      const list = await this.modelInstance
         .field(field)
         .order('addtime DESC')
-        .page(this.get('page'), this.get('pageSize'))
+        .page(page, pageSize)
         .countSelect()
       return this.success(list)
     }

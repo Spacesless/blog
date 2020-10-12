@@ -1,11 +1,24 @@
 import Cookies from 'js-cookie'
 
+// 检测客户端是否支持webp图片
+function checkWebpSupport() {
+  let flag
+  try {
+    flag = document.createElement('canvas').toDataURL('image/webp', 0.5).indexOf('data:image/webp') === 0
+  } catch (err) {
+    flag = false
+  }
+  Cookies.set('isSupportWebp', flag)
+  return flag
+}
+
 const state = {
   sidebar: {
     opened: Cookies.get('sidebarStatus') ? !!+Cookies.get('sidebarStatus') : true,
     withoutAnimation: false
   },
-  device: 'desktop'
+  device: 'desktop',
+  isSupportWebp: Cookies.get('isSupportWebp') ? Cookies.get('isSupportWebp') : checkWebpSupport()
 }
 
 const mutations = {

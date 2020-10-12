@@ -28,6 +28,8 @@ service.interceptors.request.use(
     //   config.headers['Authorization'] = token || ''
     // }
 
+    config.headers['SupportWebp'] = store.getters.isSupportWebp ? 1 : 0
+
     return config
   },
   error => {

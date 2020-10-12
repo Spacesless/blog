@@ -7,7 +7,7 @@
       <!--header-->
       <app-header />
       <!-- main start -->
-      <nuxt class="app-container" />
+      <nuxt class="container" />
       <!--footer start-->
       <app-footer :configs="configs" />
     </div>

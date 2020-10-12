@@ -230,7 +230,7 @@
   }
 }
 
-.app-container {
+.container {
   width: 100%;
   min-height: calc(100vh - 150px);
   padding-right: 15px;
@@ -249,9 +249,6 @@
   }
   @media (min-width: 1200px) {
     max-width: 1140px;
-  }
-  @media (min-width: 1920px) {
-    max-width: 1280px;
   }
 }
 

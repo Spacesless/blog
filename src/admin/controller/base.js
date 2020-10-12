@@ -24,7 +24,7 @@ module.exports = class extends think.Controller {
    */
   async thumbImage(src, width, height, fit = 0, options = {}) {
     if (think.isEmpty(src)) return ''
-    const isSupportWebp = this.ajaxSuportWebp
+    const isSupportWebp = Number(this.ctx.headers.SupportWebp)
     const dest = await think.sharpResize(
       src,
       {
@@ -33,7 +33,7 @@ module.exports = class extends think.Controller {
         fit: +fit
       },
       {
-        format: +isSupportWebp ? 'webp' : 'jpg',
+        format: isSupportWebp ? 'webp' : 'jpg',
         ...options
       }
     )

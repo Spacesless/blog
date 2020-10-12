@@ -136,14 +136,14 @@ module.exports = class extends think.Controller {
     if (think.isEmpty(src)) {
       src = '/static/placeholder.png'
     }
-    const isSupportWebp = this.ctx.headers.supportwebp
+    const isSupportWebp = Number(this.ctx.headers.SupportWebp)
     const dest = await think.sharpResize(src, {
       width: +width,
       height: +height,
       fit: +fit
     },
     {
-      format: +isSupportWebp ? 'webp' : 'jpg',
+      format: isSupportWebp ? 'webp' : 'jpg',
       ...options
     })
 
