@@ -1,30 +1,32 @@
 <template>
-  <div class="comment-reply">
+  <div class="reply">
     <el-form ref="form" :model="info" :rules="rules">
       <el-row :gutter="10">
         <el-col :sm="24" :md="8">
           <el-form-item prop="name">
-            <el-input v-model="info.name" placeholder="Name" />
+            <el-input v-model="info.name" placeholder="Name" clearable />
           </el-form-item>
         </el-col>
         <el-col :sm="24" :md="8">
           <el-form-item prop="email">
-            <el-input v-model="info.email" placeholder="" />
+            <el-input v-model="info.email" placeholder="Email" clearable />
           </el-form-item>
         </el-col>
         <el-col :sm="24" :md="8">
           <el-form-item prop="website">
-            <el-input v-model="info.website" placeholder="" />
+            <el-input v-model="info.website" placeholder="Website" clearable />
+          </el-form-item>
+        </el-col>
+        <el-col class="reply-content" :span="24">
+          <el-form-item prop="content">
+            <el-input ref="textarea" v-model="info.content" class="reply-content-input" type="textarea" :rows="5" resize="none" placeholder="What do you want to say..." />
+            <span class="reply-content__submit" @click="handleSubmit">
+              <i class="el-icon-position" />
+            </span>
           </el-form-item>
         </el-col>
       </el-row>
-      <el-form-item prop="content">
-        <el-input ref="textarea" v-model="info.content" type="textarea" :rows="5" resize="none" placeholder="What do you want to say..." />
-      </el-form-item>
     </el-form>
-    <div class="reply-tools">
-      <el-button type="primary" icon="el-icon-position" @click="handleSubmit">123</el-button>
-    </div>
   </div>
 </template>
 
@@ -80,3 +82,35 @@ export default {
 }
 </script>
 
+<style lang="scss" scoped>
+.reply{
+  &-content{
+    ::v-deep .el-textarea__inner{
+      padding-right: 66px;
+    }
+    &__submit{
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      width: 36px;
+      height: 36px;
+      margin-top: -18px;
+      background-color: #409EFF;
+      color: #fff;
+      font-size: 18px;
+      line-height: 36px;
+      text-align: center;
+      border-radius: 50%;
+      cursor: pointer;
+      .el-icon-position{
+        transition: transform .3s;
+      }
+      &:hover{
+        .el-icon-position{
+          transform: rotate(45deg);
+        }
+      }
+    }
+  }
+}
+</style>

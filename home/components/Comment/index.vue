@@ -1,26 +1,32 @@
 <template>
   <div v-loading="fetchLoading" class="comment">
-    <!-- <h3 class="app-main__title">评论（{{ total }}）</h3>
     <comment-reply :info="info" />
     <div class="comment-list">
-      <div v-for="item in commentsList" :key="item.id" class="comment-main">
-        <comment-item :info="info" :data="item" :is-reply="isReply" @onreply="handleReply" />
-      </div>
+      <comment-item
+        v-for="item in commentsList"
+        :key="item.id"
+        :info="info"
+        :data="item"
+        :reply-id="replyId"
+        @onReply="onReply"
+        @onCancel="onCancel"
+      />
     </div>
-    <pagination v-show="total > listQuery.pageSize" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.pageSize" @pagination="fetchList" /> -->
+    <pagination v-show="total > listQuery.pageSize" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.pageSize" @pagination="fetchList" />
   </div>
+
 </template>
 
 <script>
-// import Pagination from '@/components/Pagination/index'
-// import CommentItem from './components/CommentItem'
-// import CommentReply from './components/CommentReply'
+import Pagination from '@/components/Pagination/index'
+import CommentItem from './components/CommentItem'
+import CommentReply from './components/CommentReply'
 
 export default {
   components: {
-    // Pagination,
-    // CommentItem,
-    // CommentReply
+    Pagination,
+    CommentItem,
+    CommentReply
   },
   props: {
     topicId: {
@@ -30,7 +36,7 @@ export default {
   },
   data() {
     return {
-      isReply: 0,
+      replyId: 0,
       info: {},
       fetchLoading: false,
       total: 0,
@@ -38,7 +44,22 @@ export default {
         page: 1,
         pageSize: 10
       },
-      commentsList: []
+      commentsList: [{
+        id: 1,
+        nickname: '测试',
+        email: '804093032@qq.com',
+        content: '测试',
+        webSite: '/',
+        addTime: '2020-11-16 10:00:00',
+        children: [{
+          id: 1,
+          nickname: '子节点',
+          email: '18878554196@163.com',
+          content: '测试',
+          webSite: '/',
+          addTime: '2020-11-16 15:00:00'
+        }]
+      }]
     }
   },
   mounted() {
@@ -57,47 +78,22 @@ export default {
       }).catch(() => {})
       this.fetchLoading = false
     },
-    handleReply(id) {
-      this.isReply = id
+    onReply(id) {
+      this.replyId = id
+    },
+    onCancel() {
+      this.replyId = 0
     }
   }
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .comment{
+  width: 1110px;
+  margin: 50px;
   &-list{
     padding: 15px 0;
-  }
-  &-tree{
-    padding-left: 50px;
-  }
-  &-main{
-    padding: 10px 0;
-    border-bottom: 1px solid #e6e6e6;
-  }
-  &-item{
-    padding: 5px 0;
-    .comment-reply{
-      margin: 10px 0;
-    }
-  }
-  &-avatar{
-    overflow: hidden;
-    float: left;
-    width: 50px;
-    height: 50px;
-    margin-right: 15px;
-    border-radius: 50%;
-    img{
-      display: block;
-      width: 100%;
-      height: 100%;
-    }
-  }
-  &-oparate{
-    color: #909399;
-    font-size: 14px;
   }
 }
 

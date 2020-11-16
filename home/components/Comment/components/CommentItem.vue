@@ -2,18 +2,25 @@
   <div class="comment-item">
     <div class="clearfix">
       <div class="comment-avatar">
-        <el-image :src="getAvatar(data.id, data.email)" />
+        <a :href="data.webSite" target="_blank" rel="noopener noreferrer">
+          <el-image class="comment-avatar__picture" :src="getAvatar(data.id, data.email)" />
+        </a>
       </div>
       <div class="comment-info">
-        <div class="comment-oparate">
-          <span class="comment-name">{{ data.nickname }}</span>
-          <span>{{ data.addtime }}</span>
-          <i class="el-icon-chat-line-round" @click="handleReply" />
+        <p class="comment-info__name">{{ data.nickname }}</p>
+        <div class="comment-info__content">{{ data.content }}</div>
+        <div class="comment-info-operate">
+          <span class="comment-info__time">{{ data.addTime }}</span>
+          <span v-if="data.id === replyId" class="comment-info-btn" @click="handleCancel">
+            <i class="el-icon-close" />取消
+          </span>
+          <span v-else class="comment-info-btn" @click="handleReply">
+            <i class="el-icon-chat-line-round" />回复
+          </span>
         </div>
-        <div class="comment-content">{{ data.content }}</div>
       </div>
     </div>
-    <comment-reply v-if="data.id === isReply" ref="textArea" :info="info" :parentid="data.id" :respond="respond" />
+    <comment-reply v-if="data.id === replyId" ref="textArea" :info="info" :parentid="data.id" :respond="respond" />
 
     <div v-if="data.children" class="comment-tree">
       <comment-item
@@ -21,7 +28,7 @@
         :key="child.id"
         :info="info"
         :data="child"
-        :is-reply="isReply"
+        :reply-id="replyId"
         @onreply="handleReply"
       />
     </div>
@@ -44,7 +51,7 @@ export default {
       type: Object,
       default: () => {}
     },
-    isReply: {
+    replyId: {
       type: Number,
       default: 0
     }
@@ -57,7 +64,7 @@ export default {
   methods: {
     async handleReply() {
       const { id, nickname } = this.data
-      this.$emit('onreply', id)
+      this.$emit('onReply', id)
       await this.$nextTick()
       this.respond = `@${nickname}`
     },
@@ -70,8 +77,67 @@ export default {
         const emailHash = md5(email)
         return `${domains[id % 3] || domains[0]}/avatar/${emailHash}`
       }
+    },
+    handleCancel() {
+      this.$emit('onCancel')
     }
   }
 }
 </script>
 
+<style lang="scss" scoped>
+.comment{
+  &-tree{
+    padding-left: 65px;
+  }
+  &-item{
+    margin-bottom: 20px;
+  }
+  &-avatar{
+    overflow: hidden;
+    float: left;
+    width: 50px;
+    height: 50px;
+    margin-right: 15px;
+    border-radius: 50%;
+    &__picture{
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+  }
+  &-info{
+    overflow: hidden;
+    &__name{
+      margin-bottom: 8px;
+      font-size: 14px;
+      color: #606266;
+    }
+    &__content{
+      margin-bottom: 8px;
+      padding: 7px 12px;
+      background-color: #f4f6fb;
+      color: #303133;
+      font-size: 15px;
+      border-radius: 2px;
+    }
+    &-operate{
+      margin-bottom: 20px;
+      font-size: 13px;
+      color: #606266;
+    }
+    &__time{
+      margin-right: 10px;
+    }
+    &-btn{
+      cursor: pointer;
+      i {
+        margin-right: 3px;
+      }
+      &:hover{
+        color: #409EFF;
+      }
+    }
+  }
+}
+</style>
