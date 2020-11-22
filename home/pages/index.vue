@@ -10,7 +10,7 @@
     <!-- blog start -->
     <div class="articles">
       <div class="home-head">
-        <h2 class="home-head__title">最新博文</h2>
+        <h2 class="home-head__title">最新文章</h2>
         <nuxt-link class="home-head__more" to="/blog">more+</nuxt-link>
       </div>
       <el-row class="articles-list" :gutter="20">

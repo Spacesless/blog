@@ -87,6 +87,7 @@ export default {
   &-content{
     ::v-deep .el-textarea__inner{
       padding-right: 66px;
+      font-family: Quicksand,"Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
     }
     &__submit{
       position: absolute;
