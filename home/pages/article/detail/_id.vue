@@ -19,15 +19,20 @@
         <div ref="content" class="Tinymce" v-html="data.content" />
         <el-image ref="preview" class="app-preview" :src="previewSrc" :preview-src-list="previewSrcList" />
       </div>
-      <div v-if="headings.length" class="blog-content-catalogue" :class="{'blog-content-catalogue--close': isHideCatalogue}">
-        <div class="blog-content-catalogue-head">
-          文章目录
-          <!-- <i class="blog-content-catalogue__close el-icon-close" @click="isHideCatalogue = true"></i> -->
-        </div>
-        <ul>
-          <li v-for="(item,index) in headings" :key="index" class="blog-content-catalogue-item" :class="'blog-content-catalogue--'+item.nodeName">
-            <span :class="index === isActive ? 'active': ''" @click="scrollIntoView(item)">{{ item.innerText }}</span>
-          </li>
+      <div v-if="catalogList.length" class="catalog">
+        <ul class="catalog-list">
+          <li
+            v-for="(item, index) in catalogList"
+            :key="index"
+            class="catalog-item"
+            :class="[
+              'catalog-item--' + item.nodeName,
+              {
+                'catalog-item--active': index === isActive
+              }
+            ]"
+            @click="scrollIntoView(item)"
+          >{{ item.innerText }}</li>
         </ul>
       </div>
     </div>
@@ -64,9 +69,8 @@ export default {
   },
   data() {
     return {
-      headings: [],
+      catalogList: [],
       isActive: -1,
-      isHideCatalogue: false,
       previewSrc: '',
       previewSrcList: []
     }
@@ -79,21 +83,20 @@ export default {
   methods: {
     initContent() {
       const nodes = Array.from(this.$refs.content.childNodes)
-      this.headings = nodes.filter(item => {
+      this.catalogList = nodes.filter(item => {
         const nodeName = item.nodeName.toLowerCase()
         return nodeName === 'h2' ||
         nodeName === 'h3' ||
         nodeName === 'h4'
       })
-      this.sideType = this.headings.length > 0 ? 2 : 1
+      this.sideType = this.catalogList.length > 0 ? 2 : 1
 
       const nodeOffsetTop = []
-      const headings = this.headings
-      const headingsLen = headings.length
+      const catalogListLen = this.catalogList.length
       const contentStart = this.getOffsetTop(this.$refs.content)
       const contentEnd = this.getOffsetTop(this.$refs.content) + this.$refs.content.clientHeight
-      for (let i = 0; i < headingsLen; i++) {
-        const top = this.getOffsetTop(headings[i]) - 100
+      for (let i = 0; i < catalogListLen; i++) {
+        const top = this.getOffsetTop(this.catalogList[i]) - 15
         nodeOffsetTop.push(top)
       }
 
@@ -146,7 +149,7 @@ export default {
       Prism.highlightAll()
     },
     scrollIntoView(item) {
-      const tagetTop = this.getOffsetTop(item) - 60
+      const tagetTop = this.getOffsetTop(item) - 10
       scrollTo(tagetTop, 400)
     },
     getOffsetTop(dom) {
@@ -208,49 +211,45 @@ export default {
   }
   &-content{
     border-radius: 4px;
-    &-catalogue{
-      position: fixed;
-      right: 0;
-      top: 80px;
-      max-width: 250px;
-      background-color: #fff;
-      border-top-left-radius: 4px;
-      border-bottom-left-radius: 4px;
-      box-shadow: rgba(0, 0, 0, 0.12) 0px 0px 6px;
-      &-head{
-        position: relative;
-        padding: 0 15px;
-        color: #303133;
-        line-height: 2;
-        border-bottom: 1px dashed #EBEEF5;
-      }
-      &__close{
+  }
+  .catalog{
+    position: fixed;
+    top: 75px;
+    right: 0;
+    width: 290px;
+    &-list{
+      padding: 0 15px;
+    }
+    &-item{
+      position: relative;
+      color: #303133;
+      line-height: 24px;
+      margin-bottom: 2px;
+      cursor: pointer;
+      &:before{
+        content: '';
         position: absolute;
-        right: 10px;
-        top: 7px;
-        cursor: pointer;
+        left: -18px;
+        top: 0;
+        width: 12px;
+        height: 12px;
+        border-left: 1px dashed #DCDFE6;
+        border-bottom: 1px dashed #DCDFE6;
       }
-      &-item{
-        padding: 7px 15px;
-        color: #606266;
-        font-size: 14px;
-        cursor: pointer;
-        .active{
-          color: $primary;
-        }
-        &:hover{
-          color: $primary;
-          background-color: #ecf5ff;
-        }
+      &--H2{
+        overflow: hidden;
       }
       &--H3{
-        margin-left: 5px;
+        margin-left: 24px;
       }
       &--H4{
-        margin-left: 10px;
+        margin-left: 48px;
       }
       &--H5{
-        margin-left: 15px;
+        margin-left: 72px;
+      }
+      &:hover, &--active{
+        color: $primary;
       }
     }
   }

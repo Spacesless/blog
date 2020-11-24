@@ -6,7 +6,7 @@
       <p>部分内容(图片、视频)来源于互联网，如果有侵权内容、不妥之处，请联系我删除。</p>
       <p>Timeless</p>
       <p>大区：广州</p>
-      <p>职业：练习时长2年半的前端小白</p>
+      <p>职业：练习时长2年半的前端开发</p>
       <div class="about-connact">
         <a class="about-connact__links" href="https://space.bilibili.com/315883644/favlist" rel="noopener noreferrer" target="_blank">
           <i class="tl-icon">&#xe75e;</i>Bilibili

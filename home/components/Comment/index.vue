@@ -82,8 +82,6 @@ export default {
 
 <style lang="scss" scoped>
 .comment{
-  width: 1110px;
-  margin: 50px;
   &-list{
     padding: 15px 0;
   }

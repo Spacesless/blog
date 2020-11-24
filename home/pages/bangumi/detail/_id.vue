@@ -44,8 +44,8 @@
     <div class="bangumi-content">
       <h2 class="app-main__title">观后感</h2>
       <!--bangumi content-->
-      <div v-if="data.content" class="Tinymce" v-html="data.content" />
-      <div class="bangumi-none">
+      <div class="Tinymce" v-html="data.content" />
+      <div v-if="isNoData" class="bangumi-none">
         <img class="bangumi-none__img" src="@/assets/image/no-data.svg" alt="">
         <p class="bangumi-none__tips">光顾着看了，什么都没留下</p>
       </div>
@@ -84,6 +84,11 @@ export default {
       showViewer: false,
       previewSrc: '',
       previewSrcList: []
+    }
+  },
+  computed: {
+    isNoData() {
+      return this.data.content.trim().length === 0
     }
   },
   mounted() {
