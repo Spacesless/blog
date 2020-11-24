@@ -28,8 +28,7 @@
         :key="child.id"
         :info="info"
         :data="child"
-        :reply-id="replyId"
-        @onreply="handleReply"
+        :reply-id.sync="replyId"
       />
     </div>
   </div>
@@ -64,7 +63,7 @@ export default {
   methods: {
     async handleReply() {
       const { id, nickname } = this.data
-      this.$emit('onReply', id)
+      this.$emit('update:replyId', id)
       await this.$nextTick()
       this.respond = `@${nickname}`
     },
@@ -73,9 +72,9 @@ export default {
         const qquin = email.split('@')[0]
         return `http://q1.qlogo.cn/g?b=qq&s=100&nk=${qquin}`
       } else {
-        const domains = ['//www.gravatar.com', '//0.gravatar.com', '//1.gravatar.com', '//secure.gravatar.com']
+        const domains = ['//www.gravatar.com', '//0.gravatar.com', '//1.gravatar.com', '//cn.gravatar.com']
         const emailHash = md5(email)
-        return `${domains[id % 3] || domains[0]}/avatar/${emailHash}`
+        return `${domains[id % 4] || domains[0]}/avatar/${emailHash}?s=50&d=http://cdn.timelessq.com/static/comment/${id % 10}.jpg`
       }
     },
     handleCancel() {

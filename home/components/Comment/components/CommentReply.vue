@@ -1,33 +1,31 @@
 <template>
-  <div class="reply">
-    <el-form ref="form" :model="info" :rules="rules">
-      <el-row :gutter="10">
-        <el-col :sm="24" :md="8">
-          <el-form-item prop="name">
-            <el-input v-model="info.name" placeholder="Name" clearable />
-          </el-form-item>
-        </el-col>
-        <el-col :sm="24" :md="8">
-          <el-form-item prop="email">
-            <el-input v-model="info.email" placeholder="Email" clearable />
-          </el-form-item>
-        </el-col>
-        <el-col :sm="24" :md="8">
-          <el-form-item prop="website">
-            <el-input v-model="info.website" placeholder="Website" clearable />
-          </el-form-item>
-        </el-col>
-        <el-col class="reply-content" :span="24">
-          <el-form-item prop="content">
-            <el-input ref="textarea" v-model="info.content" class="reply-content-input" type="textarea" :rows="5" resize="none" placeholder="What do you want to say..." />
-            <span class="reply-content__submit" @click="handleSubmit">
-              <i class="el-icon-position" />
-            </span>
-          </el-form-item>
-        </el-col>
-      </el-row>
-    </el-form>
-  </div>
+  <el-form ref="form" class="reply" :model="info" :rules="rules">
+    <el-row :gutter="10">
+      <el-col :sm="24" :md="8">
+        <el-form-item prop="name">
+          <el-input v-model="info.name" placeholder="Name" clearable />
+        </el-form-item>
+      </el-col>
+      <el-col :sm="24" :md="8">
+        <el-form-item prop="email">
+          <el-input v-model="info.email" placeholder="Email" clearable />
+        </el-form-item>
+      </el-col>
+      <el-col :sm="24" :md="8">
+        <el-form-item prop="website">
+          <el-input v-model="info.website" placeholder="Website" clearable />
+        </el-form-item>
+      </el-col>
+      <el-col class="reply-content" :span="24">
+        <el-form-item prop="content">
+          <el-input ref="textarea" v-model="info.content" class="reply-content-input" type="textarea" :rows="5" resize="none" placeholder="What do you want to say..." />
+          <span class="reply-content__submit" @click="handleSubmit">
+            <i class="el-icon-position" />
+          </span>
+        </el-form-item>
+      </el-col>
+    </el-row>
+  </el-form>
 </template>
 
 <script>

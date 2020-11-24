@@ -7,9 +7,7 @@
         :key="item.id"
         :info="info"
         :data="item"
-        :reply-id="replyId"
-        @onReply="onReply"
-        @onCancel="onCancel"
+        :reply-id.sync="replyId"
       />
     </div>
     <pagination v-show="total > listQuery.pageSize" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.pageSize" @pagination="fetchList" />
@@ -77,12 +75,6 @@ export default {
         this.commentsList = data
       }).catch(() => {})
       this.fetchLoading = false
-    },
-    onReply(id) {
-      this.replyId = id
-    },
-    onCancel() {
-      this.replyId = 0
     }
   }
 }

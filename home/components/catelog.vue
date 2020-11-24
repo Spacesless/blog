@@ -6,12 +6,14 @@
         :key="index"
         class="catalog-item"
         :class="[
-          'catalog-item--heading' + item.value,
+          'catalog-item--H' + item.value,
           {
             'catalog-item--active': index === 1
           }
         ]"
-      >{{ item.name }}</li>
+      >
+        <p class="catalog-item__text">{{ item.name }}</p>
+      </li>
     </ul>
   </div>
 </template>
@@ -21,10 +23,6 @@ export default {
   data() {
     return {
       catalogList: [{
-        value: 1,
-        name: '标题一'
-      },
-      {
         value: 2,
         name: '标题二'
       },
@@ -33,12 +31,8 @@ export default {
         name: '标题二'
       },
       {
-        value: 1,
-        name: '标题一标题一标题一标题一标题一标题一标题一'
-      },
-      {
         value: 2,
-        name: '标题二'
+        name: '标题二标题一标题一标题一标题一标题一标题一'
       },
       {
         value: 3,
@@ -47,6 +41,9 @@ export default {
       {
         value: 4,
         name: '标题四'
+      }, {
+        value: 5,
+        name: '标题五'
       }]
     }
   }
@@ -61,40 +58,46 @@ export default {
   position: fixed;
   top: 100px;
   right: 0;
-  width: 290px;
+  width: 250px;
   &-list{
-    padding: 0 15px;
+    border-left: 1px solid #ebeef5;
   }
   &-item{
     position: relative;
+    padding-right: 15px;
     color: #303133;
-    line-height: 24px;
-    margin-bottom: 2px;
     cursor: pointer;
-    &:before{
-      content: '';
-      position: absolute;
-      left: -18px;
-      top: 0;
-      width: 12px;
-      height: 12px;
-      border-left: 1px dashed #DCDFE6;
-      border-bottom: 1px dashed #DCDFE6;
-    }
-    &--heading1{
+    &__text{
       overflow: hidden;
+      font-size: 14px;
+      line-height: 24px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
-    &--heading2{
-      margin-left: 24px;
+    &--H2{
+      padding-left: 15px;
     }
-    &--heading3{
-      margin-left: 48px;
+    &--H3{
+      padding-left: 30px;
     }
-    &--heading4{
-      margin-left: 72px;
+    &--H4{
+      padding-left: 45px;
+    }
+    &--H5{
+      padding-left: 60px;
     }
     &--active{
       color: $--color-primary;
+      &:before{
+        content: '';
+        position: absolute;
+        left: -1px;
+        top: 0;
+        z-index: 1;
+        width: 1px;
+        height: 100%;
+        background-color: $--color-primary;
+      }
     }
   }
 }
