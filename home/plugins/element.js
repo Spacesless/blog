@@ -41,7 +41,6 @@ import {
   Card,
   Loading,
   Notification,
-  Message,
   Drawer
 } from 'element-ui'
 
@@ -91,4 +90,3 @@ Vue.prototype.$ELEMENT = {
 }
 
 Vue.prototype.$notify = Notification
-Vue.prototype.$message = Message

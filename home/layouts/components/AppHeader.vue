@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <div class="header-logo hidden-sm-and-up">
+    <div class="header-logo hidden-md-and-up">
       <img class="header-logo__avatar" src="/static/avatar.jpg" alt="logo">
     </div>
     <div class="header-menus">

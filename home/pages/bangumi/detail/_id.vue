@@ -54,7 +54,7 @@
     <!-- Advertisement -->
     <Advertisement />
     <!-- comment start -->
-    <Comment />
+    <Comment :topic-id="'bangumi-' + data.id" />
   </div>
 </template>
 

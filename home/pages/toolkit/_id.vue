@@ -1,6 +1,6 @@
 <template>
   <div class="webapp">
-    <el-row :gutter="15">
+    <el-row class="webapp-list" :gutter="20">
       <el-col v-for="item in webappList" :key="item.id" :sm="12" :md="8" :xl="6">
         <a class="webapp-card" :href="item.url" :title="item.name" target="_blank">
           <div class="webapp-card__header">{{ item.name }}</div>
@@ -21,7 +21,6 @@
 export default {
   async asyncData({ params, query, $axios }) {
     const { seo, list } = await $axios.$get('/toolkit/list')
-    console.log(list)
     return { seo, webappList: list }
   },
   head() {
@@ -39,6 +38,9 @@ export default {
 <style lang="scss" scoped>
 .webapp{
   padding: 15px 0;
+  &-list{
+    padding: 0 15px;
+  }
   &-card{
     display: block;
     position: relative;

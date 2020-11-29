@@ -12,9 +12,9 @@ export default function({ store, app: { $axios }}) {
   })
 
   $axios.onResponse(response => {
-    const { errno, msg } = response.data
+    const { errno, errmsg } = response.data
     if (errno !== 0) {
-      return Promise.reject(msg)
+      return Promise.reject(errmsg)
     }
     return response.data
   })

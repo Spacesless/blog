@@ -3,7 +3,7 @@
     <transition name="fade-transform" mode="out-in">
       <div v-show="tipsShow" class="waifu-tips" v-html="tips" />
     </transition>
-    <canvas id="live2d" ref="live2d" width="280" height="250" class="live2d" />
+    <canvas id="live2d" ref="live2d" width="240" height="240" class="live2d" />
     <div class="waifu-tool">
       <span ref="home" class="tl-icon" @click="navigatorToHome">&#xe76f;</span>
       <span ref="model" class="tl-icon" @click="loadOtherModel">&#xe6ed;</span>

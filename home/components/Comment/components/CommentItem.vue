@@ -2,25 +2,38 @@
   <div class="comment-item">
     <div class="clearfix">
       <div class="comment-avatar">
-        <a :href="data.webSite" target="_blank" rel="noopener noreferrer">
-          <el-image class="comment-avatar__picture" :src="getAvatar(data.id, data.email)" />
+        <a v-if="data.website" :href="data.website" target="_blank" rel="noopener noreferrer" :title="data.website">
+          <el-image class="comment-avatar__picture" :src="getAvatar(data)">
+            <div slot="error" class="image-slot">
+              <i class="el-icon-picture-outline" />
+            </div>
+          </el-image>
         </a>
+        <el-image v-else class="comment-avatar__picture" :src="getAvatar(data)">
+          <div slot="error" class="image-slot">
+            <i class="el-icon-picture-outline" />
+          </div>
+        </el-image>
       </div>
       <div class="comment-info">
-        <p class="comment-info__name">{{ data.nickname }}</p>
-        <div class="comment-info__content">{{ data.content }}</div>
+        <p class="comment-info-name">{{ data.name }}<span v-if="data.is_admin" class="comment-info__admin">管网站的</span></p>
+        <div class="comment-info-content">
+          <span v-if="data.type === 3" class="comment-info-content__replyname">@{{ data.reply_name }}</span>
+          <span class="comment-info-content__text">{{ data.content }}</span>
+        </div>
         <div class="comment-info-operate">
-          <span class="comment-info__time">{{ data.addTime }}</span>
-          <span v-if="data.id === replyId" class="comment-info-btn" @click="handleCancel">
+          <span class="comment-info__time">{{ data.addtime }}</span>
+          <span v-if="data.id === replyData.id" class="comment-info-btn" @click="handleCancel">
             <i class="el-icon-close" />取消
           </span>
           <span v-else class="comment-info-btn" @click="handleReply">
             <i class="el-icon-chat-line-round" />回复
           </span>
         </div>
+
+        <comment-reply v-if="data.id === replyData.id" ref="textArea" :info="info" :reply-data="replyData" />
       </div>
     </div>
-    <comment-reply v-if="data.id === replyId" ref="textArea" :info="info" :parentid="data.id" :respond="respond" />
 
     <div v-if="data.children" class="comment-tree">
       <comment-item
@@ -28,14 +41,13 @@
         :key="child.id"
         :info="info"
         :data="child"
-        :reply-id.sync="replyId"
+        :reply-data="replyData"
       />
     </div>
   </div>
 </template>
 
 <script>
-import md5 from 'md5'
 import CommentReply from './CommentReply'
 
 export default {
@@ -50,35 +62,37 @@ export default {
       type: Object,
       default: () => {}
     },
-    replyId: {
-      type: Number,
-      default: 0
+    replyData: {
+      type: Object,
+      default: () => {}
     }
   },
   data() {
     return {
-      respond: ''
+      tree: null
     }
+  },
+  mounted() {
+    let parent = this.$parent
+    while (parent && !parent.isTreeRoot) {
+      parent = parent.$parent
+    }
+    this.tree = parent
   },
   methods: {
     async handleReply() {
-      const { id, nickname } = this.data
-      this.$emit('update:replyId', id)
-      await this.$nextTick()
-      this.respond = `@${nickname}`
+      this.tree.updateReplyData(this.data)
     },
-    getAvatar(id, email) {
+    handleCancel() {
+      this.tree.resetReplyData()
+    },
+    getAvatar({ id, email }) {
       if (email.toLowerCase().includes('@qq.com')) {
         const qquin = email.split('@')[0]
         return `http://q1.qlogo.cn/g?b=qq&s=100&nk=${qquin}`
       } else {
-        const domains = ['//www.gravatar.com', '//0.gravatar.com', '//1.gravatar.com', '//cn.gravatar.com']
-        const emailHash = md5(email)
-        return `${domains[id % 4] || domains[0]}/avatar/${emailHash}?s=50&d=http://cdn.timelessq.com/static/comment/${id % 10}.jpg`
+        return `/static/comment/${id % 10}.jpg`
       }
-    },
-    handleCancel() {
-      this.$emit('onCancel')
     }
   }
 }
@@ -90,7 +104,7 @@ export default {
     padding-left: 65px;
   }
   &-item{
-    margin-bottom: 20px;
+    margin-bottom: 15px;
   }
   &-avatar{
     overflow: hidden;
@@ -103,22 +117,45 @@ export default {
       display: block;
       width: 100%;
       height: 100%;
+      background-color: #f4f6fb;
+      color: #606266;
+      text-align: center;
+      line-height: 50px;
     }
   }
   &-info{
     overflow: hidden;
-    &__name{
-      margin-bottom: 8px;
-      font-size: 14px;
+    &-name{
+      margin-bottom: 5px;
       color: #606266;
+      font-size: 13px;
+      line-height: 22px;
     }
-    &__content{
+    &__admin{
+      display: inline-block;
+      height: 22px;
+      margin-left: 5px;
+      padding: 0 6px;
+      background: #ecf5ff;
+      color: $primary;
+      border-radius: 4px;
+    }
+    &-content{
       margin-bottom: 8px;
       padding: 7px 12px;
       background-color: #f4f6fb;
       color: #303133;
       font-size: 15px;
-      border-radius: 2px;
+      border-radius: 4px;
+      &__replyname{
+        display: inline-block;
+        margin-right: 5px;
+        padding: 3px 6px;
+        background: $primary;
+        color: #fff;
+        font-size: 12px;
+        border-radius: 11px;
+      }
     }
     &-operate{
       margin-bottom: 20px;

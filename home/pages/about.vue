@@ -19,17 +19,22 @@
       <p>服务器：腾讯云学生服务器（1C2G3M）</p>
       <p>内容分发服务：腾讯云CDN，每月白嫖10G够用了，反正没啥流量</p>
       <p>对象储存服务：腾讯云COS，每月存储50G + 流量10G，存个静态文件啥的</p>
-      <p>后台：Thinkjs + Vue-element-admin</p>
-      <p>前台：Thinkjs + Nuxt</p>
-      <el-timeline class="about-introduce-timeline">
+      <p>后台：ThinkJS + Vue-element-admin</p>
+      <p>前台：ThinkJS + NuxtJs + Element-ui</p>
+      <el-timeline class="about-timeline">
         <el-timeline-item timestamp="2020-06-01" placement="top">
           <el-card>
             <p>使用nuxt.js代替nunjucks模板引擎实现SSR</p>
           </el-card>
         </el-timeline-item>
-        <el-timeline-item timestamp="2019-11-10" placement="top">
+        <el-timeline-item timestamp="2019-10-15" placement="top">
           <el-card>
-            <p>使用thinkjs(nodejs)+mysql+vue进行完全重构</p>
+            <p>使用nodejs开发的Api站点<a class="about-timeline__link" href="https://api.timelessq.com" target="_blank">https://api.timelessq.com</a>上线</p>
+          </el-card>
+        </el-timeline-item>
+        <el-timeline-item timestamp="2019-08-10" placement="top">
+          <el-card>
+            <p>使用nodejs(thinkjs)代替php进行完全重构</p>
           </el-card>
         </el-timeline-item>
         <el-timeline-item timestamp="2018-03-02" placement="top">
@@ -40,12 +45,12 @@
       </el-timeline>
       <h2 class="app-main__title">未来计划</h2>
       <ul>
-        <li>1、统一用nuxt写前台、内容管理系统</li>
+        <li>1、统一用nuxt管理前台、内容管理系统</li>
         <li>2、研究live2d、spine</li>
       </ul>
     </div>
     <!-- comment start -->
-    <Comment :topic-id="'other-5'" />
+    <Comment :topic-id="'about'" />
   </div>
 </template>
 
@@ -88,6 +93,13 @@ export default {
     font-size: 32px;
     font-weight: normal;
     line-height: 1.5;
+  }
+  &-timeline {
+    padding-top: 15px;
+    &__link{
+      margin: 0 5px;
+      color: $primary;
+    }
   }
   &-connact{
     &__links{

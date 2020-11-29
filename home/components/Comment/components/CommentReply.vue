@@ -18,10 +18,16 @@
       </el-col>
       <el-col class="reply-content" :span="24">
         <el-form-item prop="content">
-          <el-input ref="textarea" v-model="info.content" class="reply-content-input" type="textarea" :rows="5" resize="none" placeholder="What do you want to say..." />
-          <span class="reply-content__submit" @click="handleSubmit">
-            <i class="el-icon-position" />
-          </span>
+          <el-input
+            ref="textarea"
+            v-model="info.content"
+            class="reply-content-input"
+            type="textarea"
+            :rows="5"
+            resize="none"
+            placeholder="What do you want to say..."
+          />
+          <el-button class="reply-content__submit" type="primary" icon="el-icon-position" :loading="submitLoading" @click="handleSubmit" />
         </el-form-item>
       </el-col>
     </el-row>
@@ -36,9 +42,9 @@ export default {
       type: Object,
       default: () => {}
     },
-    parentid: {
-      type: Number,
-      default: 0
+    replyData: {
+      type: Object,
+      default: () => {}
     }
   },
   data() {
@@ -50,11 +56,13 @@ export default {
       }
     }
     return {
+      tree: null,
+      submitLoading: false,
       rules: {
         name: [{ required: true, trigger: 'blur', message: '你还没告诉我你叫什么呢' }],
         email: [
           { required: true, message: '要不留个邮箱', trigger: 'blur' },
-          { type: 'email', message: '请输入正确的邮箱', trigger: 'change' },
+          { type: 'email', message: '请输入正确的邮箱', trigger: ['change', 'blur'] },
           { trigger: 'change', validator: validateEmail }
         ],
         website: [{ type: 'url', message: '噫，这个网址好像不对哦', trigger: 'change' }],
@@ -62,18 +70,42 @@ export default {
       }
     }
   },
+  mounted() {
+    let parent = this.$parent
+    while (parent && !parent.isTreeRoot) {
+      parent = parent.$parent
+    }
+    this.tree = parent
+  },
   methods: {
     handleSubmit() {
       this.$refs.form.validate(async(valid) => {
         if (!valid) return
+        const { id, topic_id, parent_id, name, type } = this.replyData
         const postData = Object.assign(this.info, {
-          parent_id: this.parentid
+          topic_id,
+          reply_name: name,
+          parent_id: parent_id || id || 0,
+          type: type ? type + 1 : 1
         })
-        this.$axios.$post('/comment/post', postData).then(response => {
-
+        this.submitLoading = true
+        await this.$axios.$post('/comment/post', postData).then(res => {
+          this.$notify({
+            title: '评论成功',
+            message: '感谢您留下美好的声音',
+            type: 'success',
+            offset: 50
+          })
+          this.tree.resetInfo()
+          this.tree.fetchList()
         }).catch(error => {
-          console.log(error)
+          this.$notify.error({
+            title: '评论失败',
+            message: error,
+            offset: 50
+          })
         })
+        this.submitLoading = false
       })
     }
   }
@@ -94,18 +126,17 @@ export default {
       width: 36px;
       height: 36px;
       margin-top: -18px;
-      background-color: #409EFF;
-      color: #fff;
+      padding: 0;
       font-size: 18px;
       line-height: 36px;
       text-align: center;
       border-radius: 50%;
       cursor: pointer;
-      .el-icon-position{
+      ::v-deep .el-icon-position{
         transition: transform .3s;
       }
       &:hover{
-        .el-icon-position{
+        ::v-deep .el-icon-position{
           transform: rotate(45deg);
         }
       }

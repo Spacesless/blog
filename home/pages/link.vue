@@ -35,7 +35,7 @@
       <p>头像/Logo：https://www.timelessq.com/static/avatar.jpg <span>可选</span></p>
     </div>
     <!-- comment start -->
-    <Comment />
+    <Comment :topic-id="'link'" />
   </div>
 </template>
 

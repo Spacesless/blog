@@ -91,6 +91,9 @@ a,a:hover,a:active,a:focus,a:visited{
       height: 215px;
     }
   }
+  &-pagination__jump{
+    margin-left: 10px;
+  }
 }
 //waifu
 .waifu {
@@ -98,15 +101,11 @@ a,a:hover,a:active,a:focus,a:visited{
   bottom: 0;
   right: 0;
   z-index: 999;
-  width: 290px;
-  height: 280px;
-  margin-top: 3px;
+  width: 240px;
+  height: 250px;
   transition: margin-top .3s ease-in-out;
   transform-origin: bottom center;
-  @media (max-width:1600px) {
-    transform: scale(0.85);
-  }
-  @media (max-width:768px) {
+  @media (max-width: 992px) {
     display: none;
   }
   &:hover{
@@ -119,10 +118,9 @@ a,a:hover,a:active,a:focus,a:visited{
   &-tips {
     overflow: hidden;
     position: absolute;
-    top: 20px;
-    width: 250px;
-    height: 70px;
-    margin: -20px 10px;
+    top: 0;
+    width: 215px;
+    height: 60px;
     padding: 5px 10px;
     border: 1px solid $primary;
     border-radius: 12px;
@@ -156,7 +154,7 @@ a,a:hover,a:active,a:focus,a:visited{
 }
 #live2d {
   position: relative;
-  top: 20px
+  top: 15px
 }
 //Animation
 @keyframes shake{

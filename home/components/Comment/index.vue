@@ -1,16 +1,21 @@
 <template>
   <div v-loading="fetchLoading" class="comment">
-    <comment-reply :info="info" />
-    <div class="comment-list">
+    <h2 class="app-main__title">评论<span class="comment__count">({{ total }})</span></h2>
+    <comment-reply v-if="!replyData.id" :info="info" :reply-data="replyData" />
+    <div v-if="total === 0" class="comment-none">
+      <p class="comment-none__tips">还没有评论，快来抢第一吧</p>
+      <img class="comment-none__img" src="@/assets/image/no-data.svg" alt="">
+    </div>
+    <div v-else class="comment-list">
       <comment-item
         v-for="item in commentsList"
         :key="item.id"
         :info="info"
         :data="item"
-        :reply-id.sync="replyId"
+        :reply-data="replyData"
       />
+      <pagination v-if="total > listQuery.pageSize" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.pageSize" @pagination="fetchList" />
     </div>
-    <pagination v-show="total > listQuery.pageSize" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.pageSize" @pagination="fetchList" />
   </div>
 
 </template>
@@ -34,38 +39,26 @@ export default {
   },
   data() {
     return {
-      replyId: 0,
       info: {},
+      replyData: {
+        topic_id: this.topicId
+      },
+      isTreeRoot: true,
       fetchLoading: false,
       total: 0,
       listQuery: {
         page: 1,
         pageSize: 10
       },
-      commentsList: [{
-        id: 1,
-        nickname: '测试',
-        email: '804093032@qq.com',
-        content: '测试',
-        webSite: '/',
-        addTime: '2020-11-16 10:00:00',
-        children: [{
-          id: 1,
-          nickname: '子节点',
-          email: '18878554196@163.com',
-          content: '测试',
-          webSite: '/',
-          addTime: '2020-11-16 15:00:00'
-        }]
-      }]
+      commentsList: []
     }
   },
   mounted() {
-    // this.fetchList()
+    this.fetchList()
   },
   methods: {
     async fetchList() {
-      this.listQuery.id = this.topicId
+      this.listQuery.topic_id = this.topicId
       this.fetchLoading = true
       this.$axios.$get('/comment', {
         params: this.listQuery
@@ -75,6 +68,22 @@ export default {
         this.commentsList = data
       }).catch(() => {})
       this.fetchLoading = false
+    },
+    /**
+     * 更新要回复的评论数据
+     * @param {Object} data
+     */
+    updateReplyData(data) {
+      this.replyData = data
+    },
+    // 重置要回复的评论数据
+    resetReplyData() {
+      this.replyData = {
+        topic_id: this.topicId
+      }
+    },
+    resetInfo() {
+      this.info.content = ''
     }
   }
 }
@@ -82,8 +91,24 @@ export default {
 
 <style lang="scss" scoped>
 .comment{
+  &__count{
+    margin-left: 5px;
+    font-size: 16px;
+    vertical-align: text-top;
+  }
   &-list{
     padding: 15px 0;
+  }
+  &-none{
+    &__img{
+      display: block;
+      width: 300px;
+      margin: 0 auto;
+    }
+    &__tips{
+      color: #909399;
+      text-align: center;
+    }
   }
 }
 

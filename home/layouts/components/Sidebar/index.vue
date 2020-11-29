@@ -9,7 +9,6 @@
     <el-scrollbar wrap-class="aside-wrap">
       <el-menu
         ref="navigation"
-        background-color="#F2F6FC"
         :default-active="activeMenu"
         :collapse="isCollapse"
         class="aside-menu"

@@ -76,7 +76,7 @@ pre[class*="language-"] {
   position: relative;
   margin: 10px 0;
   border: 1px solid #EBEEF5;
-  background: #fff;
+  background: #f4f6fb;
   border-radius: 4px;
 }
 .toolbar{
@@ -86,7 +86,7 @@ pre[class*="language-"] {
   height: 40px;
   padding: 0 10px;
   line-height: 40px;
-  border-bottom: 1px dashed #EBEEF5;
+  border-bottom: 1px dashed #DCDFE6;
   text-align: right;
   box-sizing: border-box;
   &-item{
@@ -109,7 +109,7 @@ pre[class*="language-"] {
       background: none;
       padding: 3px 6px;
       color: #606266;
-      font-size: 14px;
+      font-size: 16px;
       cursor: pointer;
       &__tips{
         position: absolute;

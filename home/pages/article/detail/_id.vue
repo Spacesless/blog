@@ -26,13 +26,15 @@
             :key="index"
             class="catalog-item"
             :class="[
-              'catalog-item--' + item.nodeName,
               {
                 'catalog-item--active': index === isActive
               }
             ]"
+            :title="item.innerText"
             @click="scrollIntoView(item)"
-          >{{ item.innerText }}</li>
+          >
+            <p class="catalog-item__text">{{ item.innerText }}</p>
+          </li>
         </ul>
       </div>
     </div>
@@ -41,7 +43,7 @@
     <!-- Advertisement -->
     <Advertisement />
     <!-- comment start -->
-    <Comment />
+    <Comment :topic-id="'article-' + data.id" />
   </div>
 </template>
 
@@ -76,27 +78,27 @@ export default {
     }
   },
   mounted() {
-    this.initContent()
     this.initPrism()
     this.initPreviw()
+
+    this.$nextTick(() => {
+      this.initCatelog()
+    })
   },
   methods: {
-    initContent() {
+    initCatelog() {
       const nodes = Array.from(this.$refs.content.childNodes)
       this.catalogList = nodes.filter(item => {
         const nodeName = item.nodeName.toLowerCase()
-        return nodeName === 'h2' ||
-        nodeName === 'h3' ||
-        nodeName === 'h4'
+        return ['h2', 'h3', 'h4'].includes(nodeName)
       })
-      this.sideType = this.catalogList.length > 0 ? 2 : 1
 
       const nodeOffsetTop = []
       const catalogListLen = this.catalogList.length
-      const contentStart = this.getOffsetTop(this.$refs.content)
+      const contentStart = this.getOffsetTop(this.$refs.content) - 10
       const contentEnd = this.getOffsetTop(this.$refs.content) + this.$refs.content.clientHeight
       for (let i = 0; i < catalogListLen; i++) {
-        const top = this.getOffsetTop(this.catalogList[i]) - 15
+        const top = this.getOffsetTop(this.catalogList[i]) - 10
         nodeOffsetTop.push(top)
       }
 
@@ -135,7 +137,7 @@ export default {
             title: '复制成功',
             message: '转载最好带上出处哟',
             type: 'success',
-            offset: 60
+            offset: 50
           })
         })
         clipboard.on('error', () => {
@@ -149,7 +151,7 @@ export default {
       Prism.highlightAll()
     },
     scrollIntoView(item) {
-      const tagetTop = this.getOffsetTop(item) - 10
+      const tagetTop = this.getOffsetTop(item) - 5
       scrollTo(tagetTop, 400)
     },
     getOffsetTop(dom) {
@@ -214,42 +216,37 @@ export default {
   }
   .catalog{
     position: fixed;
-    top: 75px;
+    top: 60px;
     right: 0;
-    width: 290px;
+    width: 230px;
     &-list{
-      padding: 0 15px;
+      border-left: 1px solid #ebeef5;
     }
     &-item{
       position: relative;
+      padding: 0 15px;
       color: #303133;
-      line-height: 24px;
-      margin-bottom: 2px;
       cursor: pointer;
-      &:before{
-        content: '';
-        position: absolute;
-        left: -18px;
-        top: 0;
-        width: 12px;
-        height: 12px;
-        border-left: 1px dashed #DCDFE6;
-        border-bottom: 1px dashed #DCDFE6;
-      }
-      &--H2{
+      &__text{
         overflow: hidden;
+        color: #303133;
+        font-size: 14px;
+        line-height: 24px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
-      &--H3{
-        margin-left: 24px;
-      }
-      &--H4{
-        margin-left: 48px;
-      }
-      &--H5{
-        margin-left: 72px;
-      }
-      &:hover, &--active{
+      &--active{
         color: $primary;
+        &:before{
+          content: '';
+          position: absolute;
+          left: -1px;
+          top: 0;
+          z-index: 1;
+          width: 1px;
+          height: 100%;
+          background-color: $primary;
+        }
       }
     }
   }
