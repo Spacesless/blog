@@ -20,7 +20,7 @@
               <nuxt-link :to="'/article/detail/' + item.id" :title="item.title">{{ item.title }}</nuxt-link>
             </p>
             <div class="articles-meta">
-              <span class="articles-meta__date"><i class="tl-icon">&#xe70b;</i>{{ item.updatetime | moment('{y}-{m}-{d}') }}</span>
+              <span class="articles-meta__date"><i class="tl-icon">&#xe70b;</i>{{ item.updatetime | parseTime('{y}-{m}-{d}') }}</span>
               <span class="articles-meta__cate">
                 <i class="tl-icon">&#xe652;</i>
                 <nuxt-link :to="item.column.url" :title="item.column.name">{{ item.column.name }}</nuxt-link>

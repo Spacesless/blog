@@ -3,7 +3,12 @@ const Rest = require('../rest')
 module.exports = class extends Rest {
   async getAction() {
     if (this.id) { // 栏目详情
-      const data = await this.modelInstance.where({ id: this.id }).find()
+      const data = await this.modelInstance.where({ id: this.id })
+        .join({
+          table: 'toolkit',
+          join: 'inner', // join 方式，有 left, right, inner 3 种方式
+          on: ['category_id', 'id'] // ON 条件
+        }).find()
       return this.success(data)
     } else { // 栏目列表
       const list = await this.modelInstance.getCategory()

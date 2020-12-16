@@ -17,7 +17,7 @@
 <script>
 import { mapGetters } from 'vuex'
 if (process.client) {
-  require('@/utils/live2d')
+  require('@/vendor/live2d')
 }
 
 export default {

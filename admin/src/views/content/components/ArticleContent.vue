@@ -218,11 +218,14 @@ export default {
             url: imgurl
           }]
         }
-        this.formData.updatetime = new Date()
         this.tags = tag ? tag.split('|') : []
       }).catch(() => {})
       this.fetchLoading = false
     },
+    /**
+     * 删除tag标签
+     * @param {String} tag
+     */
     handleDeleteTag(tag) {
       this.tags.splice(this.tags.indexOf(tag), 1)
     },

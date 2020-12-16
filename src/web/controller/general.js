@@ -24,18 +24,4 @@ module.exports = class extends Base {
     }
     return this.success({ navigation, configs: targetConfigs })
   }
-
-  async accessAction() {
-    const { type, id } = this.post()
-    const moduleEnum = ['', 'blog', 'image', 'bangumi']
-    const hasModule = moduleEnum[+type] || null
-
-    if (hasModule) {
-      await this.model(hasModule)
-        .where({ id })
-        .increment('hits')
-    }
-
-    return this.success()
-  }
 }

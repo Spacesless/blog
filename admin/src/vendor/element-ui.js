@@ -1,4 +1,5 @@
 // @see https://element.eleme.cn/#/zh-CN/component/quickstart
+import 'element-ui/lib/theme-chalk/index.css'
 import 'element-ui/lib/theme-chalk/display.css' // 基于断点的隐藏类
 
 import {

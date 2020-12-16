@@ -5,19 +5,18 @@
     <breadcrumb class="breadcrumb-container" />
 
     <div class="right-menu">
-      <el-tooltip class="btn-container" effect="dark" content="清除缓存" placement="bottom">
+      <el-tooltip class="right-menu-item" effect="dark" content="清除缓存" placement="bottom">
         <i class="el-icon-refresh" @click="handleClearCache" />
       </el-tooltip>
-      <el-tooltip class="btn-container" effect="dark" content="前台预览" placement="bottom">
+      <el-tooltip class="right-menu-item" effect="dark" content="前台预览" placement="bottom">
         <a :href="configs.siteurl" target="_blank">
           <i class="el-icon-monitor" />
         </a>
       </el-tooltip>
       <el-dropdown class="avatar-container" trigger="click">
-        <div class="avatar-wrapper">
-          <img src="http://www.timelessq.com/static/avatar.jpg" class="user-avatar">
-          <i class="el-icon-caret-bottom" />
-        </div>
+        <span class="avatar-container-link">
+          {{ userInfo.name }}<i class="el-icon-arrow-down el-icon--right" />
+        </span>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
           <el-dropdown-item>
             <router-link to="/">首页</router-link>
@@ -130,46 +129,14 @@ export default {
       }
     }
 
-    .btn-container{
-      margin: 0 6px;
-      color: #606266;
-      font-size: 22px;
-      cursor: pointer;
-      &.el-badge{
-        height: 22px;
-        margin-right: 15px;
-        line-height: 22px;
-        vertical-align: baseline;
-        ::v-deep .el-badge__content{
-          top: 0;
-          right: 15px;
-        }
-      }
-    }
-
     .avatar-container {
-      height: 45px;
-      margin-right: 30px;
+      margin: 0 15px;
+      vertical-align: text-bottom;
 
-      .avatar-wrapper {
-        position: relative;
-
-        .user-avatar {
-          width: 40px;
-          height: 40px;
-          margin-top: -10px;
-          vertical-align: middle;
-          cursor: pointer;
-          border-radius: 10px;
-        }
-
-        .el-icon-caret-bottom {
-          position: absolute;
-          right: -20px;
-          top: 25px;
-          font-size: 12px;
-          cursor: pointer;
-        }
+      &-link{
+        display: block;
+        color: #5a5e66;
+        cursor: pointer;
       }
     }
   }

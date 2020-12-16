@@ -1,4 +1,5 @@
 const ThinkSvgCaptcha = require('think-svg-captcha')
+const path = require('path')
 
 module.exports = class extends think.Service {
   constructor(options) {
@@ -11,7 +12,7 @@ module.exports = class extends think.Service {
       background: '#f3f3f3', // svg image 背景颜色
       width: 120, // captcha 宽度
       height: 40, // captcha 高度
-      // fontPath: '', // 字体文件路径
+      fontPath: path.join(think.RESOURCE_PATH, '/fonts/Monaco.ttf'), // 字体文件路径
       fontSize: 36, // captcha 文字大小
       charPreset: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789' // random character preset
     }

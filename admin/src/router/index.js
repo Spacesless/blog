@@ -97,19 +97,6 @@ export const constantRoutes = [
         meta: { title: '番剧模块' }
       },
       {
-        path: 'toolkit',
-        name: 'Toolkit',
-        component: () => import('@/views/content/toolkit/index'),
-        meta: { title: '小工具' }
-      },
-      {
-        path: 'toolkit/:id',
-        name: 'ToolkitContent',
-        hidden: true,
-        component: () => import('@/views/content/toolkit/content'),
-        meta: { title: '工具详情' }
-      },
-      {
         path: 'create',
         name: 'ContentCreate',
         props: true,

@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { spine } from '@/utils/spine-ts/spine-webgl.js'
+import { spine } from '@/vendor/spine-ts/spine-webgl.js'
 
 export default {
   async asyncData({ app, route, $axios }) {

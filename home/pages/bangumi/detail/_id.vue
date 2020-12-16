@@ -41,14 +41,10 @@
       <!-- share start -->
       <Share />
     </div>
-    <div class="bangumi-content">
+    <!--bangumi content-->
+    <div v-if="hasContent" class="bangumi-content">
       <h2 class="app-main__title">观后感</h2>
-      <!--bangumi content-->
       <div class="Tinymce" v-html="data.content" />
-      <div v-if="isNoData" class="bangumi-none">
-        <img class="bangumi-none__img" src="@/assets/image/no-data.svg" alt="">
-        <p class="bangumi-none__tips">光顾着看了，什么都没留下</p>
-      </div>
       <el-image ref="preview" class="app-preview" :src="previewSrc" :preview-src-list="previewSrcList" />
     </div>
     <!-- Advertisement -->
@@ -62,7 +58,7 @@
 import Share from '@/components/Share'
 import Advertisement from '@/components/Advertisement'
 import Comment from '@/components/Comment'
-import { globalFilter, contentPage } from '@/mixins'
+import { globalFilter } from '@/mixins'
 
 export default {
   components: {
@@ -70,7 +66,7 @@ export default {
     Advertisement,
     Comment
   },
-  mixins: [globalFilter, contentPage],
+  mixins: [globalFilter],
   async asyncData({ params, $axios }) {
     const id = params.id
     const { seo, content: data } = await $axios.$get('/bangumi/detail', {
@@ -87,12 +83,9 @@ export default {
     }
   },
   computed: {
-    isNoData() {
-      return this.data.content.trim().length === 0
+    hasContent() {
+      return this.data.content.trim().length !== 0
     }
-  },
-  mounted() {
-    this.accessStatistics(3, this.data.id)
   },
   methods: {
     initPreviw() {
@@ -160,17 +153,6 @@ export default {
   }
   &-content{
     padding: 15px;
-  }
-  &-none{
-    &__img{
-      display: block;
-      width: 360px;
-      margin: 0 auto;
-    }
-    &__tips{
-      color: #909399;
-      text-align: center;
-    }
   }
 }
 </style>
