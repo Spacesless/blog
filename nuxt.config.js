@@ -34,6 +34,7 @@ module.exports = {
   styleResources: {
     scss: ['@/styles/variables.scss']
   },
+  buildModules: ['@nuxtjs/color-mode'],
   build: {
     publicPath: isPro ? '//cdn.timelessq.com/assets/dist/client' : '/_nuxt/', // 只需将dist/client上传cdn
     babel: {

@@ -6,14 +6,14 @@
         <p class="aside-logo__name">{{ logoTitle }}</p>
       </nuxt-link>
     </div>
-    <el-scrollbar wrap-class="aside-wrap">
+    <el-scrollbar class="aside-scrollbar" wrap-class="aside-scrollbar-wrapper">
       <el-menu
         ref="navigation"
         :default-active="activeMenu"
         :collapse="isCollapse"
         class="aside-menu"
       >
-        <div class="aside-item">
+        <div class="aside-menu-item">
           <nuxt-link to="/">
             <el-menu-item index="/">
               <i class="aside-menu__icon tl-icon">&#xe76f;</i>
@@ -22,7 +22,7 @@
           </nuxt-link>
         </div>
         <sidebar-item v-for="route in menus" :key="route.path" :item="route" />
-        <div class="aside-item">
+        <div class="aside-menu-item">
           <nuxt-link to="/link">
             <el-menu-item index="/link">
               <i class="aside-menu__icon tl-icon">&#xe6f5;</i>

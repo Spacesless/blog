@@ -57,8 +57,7 @@ export default {
         hideAside: !this.sidebar.opened,
         openAside: this.sidebar.opened,
         withoutAnimation: this.sidebar.withoutAnimation,
-        mobile: this.device === 'mobile',
-        silent: parseInt(this.configs.is_silent)
+        mobile: this.device === 'mobile'
       }
     }
   },
@@ -122,7 +121,15 @@ export default {
           'angle': { 'value': 140, 'float': 40 },
           'reIn': 'reverseDirection'
         }
-      ])
+      ]
+    )
+  },
+  head() {
+    return {
+      htmlAttrs: {
+        class: parseInt(this.configs.is_silent) ? 'silent' : ''
+      }
+    }
   }
 }
 </script>

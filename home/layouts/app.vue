@@ -1,5 +1,5 @@
 <template>
-  <div class="webapp" :class="classObj">
+  <div class="webapp">
     <!-- app start -->
     <nuxt />
   </div>
@@ -10,10 +10,12 @@ import { mapGetters } from 'vuex'
 
 export default {
   computed: {
-    ...mapGetters(['configs']),
-    classObj() {
-      return {
-        silent: parseInt(this.configs.is_silent)
+    ...mapGetters(['configs'])
+  },
+  head() {
+    return {
+      htmlAttrs: {
+        class: parseInt(this.configs.is_silent) ? 'silent' : ''
       }
     }
   }

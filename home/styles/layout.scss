@@ -11,7 +11,7 @@
   box-shadow: 2px 0 10px rgba(0,0,0,.1);
   transition: width 0.3s;
   &-logo{
-    padding: 25px 0 15px;
+    padding: 35px 0 15px;
     text-align: center;
     &__img{
       width: 100px;
@@ -37,8 +37,11 @@
       height: 0;
     }
   }
-  &-wrap{
-    overflow-x: hidden;
+  &-scrollbar{
+    height: calc(100vh - 160px);
+    &-wrap{
+      overflow-x: hidden;
+    }
   }
   &-menu{
     height: 100%;
@@ -82,27 +85,6 @@
   .el-submenu .el-menu-item{
     height: 45px;
     line-height: 45px;
-  }
-  &-button{
-    padding-top: 15px;
-    text-align: center;
-    a,span{
-      display: inline-block;
-      width: 30px;
-      height: 30px;
-      margin: 0 10px;
-      color: #606266;
-      font-size: 22px;
-      line-height: 30px;
-      vertical-align: middle;
-      cursor: pointer;
-      &:hover{
-        color: $primary;
-      }
-    }
-  }
-  .el-scrollbar{
-    height: calc(100vh - 160px);
   }
 }
 
