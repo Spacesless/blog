@@ -21,7 +21,7 @@ module.exports = class extends Rest {
         where.category_id = ['IN', findCategory]
       }
 
-      const field = 'id,title,total,current,imgurl,is_show'
+      const field = 'id,title,imgurl,total,current,status,is_show'
       const list = await this.modelInstance.where(where)
         .field(field)
         .order('updatetime DESC')

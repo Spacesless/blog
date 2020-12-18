@@ -6,6 +6,7 @@
       @onSearchKeyword="handleSearchTitle"
       @onColumnChange="handleChangeColumn"
     />
+
     <el-table
       ref="multipleTable"
       v-el-height-adaptive-table="{bottomOffset: 142}"
@@ -16,7 +17,7 @@
       @selection-change="onSelectionChange"
     >
       <el-table-column type="selection" width="50" align="center" />
-      <el-table-column label="图片" width="150" align="center">
+      <el-table-column label="图片" width="180" align="center">
         <template #default="scope">
           <el-image :src="scope.row.imgurl" fit="contain" lazy scroll-container=".el-table__body-wrapper">
             <div slot="error" class="image-slot">
@@ -167,7 +168,7 @@ export default {
 .blog{
   .el-image{
     display: block;
-    width: 120px;
+    width: 150px;
     height: 120px;
     margin: 0 auto;
   }

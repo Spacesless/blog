@@ -46,6 +46,15 @@
           />
         </template>
       </el-table-column>
+      <el-table-column label="状态" width="180" align="center">
+        <template #default="scope">
+          <el-select v-model="scope.row.status" placeholder="请选择状态">
+            <el-option label="未上映" :value="0" />
+            <el-option label="连载中" :value="1" />
+            <el-option label="已完结" :value="2" />
+          </el-select>
+        </template>
+      </el-table-column>
       <el-table-column label="前台显示" width="120" align="center">
         <template #default="scope">
           <el-tag v-if="scope.row.is_show">显示</el-tag>

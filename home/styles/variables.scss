@@ -2,3 +2,23 @@
 $primary:#409EFF;
 
 $asideWidth: 235px;
+
+:root {
+  --color-primary: #409EFF;
+  --color-title: #262626;
+  --color-text: #595959;
+  --color-secondary: #8C8C8C;
+  --bg: #fff;
+  --border-color: #ddd;
+  --box-shadow: rgba(0, 0, 0, 0.16)	1px, 0px	2px	-2px;
+}
+
+.dark-mode {
+  --color-primary: #409EFF;
+  --color-title: #ebf4f1;
+  --color-text: #595959;
+  --color-secondary: #fdf9f3;
+  --bg: #141414;
+  --border-color: #0d2538;
+  --box-shadow: rgba(0, 0, 0, 0.16)	1px, 0px	2px	-2px;
+}

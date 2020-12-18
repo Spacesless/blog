@@ -11,7 +11,6 @@
     >
       <el-table-column type="selection" width="50" align="center" />
       <el-table-column label="评论内容" prop="content" show-overflow-tooltip />
-      <el-table-column align="center" label="用户" width="150" prop="username" />
       <el-table-column class-name="status-col" label="状态" width="110" align="center">
         <template #default="scope">
           <el-tag v-if="scope.row.status">已审核</el-tag>
@@ -64,7 +63,7 @@ export default {
   data() {
     return {
       commentList: [],
-      changeLoading: true
+      changeLoading: false
     }
   },
   created() {

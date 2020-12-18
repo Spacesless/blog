@@ -1,58 +1,75 @@
 <template>
   <div v-loading="fetchLoading" class="app-container home">
     <div class="home-welcome">
-      123
+      <h2 class="home-welcome-hello">{{ helloText }}</h2>
+      <p class="home-welcome-text">我们一日日度过的所谓的日常，实际上可能是接连不断的奇迹</p>
     </div>
-    <el-row class="home-general" :gutter="30">
-      <el-col :sm="24" :md="12" :lg="8">
-        <div class="home-card">
-          <h2 class="home-card__title">ENVIRONMENT</h2>
-          <div class="home-card-body">
-          <!-- <ul>
-            <li>Nodejs：{{ version.nodeVersion }}</li>
-            <li>V8：{{ version.v8Version }}</li>
-            <li>Web Server：{{ version.platform }}</li>
-            <li>Thinkjs：{{ version.thinkjsVersion }}</li>
-            <li>Mysql：{{ version.mysqlVersion }}</li>
-          </ul> -->
+
+    <el-row class="home-general" :gutter="20">
+      <el-col :xs="24" :sm="12" :md="6">
+        <div class="home-general-item">
+          <div class="home-general-icon">
+            svg
+          </div>
+          <div class="home-general-info">
+            <p class="home-gernal-desc">Category</p>
+            <p class="home-gernal-count">{{ count.category }}</p>
           </div>
         </div>
       </el-col>
-      <el-col :sm="24" :md="12" :lg="8" @click="navigateTo('Category')">
-        <div class="home-card">
-          <h2 class="home-card__title">CATEGORY</h2>
-          <div class="home-card-body">
-            <strong class="home-card-body__count">{{ count.category }}</strong>
-            <p class="home-card-body__desc">描述</p>
+      <el-col :xs="24" :sm="12" :md="6">
+        <div class="home-general-item">
+          <div class="home-general-icon">
+            svg
+          </div>
+          <div class="home-general-info">
+            <p class="home-gernal-desc">Article</p>
+            <p class="home-gernal-count">{{ count.article }}</p>
           </div>
         </div>
       </el-col>
-      <el-col :sm="24" :md="12" :lg="8" @click="navigateTo('Article')">
-        <div class="home-card">
-          <h2 class="home-card__title">ARTICLE</h2>
-          <div class="home-card-body">
-            <strong class="home-card-body__count">{{ count.article }}</strong>
-            <p class="home-card-body__desc">描述</p>
+      <el-col :xs="24" :sm="12" :md="6">
+        <div class="home-general-item">
+          <div class="home-general-icon">
+            svg
+          </div>
+          <div class="home-general-info">
+            <p class="home-gernal-desc">Bangumi</p>
+            <p class="home-gernal-count">{{ count.bangumi }}</p>
           </div>
         </div>
       </el-col>
-      <el-col :sm="24" :md="12" :lg="8" @click="navigateTo('Bangumi')">
-        <div class="home-card">
-          <h2 class="home-card__title">BANGUMI</h2>
-          <div class="home-card-body">
-            <strong class="home-card-body__count">{{ count.bangumi }}</strong>
-            <p class="home-card-body__desc">描述</p>
+      <el-col :xs="24" :sm="12" :md="6">
+        <div class="home-general-item">
+          <div class="home-general-icon">
+            svg
+          </div>
+          <div class="home-general-info">
+            <p class="home-gernal-desc">Comment</p>
+            <p class="home-gernal-count">{{ count.comment }}</p>
           </div>
         </div>
       </el-col>
-      <el-col :sm="24" :md="12" :lg="8" @click="navigateTo('Comment')">
-        <div class="home-card">
-          <h2 class="home-card__title">COMMENT</h2>
-          <div class="home-card-body">
-            <strong class="home-card-body__count">{{ count.comment }}</strong>
-            <p class="home-card-body__desc">描述</p>
-          </div>
-        </div>
+    </el-row>
+
+    <el-row :gutter="8">
+      <el-col :xs="24" :lg="12">
+        <comment-list />
+      </el-col>
+      <el-col :xs="24" :sm="12" :lg="6">
+        <todo-list />
+      </el-col>
+      <el-col :xs="24" :sm="12" :lg="6">
+        <el-card>
+          <div slot="header">运行环境</div>
+          <ul>
+            <li>{{ version.nodeVersion }}</li>
+            <li>{{ version.v8Version }}</li>
+            <li>{{ version.platform }}</li>
+            <li>{{ version.thinkjsVersion }}</li>
+            <li>{{ version.mysqlVersion }}</li>
+          </ul>
+        </el-card>
       </el-col>
     </el-row>
   </div>
@@ -60,10 +77,16 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import CommentList from './components/CommentList'
+import TodoList from './components/TodoList'
 import { GetGeneral } from '@/api/home'
 
 export default {
   name: 'Home',
+  components: {
+    CommentList,
+    TodoList
+  },
   data() {
     return {
       generals: {},
@@ -72,6 +95,28 @@ export default {
   },
   computed: {
     ...mapGetters(['userinfo']),
+    helloText() {
+      const now = new Date().getHours()
+      if (now > 23 || now <= 5) {
+        return `${this.userinfo.name}你是夜猫子呀？这么晚还不睡觉，明天起的来嘛`
+      } else if (now > 5 && now <= 7) {
+        return `早上好！${this.userinfo.name}，一日之计在于晨，美好的一天就要开始了`
+      } else if (now > 7 && now <= 11) {
+        return `上午好！${this.userinfo.name}，工作顺利嘛，不要久坐，多起来走动走动哦！`
+      } else if (now > 11 && now <= 14) {
+        return '中午了，工作了一个上午，现在是午餐时间！'
+      } else if (now > 14 && now <= 17) {
+        return '午后很容易犯困呢，今天的运动目标完成了吗？'
+      } else if (now > 17 && now <= 19) {
+        return '傍晚了！窗外夕阳的景色很美丽呢，最美不过夕阳红~'
+      } else if (now > 19 && now <= 21) {
+        return `晚上好，${this.userinfo.name}，今天过得怎么样？`
+      } else if (now > 21 && now <= 23) {
+        return '已经这么晚了呀，早点休息吧，晚安~'
+      } else {
+        return `Hello ${this.userinfo.name}，祝你开心每一天`
+      }
+    },
     version() {
       return this.generals.version || {}
     },
@@ -106,39 +151,6 @@ export default {
 
 <style lang="scss" scoped>
 .home{
-  &-welcome{
-    height: 150px;
-    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1)
-  }
-  &-general{
-    padding: 30px;
-  }
-  &-card {
-    height: 280px;
-    margin-bottom: 30px;
-    border-radius: 10px;
-    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-    &__title{
-      display: inline-block;
-      position: relative;
-      margin: 10px 15px;
-      padding-bottom: 5px;
-      color: #409FEF;
-      font-size: 26px;
-      font-weight: normal;
-      &:after{
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 2px;
-        background-color: #409FEF;
-      }
-    }
-    &-body{
-      color: #606266;
-    }
-  }
+
 }
 </style>

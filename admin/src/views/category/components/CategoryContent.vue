@@ -94,6 +94,9 @@
       <el-form-item label="栏目图标">
         <el-input v-model="formData.icon" />
       </el-form-item>
+      <el-form-item label="栏目版本">
+        <el-input v-model="formData.version" />
+      </el-form-item>
       <el-form-item label="栏目内容">
         <Tinymce ref="editor" v-model="formData.content" :height="350" />
       </el-form-item>

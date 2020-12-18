@@ -6,3 +6,10 @@ export function GetGeneral() {
     method: 'get'
   })
 }
+
+export function GetNewComments() {
+  return request({
+    url: '/general/comment',
+    method: 'get'
+  })
+}

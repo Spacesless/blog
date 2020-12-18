@@ -1,5 +1,6 @@
 <template>
   <div class="aside">
+    <div v-if="device==='mobile' && sidebar.opened" class="aside-mask" @click="handleClickOutside" />
     <div :class="{'aside-logo': true, 'aside-logo--collapse': isCollapse}">
       <nuxt-link to="/">
         <img class="aside-logo__img" src="/static/avatar.jpg" alt="logo">
@@ -49,7 +50,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['sidebar', 'menus', 'configs']),
+    ...mapGetters(['device', 'sidebar', 'menus', 'configs']),
     logoTitle() {
       return this.configs.sitename || "Timeless's 博客"
     },
@@ -58,6 +59,11 @@ export default {
     },
     isCollapse() {
       return !this.sidebar.opened
+    }
+  },
+  methods: {
+    handleClickOutside() {
+      this.$store.dispatch('tools/closeSideBar', { withoutAnimation: false })
     }
   }
 }
