@@ -17,7 +17,7 @@
       <el-form-item label="生成预览">
         <el-image
           class="reading-preview"
-          src="https://fuss10.elemecdn.com/3/28/bbf893f792f03a54408b3b7a7ebf0jpeg.jpeg"
+          :src="example"
           :fit="fit"
         />
       </el-form-item>
@@ -51,13 +51,15 @@
 
 <script>
 import { mapGetters } from 'vuex'
+const example = require('@/assets/example.jpg')
 
 export default {
   name: 'OptionsReading',
   data() {
     return {
       formData: {},
-      confirmLoading: false
+      confirmLoading: false,
+      example
     }
   },
   computed: {
@@ -99,8 +101,9 @@ export default {
     padding: 10px 0;
   }
   &-preview {
-    width: 180px;
+    width: 200px;
     height: 120px;
+    border-radius: 10px;
   }
 }
 </style>

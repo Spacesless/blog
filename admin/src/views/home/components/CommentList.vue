@@ -1,8 +1,9 @@
 <template>
-  <el-card>
+  <el-card class="comment">
     <div slot="header">新的留言</div>
     <el-table
       v-loading="listLoading"
+      height="375"
       :data="commentList"
     >
       <el-table-column label="评论内容" prop="content" show-overflow-tooltip />
@@ -19,6 +20,8 @@
 </template>
 
 <script>
+import { GetNewComments } from '@/api/home'
+
 export default {
   data() {
     return {
@@ -26,13 +29,31 @@ export default {
       listLoading: false
     }
   },
+  created() {
+    this.fetchList()
+  },
   methods: {
-    fetchList() {
-
+    async fetchList() {
+      this.listLoading = true
+      await GetNewComments().then(res => {
+        this.commentList = res.data.data
+      }).catch(() => {})
+      this.listLoading = false
     },
-    handleView() {
-
+    handleView(id) {
+      this.$router.push({
+        name: 'CommentContent',
+        params: { id }
+      })
     }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.comment{
+  ::v-deep .el-card__body{
+    padding: 0;
+  }
+}
+</style>

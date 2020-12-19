@@ -16,9 +16,6 @@
         <i v-if="!tag.meta.affix" class="el-icon-close" @click.prevent.stop="closeSelectedTag(tag)" />
       </router-link>
     </scroll-pane>
-    <div class="tags-view-refresh" @click="handleRefresh">
-      <i class="el-icon-refresh" />
-    </div>
     <ul v-show="visible" :style="{left:left+'px',top:top+'px'}" class="contextmenu">
       <li @click="refreshSelectedTag(selectedTag)">刷新</li>
       <li
@@ -125,18 +122,6 @@ export default {
             break
           }
         }
-      })
-    },
-    // 刷新当前页
-    handleRefresh() {
-      const view = this.$route
-      this.$store.dispatch('tagsView/delCachedView', view).then(() => {
-        const { fullPath } = view
-        this.$nextTick(() => {
-          this.$router.replace({
-            path: '/redirect' + fullPath
-          })
-        })
       })
     },
     refreshSelectedTag(view) {
@@ -268,47 +253,6 @@ export default {
       color: #409eff;
       &::before {
         background-color: #409eff;
-      }
-    }
-  }
-  &-refresh{
-    position: absolute;
-    right: 0;
-    z-index: 999;
-    width: 32px;
-    height: 40px;
-    border-bottom: 1px solid #EBEEF5;
-    background-color: #fff;
-    color: #606266;
-    font-size: 20px;
-    line-height: 40px;
-    text-align: center;
-    cursor: pointer;
-    &:hover{
-      color: #303133;
-    }
-  }
-}
-</style>
-
-<style lang="scss">
-//reset element css of el-icon-close
-.tags-view-wrapper {
-  .tags-view-item {
-    .el-icon-close {
-      width: 16px;
-      height: 16px;
-      margin-left: 6px;
-      line-height: 16px;
-      text-align: center;
-      border-radius: 50%;
-      transition: all .3s cubic-bezier(.645, .045, .355, 1);
-      &:before {
-        display: inline-block;
-      }
-      &:hover {
-        background-color: #b4bccc;
-        color: #fff;
       }
     }
   }

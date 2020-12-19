@@ -94,7 +94,7 @@
   }
 }
 
-$header-height: 50px;
+$header-height: 45px;
 .header{
   position: fixed;
   top: 0;
@@ -207,11 +207,10 @@ $header-height: 50px;
 .app-main{
   margin-left: $asideWidth + 15px;
   margin-right: $asideWidth + 15px;
-  padding-top: 30px;
+  padding-top: $header-height + 15;
   transition: margin 0.3s;
   @media (max-width: 992px) {
     margin-right: 0;
-    padding-top: $header-height + 20;
   }
   &__title{
     position: relative;

@@ -72,7 +72,7 @@ export default {
   overflow: hidden;
   position: absolute;
   left: 0;
-  right: 32px;
+  right: 0;
   height: 38px;
   line-height: 38px;
   white-space: nowrap;

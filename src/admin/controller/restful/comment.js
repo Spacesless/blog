@@ -7,7 +7,7 @@ module.exports = class extends Rest {
       return this.success(data)
     } else {
       const { page, pageSize } = this.get()
-      const field = 'id,content,addtime,name'
+      const field = 'id,parent_id,content,addtime,name,reply_name,type'
       const list = await this.modelInstance
         .field(field)
         .order('addtime DESC')

@@ -10,13 +10,13 @@
   >
 
     <el-form ref="form" v-loading="fetchLoading" :model="formData" :rules="rules" label-width="80px">
-      <el-form-item label="网站标题" prop="webname">
+      <el-form-item label="网站标题" prop="name">
         <el-input v-model="formData.name" />
       </el-form-item>
-      <el-form-item label="网站地址" prop="weburl">
+      <el-form-item label="网站地址" prop="website">
         <el-input v-model="formData.website" />
       </el-form-item>
-      <el-form-item label="网站logo" prop="weblogo">
+      <el-form-item label="网站logo" prop="logo">
         <el-input v-model="formData.logo" />
       </el-form-item>
       <el-form-item label="网站描述">
@@ -57,12 +57,12 @@ export default {
       formData: {},
       fetchLoading: false,
       rules: {
-        webname: [{ required: true, message: '请输入网站名称', trigger: 'blur' }],
-        weburl: [
+        name: [{ required: true, message: '请输入网站名称', trigger: 'blur' }],
+        website: [
           { required: true, message: '请输入网站地址', trigger: 'blur' },
           { type: 'url', message: '请输入正确的地址', trigger: 'change' }
         ],
-        weblogo: [{ type: 'url', message: '请输入正确的地址', trigger: 'change' }]
+        logo: [{ type: 'url', message: '请输入正确的地址', trigger: 'change' }]
       }
     }
   },
@@ -87,7 +87,7 @@ export default {
         this.dialogLoading = true
 
         const SubmitHandler = this.currentId ? UpdateContent : CreateContent
-        await SubmitHandler(this.formData).then(res => {
+        await SubmitHandler('link', this.formData).then(res => {
           this.$message({
             type: 'success',
             message: this.isEdit ? '更新成功' : '添加成功'

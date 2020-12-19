@@ -1,13 +1,19 @@
 <template>
-  <el-form ref="form" :model="formData" :rules="rules" label-width="80px">
+  <el-form ref="form" class="app-container" :model="formData" :rules="rules" label-width="auto">
     <el-form-item label="用户名" prop="username">
-      <el-input v-model="formData.username" />
+      <el-col :sm="24" :md="12" :lg="8">
+        <el-input v-model="formData.username" />
+      </el-col>
     </el-form-item>
     <el-form-item label="昵称">
-      <el-input v-model="formData.nickname" />
+      <el-col :sm="24" :md="12" :lg="8">
+        <el-input v-model="formData.nickname" />
+      </el-col>
     </el-form-item>
     <el-form-item label="邮箱" prop="email">
-      <el-input v-model="formData.email" />
+      <el-col :sm="24" :md="12" :lg="8">
+        <el-input v-model="formData.email" />
+      </el-col>
     </el-form-item>
     <el-form-item label="最后登录时间">
       <el-date-picker
@@ -17,18 +23,23 @@
       />
     </el-form-item>
     <el-form-item label="新密码" prop="password">
-      <el-input v-model="formData.password" />
+      <el-col :sm="24" :md="12" :lg="8">
+        <el-input v-model="formData.password" />
+      </el-col>
     </el-form-item>
     <el-form-item label="再次输入密码" prop="againPassword">
-      <el-input v-model="formData.asginPassword" />
+      <el-col :sm="24" :md="12" :lg="8">
+        <el-input v-model="formData.againPassword" />
+      </el-col>
     </el-form-item>
-    <el-form-item class="text-right">
+    <el-form-item>
       <el-button type="primary" :loading="confirmLoading" @click="handleSubmit">保存</el-button>
     </el-form-item>
   </el-form>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import { UpdateAdminInfo } from '@/api/user'
 
 export default {
@@ -42,7 +53,7 @@ export default {
       }
     }
     const validateAgainPassword = (rule, value, callback) => {
-      if (value !== this.formData.againPassword) {
+      if (value !== this.formData.password) {
         callback(new Error('两次输入的密码不一致'))
       } else {
         callback()
@@ -50,32 +61,34 @@ export default {
     }
     return {
       formData: {},
-      fetchLoading: false,
+      confirmLoading: false,
       rules: {
         username: [{ required: true, trigger: 'blur', message: '请输入用户名' }],
         email: [
           { required: true, trigger: 'blur', message: '请输入邮箱地址' },
           { type: 'email', trigger: 'change', message: '请输入正确的邮箱地址' }
         ],
-        password: [{ trigger: 'blur', validator: validatePassword }],
-        againPassword: [{ trigger: 'blur', validator: validateAgainPassword }]
+        password: [{ trigger: ['blur', 'change'], validator: validatePassword }],
+        againPassword: [{ trigger: ['blur', 'change'], validator: validateAgainPassword }]
       }
     }
   },
-  created() {
-    if (this.isEdit) {
-      this.id = this.$route.params && this.$route.params.id
-      this.fetchData()
+  computed: {
+    ...mapGetters(['userinfo'])
+  },
+  watch: {
+    userinfo: {
+      handler(data) {
+        this.formData = { ...data }
+      },
+      immediate: true
     }
   },
   methods: {
-    fetchData() {
-
-    },
     handleSubmit() {
       this.$refs.form.validate(async(valid) => {
         if (!valid) return
-        this.dialogLoading = true
+        this.confirmLoading = true
 
         await UpdateAdminInfo(this.formData).then(res => {
           this.$message({
@@ -89,7 +102,7 @@ export default {
             message: this.isEdit ? '更新失败' : '添加失败'
           })
         })
-        this.dialogLoading = false
+        this.confirmLoading = false
       })
     }
   }

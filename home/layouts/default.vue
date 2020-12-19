@@ -125,9 +125,10 @@ export default {
     )
   },
   head() {
+    const { is_silent } = this.configs
     return {
       htmlAttrs: {
-        class: parseInt(this.configs.is_silent) ? 'silent' : ''
+        class: +is_silent ? 'silent' : ''
       }
     }
   }

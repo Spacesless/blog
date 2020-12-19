@@ -25,11 +25,11 @@ module.exports = class extends Base {
   // 查询未查看的评论
   async commentAction() {
     const field = 'id,content,addtime,status'
-    const list = await this.modelInstance
+    const list = await this.model('comment')
       .field(field)
-      .where({ status: 0 })
+      .where({ status: 0, 'is_admin': 0 })
       .order('addtime DESC')
-      .page(1, 8)
+      .page(1, 7)
       .countSelect()
     return this.success(list)
   }

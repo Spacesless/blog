@@ -43,7 +43,7 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item label="网站logo">
-        <upload-image :file-list="formData.weblogo" />
+        <upload-image :file-list="formData.logo" />
       </el-form-item>
       <el-form-item label="工信备案">
         <el-input v-model="formData.icp_beian" />
@@ -52,7 +52,7 @@
         <el-input v-model="formData.police_beian" />
       </el-form-item>
       <el-form-item label="沉寂模式">
-        <el-switch v-model="formData.is_silent " />
+        <el-switch v-model="formData.is_silent" :active-value="1" :inactive-value="0" />
       </el-form-item>
       <el-form-item label="Live2d模型">
         <el-input v-model="formData.live2d_model" />
@@ -87,13 +87,27 @@ export default {
     }
   },
   created() {
-    const { sitename, siteurl, keywords, description, seo_title_type, logo, icp_beian, police_beian, live2d_model, live2d_texture } = this.configs
-    this.formData = { sitename, siteurl, keywords, description, seo_title_type, logo, icp_beian, police_beian, live2d_model, live2d_texture }
+    const {
+      sitename, keywords, description, seo_title_type, logo, icp_beian, police_beian,
+      is_silent, live2d_model, live2d_texture
+    } = this.configs
+    this.formData = {
+      sitename,
+      keywords,
+      description,
+      seo_title_type,
+      logo,
+      icp_beian,
+      police_beian,
+      is_silent,
+      live2d_model,
+      live2d_texture
+    }
   },
   methods: {
     async handleSubmit() {
       this.confirmLoading = true
-      await this.$store.dispatch('config/updateConfigs', this.form).then(() => {
+      await this.$store.dispatch('config/updateConfigs', this.formData).then(() => {
         this.$message({
           type: 'success',
           message: '更新成功'

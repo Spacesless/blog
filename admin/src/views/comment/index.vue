@@ -10,11 +10,18 @@
       @selection-change="onSelectionChange"
     >
       <el-table-column type="selection" width="50" align="center" />
-      <el-table-column label="评论内容" prop="content" show-overflow-tooltip />
+      <el-table-column label="ID" prop="id" width="65" align="center" />
+      <el-table-column label="Reply" prop="parent_id" width="65" align="center" />
+      <el-table-column label="评论内容" show-overflow-tooltip>
+        <template #default="scope">
+          {{ `${scope.row.type === 3 ? '@' + scope.row.reply_name : ''} ${scope.row.content}` }}
+        </template>
+      </el-table-column>
+      <el-table-column label="评论人" prop="name" width="150" align="center" />
       <el-table-column class-name="status-col" label="状态" width="110" align="center">
         <template #default="scope">
           <el-tag v-if="scope.row.status">已审核</el-tag>
-          <el-tag v-else type="info">未通过</el-tag>
+          <el-tag v-else type="info">未审核</el-tag>
         </template>
       </el-table-column>
       <el-table-column align="center" label="发布时间" width="200">

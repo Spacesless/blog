@@ -26,8 +26,8 @@
           </el-image>
         </template>
       </el-table-column>
-      <el-table-column label="标题" prop="title" />
-      <el-table-column label="总集数" width="180" align="center">
+      <el-table-column label="标题" prop="title" min-width="200" />
+      <el-table-column label="总集数" width="150" align="center">
         <template #default="scope">
           <el-input-number
             v-model="scope.row.total"
@@ -36,7 +36,7 @@
           />
         </template>
       </el-table-column>
-      <el-table-column label="进度" width="180" align="center">
+      <el-table-column label="进度" width="150" align="center">
         <template #default="scope">
           <el-input-number
             v-model="scope.row.current"
@@ -46,7 +46,7 @@
           />
         </template>
       </el-table-column>
-      <el-table-column label="状态" width="180" align="center">
+      <el-table-column label="状态" width="150" align="center">
         <template #default="scope">
           <el-select v-model="scope.row.status" placeholder="请选择状态">
             <el-option label="未上映" :value="0" />
@@ -55,7 +55,18 @@
           </el-select>
         </template>
       </el-table-column>
-      <el-table-column label="前台显示" width="120" align="center">
+      <el-table-column label="推荐指数" width="150" align="center">
+        <template #default="scope">
+          <el-input-number
+            v-model="scope.row.ratings"
+            controls-position="right"
+            :min="5"
+            :max="10"
+            :step="0.1"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column label="前台显示" width="100" align="center">
         <template #default="scope">
           <el-tag v-if="scope.row.is_show">显示</el-tag>
           <el-tag v-else type="info">隐藏</el-tag>

@@ -6,13 +6,14 @@
       </router-link>
       <router-link v-else key="expand" class="sidebar-logo-link" to="/">
         <img v-if="logo" :src="logo" class="sidebar-logo">
+        <span class="sidebar-logo__name">{{ title }}</span>
       </router-link>
     </transition>
   </div>
 </template>
 
 <script>
-const logo = require('@/assets/logo.png')
+const logo = require('@/assets/logo.jpg')
 
 export default {
   name: 'SidebarLogo',
@@ -24,14 +25,19 @@ export default {
   },
   data() {
     return {
-      title: '',
-      logo: logo
+      title: 'Timeless',
+      logo
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+@font-face {
+  font-family: 'Bega';
+  src: url('~@/assets/fonts/Bega-Light.ttf');
+}
+
 .sidebarLogoFade-enter-active {
   transition: opacity 1.5s;
 }
@@ -50,13 +56,25 @@ export default {
   line-height: 50px;
   text-align: center;
 
-  & .sidebar-logo-link {
-    height: 100%;
-    width: 100%;
-
-    & .sidebar-logo {
-      height: 36px;
-      margin-right: 12px;
+  .sidebar-logo {
+    display: inline-block;
+    height: 36px;
+    margin-right: 8px;
+    border-radius: 50%;
+    vertical-align: middle;
+    &-link {
+      height: 100%;
+      width: 100%;
+    }
+    &__name{
+      display: inline-block;
+      margin-right: 8px;
+      color: #fff;
+      line-height: 1.7;
+      font: {
+        size: 30px;
+        family: 'Bega';
+      };
       vertical-align: middle;
     }
   }

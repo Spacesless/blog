@@ -7,7 +7,7 @@ function resolve(dir) {
   return path.join(__dirname, 'admin', dir)
 }
 
-const name = defaultSettings.title || 'Timeless`s 管理平台' // page title
+const name = defaultSettings.title || 'Timeless`s 管理系统' // page title
 
 // If your port is set to 80,
 // use administrator privileges to execute the command line.

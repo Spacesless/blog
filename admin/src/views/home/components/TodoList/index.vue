@@ -30,9 +30,9 @@
           <a :class="{ selected: visibility === key }" @click.prevent="visibility = key">{{ key | capitalize }}</a>
         </li>
       </ul>
-      <button v-show="todos.length > remaining" class="clear-completed" @click="clearCompleted">
-        Clear completed
-      </button>
+      <!-- <button v-show="todos.length > remaining" class="clear-completed" @click="clearCompleted">
+        Clear
+      </button> -->
     </footer>
   </section>
 </template>

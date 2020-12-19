@@ -28,7 +28,7 @@
       </el-table-column>
       <el-table-column label="标题" prop="title" />
       <el-table-column label="访问量" prop="hits" width="100" align="center" />
-      <el-table-column class-name="status-col" label="前台展示" width="120" align="center">
+      <el-table-column class-name="status-col" label="前台展示" width="100" align="center">
         <template #default="scope">
           <el-tag v-if="scope.row.is_show">显示</el-tag>
           <el-tag v-else type="info">隐藏</el-tag>

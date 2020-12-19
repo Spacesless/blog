@@ -37,7 +37,6 @@ export default {
 
 <style lang="scss" scoped>
 .webapp{
-  padding: 15px 0;
   &-list{
     padding: 0 15px;
   }
