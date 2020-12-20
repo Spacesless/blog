@@ -198,13 +198,12 @@ export default {
       padding: 0 15px;
     }
     &__title{
-      color: #303133;
+      color: var(--color-main);
       font-size: 28px;
       font-weight: normal;
       line-height: 2;
     }
     &__admin{
-      color: #606266;
       font-size: 15px;
       span{
         margin-right: 8px;
@@ -225,18 +224,18 @@ export default {
     &-item{
       position: relative;
       padding: 0 15px;
-      color: #303133;
+      color: var(--color-main);
       cursor: pointer;
       &__text{
         overflow: hidden;
-        color: #303133;
+        color: var(--color-main);
         font-size: 14px;
         line-height: 24px;
         text-overflow: ellipsis;
         white-space: nowrap;
       }
       &--active{
-        color: $primary;
+        color: var(--color-primary);
         &:before{
           content: '';
           position: absolute;
@@ -245,7 +244,7 @@ export default {
           z-index: 1;
           width: 1px;
           height: 100%;
-          background-color: $primary;
+          background-color: var(--color-primary);
         }
       }
     }

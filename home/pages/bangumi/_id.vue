@@ -177,7 +177,7 @@ export default {
       transition: all .3s;
       &:hover{
         border-style: solid;
-        border-color: $primary;
+        border-color: var(--color-primary);
       }
     }
     &-cover{
@@ -189,7 +189,7 @@ export default {
       bottom: 0;
       width: 30px;
       height: 16px;
-      background: $primary;
+      background: var(--color-primary);
       color: #fff;
       font-size: 12px;
       line-height: 16px;
@@ -198,7 +198,6 @@ export default {
     }
     &-info{
       padding: 10px 12px;
-      color: #606266;
       font-size: 14px;
       line-height: 1.6em;
       .el-progress-bar{
@@ -209,7 +208,7 @@ export default {
         font-size: 12px;
       }
       .para-name{
-        color: #909399;
+        color: var(--color-secondary);
       }
     }
     &__title{
@@ -217,7 +216,7 @@ export default {
       display: inline-block;
       max-width: 100%;
       margin-bottom: 5px;
-      color: $primary;
+      color: var(--color-primary);
       font-size: 18px;
       text-overflow: ellipsis;
       white-space: nowrap;

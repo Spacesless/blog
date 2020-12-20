@@ -87,7 +87,7 @@ export default {
   &-item{
     display: block;
     padding: 10px;
-    border-top: 3px solid $primary;
+    border-top: 3px solid var(--color-primary);
     border-radius: 4px;
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   }
@@ -102,7 +102,6 @@ export default {
       display: block;
       width: 65px;
       height: 65px;
-      color: #606266;
       font-size: 22px;
       line-height: 65px;
       text-align: center;
@@ -114,18 +113,16 @@ export default {
     &__name{
       font-size: 16px;
       line-height: 22px;
-      color: $primary;
+      color: var(--color-primary);
     }
     &__desc{
       overflow: hidden;
       height: 42px;
-      color: #606266;
       font-size: 13px;
       line-height: 1.6em;
     }
   }
   &-tips{
-    color: #606266;
     font-size: 15px;
     line-height: 2;
     span {

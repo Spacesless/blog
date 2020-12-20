@@ -109,14 +109,13 @@ export default {
     height: 40px;
     margin-right: 3px;
     background-color: #F2F6FC;
-    color: #606266;
     font-size: 22px;
     line-height: 40px;
     border-radius: 50%;
   }
   .el-icon-share{
     margin-right: 3px;
-    color: $primary;
+    color: var(--color-primary);
     font-size: 24px;
     line-height: 40px;
   }
@@ -145,7 +144,7 @@ export default {
 .qrcode-wrap{
   p{
     padding-top: 10px;
-    color: #909399;
+    color: var(--color-secondary);
     font-size: 15px;
     text-align: center;
   }

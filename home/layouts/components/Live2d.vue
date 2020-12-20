@@ -6,10 +6,10 @@
     <canvas id="live2d" ref="live2d" width="240" height="240" class="live2d" />
     <div class="waifu-tool">
       <span ref="home" class="tl-icon" @click="navigatorToHome">&#xe76f;</span>
-      <span ref="model" class="tl-icon" @click="loadOtherModel">&#xe6ed;</span>
+      <span ref="model" class="tl-icon" @click="loadOtherModel">&#xe651;</span>
       <span ref="textures" class="tl-icon" @click="loadOtherTexture">&#xe743;</span>
-      <span ref="photo" class="tl-icon" @click="handleTakePhoto">&#xe704;</span>
-      <span ref="close" class="tl-icon" @click="handleHideLive2d">&#xe602;</span>
+      <span ref="photo" class="tl-icon" @click="handleTakePhoto">&#xe60d;</span>
+      <span ref="close" class="tl-icon" @click="handleHideLive2d">&#xe645;</span>
     </div>
   </div>
 </template>

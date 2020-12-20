@@ -123,7 +123,6 @@ export default {
     &-text{
       padding: 0 10px;
       padding-right: 15px;
-      color: #606266;
       font-size: 14px;
       line-height: 1.7;
       p{
@@ -132,12 +131,12 @@ export default {
       }
       .para-name{
         padding-right: 5px;
-        color: #909399;
+        color: var(--color-secondary);
       }
     }
     &__title{
       padding: 10px 0 5px;
-      color: $primary;
+      color: var(--color-primary);
       font-size: 26px;
       font-weight: 100;
     }

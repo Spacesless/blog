@@ -168,7 +168,7 @@ export default {
         margin-top: -180px;
       }
       &__time{
-        color: #909399;
+        color: var(--color-secondary);
         font-size: 14px;
       }
       &-title{
@@ -178,14 +178,13 @@ export default {
         word-break: break-all;
       }
       &__url{
-        color: #303133;
+        color: var(--color-main);
         &:hover{
           color: #409FEF;
         }
       }
       &__desc{
         margin-top: 10px;
-        color: #606266;
         font-size: 15px;
         line-height: 22px;
       }
@@ -193,7 +192,7 @@ export default {
         position: absolute;
         bottom: 70px;
         left: 60px;
-        color: #909399;
+        color: var(--color-secondary);
         font-size: 14px;
         .tl-icon{
           margin-top: -2px;

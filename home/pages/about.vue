@@ -81,7 +81,7 @@ export default {
 <style lang="scss" scoped>
 .about{
   &-introduce{
-    color: #303133;
+    color: var(--color-main);
     font-size: 15px;
     line-height: 2;
     &-timeline{
@@ -98,7 +98,7 @@ export default {
     padding-top: 15px;
     &__link{
       margin: 0 5px;
-      color: $primary;
+      color: var(--color-primary);
     }
   }
   &-connact{
@@ -107,14 +107,13 @@ export default {
       margin-right: 10px;
       padding: 5px 12px;
       border: 1px solid #dcdfe6;
-      color: #606266;
       line-height: 1;
       vertical-align: middle;
       border-radius: 4px;
       &:hover{
-        border-color: $primary;
+        border-color: var(--color-primary);
         background-color: #ecf5ff;
-        color: $primary;
+        color: var(--color-primary);
       }
       .tl-icon{
         margin-right: 3px;

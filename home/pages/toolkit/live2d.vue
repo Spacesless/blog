@@ -279,7 +279,7 @@ export default {
     height: 100px;
     margin: -20px 10px;
     padding: 5px 10px;
-    border: 1px solid $primary;
+    border: 1px solid var(--color-primary);
     background-color: rgba(255, 255, 255, 0.8);
     font-size: 12px;
     text-overflow: ellipsis;
@@ -299,7 +299,7 @@ export default {
       color: #606266;
     }
     a{
-      color: $primary;
+      color: var(--color-primary);
     }
   }
   &-filter{
@@ -310,7 +310,7 @@ export default {
       padding: 10px 15px;
       border: 1px solid #fff;
       &--active{
-        border: 1px solid $primary;
+        border: 1px solid var(--color-primary);
         border-radius: 4px;
       }
       .el-image{

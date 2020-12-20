@@ -26,7 +26,7 @@
         <div class="aside-menu-item">
           <nuxt-link to="/link">
             <el-menu-item index="/link">
-              <i class="aside-menu__icon tl-icon">&#xe6f5;</i>
+              <i class="aside-menu__icon tl-icon">&#xe654;</i>
               <span slot="title">友情链接</span>
             </el-menu-item>
           </nuxt-link>

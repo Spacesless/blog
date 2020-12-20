@@ -131,7 +131,7 @@ export default {
   }
   &-noData{
     height: 350px;
-    color: #909399;
+    color: var(--color-secondary);
     font-size: 18px;
     line-height: 350px;
     text-align: center;
@@ -144,7 +144,7 @@ export default {
     border-radius: 4px;
     &__result{
       padding: 10px 15px;
-      color: #303133;
+      color: var(--color-main);
       font-size: 24px;
       font-weight: normal;
     }
@@ -169,27 +169,26 @@ export default {
       padding-left: 15px;
       p{
         font-size: 15px;
-        color: #606266;
         line-height: 1.6em;
       }
     }
     &__title{
       display: inline-block;
       margin: 5px 0 10px;
-      color: #303133;
+      color: var(--color-main);
       font-size: 20px;
       &:hover{
-        color: $primary;
+        color: var(--color-primary);
       }
     }
     &__classify{
       position: absolute;
       bottom: 15px;
       margin-left: -5px;
-      color: #909399;
+      color: var(--color-secondary);
       a{
         margin: 0 5px;
-        color: $primary;
+        color: var(--color-primary);
         font-size: 14px;
         &:hover{
           color:#f56c6c;

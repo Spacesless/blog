@@ -1,5 +1,11 @@
 @import './variables.scss';
 
+body{
+  background-color: var(--bg);
+  color: var(--color-normal);
+  transition: background-color .3s;
+}
+
 .aside{
   position: fixed;
   top: 0;
@@ -7,17 +13,19 @@
   z-index: 999;
   width: $asideWidth;
   height: 100%;
-  background-color: #fff;
   box-shadow: 2px 0 10px rgba(0,0,0,.1);
   transition: width 0.3s;
   &-mask{
     position: fixed;
     top: 0;
+    z-index: -1;
     width: 100%;
     height: 100%;
+    background-color: rgba($color: #000000, $alpha: .5);
   }
   &-logo{
     padding: 35px 0 15px;
+    background-color: #fff;
     text-align: center;
     &__img{
       width: 100px;
@@ -28,7 +36,7 @@
     &__name{
       overflow: hidden;
       padding-top: 5px;
-      color: $primary;
+      color: var(--color-primary);
       font-family: 'Bega';
       font-size: 24px;
       white-space: nowrap;
@@ -44,8 +52,9 @@
     }
   }
   &-scrollbar{
-    height: calc(100vh - 160px);
-    &-wrap{
+    height: calc(100vh - 190px);
+    background-color: #fff;
+    &-wrapper{
       overflow-x: hidden;
     }
   }
@@ -67,17 +76,17 @@
     .el-menu-item{
       &:focus,&:hover{
         background-color: #ecf5ff !important;
-        color: $primary;
+        color: var(--color-primary);
         i{
-          color: $primary;
+          color: var(--color-primary);
         }
       }
     }
     .el-submenu__title:hover{
       background-color: #ecf5ff !important;
-      color: $primary;
+      color: var(--color-primary);
       i{
-        color: $primary;
+        color: var(--color-primary);
       }
     }
   }
@@ -115,8 +124,17 @@ $header-height: 45px;
     line-height: $header-height;
     &__avatar{
       height: 36px;
+      margin-right: 3px;
       vertical-align: middle;
       border-radius: 20px;
+    }
+    &__hamburger{
+      padding: 5px;
+      font-size: 18px;
+      cursor: pointer;
+      &:hover{
+        color: var(--color-main);
+      }
     }
   }
   &-menus{
@@ -124,14 +142,15 @@ $header-height: 45px;
     height: $header-height;
     text-align: right;
     &__btn{
-      margin-left: 5px;
-      padding: 3px;
-      color: #606266;
+      margin-left: 3px;
+      padding: 5px;
+      color: var(--color-normal);
       font-size: 18px;
       user-select: none;
+      outline: none;
       cursor: pointer;
       &:hover{
-        color: #303133;
+        color: var(--color-main);
       }
     }
   }
@@ -165,12 +184,11 @@ $header-height: 45px;
     right: 0;
     top: 0;
     width: 40px;
-    color: #606266;
     line-height: 40px;
     text-align: center;
     cursor: pointer;
     &:hover{
-      color: $primary;
+      color: var(--color-primary);
     }
   }
   &-hot{
@@ -183,7 +201,6 @@ $header-height: 45px;
       color: #F56C6C;
     }
     &__title{
-      color: #606266;
       font-weight: normal;
     }
     &__link{
@@ -192,13 +209,12 @@ $header-height: 45px;
       margin-right: 10px;
       padding: 7px 15px;
       background-color: #E4E7ED;
-      color: #606266;
       font-size: 13px;
       border-radius: 15px;
       cursor: pointer;
       &:hover{
         background-color: #ecf5ff;
-        color: $primary;
+        color: var(--color-primary);
       }
     }
   }
@@ -216,7 +232,7 @@ $header-height: 45px;
     position: relative;
     margin: 30px 0 15px;
     padding-left: 15px;
-    color: #303133;
+    color: var(--color-main);
     font-size: 24px;
     font-weight: normal;
     line-height: 1em;
@@ -228,14 +244,14 @@ $header-height: 45px;
       top: 0;
       width: 3px;
       height: 100%;
-      background-color: $primary;
+      background-color: var(--color-primary);
     }
   }
 }
 
 .container {
   width: 100%;
-  min-height: calc(100vh - 115px);
+  min-height: calc(100vh - 140px);
   padding-right: 15px;
   padding-left: 15px;
   margin-right: auto;
@@ -260,7 +276,7 @@ $header-height: 45px;
 
 .footer{
   padding: 15px 0 20px;
-  color: #909399;
+  color: var(--color-secondary);
   font-size: 14px;
   line-height: 1.3;
   &__icon{
@@ -270,12 +286,18 @@ $header-height: 45px;
   &-info{
     margin-bottom: 5px;
     text-align: center;
+    @media (max-width: 576px) {
+      display: none;
+    }
   }
   &-copyright{
     text-align: center;
     &__link{
       margin-left: 10px;
-      color: $primary;
+      color: var(--color-primary);
+      @media (max-width: 576px) {
+        display: none;
+      }
     }
   }
 }
@@ -313,10 +335,6 @@ $header-height: 45px;
         }
       }
     }
-  }
-  .app-main{
-    max-width: calc(100% - 64px);
-    margin-left: 64px;
   }
   .header {
     width: calc(100% - 64px)

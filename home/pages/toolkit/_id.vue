@@ -44,6 +44,7 @@ export default {
     display: block;
     position: relative;
     background-color: #fff;
+    color: var(--color-normal);
     font-size: 14px;
     border-radius: 4px;
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
@@ -69,26 +70,26 @@ export default {
       transition: border-color 0s ease-in 0.8s,width 0.2s ease-in 0.6s,height 0.2s ease-in 0.4s;
     }
     &:hover {
-      border-color: $primary;
+      border-color: var(--color-primary);
     }
     &:hover:before,&:hover:after {
       width: 100%;
       height: 100%;
     }
     &:hover:before {
-      border-bottom-color: $primary;
-      border-left-color: $primary;
+      border-bottom-color: var(--color-primary);
+      border-left-color: var(--color-primary);
       transition: border-color 0s ease-out 0.4s,width 0.2s ease-out 0.4s,height 0.2s ease-out 0.6s;
     }
     &:hover:after {
-      border-top-color: $primary;
-      border-right-color: $primary;
+      border-top-color: var(--color-primary);
+      border-right-color: var(--color-primary);
       transition:width 0.2s ease-out,height 0.2s ease-out 0.2s;
     }
     &__header{
       height: 42px;
       padding: 0 15px;
-      color: #303133;
+      color: var(--color-main);
       line-height: 42px;
       border-bottom: 1px solid #f6f6f6;
     }
@@ -104,10 +105,9 @@ export default {
       overflow: hidden;
       height: 3em;
       padding-left: 10px;
-      color: #606266;
     }
     &__version{
-      color: #909399;
+      color: var(--color-secondary);
       text-align: right;
     }
   }

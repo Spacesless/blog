@@ -118,7 +118,6 @@ export default {
       width: 100%;
       height: 100%;
       background-color: #f4f6fb;
-      color: #606266;
       text-align: center;
       line-height: 50px;
     }
@@ -127,7 +126,6 @@ export default {
     overflow: hidden;
     &-name{
       margin-bottom: 5px;
-      color: #606266;
       font-size: 13px;
       line-height: 22px;
     }
@@ -137,21 +135,21 @@ export default {
       margin-left: 5px;
       padding: 0 6px;
       background: #ecf5ff;
-      color: $primary;
+      color: var(--color-primary);
       border-radius: 4px;
     }
     &-content{
       margin-bottom: 8px;
       padding: 7px 12px;
       background-color: #f4f6fb;
-      color: #303133;
+      color: var(--color-main);
       font-size: 15px;
       border-radius: 4px;
       &__replyname{
         display: inline-block;
         margin-right: 5px;
         padding: 3px 6px;
-        background: $primary;
+        background: var(--color-primary);
         color: #fff;
         font-size: 12px;
         border-radius: 11px;
@@ -160,7 +158,6 @@ export default {
     &-operate{
       margin-bottom: 20px;
       font-size: 13px;
-      color: #606266;
     }
     &__time{
       margin-right: 10px;

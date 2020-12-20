@@ -1,9 +1,17 @@
 <template>
   <div class="header">
-    <div class="header-logo hidden-md-and-up">
-      <img class="header-logo__avatar" src="/static/avatar.jpg" alt="logo">
+    <div class="header-logo">
+      <nuxt-link to="/" class="hidden-md-and-up">
+        <img class="header-logo__avatar" src="/static/avatar.jpg" alt="logo">
+      </nuxt-link>
+      <span class="header-logo__hamburger tl-icon" :class="{'header-logo__hamburger--collapse': isCollapse}" @click="toggleSidebar">
+        &#xe71b;
+      </span>
     </div>
     <div class="header-menus">
+      <el-tooltip effect="dark" :content="$colorMode.preference === 'system' ? '黑夜模式' : '白天模式'" placement="bottom">
+        <i class="header-menus__btn tl-icon" @click="toggleColorMode">{{ $colorMode.preference === 'system' ? '&#xe607;' : '&#xe666;' }}</i>
+      </el-tooltip>
       <span class="hidden-sm-and-down">
         <el-tooltip effect="dark" content="RSS" placement="bottom">
           <a class="header-menus__btn tl-icon" href="/rss" target="_blank">&#xe6d0;</a>
@@ -11,9 +19,6 @@
       </span>
       <el-tooltip effect="dark" content="站内搜索" placement="bottom">
         <i class="header-menus__btn el-icon-search" @click="handleShowSearch" />
-      </el-tooltip>
-      <el-tooltip effect="dark" content="侧边菜单" placement="bottom">
-        <i class="header-menus__btn tl-icon" @click="toggleSidebar">&#xe6ee;</i>
       </el-tooltip>
     </div>
 
@@ -50,12 +55,20 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   data() {
     return {
       searchVisible: false,
       type: '',
       keyword: ''
+    }
+  },
+  computed: {
+    ...mapGetters(['sidebar']),
+    isCollapse() {
+      return !this.sidebar.opened
     }
   },
   methods: {
@@ -84,6 +97,9 @@ export default {
         name: 'search', query: { keyword }
       })
       this.searchVisible = false
+    },
+    toggleColorMode() {
+      this.$colorMode.preference = this.$colorMode.preference === 'system' ? 'dark' : 'system'
     }
   }
 }

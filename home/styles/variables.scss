@@ -1,12 +1,10 @@
 //theme
-$primary:#409EFF;
-
 $asideWidth: 235px;
 
 :root {
   --color-primary: #409EFF;
-  --color-title: #262626;
-  --color-text: #595959;
+  --color-main: #262626;
+  --color-normal: #595959;
   --color-secondary: #8C8C8C;
   --bg: #fff;
   --border-color: #ddd;
@@ -15,8 +13,8 @@ $asideWidth: 235px;
 
 .dark-mode {
   --color-primary: #409EFF;
-  --color-title: #ebf4f1;
-  --color-text: #595959;
+  --color-main: #ebf4f1;
+  --color-normal: #595959;
   --color-secondary: #fdf9f3;
   --bg: #141414;
   --border-color: #0d2538;

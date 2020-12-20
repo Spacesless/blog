@@ -37,7 +37,7 @@ pre[class*="language-"] {
     color: #b3b3b3;
   }
   &.punctuation{ // 标点符号
-    color: #909399;
+    color: var(--color-secondary);
   }
   &.tag {
     color: #3e76f6;
@@ -97,7 +97,7 @@ pre[class*="language-"] {
       left: 15px;
       top: 0;
       padding-right: 10px;
-      color: #909399;
+      color: var(--color-secondary);
       font-size: 16px;
       font-weight: normal;
       user-select: none;
@@ -108,7 +108,6 @@ pre[class*="language-"] {
       border: none;
       background: none;
       padding: 3px 6px;
-      color: #606266;
       font-size: 16px;
       cursor: pointer;
       &__tips{
@@ -118,7 +117,7 @@ pre[class*="language-"] {
         width: 80px;
         height: 30px;
         margin-left: -44px;
-        background-color: #303133;
+        background-color: var(--color-main);
         color: #fff;
         font-size: 12px;
         line-height: 30px;
@@ -134,12 +133,12 @@ pre[class*="language-"] {
           height: 0;
           margin-left: -3px;
           border: 6px solid transparent;
-          border-top-color: #303133;
+          border-top-color: var(--color-main);
           border-bottom-width: 0;
         }
       }
       &:hover{
-        color: $primary;
+        color: var(--color-primary);
       }
       &:hover &__tips{
         opacity: 1;

@@ -498,7 +498,7 @@ export default {
     &__item{
       margin: 10px 0;
       padding: 10px 0 10px 30px;
-      color: #303133;
+      color: var(--color-main);
       font-size: 15px;
       cursor: pointer;
       transition: all .3s;
@@ -508,7 +508,7 @@ export default {
     }
     span{
       display: block;
-      color: #909399;
+      color: var(--color-secondary);
       font-size: 14px;
     }
   }
@@ -517,7 +517,6 @@ export default {
     text-align: center;
     &__name{
       font-size: 16px;
-      color: #606266;
     }
   }
   &-content{
@@ -558,7 +557,6 @@ export default {
       right: 20px;
       top: 20px;
       padding: 5px;
-      color: #606266;
       cursor: pointer;
     }
   }
@@ -574,11 +572,11 @@ export default {
       right: 15px;
     }
     &__songname{
-      color: #303133;
+      color: var(--color-main);
     }
     &__albumdesc{
       padding-left: 10px;
-      color: #909399;
+      color: var(--color-secondary);
     }
     &-operate{
       position: absolute;
@@ -609,7 +607,7 @@ export default {
       }
     }
     &__tips{
-      color: $primary;
+      color: var(--color-primary);
       font-size: 14px;
       line-height: 2;
       text-align: center;
@@ -624,12 +622,11 @@ export default {
       overflow: hidden;
       padding-left: 15px;
       h2{
-        color: #303133;
+        color: var(--color-main);
         line-height: 1.3;
         font-weight: normal;
       }
       p{
-        color: #606266;
         font-size: 15px;
         line-height: 1.5;
       }
@@ -650,14 +647,14 @@ export default {
         width: 40px;
         height: 40px;
         margin-right: 10px;
-        color: #303133;
+        color: var(--color-main);
         line-height: 40px;
         text-align: center;
         border-radius: 50px;
         box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
         cursor: pointer;
         &:hover{
-          color: $primary;
+          color: var(--color-primary);
         }
       }
     }
@@ -699,7 +696,7 @@ export default {
       top: 5px;
       bottom: 0;
       padding-right: 15px;
-      color: #303133;
+      color: var(--color-main);
       font-size: 14px;
       text-align: right;
     }
@@ -719,7 +716,7 @@ export default {
         font-size: 14px;
       }
       &-current{
-        color: $primary;
+        color: var(--color-primary);
       }
     }
     &-list{

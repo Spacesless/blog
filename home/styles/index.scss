@@ -11,7 +11,7 @@
     padding: 0 10px;
     margin-top: 5px;
     margin-right: 5px;
-    color: #303133;
+    color: var(--color-main);
     font-size: 12px;
     line-height: 20px;
     border-radius: 10px;
@@ -83,7 +83,7 @@ $tagColor:(
 }
 // content
 .Tinymce{
-  color: #303133;
+  color: var(--color-main);
   font-size: 15px;
   line-height: 1.7;
   letter-spacing: 1px;
@@ -91,7 +91,7 @@ $tagColor:(
     margin: 12px 0;
   }
   h2,h3,h4,h5{
-    color: #303133;
+    color: var(--color-main);
     font-weight: 100;
   }
   h2{
@@ -117,7 +117,7 @@ $tagColor:(
     cursor: pointer;
   }
   a{
-    color: $primary;
+    color: var(--color-primary);
     &:hover{
       color: #E6A23C;
     }
@@ -128,7 +128,7 @@ $tagColor:(
       padding: 3px 6px;
       margin: 0 3px;
       background-color: #ecf5ff;
-      color: $primary;
+      color: var(--color-primary);
       font-size: 90%;
       font-family: Consolas,Menlo,Courier,monospace;
       line-height: 1em;

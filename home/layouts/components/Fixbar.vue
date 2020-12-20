@@ -71,7 +71,6 @@ export default {
     height: 40px;
     margin-bottom: 5px;
     background-color: #fff;
-    color: #606266;
     font-size: 24px;
     line-height: 40px;
     text-align: center;
@@ -82,10 +81,10 @@ export default {
     border-radius: 4px;
     &:hover{
       background-color: #ecf5ff;
-      color: $primary;
+      color: var(--color-primary);
     }
     &.active{
-      color: $primary;
+      color: var(--color-primary);
     }
   }
 }

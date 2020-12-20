@@ -106,7 +106,7 @@ export default {
       margin: 0 auto;
     }
     &__tips{
-      color: #909399;
+      color: var(--color-secondary);
       text-align: center;
     }
   }

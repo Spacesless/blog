@@ -22,7 +22,7 @@
             <div class="articles-meta">
               <span class="articles-meta__date"><i class="tl-icon">&#xe70b;</i>{{ item.updatetime | parseTime('{y}-{m}-{d}') }}</span>
               <span class="articles-meta__cate">
-                <i class="tl-icon">&#xe652;</i>
+                <i class="tl-icon">&#xe668;</i>
                 <nuxt-link :to="item.column.url" :title="item.column.name">{{ item.column.name }}</nuxt-link>
               </span>
               <span class="articles-meta__view"><i class="tl-icon">&#xe681;</i>{{ item.hits }}</span>
@@ -123,7 +123,7 @@ export default {
     position: relative;
     padding: 15px 0 30px;
     &__title{
-      color: $primary;
+      color: var(--color-primary);
       font-size: 24px;
       font-weight: normal;
       line-height: 1;
@@ -132,11 +132,11 @@ export default {
       position: absolute;
       right: 0;
       top: 15px;
-      color: #909399;
+      color: var(--color-secondary);
       font-size: 14px;
       line-height: 24px;
       &:hover{
-        color: $primary;
+        color: var(--color-primary);
       }
     }
   }
@@ -182,11 +182,11 @@ export default {
       overflow: hidden;
       display: inline-block;
       max-width: 100%;
-      color: #303133;
+      color: var(--color-main);
       text-overflow: ellipsis;
       white-space: nowrap;
       &:hover{
-        color: $primary;
+        color: var(--color-primary);
       }
     }
   }
@@ -194,7 +194,7 @@ export default {
     padding: 5px 0;
     font-size: 14px;
     span{
-      color: #909399;
+      color: var(--color-secondary);
       margin-right: 10px;
     }
     i {
@@ -204,9 +204,9 @@ export default {
     }
     &__cate{
       a{
-        color: #909399;
+        color: var(--color-secondary);
         &:hover{
-          color: $primary;
+          color: var(--color-primary);
         }
       }
     }
@@ -215,7 +215,6 @@ export default {
     p {
       overflow: hidden;
       height: 60px;
-      color: #606266;
       font-size: 14px;
       line-height: 2em;
     }
@@ -232,7 +231,7 @@ export default {
       transition: all .3s;
       &:hover{
         border-style: solid;
-        border-color: $primary;
+        border-color: var(--color-primary);
       }
     }
     &-cover{
@@ -244,7 +243,7 @@ export default {
       bottom: 0;
       width: 30px;
       height: 16px;
-      background: $primary;
+      background: var(--color-primary);
       color: #fff;
       font-size: 12px;
       line-height: 16px;
@@ -254,7 +253,6 @@ export default {
     &-info{
       padding: 10px 12px;
       p, span, .el-progress__text{
-        color: #606266;
         font-size: 14px;
         line-height: 1.6em;
       }
@@ -266,7 +264,7 @@ export default {
         margin-left: 0;
       }
       .para-name{
-        color: #909399;
+        color: var(--color-secondary);
       }
     }
     &__title{
@@ -275,7 +273,7 @@ export default {
       max-width: 100%;
       margin-bottom: 5px;
       font-size: 18px;
-      color: $primary;
+      color: var(--color-primary);
       text-overflow: ellipsis;
       white-space: nowrap;
     }
