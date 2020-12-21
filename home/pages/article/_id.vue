@@ -140,7 +140,7 @@ export default {
       overflow: hidden;
       display: inline-block;
       float: none;
-      border: 1px solid #eaeaea;
+      border: 1px solid var(--border-color);
       border-radius: 6px;
       &__picture{
         display: block;
@@ -153,7 +153,7 @@ export default {
       height: 400px;
       margin-top: -200px;
       padding: 70px 60px 0 60px;
-      border: 1px solid #eaeaea;
+      border: 1px solid var(--border-color);
       @media (max-width: 992px) {
         position: static;
         height: auto;
@@ -180,7 +180,7 @@ export default {
       &__url{
         color: var(--color-main);
         &:hover{
-          color: #409FEF;
+          color: var(--color-primary);
         }
       }
       &__desc{

@@ -219,7 +219,7 @@ export default {
     right: 0;
     width: 230px;
     &-list{
-      border-left: 1px solid #ebeef5;
+      border-left: 1px solid var(--border-color);
     }
     &-item{
       position: relative;

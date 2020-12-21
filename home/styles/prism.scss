@@ -75,8 +75,8 @@ pre[class*="language-"] {
 .code-toolbar{
   position: relative;
   margin: 10px 0;
-  border: 1px solid #EBEEF5;
-  background: #f4f6fb;
+  border: 1px solid var(--border-color);
+  background: var(--bg-secondary);
   border-radius: 4px;
 }
 .toolbar{
@@ -86,7 +86,7 @@ pre[class*="language-"] {
   height: 40px;
   padding: 0 10px;
   line-height: 40px;
-  border-bottom: 1px dashed #DCDFE6;
+  border-bottom: 1px dashed var(--border-color);
   text-align: right;
   box-sizing: border-box;
   &-item{

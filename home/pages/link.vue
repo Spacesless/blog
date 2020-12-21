@@ -89,14 +89,14 @@ export default {
     padding: 10px;
     border-top: 3px solid var(--color-primary);
     border-radius: 4px;
-    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: var(--box-shadow);
   }
   &-logo{
     overflow: hidden;
     float: left;
     width: 65px;
     height: 65px;
-    background-color: #f7f7f7;
+    background-color: var(--bg-secondary);
     border-radius: 50%;
     &__picture{
       display: block;

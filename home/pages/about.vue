@@ -106,13 +106,13 @@ export default {
       display: inline-block;
       margin-right: 10px;
       padding: 5px 12px;
-      border: 1px solid #dcdfe6;
+      border: 1px solid var(--border-color);
       line-height: 1;
       vertical-align: middle;
       border-radius: 4px;
       &:hover{
         border-color: var(--color-primary);
-        background-color: #ecf5ff;
+        background-color: var(--bg-secondary);
         color: var(--color-primary);
       }
       .tl-icon{

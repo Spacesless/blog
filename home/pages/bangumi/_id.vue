@@ -171,8 +171,8 @@ export default {
       overflow: hidden;
       position: relative;
       margin-bottom: 20px;
-      border: 1px dashed #EBEEF5;
-      background-color: #fff;
+      border: 1px dashed var(--border-color);
+      background-color: var(--bg);
       border-radius: 4px;
       transition: all .3s;
       &:hover{

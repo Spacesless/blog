@@ -117,7 +117,7 @@ export default {
       display: block;
       width: 100%;
       height: 100%;
-      background-color: #f4f6fb;
+      background-color: var(--bg-secondary);
       text-align: center;
       line-height: 50px;
     }
@@ -141,7 +141,7 @@ export default {
     &-content{
       margin-bottom: 8px;
       padding: 7px 12px;
-      background-color: #f4f6fb;
+      background-color: var(--bg-secondary);
       color: var(--color-main);
       font-size: 15px;
       border-radius: 4px;

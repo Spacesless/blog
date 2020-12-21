@@ -13,7 +13,7 @@ body{
   z-index: 999;
   width: $asideWidth;
   height: 100%;
-  box-shadow: 2px 0 10px rgba(0,0,0,.1);
+  box-shadow: var(--box-shadow);
   transition: width 0.3s;
   &-mask{
     position: fixed;
@@ -25,7 +25,7 @@ body{
   }
   &-logo{
     padding: 35px 0 15px;
-    background-color: #fff;
+    background-color: var(--bg);
     text-align: center;
     &__img{
       width: 100px;
@@ -53,7 +53,7 @@ body{
   }
   &-scrollbar{
     height: calc(100vh - 190px);
-    background-color: #fff;
+    background-color: var(--bg);
     &-wrapper{
       overflow-x: hidden;
     }
@@ -116,8 +116,8 @@ $header-height: 45px;
   box-sizing: border-box;
   transition: width 0.3s;
   @media (max-width: 992px) {
-    background-color: #fff;
-    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1)
+    background-color: var(--bg);
+    box-shadow: var(--box-shadow);
   }
   &-logo{
     float: left;
@@ -208,7 +208,7 @@ $header-height: 45px;
       margin-bottom: 10px;
       margin-right: 10px;
       padding: 7px 15px;
-      background-color: #E4E7ED;
+      background-color: var(--bg-secondary);
       font-size: 13px;
       border-radius: 15px;
       cursor: pointer;

@@ -7,16 +7,18 @@ $asideWidth: 235px;
   --color-normal: #595959;
   --color-secondary: #8C8C8C;
   --bg: #fff;
-  --border-color: #ddd;
+  --bg-secondary: #ecf5ff;
+  --border-color: #EBEEF5;
   --box-shadow: rgba(0, 0, 0, 0.16)	1px, 0px	2px	-2px;
 }
 
 .dark-mode {
   --color-primary: #409EFF;
-  --color-main: #ebf4f1;
-  --color-normal: #595959;
-  --color-secondary: #fdf9f3;
+  --color-main: #fff;
+  --color-normal: #b3b3b3;
+  --color-secondary: #aaa;
   --bg: #141414;
-  --border-color: #0d2538;
+  --bg-secondary: #1f1f1f;
+  --border-color: #303030;
   --box-shadow: rgba(0, 0, 0, 0.16)	1px, 0px	2px	-2px;
 }

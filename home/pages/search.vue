@@ -139,8 +139,8 @@ export default {
   &-list{
     overflow: hidden;
     margin-top: 15px;
-    border: 1px solid #EBEEF5;
-    background-color: #fff;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg);
     border-radius: 4px;
     &__result{
       padding: 10px 15px;
@@ -152,8 +152,7 @@ export default {
       position: relative;
       margin-top: -1px;
       padding: 10px 15px;
-      border-top: 1px solid #EBEEF5;
-      background: #fff;
+      border-top: 1px solid var(--border-color);
     }
     em{
       padding: 0 5px;

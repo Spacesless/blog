@@ -8,26 +8,26 @@
       </el-carousel-item>
     </el-carousel>
     <!-- blog start -->
-    <div class="articles">
+    <div class="article">
       <div class="home-head">
         <h2 class="home-head__title">最新文章</h2>
         <nuxt-link class="home-head__more" to="/blog">more+</nuxt-link>
       </div>
-      <el-row class="articles-list" :gutter="20">
+      <el-row class="article-list" :gutter="20">
         <el-col v-for="item in articleList" :key="item.id" :md="12">
-          <div class="articles-item">
-            <p class="articles-title">
+          <div class="article-item">
+            <p class="article-title">
               <nuxt-link :to="'/article/detail/' + item.id" :title="item.title">{{ item.title }}</nuxt-link>
             </p>
-            <div class="articles-meta">
-              <span class="articles-meta__date"><i class="tl-icon">&#xe70b;</i>{{ item.updatetime | parseTime('{y}-{m}-{d}') }}</span>
-              <span class="articles-meta__cate">
+            <div class="article-meta">
+              <span class="article-meta__date"><i class="tl-icon">&#xe70b;</i>{{ item.updatetime | parseTime('{y}-{m}-{d}') }}</span>
+              <span class="article-meta__cate">
                 <i class="tl-icon">&#xe668;</i>
                 <nuxt-link :to="item.column.url" :title="item.column.name">{{ item.column.name }}</nuxt-link>
               </span>
-              <span class="articles-meta__view"><i class="tl-icon">&#xe681;</i>{{ item.hits }}</span>
+              <span class="article-meta__view"><i class="tl-icon">&#xe681;</i>{{ item.hits }}</span>
             </div>
-            <div class="articles-desc">
+            <div class="article-desc">
               <p>{{ item.description }}</p>
             </div>
           </div>
@@ -145,7 +145,7 @@ export default {
   overflow: hidden;
   margin-bottom: 15px;
   border-radius: 4px;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: var(--box-shadow);
   &-item{
     &__image{
       display: block;
@@ -163,16 +163,16 @@ export default {
     }
   }
 }
-.articles{
+.article{
   &-item {
     margin-bottom: 20px;
     padding: 10px 15px;
-    background: #fff;
-    border: 1px solid #EBEEF5;
+    background: var(--bg);
+    border: 1px solid var(--border-color);
     border-radius: 4px;
     transition: all .3s;
     &:hover{
-      box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+      box-shadow: var(--box-shadow);
     }
   }
   &-title {
@@ -225,8 +225,8 @@ export default {
     &-item{
       overflow: hidden;
       margin-bottom: 20px;
-      border: 1px dashed #EBEEF5;
-      background-color: #fff;
+      border: 1px dashed var(--border-color);
+      background-color: var(--bg);
       border-radius: 4px;
       transition: all .3s;
       &:hover{
@@ -244,7 +244,7 @@ export default {
       width: 30px;
       height: 16px;
       background: var(--color-primary);
-      color: #fff;
+      color: var(--bg);
       font-size: 12px;
       line-height: 16px;
       text-align: center;

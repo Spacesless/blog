@@ -70,17 +70,17 @@ export default {
     width: 40px;
     height: 40px;
     margin-bottom: 5px;
-    background-color: #fff;
+    background-color: var(--bg);
     font-size: 24px;
     line-height: 40px;
     text-align: center;
     outline: none;
     user-select: none;
     cursor: pointer;
-    box-shadow: rgba(0, 0, 0, 0.12) 0px 0px 6px;
+    box-shadow: var(--box-shadow);
     border-radius: 4px;
     &:hover{
-      background-color: #ecf5ff;
+      background-color: var(--bg-secondary);
       color: var(--color-primary);
     }
     &.active{
