@@ -153,6 +153,7 @@ export default {
       height: 400px;
       margin-top: -200px;
       padding: 70px 60px 0 60px;
+      background-color: var(--bg-normal);
       border: 1px solid var(--border-color);
       @media (max-width: 992px) {
         position: static;

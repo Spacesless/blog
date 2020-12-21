@@ -43,7 +43,7 @@ export default {
   &-card{
     display: block;
     position: relative;
-    background-color: var(--bg);
+    background-color: var(--bg-normal);
     color: var(--color-normal);
     font-size: 14px;
     border-radius: 4px;
@@ -91,7 +91,7 @@ export default {
       padding: 0 15px;
       color: var(--color-main);
       line-height: 42px;
-      border-bottom: 1px solid #f6f6f6;
+      border-bottom: 1px solid var(--border-color);
     }
     &__body{
       padding: 10px 15px;

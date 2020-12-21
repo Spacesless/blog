@@ -9,7 +9,7 @@
         <div class="blog-summary__admin">
           <span><i class="el-icon-user" />{{ data.author }}</span>
           <span><i class="tl-icon">&#xe70b;</i>{{ data.updatetime }}</span>
-          <span><i class="tl-icon">&#xe601;</i>{{ data.hits }}</span>
+          <span><i class="tl-icon">&#xe681;</i>{{ data.hits }}</span>
         </div>
       </el-col>
     </el-row>

@@ -87,9 +87,11 @@ export default {
   &-item{
     display: block;
     padding: 10px;
+    background-color: var(--bg-normal);
     border-top: 3px solid var(--color-primary);
+    color: var(--color-normal);
     border-radius: 4px;
-    box-shadow: var(--box-shadow);
+    box-shadow: 2px 0 10px rgba(0,0,0,.1);
   }
   &-logo{
     overflow: hidden;

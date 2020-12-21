@@ -57,6 +57,9 @@ $tagColor:(
   position: relative;
   padding: 15px 0 12px;
   .el-form-item{
+    &__label{
+      color: var(--color-normal);
+    }
     &__content{
       overflow: hidden;
     }
@@ -77,13 +80,13 @@ $tagColor:(
       background-color: #ecf5ff;
     }
     .el-pager li{
-      background-color: var(--bg);
+      background-color: var(--bg-normal);
     }
   }
 }
 // content
 .Tinymce{
-  color: var(--color-main);
+  color: var(--color-normal);
   font-size: 15px;
   line-height: 1.7;
   letter-spacing: 1px;

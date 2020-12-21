@@ -3,22 +3,24 @@ $asideWidth: 235px;
 
 :root {
   --color-primary: #409EFF;
-  --color-main: #262626;
-  --color-normal: #595959;
-  --color-secondary: #8C8C8C;
+  --color-main: #303133;
+  --color-normal: #606266;
+  --color-secondary: #909399;
   --bg: #fff;
-  --bg-secondary: #ecf5ff;
+  --bg-normal: #fff;
+  --bg-secondary: #f2f2f2;
   --border-color: #EBEEF5;
-  --box-shadow: rgba(0, 0, 0, 0.16)	1px, 0px	2px	-2px;
+  --box-shadow: rgba(0, 0, 0, .16);
 }
 
 .dark-mode {
   --color-primary: #409EFF;
   --color-main: #fff;
-  --color-normal: #b3b3b3;
+  --color-normal: #d3d3d3;
   --color-secondary: #aaa;
   --bg: #141414;
-  --bg-secondary: #1f1f1f;
-  --border-color: #303030;
-  --box-shadow: rgba(0, 0, 0, 0.16)	1px, 0px	2px	-2px;
+  --bg-normal: #0d2538;
+  --bg-secondary: #aaa;
+  --border-color: #606266;
+  --box-shadow: rgba($color: #0d2538, $alpha: .16);
 }

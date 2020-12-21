@@ -13,7 +13,8 @@ body{
   z-index: 999;
   width: $asideWidth;
   height: 100%;
-  box-shadow: var(--box-shadow);
+  background-color: var(--bg-normal);
+  box-shadow: 2px 0 10px rgba(0,0,0,.1);
   transition: width 0.3s;
   &-mask{
     position: fixed;
@@ -25,7 +26,7 @@ body{
   }
   &-logo{
     padding: 35px 0 15px;
-    background-color: var(--bg);
+    background-color: var(--bg-normal);
     text-align: center;
     &__img{
       width: 100px;
@@ -53,13 +54,14 @@ body{
   }
   &-scrollbar{
     height: calc(100vh - 190px);
-    background-color: var(--bg);
+    background-color: var(--bg-normal);
     &-wrapper{
       overflow-x: hidden;
     }
   }
   &-menu{
     height: 100%;
+    background-color: var(--bg-normal);
     border-right: none !important;
     a{
       overflow: hidden;
@@ -73,7 +75,18 @@ body{
       text-align: center;
       vertical-align: middle;
     }
+    .el-menu{
+      background: none;
+    }
+    .el-menu-item, .el-submenu__title{
+      height: 50px;
+      color: var(--color-main);
+      line-height: 50px;
+    }
     .el-menu-item{
+      &.is-active{
+        color: var(--color-primary);
+      }
       &:focus,&:hover{
         background-color: #ecf5ff !important;
         color: var(--color-primary);
@@ -92,10 +105,6 @@ body{
   }
   .horizontal-collapse-transition {
     transition: 0s width ease-in-out, 0s padding-left ease-in-out, 0s padding-right ease-in-out;
-  }
-  .el-menu-item,.el-submenu__title{
-    height: 50px;
-    line-height: 50px;
   }
   .el-submenu .el-menu-item{
     height: 45px;
@@ -117,7 +126,7 @@ $header-height: 45px;
   transition: width 0.3s;
   @media (max-width: 992px) {
     background-color: var(--bg);
-    box-shadow: var(--box-shadow);
+    box-shadow: 2px 0 10px rgba(0,0,0,.1);
   }
   &-logo{
     float: left;

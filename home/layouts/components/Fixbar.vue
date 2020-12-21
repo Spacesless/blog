@@ -70,14 +70,14 @@ export default {
     width: 40px;
     height: 40px;
     margin-bottom: 5px;
-    background-color: var(--bg);
+    background-color: var(--bg-normal);
     font-size: 24px;
     line-height: 40px;
     text-align: center;
     outline: none;
     user-select: none;
     cursor: pointer;
-    box-shadow: var(--box-shadow);
+    box-shadow: 2px 0 10px rgba(0,0,0,.1);
     border-radius: 4px;
     &:hover{
       background-color: var(--bg-secondary);

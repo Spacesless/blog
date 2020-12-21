@@ -81,7 +81,7 @@ export default {
 <style lang="scss" scoped>
 .about{
   &-introduce{
-    color: var(--color-main);
+    color: var(--color-normal);
     font-size: 15px;
     line-height: 2;
     &-timeline{
@@ -90,6 +90,7 @@ export default {
   }
   &__title{
     padding: 30px 0;
+    color: var(--color-main);
     font-size: 32px;
     font-weight: normal;
     line-height: 1.5;
@@ -100,6 +101,11 @@ export default {
       margin: 0 5px;
       color: var(--color-primary);
     }
+    .el-card{
+      background-color: var(--bg-normal);
+      border-color: var(--border-color);
+      color: var(--color-normal);
+    }
   }
   &-connact{
     &__links{
@@ -107,6 +113,7 @@ export default {
       margin-right: 10px;
       padding: 5px 12px;
       border: 1px solid var(--border-color);
+      color: var(--color-normal);
       line-height: 1;
       vertical-align: middle;
       border-radius: 4px;

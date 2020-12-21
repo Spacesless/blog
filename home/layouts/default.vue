@@ -71,6 +71,11 @@ export default {
     }
   },
   mounted() {
+    if (+this.configs.is_silent) {
+      document.documentElement.classList.add('silent')
+    } else {
+      document.documentElement.classList.remove('silent')
+    }
     this.particleInstance = new ParticleCanvas(
       'flower',
       [
@@ -123,14 +128,6 @@ export default {
         }
       ]
     )
-  },
-  head() {
-    const { is_silent } = this.configs
-    return {
-      htmlAttrs: {
-        class: +is_silent ? 'silent' : ''
-      }
-    }
   }
 }
 </script>

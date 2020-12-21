@@ -145,7 +145,7 @@ export default {
   overflow: hidden;
   margin-bottom: 15px;
   border-radius: 4px;
-  box-shadow: var(--box-shadow);
+  box-shadow: 2px 0 10px rgba(0,0,0,.1);
   &-item{
     &__image{
       display: block;
@@ -167,12 +167,12 @@ export default {
   &-item {
     margin-bottom: 20px;
     padding: 10px 15px;
-    background: var(--bg);
+    background: var(--bg-normal);
     border: 1px solid var(--border-color);
     border-radius: 4px;
     transition: all .3s;
     &:hover{
-      box-shadow: var(--box-shadow);
+      box-shadow: 2px 0 10px rgba(0,0,0,.1);
     }
   }
   &-title {
@@ -226,7 +226,7 @@ export default {
       overflow: hidden;
       margin-bottom: 20px;
       border: 1px dashed var(--border-color);
-      background-color: var(--bg);
+      background-color: var(--bg-normal);
       border-radius: 4px;
       transition: all .3s;
       &:hover{
@@ -260,8 +260,9 @@ export default {
         padding-right: 55px;
       }
       .el-progress__text{
-        font-size: 12px;
         margin-left: 0;
+        color: var(--color-noraml);
+        font-size: 12px;
       }
       .para-name{
         color: var(--color-secondary);

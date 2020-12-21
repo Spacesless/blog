@@ -28,7 +28,7 @@ code[class*="language-"], pre[class*="language-"] {
 pre[class*="language-"] {
   margin: 0;
 	padding: 50px 15px 10px;
-  color: #525252;
+  color: var(--color-normal);
 }
 
 /* Inline code */
@@ -76,7 +76,7 @@ pre[class*="language-"] {
   position: relative;
   margin: 10px 0;
   border: 1px solid var(--border-color);
-  background: var(--bg-secondary);
+  background: var(--bg-normal);
   border-radius: 4px;
 }
 .toolbar{
@@ -97,7 +97,7 @@ pre[class*="language-"] {
       left: 15px;
       top: 0;
       padding-right: 10px;
-      color: var(--color-secondary);
+      color: var(--color-normal);
       font-size: 16px;
       font-weight: normal;
       user-select: none;
@@ -105,9 +105,10 @@ pre[class*="language-"] {
     &-button{
       display: inline-block;
       position: relative;
+      padding: 3px 6px;
       border: none;
       background: none;
-      padding: 3px 6px;
+      color: var(--color-normal);
       font-size: 16px;
       cursor: pointer;
       &__tips{
@@ -117,7 +118,7 @@ pre[class*="language-"] {
         width: 80px;
         height: 30px;
         margin-left: -44px;
-        background-color: var(--color-main);
+        background-color: #303133;
         color: #fff;
         font-size: 12px;
         line-height: 30px;
@@ -133,7 +134,7 @@ pre[class*="language-"] {
           height: 0;
           margin-left: -3px;
           border: 6px solid transparent;
-          border-top-color: var(--color-main);
+          border-top-color: #303133;
           border-bottom-width: 0;
         }
       }

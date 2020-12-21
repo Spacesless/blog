@@ -172,7 +172,7 @@ export default {
       position: relative;
       margin-bottom: 20px;
       border: 1px dashed var(--border-color);
-      background-color: var(--bg);
+      background-color: var(--bg-normal);
       border-radius: 4px;
       transition: all .3s;
       &:hover{
@@ -205,6 +205,7 @@ export default {
       }
       .el-progress__text{
         margin-left: 0;
+        color: var(--color-noraml);
         font-size: 12px;
       }
       .para-name{
