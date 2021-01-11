@@ -1,9 +1,6 @@
 <template>
   <div :class="{fullscreen:fullscreen}" class="tinymce-container" :style="{width:containerWidth}">
     <textarea :id="tinymceId" class="tinymce-textarea" />
-    <div class="editor-custom-btn-container">
-      <editorImage color="#1890ff" class="editor-upload-btn" @successCBK="imageSuccessCBK" />
-    </div>
   </div>
 </template>
 
@@ -12,17 +9,16 @@
  * docs:
  * https://panjiachen.github.io/vue-element-admin-site/feature/component/rich-editor.html#tinymce
  */
-import editorImage from './components/EditorImage'
 import plugins from './plugins'
 import toolbar from './toolbar'
 import load from './dynamicLoadScript'
+import { UploadFiles } from '@/api/common'
 
 // why use this cdn, detail see https://github.com/PanJiaChen/tinymce-all-in-one
-const tinymceCDN = 'https://cdn.jsdelivr.net/npm/tinymce-all-in-one@4.9.5/tinymce.min.js'
+const tinymceCDN = 'vendor/tinymce/tinymce.min.js'
 
 export default {
   name: 'Tinymce',
-  components: { editorImage },
   props: {
     id: {
       type: String,
@@ -43,7 +39,7 @@ export default {
     },
     menubar: {
       type: String,
-      default: 'file edit insert view format table'
+      default: 'file edit view insert format tools table'
     },
     height: {
       type: [Number, String],
@@ -61,13 +57,7 @@ export default {
       hasChange: false,
       hasInit: false,
       tinymceId: this.id,
-      fullscreen: false,
-      languageTypeList: {
-        'en': 'en',
-        'zh': 'zh_CN',
-        'es': 'es_MX',
-        'ja': 'ja'
-      }
+      fullscreen: false
     }
   },
   computed: {
@@ -82,8 +72,7 @@ export default {
   watch: {
     value(val) {
       if (!this.hasChange && this.hasInit) {
-        this.$nextTick(() =>
-          window.tinymce.get(this.tinymceId).setContent(val || ''))
+        this.$nextTick(() => window.tinymce.get(this.tinymceId).setContent(val || ''))
       }
     }
   },
@@ -113,40 +102,27 @@ export default {
       })
     },
     initTinymce() {
-      const _this = this
       window.tinymce.init({
         selector: `#${this.tinymceId}`,
-        language: this.languageTypeList['zh'],
+        language: 'zh_CN',
         height: this.height,
-        body_class: 'panel-body ',
         object_resizing: false,
         toolbar: this.toolbar.length > 0 ? this.toolbar : toolbar,
         menubar: this.menubar,
         plugins: plugins,
-        codesample_languages: [
-          { text: 'HTML/XML', value: 'markup' },
-          { text: 'JavaScript', value: 'javascript' },
-          { text: 'CSS', value: 'css' },
-          { text: 'PHP', value: 'php' },
-          { text: 'JSON', value: 'json' },
-          { text: 'SQL', value: 'sql' },
-          { text: 'PowerShell', value: 'powershell' }
-        ],
         end_container_on_empty_block: true,
         powerpaste_word_import: 'clean',
         code_dialog_height: 450,
         code_dialog_width: 1000,
-        advlist_bullet_styles: 'square',
-        advlist_number_styles: 'default',
-        imagetools_cors_hosts: ['www.tinymce.com', 'codepen.io'],
         default_link_target: '_blank',
-        link_title: false,
         nonbreaking_force_tab: true, // inserting nonbreaking space &nbsp; need Nonbreaking Space Plugin
+        fontsize_formats: '12px 14px 16px 18px 24px 36px 48px 56px 72px',
+        font_formats: '微软雅黑=Microsoft YaHei,Helvetica Neue,PingFang SC,sans-serif;苹果苹方=PingFang SC,Microsoft YaHei,sans-serif;宋体=simsun,serif;仿宋体=FangSong,serif;黑体=SimHei,sans-serif;Arial=arial,helvetica,sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book antiqua,palatino;Comic Sans MS=comic sans ms,sans-serif;Courier New=courier new,courier;Georgia=georgia,palatino;Helvetica=helvetica;Impact=impact,chicago;Tahoma=tahoma,arial,helvetica,sans-serif;Terminal=terminal,monaco;Times New Roman=times new roman,times;Verdana=verdana,geneva;Webdings=webdings;Wingdings=wingdings,zapf dingbats',
         init_instance_callback: editor => {
-          if (_this.value) {
-            editor.setContent(_this.value)
+          if (this.value) {
+            editor.setContent(this.value)
           }
-          _this.hasInit = true
+          this.hasInit = true
           editor.on('NodeChange Change KeyUp SetContent', () => {
             this.hasChange = true
             this.$emit('input', editor.getContent())
@@ -154,9 +130,65 @@ export default {
         },
         setup(editor) {
           editor.on('FullscreenStateChanged', (e) => {
-            _this.fullscreen = e.state
+            this.fullscreen = e.state
           })
-        }
+        },
+        file_picker_types: 'image',
+        file_picker_callback: () => this.handlerPickerFile(),
+        images_upload_handler: (...arg) => this.uploadImages(...arg)
+      })
+    },
+    /**
+     * 在图片、媒体、链接对话框中加入上传文件功能
+     * @param {Function} callback 上传成功后执行的回调函数
+     * @param {*} value 当前受影响的字段值
+     * @param {Object} meta 包含指定对话框中其它字段值的对象
+     */
+    handlerPickerFile(callback, value, meta) {
+      const input = document.createElement('input')
+      input.setAttribute('type', 'file')
+      input.setAttribute('accept', 'image/*')
+
+      /*
+        Note: In modern browsers input[type="file"] is functional without
+        even adding it to the DOM, but that might not be the case in some older
+        or quirky browsers like IE, so you might want to add it to the DOM
+        just in case, and visually hide it. And do not forget do remove it
+        once you do not need it anymore.
+      */
+
+      input.onchange = () => {
+        const file = this.files[0]
+        const formData = new FormData()
+        formData.append('file', file)
+        UploadFiles(formData).then(res => {
+          const fileList = res.data
+          const { url, name } = fileList[0] || {}
+          callback(url, { alt: name })
+        }).catch(() => {
+          this.$message({
+            type: 'error',
+            message: '图片上传失败.'
+          })
+        })
+      }
+      input.click()
+    },
+    /**
+     * 使用自定义函数代替TinyMCE来处理上传操作
+     * @param {Object} blobInfo 文件信息
+     * @param {Function} success 成功回调
+     * @param {Function} failure 失败回调
+     */
+    uploadImages(blobInfo, success, failure) {
+      const formData = new FormData()
+      formData.append('file', blobInfo.file)
+      UploadFiles(formData).then(res => {
+        const fileList = res.data
+        const { url } = fileList[0] || {}
+        success(url)
+      }).catch(() => {
+        failure('图片上传失败.')
       })
     },
     destroyTinymce() {
@@ -174,36 +206,42 @@ export default {
     },
     getContent() {
       window.tinymce.get(this.tinymceId).getContent()
-    },
-    imageSuccessCBK(arr) {
-      arr.forEach(v => window.tinymce.get(this.tinymceId).insertContent(`<img class="wscnph" src="${v.url}" >`))
     }
   }
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .tinymce-container {
   position: relative;
   line-height: normal;
 }
-.tinymce-container>>>.mce-fullscreen {
-  z-index: 10000;
+
+.tinymce-container {
+  ::v-deep {
+    .mce-fullscreen {
+      z-index: 10000;
+    }
+  }
 }
+
 .tinymce-textarea {
   visibility: hidden;
   z-index: -1;
 }
+
 .editor-custom-btn-container {
   position: absolute;
   right: 4px;
   top: 4px;
   /*z-index: 2005;*/
 }
+
 .fullscreen .editor-custom-btn-container {
   z-index: 10000;
   position: fixed;
 }
+
 .editor-upload-btn {
   display: inline-block;
 }

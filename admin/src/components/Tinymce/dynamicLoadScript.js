@@ -14,6 +14,7 @@ const dynamicLoadScript = (src, callback) => {
     const script = document.createElement('script')
     script.src = src // src url for the third-party library being loaded.
     script.id = src
+    script.setAttribute('referrerpolicy', 'origin')
     document.body.appendChild(script)
     callbacks.push(cb)
     const onEnd = 'onload' in script ? stdOnEnd : ieOnEnd
