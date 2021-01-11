@@ -35,7 +35,7 @@
       <component :is="paramComponent" :params="formData" :file-list="fileList" />
 
       <div class="form-item">
-        <Tinymce ref="editor" v-model="formData.content" :height="500" />
+        <Tinymce ref="editor" v-model="formData.content" :height="600" />
       </div>
       <el-form-item class="form-title">
         其它设置

@@ -11,7 +11,7 @@
   "scripts": {
     "start": "node development.js",
     "api": "node development.js --api",
-    "dev:admin": "vue-cli-service serve",
+    "dev": "vue-cli-service serve",
     "build": "vue-cli-service build --modern && nuxt build",
     "build:admin": "vue-cli-service build --modern",
     "build:home": "nuxt build",

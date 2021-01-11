@@ -1,8 +1,8 @@
 const Base = require('./base')
 
-// session过期时间 = 记录登录状态?15天:1天
+// session过期时间 = 记录登录状态?7天:1天
 const rememberSessionOpt = {
-  maxAge: 15 * 24 * 3600 * 1000
+  maxAge: 7 * 24 * 3600 * 1000
 }
 const normalSessionOpt = {
   maxAge: 24 * 3600 * 1000

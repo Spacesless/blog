@@ -29,12 +29,12 @@ module.exports = {
     ? '//cdn.timelessq.com/admin/'
     : '/',
   outputDir: 'www/admin',
-  assetsDir: '',
   lintOnSave: process.env.NODE_ENV === 'development',
   productionSourceMap: false,
   devServer: {
     port: port,
     open: true,
+    contentBase: resolve('public'),
     overlay: {
       warnings: false,
       errors: true

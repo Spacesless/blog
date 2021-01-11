@@ -46,7 +46,7 @@
           />
         </template>
       </el-table-column>
-      <el-table-column label="状态" width="150" align="center">
+      <el-table-column label="状态" width="150" align="center" sortable sort-by="status">
         <template #default="scope">
           <el-select v-model="scope.row.status" placeholder="请选择状态">
             <el-option label="未上映" :value="0" />
@@ -148,9 +148,9 @@ export default {
       this.listLoading = false
     },
     async handleUpdate(row) {
-      const { id, total, current } = row
+      const { id, total, current, status, ratings } = row
       this.$set(row, 'updateLoading', true)
-      await UpdateContent(this.currentType, { id, total, current }).then(res => {
+      await UpdateContent(this.currentType, { id, total, current, status, ratings }).then(res => {
         this.$message({
           type: 'success',
           message: '更新成功'
