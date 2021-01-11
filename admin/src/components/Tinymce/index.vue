@@ -1,10 +1,12 @@
 <template>
   <div :class="{fullscreen:fullscreen}" class="tinymce-container" :style="{width:containerWidth}">
     <textarea :id="tinymceId" class="tinymce-textarea" />
+    <picture-ablum :visible.sync="ablumVisible" @onSelectFile="onSelectFile" />
   </div>
 </template>
 
 <script>
+import PictureAblum from '@/components/Upload/components/PictureAblum'
 /**
  * docs:
  * https://panjiachen.github.io/vue-element-admin-site/feature/component/rich-editor.html#tinymce
@@ -19,6 +21,9 @@ const tinymceCDN = 'vendor/tinymce/tinymce.min.js'
 
 export default {
   name: 'Tinymce',
+  components: {
+    PictureAblum
+  },
   props: {
     id: {
       type: String,
@@ -57,7 +62,8 @@ export default {
       hasChange: false,
       hasInit: false,
       tinymceId: this.id,
-      fullscreen: false
+      fullscreen: false,
+      ablumVisible: false
     }
   },
   computed: {
@@ -135,7 +141,10 @@ export default {
         },
         file_picker_types: 'image',
         file_picker_callback: () => this.handlerPickerFile(),
-        images_upload_handler: (...arg) => this.uploadImages(...arg)
+        images_upload_handler: (...arg) => this.uploadImages(...arg),
+        gallery_click_handler: () => {
+          this.ablumVisible = true
+        }
       })
     },
     /**
@@ -190,6 +199,9 @@ export default {
       }).catch(() => {
         failure('图片上传失败.')
       })
+    },
+    onSelectFile(arr) {
+      arr.forEach(v => window.tinymce.get(this.tinymceId).insertContent(`<img src="${v.url}" >`))
     },
     destroyTinymce() {
       const tinymce = window.tinymce.get(this.tinymceId)
