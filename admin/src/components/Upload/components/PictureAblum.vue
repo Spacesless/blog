@@ -2,7 +2,7 @@
   <el-dialog
     class="ablum"
     :visible="visible"
-    width="80%"
+    width="90%"
     append-to-body
     @close="handleCancel"
   >
@@ -215,7 +215,7 @@ export default {
 <style lang="scss" scoped>
 .ablum{
   ::v-deep .el-dialog{
-    height: 86%;
+    height: 90%;
     &__body{
       height: calc(100% - 95px);
       padding: 15px 20px;

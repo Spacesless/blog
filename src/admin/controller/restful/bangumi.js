@@ -66,8 +66,8 @@ module.exports = class extends Rest {
       return this.fail('CONTENT_NOT_EXIST')
     }
     const data = this.post()
-    const influenceId = await this.modelInstance.updateContent(this.id, data, this.siteurl)
-    if (influenceId) {
+    const row = await this.modelInstance.updateContent(this.id, data, this.siteurl)
+    if (row) {
       return this.success()
     } else {
       return this.fail()

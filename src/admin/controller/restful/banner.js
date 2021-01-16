@@ -51,8 +51,8 @@ module.exports = class extends Rest {
     const data = this.post()
     const { imgurl } = data
     if (imgurl) data.imgurl = imgurl.replace(this.siteurl, '')
-    const influenceId = await this.modelInstance.where({ id: this.id }).update(data)
-    if (influenceId) {
+    const row = await this.modelInstance.where({ id: this.id }).update(data)
+    if (row) {
       return this.success()
     } else {
       return this.fail()

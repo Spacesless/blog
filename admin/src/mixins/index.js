@@ -1,4 +1,6 @@
 import { debounce } from 'lodash-es'
+import elHeightAdaptiveTable from '@/directive/el-table'
+import { GetList, DeleteList } from '@/api/list'
 
 /**
  * echarts自适应
@@ -49,34 +51,47 @@ export const resizeChart = {
 
 /**
  * 列表多选表格
- * @summary 包括分页、复选框、删除选中
+ * @summary 包括删、改、查
  */
 export const multipleTable = {
+  directives: {
+    elHeightAdaptiveTable
+  },
   data() {
     return {
       multipleSelection: [],
-      listLoading: true,
+      tableData: [],
+      listLoading: false,
       listQuery: {
         page: 1,
         pageSize: 20
       },
       total: 0,
-      deleteLoading: false,
-      updateLoading: false
+      deleteLoading: false
     }
   },
+  created() {
+    this.fetchList()
+  },
   methods: {
+    async fetchList() {
+      this.listLoading = true
+      await GetList(this.currentType, this.listQuery).then(res => {
+        const { data, count } = res.data
+        this.tableData = data
+        this.total = count
+      }).catch(() => {})
+      this.listLoading = false
+    },
     onSelectionChange(val) {
       this.multipleSelection = val
     },
     handleDelete(row) {
       this.$confirm('此操作将永久删除该内容, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
         this.$set(row, 'deleteLoading', false)
-        this.deleteSingle(row).catch(() => {
+        this.deleteMultiple(1, row).catch(() => {
           this.$set(row, 'deleteLoading', false)
         })
       })
@@ -88,12 +103,33 @@ export const multipleTable = {
           type: 'warning'
         }).then(async() => {
           this.deleteLoading = true
-          await this.deleteSelection(listCount).catch(() => {})
+          await this.deleteMultiple(listCount).catch(() => {})
           this.deleteLoading = false
         })
       } else {
         this.$message('请先选择数据，再进行操作')
       }
+    },
+    /**
+     * 删除一个或多个
+     * @param {Number} listCount 删除数目
+     * @param {Object} row 当前行
+     */
+    deleteMultiple(listCount, row) {
+      const lists = row ? [row.id] : this.multipleSelection.map(item => item.id)
+      DeleteList(this.currentType, lists).then(res => {
+        this.$message({
+          type: 'success',
+          message: '删除成功'
+        })
+        this.calcCurrentPage(listCount)
+        this.fetchList()
+      }).catch(() => {
+        this.$message({
+          type: 'error',
+          message: '删除失败'
+        })
+      })
     },
     handleSearch() {
       this.listQuery.page = 1 // 搜索重置页码

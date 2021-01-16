@@ -7,7 +7,7 @@ module.exports = class extends Rest {
       return this.success(data)
     } else {
       const { page, pageSize } = this.get()
-      const field = 'id,parent_id,content,addtime,name,reply_name,type'
+      const field = 'id,parent_id,content,addtime,name,reply_name,type,is_show'
       const list = await this.modelInstance
         .field(field)
         .order('addtime DESC')
@@ -35,12 +35,22 @@ module.exports = class extends Rest {
   }
 
   async putAction() {
+    // 列表页更新
+    const list = this.post('list')
+    if (list) {
+      const rows = await this.modelInstance.updateMany(list)
+      if (rows) {
+        return this.success()
+      } else {
+        return this.fail()
+      }
+    }
     if (!this.id) {
       return this.fail('CONTENT_NOT_EXIST')
     }
     const data = this.post()
-    const rows = await this.modelInstance.where({ id: this.id }).update(data)
-    if (rows) {
+    const row = await this.modelInstance.where({ id: this.id }).update(data)
+    if (row) {
       return this.success('更新成功')
     } else {
       return this.fail('更新失败')

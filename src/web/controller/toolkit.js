@@ -22,13 +22,7 @@ module.exports = class extends Base {
     const { seo } = this.getListInfo(findCategory.id, categorys, configs)
 
     // webapp列表
-    const list = await this.model('category')
-      .where({ is_show: 1 })
-      .join({
-        table: 'toolkit',
-        join: 'inner', // join 方式，有 left, right, inner 3 种方式
-        on: ['id', 'category_id'] // ON 条件
-      }).select()
+    const list = categorys.filter(item => item.type === 'toolkit' && item.level !== 1)
     const webapps = this.model('category').formatCategoryUrl(list)
 
     return this.success({

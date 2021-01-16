@@ -4,7 +4,7 @@
       ref="multipleTable"
       v-el-height-adaptive-table="{bottomOffset: 142}"
       v-loading="listLoading"
-      :data="commentList"
+      :data="tableData"
       height="233"
       border
       @selection-change="onSelectionChange"
@@ -20,8 +20,8 @@
       <el-table-column label="评论人" prop="name" width="150" align="center" />
       <el-table-column class-name="status-col" label="状态" width="110" align="center">
         <template #default="scope">
-          <el-tag v-if="scope.row.status">已审核</el-tag>
-          <el-tag v-else type="info">未审核</el-tag>
+          <el-tag v-if="scope.row.is_show">已通过</el-tag>
+          <el-tag v-else type="info">待审核</el-tag>
         </template>
       </el-table-column>
       <el-table-column align="center" label="发布时间" width="200">
@@ -42,8 +42,8 @@
             状态修改<i class="el-icon-arrow-down el-icon--right" />
           </el-button>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="unaudit">未通过</el-dropdown-item>
-            <el-dropdown-item command="audit">已审核</el-dropdown-item>
+            <el-dropdown-item command="show">通过</el-dropdown-item>
+            <el-dropdown-item command="hide">待审核</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
         <el-button type="danger" icon="el-icon-delete" :loading="deleteLoading" @click="handleDeleteSelection">删除选中</el-button>
@@ -58,7 +58,7 @@
 import Pagination from '@/components/Pagination'
 import elHeightAdaptiveTable from '@/directive/el-table'
 import { multipleTable } from '@/mixins'
-import { GetList, DeleteList, UpdateList } from '@/api/list'
+import { UpdateList } from '@/api/list'
 
 export default {
   name: 'Comment',
@@ -69,81 +69,34 @@ export default {
   mixins: [multipleTable],
   data() {
     return {
-      commentList: [],
+      currentType: 'comment',
       changeLoading: false
     }
   },
-  created() {
-    this.fetchList()
-  },
   methods: {
-    async fetchList() {
-      this.listLoading = true
-      await GetList('comment', this.listQuery).then(res => {
-        const { data, count } = res.data
-        this.commentList = data
-        this.total = count
-      }).catch(() => {})
-      this.listLoading = false
-    },
     handleView(id) {
       this.$router.push({
         name: 'CommentContent',
         params: { id: id }
       })
     },
-    deleteSingle({ id }) {
-      DeleteList('comment', [id]).then(response => {
-        this.$message({
-          type: 'success',
-          message: '删除成功'
-        })
-        this.calcCurrentPage(1)
-        this.fetchList()
-      }).catch(() => {
-        this.$message({
-          type: 'error',
-          message: '删除失败'
-        })
-      })
-    },
-    deleteSelection(listCount) {
-      const lists = this.multipleSelection.map(item => item.id)
-      DeleteList('comment', lists).then(response => {
-        this.$message({
-          type: 'success',
-          message: '删除成功'
-        })
-        this.calcCurrentPage(listCount)
-        this.fetchList()
-      }).catch(() => {
-        this.$message({
-          type: 'error',
-          message: '删除失败'
-        })
-      })
-    },
     handleChangeStatus(command) {
-      if (!this.multipleSelection.length) {
-        return this.$message({
-          type: 'warning',
-          message: 'emmmm 你未选择任何内容'
-        })
+      const listCount = this.multipleSelection.length
+      if (!listCount) {
+        return this.$message('请先选择数据，再进行操作')
       }
-      this.$confirm(`确定要更新${this.multipleSelection.length}条内容?`, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(`确定要更新${listCount}条内容?`, '提示', {
         type: 'warning'
       }).then(async() => {
-        this.changeLoading = true
-        const data = this.multipleSelection.map(item => {
+        const passData = this.multipleSelection.map(item => {
           const { id } = item
-          return { id, is_audit: command === 'unaudit' ? 0 : 1 }
+          return { id, is_show: command === 'hide' ? 0 : 1 }
         })
-        await UpdateList('comment', data).then(response => {
+        this.changeLoading = true
+        await UpdateList(this.currentType, passData).then(res => {
           this.$message({
             type: 'success',
-            message: `已更新${data.length}条内容`
+            message: '更新成功'
           })
           this.fetchList()
         }).catch(() => {

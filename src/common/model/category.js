@@ -5,7 +5,7 @@ module.exports = class extends think.Model {
    */
   async getCategory() {
     // 设置缓存 key 为 column，有效期为 30 天
-    const field = 'id,name,keywords,description,folder_name,filename,parent_id,type,level,no_order,is_nav,mark_name,icon,is_show'
+    const field = 'id,name,keywords,description,folder_name,filename,parent_id,type,level,no_order,is_nav,mark_name,icon,version,is_show'
     const list = await this.cache('category', { timeout: 30 * 24 * 3600 * 1000 })
       .where({ is_show: 1 })
       .field(field)

@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-row class="app-header">
       <el-col :xs="24" :sm="12">
-        <el-select v-model="listQuery.type" clearable placeholder="请选择模块" @change="handleSelect">
+        <el-select v-model="listQuery.type" clearable placeholder="请选择模块" @change="handleSearch">
           <el-option label="文章模块" value="article" />
           <el-option label="追番模块" value="bangumi" />
         </el-select>
@@ -42,16 +42,12 @@
 <script>
 import { mapGetters } from 'vuex'
 import Pagination from '@/components/Pagination'
-import elHeightAdaptiveTable from '@/directive/el-table'
 import { multipleTable } from '@/mixins'
 import { GetRecycleList, RestoreRecycleList, DeleteRecyleList } from '@/api/list'
 
 export default {
   name: 'Recycle',
   components: { Pagination },
-  directives: {
-    elHeightAdaptiveTable
-  },
   mixins: [multipleTable],
   data() {
     return {
@@ -92,10 +88,6 @@ export default {
       }
       return typeEnum[cellValue] || ''
     },
-    handleSelect() {
-      this.listQuery.page = 1
-      this.fetchList()
-    },
     handleRestore(row) {
       const { id, type } = row
       this.$confirm('确定要还原该内容?', '提示', {
@@ -118,26 +110,18 @@ export default {
         this.$set(row, 'restoreLoading', false)
       })
     },
-    deleteSingle({ id, type }) {
-      return DeleteRecyleList([{ id, type }]).then(res => {
-        this.$message({
-          type: 'success',
-          message: '删除成功'
+    /**
+     * 删除一个或多个
+     * @param {Number} listCount 删除数目
+     * @param {Object} row 当前行
+     */
+    deleteMultiple(listCount, row) {
+      const lists = row
+        ? [{ id: row.id, type: row.type }]
+        : this.multipleSelection.map(item => {
+          const { id, type } = item
+          return { id, type }
         })
-        this.calcCurrentPage(1)
-        this.fetchList()
-      }).catch(() => {
-        this.$message({
-          type: 'error',
-          message: '删除失败'
-        })
-      })
-    },
-    deleteSelection(listCount) {
-      const lists = this.multipleSelection.map(item => {
-        const { id, type } = item
-        return { id, type }
-      })
       return DeleteRecyleList(lists).then(res => {
         this.$message({
           type: 'success',

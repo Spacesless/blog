@@ -6,14 +6,13 @@
       </el-col>
       <el-col :xs="24" :sm="12" class="text-right">
         <el-button type="primary" icon="el-icon-plus" @click="handleAdd">添加友链</el-button>
-        <el-button type="danger" icon="el-icon-delete" @click="handleDeleteSelection">删除选中</el-button>
       </el-col>
     </el-row>
 
     <el-table
       v-loading="listLoading"
-      v-el-height-adaptive-table="{bottomOffset: 80}"
-      :data="linkList"
+      v-el-height-adaptive-table="{bottomOffset: 142}"
+      :data="tableData"
       height="233"
       border
       @selection-change="onSelectionChange"
@@ -50,6 +49,21 @@
       </el-table-column>
     </el-table>
 
+    <el-row class="app-footer">
+      <el-col :xs="24" class="text-right">
+        <el-dropdown @command="handleChangeStatus">
+          <el-button type="warning" plain :loading="changeLoading">
+            状态修改<i class="el-icon-arrow-down el-icon--right" />
+          </el-button>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item command="show">前台显示</el-dropdown-item>
+            <el-dropdown-item command="hide">前台隐藏</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+        <el-button type="danger" icon="el-icon-delete" :loading="deleteLoading" @click="handleDeleteSelection">删除选中</el-button>
+      </el-col>
+    </el-row>
+
     <pagination :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.pageSize" @pagination="fetchList" />
 
     <links-form :dialog-visible="dialogVisible" :current-id="currentId" @onConfirm="onConfirm" />
@@ -59,9 +73,8 @@
 <script>
 import Pagination from '@/components/Pagination'
 import LinksForm from './components/LinksForm'
-import elHeightAdaptiveTable from '@/directive/el-table'
 import { multipleTable, listDialog } from '@/mixins'
-import { GetList, DeleteList } from '@/api/list'
+import { UpdateList } from '@/api/list'
 
 export default {
   name: 'Link',
@@ -69,59 +82,40 @@ export default {
     Pagination,
     LinksForm
   },
-  directives: {
-    elHeightAdaptiveTable
-  },
   mixins: [multipleTable, listDialog],
   data() {
     return {
-      linkList: []
+      currentType: 'link',
+      changeLoading: false
     }
   },
-  created() {
-    this.fetchList()
-  },
   methods: {
-    async fetchList() {
-      this.listLoading = true
-      await GetList('link', this.listQuery).then(res => {
-        const { data, count } = res.data
-        this.linkList = data
-        this.total = count
-      }).catch(() => {})
-      this.listLoading = false
-    },
-    deleteSingle({ id }) {
-      DeleteList('link', [id]).then(res => {
-        this.$message({
-          type: 'success',
-          message: '删除成功'
+    handleChangeStatus(command) {
+      const listCount = this.multipleSelection.length
+      if (!listCount) {
+        return this.$message('请先选择数据，再进行操作')
+      }
+      this.$confirm(`确定要更新${listCount}条内容?`, '提示', {
+        type: 'warning'
+      }).then(async() => {
+        const passData = this.multipleSelection.map(item => {
+          const { id } = item
+          return { id, is_show: command === 'hide' ? 0 : 1 }
         })
-        this.calcCurrentPage(1)
-        this.fetchList()
-      }).catch(() => {
-        this.$message({
-          type: 'error',
-          message: '删除失败'
+        this.changeLoading = true
+        await UpdateList(this.currentType, passData).then(res => {
+          this.$message({
+            type: 'success',
+            message: '更新成功'
+          })
+          this.fetchList()
+        }).catch(() => {
+          this.$message({
+            type: 'error',
+            message: '更新失败'
+          })
         })
-      })
-    },
-    deleteSelection(listCount) {
-      const list = this.multipleSelection.map(item => {
-        return item.id
-      })
-      DeleteList('link', list).then(res => {
-        this.$message({
-          type: 'success',
-          message: '删除成功'
-        })
-        this.calcCurrentPage(listCount)
-        this.fetchList()
-      }).catch(() => {
-        this.$message({
-          type: 'error',
-          message: '删除失败'
-        })
+        this.changeLoading = false
       })
     }
   }

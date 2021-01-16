@@ -7,7 +7,7 @@
           <div class="webapp-card__body">
             <div class="clearfix">
               <img class="webapp-card__logo img-fluid" :src="item.columnimg">
-              <p class="webapp-card__desc">{{ item.info }}</p>
+              <p class="webapp-card__desc">{{ item.description }}</p>
             </div>
             <p class="webapp-card__version">版本号：{{ item.version }}</p>
           </div>

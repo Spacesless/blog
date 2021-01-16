@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 清除缓存
 export function RefreshCache() {
   return request({
-    url: '/index/refresh',
+    url: '/general/refresh',
     method: 'get'
   })
 }

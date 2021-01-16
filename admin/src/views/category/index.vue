@@ -3,12 +3,6 @@
     <el-row class="app-header">
       <el-col :xs="24" :sm="12">
         <el-button type="primary" icon="el-icon-plus" @click="handleAdd">添加栏目</el-button>
-        <el-switch
-          v-model="expandAll"
-          class="expand-ctrl"
-          active-text="全部展开"
-          inactive-text="全部收缩"
-        />
       </el-col>
       <el-col :xs="24" :sm="12" class="text-right">
         <el-button type="danger" icon="el-icon-delete" :loading="deleteLoading" @click="handleDeleteSelection">删除</el-button>
@@ -21,7 +15,7 @@
       v-el-height-adaptive-table="{bottomOffset: 15}"
       v-loading="listLoading"
       :data="categoryList"
-      :default-expand-all="expandAll"
+      default-expand-all
       row-key="id"
       height="233"
       border
@@ -55,7 +49,7 @@
       <el-table-column label="目录" prop="folder_name" min-width="160" />
       <el-table-column label="操作" align="center" width="250">
         <template #default="scope">
-          <el-button class="category-tools-edit" type="primary" @click="handleEdit(scope.row)">编辑</el-button>
+          <el-button class="category-tools-edit" type="primary" @click="handleEdit(scope.row.id)">编辑</el-button>
           <el-dropdown>
             <el-button type="primary" plain :loading="scope.row.deleteLoading">
               更多操作<i class="el-icon-arrow-down el-icon--right" />
@@ -80,7 +74,7 @@ import MoveCategory from './components/MoveCategory'
 import elHeightAdaptiveTable from '@/directive/el-table'
 import { multipleTable, listDialog } from '@/mixins'
 import { formatCategory } from '@/utils'
-import { UpdateList, DeleteList } from '@/api/list'
+import { UpdateList } from '@/api/list'
 
 export default {
   name: 'Category',
@@ -93,7 +87,7 @@ export default {
   mixins: [multipleTable, listDialog],
   data() {
     return {
-      expandAll: true,
+      currentType: 'category',
       categoryList: [],
       multipleSelection: [],
       currentRow: {},
@@ -117,7 +111,7 @@ export default {
       this.listLoading = false
     },
     handleAdd() {
-      this.$router.push({ name: 'CategoryAdd' })
+      this.$router.push({ name: 'CategoryCreate' })
     },
     handleEdit(id) {
       this.$router.push({
@@ -127,44 +121,13 @@ export default {
     },
     handleAddChild(id) {
       this.$router.push({
-        name: 'CategoryAdd',
+        name: 'CategoryCreate',
         query: { class: id }
       })
     },
     handleMove(row) {
       this.currentRow = row
       this.dialogVisible = true
-    },
-    deleteSingle({ id }) {
-      DeleteList('category', [id]).then(response => {
-        this.$message({
-          type: 'success',
-          message: '删除成功'
-        })
-        this.calcCurrentPage(1)
-        this.fetchList()
-      }).catch(() => {
-        this.$message({
-          type: 'error',
-          message: '删除失败'
-        })
-      })
-    },
-    deleteSelection(listCount) {
-      const lists = this.multipleSelection.map(item => item.id)
-      DeleteList('category', lists).then(res => {
-        this.$message({
-          type: 'success',
-          message: '删除成功'
-        })
-        this.calcCurrentPage(listCount)
-        this.fetchList()
-      }).catch(() => {
-        this.$message({
-          type: 'error',
-          message: '删除失败'
-        })
-      })
     },
     async handleSave() {
       this.saveLoading = true

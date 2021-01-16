@@ -24,10 +24,10 @@ module.exports = class extends Base {
 
   // 查询未查看的评论
   async commentAction() {
-    const field = 'id,content,addtime,status'
+    const field = 'id,content,addtime'
     const list = await this.model('comment')
       .field(field)
-      .where({ status: 0, 'is_admin': 0 })
+      .where({ is_show: 0, 'is_admin': 0 })
       .order('addtime DESC')
       .page(1, 7)
       .countSelect()
@@ -36,7 +36,8 @@ module.exports = class extends Base {
 
   // 清除缓存
   async refreshAction() {
-    await think.cache('category', null)
-    await think.cache('config', null)
+    await this.cache('category', null)
+    await this.cache('config', null)
+    return this.success()
   }
 }

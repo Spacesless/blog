@@ -29,7 +29,7 @@ module.exports = class extends Base {
     const articleList = await this.model('article')
       .field(articleField)
       .where(articleWhere)
-      .limit(10)
+      .limit(8)
       .order('updatetime DESC')
       .select()
 

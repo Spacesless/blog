@@ -53,7 +53,7 @@ export default {
   },
   methods: {
     handleDeleteSelection() {
-      this.$emit('onDelateEelection')
+      this.$emit('onDelateSelection')
     },
     handleMove() {
       const listCount = this.multipleSelection.length

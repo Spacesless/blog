@@ -9,7 +9,7 @@
         :to="{ path: tag.path, query: tag.query, fullPath: tag.fullPath }"
         tag="span"
         class="tags-view-item"
-        @click.middle.native="closeSelectedTag(tag)"
+        @click.middle.native="!isAffix(tag)?closeSelectedTag(tag):''"
         @contextmenu.prevent.native="openMenu(tag,$event)"
       >
         <span>{{ tag.title }}</span>
@@ -48,7 +48,7 @@ export default {
       return this.$store.state.tagsView.visitedViews
     },
     routes() {
-      return this.$router.options.routes
+      return this.$store.state.permission.routes
     }
   },
   watch: {
@@ -71,6 +71,9 @@ export default {
   methods: {
     isActive(route) {
       return route.path === this.$route.path
+    },
+    isAffix(tag) {
+      return tag.meta && tag.meta.affix
     },
     filterAffixTags(routes, basePath = '/') {
       let tags = []
@@ -98,7 +101,7 @@ export default {
       for (const tag of affixTags) {
         // Must have tag name
         if (tag.name) {
-          this.$store.dispatch('tagsView/addView', tag)
+          this.$store.dispatch('tagsView/addVisitedView', tag)
         }
       }
     },
@@ -158,7 +161,7 @@ export default {
     toLastView(visitedViews, view) {
       const latestView = visitedViews.slice(-1)[0]
       if (latestView) {
-        this.$router.push(latestView)
+        this.$router.push(latestView.fullPath)
       } else {
         // now the default is to redirect to the home page if there is no tags-view,
         // you can adjust it according to your needs.
@@ -176,7 +179,6 @@ export default {
       const offsetWidth = this.$el.offsetWidth // container width
       const maxLeft = offsetWidth - menuMinWidth // left boundary
       const left = e.clientX - offsetLeft + 15 // 15: margin right
-
       if (left > maxLeft) {
         this.left = maxLeft
       } else {
@@ -188,6 +190,9 @@ export default {
     },
     closeMenu() {
       this.visible = false
+    },
+    handleScroll() {
+      this.closeMenu()
     }
   }
 }
@@ -227,7 +232,7 @@ export default {
   &-item {
     display: inline-block;
     height: 30px;
-    margin-left: 5px;
+    margin-left: 8px;
     padding: 0 12px;
     border: 1px solid #EBEEF5;
     background: #fff;

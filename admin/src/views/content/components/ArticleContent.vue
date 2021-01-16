@@ -282,26 +282,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.app-container{
-  .is-bottom{
-    margin-bottom: 75px;
-  }
-  .stick-bottom{
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 5;
-    padding: 10px 20px;
-    background-color: #fff;
-    text-align: right;
-    box-shadow: 0 -1px 4px rgba(0, 21, 41, 0.08);
-    .el-select{
-      vertical-align: middle;
-      margin-right: 15px;
-    }
-  }
-}
 .form-container{
   .inner-item{
     padding: 0;

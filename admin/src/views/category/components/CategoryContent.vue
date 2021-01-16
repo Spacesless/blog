@@ -1,12 +1,12 @@
 <template>
   <div class="app-container">
     <el-form
-      ref="postForm"
+      ref="form"
       v-loading="fetchLoading"
-      :model="form"
+      :model="formData"
       label-position="left"
       label-width="100px"
-      class="form-container"
+      class="form-container is-bottom"
     >
       <el-form-item class="form-title">基本信息</el-form-item>
       <el-form-item label="栏目名称" prop="name">
@@ -92,32 +92,33 @@
         </el-row>
       </el-form-item>
       <el-form-item label="栏目图标">
-        <el-input v-model="formData.icon" />
+        <el-row>
+          <el-col :xs="24" :md="12">
+            <el-input v-model="formData.icon" />
+          </el-col>
+        </el-row>
       </el-form-item>
       <el-form-item label="栏目版本">
-        <el-input v-model="formData.version" />
+        <el-row>
+          <el-col :xs="24" :md="12">
+            <el-input v-model="formData.version" />
+          </el-col>
+        </el-row>
       </el-form-item>
-      <el-form-item label="栏目内容">
-        <Tinymce ref="editor" v-model="formData.content" :height="350" />
-      </el-form-item>
-      <el-form-item class="text-right">
+      <div class="stick-bottom">
         <el-button type="primary" plain @click="handleCancel">取消</el-button>
         <el-button type="primary" :loading="confirmLoading" @click="handleSubmit">保存</el-button>
-      </el-form-item>
+      </div>
     </el-form>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-import Tinymce from '@/components/Tinymce'
 import { GetContent, CreateContent, UpdateContent } from '@/api/content'
 import { getCategoryByType } from '@/utils'
 
 export default {
-  components: {
-    Tinymce
-  },
   props: {
     isEdit: {
       type: Boolean,
@@ -163,26 +164,25 @@ export default {
       this.fetchLoading = false
     },
     handleSubmit() {
-      this.$refs.postformData.validate(async(valid) => {
-        if (valid) {
-          this.confirmLoading = true
+      this.$refs.form.validate(async(valid) => {
+        if (!valid) return
 
-          const SubmitHander = this.isEdit ? UpdateContent : CreateContent
-          await SubmitHander('category', this.formData).then(res => {
-            this.$message({
-              type: 'success',
-              message: this.isEdit ? '更新栏目成功' : '添加栏目成功'
-            })
-            this.$store.commit('list/SET_UPDATELIST', 'Category')
-            this.handleCancel()
-          }).catch(() => {
-            this.$message({
-              type: 'error',
-              message: this.isEdit ? '更新栏目失败' : '添加栏目失败'
-            })
+        this.confirmLoading = true
+        const SubmitHander = this.isEdit ? UpdateContent : CreateContent
+        await SubmitHander('category', this.formData).then(res => {
+          this.$message({
+            type: 'success',
+            message: this.isEdit ? '更新栏目成功' : '添加栏目成功'
           })
-          this.confirmLoading = false
-        }
+          this.$store.commit('list/SET_UPDATELIST', 'Category')
+          this.handleCancel()
+        }).catch(() => {
+          this.$message({
+            type: 'error',
+            message: this.isEdit ? '更新栏目失败' : '添加栏目失败'
+          })
+        })
+        this.confirmLoading = false
       })
     },
     /**

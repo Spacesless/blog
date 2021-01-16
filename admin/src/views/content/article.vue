@@ -11,7 +11,7 @@
       ref="multipleTable"
       v-el-height-adaptive-table="{bottomOffset: 142}"
       v-loading="listLoading"
-      :data="list"
+      :data="tableData"
       height="233"
       border
       @selection-change="onSelectionChange"
@@ -47,6 +47,7 @@
       :category-options="categoryOptions"
       :delete-loading="deleteLoading"
       :multiple-selection="multipleSelection"
+      @onDelateSelection="handleDeleteSelection"
     />
 
     <pagination :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.pageSize" @pagination="fetchList" />
@@ -58,10 +59,9 @@ import { mapGetters } from 'vuex'
 import HeaderMenu from './components/HeaderMenu'
 import FooterMenu from './components/FooterMenu'
 import Pagination from '@/components/Pagination'
-import elHeightAdaptiveTable from '@/directive/el-table'
 import { multipleTable } from '@/mixins'
 import { getCategoryByType } from '@/utils'
-import { GetList, DeleteList, UpdateList } from '@/api/list'
+import { UpdateList } from '@/api/list'
 
 export default {
   name: 'Article',
@@ -70,14 +70,11 @@ export default {
     FooterMenu,
     Pagination
   },
-  directives: {
-    elHeightAdaptiveTable
-  },
   mixins: [multipleTable],
   data() {
     return {
       currentType: 'article',
-      list: null
+      updateLoading: false
     }
   },
   computed: {
@@ -95,55 +92,12 @@ export default {
       }
     }
   },
-  created() {
-    this.fetchList()
-  },
   methods: {
-    async fetchList() {
-      this.listLoading = true
-      await GetList(this.currentType, this.listQuery).then(res => {
-        const { data, count } = res.data
-        this.list = data
-        this.total = count
-      }).catch(() => {})
-      this.listLoading = false
-    },
     handleEdit(id) {
       this.$router.push({
         name: 'ContentEdit',
         params: { id: id },
         query: { type: this.currentType }
-      })
-    },
-    deleteSingle({ id }) {
-      DeleteList(this.currentType, [id]).then(response => {
-        this.$message({
-          type: 'success',
-          message: '删除成功'
-        })
-        this.calcCurrentPage(1)
-        this.fetchList()
-      }).catch(() => {
-        this.$message({
-          type: 'error',
-          message: '删除失败'
-        })
-      })
-    },
-    deleteSelection(listCount) {
-      const lists = this.multipleSelection.map(item => item.id)
-      DeleteList(this.currentType, lists).then(res => {
-        this.$message({
-          type: 'success',
-          message: '删除成功'
-        })
-        this.calcCurrentPage(listCount)
-        this.fetchList()
-      }).catch(() => {
-        this.$message({
-          type: 'error',
-          message: '删除失败'
-        })
       })
     },
     handleUpdateSelection(data) {
