@@ -124,7 +124,7 @@ export default {
     width: 40px;
     height: 40px;
     margin: 0 3px;
-    background-image: url('/static/share-icon.png');
+    background-image: url('~@/assets/image/share-icon.png');
     vertical-align: bottom;
     cursor: pointer;
   }

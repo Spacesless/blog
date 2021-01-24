@@ -1,10 +1,17 @@
 <template>
   <div class="search">
     <div class="search-wrap clearfix">
-      <el-select v-model="listQuery.type" size="large" class="search-classify">
-        <el-option v-for="item in typeOptions" :key="item.value" :label="item.label" :value="item.value" />
+      <el-select v-model="listQuery.classify" size="large" class="search-classify">
+        <el-option v-for="item in classifyOptions" :key="item.value" :label="item.label" :value="item.value" />
       </el-select>
-      <el-input ref="searchKeyword" v-model="listQuery.keyword" class="search-input" size="large" placeholder="请输入关键字" />
+      <el-input
+        ref="searchKeyword"
+        v-model="listQuery.keyword"
+        class="search-input"
+        size="large"
+        placeholder="请输入关键字"
+        @keyup.enter.native="handleSearch"
+      />
       <span class="el-icon-search search__button" @click="handleSearch" />
     </div>
     <div class="search-hot">
@@ -16,7 +23,7 @@
       <a class="search-hot__link" @click="handleSearchHot('二次元')">二次元</a>
     </div>
     <ol v-if="total > 0" class="search-list">
-      <h3 class="search-list__result">检索到包含 {{ resultInfo.keyword }} 的{{ resultInfo.type }} {{ total }} 篇</h3>
+      <h3 class="search-list__result">检索到包含 {{ resultInfo.keyword }} 的{{ resultInfo.classify }} {{ total }} 篇</h3>
       <li v-for="item in searchList" :key="item.id" class="search-list-item el-row">
         <div class="search-list__thumb el-col el-col el-col-sm-10 el-col-md-6 el-col-lg-8">
           <nuxt-link :to="item.url">
@@ -51,7 +58,7 @@ export default {
   data() {
     return {
       searchList: [],
-      typeOptions: [{
+      classifyOptions: [{
         label: '全部',
         value: ''
       },
@@ -65,7 +72,7 @@ export default {
       }],
       listQuery: {
         page: 1,
-        type: '',
+        classify: '',
         keyword: ''
       },
       resultInfo: {},
@@ -76,11 +83,11 @@ export default {
     ...mapGetters(['configs'])
   },
   mounted() {
-    const { keyword, type } = this.$route.query
+    const { keyword, classify } = this.$route.query
 
     if (keyword) {
       this.listQuery.keyword = keyword
-      this.listQuery.classify = type || ''
+      this.listQuery.classify = classify || ''
 
       this.fetchList()
     }
@@ -92,11 +99,11 @@ export default {
         this.total = count
         this.searchList = data
 
-        const { keyword, type } = this.listQuery
-        const findType = this.typeOptions.find(item => item.value === type)
+        const { keyword, classify } = this.listQuery
+        const findClassify = this.classifyOptions.find(item => item.value === classify)
         this.resultInfo = {
           keyword,
-          type: findType ? findType.value : '文章'
+          classify: findClassify ? findClassify.value : '文章'
         }
       })
     },

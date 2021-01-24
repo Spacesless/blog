@@ -8,7 +8,7 @@ module.exports = class extends Rest {
       data.content = data.content.replace(/upload/gi, this.siteurl + '/upload')
       return this.success(data)
     } else { // 番剧列表
-      const { keyword, category, page, pageSize } = this.get()
+      const { keyword, category, page, pageSize, order } = this.get()
 
       const where = { is_recycle: 0 }
       if (keyword) {
@@ -24,7 +24,7 @@ module.exports = class extends Rest {
       const field = 'id,title,imgurl,total,current,status,ratings,is_show'
       const list = await this.modelInstance.where(where)
         .field(field)
-        .order('updatetime DESC')
+        .order(order || 'updatetime DESC')
         .page(page, pageSize)
         .countSelect()
 

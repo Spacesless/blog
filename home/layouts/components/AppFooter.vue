@@ -2,7 +2,7 @@
   <div class="footer">
     <p class="footer-info">
       Power by NodeJs + NuxtJs,&nbsp;
-      由<img class="footer__icon" src="/static/tencent-cloud.png" alt="腾讯云">腾讯云 提供云计算服务,&nbsp;
+      由<img class="footer__icon" src="@/assets/image/tencent-cloud.png" alt="腾讯云">腾讯云 提供云计算服务,&nbsp;
       本站已经稳稳地存活了 {{ configs.timeless }} 天
     </p>
     <p class="footer-copyright">
@@ -18,7 +18,7 @@
           target="_blank"
           title="公网安备"
         >
-          <img class="footer__icon" src="/static/icp-beian.png" alt="公网安备">{{ configs.police_beian }}
+          <img class="footer__icon" src="@/assets/image/icp-beian.png" alt="公网安备">{{ configs.police_beian }}
         </a>
       </template>
     </p>

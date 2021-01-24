@@ -32,12 +32,19 @@
       <div class="search">
         <div class="container">
           <div class="search-wrap clearfix">
-            <el-select v-model="type" size="large" class="search-classify">
+            <el-select v-model="classify" size="large" class="search-classify">
               <el-option label="全部" value="" />
               <el-option label="文章" value="article" />
               <el-option label="番剧" value="bangumi" />
             </el-select>
-            <el-input ref="searchKeyword" v-model="keyword" class="search-input" size="large" placeholder="请输入关键字" />
+            <el-input
+              ref="searchKeyword"
+              v-model="keyword"
+              class="search-input"
+              size="large"
+              placeholder="请输入关键字"
+              @keyup.enter.native="handleSearch"
+            />
             <span class="el-icon-search search__button" @click="handleSearch" />
           </div>
           <div class="search-hot">
@@ -61,7 +68,7 @@ export default {
   data() {
     return {
       searchVisible: false,
-      type: '',
+      classify: '',
       keyword: ''
     }
   },
@@ -84,7 +91,7 @@ export default {
     handleSearch() {
       this.$router.push({
         name: 'search',
-        query: { keyword: this.keyword, type: this.type }
+        query: { keyword: this.keyword, classify: this.classify }
       })
       this.searchVisible = false
     },
@@ -98,6 +105,7 @@ export default {
       })
       this.searchVisible = false
     },
+    // 白天、黑夜模式切换
     toggleColorMode() {
       this.$colorMode.preference = this.$colorMode.preference === 'system' ? 'dark' : 'system'
     }

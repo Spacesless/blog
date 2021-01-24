@@ -7,8 +7,7 @@
       <el-col class="blog-summary-info" :sm="12" :lg="16">
         <h1 class="blog-summary__title">{{ data.title }}</h1>
         <div class="blog-summary__admin">
-          <span><i class="el-icon-user" />{{ data.author }}</span>
-          <span><i class="tl-icon">&#xe70b;</i>{{ data.updatetime }}</span>
+          <span><i class="tl-icon">&#xe70b;</i>{{ data.updatetime | parseTime('{y}-{m}-{d}') }}</span>
           <span><i class="tl-icon">&#xe681;</i>{{ data.hits }}</span>
         </div>
       </el-col>
@@ -205,7 +204,7 @@ export default {
     }
     &__admin{
       font-size: 15px;
-      span{
+      .tl-icon{
         margin-right: 8px;
       }
     }

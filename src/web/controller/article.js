@@ -72,31 +72,14 @@ module.exports = class extends Base {
     const { category, seo } = this.getDetailInfo(data, categorys, configs)
     data.content = await this.compressContent(data.content)
 
-    // 详情分页
-    const field = 'id,title'
-    const prev = await this.modelInstance
-      .field(field)
-      .where({ 'id': ['<', id], is_recycle: 0 })
-      .limit(1)
-      .find()
-    const next = await this.modelInstance
-      .field(field)
-      .where({ 'id': ['>', id], is_recycle: 0 })
-      .limit(1)
-      .find()
-    const page = [
-      prev || {},
-      next || {}
-    ]
-    page.forEach(item => {
-      if (!think.isEmpty(item)) item.url = ''
-    })
+    // 访问量+1
+    this.modelInstance.where({ id })
+      .increment('hits', 1)
 
     return this.success({
       seo,
       category,
-      content: data,
-      page
+      content: data
     })
   }
 }

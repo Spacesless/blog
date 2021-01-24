@@ -1,6 +1,5 @@
 'use strict'
 const path = require('path')
-const CompressionWebpackPlugin = require('compression-webpack-plugin')
 const defaultSettings = require('./admin/src/settings.js')
 
 function resolve(dir) {
@@ -42,11 +41,8 @@ module.exports = {
     proxy: {
       // detail: https://cli.vuejs.org/config/#devserver-proxy
       [process.env.VUE_APP_BASE_API]: {
-        target: `http://127.0.0.1:8360${process.env.VUE_APP_BASE_API}`,
-        changeOrigin: true,
-        pathRewrite: {
-          ['^' + process.env.VUE_APP_BASE_API]: ''
-        }
+        target: 'http://127.0.0.1:8360',
+        changeOrigin: true
       }
     }
   },
@@ -111,7 +107,7 @@ module.exports = {
             }])
             .end()
           config.plugin('compress')
-            .use(CompressionWebpackPlugin, [
+            .use('compression-webpack-plugin', [
               { // compressionOptions 默认为{ level: 9 } 级别越高压缩率越大，压缩时间也就越长
                 test: /.(js|css|woff|ttf)$/, // 匹配需要压缩的文件后缀 看需求
                 threshold: 10240 // 大于10kb的会压缩，默认为0

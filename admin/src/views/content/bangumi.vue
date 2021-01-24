@@ -14,6 +14,7 @@
       :data="tableData"
       height="233"
       border
+      @sort-change="onSortChange"
       @selection-change="onSelectionChange"
     >
       <el-table-column type="selection" width="50" align="center" />
@@ -46,7 +47,7 @@
           />
         </template>
       </el-table-column>
-      <el-table-column label="状态" width="150" align="center" sortable sort-by="status">
+      <el-table-column label="状态" column-key="status" width="150" align="center" sortable>
         <template #default="scope">
           <el-select v-model="scope.row.status" placeholder="请选择状态">
             <el-option label="未上映" :value="0" />
@@ -155,6 +156,15 @@ export default {
         params: { id: id },
         query: { type: this.currentType }
       })
+    },
+    onSortChange({ column, prop, order }) {
+      console.log({ column, prop, order })
+      if (order) {
+        this.listQuery.order = `${column.columnKey} ${order === 'descending' ? 'DESC' : 'ASC'}`
+      } else {
+        this.listQuery.order = ''
+      }
+      this.handleSearch()
     },
     handleUpdateSelection(data) {
       return UpdateList(this.currentType, data).then(res => {

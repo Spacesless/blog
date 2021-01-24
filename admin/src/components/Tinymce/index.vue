@@ -17,7 +17,9 @@ import load from './dynamicLoadScript'
 import { UploadFiles } from '@/api/common'
 
 // why use this cdn, detail see https://github.com/PanJiaChen/tinymce-all-in-one
-const tinymceCDN = 'vendor/tinymce/tinymce.min.js'
+const tinymceCDN = process.env.NODE_ENV === 'production'
+  ? '//cdn.timelessq.com/static/vendor/tinymce/tinymce.min.js'
+  : '//127.0.0.1:8360/static/vendor/tinymce/tinymce.min.js'
 
 export default {
   name: 'Tinymce',
