@@ -70,6 +70,8 @@ module.exports = class extends Base {
     const categorys = await this.getCategory()
 
     const { category, seo } = this.getDetailInfo(data, categorys, configs)
+    const { thumb_article_x, thumb_article_y, thumb_kind } = configs
+    data.imgurl = await this.thumbImage(data.imgurl, thumb_article_x, thumb_article_y, thumb_kind)
     data.content = await this.compressContent(data.content)
 
     // 访问量+1

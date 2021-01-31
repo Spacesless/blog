@@ -1,17 +1,17 @@
 <template>
   <div class="blog">
-    <el-row class="blog-summary">
-      <el-col class="blog-summary-cover" :sm="12" :lg="8">
-        <img class="img-fluid" :src="data.imgurl" :alt="data.title">
-      </el-col>
-      <el-col class="blog-summary-info" :sm="12" :lg="16">
-        <h1 class="blog-summary__title">{{ data.title }}</h1>
-        <div class="blog-summary__admin">
-          <span><i class="tl-icon">&#xe70b;</i>{{ data.updatetime | parseTime('{y}-{m}-{d}') }}</span>
-          <span><i class="tl-icon">&#xe681;</i>{{ data.hits }}</span>
-        </div>
-      </el-col>
-    </el-row>
+    <div class="blog-summary">
+      <el-row>
+        <el-col class="blog-summary-cover" :xs="24" :sm="16" :lg="12">
+          <img class="img-fluid" :src="data.imgurl" :alt="data.title">
+        </el-col>
+      </el-row>
+      <h1 class="blog-summary__title">{{ data.title }}</h1>
+      <div class="blog-summary__admin">
+        <span><i class="tl-icon">&#xe70b;</i>{{ data.updatetime | parseTime('{y}-{m}-{d}') }}</span>
+        <span><i class="tl-icon">&#xe681;</i>{{ data.hits }}</span>
+      </div>
+    </div>
     <!--blog content-->
     <div class="blog-content">
       <div class="blog-content-wrap">
@@ -193,19 +193,25 @@ export default {
 .blog{
   &-summary{
     padding: 15px 0;
+    &-cover{
+      margin-bottom: 15px;
+    }
     &-info{
       padding: 0 15px;
     }
     &__title{
       color: var(--color-main);
-      font-size: 28px;
+      font-size: 30px;
       font-weight: normal;
       line-height: 2;
     }
     &__admin{
       font-size: 15px;
+      span{
+        margin-right: 10px;
+      }
       .tl-icon{
-        margin-right: 8px;
+        margin-right: 5px;
       }
     }
   }

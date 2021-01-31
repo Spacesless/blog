@@ -58,6 +58,9 @@ body{
     &-wrapper{
       overflow-x: hidden;
     }
+    .el-scrollbar__bar.is-horizontal{
+      display: none;
+    }
   }
   &-menu{
     height: 100%;

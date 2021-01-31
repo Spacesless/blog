@@ -80,7 +80,7 @@ export default {
       'flower',
       [
         {
-          'type': { 'typeName': 'image', 'url': '/static/spring/flower-1.png' },
+          'type': { 'typeName': 'image', 'url': '/static/img/spring/flower-1.png' },
           'number': 3,
           'op': { 'min': 0.7, 'max': 1 },
           'size': { 'min': 40, 'max': 60 },
@@ -91,7 +91,7 @@ export default {
           'reIn': 'reverseDirection'
         },
         {
-          'type': { 'typeName': 'image', 'url': '/static/spring/flower-2.png' },
+          'type': { 'typeName': 'image', 'url': '/static/img/spring/flower-2.png' },
           'number': 4,
           'size': { 'min': 40, 'max': 60 },
           'speed': { 'min': 2, 'max': 5 },
@@ -100,7 +100,7 @@ export default {
           'reIn': 'reverseDirection'
         },
         {
-          'type': { 'typeName': 'image', 'url': '/static/spring/flower-3.png' },
+          'type': { 'typeName': 'image', 'url': '/static/img/spring/flower-3.png' },
           'number': 3,
           'size': { 'min': 50, 'max': 60 },
           'speed': { 'min': 1, 'max': 3 },
@@ -109,7 +109,7 @@ export default {
           'reIn': 'reverseDirection'
         },
         {
-          'type': { 'typeName': 'image', 'url': '/static/spring/flower-4.png' },
+          'type': { 'typeName': 'image', 'url': '/static/img/spring/flower-4.png' },
           'number': 2,
           'size': { 'min': 50, 'max': 60 },
           'speed': { 'min': 3, 'max': 5 },
@@ -118,7 +118,7 @@ export default {
           'reIn': 'reverseDirection'
         },
         {
-          'type': { 'typeName': 'image', 'url': '/static/spring/flower-5.png' },
+          'type': { 'typeName': 'image', 'url': '/static/img/spring/flower-5.png' },
           'number': 1,
           'size': { 'min': 50, 'max': 60 },
           'speed': { 'min': 1, 'max': 2 },

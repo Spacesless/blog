@@ -93,7 +93,8 @@ export default {
         id: id === 'list' ? null : id,
         page,
         sortBy,
-        orderBy
+        orderBy,
+        tags
       }
     })
     return {

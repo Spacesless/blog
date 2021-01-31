@@ -91,7 +91,7 @@ export default {
         const qquin = email.split('@')[0]
         return `http://q1.qlogo.cn/g?b=qq&s=100&nk=${qquin}`
       } else {
-        return `/static/comment/${id % 10}.jpg`
+        return `/static/img/comment/${id % 10}.jpg`
       }
     }
   }

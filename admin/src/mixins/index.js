@@ -73,6 +73,9 @@ export const multipleTable = {
   created() {
     this.fetchList()
   },
+  activated() {
+    this.$refs.multipleTable && this.$refs.multipleTable.doLayout()
+  },
   methods: {
     async fetchList() {
       this.listLoading = true

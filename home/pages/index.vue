@@ -11,7 +11,7 @@
     <div class="article">
       <div class="home-head">
         <h2 class="home-head__title">最新文章</h2>
-        <nuxt-link class="home-head__more" to="/blog">more+</nuxt-link>
+        <nuxt-link class="home-head__more" to="/article">more+</nuxt-link>
       </div>
       <el-row class="article-list" :gutter="20">
         <el-col v-for="item in articleList" :key="item.id" :md="12">
