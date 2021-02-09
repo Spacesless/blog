@@ -78,17 +78,6 @@ module.exports = {
       })
       .end()
 
-    // set preserveWhitespace
-    config.module
-      .rule('vue')
-      .use('vue-loader')
-      .loader('vue-loader')
-      .tap(options => {
-        options.compilerOptions.preserveWhitespace = true
-        return options
-      })
-      .end()
-
     config
     // https://webpack.js.org/configuration/devtool/#development
       .when(process.env.NODE_ENV === 'development',
@@ -105,6 +94,11 @@ module.exports = {
             // `runtime` must same as runtimeChunk name. default is `runtime`
               inline: /runtime\..*\.js$/
             }])
+            .end()
+          config.plugin('copy')
+            .use('copy-webpack-plugin', [
+              [{ from: resolve('public/vendor'), to: 'vendor' }]
+            ])
             .end()
           config.plugin('compress')
             .use('compression-webpack-plugin', [

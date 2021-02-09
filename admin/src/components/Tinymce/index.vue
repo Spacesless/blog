@@ -18,8 +18,8 @@ import { UploadFiles } from '@/api/common'
 
 // why use this cdn, detail see https://github.com/PanJiaChen/tinymce-all-in-one
 const tinymceCDN = process.env.NODE_ENV === 'production'
-  ? '//cdn.timelessq.com/static/vendor/tinymce/tinymce.min.js'
-  : '//127.0.0.1:8360/static/vendor/tinymce/tinymce.min.js'
+  ? '//cdn.timelessq.com/admin/vendor/tinymce/tinymce.min.js'
+  : '/vendor/tinymce/tinymce.min.js'
 
 export default {
   name: 'Tinymce',
@@ -142,7 +142,7 @@ export default {
           })
         },
         file_picker_types: 'image',
-        file_picker_callback: () => this.handlerPickerFile(),
+        file_picker_callback: (...arg) => this.handlerPickerFile(...arg),
         images_upload_handler: (...arg) => this.uploadImages(...arg),
         gallery_click_handler: () => {
           this.ablumVisible = true
@@ -168,7 +168,8 @@ export default {
         once you do not need it anymore.
       */
 
-      input.onchange = () => {
+      const that = this
+      input.onchange = function() {
         const file = this.files[0]
         const formData = new FormData()
         formData.append('file', file)
@@ -177,7 +178,7 @@ export default {
           const { url, name } = fileList[0] || {}
           callback(url, { alt: name })
         }).catch(() => {
-          this.$message({
+          that.$message({
             type: 'error',
             message: '图片上传失败.'
           })
