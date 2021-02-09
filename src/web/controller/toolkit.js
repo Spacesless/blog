@@ -1,11 +1,6 @@
 const Base = require('./base.js')
 
 module.exports = class extends Base {
-  constructor(...arg) {
-    super(...arg)
-    this.modelInstance = this.model('toolkit')
-  }
-
   async listAction() {
     const categorys = await this.getCategory()
 
@@ -45,9 +40,7 @@ module.exports = class extends Base {
     const configs = await this.getConfigs()
     const { seo } = this.getListInfo(findCategory.id, categorys, configs)
 
-    const data = await this.modelInstance
-      .where({ id: findCategory.id })
-      .select()
+    const data = findCategory
 
     return this.success({
       seo,

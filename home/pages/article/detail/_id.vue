@@ -66,10 +66,11 @@ export default {
     const { seo, content: data } = await $axios.$get('/article/detail', {
       params: { id }
     })
-    return { seo, data }
+    return { id, seo, data }
   },
   data() {
     return {
+      id: 0,
       catalogList: [],
       isActive: -1,
       previewSrc: '',
@@ -83,6 +84,11 @@ export default {
     this.$nextTick(() => {
       this.initCatelog()
     })
+
+    // 浏览5秒才算访问量
+    setTimeout(() => {
+      this.handleRecordAccess()
+    }, 5000)
   },
   methods: {
     initCatelog() {
@@ -149,10 +155,18 @@ export default {
       })
       Prism.highlightAll()
     },
+    /**
+     * 滚动到对应的dom元素
+     * @param {Element} item
+     */
     scrollIntoView(item) {
       const tagetTop = this.getOffsetTop(item) - 5
       scrollTo(tagetTop, 400)
     },
+    /**
+     * 计算元素的OffsetTop
+     * @param {Element} dom
+     */
     getOffsetTop(dom) {
       let top = dom.offsetTop
       while (dom.offsetParent) {
@@ -175,6 +189,12 @@ export default {
     },
     closeViewer() {
       this.$refs.preview && this.$refs.preview.closeViewer()
+    },
+    // 记录访问量
+    handleRecordAccess() {
+      this.$axios.$get('/article/access', {
+        params: { id: this.id }
+      })
     }
   },
   head() {
@@ -223,6 +243,9 @@ export default {
     top: 60px;
     right: 0;
     width: 230px;
+    @media (max-width: 768px){
+      display: none;
+    }
     &-list{
       border-left: 1px solid var(--border-color);
     }

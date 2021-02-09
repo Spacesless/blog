@@ -62,7 +62,7 @@ module.exports = class extends Base {
       .where({ id, is_recycle: 0 })
       .find()
 
-    if (think.isEmpty(data)) {
+    if (think.isEmpty(data) || data.is_show === 0) {
       return this.ctx.throw(404)
     }
 
@@ -74,14 +74,18 @@ module.exports = class extends Base {
     data.imgurl = await this.thumbImage(data.imgurl, thumb_article_x, thumb_article_y, thumb_kind)
     data.content = await this.compressContent(data.content)
 
-    // 访问量+1
-    this.modelInstance.where({ id })
-      .increment('hits', 1)
-
     return this.success({
       seo,
       category,
       content: data
     })
+  }
+
+  accessAction() {
+    const { id } = this.get()
+    // 访问量+1
+    this.modelInstance.where({ id })
+      .increment('hits', 1)
+    return this.success()
   }
 }

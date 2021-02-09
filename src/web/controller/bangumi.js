@@ -73,7 +73,7 @@ module.exports = class extends Base {
       .where({ id, is_recycle: 0 })
       .find()
 
-    if (think.isEmpty(data)) {
+    if (think.isEmpty(data) || data.is_show === 0) {
       return this.ctx.throw(404)
     }
 

@@ -5,7 +5,7 @@ module.exports = class extends Rest {
     if (this.id) { // 文章详情
       const data = await this.modelInstance.where({ id: this.id }).find()
       data.imgurl = data.imgurl ? this.siteurl + data.imgurl : ''
-      data.content = data.content.replace(/upload/gi, this.siteurl + '/upload')
+      data.content = data.content.replace(/\/upload/gi, this.siteurl + '/upload')
       return this.success(data)
     } else { // 文章列表
       const { keyword, category, page, pageSize } = this.get()
