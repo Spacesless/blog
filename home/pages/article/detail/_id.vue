@@ -86,9 +86,12 @@ export default {
     })
 
     // 浏览5秒才算访问量
-    setTimeout(() => {
+    this.timer = setTimeout(() => {
       this.handleRecordAccess()
     }, 5000)
+  },
+  beforeDestroy() {
+    this.timer && clearInterval(this.timer)
   },
   methods: {
     initCatelog() {

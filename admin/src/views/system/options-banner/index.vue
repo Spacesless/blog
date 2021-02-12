@@ -65,9 +65,6 @@ export default {
       bannerList: []
     }
   },
-  created() {
-    this.fetchList()
-  },
   methods: {
     async fetchList() {
       this.listLoading = true

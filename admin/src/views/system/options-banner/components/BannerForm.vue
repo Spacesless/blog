@@ -10,8 +10,14 @@
   >
 
     <el-form ref="form" :model="formData" :rules="rules" label-width="80px">
-      <el-form-item label="图片">
+      <el-form-item label="图片" prop="imgurl">
         <upload-image :file-list.sync="fileList" />
+      </el-form-item>
+      <el-form-item label="标题" prop="title">
+        <el-input v-model="formData.title" />
+      </el-form-item>
+      <el-form-item label="排序">
+        <el-input-number v-model="formData.sort" controls-position="right" />
       </el-form-item>
     </el-form>
 
@@ -46,12 +52,14 @@ export default {
       fileList: [],
       fetchLoading: false,
       rules: {
-
+        imgurl: [{ required: true, message: '请选择图片', trigger: 'blur' }],
+        title: [{ required: true, message: '请输入标题', trigger: 'blur' }]
       }
     }
   },
   methods: {
     onOpen() {
+      this.fileList = []
       if (this.currentId) {
         this.dialogTitle = '修改Banner'
         this.fetchData()
@@ -87,7 +95,7 @@ export default {
         }
 
         const SubmitHandler = this.currentId ? UpdateContent : CreateContent
-        await SubmitHandler(postData).then(res => {
+        await SubmitHandler('banner', postData).then(res => {
           this.$message({
             type: 'success',
             message: this.isEdit ? '更新成功' : '添加成功'

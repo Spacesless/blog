@@ -84,7 +84,7 @@ export default {
   },
   data() {
     return {
-      bannerHeight: '450px'
+      bannerHeight: '500px'
     }
   },
   mounted() {
@@ -102,7 +102,7 @@ export default {
   methods: {
     handleResize() {
       const carouselWidth = this.$refs.carousel.$el.clientWidth
-      this.bannerHeight = 450 * carouselWidth / 1280 + 'px'
+      this.bannerHeight = 500 * carouselWidth / 1280 + 'px'
     }
   },
   head() {
