@@ -41,7 +41,9 @@ import {
   Card,
   Loading,
   Notification,
-  Drawer
+  Drawer,
+  Message,
+  MessageBox
 } from 'element-ui'
 
 Vue.use(Pagination)
@@ -89,4 +91,9 @@ Vue.prototype.$ELEMENT = {
   zIndex: 2000
 }
 
+const msgbox = MessageBox
+const { prompt } = msgbox
+
 Vue.prototype.$notify = Notification
+Vue.prototype.$prompt = prompt
+Vue.prototype.$message = Message
