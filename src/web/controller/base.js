@@ -6,7 +6,7 @@ module.exports = class extends think.Controller {
     this.siteurl = ''
   }
 
-  async __before() {
+  __before() {
     // 配置信息
     this.siteurl = this.ctx.origin.replace(/http:|https:/, '')
   }
@@ -17,24 +17,6 @@ module.exports = class extends think.Controller {
    */
   async getConfigs() {
     const configs = await this.model('config').getConfig()
-
-    const { seo_title_type, sitename, keywords } = configs
-    // SEO
-    switch (seo_title_type) {
-      case '1':
-        configs.metaTitle = ''
-        break
-      case '2':
-        configs.metaTitle = ` - ${keywords}`
-        break
-      case '3':
-        configs.metaTitle = ` - ${sitename}`
-        break
-      case '4':
-        configs.metaTitle = ` - ${keywords} | ${sitename}`
-        break
-    }
-
     return configs
   }
 
@@ -91,7 +73,7 @@ module.exports = class extends think.Controller {
     // meta信息
     const { name: title, keywords, description } = findCategory
     const seo = {
-      title: title + configs.metaTitle,
+      title: `${title} -  ${configs.sitename}`,
       keywords,
       description
     }
@@ -111,10 +93,10 @@ module.exports = class extends think.Controller {
 
     // meta信息
     const findCategory = categorys.find(item => item.id === category_id)
-    const { keywords: categoryKeywords, description: categoryDescription } = findCategory
+    const { name: categoryTitle, keywords: categoryKeywords, description: categoryDescription } = findCategory
 
     const seo = {
-      title: title + configs.metaTitle,
+      title: `${title} - ${categoryTitle} - ${configs.sitename}`,
       keywords: keywords || categoryKeywords,
       description: description || categoryDescription
     }

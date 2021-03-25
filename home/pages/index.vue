@@ -290,9 +290,9 @@ export default {
   &-progress{
     position: absolute;
     bottom: 10px;
-    width: 66%;
+    width: calc(66.6% - 24px);
     @media screen and (min-width: 1920px){
-      width: 58%;
+      width: calc(58.3% - 24px);
     }
     .para-name{
       float: left;

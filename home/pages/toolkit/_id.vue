@@ -43,6 +43,7 @@ export default {
   &-card{
     display: block;
     position: relative;
+    margin-bottom: 20px;
     background-color: var(--bg-normal);
     color: var(--color-normal);
     font-size: 14px;

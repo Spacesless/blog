@@ -4,7 +4,7 @@
     <h1 class="links__title">友情链接</h1>
     <el-row class="links-wrap" :gutter="15">
       <el-col v-for="item in linkList" :key="item.id" :sm="12" :md="8" :lg="6">
-        <a class="links-item" :href="item.website" :title="item.name" target="_blank">
+        <a class="links-item" :href="item.website" :title="item.name" target="_blank" rel="noopener noreferrer">
           <div class="links-logo">
             <el-image class="links-logo__picture" :src="item.logo">
               <div slot="error" class="image-slot">
