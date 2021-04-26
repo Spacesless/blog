@@ -40,7 +40,7 @@ export default {
   layout: 'app',
   async asyncData({ app, route, $axios }) {
     const filename = route.path.split('/')
-    const { seo } = await $axios.$get('/toolkit/content', {
+    const { seo } = await $axios.$get('/tool/content', {
       params: {
         path: filename[filename.length - 1] || 'live2d'
       }

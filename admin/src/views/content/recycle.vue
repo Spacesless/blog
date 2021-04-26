@@ -83,7 +83,7 @@ export default {
       const typeEnum = {
         article: '文章模块',
         bangumi: '追番模块',
-        toolkit: '小工具',
+        app: '小工具',
         other: '其它模块'
       }
       return typeEnum[cellValue] || ''

@@ -43,7 +43,8 @@ import {
   Notification,
   Drawer,
   Message,
-  MessageBox
+  MessageBox,
+  Tree
 } from 'element-ui'
 
 Vue.use(Pagination)
@@ -66,6 +67,7 @@ Vue.use(RadioGroup)
 Vue.use(Form)
 Vue.use(FormItem)
 Vue.use(Tag)
+Vue.use(Tree)
 Vue.use(Table)
 Vue.use(TableColumn)
 Vue.use(Progress)

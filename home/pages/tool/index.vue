@@ -20,7 +20,7 @@
 <script>
 export default {
   async asyncData({ params, query, $axios }) {
-    const { seo, list } = await $axios.$get('/toolkit/list')
+    const { seo, list } = await $axios.$get('/tool/list')
     return { seo, webappList: list }
   },
   head() {

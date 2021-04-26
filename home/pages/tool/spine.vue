@@ -35,7 +35,7 @@ import { spine } from '@/vendor/spine-ts/spine-webgl.js'
 export default {
   async asyncData({ app, route, $axios }) {
     const filename = route.path.split('/')
-    const { seo } = await $axios.$get('/toolkit/content', {
+    const { seo } = await $axios.$get('/tool/content', {
       params: {
         path: filename[filename.length - 1] || 'live2d'
       }
@@ -46,7 +46,7 @@ export default {
   },
   data() {
     return {
-      seleteSkeleton: 'lafei_4',
+      seleteSkeleton: 'tiancheng_younv',
       skelOptions: [],
       listLoading: false,
       filterOptions: [],

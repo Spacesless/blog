@@ -57,7 +57,7 @@ module.exports = class extends think.Model {
           case 'other':
             path = ''
             break
-          case 'toolkit':
+          case 'tool':
             path = ''
             break
           default:

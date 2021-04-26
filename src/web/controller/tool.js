@@ -17,7 +17,7 @@ module.exports = class extends Base {
     const { seo } = this.getListInfo(findCategory.id, categorys, configs)
 
     // webapp列表
-    const list = categorys.filter(item => item.type === 'toolkit' && item.level !== 1)
+    const list = categorys.filter(item => item.type === 'tool' && item.level !== 1)
     const webapps = this.model('category').formatCategoryUrl(list)
 
     return this.success({
