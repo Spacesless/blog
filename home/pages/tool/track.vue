@@ -19,7 +19,11 @@
           }"
           :filter-node-method="filterNode"
           @node-click="handleNodeClick"
-        />
+        >
+          <span slot-scope="{ node, data }" class="tour-list__item">
+            {{ node.label }}({{ data.count }})
+          </span>
+        </el-tree>
       </el-scrollbar>
     </div>
     <div class="tour-overview">
@@ -89,6 +93,7 @@ export default {
       await axios.get('../static/track.json').then(res => {
         const treeData = JSON.parse(JSON.stringify(res.data))
         treeData.forEach(item => {
+          item.count = 0
           item.children.forEach(child => {
             const length = child.children.length
             this.cityCount += 1
@@ -289,6 +294,9 @@ $sidebar-width: 200px;
     }
     ::v-deep .el-icon-caret-right:before{
       content: "\e6e0";
+    }
+    &__item{
+      font-size: 14px;
     }
   }
   &-overview{
