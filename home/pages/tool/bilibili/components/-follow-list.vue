@@ -1,20 +1,23 @@
 <template>
   <div v-loading="listLoading" class="follow">
-    <ul class="follow-list">
-      <li v-for="item in followList" :key="item.id" class="follow-list-item clearfix">
-        <div class="follow-list-face">
-          <a :href="item.mid | formatFollowUrl" :title="item.uname" target="_blank" rel="noopener noreferrer">
-            <img class="follow-list-face__img" :src="item.face + '@96w_96h_100Q_1c.webp'" alt="">
-          </a>
-        </div>
-        <div class="follow-list-info">
-          <a class="follow-list-info-link" :href="item.mid | formatFollowUrl" :title="item.uname" target="_blank" rel="noopener noreferrer">
-            <span class="follow-list-info__name">{{ item.uname }}</span>
-          </a>
-          <p class="follow-list-info__desc">{{ item.official_verify.desc }}</p>
-        </div>
-      </li>
-    </ul>
+    <el-scrollbar class="follow-list-scrollbar" wrap-class="follow-scrollbar-wrapper">
+      <ul class="follow-list">
+        <li v-for="item in followList" :key="item.id" class="follow-list-item clearfix">
+          <div class="follow-list-face">
+            <a :href="item.mid | formatFollowUrl" :title="item.uname" target="_blank" rel="noopener noreferrer">
+              <img class="follow-list-face__img" :src="item.face + '@96w_96h_100Q_1c.webp'" alt="" referrerpolicy="no-referrer">
+            </a>
+          </div>
+          <div class="follow-list-info">
+            <a class="follow-list-info-link" :href="item.mid | formatFollowUrl" :title="item.uname" target="_blank" rel="noopener noreferrer">
+              <span class="follow-list-info__name">{{ item.uname }}</span>
+            </a>
+            <span class="follow-list-info__desc">({{ item.official_verify.desc }})</span>
+            <p class="follow-list-info__sign">{{ item.sign }}</p>
+          </div>
+        </li>
+      </ul>
+    </el-scrollbar>
     <pagination class="pagination" :total="total" :page.sync="listQuery.page" :limit="listQuery.pageSize" @pagination="fetchList" />
   </div>
 </template>
@@ -69,16 +72,20 @@ export default {
 
 <style lang="scss" scoped>
 .follow{
+  height: 100%;
   &-list{
+    &-scrollbar{
+      height: calc(100% - 72px);
+    }
     &-item{
-      padding: 5px 0;
+      padding: 10px 0;
       background-color: #fff;
       margin-bottom: 3px;
+      border-bottom: 1px solid #e6e6e6;
     }
     &-face{
       float: left;
-      width: 100px;
-      text-align: center;
+      padding: 0 20px;
       &__img{
         width: 60px;
         height: 60px;
@@ -88,6 +95,7 @@ export default {
     &-info{
       overflow: hidden;
       padding-top: 8px;
+      padding-right: 20px;
       &-link{
         color: #303133;
         &:hover{
@@ -95,6 +103,11 @@ export default {
         }
       }
       &__desc{
+        margin-left: 8px;
+        font-size: 12px;
+        color: #606266;
+      }
+      &__sign{
         font-size: 14px;
         color: #909399;
         margin-top: 5px;
@@ -104,6 +117,6 @@ export default {
 }
 .pagination{
   text-align: center;
-  padding: 15px;
+  padding: 20px;
 }
 </style>

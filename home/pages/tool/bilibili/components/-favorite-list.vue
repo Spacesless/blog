@@ -1,24 +1,26 @@
 <template>
   <div v-loading="listLoading" class="favorite">
-    <el-row class="favorite-list" :gutter="15">
-      <el-col v-for="item in mediaList" :key="item.id" :xs="24" :sm="12" :md="8" :lg="6" class="favorite-list-item">
-        <div class="favorite-list-media">
-          <a :href="item.bvid | formatVideoUrl" :title="item.title" target="_blank" rel="noopener noreferrer">
-            <img class="favorite-list__cover" :src="item.cover + '@380w_240h_100Q_1c.webp'" alt="">
-            <div class="favorite-list-media-info">
-              <p class="favorite-list-media__param">播放：{{ item.cnt_info.play }}</p>
-              <p class="favorite-list-media__param">收藏：{{ item.cnt_info.collect }}</p>
-              <p class="favorite-list-media__param">UP主：{{ item.upper.name }}</p>
-              <p class="favorite-list-media__param">投稿：{{ item.pubtime | parseTime('{y}-{m}-{d}') }}</p>
-            </div>
+    <el-scrollbar class="favorite-list-scrollbar" wrap-class="favorite-scrollbar-wrapper">
+      <el-row class="favorite-list">
+        <el-col v-for="item in mediaList" :key="item.id" :xs="24" :sm="12" :md="8" :lg="6" class="favorite-list-item">
+          <div class="favorite-list-media">
+            <a :href="item.bvid | formatVideoUrl" :title="item.title" target="_blank" rel="noopener noreferrer">
+              <img class="favorite-list__cover" :src="item.cover + '@380w_240h_100Q_1c.webp'" alt="" referrerpolicy="no-referrer">
+              <div class="favorite-list-media-info">
+                <p class="favorite-list-media__param">播放：{{ item.cnt_info.play }}</p>
+                <p class="favorite-list-media__param">收藏：{{ item.cnt_info.collect }}</p>
+                <p class="favorite-list-media__param">UP主：{{ item.upper.name }}</p>
+                <p class="favorite-list-media__param">投稿：{{ item.pubtime | parseTime('{y}-{m}-{d}') }}</p>
+              </div>
+            </a>
+          </div>
+          <a class="favorite-list__title" :href="item.bvid | formatVideoUrl" :title="item.title" target="_blank" rel="noopener noreferrer">
+            <p>{{ item.title }}</p>
           </a>
-        </div>
-        <a class="favorite-list__title" :href="item.bvid | formatVideoUrl" :title="item.title" target="_blank" rel="noopener noreferrer">
-          <p>{{ item.title }}</p>
-        </a>
-        <p class="favorite-list__favtime">收藏于：{{ item.fav_time | parseTime('{y}-{m}-{d}') }}</p>
-      </el-col>
-    </el-row>
+          <p class="favorite-list__favtime">收藏于：{{ item.fav_time | parseTime('{y}-{m}-{d}') }}</p>
+        </el-col>
+      </el-row>
+    </el-scrollbar>
     <pagination class="pagination" :total="total" :page.sync="listQuery.page" :limit="listQuery.pageSize" @pagination="fetchList" />
   </div>
 </template>
@@ -71,7 +73,6 @@ export default {
       await this.$axios.get(apiurl + '/resource', {
         params: this.listQuery
       }).then(res => {
-        console.log(res.data)
         const { info, medias } = res.data
         this.total = info.media_count || 0
         this.mediaList = medias
@@ -84,9 +85,15 @@ export default {
 
 <style lang="scss" scoped>
 .favorite{
+  height: 100%;
   &-list{
+    padding: 20px 10px 0;
+    &-scrollbar{
+      height: calc(100% - 72px);
+    }
     &-item{
-      margin-bottom: 15px;
+      margin-bottom: 20px;
+      padding: 0 10px;
     }
     &__cover{
       display: block;
@@ -134,9 +141,12 @@ export default {
       color: #606266;
     }
   }
+  ::v-deep &-scrollbar-wrapper{
+    overflow-x: hidden;
+  }
 }
 .pagination{
   text-align: center;
-  padding: 15px;
+  padding: 20px;
 }
 </style>
