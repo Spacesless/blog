@@ -92,6 +92,9 @@ export default {
       }
     }
   },
+  activated() {
+    this.$refs.multipleTable && this.$refs.multipleTable.doLayout()
+  },
   methods: {
     handleEdit(id) {
       this.$router.push({

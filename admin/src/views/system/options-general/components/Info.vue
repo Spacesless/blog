@@ -99,7 +99,7 @@ export default {
       logo,
       icp_beian,
       police_beian,
-      is_silent,
+      is_silent: +is_silent,
       live2d_model,
       live2d_texture
     }

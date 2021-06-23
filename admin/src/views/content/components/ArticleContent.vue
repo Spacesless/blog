@@ -40,11 +40,11 @@
       <el-form-item class="form-title">
         其它设置
       </el-form-item>
-      <el-form-item label="状态修改">
-        <el-select v-model="formData.is_show">
-          <el-option label="前台隐藏" :value="0" />
-          <el-option label="前台显示" :value="1" />
-        </el-select>
+      <el-form-item label="前台显示">
+        <el-radio-group v-model="formData.is_show">
+          <el-radio :label="1">显示</el-radio>
+          <el-radio :label="0">隐藏</el-radio>
+        </el-radio-group>
       </el-form-item>
       <el-form-item label="发布时间" prop="addtime">
         <el-row>
@@ -68,18 +68,8 @@
           </el-col>
         </el-row>
       </el-form-item>
-      <el-form-item label="作者">
-        <el-input v-model="formData.author" class="form-container-input" />
-      </el-form-item>
       <el-form-item label="访问量">
         <el-input v-model="formData.hits" class="form-container-input" />
-      </el-form-item>
-      <el-form-item label="链接至">
-        <el-row>
-          <el-col :sm="24" :md="12">
-            <el-input v-model="formData.links" />
-          </el-col>
-        </el-row>
       </el-form-item>
       <el-form-item class="form-title">
         SEO信息

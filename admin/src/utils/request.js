@@ -57,7 +57,7 @@ service.interceptors.response.use(
     // if the custom code is not 0, it is judged as an error.
     if (res.errno !== 0) {
       _Message({
-        message: res.msg || 'error',
+        message: res.errmsg || 'error',
         type: 'error'
       })
 
@@ -74,7 +74,7 @@ service.interceptors.response.use(
           })
         }
       }
-      return Promise.reject(res.msg || 'error')
+      return Promise.reject(res.errmsg || 'error')
     } else {
       return res
     }

@@ -16,6 +16,12 @@
       <el-form-item label="标题" prop="title">
         <el-input v-model="formData.title" />
       </el-form-item>
+      <el-form-item label="状态修改">
+        <el-select v-model="formData.is_show">
+          <el-option label="前台隐藏" :value="0" />
+          <el-option label="前台显示" :value="1" />
+        </el-select>
+      </el-form-item>
       <el-form-item label="排序">
         <el-input-number v-model="formData.sort" controls-position="right" />
       </el-form-item>

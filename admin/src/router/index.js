@@ -49,14 +49,10 @@ export const constantRoutes = [
       }
     ]
   },
+
   {
     path: '/login',
     component: () => import('@/views/login/index'),
-    hidden: true
-  },
-  {
-    path: '/forgot',
-    component: () => import('@/views/login/forgot'),
     hidden: true
   },
 
@@ -153,12 +149,12 @@ export const constantRoutes = [
   },
 
   {
-    path: '/comment',
+    path: '/community',
     component: Layout,
-    meta: { title: '评论系统', icon: 'community' },
+    meta: { title: '社区管理', icon: 'member' },
     children: [
       {
-        path: '',
+        path: 'comment',
         name: 'Comment',
         component: () => import('@/views/comment/index'),
         meta: { title: '评论系统' }
@@ -170,17 +166,9 @@ export const constantRoutes = [
         hidden: true,
         component: () => import('@/views/comment/content'),
         meta: { title: '评论详情', noCache: true }
-      }
-    ]
-  },
-
-  {
-    path: '/link',
-    component: Layout,
-    meta: { title: '友情链接', icon: 'member' },
-    children: [
+      },
       {
-        path: '',
+        path: 'link',
         name: 'Link',
         component: () => import('@/views/link/index'),
         meta: { title: '友情链接' }

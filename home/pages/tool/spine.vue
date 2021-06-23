@@ -8,7 +8,7 @@
           :label="item.name"
           :value="item.value"
         >
-          <span style="float: left">{{ item.jp ? `${item.name}(${item.jp})` : item.name }}</span>
+          <span style="float: left">{{ item.alias ? `${item.name}(${item.alias})` : item.name }}</span>
           <span style="float: right; color: #606266; font-size: 12px">{{ item.remark }}</span>
         </el-option>
       </el-select>

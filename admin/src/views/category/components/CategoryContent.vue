@@ -23,29 +23,20 @@
           />
         </el-form-item>
       </template>
-      <el-form-item label="同级栏目排序">
+      <el-form-item label="栏目排序">
         <el-input-number v-model="formData.no_order" controls-position="right" :min="0" />
         <span class="form-container-tips">数值越小越靠前</span>
       </el-form-item>
       <el-form-item label="导航栏显示">
         <el-radio-group v-model="formData.is_nav">
-          <el-radio :label="0">不显示</el-radio>
           <el-radio :label="1">显示</el-radio>
+          <el-radio :label="0">隐藏</el-radio>
         </el-radio-group>
-      </el-form-item>
-      <el-form-item label="列表排序">
-        <el-select v-model="formData.list_order" placeholder="请选择">
-          <el-option label="更新时间" value="1" />
-          <el-option label="发布时间" value="2" />
-          <el-option label="点击次数" value="3" />
-          <el-option label="ID倒序" value="4" />
-          <el-option label="ID顺序" value="5" />
-        </el-select>
       </el-form-item>
       <el-form-item label="前台显示">
         <el-radio-group v-model="formData.is_show">
-          <el-radio :label="0">不显示</el-radio>
           <el-radio :label="1">显示</el-radio>
+          <el-radio :label="0">隐藏</el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item class="form-title">
@@ -105,6 +96,9 @@
           </el-col>
         </el-row>
       </el-form-item>
+      <el-form-item label="栏目参数">
+        <json-editor v-model="formData.params" />
+      </el-form-item>
       <div class="stick-bottom">
         <el-button type="primary" plain @click="handleCancel">取消</el-button>
         <el-button type="primary" :loading="confirmLoading" @click="handleSubmit">保存</el-button>
@@ -115,10 +109,14 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import JsonEditor from '@/components/JsonEditor'
 import { GetContent, CreateContent, UpdateContent } from '@/api/content'
 import { getCategoryByType } from '@/utils'
 
 export default {
+  components: {
+    JsonEditor
+  },
   props: {
     isEdit: {
       type: Boolean,

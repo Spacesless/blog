@@ -80,6 +80,16 @@
       min-width: $sideBarWidth !important;
       background-color: $subMenuBg !important;
 
+      &::before{
+        content: '';
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        margin-right: 16px;
+        background-color: rgb(191, 203, 217);
+        border-radius: 50%;
+      }
+
       &:hover {
         background-color: $subMenuHover !important;
       }

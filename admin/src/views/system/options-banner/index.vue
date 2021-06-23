@@ -16,7 +16,7 @@
       @selection-change="onSelectionChange"
     >
       <el-table-column type="selection" width="50" align="center" />
-      <el-table-column label="图片" width="300" align="center">
+      <el-table-column label="图片" width="200" align="center">
         <template #default="scope">
           <el-image :src="scope.row.imgurl" fit="contain" lazy>
             <div slot="error" class="image-slot">
