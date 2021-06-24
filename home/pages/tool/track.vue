@@ -40,19 +40,18 @@
 </template>
 
 <script>
-import axios from 'axios'
-
 export default {
   layout: 'app',
   async asyncData({ app, route, $axios }) {
     const filename = route.path.split('/')
-    const { seo } = await $axios.$get('/tool/content', {
+    const { seo, data } = await $axios.$get('/tool/content', {
       params: {
         path: filename[filename.length - 1] || 'track'
       }
     })
     return {
-      seo
+      seo,
+      content: data
     }
   },
   data() {
@@ -90,8 +89,12 @@ export default {
     },
     async fetchList() {
       this.fetchLoading = true
-      await axios.get('../static/track.json').then(res => {
-        const treeData = JSON.parse(JSON.stringify(res.data))
+      await this.$axios.$get('/tool/params', {
+        params: {
+          id: this.content.id
+        }
+      }).then(res => {
+        const treeData = JSON.parse(JSON.stringify(res))
         treeData.forEach(item => {
           item.count = 0
           item.children.forEach(child => {
@@ -105,7 +108,7 @@ export default {
         })
         this.tourTree = treeData
 
-        const { province, point } = this.flattenDeep(res.data)
+        const { province, point } = this.flattenDeep(res)
         this.topAdcodes = province
         this.tourList = point
       }).catch(error => {

@@ -12,7 +12,7 @@ import 'codemirror/theme/abbott.css'
 import 'codemirror/mode/javascript/javascript'
 import 'codemirror/addon/lint/lint'
 import 'codemirror/addon/lint/json-lint'
-import 'script-loader'
+// import 'script-loader!jsonlint'
 
 export default {
   name: 'JsonEditor',

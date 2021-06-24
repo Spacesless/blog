@@ -97,7 +97,7 @@
         </el-row>
       </el-form-item>
       <el-form-item label="栏目参数">
-        <json-editor v-model="formData.params" />
+        <json-editor v-model="formData.content" />
       </el-form-item>
       <div class="stick-bottom">
         <el-button type="primary" plain @click="handleCancel">取消</el-button>
@@ -126,6 +126,7 @@ export default {
   data() {
     return {
       formData: {
+        content: '',
         is_show: 1,
         is_nav: 1,
         list_order: 1
@@ -158,6 +159,7 @@ export default {
       await GetContent('category', id).then(response => {
         const { data } = response
         this.formData = data
+        this.formData.content = JSON.parse(data.content)
       }).catch(() => {})
       this.fetchLoading = false
     },

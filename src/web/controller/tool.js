@@ -47,4 +47,21 @@ module.exports = class extends Base {
       data
     })
   }
+
+  async paramsAction() {
+    const { id } = this.get()
+
+    const findCategory = await this.model('category')
+      .where({ id })
+      .field('content')
+      .find()
+
+    let content
+    try {
+      content = JSON.parse(findCategory.content)
+    } catch {
+      content = null
+    }
+    return this.success(content)
+  }
 }

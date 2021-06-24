@@ -35,18 +35,20 @@ import { spine } from '@/vendor/spine-ts/spine-webgl.js'
 export default {
   async asyncData({ app, route, $axios }) {
     const filename = route.path.split('/')
-    const { seo } = await $axios.$get('/tool/content', {
+    const { seo, data } = await $axios.$get('/tool/content', {
       params: {
         path: filename[filename.length - 1] || 'live2d'
       }
     })
+
     return {
-      seo
+      seo,
+      content: data
     }
   },
   data() {
     return {
-      seleteSkeleton: 'tiancheng_younv',
+      seleteSkeleton: 'lafei_4',
       skelOptions: [],
       listLoading: false,
       filterOptions: [],
@@ -63,6 +65,15 @@ export default {
     this.fetchList()
   },
   methods: {
+    fetchParams() {
+      return this.$axios.$get('/tool/params', {
+        params: {
+          id: this.content.id
+        }
+      }).then(res => {
+        this.seleteSkeleton = res?.seleteSkeleton || 'lafei_4'
+      })
+    },
     async fetchList() {
       this.listLoading = true
       await this.$axios.get(this.apiUrl + '/lists').then(res => {
@@ -101,6 +112,7 @@ export default {
       this.mvp.ortho2d(0, 0, this.spineCanvas.width - 1, this.spineCanvas.height - 1)
       this.skeletonRenderer = new spine.webgl.SkeletonRenderer(this.gl)
       this.assetManager = new spine.webgl.AssetManager(this.gl)
+      await this.fetchParams()
       await this.fetchAssets()
       requestAnimationFrame(this.load)
     },
