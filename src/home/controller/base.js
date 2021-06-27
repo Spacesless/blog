@@ -1,12 +1,12 @@
 module.exports = class extends think.Controller {
   constructor(...arg) {
-    super(...arg)
-    this.siteurl = ''
+    super(...arg);
+    this.siteurl = '';
   }
 
   async __before() {
     // 配置信息
-    this.siteurl = this.ctx.origin.replace(/http:|https:/, '')
+    this.siteurl = this.ctx.origin.replace(/http:|https:/, '');
   }
 
   /**
@@ -14,12 +14,12 @@ module.exports = class extends think.Controller {
    * @returns {Array}
    */
   async getCategory() {
-    let categorys = await this.model('category').getCategory()
-    categorys = this.model('category').formatCategoryUrl(categorys)
-    return categorys
+    let categorys = await this.model('category').getCategory();
+    categorys = this.model('category').formatCategoryUrl(categorys);
+    return categorys;
   }
 
   __cell() {
-    return this.ctx.throw(404)
+    return this.ctx.throw(404);
   }
-}
+};

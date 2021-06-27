@@ -1,11 +1,14 @@
-exports.cache = require('./adapter/cache')
+// 缓存
+exports.cache = require('./adapter/cache');
 
-exports.model = require('./adapter/model')
+// 数据库
+exports.model = require('./adapter/model');
 
-exports.session = require('./adapter/session')
-// 需要把think-session-file 替换成 think-session-jwt
-// exports.session = require('./adapter/session-jwt')
+// session会话
+exports.session = require('./adapter/session');
 
-exports.view = require('./adapter/view')
+// 模板引擎
+exports.view = require('./adapter/view');
 
-exports.logger = require('./adapter/logger')
+// 日志
+exports.logger = require('./adapter/logger');

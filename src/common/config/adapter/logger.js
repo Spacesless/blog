@@ -1,6 +1,6 @@
-const { Console, File, DateFile } = require('think-logger3')
-const path = require('path')
-const isDev = think.env === 'development'
+const { Console, File, DateFile } = require('think-logger3');
+const path = require('path');
+const isDev = think.env === 'development';
 
 /**
  * logger adapter config
@@ -26,4 +26,4 @@ module.exports = {
     alwaysIncludePattern: true,
     filename: path.join(think.ROOT_PATH, 'logs/app.log')
   }
-}
+};

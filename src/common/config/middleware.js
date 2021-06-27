@@ -1,7 +1,7 @@
-const path = require('path')
-const isDev = think.env === 'development'
-const nuxt = require('./middleware/nuxt')
-const nuxtConfig = require(path.join(think.ROOT_PATH, '/nuxt.config.js'))
+const path = require('path');
+const isDev = think.env === 'development';
+const nuxt = require('./middleware/nuxt');
+const nuxtConfig = require(path.join(think.ROOT_PATH, '/nuxt.config.js'));
 
 const middleware = [
   {
@@ -41,7 +41,7 @@ const middleware = [
   },
   'logic',
   'controller'
-]
+];
 
 // 如果node进程参数中存在--api，表示只运行api不需要nuxt中间件
 if (!process.argv.includes('--api')) {
@@ -52,7 +52,7 @@ if (!process.argv.includes('--api')) {
       unless: [/^\/admin?/, /^\/web?/, 'sitemap', 'rss'],
       isDev
     }
-  })
+  });
 }
 
-module.exports = middleware
+module.exports = middleware;

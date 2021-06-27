@@ -2,7 +2,7 @@ const isPro = process.env.NODE_ENV === 'production'
 
 module.exports = {
   modern: isPro, // 现代模式
-  srcDir: 'home/',
+  srcDir: 'web/',
   telemetry: false, // 关闭收集遥测数据
   head: {
     meta: [

@@ -40,7 +40,7 @@ module.exports = {
     },
     proxy: {
       // detail: https://cli.vuejs.org/config/#devserver-proxy
-      [process.env.VUE_APP_BASE_API]: {
+      '/admin': {
         target: 'http://127.0.0.1:8360',
         changeOrigin: true
       }

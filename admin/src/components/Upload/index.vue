@@ -24,11 +24,11 @@
       :auto-upload="false"
     >
       <template v-if="draggable">
-        <i class="el-icon-upload" />
+        <span class="el-icon-upload" />
         <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
       </template>
       <template v-else>
-        <i class="el-icon-plus" />
+        <span class="el-icon-plus" />
       </template>
     </el-upload>
 

@@ -6,19 +6,19 @@
 
     <div class="right-menu">
       <el-tooltip class="right-menu-item hover-effect" effect="dark" content="刷新页面" placement="bottom">
-        <span @click="handleRefresh"><i class="el-icon-refresh-right" /></span>
+        <span class="el-icon-refresh-right" @click="handleRefresh" />
       </el-tooltip>
       <el-tooltip class="right-menu-item hover-effect" effect="dark" content="清除缓存" placement="bottom">
-        <span @click="handleClearCache"><i class="el-icon-brush" /></span>
+        <span class="el-icon-brush" @click="handleClearCache" />
       </el-tooltip>
       <el-tooltip class="right-menu-item hover-effect" effect="dark" content="前台预览" placement="bottom">
         <a :href="configs.siteurl" target="_blank">
-          <i class="el-icon-monitor" />
+          <span class="el-icon-monitor" />
         </a>
       </el-tooltip>
       <el-dropdown class="avatar-container" trigger="click">
         <span class="avatar-container-link">
-          {{ userinfo.nickname }}<i class="el-icon-arrow-down el-icon--right" />
+          {{ userinfo.nickname }}<span class="el-icon-arrow-down el-icon--right" />
         </span>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
           <el-dropdown-item>

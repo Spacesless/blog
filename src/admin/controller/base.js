@@ -1,17 +1,17 @@
 module.exports = class extends think.Controller {
   async __before() {
-    this.siteurl = this.ctx.origin.replace(/http:|https:/, '')
+    this.siteurl = this.ctx.origin.replace(/http:|https:/, '');
 
-    const { controller, action } = this.ctx
-    const whiteController = ['user'] // 无需鉴权的白名单
-    const whiteAction = ['login', 'forgot', 'reset', 'captcha']
+    const { controller, action } = this.ctx;
+    const whiteController = ['user']; // 无需鉴权的白名单
+    const whiteAction = ['login', 'forgot', 'reset', 'captcha'];
     if (whiteController.includes(controller) && whiteAction.includes(action)) {
-      return
+      return;
     }
 
-    const userInfo = await this.session('userInfo')
+    const userInfo = await this.session('userInfo');
     if (think.isEmpty(userInfo)) {
-      return this.fail(401, '请登录后再操作！')
+      return this.fail(401, '请登录后再操作！');
     }
   }
 
@@ -23,8 +23,8 @@ module.exports = class extends think.Controller {
    * @param {Object} options 目标图片输出参数
    */
   async thumbImage(src, width, height, fit = 0, options = {}) {
-    if (think.isEmpty(src)) return ''
-    const isSupportWebp = Number(this.ctx.headers.SupportWebp)
+    if (think.isEmpty(src)) return '';
+    const isSupportWebp = Number(this.ctx.headers.SupportWebp);
     const dest = await think.sharpResize(
       src,
       {
@@ -36,8 +36,26 @@ module.exports = class extends think.Controller {
         format: isSupportWebp ? 'webp' : 'jpg',
         ...options
       }
-    )
+    );
 
-    return dest ? this.siteurl + dest : ''
+    return dest ? this.siteurl + dest : '';
   }
-}
+
+  /**
+   * 获取封面图片绝对地址
+   * @param {String} imgurl 封面图片
+   * @returns  {String}
+   */
+  getResolveImgUrl(imgurl) {
+    return imgurl ? this.siteurl + imgurl : '';
+  }
+
+  /**
+   * 获取内容图片绝对地址
+   * @param {String} content 内容
+   * @returns  {String}
+   */
+  getResolveContentUrl(content) {
+    return content ? content.replace(/\/upload/gi, this.siteurl + '/upload') : '';
+  }
+};

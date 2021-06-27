@@ -5,13 +5,13 @@
         <a v-if="data.website" :href="data.website" target="_blank" rel="noopener noreferrer" :title="data.website">
           <el-image class="comment-avatar__picture" :src="getAvatar(data)">
             <div slot="error" class="image-slot">
-              <i class="el-icon-picture-outline" />
+              <span class="el-icon-picture-outline" />
             </div>
           </el-image>
         </a>
         <el-image v-else class="comment-avatar__picture" :src="getAvatar(data)">
           <div slot="error" class="image-slot">
-            <i class="el-icon-picture-outline" />
+            <span class="el-icon-picture-outline" />
           </div>
         </el-image>
       </div>
@@ -24,10 +24,10 @@
         <div class="comment-info-operate">
           <span class="comment-info__time">{{ data.addtime }}</span>
           <span v-if="data.id === replyData.id" class="comment-info-btn" @click="handleCancel">
-            <i class="el-icon-close" />取消
+            <span class="el-icon-close" />取消
           </span>
           <span v-else class="comment-info-btn" @click="handleReply">
-            <i class="el-icon-chat-line-round" />回复
+            <span class="el-icon-chat-line-round" />回复
           </span>
         </div>
 

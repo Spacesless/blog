@@ -19,6 +19,7 @@ package-lock.json
 # Editor directories and files
 .idea
 .vscode
+.scannerwork
 *.suo
 *.ntvs*
 *.njsproj
@@ -36,3 +37,5 @@ www/static/thumb
 
 config.development.js
 adapter.development.js
+
+sonar-project.properties

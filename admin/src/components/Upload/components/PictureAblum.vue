@@ -40,7 +40,7 @@
             class="grid-item folder"
             @click="enterDirectory(item.url)"
           >
-            <i class="el-icon-folder" />
+            <span class="el-icon-folder" />
             <p>{{ item.name }}</p>
           </div>
           <div
@@ -51,7 +51,7 @@
           >
             <el-image :src="item.url" fit="contain">
               <div slot="error" class="image-slot">
-                <i class="el-icon-picture-outline-round" />
+                <span class="el-icon-picture-outline-round" />
               </div>
             </el-image>
             <div class="file-info">
@@ -67,7 +67,7 @@
             @click="toggleSelect(item)"
           >
             <div class="blob-slot">
-              <i class="el-icon-document" />
+              <span class="el-icon-document" />
             </div>
             <div class="file-info">
               <p class="file-name">{{ item.name }}</p>

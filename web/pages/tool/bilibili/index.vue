@@ -17,7 +17,7 @@
           >
             <el-submenu index="1">
               <template slot="title">
-                <i class="el-icon-folder-opened" />
+                <span class="el-icon-folder-opened" />
                 <span>我的收藏</span>
               </template>
               <el-menu-item
@@ -31,7 +31,7 @@
               </el-menu-item>
             </el-submenu>
             <el-menu-item index="2" @click="handleViewFollow">
-              <i class="el-icon-star-off" />
+              <span class="el-icon-star-off" />
               <span slot="title">我的关注</span>
             </el-menu-item>
           </el-menu>

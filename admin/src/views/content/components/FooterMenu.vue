@@ -16,7 +16,7 @@
     <el-col :xs="24" :sm="12" class="text-right">
       <el-dropdown @command="handleChangeStatus">
         <el-button type="warning" plain :loading="changeLoading">
-          状态修改<i class="el-icon-arrow-down el-icon--right" />
+          状态修改<span class="el-icon-arrow-down el-icon--right" />
         </el-button>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item command="show">前台显示</el-dropdown-item>

@@ -52,7 +52,7 @@
           <el-button class="category-tools-edit" type="primary" @click="handleEdit(scope.row.id)">编辑</el-button>
           <el-dropdown>
             <el-button type="primary" plain :loading="scope.row.deleteLoading">
-              更多操作<i class="el-icon-arrow-down el-icon--right" />
+              更多操作<span class="el-icon-arrow-down el-icon--right" />
             </el-button>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item @click.native="handleAddChild(scope.row.id)">添加</el-dropdown-item>

@@ -21,7 +21,7 @@
         <template #default="scope">
           <el-image :src="scope.row.imgurl" fit="contain" lazy scroll-container=".el-table__body-wrapper">
             <div slot="error" class="image-slot">
-              <i class="el-icon-picture-outline-round" />
+              <span class="el-icon-picture-outline-round" />
             </div>
           </el-image>
         </template>

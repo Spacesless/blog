@@ -1,5 +1,5 @@
-const path = require('path')
-const fileSession = require('think-session-file')
+const path = require('path');
+const fileSession = require('think-session-file');
 
 /**
  * file session adapter config
@@ -22,4 +22,4 @@ module.exports = {
     handle: fileSession,
     sessionPath: path.join(think.ROOT_PATH, 'runtime/session')
   }
-}
+};

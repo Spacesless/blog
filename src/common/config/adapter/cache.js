@@ -1,5 +1,5 @@
-const path = require('path')
-const fileCache = require('think-cache-file')
+const path = require('path');
+const fileCache = require('think-cache-file');
 
 /**
  * cache adapter config
@@ -16,4 +16,4 @@ module.exports = {
     pathDepth: 2,
     gcInterval: 24 * 60 * 60 * 1000 // gc interval
   }
-}
+};
