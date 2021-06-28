@@ -6,10 +6,10 @@
 
     <div class="right-menu">
       <el-tooltip class="right-menu-item hover-effect" effect="dark" content="刷新页面" placement="bottom">
-        <span class="el-icon-refresh-right" @click="handleRefresh" />
+        <span @click="handleRefresh"><i class="el-icon-refresh-right" /></span>
       </el-tooltip>
       <el-tooltip class="right-menu-item hover-effect" effect="dark" content="清除缓存" placement="bottom">
-        <span class="el-icon-brush" @click="handleClearCache" />
+        <span @click="handleClearCache"><i class="el-icon-brush" /></span>
       </el-tooltip>
       <el-tooltip class="right-menu-item hover-effect" effect="dark" content="前台预览" placement="bottom">
         <a :href="configs.siteurl" target="_blank">

@@ -1,5 +1,9 @@
-const mysql = require('think-model-mysql')
-const isDev = think.env === 'development'
+const path = require('path');
+const mysql = require('think-model-mysql');
+const config = require(path.join(think.ROOT_PATH, 'config/database.conf.js'));
+
+const isDev = think.env === 'development';
+const { database, prefix, encoding, host, port, user, password } = config;
 
 /**
  * model adapter config
@@ -14,14 +18,14 @@ module.exports = {
   },
   mysql: {
     handle: mysql,
-    database: 'nuxt',
-    prefix: 'tl_',
-    encoding: 'utf8',
-    host: '127.0.0.1',
-    port: '',
-    user: 'root',
-    password: 'root',
+    database: database || 'Timeless',
+    prefix: prefix || 'tl_',
+    encoding: encoding || 'utf8',
+    host: host || '127.0.0.1',
+    port: port || '',
+    user: user,
+    password: password,
     dateStrings: true,
     pagesize: 20
   }
-}
+};

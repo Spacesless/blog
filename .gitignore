@@ -27,13 +27,10 @@ package-lock.json
 
 # other ignore file
 runtime/
-app/
-.nuxt/
-view/admin
+config/database.conf.js
 www/admin
 www/assets
 www/upload
-www/static/thumb
 
 config.development.js
 adapter.development.js

@@ -6,7 +6,7 @@
       :model="formData"
       label-position="left"
       label-width="100px"
-      class="form-container is-bottom"
+      class="form-container is-stick"
     >
       <el-form-item class="form-title">基本信息</el-form-item>
       <el-form-item label="栏目名称" prop="name">

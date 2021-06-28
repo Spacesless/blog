@@ -7,7 +7,7 @@
       :rules="rules"
       label-position="left"
       label-width="100px"
-      class="form-container is-bottom"
+      class="form-container is-stick"
     >
       <el-form-item label="所属栏目" prop="category_id">
         <el-cascader
@@ -108,8 +108,8 @@
         <el-button v-else class="button-new-tag" @click="showTagInput">+ 新标签</el-button>
       </el-form-item>
       <div class="stick-bottom">
-        <el-button type="warning" plain @click="handleCancel">取消</el-button>
-        <el-button type="primary" :loading="confirmLoading" @click="handleSubmit">确定</el-button>
+        <el-button type="warning" icon="el-icon-close" plain @click="handleCancel">取消</el-button>
+        <el-button type="primary" icon="el-icon-check" :loading="confirmLoading" @click="handleSubmit">确定</el-button>
       </div>
     </el-form>
   </div>

@@ -5,9 +5,10 @@
       :model="formData"
       label-position="left"
       label-width="100px"
-      class="form-container"
+      class="form-container is-stick"
     >
-      <el-form-item label="图片裁剪方式">
+      <el-form-item class="form-title">缩略图生成</el-form-item>
+      <el-form-item label="裁剪方式">
         <el-radio-group v-model="formData.thumb_kind">
           <el-radio label="0">填充(保留长宽比,通过裁剪/剪切以确保图像覆盖两个提供的尺寸)</el-radio>
           <el-radio label="1">包含(保留长宽比,包含两个提供的尺寸)</el-radio>
@@ -22,10 +23,10 @@
         />
       </el-form-item>
       <el-form-item class="form-title">文章模块</el-form-item>
-      <el-form-item label="宽度">
+      <el-form-item label="缩略图宽度">
         <el-input v-model="formData.thumb_article_x" class="form-container-input" />
       </el-form-item>
-      <el-form-item label="高度">
+      <el-form-item label="缩略图高度">
         <el-input v-model="formData.thumb_article_y" class="form-container-input" />
       </el-form-item>
       <el-form-item label="列表数量">
@@ -33,18 +34,18 @@
       </el-form-item>
 
       <el-form-item class="form-title">追番模块</el-form-item>
-      <el-form-item label="宽度">
+      <el-form-item label="缩略图宽度">
         <el-input v-model="formData.thumb_bangumi_x" class="form-container-input" />
       </el-form-item>
-      <el-form-item label="高度">
+      <el-form-item label="缩略图高度">
         <el-input v-model="formData.thumb_bangumi_y" class="form-container-input" />
       </el-form-item>
       <el-form-item label="列表数量">
         <el-input-number v-model="formData.list_bangumi" :min="1" controls-position="right" />
       </el-form-item>
-      <el-form-item class="text-right">
-        <el-button type="primary" :loading="confirmLoading" @click="handleSubmit">保存</el-button>
-      </el-form-item>
+      <div class="stick-bottom">
+        <el-button type="primary" icon="el-icon-check" :loading="confirmLoading" @click="handleSubmit">保存</el-button>
+      </div>
     </el-form>
   </div>
 </template>
@@ -102,8 +103,7 @@ export default {
   }
   &-preview {
     width: 200px;
-    height: 120px;
-    border-radius: 10px;
+    height: 130px;
   }
 }
 </style>

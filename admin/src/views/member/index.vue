@@ -1,41 +1,49 @@
 <template>
-  <el-form ref="form" class="app-container" :model="formData" :rules="rules" label-width="auto">
-    <el-form-item label="用户名" prop="username">
-      <el-col :sm="24" :md="12" :lg="8">
-        <el-input v-model="formData.username" />
-      </el-col>
-    </el-form-item>
-    <el-form-item label="昵称">
-      <el-col :sm="24" :md="12" :lg="8">
-        <el-input v-model="formData.nickname" />
-      </el-col>
-    </el-form-item>
-    <el-form-item label="邮箱" prop="email">
-      <el-col :sm="24" :md="12" :lg="8">
-        <el-input v-model="formData.email" />
-      </el-col>
-    </el-form-item>
-    <el-form-item label="最后登录时间">
-      <el-date-picker
-        v-model="formData.login_time"
-        type="datetime"
-        readonly
-      />
-    </el-form-item>
-    <el-form-item label="新密码" prop="password">
-      <el-col :sm="24" :md="12" :lg="8">
-        <el-input v-model="formData.password" />
-      </el-col>
-    </el-form-item>
-    <el-form-item label="再次输入密码" prop="againPassword">
-      <el-col :sm="24" :md="12" :lg="8">
-        <el-input v-model="formData.againPassword" />
-      </el-col>
-    </el-form-item>
-    <el-form-item>
-      <el-button type="primary" :loading="confirmLoading" @click="handleSubmit">保存</el-button>
-    </el-form-item>
-  </el-form>
+  <div class="profile app-container">
+    <el-form
+      ref="form"
+      class="form-container is-stick"
+      :model="formData"
+      :rules="rules"
+      label-width="auto"
+    >
+      <el-form-item label="用户名" prop="username">
+        <el-col :sm="24" :md="12" :lg="8">
+          <el-input v-model="formData.username" />
+        </el-col>
+      </el-form-item>
+      <el-form-item label="昵称">
+        <el-col :sm="24" :md="12" :lg="8">
+          <el-input v-model="formData.nickname" />
+        </el-col>
+      </el-form-item>
+      <el-form-item label="邮箱" prop="email">
+        <el-col :sm="24" :md="12" :lg="8">
+          <el-input v-model="formData.email" />
+        </el-col>
+      </el-form-item>
+      <el-form-item label="最后登录时间">
+        <el-date-picker
+          v-model="formData.login_time"
+          type="datetime"
+          readonly
+        />
+      </el-form-item>
+      <el-form-item label="新密码" prop="password">
+        <el-col :sm="24" :md="12" :lg="8">
+          <el-input v-model="formData.password" />
+        </el-col>
+      </el-form-item>
+      <el-form-item label="再次输入密码" prop="againPassword">
+        <el-col :sm="24" :md="12" :lg="8">
+          <el-input v-model="formData.againPassword" />
+        </el-col>
+      </el-form-item>
+      <div class="stick-bottom">
+        <el-button type="primary" icon="el-icon-check" :loading="confirmLoading" @click="handleSubmit">保存</el-button>
+      </div>
+    </el-form>
+  </div>
 </template>
 
 <script>

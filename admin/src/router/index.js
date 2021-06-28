@@ -151,12 +151,12 @@ export const constantRoutes = [
   {
     path: '/community',
     component: Layout,
-    meta: { title: '社区管理', icon: 'member' },
+    meta: { title: '社区管理', icon: 'community' },
     children: [
       {
         path: 'comment',
         name: 'Comment',
-        component: () => import('@/views/comment/index'),
+        component: () => import('@/views/community/comment/index'),
         meta: { title: '评论系统' }
       },
       {
@@ -164,14 +164,28 @@ export const constantRoutes = [
         name: 'CommentContent',
         props: true,
         hidden: true,
-        component: () => import('@/views/comment/content'),
+        component: () => import('@/views/community/comment/content'),
         meta: { title: '评论详情', noCache: true }
       },
       {
         path: 'link',
         name: 'Link',
-        component: () => import('@/views/link/index'),
+        component: () => import('@/views/community/link/index'),
         meta: { title: '友情链接' }
+      }
+    ]
+  },
+
+  {
+    path: '/member',
+    component: Layout,
+    meta: { title: '用户管理', icon: 'member' },
+    children: [
+      {
+        path: 'profile',
+        name: 'Profile',
+        component: () => import('@/views/member/index'),
+        meta: { title: '个人资料', noCache: true }
       }
     ]
   },
@@ -188,22 +202,16 @@ export const constantRoutes = [
         meta: { title: '常规配置', noCache: true }
       },
       {
-        path: 'options-profile',
-        name: 'OptionsProfile',
-        component: () => import('@/views/system/options-profile/index'),
-        meta: { title: '个人资料', noCache: true }
+        path: 'options-reading',
+        name: 'OptionsReading',
+        component: () => import('@/views/system/options-reading/index'),
+        meta: { title: '阅读设置', noCache: true }
       },
       {
         path: 'options-banner',
         name: 'OptionsBanner',
         component: () => import('@/views/system/options-banner/index'),
         meta: { title: 'Banner管理' }
-      },
-      {
-        path: 'options-reading',
-        name: 'OptionsReading',
-        component: () => import('@/views/system/options-reading/index'),
-        meta: { title: '阅读设置', noCache: true }
       }
     ]
   },
