@@ -74,8 +74,8 @@ export default {
 .scroll-container {
   overflow: hidden;
   position: absolute;
-  left: 0;
-  right: 0;
+  left: 16px;
+  right: 16px;
   height: 38px;
   line-height: 38px;
   white-space: nowrap;

@@ -1,6 +1,9 @@
 <template>
   <el-row class="app-header">
     <el-col :xs="24" :sm="12">
+      <el-button type="primary" icon="el-icon-plus" @click="handleAdd">添加</el-button>
+    </el-col>
+    <el-col :xs="24" :sm="12" class="text-right">
       <el-cascader
         v-model="selectedCategory"
         class="app-header-select"
@@ -17,14 +20,10 @@
         v-model="keyword"
         placeholder="请输入关键字"
         clearable
-        style="width:220px"
         @input="handleSearch"
       >
         <i slot="prefix" class="el-input__icon el-icon-search" />
       </el-input>
-    </el-col>
-    <el-col :xs="24" :sm="12" class="text-right">
-      <el-button type="primary" icon="el-icon-plus" @click="handleAdd">添加内容</el-button>
     </el-col>
   </el-row>
 </template>

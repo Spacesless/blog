@@ -62,18 +62,25 @@ export default {
       await this.$store.dispatch('user/logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     },
+    // 清除thinkjs缓存
     handleClearCache() {
-      RefreshCache().then(res => {
-        this.$message({
-          type: 'success',
-          message: '清除缓存成功'
-        })
-        this.$store.dispatch('list/getCategory')
-        this.$store.dispatch('config/getConfigs')
-      }).catch(() => {
-        this.$message({
-          type: 'error',
-          message: '清除缓存失败'
+      this.$confirm('此操作将清除后台缓存, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        RefreshCache().then(res => {
+          this.$message({
+            type: 'success',
+            message: '清除缓存成功'
+          })
+          this.$store.dispatch('list/getCategory')
+          this.$store.dispatch('config/getConfigs')
+        }).catch(() => {
+          this.$message({
+            type: 'error',
+            message: '清除缓存失败'
+          })
         })
       })
     },
@@ -81,10 +88,9 @@ export default {
     handleRefresh() {
       const view = this.$route
       this.$store.dispatch('tagsView/delCachedView', view).then(() => {
-        const { fullPath } = view
         this.$nextTick(() => {
           this.$router.replace({
-            path: '/redirect' + fullPath
+            path: '/redirect' + view.fullPath
           })
         })
       })
@@ -111,7 +117,7 @@ export default {
     -webkit-tap-highlight-color:transparent;
 
     &:hover {
-      background: rgba(0, 0, 0, .025)
+      background: rgba(0, 0, 0, .06)
     }
   }
 
@@ -141,13 +147,14 @@ export default {
         transition: background .3s;
 
         &:hover {
-          background: rgba(0, 0, 0, .025)
+          background: rgba(0, 0, 0, .06)
         }
       }
     }
 
     .avatar-container {
       margin: 0 15px;
+      line-height: 22px;
       vertical-align: middle;
 
       &-link{

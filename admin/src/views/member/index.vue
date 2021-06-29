@@ -48,7 +48,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { UpdateAdminInfo } from '@/api/user'
+import { UpdateAdmin } from '@/api/user'
 
 export default {
   name: 'OptionsProfile',
@@ -98,7 +98,7 @@ export default {
         if (!valid) return
         this.confirmLoading = true
 
-        await UpdateAdminInfo(this.formData).then(res => {
+        await UpdateAdmin(this.formData).then(res => {
           this.$message({
             type: 'success',
             message: this.isEdit ? '更新成功' : '添加成功'

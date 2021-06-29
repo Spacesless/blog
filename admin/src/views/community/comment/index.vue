@@ -1,8 +1,26 @@
 <template>
   <div class="app-container">
+    <el-row class="app-header">
+      <el-col :xs="24" :sm="12">
+        <el-button type="danger" icon="el-icon-delete" :loading="deleteLoading" @click="handleDeleteSelection">删除</el-button>
+        <el-dropdown @command="handleChangeStatus">
+          <el-button type="warning" plain :loading="changeLoading">
+            状态修改<span class="el-icon-arrow-down el-icon--right" />
+          </el-button>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item command="show">通过</el-dropdown-item>
+            <el-dropdown-item command="hide">待审核</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+      </el-col>
+      <el-col :xs="24" :sm="12" class="text-right">
+        <el-input v-model="listQuery.keyword" placeholder="请输入评论内容" clearable @change="onKeywordInput" />
+      </el-col>
+    </el-row>
+
     <el-table
       ref="multipleTable"
-      v-el-height-adaptive-table="{bottomOffset: 142}"
+      v-el-height-adaptive-table="{bottomOffset: 90}"
       v-loading="listLoading"
       :data="tableData"
       height="233"
@@ -34,21 +52,6 @@
         </template>
       </el-table-column>
     </el-table>
-
-    <el-row class="app-footer">
-      <el-col :xs="24" class="text-right">
-        <el-dropdown @command="handleChangeStatus">
-          <el-button type="warning" plain :loading="changeLoading">
-            状态修改<span class="el-icon-arrow-down el-icon--right" />
-          </el-button>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="show">通过</el-dropdown-item>
-            <el-dropdown-item command="hide">待审核</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-        <el-button type="danger" icon="el-icon-delete" :loading="deleteLoading" @click="handleDeleteSelection">删除选中</el-button>
-      </el-col>
-    </el-row>
 
     <pagination :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.pageSize" @pagination="fetchList" />
   </div>

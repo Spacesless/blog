@@ -186,7 +186,7 @@ export default {
 
   &-general{
     margin-bottom: 20px;
-    padding: 0 15px;
+    padding: 0 20px;
     &-item{
       height: 100px;
       border-radius: 6px;
@@ -231,7 +231,7 @@ export default {
   }
 
   &-info{
-    padding: 0 15px;
+    padding: 0 20px;
     ::v-deep .todoapp{
       box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
        .main{

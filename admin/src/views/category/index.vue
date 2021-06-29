@@ -1,18 +1,14 @@
 <template>
   <div class="app-container category">
     <el-row class="app-header">
-      <el-col :xs="24" :sm="12">
-        <el-button type="primary" icon="el-icon-plus" @click="handleAdd">添加栏目</el-button>
-      </el-col>
-      <el-col :xs="24" :sm="12" class="text-right">
-        <el-button type="danger" icon="el-icon-delete" :loading="deleteLoading" @click="handleDeleteSelection">删除</el-button>
-        <el-button type="success" icon="el-icon-check" :loading="saveLoading" @click="handleSave">保存</el-button>
-      </el-col>
+      <el-button type="primary" icon="el-icon-plus" @click="handleAdd">添加</el-button>
+      <el-button type="danger" icon="el-icon-delete" :loading="deleteLoading" @click="handleDeleteSelection">删除</el-button>
+      <el-button type="primary" plain icon="el-icon-check" :loading="saveLoading" @click="handleSave">保存</el-button>
     </el-row>
 
     <el-table
       ref="columnTable"
-      v-el-height-adaptive-table="{bottomOffset: 15}"
+      v-el-height-adaptive-table="{bottomOffset: 20}"
       v-loading="listLoading"
       :data="categoryList"
       default-expand-all

@@ -203,10 +203,7 @@ export default {
   &-container {
     width: 100%;
     height: 40px;
-    border-top: 1px solid #f0f0f0;
-    border-bottom: 1px solid #f0f0f0;
-    background: #f0f0f0;
-    box-shadow: inset 0 0 3px 2px hsla(0,0%,39.2%,.1);
+    background: #f0f2f5;
     .contextmenu {
       position: absolute;
       z-index: 3000;
@@ -232,7 +229,7 @@ export default {
   &-item {
     display: inline-block;
     height: 30px;
-    margin-left: 8px;
+    margin: 0 3px;
     padding: 0 12px;
     border: 1px solid #EBEEF5;
     background: #fff;
@@ -245,16 +242,17 @@ export default {
       content: '';
       display: inline-block;
       position: relative;
-      width: 12px;
-      height: 12px;
-      margin-right: 10px;
+      width: 10px;
+      height: 10px;
+      margin-right: 8px;
       background-color: #EBEEF5;
       vertical-align: text-top;
       border-radius: 50%;
     }
+    .el-icon-close{
+      margin-left: 8px;
+    }
     &.active {
-      border-color: #d9ecff;
-      background-color: #ecf5ff;
       color: #409eff;
       &::before {
         background-color: #409eff;

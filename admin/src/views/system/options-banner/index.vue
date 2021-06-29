@@ -8,7 +8,7 @@
 
     <el-table
       ref="multipleTable"
-      v-el-height-adaptive-table="{bottomOffset: 15}"
+      v-el-height-adaptive-table="{bottomOffset: 20}"
       v-loading="listLoading"
       :data="bannerList"
       height="233"

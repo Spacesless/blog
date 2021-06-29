@@ -76,16 +76,16 @@ div:focus {
 // main-container global css
 .app {
   &-container {
-    padding: 15px;
+    margin: 20px;
+    box-shadow: 0 1px 4px rgba(0,21,41,.08);
     .is-stick{
-      margin-bottom: 70px;
+      margin-bottom: 80px;
     }
     .stick-bottom{
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
-      z-index: 5;
       padding: 15px 20px;
       background-color: #fff;
       text-align: right;
@@ -96,25 +96,28 @@ div:focus {
     }
   }
   &-header{
-    padding: 15px;
+    padding: 15px 20px;
     border: 1px solid #EBEEF5;
     border-bottom: none;
     &-select{
-      margin-right: 15px;
+      margin-right: 10px;
     }
     .el-input{
-      width: 230px;
+      width: 200px;
+    }
+    .el-dropdown{
+      margin-left: 10px;
     }
   }
   &-footer {
-    padding: 15px;
+    padding: 15px 20px;
     border: 1px solid #EBEEF5;
     border-top: none;
     .el-cascader{
-      margin-right: 15px;
+      margin-right: 10px;
     }
     .el-dropdown{
-      margin-right: 15px;
+      margin-right: 10px;
     }
   }
   &-preview{
@@ -162,19 +165,12 @@ div:focus {
 // scrollbar
 ::-webkit-scrollbar {
   width: 8px;
-  height: 8px;
-  &-track {
-    background-color: #f2f2f2;
-  }
   &-thumb {
     background-color: rgba(0,0,0,.2);
     border-radius: 4px;
     &:hover{
       background-color: rgba(0,0,0,.3);
     }
-  }
-  &-corner, &-track {
-    background-color: #f2f2f2;
   }
 }
 .scrollbar-wrapper{

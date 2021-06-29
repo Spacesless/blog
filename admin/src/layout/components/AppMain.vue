@@ -38,19 +38,14 @@ export default {
 .app-main {
   /*50 = navbar  */
   position: relative;
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: hidden;
   width: 100%;
-  min-height: calc(100vh - 50px);
+  min-height: 100vh;
 }
 .fixed-header+.app-main {
   padding-top: 50px;
 }
 .hasTagsView {
-  .app-main {
-    /* 90 = navbar + tags-view = 50 + 40 */
-    height: 100vh;
-  }
   .fixed-header+.app-main {
     padding-top: 90px;
   }

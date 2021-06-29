@@ -95,7 +95,7 @@ export default {
 <style scoped>
 .pagination-container {
   background: #fff;
-  padding: 15px;
+  padding: 15px 20px;
   border: 1px solid #EBEEF5;
   border-top: none;
 }

@@ -2,14 +2,20 @@
   <div class="app-container">
     <el-row class="app-header">
       <el-col :xs="24" :sm="12">
+        <el-button type="danger" icon="el-icon-delete" :loading="deleteLoading" @click="handleDeleteSelection">删除</el-button>
+        <el-button
+          type="primary"
+          plain
+          icon="el-icon-refresh-right"
+          :loading="restoreLoading"
+          @click="handleRestoreSelection"
+        >还原</el-button>
+      </el-col>
+      <el-col :xs="24" :sm="12" class="text-right">
         <el-select v-model="listQuery.type" clearable placeholder="请选择模块" @change="handleSearch">
           <el-option label="文章模块" value="article" />
           <el-option label="追番模块" value="bangumi" />
         </el-select>
-      </el-col>
-      <el-col :xs="24" :sm="12" class="text-right">
-        <el-button type="danger" icon="el-icon-delete" :loading="deleteLoading" @click="handleDeleteSelection">删除</el-button>
-        <el-button type="success" icon="el-icon-refresh-right" :loading="restoreLoading" @click="handleRestoreSelection">还原</el-button>
       </el-col>
     </el-row>
 

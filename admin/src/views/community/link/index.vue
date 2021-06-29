@@ -2,16 +2,26 @@
   <div class="app-container links">
     <el-row class="app-header">
       <el-col :xs="24" :sm="12">
-        <el-input v-model="listQuery.keyword" placeholder="请输入网站标题、地址" clearable @change="onKeywordInput" />
+        <el-button type="primary" icon="el-icon-plus" @click="handleAdd">添加</el-button>
+        <el-button type="danger" icon="el-icon-delete" :loading="deleteLoading" @click="handleDeleteSelection">删除</el-button>
+        <el-dropdown @command="handleChangeStatus">
+          <el-button type="warning" plain :loading="changeLoading">
+            状态修改<span class="el-icon-arrow-down el-icon--right" />
+          </el-button>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item command="show">前台显示</el-dropdown-item>
+            <el-dropdown-item command="hide">前台隐藏</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
       </el-col>
       <el-col :xs="24" :sm="12" class="text-right">
-        <el-button type="primary" icon="el-icon-plus" @click="handleAdd">添加友链</el-button>
+        <el-input v-model="listQuery.keyword" placeholder="请输入网站标题、地址" clearable @change="onKeywordInput" />
       </el-col>
     </el-row>
 
     <el-table
       v-loading="listLoading"
-      v-el-height-adaptive-table="{bottomOffset: 142}"
+      v-el-height-adaptive-table="{bottomOffset: 90}"
       :data="tableData"
       height="233"
       border
@@ -48,21 +58,6 @@
         </template>
       </el-table-column>
     </el-table>
-
-    <el-row class="app-footer">
-      <el-col :xs="24" class="text-right">
-        <el-dropdown @command="handleChangeStatus">
-          <el-button type="warning" plain :loading="changeLoading">
-            状态修改<span class="el-icon-arrow-down el-icon--right" />
-          </el-button>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="show">前台显示</el-dropdown-item>
-            <el-dropdown-item command="hide">前台隐藏</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-        <el-button type="danger" icon="el-icon-delete" :loading="deleteLoading" @click="handleDeleteSelection">删除选中</el-button>
-      </el-col>
-    </el-row>
 
     <pagination :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.pageSize" @pagination="fetchList" />
 
