@@ -38,20 +38,12 @@
     position: relative;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
   }
-  .todoapp input::-webkit-input-placeholder {
-    font-style: italic;
-    font-weight: 300;
-    color: #e6e6e6;
-  }
-  .todoapp input::-moz-placeholder {
-    font-style: italic;
-    font-weight: 300;
-    color: #e6e6e6;
-  }
-  .todoapp input::input-placeholder {
-    font-style: italic;
-    font-weight: 300;
-    color: #e6e6e6;
+  .todoapp input {
+    &::-webkit-input-placeholder, &::-moz-placeholder {
+      font-style: italic;
+      font-weight: 300;
+      color: #e6e6e6;
+    }
   }
   .todoapp h1 {
     position: absolute;
@@ -74,7 +66,6 @@
     font-family: inherit;
     font-weight: inherit;
     line-height: 1.4em;
-    border: 0;
     color: inherit;
     padding: 6px;
     border: 1px solid #999;
@@ -159,8 +150,6 @@
     /* Mobile Safari */
     -webkit-appearance: none;
     appearance: none;
-  }
-  .todo-list li .toggle {
     opacity: 0;
   }
   .todo-list li .toggle+label {

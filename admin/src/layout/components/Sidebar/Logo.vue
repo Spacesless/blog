@@ -69,7 +69,7 @@ export default {
       font: {
         size: 30px;
         weight: 100;
-        family: 'Bega';
+        family: 'Bega', sans-serif;
       };
       vertical-align: middle;
     }

@@ -23,7 +23,7 @@
           <el-dropdown-item command="hide">前台隐藏</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
-      <el-button type="danger" icon="el-icon-delete" :loading="deleteLoading" @click="handleDeleteSelection">删除选中</el-button>
+      <el-button type="danger" icon="el-icon-delete" :loading="deleteLoading" @click="handleDeleteSelection">删除</el-button>
     </el-col>
   </el-row>
 </template>

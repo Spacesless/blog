@@ -19,9 +19,7 @@ const dynamicLoadScript = (src, callback) => {
     callbacks.push(cb)
     const onEnd = 'onload' in script ? stdOnEnd : ieOnEnd
     onEnd(script)
-  }
-
-  if (existingScript && cb) {
+  } else {
     if (loadedTinymce()) {
       cb(null, existingScript)
     } else {

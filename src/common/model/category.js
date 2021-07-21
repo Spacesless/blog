@@ -5,13 +5,13 @@ module.exports = class extends think.Model {
    */
   async getCategory() {
     // 设置缓存 key 为 column，有效期为 30 天
-    const field = 'id,name,keywords,description,folder_name,filename,parent_id,type,level,no_order,is_nav,mark_name,icon,version,is_show'
+    const field = 'id,name,keywords,description,filename,parent_id,type,level,no_order,is_nav,mark_name,icon,version,link,is_show';
     const list = await this.cache('category', { timeout: 30 * 24 * 3600 * 1000 })
       .where({ is_show: 1 })
       .field(field)
       .order('no_order ASC')
-      .select()
-    return list
+      .select();
+    return list;
   }
 
   /**
@@ -21,9 +21,9 @@ module.exports = class extends think.Model {
    * @returns {Array} 指定栏目id以及它所有子栏目id的数组
    */
   async getChildrenCategory(categorys, id) {
-    const flattenCategory = this.flattenDeep(categorys, [id])
-    const findCategory = Array.from(new Set(flattenCategory))
-    return findCategory
+    const flattenCategory = this.flattenDeep(categorys, [id]);
+    const findCategory = Array.from(new Set(flattenCategory));
+    return findCategory;
   }
 
   /**
@@ -33,14 +33,14 @@ module.exports = class extends think.Model {
    * @param {Array} target 目标数组
    */
   flattenDeep(categorys, predicate, target = []) {
-    const findCategory = categorys.filter(item => predicate.includes(item.id)).map(item => item.id)
-    const childrenCategory = categorys.filter(item => predicate.includes(item.parent_id)).map(item => item.id)
-    target = [...target, ...findCategory, ...childrenCategory]
+    const findCategory = categorys.filter(item => predicate.includes(item.id)).map(item => item.id);
+    const childrenCategory = categorys.filter(item => predicate.includes(item.parent_id)).map(item => item.id);
+    target = [...target, ...findCategory, ...childrenCategory];
 
     if (childrenCategory.length) {
-      return this.flattenDeep(categorys, childrenCategory, target)
+      return this.flattenDeep(categorys, childrenCategory, target);
     } else {
-      return target
+      return target;
     }
   }
 
@@ -50,24 +50,22 @@ module.exports = class extends think.Model {
    */
   formatCategoryUrl(categorys) {
     categorys.forEach(item => {
-      const { id, folder_name, filename, type } = item
-      let path = ''
+      const { id, filename, type } = item;
+      let path = '';
       if (think.isEmpty(filename)) {
         switch (type) {
-          case 'other':
-            path = ''
-            break
+          case 'about':
           case 'tool':
-            path = ''
-            break
+            path = '';
+            break;
           default:
-            path = id
+            path = id;
         }
       } else {
-        path = `${filename}`
+        path = `${filename}`;
       }
-      item.url = `/${folder_name}/${path}`
-    })
-    return categorys
+      item.url = `/${type}/${path}`;
+    });
+    return categorys;
   }
-}
+};

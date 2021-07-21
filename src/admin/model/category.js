@@ -9,7 +9,7 @@ module.exports = class extends think.Model {
    * @return {Array} 栏目数组
    */
   async getCategory() {
-    const field = 'id,name,folder_name,parent_id,level,type,no_order,is_nav';
+    const field = 'id,name,parent_id,level,type,no_order,is_nav';
     const list = await this.where({ is_show: 1 })
       .field(field)
       .order('no_order ASC')

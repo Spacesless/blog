@@ -4,13 +4,28 @@
       ref="form"
       v-loading="fetchLoading"
       :model="formData"
+      :rules="rules"
       label-position="left"
       label-width="100px"
       class="form-container is-stick"
     >
       <el-form-item class="form-title">基本信息</el-form-item>
       <el-form-item label="栏目名称" prop="name">
-        <el-input v-model="formData.name" class="form-container-input" />
+        <el-row>
+          <el-col :xs="24" :md="12">
+            <el-input v-model="formData.name" />
+          </el-col>
+        </el-row>
+      </el-form-item>
+      <el-form-item label="栏目类型" prop="type">
+        <el-select v-model="formData.type" placeholder="请选择栏目类型">
+          <el-option
+            v-for="item in typeOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
       </el-form-item>
       <template v-if="!isEdit">
         <el-form-item label="所属栏目">
@@ -96,8 +111,15 @@
           </el-col>
         </el-row>
       </el-form-item>
+      <el-form-item label="栏目外链">
+        <el-row>
+          <el-col :xs="24" :md="12">
+            <el-input v-model="formData.link" />
+          </el-col>
+        </el-row>
+      </el-form-item>
       <el-form-item label="栏目参数">
-        <json-editor v-model="formData.content" />
+        <json-editor v-model="formData.params" />
       </el-form-item>
       <div class="stick-bottom">
         <el-button type="primary" plain @click="handleCancel">取消</el-button>
@@ -126,15 +148,23 @@ export default {
   data() {
     return {
       formData: {
-        content: '',
+        params: '',
         is_show: 1,
         is_nav: 1,
         list_order: 1
       },
+      typeOptions: [
+        { value: 'article', label: '文章模块' },
+        { value: 'bangumi', label: '追番模块' },
+        { value: 'app', label: '应用模块' },
+        { value: 'about', label: '关于我们' },
+        { value: 'links', label: '友情链接' }
+      ],
       fetchLoading: false,
       confirmLoading: false,
       rules: {
-        name: [{ required: true, message: '请输入栏目名称', trigger: 'blur' }]
+        name: [{ required: true, message: '请输入栏目名称', trigger: 'blur' }],
+        type: [{ required: true, message: '请选择栏目类型', trigger: 'change' }]
       }
     }
   },
@@ -159,7 +189,7 @@ export default {
       await GetContent('category', id).then(response => {
         const { data } = response
         this.formData = data
-        this.formData.content = JSON.parse(data.content)
+        this.formData.params = JSON.parse(data.params)
       }).catch(() => {})
       this.fetchLoading = false
     },

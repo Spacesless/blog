@@ -188,7 +188,7 @@ export default {
     margin-bottom: 20px;
     padding: 0 20px;
     &-item{
-      height: 100px;
+      height: 110px;
       border-radius: 6px;
       box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
       cursor: pointer;
@@ -197,7 +197,7 @@ export default {
       float: left;
       width: 120px;
       color: #fff;
-      line-height: 100px;
+      line-height: 110px;
       text-align: center;
       .svg-icon{
         width: 50px;
@@ -208,7 +208,7 @@ export default {
       overflow: hidden;
     }
     &__desc{
-      padding: 20px 0 5px;
+      padding: 25px 0 6px;
       color: #efefef;
       font-size: 22px;
     }

@@ -1,14 +1,14 @@
-const isDev = think.env === 'development'
+const isDev = think.env === 'development';
 
 module.exports = class extends think.Controller {
   constructor(...arg) {
-    super(...arg)
-    this.siteurl = ''
+    super(...arg);
+    this.siteurl = '';
   }
 
   __before() {
     // 配置信息
-    this.siteurl = this.ctx.origin.replace(/http:|https:/, '')
+    this.siteurl = this.ctx.origin.replace(/http:|https:/, '');
   }
 
   /**
@@ -16,8 +16,8 @@ module.exports = class extends think.Controller {
    * @returns {Object}
    */
   async getConfigs() {
-    const configs = await this.model('config').getConfig()
-    return configs
+    const configs = await this.model('config').getConfig();
+    return configs;
   }
 
   /**
@@ -25,9 +25,9 @@ module.exports = class extends think.Controller {
    * @returns {Array}
    */
   async getCategory() {
-    let categorys = await this.model('category').getCategory()
-    categorys = this.model('category').formatCategoryUrl(categorys)
-    return categorys
+    let categorys = await this.model('category').getCategory();
+    categorys = this.model('category').formatCategoryUrl(categorys);
+    return categorys;
   }
 
   /**
@@ -37,19 +37,19 @@ module.exports = class extends think.Controller {
    * @returns {Array} 树形数组 [{id:1,children:[{id:2},{id:3,children:[{id:4}]}]}]
    */
   convertToTree(data, key = 'parent_id', value = 0) {
-    const tree = []
-    let temp
+    const tree = [];
+    let temp;
     for (let i = 0; i < data.length; i++) {
-      const item = data[i]
+      const item = data[i];
       if (item[key] === value) {
-        temp = this.convertToTree(data, key, item.id)
+        temp = this.convertToTree(data, key, item.id);
         if (temp.length > 0) {
-          item.children = temp
+          item.children = temp;
         }
-        tree.push(item)
+        tree.push(item);
       }
     }
-    return tree
+    return tree;
   }
 
   /**
@@ -57,31 +57,31 @@ module.exports = class extends think.Controller {
    * @param {Number} id 期望栏目id
    */
   getListInfo(id, categorys, configs) {
-    let findCategory
+    let findCategory;
     // 当前栏目
     if (think.isEmpty(id)) {
-      const path = this.ctx.path
-      findCategory = categorys.find(item => item.level === 1 && path.includes(item.folder_name))
+      const path = this.ctx.path;
+      findCategory = categorys.find(item => item.level === 1 && path.includes(item.type));
     } else {
-      findCategory = categorys.find(item => item.id === +id)
+      findCategory = categorys.find(item => item.id === +id);
     }
 
     if (!findCategory) {
-      return null
+      return null;
     }
 
     // meta信息
-    const { name: title, keywords, description } = findCategory
+    const { name: title, keywords, description } = findCategory;
     const seo = {
       title: `${title} -  ${configs.sitename}`,
       keywords,
       description
-    }
+    };
 
     return {
       category: findCategory,
       seo
-    }
+    };
   }
 
   /**
@@ -89,22 +89,22 @@ module.exports = class extends think.Controller {
    * @param {Object} data 详情
    */
   getDetailInfo(data, categorys, configs) {
-    const { title, keywords, description, category_id } = data
+    const { title, keywords, description, category_id: categoryId } = data;
 
     // meta信息
-    const findCategory = categorys.find(item => item.id === category_id)
-    const { name: categoryTitle, keywords: categoryKeywords, description: categoryDescription } = findCategory
+    const findCategory = categorys.find(item => item.id === categoryId);
+    const { name: categoryTitle, keywords: categoryKeywords, description: categoryDescription } = findCategory;
 
     const seo = {
       title: `${title} - ${categoryTitle} - ${configs.sitename}`,
       keywords: keywords || categoryKeywords,
       description: description || categoryDescription
-    }
+    };
 
     return {
       category: findCategory,
       seo
-    }
+    };
   }
 
   /**
@@ -116,9 +116,9 @@ module.exports = class extends think.Controller {
    */
   async thumbImage(src, width, height, fit = 0, options = {}) {
     if (think.isEmpty(src)) {
-      src = '/static/placeholder.png'
+      src = '/static/placeholder.png';
     }
-    const isSupportWebp = Number(this.ctx.headers.SupportWebp)
+    const isSupportWebp = Number(this.ctx.headers.SupportWebp);
     const dest = await think.sharpResize(src, {
       width: +width,
       height: +height,
@@ -127,9 +127,9 @@ module.exports = class extends think.Controller {
     {
       format: isSupportWebp ? 'webp' : 'jpg',
       ...options
-    })
+    });
 
-    return isDev ? dest : `${dest ? '//cdn.timelessq.com' + dest : ''}`
+    return isDev ? dest : `${dest ? '//cdn.timelessq.com' + dest : ''}`;
   }
 
   /**
@@ -137,14 +137,14 @@ module.exports = class extends think.Controller {
    * @param {String} src
    */
   async convertToWebp(src) {
-    if (think.isEmpty(src)) return ''
+    if (think.isEmpty(src)) return '';
 
-    const isSupportWebp = this.ctx.headers.supportwebp
+    const isSupportWebp = this.ctx.headers.supportwebp;
     const dest = await think.sharpFormat(src, {
       format: +isSupportWebp ? 'webp' : 'jpg'
-    })
+    });
 
-    return isDev ? dest : `${dest ? '//cdn.timelessq.com' + dest : ''}`
+    return isDev ? dest : `${dest ? '//cdn.timelessq.com' + dest : ''}`;
   }
 
   /**
@@ -153,28 +153,28 @@ module.exports = class extends think.Controller {
    * @returns {String}
    */
   async compressContent(content) {
-    const isSupportWebp = this.ctx.headers.supportwebp
+    const isSupportWebp = this.ctx.headers.supportwebp;
     if (+isSupportWebp) {
-      const contentImages = content.match(/<img[^>]+>/g) || []
-      const temp = []
+      const contentImages = content.match(/<img[^>]+>/g) || [];
+      const temp = [];
       contentImages.forEach((item) => {
         item.replace(/<img [^>]*src=['"]([^'"]+)[^>]*>/gi, (match, capture) => {
           if (capture.includes('upload')) { temp.push(capture) }
-        })
-      })
+        });
+      });
       for (let i = 0; i < temp.length; i++) {
-        const src = temp[i]
-        if (think.isEmpty(src)) continue
+        const src = temp[i];
+        if (think.isEmpty(src)) continue;
 
         const dest = await think.sharpFormat(src, {
           format: +isSupportWebp ? 'webp' : 'jpg'
-        })
-        const fileUrl = isDev ? dest : `${dest ? '//cdn.timelessq.com' + dest : ''}`
+        });
+        const fileUrl = isDev ? dest : `${dest ? '//cdn.timelessq.com' + dest : ''}`;
         if (dest) { content = content.replace(src, fileUrl) }
       }
     }
 
-    return content
+    return content;
   }
 
   /**
@@ -183,10 +183,10 @@ module.exports = class extends think.Controller {
    * @param {Number [int]} length 截取长度
    */
   substr(str, index, length) {
-    return str.substr(index, length)
+    return str.substr(index, length);
   }
 
   __cell() {
-    return this.ctx.throw(404)
+    return this.ctx.throw(404);
   }
-}
+};

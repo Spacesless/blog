@@ -128,11 +128,7 @@ class Point {
       /* 根据角度去找点移出屏幕之后,重新进入屏幕的点.*/
       case 'reverseDirection':
       { // 找到相反的方向
-        if (angle > 180) {
-          opAngle = angle - 180
-        } else {
-          opAngle = angle - 180
-        }
+        opAngle = angle - 180
         // 相反方向对应的弧度
         radian = opAngle / 180 * Math.PI
         // 根据相反的方向弧度去计算重新进入屏幕时的坐标

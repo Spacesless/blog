@@ -42,7 +42,6 @@
         </template>
       </el-table-column>
       <el-table-column label="所属模块" prop="type" min-width="160" :formatter="formatModuleName" />
-      <el-table-column label="目录" prop="folder_name" min-width="160" />
       <el-table-column label="操作" align="center" width="250">
         <template #default="scope">
           <el-button class="category-tools-edit" type="primary" @click="handleEdit(scope.row.id)">编辑</el-button>

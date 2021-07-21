@@ -90,9 +90,6 @@ $tagColor:(
   font-size: 15px;
   line-height: 1.7;
   letter-spacing: 1px;
-  p{
-    margin: 12px 0;
-  }
   h2,h3,h4,h5{
     color: var(--color-main);
     font-weight: 100;
@@ -126,6 +123,7 @@ $tagColor:(
     }
   }
   p{
+    margin: 12px 0;
     & > code{
       display: inline-block;
       padding: 3px 6px;
