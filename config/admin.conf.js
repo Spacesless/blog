@@ -1,8 +1,25 @@
+const path = require('path')
+
 const isPro = process.env.NODE_ENV === 'production'
+const srcDir = 'client/admin/'
+
+function resolve(dir) {
+  return path.join(__dirname, '../', srcDir, dir)
+}
 
 module.exports = {
+  axios: {
+    proxy: true,
+    prefix: '/admin'
+  },
+  proxy: {
+    '/admin': {
+      target: 'http://127.0.0.1:8360', // 目标接口域名
+      changeOrigin: true // 表示是否跨域
+    }
+  },
   modern: isPro, // 现代模式
-  srcDir: 'client/admin/',
+  srcDir,
   target: 'static',
   ssr: false,
   telemetry: false, // 关闭收集遥测数据
@@ -14,16 +31,17 @@ module.exports = {
     ]
   },
   css: [
-    'element-ui/lib/theme-chalk/index.css'
+    '@/styles/index.scss'
   ],
   plugins: [
-    '@/plugins/element-ui'
-  ],
-  modules: [
-    '@nuxtjs/axios'
+    '@/plugins/axios',
+    '@/plugins/api',
+    '@/plugins/element-ui',
+    '@/plugins/svg-icon'
   ],
   generate: {
-    dir: 'www/admin'
+    dir: 'www/admin',
+    fallback: 'index.html'
   },
   build: {
     publicPath: '//cdn.timelessq.com/admin/', // 只需将www/admin上传cdn
@@ -39,6 +57,20 @@ module.exports = {
       ]
     },
     extractCSS: true,
+    extend(config, ctx) {
+      // set svg-sprite-loader
+      const svgRule = config.module.rules.find(rule => rule.test.test('.svg'))
+      svgRule.exclude = [resolve('assets/icons/svg')]
+      // Includes /icons/svg for svg-sprite-loader
+      config.module.rules.push({
+        test: /\.svg$/,
+        include: [resolve('assets/icons/svg')],
+        loader: 'svg-sprite-loader',
+        options: {
+          symbolId: 'icon-[name]'
+        }
+      })
+    },
     filenames: {
       app: ({ isDev }) => isDev ? '[name].js' : 'js/app.[contenthash:8].js',
       chunk: ({ isDev }) => isDev ? '[name].js' : 'js/chunk-[name].[contenthash:8].js',
@@ -68,9 +100,22 @@ module.exports = {
       runtimeChunk: false
     }
   },
-  buildDir: '.nuxt/admin',
+  buildDir: 'www/admin',
+  buildModules: [
+    '@nuxtjs/router'
+  ],
+  modules: [
+    '@nuxtjs/axios',
+    '@nuxtjs/proxy'
+  ],
   render: {
     compressor: false // 禁用中间件压缩
     // resourceHints: false  // 添加prefetch并preload链接以加快初始页面加载时间。
+  },
+  router: {
+    middleware: ['permission']
+  },
+  server: {
+    port: 9528
   }
 }
