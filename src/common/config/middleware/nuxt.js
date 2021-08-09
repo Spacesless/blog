@@ -3,7 +3,7 @@ const { Nuxt, Builder } = require('nuxt');
 
 module.exports = options => {
   if (!options.config) {
-    options.config = require(path.join(think.ROOT_PATH, '/nuxt.config.js'));
+    options.config = require(path.join(think.ROOT_PATH, 'config/web.conf.js'));
   }
   options.config.dev = options.isDev;
 

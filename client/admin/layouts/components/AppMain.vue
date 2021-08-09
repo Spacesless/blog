@@ -2,7 +2,7 @@
   <section class="app-main">
     <!-- 使用动态的 transition name -->
     <transition :name="transitionName" mode="out-in">
-      <Nuxt keep-alive :keep-alive-props="{ include: cachedViews }" />
+      <Nuxt />
     </transition>
   </section>
 </template>
@@ -13,14 +13,6 @@ export default {
   data() {
     return {
       transitionName: 'fade-transform'
-    }
-  },
-  computed: {
-    cachedViews() {
-      return this.$store.state.tagsView.cachedViews
-    },
-    key() {
-      return this.$route.path
     }
   },
   watch: {

@@ -49,10 +49,10 @@ export default {
   data() {
     return {
       seleteSkeleton: 'lafei_4',
+      selectAnimation: '',
       skelOptions: [],
       listLoading: false,
       filterOptions: [],
-      selectAnimation: '',
       animationOptions: [],
       checkboxGroup1: '',
       apiUrl: '//api.timelessq.com/spine',
@@ -70,8 +70,9 @@ export default {
         params: {
           id: this.content.id
         }
-      }).then(res => {
-        this.seleteSkeleton = res?.seleteSkeleton || 'lafei_4'
+      }).then(({ seleteSkeleton, selectAnimation }) => {
+        this.seleteSkeleton = seleteSkeleton || 'lafei_4'
+        this.selectAnimation = selectAnimation || 'normal'
       })
     },
     async fetchList() {
@@ -101,7 +102,7 @@ export default {
       const config = { alpha: false }
       this.gl = this.spineCanvas.getContext('webgl', config) || this.spineCanvas.getContext('experimental-webgl', config)
       if (!this.gl) {
-        alert('WebGL is unavailable.')
+        console.warn('WebGL is unavailable.')
         return
       }
 
@@ -129,7 +130,6 @@ export default {
       this.skelLoading = true
       // Wait until the AssetManager has loaded all resources, then load the skeletons.
       if (this.assetManager.isLoadingComplete()) {
-        this.selectAnimation = 'normal'
         this.activeSkeleton = this.loadSkeleton(false)
         this.isChange = false
         this.lastFrameTime = Date.now() / 1000

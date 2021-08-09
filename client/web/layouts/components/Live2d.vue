@@ -249,17 +249,18 @@ export default {
     addInteraction() {
       const refs = this.$refs
       for (const key in refs) {
-        refs[key].addEventListener('mouseover', () => {
-          const rows = this.mouseover.find(item => item.selector === key)
-          if (!rows) return
-          let text = ''
-          if (Array.isArray(rows.text)) {
-            text = rows.text[Math.floor(Math.random() * rows.text.length + 1) - 1]
-          } else {
-            text = rows.text
-          }
-          this.showMessage(text, 3000)
-        })
+        refs[key].addEventListener('mouseover', $mouseoverHandler(key))
+      }
+      const $mouseoverHandler = (key) => {
+        const rows = this.mouseover.find(item => item.selector === key)
+        if (!rows) return
+        let text = ''
+        if (Array.isArray(rows.text)) {
+          text = rows.text[Math.floor(Math.random() * rows.text.length + 1) - 1]
+        } else {
+          text = rows.text
+        }
+        this.showMessage(text, 3000)
       }
       this.$refs.live2d.addEventListener('click', () => {
         const text = this.click[Math.floor(Math.random() * this.click.length + 1) - 1]

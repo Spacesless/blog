@@ -34,13 +34,14 @@ module.exports = class extends Base {
     const lastmod = sitemapList.length ? sitemapList[0].updatetime : think.datetime(new Date(), 'YYYY-MM-DD');
     this.assign('lastmod', lastmod);
 
-    const _categorys = JSON.parse(JSON.stringify(categorys));
-    const targetCategorys = _categorys.map(item => {
+    let cloneCategorys = JSON.parse(JSON.stringify(categorys));
+    cloneCategorys = cloneCategorys.filter(item => !item.link);
+    const targetCategorys = cloneCategorys.map(item => {
       const { id, url, level } = item;
-      let rows = sitemapList.filter(element => element.category_id === id);
+      const rows = sitemapList.filter(element => element.category_id === id);
       let lastmod;
       if (rows.length) {
-        rows = rows.sort((a, b) => new Date(b.updatetime) - new Date(a.updatetime));
+        rows.sort((a, b) => new Date(b.updatetime) - new Date(a.updatetime));
         lastmod = rows[0].updatetime;
       }
       return {

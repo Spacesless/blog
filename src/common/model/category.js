@@ -51,7 +51,7 @@ module.exports = class extends think.Model {
   formatCategoryUrl(categorys) {
     categorys.forEach(item => {
       const { id, filename, type } = item;
-      let path = '';
+      let path;
       if (think.isEmpty(filename)) {
         switch (type) {
           case 'about':

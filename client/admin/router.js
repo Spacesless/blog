@@ -111,7 +111,7 @@ export const constantRoutes = [
         path: 'recycle',
         name: 'Recycle',
         component: recycle,
-        meta: { title: '回收站', noCache: true }
+        meta: { title: '回收站' }
       }
     ]
   },
