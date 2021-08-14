@@ -217,9 +217,6 @@ export default {
     /** 交互时间 */
     interaction() {
       const refs = this.$refs
-      for (const key in refs) {
-        refs[key].addEventListener('mouseover', $mouseoverHandler(key))
-      }
       const $mouseoverHandler = (key) => {
         const rows = this.mouseover.find(item => item.selector === key)
         if (!rows) return
@@ -230,6 +227,9 @@ export default {
           text = rows.text
         }
         this.showMessage(text, 3000)
+      }
+      for (const key in refs) {
+        refs[key].addEventListener('mouseover', $mouseoverHandler(key))
       }
       this.$refs.live2d.addEventListener('click', () => {
         const text = this.click[Math.floor(Math.random() * this.click.length + 1) - 1]

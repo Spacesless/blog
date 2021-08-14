@@ -118,7 +118,7 @@ export const constantRoutes = [
 
   {
     path: '/category',
-    component: category,
+    component: Layout,
     meta: { title: '栏目管理', icon: 'category' },
     children: [
       {
