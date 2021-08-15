@@ -122,9 +122,9 @@ export const constantRoutes = [
     meta: { title: '栏目管理', icon: 'category' },
     children: [
       {
-        path: '',
+        path: 'list',
         name: 'Category',
-        hidden: true,
+        component: category,
         meta: { title: '栏目列表' }
       },
       {

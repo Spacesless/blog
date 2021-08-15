@@ -34,7 +34,8 @@ export default {
       fileIndex: 1,
       dotsArr: [],
       timer: null,
-      isPlaying: false
+      isPlaying: false,
+      failCount: 0
     }
   },
   mounted() {
@@ -46,29 +47,31 @@ export default {
   },
   methods: {
     fetchData() {
-      return axios.get(`../static/bad-apple/frame-${this.fileIndex}.txt`).then(res => {
-        const data = res.data.trim().split('\n\r')
+      return axios.get(`/static/bad-apple/frame-${this.fileIndex}.txt`).then(res => {
+        const data = res.data?.trim().split('\n\r') || []
         data.forEach((item, index) => {
           this.dotsArr[(this.fileIndex - 1) * partCount + index] = item
         })
       })
     },
     async play() {
-      if (this.index >= totalPaint) {
+      if (this.index >= totalPaint || this.failCount > 5) {
         return clearInterval(this.timer)
       }
 
       const preLoadIndex = this.index + partCount / 2
 
       if (!this.dotsArr[this.index]) {
-        const tempPlaying = this.isPlaying
-        if (this.isPlaying) {
-          this.$refs.audio.pause()
-          this.isPlaying = false
-        }
+        this.$refs.audio.pause()
+        this.isPlaying = false
         this.fileIndex = Math.ceil(this.index / partCount)
         await this.fetchData().then(res => {
-          tempPlaying && this.$refs.audio.play()
+          this.$refs.audio.play()
+          if (!this.dotsArr[this.index]) {
+            this.failCount++
+          } else {
+            this.failCount = 0
+          }
         })
       } else if (preLoadIndex < totalPaint && !this.dotsArr[preLoadIndex]) {
         if (this.fileIndex < maxPart) this.fileIndex++
@@ -84,7 +87,8 @@ export default {
       }
     },
     print() {
-      this.$refs.apple.innerText = this.shrinkString(this.dotsArr[this.index])
+      const currtPaint = this.dotsArr[this.index]
+      if (currtPaint) this.$refs.apple.innerText = this.shrinkString(currtPaint)
     },
     /**
      * 解压字符串
