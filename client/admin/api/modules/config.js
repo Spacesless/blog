@@ -8,6 +8,7 @@ export default axios => ({
       method: 'get'
     })
   },
+
   /**
    * 更新配置信息
    * @param {Object} data

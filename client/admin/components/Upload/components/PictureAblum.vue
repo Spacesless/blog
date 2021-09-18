@@ -1,9 +1,10 @@
 <template>
   <el-dialog
-    class="ablum"
-    :visible="visible"
-    width="90%"
     append-to-body
+    class="ablum"
+    width="90%"
+    :destroy-on-close="true"
+    :visible="visible"
     @close="handleCancel"
   >
     <div class="file-header">
@@ -205,6 +206,9 @@ export default {
     handleConfirm() {
       const findSelectFile = this.fileList.filter(item => item.checked)
       this.$emit('onSelectFile', findSelectFile)
+      this.fileList.forEach(item => {
+        item.checked = false
+      })
       this.handleCancel()
     }
   }

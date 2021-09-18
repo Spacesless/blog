@@ -48,12 +48,12 @@
 <script>
 import { mapGetters } from 'vuex'
 import Pagination from '@/components/Pagination'
-import { multipleTable } from '@/mixins'
+import { crud } from '@/mixins'
 
 export default {
   name: 'Recycle',
   components: { Pagination },
-  mixins: [multipleTable],
+  mixins: [crud],
   data() {
     return {
       recycleList: [],

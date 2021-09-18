@@ -10,6 +10,7 @@ export default axios => ({
       method: 'get'
     })
   },
+
   /**
    * 添加详情
    * @param {String} controller 控制器
@@ -22,6 +23,7 @@ export default axios => ({
       data
     })
   },
+
   /**
    * 更新详情
    * @param {String} controller 控制器

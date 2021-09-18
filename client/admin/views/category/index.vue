@@ -67,7 +67,7 @@
 import { mapGetters } from 'vuex'
 import MoveCategory from './components/MoveCategory'
 import elHeightAdaptiveTable from '@/directive/el-table'
-import { multipleTable, listDialog } from '@/mixins'
+import { crud, listDialog } from '@/mixins'
 import { formatCategory } from '@/utils'
 
 export default {
@@ -78,7 +78,7 @@ export default {
   directives: {
     elHeightAdaptiveTable
   },
-  mixins: [multipleTable, listDialog],
+  mixins: [crud, listDialog],
   data() {
     return {
       currentType: 'category',

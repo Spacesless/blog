@@ -52,7 +52,7 @@ export const resizeChart = {
  * 列表多选表格
  * @summary 包括删、改、查
  */
-export const multipleTable = {
+export const crud = {
   directives: {
     elHeightAdaptiveTable
   },

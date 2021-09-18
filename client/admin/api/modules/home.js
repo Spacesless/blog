@@ -1,4 +1,5 @@
 export default axios => ({
+  // 获取统计信息
   GetGeneral() {
     return axios({
       url: '/general',
@@ -6,6 +7,7 @@ export default axios => ({
     })
   },
 
+  // 获取最新未读的评论
   GetNewComments() {
     return axios({
       url: '/general/comment',

@@ -68,7 +68,7 @@
 <script>
 import Pagination from '@/components/Pagination'
 import LinksForm from './components/LinksForm'
-import { multipleTable, listDialog } from '@/mixins'
+import { crud, listDialog } from '@/mixins'
 
 export default {
   name: 'Link',
@@ -76,7 +76,7 @@ export default {
     Pagination,
     LinksForm
   },
-  mixins: [multipleTable, listDialog],
+  mixins: [crud, listDialog],
   data() {
     return {
       currentType: 'link',

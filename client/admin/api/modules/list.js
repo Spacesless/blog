@@ -1,5 +1,4 @@
 export default axios => ({
-
   /**
    * 获取分页列表数据
    * @param {String} controller 控制器

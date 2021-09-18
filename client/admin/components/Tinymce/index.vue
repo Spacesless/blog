@@ -16,9 +16,7 @@ import toolbar from './toolbar'
 import load from './dynamicLoadScript'
 
 // why use this cdn, detail see https://github.com/PanJiaChen/tinymce-all-in-one
-const tinymceCDN = process.env.NODE_ENV === 'production'
-  ? '//cdn.timelessq.com/admin/vendor/tinymce/tinymce.min.js'
-  : '/vendor/tinymce/tinymce.min.js'
+const tinymceCDN = '/vendor/tinymce/tinymce.min.js'
 
 export default {
   name: 'Tinymce',
@@ -168,7 +166,7 @@ export default {
       */
 
       const that = this
-      input.onchange = function() {
+      input.onchange = () => {
         const file = this.files[0]
         const formData = new FormData()
         formData.append('file', file)

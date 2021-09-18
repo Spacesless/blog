@@ -1,5 +1,4 @@
 export default axios => ({
-
   /**
    * login 登录
    * @param {Object} {username, password, remember}

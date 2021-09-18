@@ -60,7 +60,7 @@
 <script>
 import Pagination from '@/components/Pagination'
 import elHeightAdaptiveTable from '@/directive/el-table'
-import { multipleTable } from '@/mixins'
+import { crud } from '@/mixins'
 
 export default {
   name: 'Comment',
@@ -68,7 +68,7 @@ export default {
   directives: {
     elHeightAdaptiveTable
   },
-  mixins: [multipleTable],
+  mixins: [crud],
   data() {
     return {
       currentType: 'comment',

@@ -48,7 +48,7 @@
 <script>
 import BannerForm from './components/BannerForm'
 import elHeightAdaptiveTable from '@/directive/el-table'
-import { multipleTable, listDialog } from '@/mixins'
+import { crud, listDialog } from '@/mixins'
 
 export default {
   name: 'OptionsBanner',
@@ -58,7 +58,7 @@ export default {
   directives: {
     elHeightAdaptiveTable
   },
-  mixins: [multipleTable, listDialog],
+  mixins: [crud, listDialog],
   data() {
     return {
       bannerList: []

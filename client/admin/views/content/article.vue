@@ -59,7 +59,7 @@ import { mapGetters } from 'vuex'
 import HeaderMenu from './components/HeaderMenu'
 import FooterMenu from './components/FooterMenu'
 import Pagination from '@/components/Pagination'
-import { multipleTable } from '@/mixins'
+import { crud } from '@/mixins'
 import { getCategoryByType } from '@/utils'
 
 export default {
@@ -69,7 +69,7 @@ export default {
     FooterMenu,
     Pagination
   },
-  mixins: [multipleTable],
+  mixins: [crud],
   data() {
     return {
       currentType: 'article',
