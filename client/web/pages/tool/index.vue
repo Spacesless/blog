@@ -1,7 +1,23 @@
 <template>
   <div class="webapp">
+    <h2 class="app-main__title">附属站</h2>
     <el-row class="webapp-list" :gutter="20">
-      <el-col v-for="item in webappList" :key="item.id" :sm="12" :md="8" :xl="6">
+      <el-col v-for="item in externalApp" :key="item.id" :sm="12" :md="8" :xl="6">
+        <a class="webapp-card" :href="item.link" :title="item.name" target="_blank">
+          <div class="webapp-card__header">{{ item.name }}</div>
+          <div class="webapp-card__body">
+            <div class="clearfix">
+              <img class="webapp-card__logo img-fluid" :src="item.columnimg">
+              <p class="webapp-card__desc">{{ item.description }}</p>
+            </div>
+            <p class="webapp-card__version">版本号：{{ item.version }}</p>
+          </div>
+        </a>
+      </el-col>
+    </el-row>
+    <h2 class="app-main__title">小工具</h2>
+    <el-row class="webapp-list" :gutter="20">
+      <el-col v-for="item in internalApp" :key="item.id" :sm="12" :md="8" :xl="6">
         <a class="webapp-card" :href="item.link || item.url" :title="item.name" target="_blank">
           <div class="webapp-card__header">{{ item.name }}</div>
           <div class="webapp-card__body">
@@ -23,6 +39,23 @@ export default {
     const { seo, list } = await $axios.$get('/tool/list')
     return { seo, webappList: list }
   },
+  data() {
+    return {
+      externalApp: [],
+      internalApp: []
+    }
+  },
+  watch: {
+    webappList: {
+      handler(list) {
+        list.forEach(element => {
+          if (element.link) this.externalApp.push(element)
+          else this.internalApp.push(element)
+        })
+      },
+      immediate: true
+    }
+  },
   head() {
     return {
       title: this.seo.title,
@@ -37,8 +70,11 @@ export default {
 
 <style lang="scss" scoped>
 .webapp{
+  .app-main__title{
+    margin: 0 0 24px 16px;
+  }
   &-list{
-    padding: 0 15px;
+    padding: 0 15px 15px;
   }
   &-card{
     display: block;

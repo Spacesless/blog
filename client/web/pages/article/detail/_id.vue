@@ -39,8 +39,6 @@
     </div>
     <!-- share start -->
     <Share />
-    <!-- Advertisement -->
-    <Advertisement />
     <!-- comment start -->
     <Comment :topic-id="'article-' + data.id" />
   </div>
@@ -48,7 +46,6 @@
 
 <script>
 import Share from '@/components/Share'
-import Advertisement from '@/components/Advertisement'
 import Comment from '@/components/Comment'
 import Prism from 'prismjs'
 import ClipboardJS from 'clipboard'
@@ -58,7 +55,6 @@ export default {
   name: 'BlogConent',
   components: {
     Share,
-    Advertisement,
     Comment
   },
   async asyncData({ params, $axios }) {

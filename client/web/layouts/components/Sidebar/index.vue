@@ -23,14 +23,6 @@
           </nuxt-link>
         </div>
         <sidebar-item v-for="route in menus" :key="route.path" :item="route" />
-        <div class="aside-menu-item">
-          <nuxt-link to="/link">
-            <el-menu-item index="/link">
-              <i class="aside-menu__icon tl-icon">&#xe654;</i>
-              <span slot="title">友情链接</span>
-            </el-menu-item>
-          </nuxt-link>
-        </div>
       </el-menu>
     </el-scrollbar>
   </div>

@@ -1,7 +1,7 @@
 <template>
   <div class="footer">
     <p class="footer-info">
-      Power by NodeJs + NuxtJs,&nbsp;
+      Power by Node.js + Nuxt.js,&nbsp;
       由<img class="footer__icon" src="@/assets/image/tencent-cloud.png" alt="腾讯云">腾讯云 提供云计算服务,&nbsp;
       本站已经稳稳地存活了 {{ configs.timeless }} 天
     </p>

@@ -55,6 +55,7 @@ module.exports = class extends think.Model {
       if (think.isEmpty(filename)) {
         switch (type) {
           case 'about':
+          case 'link':
           case 'tool':
             path = '';
             break;

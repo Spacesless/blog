@@ -47,8 +47,6 @@
       <div class="Tinymce" v-html="data.content" />
       <el-image ref="preview" class="app-preview" :src="previewSrc" :preview-src-list="previewSrcList" />
     </div>
-    <!-- Advertisement -->
-    <Advertisement />
     <!-- comment start -->
     <Comment :topic-id="'bangumi-' + data.id" />
   </div>
@@ -56,14 +54,12 @@
 
 <script>
 import Share from '@/components/Share'
-import Advertisement from '@/components/Advertisement'
 import Comment from '@/components/Comment'
 import { globalFilter } from '@/mixins'
 
 export default {
   components: {
     Share,
-    Advertisement,
     Comment
   },
   mixins: [globalFilter],
