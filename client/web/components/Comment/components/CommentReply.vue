@@ -30,13 +30,21 @@
           <el-button class="reply-content__submit" type="primary" icon="el-icon-position" :loading="submitLoading" @click="handleSubmit" />
         </el-form-item>
       </el-col>
+      <el-col class="reply-toolbar" :span="24">
+        <Emojis />
+      </el-col>
     </el-row>
   </el-form>
 </template>
 
 <script>
+import Emojis from './Emojis'
+
 export default {
   name: 'CommentReply',
+  components: {
+    Emojis
+  },
   props: {
     info: {
       type: Object,

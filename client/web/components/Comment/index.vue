@@ -94,7 +94,6 @@ export default {
   &__count{
     margin-left: 5px;
     font-size: 16px;
-    vertical-align: text-top;
   }
   &-list{
     padding: 15px 0;
