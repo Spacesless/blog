@@ -18,24 +18,7 @@
         <div ref="content" class="Tinymce" v-html="data.content" />
         <el-image ref="preview" class="app-preview" :src="previewSrc" :preview-src-list="previewSrcList" />
       </div>
-      <div v-if="catalogList.length" class="catalog">
-        <ul class="catalog-list">
-          <li
-            v-for="(item, index) in catalogList"
-            :key="index"
-            class="catalog-item"
-            :class="[
-              {
-                'catalog-item--active': index === isActive
-              }
-            ]"
-            :title="item.innerText"
-            @click="scrollIntoView(item)"
-          >
-            <p class="catalog-item__text">{{ item.innerText }}</p>
-          </li>
-        </ul>
-      </div>
+      <Catalog />
     </div>
     <!-- share start -->
     <Share />
@@ -45,15 +28,16 @@
 </template>
 
 <script>
+import Catalog from '@/components/Catalog'
 import Share from '@/components/Share'
 import Comment from '@/components/Comment'
 import Prism from 'prismjs'
 import ClipboardJS from 'clipboard'
-import { position, scrollTo } from '@/utils/scroll-to'
 
 export default {
   name: 'BlogConent',
   components: {
+    Catalog,
     Share,
     Comment
   },
@@ -67,8 +51,6 @@ export default {
   data() {
     return {
       id: 0,
-      catalogList: [],
-      isActive: -1,
       previewSrc: '',
       previewSrcList: []
     }
@@ -77,47 +59,15 @@ export default {
     this.initPrism()
     this.initPreviw()
 
-    this.$nextTick(() => {
-      this.initCatelog()
-    })
-
     // 浏览5秒才算访问量
-    this.timer = setTimeout(() => {
-      this.handleRecordAccess()
-    }, 5000)
+    // this.timer = setTimeout(() => {
+    //   this.handleRecordAccess()
+    // }, 5000)
   },
   beforeDestroy() {
     this.timer && clearInterval(this.timer)
   },
   methods: {
-    initCatelog() {
-      const nodes = Array.from(this.$refs.content.childNodes)
-      this.catalogList = nodes.filter(item => {
-        const nodeName = item.nodeName.toLowerCase()
-        return ['h2', 'h3', 'h4'].includes(nodeName)
-      })
-
-      const nodeOffsetTop = []
-      const catalogListLen = this.catalogList.length
-      const contentStart = this.getOffsetTop(this.$refs.content) - 10
-      const contentEnd = this.getOffsetTop(this.$refs.content) + this.$refs.content.clientHeight
-      for (let i = 0; i < catalogListLen; i++) {
-        const top = this.getOffsetTop(this.catalogList[i]) - 10
-        nodeOffsetTop.push(top)
-      }
-
-      window.addEventListener('scroll', () => {
-        const scrollTop = position()
-        nodeOffsetTop.forEach((top, index) => {
-          if (scrollTop >= top) {
-            this.isActive = index
-          }
-          if (scrollTop < contentStart || scrollTop > contentEnd) {
-            this.isActive = -1
-          }
-        })
-      })
-    },
     initPrism() {
       Prism.plugins.toolbar.registerButton('copy-to-clipboard', (env) => {
         const copyElement = document.createElement('button')
@@ -153,26 +103,6 @@ export default {
         return copyElement
       })
       Prism.highlightAll()
-    },
-    /**
-     * 滚动到对应的dom元素
-     * @param {Element} item
-     */
-    scrollIntoView(item) {
-      const tagetTop = this.getOffsetTop(item) - 5
-      scrollTo(tagetTop, 400)
-    },
-    /**
-     * 计算元素的OffsetTop
-     * @param {Element} dom
-     */
-    getOffsetTop(dom) {
-      let top = dom.offsetTop
-      while (dom.offsetParent) {
-        dom = dom.offsetParent
-        top += dom.offsetTop
-      }
-      return top
     },
     initPreviw() {
       const previews = document.querySelectorAll('.Tinymce img')
@@ -236,45 +166,6 @@ export default {
   }
   &-content{
     border-radius: 4px;
-  }
-  .catalog{
-    position: fixed;
-    top: 60px;
-    right: 0;
-    width: 230px;
-    @media (max-width: 768px){
-      display: none;
-    }
-    &-list{
-      border-left: 1px solid var(--border-color);
-    }
-    &-item{
-      position: relative;
-      padding: 0 15px;
-      color: var(--color-main);
-      cursor: pointer;
-      &__text{
-        overflow: hidden;
-        color: var(--color-main);
-        font-size: 14px;
-        line-height: 24px;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
-      &--active{
-        color: var(--color-primary);
-        &:before{
-          content: '';
-          position: absolute;
-          left: -1px;
-          top: 0;
-          z-index: 1;
-          width: 1px;
-          height: 100%;
-          background-color: var(--color-primary);
-        }
-      }
-    }
   }
 }
 </style>

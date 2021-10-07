@@ -80,49 +80,49 @@ export default {
       'flower',
       [
         {
-          'type': { 'typeName': 'image', 'url': '/static/img/spring/flower-1.png' },
-          'number': 3,
+          'type': { 'typeName': 'image', 'url': '/static/img/spring/hb2.png' },
+          'number': 9,
           'op': { 'min': 0.7, 'max': 1 },
-          'size': { 'min': 40, 'max': 60 },
+          'size': { 'min': 60, 'max': 60 },
           'speed': { 'min': 2, 'max': 4 },
           'angle': { 'value': 140, 'float': 20 },
-          'area': { 'leftTop': [0, 0], 'rightBottom': [0, 1000] },
+          'area': { 'leftTop': [0, 800], 'rightBottom': [1900, 2000] },
           'rota': { 'value': 30, 'speed': 1, 'floatValue': 120, 'floatSpeed': 3 },
           'reIn': 'reverseDirection'
         },
         {
-          'type': { 'typeName': 'image', 'url': '/static/img/spring/flower-2.png' },
-          'number': 4,
-          'size': { 'min': 40, 'max': 60 },
-          'speed': { 'min': 2, 'max': 5 },
-          'area': { 'leftTop': [400, 200], 'rightBottom': [800, 1800] },
+          'type': { 'typeName': 'image', 'url': '/static/img/spring/hb3.png' },
+          'number': 10,
+          'size': { 'min': 50, 'max': 60 },
+          'speed': { 'min': 3, 'max': 5 },
+          'area': { 'leftTop': [500, 300], 'rightBottom': [1000, 4000] },
           'angle': { 'value': 130, 'float': 20 },
           'reIn': 'reverseDirection'
         },
         {
-          'type': { 'typeName': 'image', 'url': '/static/img/spring/flower-3.png' },
-          'number': 3,
-          'size': { 'min': 50, 'max': 60 },
-          'speed': { 'min': 1, 'max': 3 },
-          'area': { 'leftTop': [400, 300], 'rightBottom': [800, 1800] },
-          'angle': { 'value': 140, 'float': 30 },
-          'reIn': 'reverseDirection'
-        },
-        {
-          'type': { 'typeName': 'image', 'url': '/static/img/spring/flower-4.png' },
-          'number': 2,
+          'type': { 'typeName': 'image', 'url': '/static/img/spring/hb4.png' },
+          'number': 8,
           'size': { 'min': 50, 'max': 60 },
           'speed': { 'min': 3, 'max': 5 },
-          'area': { 'leftTop': [400, 700], 'rightBottom': [400, 1300] },
+          'area': { 'leftTop': [500, 400], 'rightBottom': [1000, 4000] },
           'angle': { 'value': 140, 'float': 30 },
           'reIn': 'reverseDirection'
         },
         {
-          'type': { 'typeName': 'image', 'url': '/static/img/spring/flower-5.png' },
-          'number': 1,
+          'type': { 'typeName': 'image', 'url': '/static/img/spring/hb5.png' },
+          'number': 7,
           'size': { 'min': 50, 'max': 60 },
-          'speed': { 'min': 1, 'max': 2 },
-          'area': { 'leftTop': [0, 1200], 'rightBottom': [1300, 200] },
+          'speed': { 'min': 3, 'max': 5 },
+          'area': { 'leftTop': [500, 600], 'rightBottom': [1000, 4000] },
+          'angle': { 'value': 140, 'float': 30 },
+          'reIn': 'reverseDirection'
+        },
+        {
+          'type': { 'typeName': 'image', 'url': '/static/img/spring/hb6.png' },
+          'number': 6,
+          'size': { 'min': 50, 'max': 60 },
+          'speed': { 'min': 3, 'max': 5 },
+          'area': { 'leftTop': [0, 1400], 'rightBottom': [1900, 4300] },
           'angle': { 'value': 140, 'float': 40 },
           'reIn': 'reverseDirection'
         }
