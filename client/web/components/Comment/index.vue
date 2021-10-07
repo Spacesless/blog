@@ -1,20 +1,32 @@
 <template>
   <div v-loading="fetchLoading" class="comment">
     <h2 class="app-main__title">评论<span class="comment__count">({{ total }})</span></h2>
-    <comment-reply v-if="!replyData.id" :info="info" :reply-data="replyData" />
+    <comment-reply
+      v-if="!replyData.id"
+      :form-data.sync="formData"
+      :reply-data="replyData"
+      @onSubmitSuccess="onSubmitSuccess"
+    />
     <div v-if="total === 0" class="comment-none">
       <p class="comment-none__tips">还没有评论，快来抢第一吧</p>
       <img class="comment-none__img" src="@/assets/image/no-data.svg" alt="">
     </div>
     <div v-else class="comment-list">
       <comment-item
-        v-for="item in commentsList"
+        v-for="item in commentList"
         :key="item.id"
-        :info="info"
-        :data="item"
-        :reply-data="replyData"
+        :form-data="formData"
+        :comment-data="item"
+        :reply-data.sync="replyData"
+        @onSubmitSuccess="onSubmitSuccess"
       />
-      <pagination v-if="total > listQuery.pageSize" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.pageSize" @pagination="fetchList" />
+      <pagination
+        v-if="total > listQuery.pageSize"
+        :total="total"
+        :page.sync="listQuery.page"
+        :limit.sync="listQuery.pageSize"
+        @pagination="fetchList"
+      />
     </div>
   </div>
 
@@ -22,8 +34,8 @@
 
 <script>
 import Pagination from '@/components/Pagination/index'
-import CommentItem from './components/CommentItem'
-import CommentReply from './components/CommentReply'
+import CommentItem from './CommentItem'
+import CommentReply from './CommentReply'
 
 export default {
   components: {
@@ -39,7 +51,9 @@ export default {
   },
   data() {
     return {
-      info: {},
+      formData: {
+        content: ''
+      },
       replyData: {
         topic_id: this.topicId
       },
@@ -50,7 +64,7 @@ export default {
         page: 1,
         pageSize: 10
       },
-      commentsList: []
+      commentList: []
     }
   },
   mounted() {
@@ -65,25 +79,13 @@ export default {
       }).then(res => {
         const { total, data } = res
         this.total = total
-        this.commentsList = data
+        this.commentList = data
       }).catch(() => {})
       this.fetchLoading = false
     },
-    /**
-     * 更新要回复的评论数据
-     * @param {Object} data
-     */
-    updateReplyData(data) {
-      this.replyData = data
-    },
-    // 重置要回复的评论数据
-    resetReplyData() {
-      this.replyData = {
-        topic_id: this.topicId
-      }
-    },
-    resetInfo() {
-      this.info.content = ''
+    onSubmitSuccess() {
+      this.formData.content = ''
+      this.fetchList()
     }
   }
 }
@@ -108,6 +110,11 @@ export default {
       color: var(--color-secondary);
       text-align: center;
     }
+  }
+  ::v-deep .emojis{
+    width: 32px;
+    height: 32px;
+    vertical-align: middle;
   }
 }
 

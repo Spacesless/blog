@@ -1,8 +1,17 @@
+const path = require('path')
 const CompressionPlugin = require('compression-webpack-plugin')
 
 const isPro = process.env.NODE_ENV === 'production'
+const srcDir = 'client/web/'
+
+function resolve(dir) {
+  return path.join(__dirname, '../', srcDir, dir)
+}
 
 module.exports = {
+  alias: {
+    '#': resolve('../common')
+  },
   buildModules: ['@nuxtjs/color-mode'],
   build: {
     babel: {

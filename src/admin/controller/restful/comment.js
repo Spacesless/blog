@@ -5,6 +5,11 @@ module.exports = class extends Rest {
     if (this.id) {
       const data = await this.modelInstance.where({ id: this.id }).find();
 
+      if (data.parent_id) {
+        const replyData = await this.modelInstance.where({ id: data.parent_id }).find();
+        data.replyData = replyData;
+      }
+
       return this.success(data);
     } else {
       const { page, pageSize } = this.get();

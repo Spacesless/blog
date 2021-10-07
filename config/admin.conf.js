@@ -8,40 +8,12 @@ function resolve(dir) {
 }
 
 module.exports = {
+  alias: {
+    '#': resolve('../common')
+  },
   axios: {
     proxy: true,
     prefix: '/admin'
-  },
-  proxy: {
-    '/admin': {
-      target: 'http://127.0.0.1:8360', // 目标接口域名
-      changeOrigin: true // 表示是否跨域
-    }
-  },
-  modern: isPro, // 现代模式
-  srcDir,
-  target: 'static',
-  ssr: false,
-  telemetry: false, // 关闭收集遥测数据
-  head: {
-    meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' }
-    ]
-  },
-  css: [
-    '@/styles/index.scss'
-  ],
-  plugins: [
-    '@/plugins/axios',
-    '@/plugins/api',
-    '@/plugins/element-ui',
-    '@/plugins/svg-icon'
-  ],
-  generate: {
-    dir: 'www/admin',
-    fallback: 'index.html'
   },
   build: {
     publicPath: '//cdn.timelessq.com/admin/', // 只需将www/admin上传cdn
@@ -104,10 +76,37 @@ module.exports = {
   buildModules: [
     '@nuxtjs/router'
   ],
+  css: [
+    '@/styles/index.scss'
+  ],
+  plugins: [
+    '@/plugins/axios',
+    '@/plugins/api',
+    '@/plugins/element-ui',
+    '@/plugins/svg-icon'
+  ],
+  generate: {
+    dir: 'www/admin',
+    fallback: 'index.html'
+  },
+  head: {
+    meta: [
+      { charset: 'utf-8' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      { hid: 'description', name: 'description', content: '' }
+    ]
+  },
+  modern: isPro, // 现代模式
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/proxy'
   ],
+  proxy: {
+    '/admin': {
+      target: 'http://127.0.0.1:8360', // 目标接口域名
+      changeOrigin: true // 表示是否跨域
+    }
+  },
   render: {
     compressor: false // 禁用中间件压缩
     // resourceHints: false  // 添加prefetch并preload链接以加快初始页面加载时间。
@@ -117,5 +116,9 @@ module.exports = {
   },
   server: {
     port: 9528
-  }
+  },
+  srcDir,
+  ssr: false,
+  target: 'static',
+  telemetry: false // 关闭收集遥测数据
 }

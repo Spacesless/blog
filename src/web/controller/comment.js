@@ -42,9 +42,11 @@ module.exports = class extends Base {
     let result;
     const data = this.post();
 
+    // 重复内容检测
     const isExist = await this.model('comment')
       .where({ ip: IP, parent_id: data.parent_id, content: ['like', `%${data.content}%`] })
       .count();
+    // 基于IP的发布评论频率限制
     if (isExist) {
       return this.fail('请勿重复评论');
     } else {
