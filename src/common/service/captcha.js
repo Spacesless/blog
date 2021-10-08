@@ -1,9 +1,9 @@
-const ThinkSvgCaptcha = require('think-svg-captcha')
-const path = require('path')
+const ThinkSvgCaptcha = require('think-svg-captcha');
+const path = require('path');
 
 module.exports = class extends think.Service {
   constructor(options) {
-    super()
+    super();
     const defaultOptions = {
       size: 4, // 字符个数
       ignoreChars: '0oO1i', // 过滤字符
@@ -15,8 +15,8 @@ module.exports = class extends think.Service {
       fontPath: path.join(think.RESOURCE_PATH, '/fonts/Monaco.ttf'), // 字体文件路径
       fontSize: 36, // captcha 文字大小
       charPreset: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789' // random character preset
-    }
-    this.options = options ? Object.assign(defaultOptions, options) : defaultOptions
+    };
+    this.options = options ? Object.assign(defaultOptions, options) : defaultOptions;
   }
 
   /**
@@ -24,8 +24,8 @@ module.exports = class extends think.Service {
    * @returns {Object} {data: 'svg path data', text: 'captcha text'}
    */
   createCaptcha() {
-    const captchaInstance = new ThinkSvgCaptcha(this.options)
-    const captchaData = captchaInstance.create()
-    return captchaData
+    const captchaInstance = new ThinkSvgCaptcha(this.options);
+    const captchaData = captchaInstance.create();
+    return captchaData;
   }
-}
+};

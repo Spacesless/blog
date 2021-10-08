@@ -46,7 +46,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import FavoriteList from './components/-favorite-list'
 import FollowList from './components/-follow-list'
 
@@ -81,7 +80,6 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['isSupportWebp']),
     vipText() {
       return this.userInfo.vip?.label?.text
     }

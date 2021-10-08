@@ -1,7 +1,6 @@
 const getters = {
   sidebar: state => state.sidebar,
   device: state => state.device,
-  isSupportWebp: state => state.isSupportWebp,
   visitedViews: state => state.tagsView.visitedViews,
   cachedViews: state => state.tagsView.cachedViews,
   token: state => state.user.token,

@@ -73,7 +73,7 @@ module.exports = class extends Base {
           title: _title,
           content: _content,
           url: `/${findCategory.type}/detail/${id}`,
-          imgurl: await this.thumbImage(imgurl, thumbX, thumbY, configs.thumb_kind),
+          imgurl: await this.getThumbnail(imgurl, thumbX, thumbY, configs.thumb_kind),
           classList
         });
       }

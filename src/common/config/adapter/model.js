@@ -1,6 +1,12 @@
 const path = require('path');
 const mysql = require('think-model-mysql');
-const config = require(path.join(think.ROOT_PATH, 'config/database.conf.js'));
+
+let config = {};
+try {
+  config = require(path.join(think.ROOT_PATH, 'config/database.conf.js'));
+} catch (e) {
+  think.logger.debug(e);
+}
 
 const isDev = think.env === 'development';
 const { database, prefix, encoding, host, port, user, password } = config;
@@ -22,7 +28,7 @@ module.exports = {
     prefix: prefix || 'tl_',
     encoding: encoding || 'utf8',
     host: host || '127.0.0.1',
-    port: port || '',
+    port: port,
     user: user,
     password: password,
     dateStrings: true,

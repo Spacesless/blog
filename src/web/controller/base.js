@@ -108,70 +108,63 @@ module.exports = class extends think.Controller {
   }
 
   /**
-   * 裁剪图片
+   * 获取绝对路径
+   * @param {String} src 源路径
+   * @returns  {String}
+   */
+  getAbsolutePath(src) {
+    return isDev ? src : `${src ? '//cdn.timelessq.com' + src : ''}`;
+  }
+
+  /**
+   * 获取缩略图
    * @param {Number} width 目标图片宽度.
    * @param {Number} height 目标图片高度
    * @param {Number} fit 裁剪方式
    * @param {Object} options 目标图片输出参数
+   * @returns {String}
    */
-  async thumbImage(src, width, height, fit = 0, options = {}) {
+  async getThumbnail(src, width, height, fit = 0, options = {}) {
     if (think.isEmpty(src)) {
       src = '/static/placeholder.png';
     }
-    const isSupportWebp = Number(this.ctx.headers.SupportWebp);
-    const dest = await think.sharpResize(src, {
-      width: +width,
-      height: +height,
-      fit: +fit
-    },
-    {
-      format: isSupportWebp ? 'webp' : 'jpg',
-      ...options
-    });
 
-    return isDev ? dest : `${dest ? '//cdn.timelessq.com' + dest : ''}`;
+    const SharpHelper = think.service('sharp', 'common');
+    const dest = await SharpHelper.resizeAndCrop(
+      src,
+      {
+        width: +width,
+        height: +height,
+        fit: +fit
+      },
+      {
+        format: 'jpg',
+        ...options
+      }
+    );
+
+    return this.getAbsolutePath(dest);
   }
 
   /**
-   * 转换图片为webp
-   * @param {String} src
-   */
-  async convertToWebp(src) {
-    if (think.isEmpty(src)) return '';
-
-    const isSupportWebp = this.ctx.headers.supportwebp;
-    const dest = await think.sharpFormat(src, {
-      format: +isSupportWebp ? 'webp' : 'jpg'
-    });
-
-    return isDev ? dest : `${dest ? '//cdn.timelessq.com' + dest : ''}`;
-  }
-
-  /**
-   * 文章内图片转换成webp格式
+   * 文章内图片添加CDN地址
    * @param {String} str 文章内容
    * @returns {String}
    */
-  async compressContent(content) {
-    const isSupportWebp = this.ctx.headers.supportwebp;
-    if (+isSupportWebp) {
-      const contentImages = content.match(/<img[^>]+>/g) || [];
-      const temp = [];
-      contentImages.forEach((item) => {
-        item.replace(/<img [^>]*src=['"]([^'"]+)[^>]*>/gi, (match, capture) => {
-          if (capture.includes('upload')) { temp.push(capture) }
-        });
+  async formatContent(content) {
+    const contentImages = content.match(/<img[^>]+>/g) || [];
+    const temp = [];
+    contentImages.forEach((item) => {
+      item.replace(/<img [^>]*src=['"]([^'"]+)[^>]*>/gi, (match, capture) => {
+        if (capture.includes('upload')) { temp.push(capture) }
       });
-      for (let i = 0; i < temp.length; i++) {
-        const src = temp[i];
-        if (think.isEmpty(src)) continue;
+    });
+    for (let i = 0; i < temp.length; i++) {
+      const src = temp[i];
+      if (think.isEmpty(src)) continue;
 
-        const dest = await think.sharpFormat(src, {
-          format: +isSupportWebp ? 'webp' : 'jpg'
-        });
-        const fileUrl = isDev ? dest : `${dest ? '//cdn.timelessq.com' + dest : ''}`;
-        if (dest) { content = content.replace(src, fileUrl) }
-      }
+      const fileUrl = this.getAbsolutePath(src);
+      content = content.replace(src, fileUrl);
     }
 
     return content;
@@ -181,6 +174,7 @@ module.exports = class extends think.Controller {
    * 截取字符串
    * @param {Number [int]} index 开始下标
    * @param {Number [int]} length 截取长度
+   * @returns {String}
    */
   substr(str, index, length) {
     return str.substr(index, length);

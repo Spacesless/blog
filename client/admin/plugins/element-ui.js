@@ -83,7 +83,15 @@ import {
   // Notification,
   // Avatar,
   // Drawer,
-  // InfiniteScroll
+  // InfiniteScroll,
+  // Popconfirm,
+  // Skeleton,
+  // SkeletonItem,
+  // Empty,
+  // Descriptions,
+  // DescriptionsItem,
+  // Result,
+  // CollapseTransition
 } from 'element-ui'
 
 const components = [

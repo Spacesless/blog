@@ -90,26 +90,6 @@ export function formatTime(time, option) {
 }
 
 /**
- * @param {string} url
- * @returns {Object}
- */
-export function param2Obj(url) {
-  const search = url.split('?')[1]
-  if (!search) {
-    return {}
-  }
-  return JSON.parse(
-    '{"' +
-      decodeURIComponent(search)
-        .replace(/"/g, '\\"')
-        .replace(/&/g, '","')
-        .replace(/=/g, '":"')
-        .replace(/\+/g, ' ') +
-      '"}'
-  )
-}
-
-/**
  * 栏目数组转换成树形结构
  * @param {Array} category 栏目数组
  * @returns {Array} 栏目树形结果数组
@@ -185,28 +165,6 @@ export function updateLocalStorage(key, data) {
   } else {
     localStorage.setItem(key, data)
   }
-}
-
-/**
- * 睡眠等待
- * @param {Number} duration 等待时间
- */
-export function sleep(duration = 10000) {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      resolve()
-    }, duration)
-  })
-}
-
-/**
- * 数字小数位数格式化
- * @param {Number} value 源数据
- * @param {Number [int]} length 保留小数位数
- */
-export function fixedNumber(value, length = 2) {
-  const isInteger = parseInt(value) === parseFloat(value)
-  return value && !isInteger ? value.toFixed(length) : value
 }
 
 /**

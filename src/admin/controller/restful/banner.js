@@ -5,7 +5,7 @@ module.exports = class extends Rest {
     if (this.id) {
       // banner 详情
       const data = await this.modelInstance.where({ id: this.id }).find();
-      data.imgurl = this.getResolveImgUrl(data.imgurl);
+      data.imgurl = this.getAbsolutePath(data.imgurl);
       return this.success(data);
     } else {
       // banner 列表

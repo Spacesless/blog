@@ -1,14 +1,10 @@
 const state = () => ({
-  isSupportWebp: false,
   menus: [],
   configs: {},
   device: 'desktop'
 })
 
 const mutations = {
-  SET_ACCEPT: (state, isSupport) => {
-    state.isSupportWebp = isSupport
-  },
   SET_MENUS: (state, menus) => {
     state.menus = menus
   },
@@ -22,9 +18,7 @@ const mutations = {
 
 const actions = {
   async nuxtServerInit({ commit }, { req, $axios }) {
-    const accept = req.headers.accept
-    commit('SET_ACCEPT', accept.includes('image/webp'))
-
+    // 获取菜单以及系统配置
     const { navigation, configs } = await $axios.$get(`/general`)
     commit('SET_MENUS', navigation)
     commit('SET_CONFIGS', configs)

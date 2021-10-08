@@ -1,14 +1,17 @@
 module.exports = class extends think.Controller {
   async __before() {
+    // 网站地址
     this.siteurl = this.ctx.origin.replace(/http:|https:/, '');
 
+    // 无需鉴权的白名单
     const { controller, action } = this.ctx;
-    const whiteController = ['user']; // 无需鉴权的白名单
+    const whiteController = ['user'];
     const whiteAction = ['login', 'forgot', 'reset', 'captcha'];
     if (whiteController.includes(controller) && whiteAction.includes(action)) {
       return;
     }
 
+    // Session-Cookie鉴权
     const userInfo = await this.session('userInfo');
     if (think.isEmpty(userInfo)) {
       return this.fail(401, '请登录后再操作！');
@@ -16,16 +19,18 @@ module.exports = class extends think.Controller {
   }
 
   /**
-   * 裁剪图片
+   * 获取缩略图
    * @param {Number} width 目标图片宽度.
    * @param {Number} height 目标图片高度
    * @param {Number} fit 裁剪方式
    * @param {Object} options 目标图片输出参数
+   * @returns {String}
    */
-  async thumbImage(src, width, height, fit = 0, options = {}) {
+  async getThumbnail(src, width, height, fit = 0, options = {}) {
     if (think.isEmpty(src)) return '';
-    const isSupportWebp = Number(this.ctx.headers.SupportWebp);
-    const dest = await think.sharpResize(
+
+    const SharpHelper = think.service('sharp', 'common');
+    const dest = await SharpHelper.resizeAndCrop(
       src,
       {
         width: +width,
@@ -33,21 +38,21 @@ module.exports = class extends think.Controller {
         fit: +fit
       },
       {
-        format: isSupportWebp ? 'webp' : 'jpg',
+        format: 'jpg',
         ...options
       }
     );
 
-    return dest ? this.siteurl + dest : '';
+    return this.getAbsolutePath(dest);
   }
 
   /**
-   * 获取封面图片绝对地址
-   * @param {String} imgurl 封面图片
+   * 获取绝对路径
+   * @param {String} src 源路径
    * @returns  {String}
    */
-  getResolveImgUrl(imgurl) {
-    return imgurl ? this.siteurl + imgurl : '';
+  getAbsolutePath(src) {
+    return src ? this.siteurl + src : '';
   }
 
   /**
@@ -55,7 +60,7 @@ module.exports = class extends think.Controller {
    * @param {String} content 内容
    * @returns  {String}
    */
-  getResolveContentUrl(content) {
+  getContentAbsolutePath(content) {
     return content ? content.replace(/\/upload/gi, this.siteurl + '/upload') : '';
   }
 };

@@ -6,8 +6,8 @@ module.exports = class extends Rest {
     if (this.id) {
       // 文章详情
       const data = await this.modelInstance.where({ id: this.id }).find();
-      data.imgurl = this.getResolveImgUrl(data.imgurl);
-      data.content = this.getResolveContentUrl(data.content);
+      data.imgurl = this.getAbsolutePath(data.imgurl);
+      data.content = this.getContentAbsolutePath(data.content);
       return this.success(data);
     } else {
       // 文章列表
@@ -38,7 +38,7 @@ module.exports = class extends Rest {
       const { data } = list;
       for (const item of data) {
         const { imgurl } = item;
-        item.imgurl = await this.thumbImage(imgurl, width, height, fit);
+        item.imgurl = await this.getThumbnail(imgurl, width, height, fit);
       }
       list.data = data;
 

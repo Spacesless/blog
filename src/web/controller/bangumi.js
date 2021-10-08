@@ -52,7 +52,7 @@ module.exports = class extends Base {
     for (const item of list.data) {
       const { imgurl, tag } = item
       item.description = this.substr(item.description, 0, 60)
-      item.imgurl = await this.thumbImage(imgurl, thumb_bangumi_x, thumb_bangumi_y, thumb_kind)
+      item.imgurl = await this.getThumbnail(imgurl, thumb_bangumi_x, thumb_bangumi_y, thumb_kind)
       item.tag = tag ? tag.split('|') : []
     }
 

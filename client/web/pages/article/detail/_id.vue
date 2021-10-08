@@ -12,17 +12,18 @@
         <span><i class="tl-icon">&#xe681;</i>{{ data.hits }}</span>
       </div>
     </div>
-    <!--blog content-->
+    <!-- 文章内容 -->
     <div class="blog-content">
       <div class="blog-content-wrap">
         <div ref="content" class="Tinymce" v-html="data.content" />
         <el-image ref="preview" class="app-preview" :src="previewSrc" :preview-src-list="previewSrcList" />
       </div>
-      <Catalog />
+      <!-- 文章目录 -->
+      <Catalog v-if="data.content" />
     </div>
-    <!-- share start -->
+    <!-- 社区分享 -->
     <Share />
-    <!-- comment start -->
+    <!-- 评论 -->
     <Comment :topic-id="'article-' + data.id" />
   </div>
 </template>
