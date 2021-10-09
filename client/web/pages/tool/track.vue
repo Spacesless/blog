@@ -24,6 +24,10 @@
             {{ node.label }}({{ data.count }})
           </span>
         </el-tree>
+        <!-- <dl v-for="(item, index) in tourTree" :key="index">
+          <dt>{{ item.name }}({{ item.count }})</dt>
+          <dd v-for="(child, childIndex) in item.children" :key="childIndex">{{ item.name }}({{ item.count }})</dd>
+        </dl> -->
       </el-scrollbar>
     </div>
     <div class="tour-overview">

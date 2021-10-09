@@ -54,11 +54,9 @@ module.exports = {
       splitChunks: {
         chunks: 'all',
         cacheGroups: {
-          commons: false,
           vendors: {
             name: 'vendors',
             test: /[\\/]node_modules[\\/]/,
-            minChunks: 2,
             priority: 10,
             chunks: 'initial' // only package third parties that are initially dependent
           },

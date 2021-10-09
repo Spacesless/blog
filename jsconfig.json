@@ -1,0 +1,6 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./client"
+  },
+  "exclude": ["node_modules", "dist"]
+}

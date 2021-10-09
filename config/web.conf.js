@@ -45,11 +45,9 @@ module.exports = {
       splitChunks: {
         chunks: 'all',
         cacheGroups: {
-          commons: false,
           vendors: {
             name: 'vendors',
             test: /[\\/]node_modules[\\/]/,
-            minChunks: 2,
             priority: 10,
             chunks: 'initial' // only package third parties that are initially dependent
           },
@@ -68,9 +66,9 @@ module.exports = {
         threshold: 10240 // 大于10kb的会压缩，默认为0
       })
     ],
-    publicPath: isPro ? '//cdn.timelessq.com/assets/dist/client' : '/_nuxt/' // 只需将dist/client上传cdn
+    publicPath: '//cdn.timelessq.com/web/' // 只需将www/web上传cdn
   },
-  buildDir: 'www/assets',
+  buildDir: 'www/web',
   css: [
     'element-ui/lib/theme-chalk/index.css',
     '@/styles/global.scss'

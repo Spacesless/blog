@@ -1,13 +1,20 @@
 <template>
   <div class="home">
     <!-- banner start -->
-    <el-carousel ref="carousel" class="banner" trigger="click" :interval="5000" :height="bannerHeight">
+    <el-carousel
+      ref="carousel"
+      class="banner"
+      trigger="click"
+      :interval="5000"
+      :height="bannerHeight"
+      indicator-position="none"
+    >
       <el-carousel-item v-for="item in bannerList" :key="item.title">
         <img class="banner-item__image" :src="item.imgurl" alt="">
         <div class="banner-item__title">{{ item.title }}</div>
       </el-carousel-item>
     </el-carousel>
-    <!-- blog start -->
+    <!-- 博文 -->
     <div class="article">
       <div class="home-head">
         <h2 class="home-head__title">最新文章</h2>
@@ -34,7 +41,7 @@
         </el-col>
       </el-row>
     </div>
-    <!-- bangumi start -->
+    <!-- 追番 -->
     <div class="bangumi">
       <div class="home-head">
         <h2 class="home-head__title">最近追番</h2>
@@ -45,7 +52,7 @@
           <el-row class="bangumi-list-item">
             <el-col :span="8" :xl="10">
               <nuxt-link :to="'/bangumi/detail/' + item.id" :title="item.title">
-                <img class="img-fluid" :src="item.imgurl" :alt="item.title">
+                <img class="img-fluid" :width="item.width" :height="item.height" :src="item.imgurl" :alt="item.title">
               </nuxt-link>
             </el-col>
             <el-col class="bangumi-list-info" :span="16" :xl="14">

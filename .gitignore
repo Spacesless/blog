@@ -29,7 +29,7 @@ package-lock.json
 runtime/
 config/database.conf.js
 www/admin
-www/assets
+www/web
 www/upload
 
 config.development.js

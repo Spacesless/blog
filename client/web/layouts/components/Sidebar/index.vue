@@ -13,6 +13,7 @@
         :default-active="activeMenu"
         :collapse="isCollapse"
         class="aside-menu"
+        role="menu"
       >
         <div class="aside-menu-item">
           <nuxt-link to="/">

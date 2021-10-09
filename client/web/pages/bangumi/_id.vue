@@ -45,7 +45,7 @@
           <el-row class="bangumi-list__item">
             <el-col class="bangumi-list-cover" :span="8" :xl="10">
               <nuxt-link :to="'/bangumi/detail/' + item.id">
-                <img class="img-fluid" :src="item.imgurl" :alt="item.title">
+                <img class="img-fluid" :width="item.width" :height="item.height" :src="item.imgurl" :alt="item.title">
                 <span class="bangumi-list__ratings">{{ item.ratings }}</span>
               </nuxt-link>
             </el-col>
