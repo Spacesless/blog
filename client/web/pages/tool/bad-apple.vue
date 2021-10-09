@@ -1,7 +1,7 @@
 <template>
   <div class="apple">
     <div ref="apple" class="apple-console" />
-    <audio ref="audio" class="apple-audio" controls :src="'/static/bad-apple/music.mp3' | replaceUrlPrefix">
+    <audio ref="audio" class="apple-audio" controls src="//cos.timelessq.com/static/bad-apple/music.mp3">
       <p>你的浏览器不支持播放音频</p>
     </audio>
   </div>
@@ -47,7 +47,7 @@ export default {
   },
   methods: {
     fetchData() {
-      return axios.get(`/static/bad-apple/frame-${this.fileIndex}.txt`).then(res => {
+      return axios.get(`//cos.timelessq.com/static/bad-apple/frame-${this.fileIndex}.txt`).then(res => {
         const data = res.data?.trim().split('\n\r') || []
         data.forEach((item, index) => {
           this.dotsArr[(this.fileIndex - 1) * partCount + index] = item
