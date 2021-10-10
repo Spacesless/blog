@@ -20,7 +20,7 @@ module.exports = class extends Base {
       .order('sort ASC')
       .select();
     for (const element of bannerList) {
-      element.imgurl = await this.convertToWebp(element.imgurl);
+      element.imgurl = await this.getAbsolutePath(element.imgurl);
     }
 
     // 最新动态文章

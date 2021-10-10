@@ -1,5 +1,5 @@
 const path = require('path');
-const nuxt = require('./nuxt');
+const nuxt = require('./middleware/nuxt');
 const nuxtConfig = require(path.join(think.ROOT_PATH, '/nuxt.config.js'));
 
 const isDev = think.env === 'development';

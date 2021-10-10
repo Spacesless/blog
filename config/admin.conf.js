@@ -16,7 +16,6 @@ module.exports = {
     prefix: '/admin'
   },
   build: {
-    publicPath: '//cdn.timelessq.com/admin/', // 只需将www/admin上传cdn
     babel: {
       plugins: [
         [
@@ -68,7 +67,14 @@ module.exports = {
         }
       },
       runtimeChunk: false
-    }
+    },
+    postcss: {
+      'plugins': {
+        // to edit target browsers: use "browserslist" field in package.json
+        'autoprefixer': {}
+      }
+    },
+    publicPath: '//cdn.timelessq.com/admin/' // 只需将www/admin上传cdn
   },
   buildDir: 'www/admin',
   buildModules: [

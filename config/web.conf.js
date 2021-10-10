@@ -57,8 +57,13 @@ module.exports = {
             test: /[\\/]node_modules[\\/]_?element-ui(.*)/ // in order to adapt to cnpm
           }
         }
-      },
-      runtimeChunk: false
+      }
+    },
+    postcss: {
+      'plugins': {
+        // to edit target browsers: use "browserslist" field in package.json
+        'autoprefixer': {}
+      }
     },
     plugins: [
       new CompressionPlugin({
