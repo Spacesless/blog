@@ -19,7 +19,7 @@
         <el-image ref="preview" class="app-preview" :src="previewSrc" :preview-src-list="previewSrcList" />
       </div>
       <!-- 文章目录 -->
-      <Catalog v-if="data.content" />
+      <Catalog />
     </div>
     <!-- 社区分享 -->
     <Share />
@@ -29,11 +29,11 @@
 </template>
 
 <script>
+import Prism from 'prismjs'
+import ClipboardJS from 'clipboard'
 import Catalog from '@/components/Catalog'
 import Share from '@/components/Share'
 import Comment from '#/components/Comment'
-import Prism from 'prismjs'
-import ClipboardJS from 'clipboard'
 
 export default {
   name: 'BlogConent',

@@ -39,7 +39,6 @@
           v-if="commentData.id === replyData.id"
           ref="textArea"
           :form-data.sync="formData"
-          :reply-data="replyData"
           :submit-comment="submitComment"
         />
       </div>
@@ -92,7 +91,7 @@ export default {
     // 取消回复
     handleCancel() {
       this.$emit('update:replyData', {
-        topic_id: this.tempReplyId
+        id: this.tempReplyId
       })
     },
     /**

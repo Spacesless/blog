@@ -77,10 +77,6 @@ export default {
       type: Object,
       default: () => {}
     },
-    replyData: {
-      type: Object,
-      default: () => {}
-    },
     submitComment: {
       type: Function,
       default: () => {}
@@ -152,17 +148,9 @@ export default {
       this.$refs.form.validate(async(valid) => {
         if (!valid) return
 
-        const { id, topic_id, parent_id, name, type } = this.replyData
-        const postData = {
-          ...this.formData,
-          topic_id,
-          reply_name: name,
-          parent_id: parent_id || id || 0,
-          type: type ? type + 1 : 1,
-          content: this.formatContent()
-        }
         this.submitLoading = true
-        await this.submitComment(postData).catch(() => {})
+        const content = this.formatContent()
+        await this.submitComment(content).catch(() => {})
         this.submitLoading = false
       })
     }

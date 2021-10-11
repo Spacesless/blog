@@ -1,5 +1,5 @@
 <template>
-  <ul v-if="catalogList.length" class="catalog">
+  <ul v-if="isLoaded && catalogList.length" class="catalog">
     <li
       v-for="(item, index) in catalogList"
       :key="index"
@@ -23,7 +23,8 @@ export default {
   data() {
     return {
       catalogList: [],
-      isActive: -1
+      isActive: -1,
+      isLoaded: false
     }
   },
   computed: {
@@ -32,9 +33,10 @@ export default {
     }
   },
   mounted() {
-    this.$nextTick(() => {
+    window.onload = () => {
       this.initCatelog()
-    })
+      this.isLoaded = true
+    }
   },
   methods: {
     initCatelog() {

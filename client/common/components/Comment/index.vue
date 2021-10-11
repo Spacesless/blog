@@ -4,7 +4,6 @@
     <comment-reply
       v-if="!replyData.id"
       :form-data.sync="formData"
-      :reply-data="replyData"
       :submit-comment="submitComment"
     />
     <div v-if="total === 0" class="comment-none">
@@ -36,6 +35,7 @@
 import Pagination from '#/components/Pagination/index'
 import CommentItem from './CommentItem'
 import CommentReply from './CommentReply'
+import { getLocalStorage, setLocalStorage } from '#/utils'
 
 export default {
   components: {
@@ -51,9 +51,7 @@ export default {
   },
   data() {
     return {
-      formData: {
-        content: ''
-      },
+      formData: {},
       replyData: {
         topic_id: this.topicId
       },
@@ -67,7 +65,18 @@ export default {
     }
   },
   mounted() {
+    this.storageInfo = getLocalStorage('comment')
+    this.formData = {
+      ...this.storageInfo,
+      content: ''
+    }
     this.fetchList()
+  },
+  beforeDestroy() {
+    delete this.formData.content
+    if (JSON.stringify(this.formData) !== JSON.stringify(this.storageInfo)) {
+      setLocalStorage('comment', this.formData)
+    }
   },
   methods: {
     // 获取评论列表
@@ -85,9 +94,18 @@ export default {
     },
     /**
      * 提交评论
-     * @param {Object} postData 评论数据
+     * @param {String} content 评论信息
      */
-    submitComment(postData) {
+    submitComment(content) {
+      const { id, topic_id, parent_id, name, type } = this.replyData
+      const postData = {
+        ...this.formData,
+        topic_id,
+        reply_name: name,
+        parent_id: parent_id || id || 0,
+        type: type ? type + 1 : 1,
+        content
+      }
       return this.$axios.$post('/comment/post', postData).then(res => {
         this.$notify({
           title: '评论成功',

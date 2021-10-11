@@ -24,7 +24,6 @@
     <div class="comment-reply">
       <comment-reply
         :form-data.sync="formData"
-        :reply-data="replyData"
         :submit-comment="submitComment"
       />
     </div>
@@ -65,9 +64,12 @@ export default {
     },
     /**
      * 提交评论
-     * @param {Object} postData 评论数据
+     * @param {String} content 评论信息
      */
-    submitComment(postData) {
+    submitComment(content) {
+      const postData = {
+        content
+      }
       this.$api.content.CreateContent('comment', postData).then(res => {
         this.fetchData()
       })

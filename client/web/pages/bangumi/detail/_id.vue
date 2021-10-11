@@ -43,7 +43,6 @@
     </div>
     <!--bangumi content-->
     <div v-if="hasContent" class="bangumi-content">
-      <h2 class="app-main__title">观后感</h2>
       <div class="Tinymce" v-html="data.content" />
       <el-image ref="preview" class="app-preview" :src="previewSrc" :preview-src-list="previewSrcList" />
     </div>

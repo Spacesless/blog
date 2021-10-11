@@ -10,7 +10,7 @@
       indicator-position="none"
     >
       <el-carousel-item v-for="item in bannerList" :key="item.title">
-        <img class="banner-item__image" :src="item.imgurl" alt="">
+        <img class="banner-item__image" width="1280" height="500" :src="item.imgurl" :alt="item.title">
         <div class="banner-item__title">{{ item.title }}</div>
       </el-carousel-item>
     </el-carousel>
@@ -157,6 +157,7 @@ export default {
     &__image{
       display: block;
       width: 100%;
+      height: auto;
     }
     &__title{
       position: absolute;
