@@ -14,7 +14,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { position, scrollTo } from '@/utils/scroll-to'
+import { position, scrollTo } from '#/utils/scroll-to'
 
 const REFERENCE = 200
 

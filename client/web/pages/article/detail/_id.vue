@@ -31,7 +31,7 @@
 <script>
 import Catalog from '@/components/Catalog'
 import Share from '@/components/Share'
-import Comment from '@/components/Comment'
+import Comment from '#/components/Comment'
 import Prism from 'prismjs'
 import ClipboardJS from 'clipboard'
 

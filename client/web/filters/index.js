@@ -1,5 +1,5 @@
 // import parseTime and set to filter
-export { parseTime } from '@/utils'
+export { parseTime } from '#/utils'
 
 export function replaceUrlPrefix(url) {
   const isDev = process.env.NODE_ENV === 'development'

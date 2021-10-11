@@ -80,14 +80,14 @@
       </el-row>
       <!--list paper-->
       <div class="list-page">
-        <pagination :total="total" :page.sync="listPage.page" :limit="listPage.pageSize" @pagination="changeListPage" />
+        <pagination :is-admin="false" :total="total" :page.sync="listPage.page" :limit="listPage.pageSize" @pagination="changeListPage" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import Pagination from '@/components/Pagination'
+import Pagination from '#/components/Pagination'
 import { listQuery, listPage, globalFilter } from '@/mixins'
 
 export default {

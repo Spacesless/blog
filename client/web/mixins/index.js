@@ -1,4 +1,4 @@
-import { parseTime } from '@/utils'
+import { parseTime } from '#/utils'
 
 export const listPage = {
   data() {
@@ -75,13 +75,6 @@ export const listQuery = {
 
 export const globalFilter = {
   filters: {
-    /**
-     * 格式化时间
-     * @param {String} format {y}-{m}-{d} {h}:{i}:{s}
-     */
-    moment(time, format) {
-      return parseTime(time, format)
-    },
     bangumiStatus(status) {
       status = status || 0
       const statusList = ['未上映', '连载中', '已完结']

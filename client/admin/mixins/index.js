@@ -1,5 +1,5 @@
 import { debounce } from 'lodash-es'
-import elHeightAdaptiveTable from '@/directive/el-table'
+import elHeightAdaptiveTable from '#/directive/el-table'
 
 /**
  * echarts自适应

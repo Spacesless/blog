@@ -42,14 +42,14 @@
     <div v-else class="search-noData">暂无数据</div>
     <!-- list page -->
     <div class="list-page">
-      <pagination v-show="total > 0" :total="total" :page.sync="listQuery.page" :limit="20" @pagination="fetchList" />
+      <pagination :is-admin="false" :total="total" :page.sync="listQuery.page" :limit="20" @pagination="fetchList" />
     </div>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-import Pagination from '@/components/Pagination'
+import Pagination from '#/components/Pagination'
 
 export default {
   components: {

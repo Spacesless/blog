@@ -5,7 +5,7 @@
       v-if="!replyData.id"
       :form-data.sync="formData"
       :reply-data="replyData"
-      @onSubmitSuccess="onSubmitSuccess"
+      :submit-comment="submitComment"
     />
     <div v-if="total === 0" class="comment-none">
       <p class="comment-none__tips">还没有评论，快来抢第一吧</p>
@@ -18,7 +18,7 @@
         :form-data="formData"
         :comment-data="item"
         :reply-data.sync="replyData"
-        @onSubmitSuccess="onSubmitSuccess"
+        :submit-comment="submitComment"
       />
       <pagination
         v-if="total > listQuery.pageSize"
@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import Pagination from '@/components/Pagination/index'
+import Pagination from '#/components/Pagination/index'
 import CommentItem from './CommentItem'
 import CommentReply from './CommentReply'
 
@@ -57,7 +57,6 @@ export default {
       replyData: {
         topic_id: this.topicId
       },
-      isTreeRoot: true,
       fetchLoading: false,
       total: 0,
       listQuery: {
@@ -71,6 +70,7 @@ export default {
     this.fetchList()
   },
   methods: {
+    // 获取评论列表
     async fetchList() {
       this.listQuery.topic_id = this.topicId
       this.fetchLoading = true
@@ -83,9 +83,27 @@ export default {
       }).catch(() => {})
       this.fetchLoading = false
     },
-    onSubmitSuccess() {
-      this.formData.content = ''
-      this.fetchList()
+    /**
+     * 提交评论
+     * @param {Object} postData 评论数据
+     */
+    submitComment(postData) {
+      return this.$axios.$post('/comment/post', postData).then(res => {
+        this.$notify({
+          title: '评论成功',
+          message: '感谢您留下美好的声音',
+          type: 'success',
+          offset: 50
+        })
+        this.formData.content = ''
+        this.fetchList()
+      }).catch(error => {
+        this.$notify.error({
+          title: '评论失败',
+          message: error,
+          offset: 50
+        })
+      })
     }
   }
 }

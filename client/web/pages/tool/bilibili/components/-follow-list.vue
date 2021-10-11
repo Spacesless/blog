@@ -18,12 +18,12 @@
         </li>
       </ul>
     </el-scrollbar>
-    <pagination class="pagination" :total="total" :page.sync="listQuery.page" :limit="listQuery.pageSize" @pagination="fetchList" />
+    <pagination class="pagination" :is-admin="false" :total="total" :page.sync="listQuery.page" :limit="listQuery.pageSize" @pagination="fetchList" />
   </div>
 </template>
 
 <script>
-import Pagination from '@/components/Pagination'
+import Pagination from '#/components/Pagination'
 
 const mid = 315883644
 const apiurl = 'https://api.timelessq.com/bilibili'

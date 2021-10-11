@@ -67,7 +67,7 @@
 import { differenceBy } from 'lodash/array'
 let elHeightAdaptiveTable = {}
 if (process.client) {
-  elHeightAdaptiveTable = require('@/directive/el-table').default
+  elHeightAdaptiveTable = require('#/directive/el-table').default
 }
 
 export default {

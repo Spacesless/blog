@@ -54,7 +54,7 @@
 
 <script>
 import Share from '@/components/Share'
-import Comment from '@/components/Comment'
+import Comment from '#/components/Comment'
 import { globalFilter } from '@/mixins'
 
 export default {

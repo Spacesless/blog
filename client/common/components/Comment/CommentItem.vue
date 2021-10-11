@@ -1,14 +1,15 @@
 <template>
   <div class="comment-item">
     <div class="clearfix">
+      <!-- 头像 -->
       <div class="comment-avatar">
         <a
           rel="noopener noreferrer"
-          :href="data.website ? data.website : 'javascript:;'"
-          :target="data.website ? '__blank' : ''"
-          :title="data.website"
+          :href="commentData.website ? commentData.website : 'javascript:;'"
+          :target="commentData.website ? '__blank' : ''"
+          :title="commentData.website"
         >
-          <el-image class="comment-avatar__picture" :src="getAvatar(data)">
+          <el-image class="comment-avatar__picture" :src="getAvatar(commentData)">
             <div slot="error" class="image-slot">
               <span class="el-icon-picture-outline" />
             </div>
@@ -16,76 +17,83 @@
         </a>
       </div>
       <div class="comment-info">
-        <p class="comment-info-name">{{ data.name }}<span v-if="data.is_admin" class="comment-info__admin">管网站的</span></p>
+        <!-- 昵称 -->
+        <p class="comment-info-name">{{ commentData.name }}<span v-if="commentData.is_admin" class="comment-info__admin">管网站的</span></p>
         <div class="comment-info-operate">
-          <span class="comment-info__time">{{ data.addtime }}</span>
-          <span v-if="data.id === replyData.id" class="comment-info-btn" @click="handleCancel">
+          <!-- 评论时间 -->
+          <span class="comment-info__time">{{ commentData.addtime }}</span>
+          <span v-if="commentData.id === replyData.id" class="comment-info-btn" @click="handleCancel">
             <span class="el-icon-close" />取消
           </span>
           <span v-else class="comment-info-btn" @click="handleReply">
             <span class="el-icon-chat-line-round" />回复
           </span>
         </div>
+        <!-- 评论内容 -->
         <div class="comment-info-content">
-          <span v-if="data.type === 3" class="comment-info-content__replyname">@{{ data.reply_name }}</span>
-          <span class="comment-info-content__text" v-html="data.content" />
+          <span v-if="commentData.type === 3" class="comment-info-content__replyname">@{{ commentData.reply_name }}</span>
+          <span class="comment-info-content__text" v-html="commentData.content" />
         </div>
-
-        <comment-reply v-if="data.id === replyData.id" ref="textArea" :info="info" :reply-data="replyData" />
+        <!-- 回复 -->
+        <comment-reply
+          v-if="commentData.id === replyData.id"
+          ref="textArea"
+          :form-data.sync="formData"
+          :reply-data="replyData"
+          :submit-comment="submitComment"
+        />
       </div>
     </div>
-
-    <div v-if="data.children" class="comment-tree">
+    <!-- 子评论 -->
+    <div v-if="commentData.children" class="comment-tree">
       <comment-item
-        v-for="child in data.children"
+        v-for="child in commentData.children"
         :key="child.id"
-        :info="info"
-        :data="child"
+        :form-data="formData"
+        :comment-data="child"
         :reply-data="replyData"
+        :submit-comment="submitComment"
       />
     </div>
   </div>
 </template>
 
 <script>
-import CommentReply from './CommentReply'
 import md5 from 'md5'
+import CommentReply from './CommentReply'
 
 export default {
   name: 'CommentItem',
   components: { CommentReply },
   props: {
-    info: {
+    formData: {
       type: Object,
       default: () => {}
     },
-    data: {
+    commentData: {
       type: Object,
       default: () => {}
     },
     replyData: {
       type: Object,
       default: () => {}
+    },
+    submitComment: {
+      type: Function,
+      default: () => {}
     }
-  },
-  data() {
-    return {
-      tree: null
-    }
-  },
-  mounted() {
-    let parent = this.$parent
-    while (parent && !parent.isTreeRoot) {
-      parent = parent.$parent
-    }
-    this.tree = parent
   },
   methods: {
-    async handleReply() {
-      this.tree.updateReplyData(this.data)
+    // 回复指定评论
+    handleReply() {
+      this.tempReplyId = this.replyData.id
+      this.$emit('update:replyData', this.commentData)
     },
+    // 取消回复
     handleCancel() {
-      this.tree.resetReplyData()
+      this.$emit('update:replyData', {
+        topic_id: this.tempReplyId
+      })
     },
     /**
      * 根据邮箱地址获取头像

@@ -28,7 +28,7 @@
             show-word-limit
             resize="none"
             placeholder="What do you want to say..."
-            @blur="onTextareaKeyDown"
+            @blur="onTextareaBlur"
           />
         </el-form-item>
       </el-col>
@@ -80,6 +80,10 @@ export default {
     replyData: {
       type: Object,
       default: () => {}
+    },
+    submitComment: {
+      type: Function,
+      default: () => {}
     }
   },
   data() {
@@ -109,24 +113,45 @@ export default {
   },
   computed: {
     previewHtml() {
-      const target = this.formatContent()
-      return target
+      return this.formatContent()
     },
     emojiList() {
       return this.$refs.emoji.emojis
     }
   },
-  mounted() {
-    let parent = this.$parent
-    while (parent && !parent.isTreeRoot) {
-      parent = parent.$parent
-    }
-    this.tree = parent
-  },
   methods: {
+    /**
+     * @event 选中表情
+     * @param {String} emojis 表情名称
+     */
+    onSelectEmojis(emojis) {
+      const content = this.formData.content || ''
+      this.formData.content = `${content.slice(0, this.selectionStart)} :${emojis}: ${content.slice(this.selectionStart)}`
+    },
+    /**
+     * @event 评论输入框拾取焦点
+     * @param {Event} e
+     * @summary 获取输入光标位置
+     */
+    onTextareaBlur(e) {
+      this.selectionStart = e.target.selectionStart
+    },
+    // 格式化表情展示
+    formatContent() {
+      return this.formData.content.replace(/:((?!:).)*:/g, emojis => {
+        const [prefix, ...name] = emojis.replace(/:/g, '').split('_')
+
+        const findEmojis = this.emojiList.find(item => item.prefix.includes(prefix))
+        if (findEmojis) {
+          return `<img class="emojis" src="${findEmojis.url}/${findEmojis.prefix}${name.join('_')}.${findEmojis.type}" alt="${findEmojis.prefix}${name.join('_')}" >`
+        }
+        return emojis
+      })
+    },
     handleSubmit() {
       this.$refs.form.validate(async(valid) => {
         if (!valid) return
+
         const { id, topic_id, parent_id, name, type } = this.replyData
         const postData = {
           ...this.formData,
@@ -137,40 +162,8 @@ export default {
           content: this.formatContent()
         }
         this.submitLoading = true
-        await this.$axios.$post('/comment/post', postData).then(res => {
-          this.$notify({
-            title: '评论成功',
-            message: '感谢您留下美好的声音',
-            type: 'success',
-            offset: 50
-          })
-          this.$emit('onSubmitSuccess')
-        }).catch(error => {
-          this.$notify.error({
-            title: '评论失败',
-            message: error,
-            offset: 50
-          })
-        })
+        await this.submitComment(postData).catch(() => {})
         this.submitLoading = false
-      })
-    },
-    onSelectEmojis(emojis) {
-      const content = this.formData.content || ''
-      this.formData.content = `${content.slice(0, this.selectionStart)} :${emojis}: ${content.slice(this.selectionStart)}`
-    },
-    onTextareaKeyDown(e) {
-      this.selectionStart = e.target.selectionStart
-    },
-    formatContent() {
-      return this.formData.content.replace(/:((?!:).)*:/g, emojis => {
-        const [prefix, ...name] = emojis.replace(/:/g, '').split('_')
-
-        const findEmojis = this.emojiList.find(item => item.prefix.includes(prefix))
-        if (findEmojis) {
-          return `<img class="emojis" src="${findEmojis.url}/${findEmojis.prefix}${name.join('_')}.${findEmojis.type}" alt="${findEmojis.prefix}${name.join('_')}" >`
-        }
-        return emojis
       })
     }
   }

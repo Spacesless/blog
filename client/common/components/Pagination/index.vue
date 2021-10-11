@@ -4,7 +4,7 @@
       :background="background"
       :current-page.sync="currentPage"
       :page-size.sync="pageSize"
-      :layout="layout"
+      :layout="pageLayout"
       :page-sizes="pageSizes"
       :total="total"
       v-bind="$attrs"
@@ -15,7 +15,8 @@
 </template>
 
 <script>
-import { scrollTo } from '@/utils/scroll-to'
+import { mapGetters } from 'vuex'
+import { scrollTo } from '#/utils/scroll-to'
 
 export default {
   name: 'Pagination',
@@ -38,9 +39,17 @@ export default {
         return [10, 20, 30, 50, 100]
       }
     },
-    layout: {
+    isAdmin: {
+      type: Boolean,
+      default: true
+    },
+    adminLayout: {
       type: String,
       default: 'total, sizes, ->, prev, pager, next, jumper'
+    },
+    webLayout: {
+      type: String,
+      default: 'total, prev, pager, next, jumper'
     },
     background: {
       type: Boolean,
@@ -56,6 +65,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['device']),
     currentPage: {
       get() {
         return this.page
@@ -71,20 +81,25 @@ export default {
       set(val) {
         this.$emit('update:limit', val)
       }
+    },
+    pageLayout() {
+      return this.device === 'desktop'
+        ? (this.isAdmin ? this.adminLayout : this.webLayout)
+        : 'prev, pager, next'
     }
   },
   methods: {
     handleSizeChange(val) {
       this.$emit('pagination', { page: this.currentPage, limit: val })
       if (this.autoScroll) {
-        const multipleTable = this.$parent.$refs.multipleTable && this.$parent.$refs.multipleTable.bodyWrapper
+        const multipleTable = this.$parent?.$refs.multipleTable?.bodyWrapper
         multipleTable && scrollTo(multipleTable, 0, 200)
       }
     },
     handleCurrentChange(val) {
       this.$emit('pagination', { page: val, limit: this.pageSize })
       if (this.autoScroll) {
-        const multipleTable = this.$parent.$refs.multipleTable && this.$parent.$refs.multipleTable.bodyWrapper
+        const multipleTable = this.$parent?.$refs.multipleTable?.bodyWrapper
         multipleTable && scrollTo(multipleTable, 0, 200)
       }
     }

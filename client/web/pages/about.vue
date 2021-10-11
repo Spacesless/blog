@@ -56,7 +56,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import Comment from '@/components/Comment'
+import Comment from '#/components/Comment'
 
 export default {
   components: {

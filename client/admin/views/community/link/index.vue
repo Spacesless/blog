@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import Pagination from '@/components/Pagination'
+import Pagination from '#/components/Pagination'
 import LinksForm from './components/LinksForm'
 import { crud, listDialog } from '@/mixins'
 

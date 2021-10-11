@@ -58,7 +58,7 @@
 import { mapGetters } from 'vuex'
 import HeaderMenu from './components/HeaderMenu'
 import FooterMenu from './components/FooterMenu'
-import Pagination from '@/components/Pagination'
+import Pagination from '#/components/Pagination'
 import { crud } from '@/mixins'
 import { getCategoryByType } from '@/utils'
 

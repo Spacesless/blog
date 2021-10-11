@@ -47,7 +47,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import Pagination from '@/components/Pagination'
+import Pagination from '#/components/Pagination'
 import { crud } from '@/mixins'
 
 export default {

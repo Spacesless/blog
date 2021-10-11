@@ -97,8 +97,8 @@
 
 <script>
 import { debounce } from 'lodash-es'
-import Pagination from '@/components/Pagination'
-import { parseTime } from '@/utils'
+import Pagination from '#/components/Pagination'
+import { parseTime } from '#/utils'
 
 export default {
   name: 'Upload',

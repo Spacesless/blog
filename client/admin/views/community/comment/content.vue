@@ -22,17 +22,31 @@
       </el-form-item>
     </el-form>
     <div class="comment-reply">
-      <el-input v-model="replyContent" type="textarea" :rows="6" />
+      <comment-reply
+        :form-data.sync="formData"
+        :reply-data="replyData"
+        :submit-comment="submitComment"
+      />
     </div>
   </div>
 </template>
 
 <script>
+import CommentReply from '#/components/Comment/CommentReply'
+
 export default {
   name: 'CommentContent',
+  components: {
+    CommentReply
+  },
   data() {
     return {
-      formData: {},
+      formData: {
+        content: ''
+      },
+      replyData: {
+        topic_id: this.topicId
+      },
       replyContent: '',
       fetchLoading: false
     }
@@ -49,11 +63,11 @@ export default {
       }).catch(() => {})
       this.fetchLoading = false
     },
-    handleReplyComment() {
-      const postData = {
-        topic_id: this.formData.id,
-        content: this.replyContent
-      }
+    /**
+     * 提交评论
+     * @param {Object} postData 评论数据
+     */
+    submitComment(postData) {
       this.$api.content.CreateContent('comment', postData).then(res => {
         this.fetchData()
       })

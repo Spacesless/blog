@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { position, scrollTo } from '@/utils/scroll-to'
+import { position, scrollTo } from '#/utils/scroll-to'
 
 export default {
   data() {
