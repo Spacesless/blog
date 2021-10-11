@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { position, scrollTo } from '#/utils/scroll-to'
+import { getPosition, scrollTo } from '#/utils/scroll-to'
 
 export default {
   data() {
@@ -57,7 +57,7 @@ export default {
       console.log(this.catalogList)
 
       window.addEventListener('scroll', () => {
-        const scrollTop = position()
+        const scrollTop = getPosition()
         nodeOffsetTop.forEach((top, index) => {
           if (scrollTop >= top) {
             this.isActive = index

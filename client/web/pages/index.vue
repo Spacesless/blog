@@ -95,9 +95,9 @@ export default {
     }
   },
   mounted() {
-    setTimeout(() => {
+    this.$nextTick(() => {
       this.handleResize()
-    }, 100)
+    })
     this.__resizeHandler = debounce(() => {
       this.handleResize()
     }, 100)
@@ -108,7 +108,7 @@ export default {
   },
   methods: {
     handleResize() {
-      const carouselWidth = this.$refs.carousel.$el.clientWidth
+      const carouselWidth = this.$refs.carousel?.$el.clientWidth
       this.bannerHeight = 500 * carouselWidth / 1280 + 'px'
     }
   },
