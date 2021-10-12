@@ -14,7 +14,7 @@ body{
   width: $asideWidth;
   height: 100%;
   background-color: var(--bg-normal);
-  box-shadow: 2px 0 10px rgba(0,0,0,.1);
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   transition: width 0.3s;
   &-mask{
     position: fixed;
@@ -154,6 +154,19 @@ $header-height: 45px;
     float: right;
     height: $header-height;
     text-align: right;
+    // background-color: #fff;
+    // border-bottom-left-radius: 16px;
+    // box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+    // &:before{
+    //   content: '';
+    //   position: absolute;
+    //   top: 0;
+    //   left: -25px;
+    //   width: 0;
+    //   height: 0;
+    //   border-top: 34px solid #fff;
+    //   border-left: 34px solid transparent;
+    // }
     &__btn{
       margin-left: 3px;
       padding: 5px;

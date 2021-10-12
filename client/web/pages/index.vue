@@ -6,11 +6,11 @@
       class="banner"
       trigger="click"
       :interval="5000"
-      :height="bannerHeight"
+      :height="bannerHeight + 'px'"
       indicator-position="none"
     >
       <el-carousel-item v-for="item in bannerList" :key="item.title">
-        <img class="banner-item__image" width="1280" height="500" :src="item.imgurl" :alt="item.title">
+        <img ref="carouselImg" class="banner-item__image" width="1280" height="500" :src="item.imgurl" :alt="item.title" @load="onImageLoad">
         <div class="banner-item__title">{{ item.title }}</div>
       </el-carousel-item>
     </el-carousel>
@@ -91,7 +91,8 @@ export default {
   },
   data() {
     return {
-      bannerHeight: '500px'
+      bannerHeight: 500,
+      isLoaded: false
     }
   },
   mounted() {
@@ -107,9 +108,19 @@ export default {
     window.removeEventListener('resize', this.__resizeHandler)
   },
   methods: {
+    /**
+     * @event 图片加载完成
+     * @summary 设置走马灯高度，适用于所有图片高度一致的情况
+     */
+    onImageLoad(e) {
+      if (this.isLoaded) return
+      this.isLoaded = true
+      this.bannerHeight = e.target.height
+      this.tempHeight = this.bannerHeight
+    },
     handleResize() {
       const carouselWidth = this.$refs.carousel?.$el.clientWidth
-      this.bannerHeight = 500 * carouselWidth / 1280 + 'px'
+      this.bannerHeight = this.tempHeight * carouselWidth / 1280
     }
   },
   head() {
