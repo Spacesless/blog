@@ -139,7 +139,7 @@ export const crud = {
 
       // 表格返回头部
       const multipleTable = this.$refs.multipleTable && this.$refs.multipleTable.bodyWrapper
-      multipleTable && scrollTo(multipleTable, 0, 200)
+      multipleTable && scrollTo(0, 200, multipleTable)
     },
     onKeywordInput: debounce(function() {
       this.handleSearch()

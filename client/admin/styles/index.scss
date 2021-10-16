@@ -163,6 +163,13 @@ div:focus {
   }
 }
 
+.pagination-container {
+  background: #fff;
+  padding: 15px 20px;
+  border: 1px solid #EBEEF5;
+  border-top: none;
+}
+
 // scrollbar
 ::-webkit-scrollbar {
   width: 8px;
