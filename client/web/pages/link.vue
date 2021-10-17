@@ -1,25 +1,25 @@
 <template>
-  <!-- links start -->
-  <div class="links">
-    <h1 class="links__title">友情链接</h1>
-    <el-row class="links-wrap" :gutter="15">
+  <!-- link start -->
+  <div class="link">
+    <h1 class="link__title">友情链接</h1>
+    <el-row class="link-wrap" :gutter="15">
       <el-col v-for="item in linkList" :key="item.id" :sm="12" :md="8" :lg="6">
-        <a class="links-item" :href="item.website" :title="item.name" target="_blank" rel="noopener noreferrer">
-          <div class="links-logo">
-            <el-image class="links-logo__picture" :src="item.logo">
+        <a class="link-item" :href="item.website" :title="item.name" target="_blank" rel="noopener noreferrer">
+          <div class="link-logo">
+            <el-image class="link-logo__picture" :src="item.logo">
               <div slot="error" class="image-slot">
                 <i class="tl-icon">&#xe695;</i>
               </div>
             </el-image>
           </div>
-          <div class="links-info">
-            <p class="links-info__name">{{ item.name }}</p>
-            <p class="links-info__desc">{{ item.description }}</p>
+          <div class="link-info">
+            <p class="link-info__name">{{ item.name }}</p>
+            <p class="link-info__desc">{{ item.description }}</p>
           </div>
         </a>
       </el-col>
     </el-row>
-    <div class="links-tips">
+    <div class="link-tips">
       <h2 class="app-main__title">友链要求</h2>
       <p>1、优先考虑博客类、ACG、国风相关的网站</p>
       <p>2、需有原创内容，内容积极向上，如有广告需适量</p>
@@ -68,7 +68,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.links{
+.link{
+  color: var(--color-normal);
+  font-size: 15px;
+  line-height: 2;
   &__title{
     padding: 30px 0;
     font-size: 32px;
@@ -91,7 +94,7 @@ export default {
     border-top: 3px solid var(--color-primary);
     color: var(--color-normal);
     border-radius: 4px;
-    box-shadow: 2px 0 10px rgba(0,0,0,.1);
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   }
   &-logo{
     overflow: hidden;
@@ -125,8 +128,12 @@ export default {
     }
   }
   &-tips{
-    font-size: 15px;
-    line-height: 2;
+    padding: 20px 15px;
+    padding-top: 1px;
+    margin: 5px 0 20px;
+    background-color: var(--bg-normal);
+    border-radius: 4px;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
     span {
       margin-left: 15px;
       color: #F56C6C;

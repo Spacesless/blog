@@ -1,6 +1,6 @@
 <template>
   <div class="webapp">
-    <h2 class="app-main__title">附属站</h2>
+    <h2 class="webapp__title">附属站</h2>
     <el-row class="webapp-list" :gutter="20">
       <el-col v-for="item in externalApp" :key="item.id" :sm="12" :md="8" :xl="6">
         <a class="webapp-card" :href="item.link" :title="item.name" target="_blank">
@@ -15,7 +15,7 @@
         </a>
       </el-col>
     </el-row>
-    <h2 class="app-main__title">小工具</h2>
+    <h2 class="webapp__title">小工具</h2>
     <el-row class="webapp-list" :gutter="20">
       <el-col v-for="item in internalApp" :key="item.id" :sm="12" :md="8" :xl="6">
         <a class="webapp-card" :href="item.link || item.url" :title="item.name" target="_blank">
@@ -70,8 +70,12 @@ export default {
 
 <style lang="scss" scoped>
 .webapp{
-  .app-main__title{
-    margin: 0 0 24px 16px;
+  &__title{
+    padding: 30px 0 20px 15px;
+    color: var(--color-main);
+    font-size: 32px;
+    font-weight: normal;
+    line-height: 1.5;
   }
   &-list{
     padding: 0 15px 15px;
@@ -79,7 +83,7 @@ export default {
   &-card{
     display: block;
     position: relative;
-    margin-bottom: 20px;
+    margin: 10px 0;
     background-color: var(--bg-normal);
     color: var(--color-normal);
     font-size: 14px;

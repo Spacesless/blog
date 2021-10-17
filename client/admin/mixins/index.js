@@ -1,5 +1,6 @@
 import { debounce } from 'lodash-es'
 import elHeightAdaptiveTable from '#/directive/el-table'
+import { scrollTo } from '#/utils/scroll-to'
 
 /**
  * echarts自适应

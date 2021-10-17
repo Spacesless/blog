@@ -59,7 +59,7 @@
 
 <script>
 import Pagination from '#/components/Pagination'
-import elHeightAdaptiveTable from '@/directive/el-table'
+import elHeightAdaptiveTable from '#/directive/el-table'
 import { crud } from '@/mixins'
 
 export default {

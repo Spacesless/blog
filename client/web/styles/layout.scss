@@ -25,7 +25,7 @@ body{
     background-color: rgba($color: #000000, $alpha: .5);
   }
   &-logo{
-    padding: 35px 0 15px;
+    padding: 50px 0 15px;
     background-color: var(--bg-normal);
     text-align: center;
     &__img{
@@ -44,6 +44,9 @@ body{
       white-space: nowrap;
       transition: width 0.3;
     }
+    &--collapse {
+      padding-bottom: 0;
+    }
     &--collapse &__img{
       width: 50px;
       height: 50px;
@@ -54,7 +57,7 @@ body{
     }
   }
   &-scrollbar{
-    height: calc(100vh - 190px);
+    height: calc(100vh - 205px);
     background-color: var(--bg-normal);
     &-wrapper{
       overflow-x: hidden;
@@ -121,18 +124,20 @@ $header-height: 45px;
   position: fixed;
   top: 0;
   right: 0;
-  z-index: 998;
+  z-index: 1000;
   width: calc(100% - #{$asideWidth});
-  height: $header-height;
+  height: 0;
   padding: 0 15px;
-  line-height: $header-height;
   box-sizing: border-box;
   transition: width 0.3s;
   @media (max-width: 992px) {
-    background-color: var(--bg);
+    height: $header-height;
+    line-height: $header-height;
+    background-color: var(--bg-normal);
     box-shadow: 2px 0 10px rgba(0,0,0,.1);
   }
   &-logo{
+    position: relative;
     float: left;
     line-height: $header-height;
     &__avatar{
@@ -142,31 +147,25 @@ $header-height: 45px;
       border-radius: 20px;
     }
     &__hamburger{
+      position: absolute;
+      top: 9px;
+      left: -50px;
       padding: 5px;
       font-size: 18px;
       cursor: pointer;
       &:hover{
         color: var(--color-main);
       }
+      &--collapse{
+        left: -60px;
+      }
     }
   }
   &-menus{
     float: right;
     height: $header-height;
+    line-height: $header-height;
     text-align: right;
-    // background-color: #fff;
-    // border-bottom-left-radius: 16px;
-    // box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-    // &:before{
-    //   content: '';
-    //   position: absolute;
-    //   top: 0;
-    //   left: -25px;
-    //   width: 0;
-    //   height: 0;
-    //   border-top: 34px solid #fff;
-    //   border-left: 34px solid transparent;
-    // }
     &__btn{
       margin-left: 3px;
       padding: 5px;
@@ -252,7 +251,6 @@ $header-height: 45px;
 .app-main{
   margin-left: $asideWidth + 15px;
   margin-right: $asideWidth + 15px;
-  padding-top: $header-height + 15;
   transition: margin 0.3s;
   @media (max-width: 992px) {
     margin-right: 0;
@@ -280,7 +278,7 @@ $header-height: 45px;
 
 .container {
   width: 100%;
-  min-height: calc(100vh - 140px);
+  min-height: calc(100vh - 80px);
   padding-right: 15px;
   padding-left: 15px;
   margin-right: auto;
@@ -377,6 +375,7 @@ $header-height: 45px;
   .app-main{
     margin-left: 0;
     max-width: 100%;
+    padding-top: $header-height + 15px;
   }
   &.hideAside {
     .aside{

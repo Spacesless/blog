@@ -1,17 +1,17 @@
 <template>
   <div class="home">
-    <!-- banner start -->
+    <!-- 轮播图 -->
     <el-carousel
       ref="carousel"
-      class="banner"
+      class="carousel"
       trigger="click"
       :interval="5000"
       :height="bannerHeight + 'px'"
       indicator-position="none"
     >
       <el-carousel-item v-for="item in bannerList" :key="item.title">
-        <img ref="carouselImg" class="banner-item__image" width="1280" height="500" :src="item.imgurl" :alt="item.title" @load="onImageLoad">
-        <div class="banner-item__title">{{ item.title }}</div>
+        <img ref="carouselImg" class="carousel-item__image" width="1280" height="500" :src="item.imgurl" :alt="item.title" @load="onImageLoad">
+        <div class="carousel-item__title">{{ item.title }}</div>
       </el-carousel-item>
     </el-carousel>
     <!-- 博文 -->
@@ -96,9 +96,6 @@ export default {
     }
   },
   mounted() {
-    this.$nextTick(() => {
-      this.handleResize()
-    })
     this.__resizeHandler = debounce(() => {
       this.handleResize()
     }, 100)
@@ -115,12 +112,12 @@ export default {
     onImageLoad(e) {
       if (this.isLoaded) return
       this.isLoaded = true
-      this.bannerHeight = e.target.height
-      this.tempHeight = this.bannerHeight
+      this.bannerHeight = e.target.getAttribute('height')
+      this.handleResize()
     },
     handleResize() {
       const carouselWidth = this.$refs.carousel?.$el.clientWidth
-      this.bannerHeight = this.tempHeight * carouselWidth / 1280
+      this.bannerHeight = 500 * carouselWidth / 1280
     }
   },
   head() {
@@ -153,17 +150,19 @@ export default {
       color: var(--color-secondary);
       font-size: 14px;
       line-height: 24px;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
       &:hover{
         color: var(--color-primary);
       }
     }
   }
 }
-.banner {
+
+.carousel {
   overflow: hidden;
   margin-bottom: 15px;
   border-radius: 4px;
-  box-shadow: 2px 0 10px rgba(0,0,0,.1);
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   &-item{
     &__image{
       display: block;
@@ -182,21 +181,38 @@ export default {
     }
   }
 }
+
 .article{
   &-item {
+    position: relative;
     margin-bottom: 20px;
     padding: 10px 15px;
     background: var(--bg-normal);
     border: 1px solid var(--border-color);
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
     border-radius: 4px;
     transition: all .3s;
     &:hover{
       box-shadow: 2px 0 10px rgba(0,0,0,.1);
     }
+    &:before{
+      content: "";
+      position: absolute;
+      left: 15px;
+      top: 10px;
+      z-index: 0;
+      width: 36px;
+      height: 27px;
+      background-image: url(~@/assets/image/quotee.svg);
+      background-size: cover;
+    }
   }
   &-title {
-    font-size: 24px;
+    position: relative;
+    z-index: 5;
     padding-top: 5px;
+    padding-left: 36px;
+    font-size: 24px;
     a {
       overflow: hidden;
       display: inline-block;
@@ -239,17 +255,19 @@ export default {
     }
   }
 }
+
 .bangumi{
   &-list{
     &-item{
       overflow: hidden;
       margin-bottom: 20px;
-      border: 1px dashed var(--border-color);
+      border: 1px solid var(--border-color);
       background-color: var(--bg-normal);
       border-radius: 4px;
+      box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
       transition: all .3s;
       &:hover{
-        border-style: solid;
+        border-style: dashed;
         border-color: var(--color-primary);
       }
     }
@@ -293,9 +311,12 @@ export default {
       max-width: 100%;
       margin-bottom: 5px;
       font-size: 18px;
-      color: var(--color-primary);
+      color: var(--color-main);
       text-overflow: ellipsis;
       white-space: nowrap;
+      &:hover{
+        color: var(--color-primary);
+      }
     }
   }
   &-ratings{

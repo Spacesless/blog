@@ -66,7 +66,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import MoveCategory from './components/MoveCategory'
-import elHeightAdaptiveTable from '@/directive/el-table'
+import elHeightAdaptiveTable from '#/directive/el-table'
 import { crud, listDialog } from '@/mixins'
 import { formatCategory } from '@/utils'
 

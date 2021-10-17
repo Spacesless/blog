@@ -47,7 +47,7 @@
 
 <script>
 import BannerForm from './components/BannerForm'
-import elHeightAdaptiveTable from '@/directive/el-table'
+import elHeightAdaptiveTable from '#/directive/el-table'
 import { crud, listDialog } from '@/mixins'
 
 export default {
