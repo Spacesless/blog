@@ -16,7 +16,9 @@ import toolbar from './toolbar'
 import load from './dynamicLoadScript'
 
 // why use this cdn, detail see https://github.com/PanJiaChen/tinymce-all-in-one
-const tinymceCDN = '/vendor/tinymce/tinymce.min.js'
+const tinymceCDN = process.env.NODE_ENV === 'production'
+  ? '/admin/vendor/tinymce/tinymce.min.js'
+  : '/vendor/tinymce/tinymce.min.js'
 
 export default {
   name: 'Tinymce',

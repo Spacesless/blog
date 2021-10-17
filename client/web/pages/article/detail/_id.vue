@@ -33,15 +33,15 @@
 import Prism from 'prismjs'
 import ClipboardJS from 'clipboard'
 import Catalog from '@/components/Catalog'
-import Share from '@/components/Share'
 import Comment from '#/components/Comment'
+import Share from '@/components/Share'
 
 export default {
   name: 'BlogConent',
   components: {
     Catalog,
-    Share,
-    Comment
+    Comment,
+    Share
   },
   async asyncData({ params, $axios }) {
     const id = params.id
