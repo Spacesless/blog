@@ -93,14 +93,14 @@ export default {
       this.$emit('pagination', { page: this.currentPage, limit: val })
       if (this.autoScroll) {
         const multipleTable = this.$parent?.$refs.multipleTable?.bodyWrapper
-        multipleTable && scrollTo(multipleTable, 0, 200)
+        multipleTable && scrollTo(0, 200, multipleTable)
       }
     },
     handleCurrentChange(val) {
       this.$emit('pagination', { page: val, limit: this.pageSize })
       if (this.autoScroll) {
         const multipleTable = this.$parent?.$refs.multipleTable?.bodyWrapper
-        multipleTable && scrollTo(multipleTable, 0, 200)
+        multipleTable && scrollTo(0, 200, multipleTable)
       }
     }
   }
@@ -108,12 +108,6 @@ export default {
 </script>
 
 <style scoped>
-.pagination-container {
-  background: #fff;
-  padding: 15px 20px;
-  border: 1px solid #EBEEF5;
-  border-top: none;
-}
 .pagination-container.hidden {
   display: none;
 }

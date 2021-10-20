@@ -49,7 +49,7 @@ export default {
     },
     backTop() {
       this.backTopTips = true
-      scrollTo(0, 800, () => {
+      scrollTo(0, 800, undefined, () => {
         this.backTopTips = false
       })
     }
@@ -77,7 +77,7 @@ export default {
     outline: none;
     user-select: none;
     cursor: pointer;
-    box-shadow: 2px 0 10px rgba(0,0,0,.1);
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
     border-radius: 4px;
     &:hover{
       background-color: var(--bg-secondary);

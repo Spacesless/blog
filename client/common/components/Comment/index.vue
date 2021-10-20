@@ -1,6 +1,6 @@
 <template>
   <div v-loading="fetchLoading" class="comment">
-    <h2 class="app-main__title">评论<span class="comment__count">({{ total }})</span></h2>
+    <h2 class="comment-title">评论<span class="comment-title__count">({{ total }})</span></h2>
     <comment-reply
       v-if="!replyData.id"
       :form-data.sync="formData"
@@ -129,9 +129,20 @@ export default {
 
 <style lang="scss" scoped>
 .comment{
-  &__count{
-    margin-left: 5px;
-    font-size: 16px;
+  padding: 15px;
+  background: var(--bg-normal);
+  border-radius: 4px;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  &-title{
+    margin-bottom: 15px;
+    color: var(--color-main);
+    font-size: 24px;
+    font-weight: normal;
+    line-height: 1em;
+    &__count{
+      margin-left: 5px;
+      font-size: 16px;
+    }
   }
   &-list{
     padding: 15px 0;

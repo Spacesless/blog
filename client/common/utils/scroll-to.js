@@ -48,12 +48,12 @@ export function getPosition(element) {
 }
 
 /**
- * @param {Document} element 需要滚动的元素
  * @param {number} to 滚动高度
  * @param {number} duration 过渡时间
+ * @param {Document} element 需要滚动的元素
  * @param {Function} callback 滚动结束的回调函数
  */
-export function scrollTo(element, to, duration, callback) {
+export function scrollTo(to, duration, element, callback) {
   const start = getPosition(element)
   const change = to - start
   const increment = 20

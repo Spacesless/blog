@@ -1,4 +1,4 @@
-const isDev = think.env === 'development';
+const isDev = think.env !== 'development';
 
 module.exports = class extends think.Controller {
   constructor(...arg) {

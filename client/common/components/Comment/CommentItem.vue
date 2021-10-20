@@ -172,7 +172,7 @@ export default {
     &-content{
       margin-bottom: 20px;
       padding: 7px 12px;
-      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-color);
       color: var(--color-main);
       font-size: 14px;
       line-height: 1.5;

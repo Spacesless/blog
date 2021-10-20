@@ -1,5 +1,9 @@
 <template>
   <div class="article">
+    <div class="banner">
+      <img class="img-fluid" width="1280" height="500" src="@/assets/image/article-banner.jpg" alt="文章">
+      <p class="banner__title">用心甘情愿的态度，过随遇而安的生活</p>
+    </div>
     <!-- filter -->
     <el-form class="filter" label-width="40px" label-position="left">
       <el-form-item label="排序">
@@ -128,8 +132,24 @@ export default {
 
 <style lang="scss" scoped>
 .article{
+  &-list{
+    position: relative;
+    overflow: hidden;
+    &:before{
+      content: '';
+      display: block;
+      width: 1px;
+      position: absolute;
+      top: 0;
+      bottom: 200px;
+      left: 50%;
+      background: #fff;
+      z-index: 5;
+    }
+  }
   &-item{
     position: relative;
+    z-index: 6;
     margin-bottom: 100px;
     &:last-child{
       margin-bottom: 0;
@@ -141,8 +161,9 @@ export default {
       overflow: hidden;
       display: inline-block;
       float: none;
-      border: 1px solid var(--border-color);
-      border-radius: 6px;
+      position: relative;
+      z-index: 5;
+      border-radius: 4px;
       &__picture{
         display: block;
         width: 100%;
@@ -186,7 +207,7 @@ export default {
         }
       }
       &__desc{
-        margin-top: 10px;
+        margin: 10px 0;
         font-size: 15px;
         line-height: 22px;
       }
@@ -206,8 +227,8 @@ export default {
     &--odd &-info{
       right: 0;
       border-left: none;
-      border-top-right-radius: 6px;
-      border-bottom-right-radius: 6px;
+      border-top-right-radius: 4px;
+      border-bottom-right-radius: 4px;
     }
     &--even{
       text-align: right;
@@ -215,9 +236,9 @@ export default {
     &--even &-info{
       left: 0;
       border-right: none;
-      border-top-left-radius: 6px;
-      border-bottom-left-radius: 6px;
       text-align: left;
+      border-top-left-radius: 4px;
+      border-bottom-left-radius: 4px;
     }
   }
 }

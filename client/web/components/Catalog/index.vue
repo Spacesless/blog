@@ -1,5 +1,5 @@
 <template>
-  <ul v-if="isLoaded && catalogList.length" class="catalog">
+  <ul v-if="catalogList.length" class="catalog">
     <li
       v-for="(item, index) in catalogList"
       :key="index"
@@ -23,8 +23,7 @@ export default {
   data() {
     return {
       catalogList: [],
-      isActive: -1,
-      isLoaded: false
+      isActive: -1
     }
   },
   computed: {
@@ -33,10 +32,9 @@ export default {
     }
   },
   mounted() {
-    window.onload = () => {
+    this.$nextTick(() => {
       this.initCatelog()
-      this.isLoaded = true
-    }
+    })
   },
   methods: {
     initCatelog() {
@@ -54,7 +52,6 @@ export default {
         const top = this.getOffsetTop(this.catalogList[i]) - 10
         nodeOffsetTop.push(top)
       }
-      console.log(this.catalogList)
 
       window.addEventListener('scroll', () => {
         const scrollTop = getPosition()

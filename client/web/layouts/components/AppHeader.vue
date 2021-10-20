@@ -5,7 +5,7 @@
         <img class="header-logo__avatar" src="/static/avatar.jpg" alt="logo">
       </nuxt-link>
       <span class="header-logo__hamburger tl-icon" :class="{'header-logo__hamburger--collapse': isCollapse}" @click="toggleSidebar">
-        &#xe71b;
+        {{ isCollapse ? '&#xe624;' : '&#xe625;' }}
       </span>
     </div>
     <div class="header-menus">

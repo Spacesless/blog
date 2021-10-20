@@ -1,12 +1,12 @@
 <template>
   <div class="about">
+    <h1 class="about__title">关于本站</h1>
+    <p>本站是个人网站，用来记录工作经验以及生活点滴，主要关注web开发、二次元等方面，用爱发电。</p>
+    <p>部分内容(图片、视频)来源于互联网，如果有侵权内容、不妥之处，请联系我删除。</p>
     <div class="about-introduce">
-      <h1 class="about__title">关于本站</h1>
-      <p>本站是个人网站，用来记录工作经验以及生活点滴，主要关注web开发、二次元等方面，用爱发电。</p>
-      <p>部分内容(图片、视频)来源于互联网，如果有侵权内容、不妥之处，请联系我删除。</p>
       <p>Timeless</p>
       <p>大区：广州</p>
-      <p>职业：练习时长2年半的前端开发</p>
+      <p>职业：练习时长3年半的前端开发</p>
       <div class="about-connact">
         <a class="about-connact__links" href="https://space.bilibili.com/315883644/favlist" rel="noopener noreferrer" target="_blank">
           <i class="tl-icon">&#xe75e;</i>Bilibili
@@ -80,10 +80,15 @@ export default {
 
 <style lang="scss" scoped>
 .about{
+  color: var(--color-normal);
+  font-size: 15px;
+  line-height: 2;
   &-introduce{
-    color: var(--color-normal);
-    font-size: 15px;
-    line-height: 2;
+    padding: 20px 15px;
+    margin: 20px 0;
+    background-color: var(--bg-normal);
+    border-radius: 4px;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
     &-timeline{
       margin-top: 15px;
     }

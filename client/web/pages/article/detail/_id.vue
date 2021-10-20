@@ -1,28 +1,29 @@
 <template>
   <div class="blog">
-    <div class="blog-summary">
-      <el-row>
-        <el-col class="blog-summary-cover" :xs="24" :sm="16" :lg="12">
-          <img class="img-fluid" :src="data.imgurl" :alt="data.title">
-        </el-col>
-      </el-row>
-      <h1 class="blog-summary__title">{{ data.title }}</h1>
-      <div class="blog-summary__admin">
-        <span><i class="tl-icon">&#xe70b;</i>{{ data.updatetime | parseTime('{y}-{m}-{d}') }}</span>
-        <span><i class="tl-icon">&#xe681;</i>{{ data.hits }}</span>
-      </div>
-    </div>
+    <el-row class="blog-summary">
+      <el-col class="blog-summary-text" :xs="24" :sm="12" :lg="14">
+        <h1 class="blog-summary__title">{{ data.title }}</h1>
+        <div class="blog-summary__admin">
+          <span><i class="tl-icon">&#xe70b;</i>{{ data.updatetime | parseTime('{y}-{m}-{d}') }}</span>
+          <span><i class="tl-icon">&#xe681;</i>{{ data.hits }}</span>
+        </div>
+        <p class="blog-summary__desc">{{ data.description }}</p>
+      </el-col>
+      <el-col class="blog-summary-cover" :xs="24" :sm="12" :lg="10">
+        <img class="img-fluid" :src="data.imgurl" :alt="data.title">
+      </el-col>
+    </el-row>
     <!-- 文章内容 -->
     <div class="blog-content">
       <div class="blog-content-wrap">
         <div ref="content" class="Tinymce" v-html="data.content" />
         <el-image ref="preview" class="app-preview" :src="previewSrc" :preview-src-list="previewSrcList" />
+        <!-- 社区分享 -->
+        <Share />
       </div>
       <!-- 文章目录 -->
       <Catalog />
     </div>
-    <!-- 社区分享 -->
-    <Share />
     <!-- 评论 -->
     <Comment :topic-id="'article-' + data.id" />
   </div>
@@ -32,15 +33,15 @@
 import Prism from 'prismjs'
 import ClipboardJS from 'clipboard'
 import Catalog from '@/components/Catalog'
-import Share from '@/components/Share'
 import Comment from '#/components/Comment'
+import Share from '@/components/Share'
 
 export default {
   name: 'BlogConent',
   components: {
     Catalog,
-    Share,
-    Comment
+    Comment,
+    Share
   },
   async asyncData({ params, $axios }) {
     const id = params.id
@@ -142,12 +143,15 @@ export default {
 <style lang="scss" scoped>
 .blog{
   &-summary{
-    padding: 15px 0;
-    &-cover{
-      margin-bottom: 15px;
-    }
-    &-info{
-      padding: 0 15px;
+    overflow: hidden;
+    position: relative;
+    padding: 15px;
+    margin-bottom: 20px;
+    background-color: var(--bg-normal);
+    border-radius: 4px;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+    &-text{
+      padding-right: 15px;
     }
     &__title{
       color: var(--color-main);
@@ -164,9 +168,20 @@ export default {
         margin-right: 5px;
       }
     }
+    &__desc{
+      padding-top: 10px;
+      color: var(--color-normal);
+      font-size: 15px;
+      line-height: 1.7;
+      letter-spacing: 1px;
+    }
   }
   &-content{
+    padding: 15px;
+    margin-bottom: 20px;
+    background-color: var(--bg-normal);
     border-radius: 4px;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   }
 }
 </style>

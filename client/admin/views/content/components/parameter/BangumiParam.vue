@@ -24,6 +24,9 @@
     <el-form-item label="推荐指数">
       <el-input-number v-model="params.ratings" controls-position="right" :min="5" :max="10" :step="0.1" />
     </el-form-item>
+    <el-form-item label="主题曲">
+      <el-input v-model="params.songs" type="textarea" :rows="4" />
+    </el-form-item>
   </div>
 </template>
 

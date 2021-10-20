@@ -1,5 +1,9 @@
 <template>
   <div class="bangumi">
+    <div class="banner">
+      <img class="img-fluid" width="1280" height="500" src="@/assets/image/bangumi-banner.jpg" alt="番剧">
+      <p class="banner__title">以一朵花的姿态，花开成景，花落成诗</p>
+    </div>
     <el-form class="filter" label-width="40px" label-position="left">
       <el-form-item label="排序">
         <el-select v-model="filters.sortBy" placeholder="请选择排序方式" @change="handleSearch">
@@ -174,6 +178,7 @@ export default {
       border: 1px dashed var(--border-color);
       background-color: var(--bg-normal);
       border-radius: 4px;
+      box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
       transition: all .3s;
       &:hover{
         border-style: solid;
@@ -217,10 +222,13 @@ export default {
       display: inline-block;
       max-width: 100%;
       margin-bottom: 5px;
-      color: var(--color-primary);
       font-size: 18px;
+      color: var(--color-main);
       text-overflow: ellipsis;
       white-space: nowrap;
+      &:hover{
+        color: var(--color-primary);
+      }
     }
   }
 }
