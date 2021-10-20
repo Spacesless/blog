@@ -15,14 +15,12 @@
         class="aside-menu"
         role="menu"
       >
-        <div class="aside-menu-item">
+        <el-menu-item index="/">
           <nuxt-link to="/">
-            <el-menu-item index="/">
-              <i class="aside-menu__icon tl-icon">&#xe76f;</i>
-              <span slot="title">首页</span>
-            </el-menu-item>
+            <i class="aside-menu__icon tl-icon">&#xe76f;</i>
+            <span slot="title">首页</span>
           </nuxt-link>
-        </div>
+        </el-menu-item>
         <sidebar-item v-for="route in menus" :key="route.path" :item="route" />
       </el-menu>
     </el-scrollbar>
