@@ -70,7 +70,6 @@ export default {
         size: 30px;
         weight: 100;
         family: 'Bega', sans-serif;
-        display: swap;
       };
       vertical-align: middle;
     }

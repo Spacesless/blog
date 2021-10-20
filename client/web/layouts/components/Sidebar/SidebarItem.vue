@@ -25,8 +25,7 @@
         class="nest-menu"
       />
     </el-submenu>
-  </div>
-</template>
+  </div></template>
 
 <script>
 export default {

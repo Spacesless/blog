@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html {{ HTML_ATTRS }} lang="zh-CN">
   <head {{ HEAD_ATTRS }}>
-    {{ HEAD }}
     <!--添加需要预解析的域名-->
-    <link rel="dns-prefetch" href="//cdn.timelessq.com">
-    <link rel="dns-prefetch" href="//cos.timelessq.com">
-    <link rel="dns-prefetch" href="//api.timelessq.com">
+    <link rel="preconnect" href="https://at.alicdn.com">
+    <link rel="preconnect" href="https://cdn.timelessq.com">
+    <link rel="preconnect" href="https://api.timelessq.com">
     <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    {{ HEAD }}
   </head>
   <body {{ BODY_ATTRS }}>
     {{ APP }}
