@@ -10,7 +10,15 @@
       indicator-position="none"
     >
       <el-carousel-item v-for="item in bannerList" :key="item.title">
-        <img ref="carouselImg" class="carousel-item__image" width="1280" height="500" :src="item.imgurl" :alt="item.title" @load="onImageLoad">
+        <img
+          ref="carouselImg"
+          class="carousel-item__image"
+          width="1280"
+          height="500"
+          :src="item.imgurl"
+          :alt="item.title"
+          @load="onImageLoad"
+        >
         <div class="carousel-item__title">{{ item.title }}</div>
       </el-carousel-item>
     </el-carousel>
@@ -52,7 +60,14 @@
           <el-row class="bangumi-list-item">
             <el-col :span="8" :xl="10">
               <nuxt-link :to="'/bangumi/detail/' + item.id" :title="item.title">
-                <img class="img-fluid" :width="item.width" :height="item.height" :src="item.imgurl" :alt="item.title">
+                <img
+                  class="img-fluid"
+                  :width="item.width"
+                  :height="item.height"
+                  :src="item.imgurl"
+                  :srcset="item | getImageSrcSet"
+                  :alt="item.title"
+                >
               </nuxt-link>
             </el-col>
             <el-col class="bangumi-list-info" :span="16" :xl="14">

@@ -38,7 +38,14 @@
       >
         <el-col class="article-item-cover" :sm="24" :md="14">
           <nuxt-link :to="'/article/detail/' + item.id" :title="item.title">
-            <img class="img-full" :width="item.width" :height="item.height" :src="item.imgurl" :alt="item.title">
+            <img
+              class="img-full"
+              :width="item.width"
+              :height="item.height"
+              :src="item.imgurl"
+              :srcset="item | getImageSrcSet"
+              :alt="item.title"
+            >
           </nuxt-link>
         </el-col>
         <el-col class="article-item-info" :sm="24" :md="10">

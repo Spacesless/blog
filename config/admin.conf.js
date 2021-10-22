@@ -42,13 +42,6 @@ module.exports = {
         }
       })
     },
-    filenames: {
-      app: ({ isDev }) => isDev ? '[name].js' : 'js/app.[contenthash:8].js',
-      chunk: ({ isDev }) => isDev ? '[name].js' : 'js/chunk-[name].[contenthash:8].js',
-      css: ({ isDev }) => isDev ? '[name].css' : 'css/chunk-[name].[contenthash:8].css',
-      img: ({ isDev }) => isDev ? '[path][name].[ext]' : 'img/[name].[contenthash:8].[ext]',
-      font: ({ isDev }) => isDev ? '[path][name].[ext]' : 'fonts/[name].[contenthash:8].[ext]'
-    },
     optimization: {
       splitChunks: {
         chunks: 'all',
@@ -63,6 +56,10 @@ module.exports = {
             name: 'element', // split elementUI into a single package
             priority: 20, // the weight needs to be larger than vendor and app or it will be packaged into vendor or app
             test: /[\\/]node_modules[\\/]_?element-ui(.*)/ // in order to adapt to cnpm
+          },
+          common: {
+            name: 'common',
+            minChunks: 2
           }
         }
       },

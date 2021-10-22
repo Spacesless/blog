@@ -23,24 +23,24 @@
       <p>前台：ThinkJS + NuxtJs + Element-ui</p>
       <el-timeline class="about-timeline">
         <el-timeline-item timestamp="2020-06-01" placement="top">
-          <el-card>
+          <div class="about-timeline-card">
             <p>使用nuxt.js代替nunjucks模板引擎实现SSR</p>
-          </el-card>
+          </div>
         </el-timeline-item>
         <el-timeline-item timestamp="2019-10-15" placement="top">
-          <el-card>
+          <div class="about-timeline-card">
             <p>使用nodejs开发的Api站点<a class="about-timeline__link" href="https://api.timelessq.com" target="_blank">https://api.timelessq.com</a>上线</p>
-          </el-card>
+          </div>
         </el-timeline-item>
         <el-timeline-item timestamp="2019-08-10" placement="top">
-          <el-card>
+          <div class="about-timeline-card">
             <p>使用nodejs(thinkjs)代替php进行完全重构</p>
-          </el-card>
+          </div>
         </el-timeline-item>
         <el-timeline-item timestamp="2018-03-02" placement="top">
-          <el-card>
+          <div class="about-timeline-card">
             <p>使用Wordpress搭建的博客上线</p>
-          </el-card>
+          </div>
         </el-timeline-item>
       </el-timeline>
       <h2 class="app-main__title">未来计划</h2>
@@ -106,7 +106,7 @@ export default {
       margin: 0 5px;
       color: var(--color-primary);
     }
-    .el-card{
+    &-card{
       background-color: var(--bg-normal);
       border-color: var(--border-color);
       color: var(--color-normal);

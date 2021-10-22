@@ -35,6 +35,7 @@ import AppFooter from './components/AppFooter'
 // 落花canvas
 import ParticleCanvas from '@/utils/particle'
 import ResizeMixin from './mixin/ResizeHandler'
+import { getAbsolutePath } from '#/utils'
 
 export default {
   components: {
@@ -80,27 +81,27 @@ export default {
       'flower',
       [
         {
-          'type': { 'typeName': 'image', 'url': '/static/img/spring/flower-1.png' },
+          'type': { 'typeName': 'image', 'url': getAbsolutePath('/static/img/spring/flower-1.png') },
           'number': 8,
           'op': { 'min': 0.7, 'max': 1 },
           'size': { 'min': 50, 'max': 60 },
-          'speed': { 'min': 2, 'max': 3 },
+          'speed': { 'min': 2, 'max': 4 },
           'angle': { 'value': 140, 'float': 20 },
           'area': { 'leftTop': [0, 0], 'rightBottom': [0, 1000] },
           'rota': { 'value': 30, 'speed': 2, 'floatValue': 120, 'floatSpeed': 1 },
           'reIn': 'reverseDirection'
         },
         {
-          'type': { 'typeName': 'image', 'url': '/static/img/spring/flower-2.png' },
+          'type': { 'typeName': 'image', 'url': getAbsolutePath('/static/img/spring/flower-2.png') },
           'number': 9,
           'size': { 'min': 50, 'max': 60 },
-          'speed': { 'min': 3, 'max': 4 },
+          'speed': { 'min': 3, 'max': 5 },
           'area': { 'leftTop': [500, 300], 'rightBottom': [1000, 4000] },
           'angle': { 'value': 130, 'float': 20 },
           'reIn': 'reverseDirection'
         },
         {
-          'type': { 'typeName': 'image', 'url': '/static/img/spring/flower-3.png' },
+          'type': { 'typeName': 'image', 'url': getAbsolutePath('/static/img/spring/flower-3.png') },
           'number': 8,
           'size': { 'min': 50, 'max': 60 },
           'speed': { 'min': 3, 'max': 5 },
@@ -109,7 +110,7 @@ export default {
           'reIn': 'reverseDirection'
         },
         {
-          'type': { 'typeName': 'image', 'url': '/static/img/spring/flower-4.png' },
+          'type': { 'typeName': 'image', 'url': getAbsolutePath('/static/img/spring/flower-4.png') },
           'number': 7,
           'size': { 'min': 50, 'max': 60 },
           'speed': { 'min': 3, 'max': 4 },
@@ -118,7 +119,7 @@ export default {
           'reIn': 'reverseDirection'
         },
         {
-          'type': { 'typeName': 'image', 'url': '/static/img/spring/flower-5.png' },
+          'type': { 'typeName': 'image', 'url': getAbsolutePath('/static/img/spring/flower-5.png') },
           'number': 6,
           'size': { 'min': 50, 'max': 60 },
           'speed': { 'min': 3, 'max': 5 },

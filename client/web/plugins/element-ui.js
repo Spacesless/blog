@@ -4,12 +4,12 @@ import 'element-ui/lib/theme-chalk/display.css'
 
 import {
   Pagination,
-  Dialog,
+  // Dialog,
   // Autocomplete,
-  Dropdown,
-  DropdownMenu,
-  DropdownItem,
-  Slider,
+  // Dropdown,
+  // DropdownMenu,
+  // DropdownItem,
+  Slider, // TODO
   Menu,
   Submenu,
   MenuItem,
@@ -27,7 +27,7 @@ import {
   Option,
   // OptionGroup,
   Button,
-  ButtonGroup,
+  // ButtonGroup,
   Table,
   TableColumn,
   // DatePicker,
@@ -35,14 +35,14 @@ import {
   // TimePicker,
   Popover,
   Tooltip,
-  Breadcrumb,
-  BreadcrumbItem,
+  // Breadcrumb,
+  // BreadcrumbItem,
   Form,
   FormItem,
   // Tabs,
   // TabPane,
   Tag,
-  Tree,
+  Tree, // TODO
   // Alert,
   // Slider,
   // Icon,
@@ -52,7 +52,7 @@ import {
   Progress,
   // Spinner,
   // Badge,
-  Card,
+  // Card,
   Rate,
   // Steps,
   // Step,
@@ -73,13 +73,13 @@ import {
   // Link,
   // Divider,
   Image,
-  Cascader,
+  Cascader, // TODO
   // Backtop,
   // PageHeader,
   // CascaderPanel,
   Loading,
-  Message,
-  MessageBox,
+  Message, // TODO
+  MessageBox, // TODO
   Notification,
   // Avatar,
   Drawer
@@ -98,10 +98,10 @@ import {
 } from 'element-ui'
 
 Vue.use(Pagination)
-Vue.use(Dialog)
-Vue.use(Dropdown)
-Vue.use(DropdownMenu)
-Vue.use(DropdownItem)
+// Vue.use(Dialog)
+// Vue.use(Dropdown)
+// Vue.use(DropdownMenu)
+// Vue.use(DropdownItem)
 Vue.use(Scrollbar)
 Vue.use(Slider)
 Vue.use(Menu)
@@ -111,7 +111,7 @@ Vue.use(Input)
 Vue.use(Select)
 Vue.use(Option)
 Vue.use(Button)
-Vue.use(ButtonGroup)
+// Vue.use(ButtonGroup)
 Vue.use(RadioButton)
 Vue.use(RadioGroup)
 Vue.use(Form)
@@ -123,8 +123,8 @@ Vue.use(TableColumn)
 Vue.use(Progress)
 Vue.use(Tooltip)
 Vue.use(Popover)
-Vue.use(Breadcrumb)
-Vue.use(BreadcrumbItem)
+// Vue.use(Breadcrumb)
+// Vue.use(BreadcrumbItem)
 Vue.use(Row)
 Vue.use(Cascader)
 Vue.use(Rate)
@@ -134,7 +134,7 @@ Vue.use(Carousel)
 Vue.use(CarouselItem)
 Vue.use(Timeline)
 Vue.use(TimelineItem)
-Vue.use(Card)
+// Vue.use(Card)
 Vue.use(Drawer)
 Vue.use(Loading)
 

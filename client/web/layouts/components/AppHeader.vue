@@ -2,7 +2,7 @@
   <div class="header">
     <div class="header-logo">
       <nuxt-link to="/" class="hidden-md-and-up">
-        <img class="header-logo__avatar" src="/static/avatar.jpg" alt="logo">
+        <img class="header-logo__avatar" :src="'/static/avatar.jpg' | getAbsolutePath" alt="logo">
       </nuxt-link>
       <span class="header-logo__hamburger tl-icon" :class="{'header-logo__hamburger--collapse': isCollapse}" @click="toggleSidebar">
         {{ isCollapse ? '&#xe624;' : '&#xe625;' }}

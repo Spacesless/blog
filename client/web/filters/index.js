@@ -1,10 +1,5 @@
 // import parseTime and set to filter
-export { parseTime } from '#/utils'
-
-export function replaceUrlPrefix(url) {
-  const isDev = process.env.NODE_ENV === 'development'
-  return isDev ? url : '//cdn.timelessq.com' + url
-}
+export { parseTime, getAbsolutePath } from '#/utils'
 
 /**
  * 计算tag的classname
@@ -22,4 +17,18 @@ export function tagClassName(tag) {
   }
   const findName = nameEnum[tagLength % enumLength]
   return findName ? `tl-tag--${findName}` : ''
+}
+
+/**
+ * 获取图片的srcset属性
+ * @param {String} imgurl 1倍图地址
+ * @param {String} sImgurl 0.5倍图地址
+ * @param {Number} width 1倍图宽度
+ * @returns {String}
+ */
+export function getImageSrcSet({ imgurl, sImgurl, width }) {
+  let result = ''
+  if (imgurl && width) result += `${imgurl} ${width}w`
+  if (sImgurl && width) result += `, ${sImgurl} ${width / 2}w`
+  return result
 }

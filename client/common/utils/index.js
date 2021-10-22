@@ -129,3 +129,13 @@ export function updateLocalStorage(key, data) {
     localStorage.setItem(key, data)
   }
 }
+
+/**
+ * 获取绝对路径
+ * @param {String} src 源路径
+ * @returns  {String}
+ */
+export function getAbsolutePath(url) {
+  const isDev = process.env.NODE_ENV === 'development'
+  return isDev ? url : `${url ? '//cdn.timelessq.com' + url : ''}`
+}

@@ -156,7 +156,9 @@ module.exports = class extends think.Controller {
     const temp = [];
     contentImages.forEach((item) => {
       item.replace(/<img [^>]*src=['"]([^'"]+)[^>]*>/gi, (match, capture) => {
-        if (capture.includes('upload')) { temp.push(capture) }
+        if (capture.includes('upload') && !temp.includes(capture)) {
+          temp.push(capture);
+        }
       });
     });
     for (let i = 0; i < temp.length; i++) {
@@ -164,7 +166,7 @@ module.exports = class extends think.Controller {
       if (think.isEmpty(src)) continue;
 
       const fileUrl = this.getAbsolutePath(src);
-      content = content.replace(src, fileUrl);
+      content = content.replaceAll(src, fileUrl);
     }
 
     return content;

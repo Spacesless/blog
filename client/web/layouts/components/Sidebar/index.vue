@@ -3,7 +3,7 @@
     <div v-if="device==='mobile' && sidebar.opened" class="aside-mask" @click="handleClickOutside" />
     <div :class="{'aside-logo': true, 'aside-logo--collapse': isCollapse}">
       <nuxt-link to="/">
-        <img class="aside-logo__img" src="/static/avatar.jpg" alt="logo">
+        <img class="aside-logo__img" :src="'/static/avatar.jpg' | getAbsolutePath" alt="logo">
         <p class="aside-logo__name">{{ logoTitle }}</p>
       </nuxt-link>
     </div>

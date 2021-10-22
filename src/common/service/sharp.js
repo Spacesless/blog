@@ -43,7 +43,8 @@ module.exports = class extends think.Service {
     }
 
     const destDirname = `${path.dirname(src)}/thumb`;
-    const dest = `${destDirname}/${path.basename(src)}@${width}x${height}.${format}`;
+    const fileSourceName = path.basename(src, path.extname(src));
+    const dest = `${destDirname}/${fileSourceName}-w${width}-h${height}.${format}`;
     const destAbsolutePath = path.join(think.RESOURCE_PATH, dest);
 
     if (think.isExist(path.join(think.RESOURCE_PATH, dest))) {

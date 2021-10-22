@@ -55,6 +55,7 @@ module.exports = class extends Base {
       item.width = width;
       item.height = height;
       item.imgurl = await this.getThumbnail(imgurl, width, height, fit);
+      item.sImgurl = await this.getThumbnail(imgurl, width / 2, height / 2, fit);
       item.tag = tag ? tag.split('|') : [];
     }
 

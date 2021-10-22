@@ -40,6 +40,14 @@ a,a:hover,a:active,a:focus,a:visited{
   text-decoration:none;
 }
 //iconfont
+@font-face{
+  font-family: element-icons;
+  src: url('~element-ui/lib/theme-chalk/fonts/element-icons.woff') format('woff'),
+      url('~element-ui/lib/theme-chalk/fonts/element-icons.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+  font-style: normal;
+}
 @font-face {
   font-family: 'iconfont';  /* Project id 442558 */
   src: url('//at.alicdn.com/t/font_442558_eiymwjdxi7c.woff2?t=1634307910325') format('woff2'),
