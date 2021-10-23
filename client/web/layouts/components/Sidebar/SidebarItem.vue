@@ -1,12 +1,12 @@
 <template>
-  <el-menu-item v-if="!item.children" :index="item.url">
-    <nuxt-link :to="item.url" :title="item.name">
+  <nuxt-link v-if="!item.children" role="menuitem" :to="item.url" :title="item.name">
+    <el-menu-item :index="item.url">
       <i v-if="!isNest" class="aside-menu__icon tl-icon" v-html="item.icon" />
       <span slot="title">{{ item.name }}</span>
-    </nuxt-link>
-  </el-menu-item>
+    </el-menu-item>
+  </nuxt-link>
 
-  <el-submenu v-else :index="item.url">
+  <el-submenu v-else :index="item.url" popper-class="aside-submenu">
     <template slot="title">
       <i v-if="!isNest" class="aside-menu__icon tl-icon" v-html="item.icon" />
       <span slot="title">{{ item.name }}</span>

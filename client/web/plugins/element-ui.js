@@ -9,7 +9,7 @@ import {
   // Dropdown,
   // DropdownMenu,
   // DropdownItem,
-  Slider, // TODO
+  // Slider,
   Menu,
   Submenu,
   MenuItem,
@@ -42,7 +42,7 @@ import {
   // Tabs,
   // TabPane,
   Tag,
-  Tree, // TODO
+  // Tree,
   // Alert,
   // Slider,
   // Icon,
@@ -78,7 +78,7 @@ import {
   // PageHeader,
   // CascaderPanel,
   Loading,
-  Message, // TODO
+  // Message,
   MessageBox, // TODO
   Notification,
   // Avatar,
@@ -103,7 +103,7 @@ Vue.use(Pagination)
 // Vue.use(DropdownMenu)
 // Vue.use(DropdownItem)
 Vue.use(Scrollbar)
-Vue.use(Slider)
+// Vue.use(Slider)
 Vue.use(Menu)
 Vue.use(Submenu)
 Vue.use(MenuItem)
@@ -117,7 +117,7 @@ Vue.use(RadioGroup)
 Vue.use(Form)
 Vue.use(FormItem)
 Vue.use(Tag)
-Vue.use(Tree)
+// Vue.use(Tree)
 Vue.use(Table)
 Vue.use(TableColumn)
 Vue.use(Progress)
@@ -148,4 +148,3 @@ const { prompt } = msgbox
 
 Vue.prototype.$notify = Notification
 Vue.prototype.$prompt = prompt
-Vue.prototype.$message = Message

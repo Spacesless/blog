@@ -120,6 +120,5 @@ module.exports = {
   },
   srcDir,
   ssr: false,
-  target: 'static',
-  telemetry: false // 关闭收集遥测数据
+  target: 'static'
 }

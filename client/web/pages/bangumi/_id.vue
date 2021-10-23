@@ -1,7 +1,14 @@
 <template>
   <div class="bangumi">
     <div class="banner">
-      <img class="img-fluid" width="1280" height="500" src="@/assets/image/bangumi-banner.jpg" alt="番剧">
+      <img
+        class="img-fluid"
+        width="1280"
+        height="500"
+        :src="bannerImage"
+        :srcset="bannerImage | getImageSrcSet(1280)"
+        alt="番剧"
+      >
       <p class="banner__title">以一朵花的姿态，花开成景，花落成诗</p>
     </div>
     <el-form class="filter" label-width="40px" label-position="left">
@@ -54,7 +61,7 @@
                   :width="item.width"
                   :height="item.height"
                   :src="item.imgurl"
-                  :srcset="item | getImageSrcSet"
+                  :srcset="item.imgurl | getImageSrcSet(item.width)"
                   :alt="item.title"
                 >
                 <span class="bangumi-list__ratings">{{ item.ratings }}</span>
@@ -99,13 +106,14 @@
 
 <script>
 import Pagination from '#/components/Pagination'
-import { listQuery, listPage, globalFilter } from '@/mixins'
+import { listQuery, listPage } from '@/mixins'
+import { getAbsolutePath } from '#/utils'
 
 export default {
   components: {
     Pagination
   },
-  mixins: [listQuery, listPage, globalFilter],
+  mixins: [listQuery, listPage],
   async asyncData({ app, params, query, $axios }) {
     const paramId = params.id
     const [id, page] = paramId ? paramId.split('-') : []
@@ -137,6 +145,11 @@ export default {
         tags: tags || ''
       },
       dynamicTags: tags ? tags.split(',') : []
+    }
+  },
+  computed: {
+    bannerImage() {
+      return getAbsolutePath('/static/img/bangumi-banner.jpg')
     }
   },
   head() {

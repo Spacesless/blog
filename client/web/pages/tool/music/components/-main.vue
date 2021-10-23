@@ -30,22 +30,18 @@
         <template #default="{row}">
           <span class="music-list__songname">{{ row.songname }}</span>
           <span class="music-list__albumdesc">{{ row.albumdesc }}</span>
-          <el-tooltip class="item" effect="dark" :disabled="row.free" content="因钱包限制，暂不能播放" placement="left">
-            <div class="music-list-operate">
-              <el-button
-                icon="tl-icon-play"
-                circle
-                :disabled="!row.free"
-                @click="handlePlaySingle(row)"
-              />
-              <el-button
-                icon="el-icon-plus"
-                :disabled="!row.free"
-                circle
-                @click="handleJoinSingle(row)"
-              />
-            </div>
-          </el-tooltip>
+          <div class="music-list-operate">
+            <el-button
+              icon="tl-icon-play"
+              circle
+              @click="handlePlaySingle(row)"
+            />
+            <el-button
+              icon="el-icon-plus"
+              circle
+              @click="handleJoinSingle(row)"
+            />
+          </div>
         </template>
       </el-table-column>
       <el-table-column label="歌手" min-width="150">
@@ -160,14 +156,18 @@ export default {
       const { songmid, songname, singer, albumcover } = row
       const isExist = this.ap.list.audios.find(item => item.songmid === songmid)
       if (isExist) {
-        this.$message({
+        this.$notify({
+          title: '添加失败',
           message: '播放列表已经有这首歌啦',
-          type: 'warning'
+          type: 'warning',
+          offset: 50
         })
       } else {
-        this.$message({
+        this.$notify({
+          title: '添加成功',
           message: '添加播放列表成功',
-          type: 'success'
+          type: 'success',
+          offset: 50
         })
         const songVkey = await this.getSongs(songmid)
         const songUrl = songVkey[0]?.url || ''

@@ -4,30 +4,20 @@
     <div v-loading="fetchLoading" class="tour-list" element-loading-background="rgba(0, 0, 0, 0.6)">
       <div class="tour-list-filter">
         <el-input
-          v-model="filterText"
+          v-model="keyword"
+          clearable
           placeholder="输入关键字进行过滤"
         />
       </div>
       <el-scrollbar class="tour-list-scrollbar" wrap-class="tour-list-scrollbar-wrapper">
-        <el-tree
-          ref="tree"
-          :data="tourTree"
-          default-expand-all
-          :props="{
-            children: 'children',
-            label: 'name'
-          }"
-          :filter-node-method="filterNode"
-          @node-click="handleNodeClick"
-        >
-          <span slot-scope="{ node, data }" class="tour-list__item">
-            {{ node.label }}({{ data.count }})
-          </span>
-        </el-tree>
-        <!-- <dl v-for="(item, index) in tourTree" :key="index">
+        <dl v-for="(item, index) in filterTree" :key="index">
           <dt>{{ item.name }}({{ item.count }})</dt>
-          <dd v-for="(child, childIndex) in item.children" :key="childIndex">{{ item.name }}({{ item.count }})</dd>
-        </dl> -->
+          <dd
+            v-for="(child, childIndex) in item.children"
+            :key="childIndex"
+            @click="handleClickNode(child.cityCode)"
+          >{{ child.name }}({{ child.count }})</dd>
+        </dl>
       </el-scrollbar>
     </div>
     <div class="tour-overview">
@@ -61,15 +51,19 @@ export default {
   data() {
     return {
       tourTree: [],
-      filterText: '',
+      keyword: '',
       cityCount: 0,
       trackCount: 0,
       fetchLoading: false
     }
   },
-  watch: {
-    filterText(val) {
-      this.$refs.tree.filter(val)
+  computed: {
+    filterTree() {
+      if (this.keyword) {
+        return this.filterNodesDeep(this.tourTree, node => node.name.indexOf(this.keyword) > -1)
+      } else {
+        return [...this.tourTree]
+      }
     }
   },
   mounted() {
@@ -231,15 +225,38 @@ export default {
         }
       })
     },
-    filterNode(value, data) {
-      if (!value) return true
-      return data.name.indexOf(value) !== -1
+    /**
+  * 递归过滤节点，但保留原树结构，即符合条件节点的父路径上所有节点不管是否符合条件都保留
+  * @param {Node[]} nodes 要过滤的节点
+  * @param {node => boolean} predicate 过滤条件，符合条件的节点保留
+  * @return 过滤后的根节点数组
+  * @see https://segmentfault.com/q/1010000018197249/a-1020000018203261
+  */
+    filterNodesDeep(nodes, predicate) {
+    // 如果已经没有节点了，结束递归
+      if (!(nodes && nodes.length)) {
+        return
+      }
+
+      const newChildren = []
+      for (const node of nodes) {
+        const subs = this.filterNodesDeep(node.children, predicate)
+
+        // 以下两个条件任何一个成立，当前节点都应该加入到新子节点集中
+        // 1. 子孙节点中存在符合条件的，即 subs 数组中有值
+        // 2. 自己本身符合条件
+        if ((subs && subs.length) || predicate(node)) {
+          node.children = subs
+          newChildren.push(node)
+        }
+      }
+      return newChildren.length ? newChildren : void 0
     },
     /**
      * 点击树节点，定位地图
-     * @param {Object} 树节点数据
+     * @param {String} cityCode 城市区域编码
      */
-    handleNodeClick({ cityCode }) {
+    handleClickNode(cityCode) {
       if (!cityCode) return
       const { idealZoom, center } = this.distCluster.getAreaNodeProps(cityCode)
       idealZoom && center && this.mapInstance.setZoomAndCenter(idealZoom - 1, center)
@@ -288,15 +305,14 @@ $sidebar-width: 200px;
     &-scrollbar{
       height: calc(100% - 180px);
     }
-    .el-tree{
+    dl{
       padding: 0 10px;
-      background: none;
       color: #f7f7f7;
-      ::v-deep &-node__content{
-        background: none;
-        &:hover{
-          color: var(--color-primary);
-        }
+      font-size: 14px;
+      line-height: 1.7;
+      dd{
+        padding-left: 15px;
+        cursor: pointer;
       }
     }
     ::v-deep .el-icon-caret-right:before{

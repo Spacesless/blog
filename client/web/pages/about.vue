@@ -106,11 +106,6 @@ export default {
       margin: 0 5px;
       color: var(--color-primary);
     }
-    &-card{
-      background-color: var(--bg-normal);
-      border-color: var(--border-color);
-      color: var(--color-normal);
-    }
   }
   &-connact{
     &__links{

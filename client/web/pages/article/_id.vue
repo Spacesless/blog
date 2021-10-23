@@ -1,7 +1,14 @@
 <template>
   <div class="article">
     <div class="banner">
-      <img class="img-fluid" width="1280" height="500" src="@/assets/image/article-banner.jpg" alt="文章">
+      <img
+        class="img-fluid"
+        width="1280"
+        height="500"
+        :src="bannerImage"
+        :srcset="bannerImage | getImageSrcSet(1280)"
+        alt="文章"
+      >
       <p class="banner__title">用心甘情愿的态度，过随遇而安的生活</p>
     </div>
     <!-- filter -->
@@ -43,7 +50,7 @@
               :width="item.width"
               :height="item.height"
               :src="item.imgurl"
-              :srcset="item | getImageSrcSet"
+              :srcset="item.imgurl | getImageSrcSet(item.width)"
               :alt="item.title"
             >
           </nuxt-link>
@@ -78,7 +85,8 @@
 
 <script>
 import Pagination from '#/components/Pagination'
-import { listQuery, listPage, globalFilter } from '@/mixins'
+import { listQuery, listPage } from '@/mixins'
+import { getAbsolutePath } from '#/utils'
 
 export default {
   components: {
@@ -94,7 +102,7 @@ export default {
       return `${monthEnum[month]}月 ${date}, ${year}`
     }
   },
-  mixins: [listQuery, listPage, globalFilter],
+  mixins: [listQuery, listPage],
   async asyncData({ app, params, query, $axios }) {
     const paramId = params.id
     const [id, page] = paramId ? paramId.split('-') : []
@@ -122,6 +130,11 @@ export default {
         tags: tags || ''
       },
       dynamicTags: tags ? tags.split(',') : []
+    }
+  },
+  computed: {
+    bannerImage() {
+      return getAbsolutePath('/static/img/article-banner.jpg')
     }
   },
   head() {

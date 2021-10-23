@@ -61,7 +61,6 @@ module.exports = class extends Base {
       element.width = bangumiWidth;
       element.height = bangumiHeight;
       element.imgurl = await this.getThumbnail(element.imgurl, bangumiWidth, bangumiHeight, fit);
-      element.sImgurl = await this.getThumbnail(element.imgurl, bangumiWidth / 2, bangumiHeight / 2, fit);
     }
 
     return this.success({

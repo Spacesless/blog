@@ -20,15 +20,26 @@ export function tagClassName(tag) {
 }
 
 /**
- * 获取图片的srcset属性
- * @param {String} imgurl 1倍图地址
- * @param {String} sImgurl 0.5倍图地址
- * @param {Number} width 1倍图宽度
+ * 格式化番剧状态
+ * @param {Number} status
  * @returns {String}
  */
-export function getImageSrcSet({ imgurl, sImgurl, width }) {
+export function bangumiStatus(status) {
+  status = status || 0
+  const statusList = ['未上映', '连载中', '已完结']
+  return statusList[status]
+}
+
+/**
+ * 获取图片的srcset属性
+ * @param {String} src 图片地址
+ * @param {Number} width 图片宽度
+ * @returns {String}
+ */
+export function getImageSrcSet(src, width) {
   let result = ''
-  if (imgurl && width) result += `${imgurl} ${width}w`
-  if (sImgurl && width) result += `, ${sImgurl} ${width / 2}w`
+  if (src && width) {
+    result = `${src} ${width}w, ${src}?imageMogr2/thumbnail/!50p ${width / 2}w`
+  }
   return result
 }

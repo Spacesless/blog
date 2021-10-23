@@ -69,44 +69,12 @@ body{
     height: 100%;
     background-color: var(--bg-normal);
     border-right: none !important;
-    a{
-      overflow: hidden;
-      display: inline-block;
-      width: 100%;
-    }
     &__icon{
       width: 24px;
       margin-right: 5px;
       font-size: 18px;
       text-align: center;
       vertical-align: middle;
-    }
-    .el-menu{
-      background: none;
-    }
-    .el-menu-item, .el-submenu__title{
-      height: 50px;
-      color: var(--color-main);
-      line-height: 50px;
-    }
-    .el-menu-item{
-      &.is-active{
-        color: var(--color-primary);
-      }
-      &:focus,&:hover{
-        background-color: #ecf5ff !important;
-        color: var(--color-primary);
-        i{
-          color: var(--color-primary);
-        }
-      }
-    }
-    .el-submenu__title:hover{
-      background-color: #ecf5ff !important;
-      color: var(--color-primary);
-      i{
-        color: var(--color-primary);
-      }
     }
   }
   .horizontal-collapse-transition {
@@ -115,6 +83,42 @@ body{
   .el-submenu .el-menu-item{
     height: 45px;
     line-height: 45px;
+  }
+}
+.el-menu {
+  background: none;
+  &--popup {
+    background-color: var(--bg-normal);
+  }
+  a{
+    overflow: hidden;
+    display: inline-block;
+    width: 100%;
+    color: var(--color-main);
+  }
+  .el-menu-item, .el-submenu__title{
+    height: 50px;
+    color: var(--color-main);
+    line-height: 50px;
+  }
+  .el-menu-item{
+    &.is-active{
+      color: var(--color-primary);
+    }
+    &:focus,&:hover{
+      background-color: #ecf5ff !important;
+      color: var(--color-primary);
+      a, i{
+        color: var(--color-primary);
+      }
+    }
+  }
+  .el-submenu__title:hover{
+    background-color: #ecf5ff !important;
+    color: var(--color-primary);
+    i{
+      color: var(--color-primary);
+    }
   }
 }
 
@@ -130,6 +134,7 @@ $header-height: 45px;
   box-sizing: border-box;
   transition: width 0.3s;
   @media (max-width: 992px) {
+    z-index: 998;
     height: $header-height;
     line-height: $header-height;
     background-color: var(--bg-normal);
@@ -157,6 +162,9 @@ $header-height: 45px;
       }
       &--collapse{
         left: -60px;
+      }
+      @media (max-width: 992px) {
+        position: static;
       }
     }
   }
@@ -198,24 +206,31 @@ $header-height: 45px;
   }
   &-classify{
     float: left;
+    margin-right: 15px;
+    @media (max-width: 769px) {
+      float: none;
+      width: 100%;
+      margin-right: 15px;
+      margin-bottom: 15px;
+    }
   }
   &-input{
     overflow: hidden;
     display: block;
+    position: relative;
     width: auto;
-    padding-left: 15px;
-  }
-  &__button{
-    display: inline-block;
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 40px;
-    line-height: 40px;
-    text-align: center;
-    cursor: pointer;
-    &:hover{
-      color: var(--color-primary);
+    &__button{
+      display: inline-block;
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 40px;
+      line-height: 40px;
+      text-align: center;
+      cursor: pointer;
+      &:hover{
+        color: var(--color-primary);
+      }
     }
   }
   &-hot{

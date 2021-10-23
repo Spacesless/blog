@@ -1,4 +1,4 @@
-const isDev = think.env !== 'development';
+const isDev = think.env === 'development';
 
 module.exports = class extends think.Controller {
   constructor(...arg) {
@@ -166,7 +166,7 @@ module.exports = class extends think.Controller {
       if (think.isEmpty(src)) continue;
 
       const fileUrl = this.getAbsolutePath(src);
-      content = content.replaceAll(src, fileUrl);
+      content = content.replace(new RegExp(src, 'g'), fileUrl);
     }
 
     return content;

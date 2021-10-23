@@ -102,6 +102,5 @@ module.exports = {
     compressor: false // 禁用中间件压缩
     // resourceHints: false  // 添加prefetch并preload链接以加快初始页面加载时间。
   },
-  srcDir,
-  telemetry: false // 关闭收集遥测数据
+  srcDir
 }

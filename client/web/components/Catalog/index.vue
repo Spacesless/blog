@@ -32,9 +32,7 @@ export default {
     }
   },
   mounted() {
-    this.$nextTick(() => {
-      this.initCatelog()
-    })
+    this.initCatelog()
   },
   methods: {
     initCatelog() {

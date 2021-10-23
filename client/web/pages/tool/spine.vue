@@ -24,7 +24,8 @@
     <canvas id="canvas" class="spine-canvas" />
     <div v-loading="skelLoading" element-loading-text="拼命加载中" element-loading-background="rgba(0, 0, 0, 0)" class="spine-loading" />
     <div class="spine-scale">
-      <el-slider v-model="spineScale" :step="0.01" :min="0.5" :max="1.5" @input="onScaleChange" />
+      <span class="spine-scale__icon el-icon-plus" @click="addSpineScale" />
+      <span class="spine-scale__icon el-icon-minus" @click="subtractSpineScale" />
     </div>
   </div>
 </template>
@@ -250,9 +251,19 @@ export default {
       skeleton.setToSetupPose()
       state.setAnimation(0, animationName, true)
     },
-    onScaleChange(val) {
+    handleChangeScale() {
       if (!this.root) return
-      this.root.scaleX = this.root.scaleY = val
+      this.root.scaleX = this.root.scaleY = this.spineScale
+    },
+    addSpineScale() {
+      if (this.spineScale >= 1.5) return
+      this.spineScale += 0.1
+      this.handleChangeScale()
+    },
+    subtractSpineScale() {
+      if (this.spineScale <= 0.5) return
+      this.spineScale -= 0.1
+      this.handleChangeScale()
     },
     filterSkel(keyword) {
       if (keyword) {
@@ -296,15 +307,27 @@ export default {
   &-scale{
     position: absolute;
     bottom: 30px;
-    left: 50%;
-    width: 410px;
-    margin-left: -205px;
-    @media (max-width: 576px) {
-      left: 0;
-      bottom: 15px;
-      width: 100%;
-      padding: 0 15px;
-      margin-left: 0;
+    right: 30px;
+    &__icon{
+      display: block;
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 4px;
+      color: var(--color-main);
+      background-color: var(--bg-normal);
+      &.el-icon-plus{
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        border-bottom: 1px solid var(--border-color);
+      }
+      &.el-icon-minus{
+        margin-top: -1px;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+      }
+      &:hover{
+        background-color: var(--color-primary);
+      }
     }
   }
   &-loading {

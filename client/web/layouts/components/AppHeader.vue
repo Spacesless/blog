@@ -37,17 +37,18 @@
               <el-option label="文章" value="article" />
               <el-option label="番剧" value="bangumi" />
             </el-select>
-            <el-input
-              ref="searchKeyword"
-              v-model="keyword"
-              class="search-input"
-              size="large"
-              placeholder="请输入关键字"
-              @keyup.enter.native="handleSearch"
-            />
-            <span class="el-icon-search search__button" @click="handleSearch" />
+            <div class="search-input">
+              <el-input
+                ref="searchKeyword"
+                v-model="keyword"
+                size="large"
+                placeholder="请输入关键字"
+                @keyup.enter.native="handleSearch"
+              />
+              <span class="el-icon-search search-input__button" @click="handleSearch" />
+            </div>
           </div>
-          <div class="search-hot">
+          <div class="search-hot hidden-md-and-down">
             <p class="search-hot-header">
               <i class="tl-icon search-hot__icon">&#xe6e1;</i>
               <strong class="search-hot__title">热门推荐：</strong>

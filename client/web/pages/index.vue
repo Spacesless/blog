@@ -16,6 +16,7 @@
           width="1280"
           height="500"
           :src="item.imgurl"
+          :srcset="item.imgurl | getImageSrcSet(1280)"
           :alt="item.title"
           @load="onImageLoad"
         >
@@ -65,7 +66,7 @@
                   :width="item.width"
                   :height="item.height"
                   :src="item.imgurl"
-                  :srcset="item | getImageSrcSet"
+                  :srcset="item.imgurl | getImageSrcSet(item.width)"
                   :alt="item.title"
                 >
               </nuxt-link>
@@ -96,10 +97,8 @@
 
 <script>
 import { debounce } from '@/utils'
-import { globalFilter } from '@/mixins'
 
 export default {
-  mixins: [globalFilter],
   async asyncData({ $axios }) {
     const { seo, bannerList, articleList, bangumiList } = await $axios.$get('/index')
     return { seo, bannerList, articleList, bangumiList }

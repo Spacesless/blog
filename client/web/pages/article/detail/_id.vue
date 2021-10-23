@@ -22,7 +22,7 @@
         <Share />
       </div>
       <!-- 文章目录 -->
-      <Catalog />
+      <Catalog v-if="isLoaded" />
     </div>
     <!-- 评论 -->
     <Comment :topic-id="'article-' + data.id" />
@@ -54,12 +54,17 @@ export default {
     return {
       id: 0,
       previewSrc: '',
-      previewSrcList: []
+      previewSrcList: [],
+      isLoaded: false
     }
   },
   mounted() {
     this.initPrism()
     this.initPreviw()
+
+    this.$nextTick(() => {
+      this.isLoaded = true
+    })
 
     // 浏览5秒才算访问量
     // this.timer = setTimeout(() => {

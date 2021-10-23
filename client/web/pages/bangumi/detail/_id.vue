@@ -64,7 +64,6 @@
 import Catalog from '@/components/Catalog'
 import Comment from '#/components/Comment'
 import Share from '@/components/Share'
-import { globalFilter } from '@/mixins'
 
 export default {
   components: {
@@ -72,7 +71,6 @@ export default {
     Comment,
     Share
   },
-  mixins: [globalFilter],
   async asyncData({ params, $axios }) {
     const id = params.id
     const { seo, content: data } = await $axios.$get('/bangumi/detail', {
