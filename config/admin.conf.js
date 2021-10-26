@@ -42,29 +42,6 @@ module.exports = {
         }
       })
     },
-    optimization: {
-      splitChunks: {
-        chunks: 'all',
-        cacheGroups: {
-          vendors: {
-            name: 'vendors',
-            test: /[\\/]node_modules[\\/]/,
-            priority: 10,
-            chunks: 'initial' // only package third parties that are initially dependent
-          },
-          element: {
-            name: 'element', // split elementUI into a single package
-            priority: 20, // the weight needs to be larger than vendor and app or it will be packaged into vendor or app
-            test: /[\\/]node_modules[\\/]_?element-ui(.*)/ // in order to adapt to cnpm
-          },
-          common: {
-            name: 'common',
-            minChunks: 2
-          }
-        }
-      },
-      runtimeChunk: false
-    },
     postcss: {
       'plugins': {
         // to edit target browsers: use "browserslist" field in package.json

@@ -286,7 +286,6 @@ export default {
     text-overflow: ellipsis;
     box-shadow: 0 1px 3px #66ccff;
     border-radius: 12px;
-    animation: shake 25s ease-in-out 2s infinite;
   }
   &-info{
     position: absolute;

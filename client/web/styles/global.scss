@@ -137,7 +137,6 @@ a,a:hover,a:active,a:focus,a:visited{
     font-size: 12px;
     text-overflow: ellipsis;
     box-shadow: 0 1px 3px #66ccff;
-    animation: shake 25s ease-in-out 2s infinite;
   }
   &-tool {
     display: none;
@@ -166,39 +165,6 @@ a,a:hover,a:active,a:focus,a:visited{
   top: 15px
 }
 //Animation
-@keyframes shake{
-  10% {
-    transform: translate(0.5px, 2.5px) rotate(0.5deg);
-  }
-  20% {
-    transform: translate(2.5px, 2.5px) rotate(1.5deg);
-  }
-  30% {
-    transform: translate(1.5px, -0.5px) rotate(-0.5deg);
-  }
-  40% {
-    transform: translate(-0.5px, 2.5px) rotate(0.5deg);
-  }
-  50% {
-    transform: translate(-1.5px, 1.5px) rotate(0.5deg);
-  }
-  60% {
-    transform: translate(2.5px, -1.5px) rotate(1.5deg);
-  }
-  70% {
-    transform: translate(2.5px, 2.5px) rotate(0.5deg);
-  }
-  80% {
-    transform: translate(-1.5px, 0.5px) rotate(-0.5deg);
-  }
-  90% {
-    transform: translate(-1.5px, -0.5px) rotate(-0.5deg);
-  }
-  0%,100% {
-    transform: translate(0, 0) rotate(0);
-  }
-}
-
 /* fade-transform */
 .fade-transform-leave-active,
 .fade-transform-enter-active {
