@@ -34,13 +34,7 @@
     }
 
     .el-scrollbar {
-      height: 100%;
-    }
-
-    &.has-logo {
-      .el-scrollbar {
-        height: calc(100% - 120px);
-      }
+      height: calc(100% - 120px);
     }
 
     .is-horizontal {

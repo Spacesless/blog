@@ -6,7 +6,7 @@ import Layout from '@/layouts/index'
 import redirect from '@/views/redirect/index'
 import login from '@/views/login/index'
 import home from '@/views/home/index'
-import article from '@/views/content/article'
+import article from '@/views/content/index'
 import bangumi from '@/views/content/bangumi'
 import createContent from '@/views/content/create'
 import editContent from '@/views/content/edit'
@@ -48,6 +48,149 @@ Vue.use(Router)
  * a base page that does not have permission requirements
  * all roles can be accessed
  */
+const contentRoutes = [
+  {
+    path: '/content/article',
+    name: 'Article',
+    component: article,
+    meta: { title: '文章模块' }
+  },
+  {
+    path: '/content/bangumi',
+    name: 'Bangumi',
+    component: bangumi,
+    meta: { title: '番剧模块' }
+  },
+  {
+    path: '/content/create',
+    name: 'ContentCreate',
+    props: true,
+    hidden: true,
+    component: createContent,
+    meta: { title: '新增文章', noCache: true }
+  },
+  {
+    path: '/content/edit/:id',
+    name: 'ContentEdit',
+    props: true,
+    hidden: true,
+    component: editContent,
+    meta: { title: '修改文章', noCache: true }
+  },
+  {
+    path: '/content/recycle',
+    name: 'Recycle',
+    component: recycle,
+    meta: { title: '回收站' }
+  }
+]
+
+const categoryRoutes = [
+  {
+    path: '/category',
+    name: 'Category',
+    component: category,
+    meta: { title: '栏目列表' }
+  },
+  {
+    path: '/category/edit/:id',
+    name: 'CategoryEdit',
+    props: true,
+    hidden: true,
+    component: editCategory,
+    meta: { title: '栏目内容', noCache: true }
+  },
+  {
+    path: '/category/create',
+    name: 'CategoryCreate',
+    props: true,
+    hidden: true,
+    component: createCategory,
+    meta: { title: '栏目内容', noCache: true }
+  }
+]
+
+const communityRoutes = [
+  {
+    path: '/community/comment',
+    name: 'Comment',
+    component: commentList,
+    meta: { title: '评论系统' }
+  },
+  {
+    path: '/community/comment/:id',
+    name: 'CommentContent',
+    props: true,
+    hidden: true,
+    component: commentContent,
+    meta: { title: '评论详情', noCache: true }
+  },
+  {
+    path: '/community/link',
+    name: 'Link',
+    component: link,
+    meta: { title: '友情链接' }
+  }
+]
+
+const systemRoutes = [
+  {
+    path: '/system/options-general',
+    name: 'OptionsGeneral',
+    component: generalOption,
+    meta: { title: '常规配置', noCache: true }
+  },
+  {
+    path: '/system/options-reading',
+    name: 'OptionsReading',
+    component: readingOption,
+    meta: { title: '阅读设置', noCache: true }
+  },
+  {
+    path: '/system/options-banner',
+    name: 'OptionsBanner',
+    component: bannerOption,
+    meta: { title: 'Banner管理' }
+  }
+]
+
+export const menus = [
+  {
+    path: '/home',
+    name: 'Home',
+    meta: { title: '首页', icon: 'dashboard', affix: true }
+  },
+  {
+    path: '/content',
+    redirect: '/content/article',
+    meta: { title: '内容管理', icon: 'content' },
+    children: contentRoutes
+  },
+  {
+    path: '/category',
+    redirect: '/category/list',
+    meta: { title: '栏目管理', icon: 'category' },
+    children: categoryRoutes
+  },
+  {
+    path: '/community',
+    redirect: '/community/comment',
+    meta: { title: '社区管理', icon: 'community' },
+    children: communityRoutes
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    meta: { title: '用户管理', icon: 'member', noCache: true }
+  },
+  {
+    path: '/system',
+    redirect: 'options-general',
+    meta: { title: '系统管理', icon: 'system' },
+    children: systemRoutes
+  }
+]
+
 export const constantRoutes = [
   {
     path: '/redirect/:path*',
@@ -62,160 +205,40 @@ export const constantRoutes = [
   },
 
   {
-    path: '',
-    component: Layout,
-    redirect: '/home',
-    children: [{
-      path: 'home',
-      name: 'Home',
-      component: home,
-      meta: { title: '首页', icon: 'dashboard', affix: true }
-    }]
+    path: '/home',
+    name: 'Home',
+    component: home,
+    meta: { title: '首页', icon: 'dashboard', affix: true }
   },
 
-  {
-    path: '/content',
-    component: Layout,
-    redirect: '/content/article',
-    meta: { title: '内容管理', icon: 'content' },
-    children: [
-      {
-        path: 'article',
-        name: 'Article',
-        component: article,
-        meta: { title: '文章模块' }
-      },
-      {
-        path: 'bangumi',
-        name: 'Bangumi',
-        component: bangumi,
-        meta: { title: '番剧模块' }
-      },
-      {
-        path: 'create',
-        name: 'ContentCreate',
-        props: true,
-        hidden: true,
-        component: createContent,
-        meta: { title: '新增文章', noCache: true }
-      },
-      {
-        path: 'edit/:id',
-        name: 'ContentEdit',
-        props: true,
-        hidden: true,
-        component: editContent,
-        meta: { title: '修改文章', noCache: true }
-      },
-      {
-        path: 'recycle',
-        name: 'Recycle',
-        component: recycle,
-        meta: { title: '回收站' }
-      }
-    ]
-  },
+  ...contentRoutes,
 
-  {
-    path: '/category',
-    component: Layout,
-    meta: { title: '栏目管理', icon: 'category' },
-    children: [
-      {
-        path: 'list',
-        name: 'Category',
-        component: category,
-        meta: { title: '栏目列表' }
-      },
-      {
-        path: 'edit/:id',
-        name: 'CategoryEdit',
-        props: true,
-        hidden: true,
-        component: editCategory,
-        meta: { title: '栏目内容', noCache: true }
-      },
-      {
-        path: 'create',
-        name: 'CategoryCreate',
-        props: true,
-        hidden: true,
-        component: createCategory,
-        meta: { title: '栏目内容', noCache: true }
-      }
-    ]
-  },
+  ...categoryRoutes,
 
   {
     path: '/community',
     component: Layout,
     redirect: 'comment',
-    meta: { title: '社区管理', icon: 'community' },
-    children: [
-      {
-        path: 'comment',
-        name: 'Comment',
-        component: commentList,
-        meta: { title: '评论系统' }
-      },
-      {
-        path: '/comment/:id',
-        name: 'CommentContent',
-        props: true,
-        hidden: true,
-        component: commentContent,
-        meta: { title: '评论详情', noCache: true }
-      },
-      {
-        path: 'link',
-        name: 'Link',
-        component: link,
-        meta: { title: '友情链接' }
-      }
-    ]
+    meta: { title: '社区管理', icon: 'community' }
   },
 
+  ...communityRoutes,
+
   {
-    path: '/member',
-    component: Layout,
-    redirect: 'profile',
-    meta: { title: '用户管理', icon: 'member' },
-    children: [
-      {
-        path: 'profile',
-        name: 'Profile',
-        component: profile,
-        meta: { title: '个人资料', noCache: true }
-      }
-    ]
+    path: '/profile',
+    name: 'Profile',
+    component: profile,
+    meta: { title: '用户管理', icon: 'member', noCache: true }
   },
 
   {
     path: '/system',
     component: Layout,
     redirect: 'options-general',
-    meta: { title: '系统管理', icon: 'system' },
-    children: [
-      {
-        path: 'options-general',
-        name: 'OptionsGeneral',
-        component: generalOption,
-        meta: { title: '常规配置', noCache: true }
-      },
-      {
-        path: 'options-reading',
-        name: 'OptionsReading',
-        component: readingOption,
-        meta: { title: '阅读设置', noCache: true }
-      },
-      {
-        path: 'options-banner',
-        name: 'OptionsBanner',
-        component: bannerOption,
-        meta: { title: 'Banner管理' }
-      }
-    ]
-  }
+    meta: { title: '系统管理', icon: 'system' }
+  },
+
+  ...systemRoutes
 ]
 
 export function createRouter() {

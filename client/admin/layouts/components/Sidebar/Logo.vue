@@ -1,12 +1,9 @@
 <template>
   <div class="sidebar-logo-container" :class="{'collapse':collapse}">
     <transition name="sidebarLogoFade">
-      <nuxt-link v-if="collapse" key="collapse" class="sidebar-logo-link" to="/">
+      <nuxt-link class="sidebar-logo-link" to="/">
         <img v-if="logo" :src="logo" class="sidebar-logo">
-      </nuxt-link>
-      <nuxt-link v-else key="expand" class="sidebar-logo-link" to="/">
-        <img v-if="logo" :src="logo" class="sidebar-logo">
-        <h1 class="sidebar-logo__name">{{ title }}</h1>
+        <h1 v-if="!collapse" class="sidebar-logo__name">{{ title }}</h1>
       </nuxt-link>
     </transition>
   </div>

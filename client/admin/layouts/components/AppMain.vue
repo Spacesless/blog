@@ -2,7 +2,7 @@
   <section class="app-main">
     <!-- 使用动态的 transition name -->
     <transition :name="transitionName" mode="out-in">
-      <Nuxt />
+      <Nuxt keep-alive :keep-alive-props="{ include: cachedViews }" />
     </transition>
   </section>
 </template>
@@ -13,6 +13,11 @@ export default {
   data() {
     return {
       transitionName: 'fade-transform'
+    }
+  },
+  computed: {
+    cachedViews() {
+      return this.$store.state.tagsView.cachedViews
     }
   },
   watch: {
@@ -31,13 +36,6 @@ export default {
   overflow: hidden;
   width: 100%;
   min-height: 100vh;
-}
-.fixed-header+.app-main {
-  padding-top: 50px;
-}
-.hasTagsView {
-  .fixed-header+.app-main {
-    padding-top: 90px;
-  }
+  padding-top: 90px;
 }
 </style>

@@ -73,7 +73,7 @@
 <script>
 export default {
   name: 'Login',
-  layout: 'whiteList',
+  layout: 'index',
   data() {
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6 || value.length > 20) {
@@ -110,6 +110,8 @@ export default {
   },
   created() {
     this.fetchCaptcha()
+
+    console.log(this.$router)
   },
   methods: {
     showPwd() {

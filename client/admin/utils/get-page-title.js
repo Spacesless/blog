@@ -1,6 +1,4 @@
-import defaultSettings from '@/settings'
-
-const title = defaultSettings.title || ''
+const title = 'Timeless`s 管理系统' || ''
 
 export default function getPageTitle(pageTitle) {
   if (pageTitle) {

@@ -34,12 +34,6 @@ module.exports = {
       ]
     },
     extractCSS: true,
-    postcss: {
-      'plugins': {
-        // to edit target browsers: use "browserslist" field in package.json
-        'autoprefixer': {}
-      }
-    },
     plugins: [
       new CompressionPlugin({
         test: /.(js|css|woff|ttf)$/, // 匹配需要压缩的文件后缀 看需求

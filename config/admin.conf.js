@@ -42,12 +42,6 @@ module.exports = {
         }
       })
     },
-    postcss: {
-      'plugins': {
-        // to edit target browsers: use "browserslist" field in package.json
-        'autoprefixer': {}
-      }
-    },
     publicPath: '//cdn.timelessq.com/admin/' // 只需将www/admin上传cdn
   },
   buildDir: 'www/admin',
@@ -81,7 +75,7 @@ module.exports = {
   ],
   proxy: {
     '/admin': {
-      target: 'http://127.0.0.1:8360', // 目标接口域名
+      target: 'https://www.timelessq.com', // 目标接口域名
       changeOrigin: true // 表示是否跨域
     }
   },
