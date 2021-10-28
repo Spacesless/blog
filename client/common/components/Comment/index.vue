@@ -98,12 +98,15 @@ export default {
      */
     submitComment(content) {
       const { id, topic_id, parent_id, name, type } = this.replyData
+      const pageUrl = encodeURIComponent(location.href)
       const postData = {
         ...this.formData,
         topic_id,
         reply_name: name,
         parent_id: parent_id || id || 0,
         type: type ? type + 1 : 1,
+        page_url: pageUrl,
+        page_name: document.title,
         content
       }
       return this.$axios.$post('/comment/post', postData).then(res => {

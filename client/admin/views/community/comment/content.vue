@@ -1,6 +1,9 @@
 <template>
   <div v-loading="fetchLoading" class="app-container comment">
     <el-form ref="form" label-width="100px">
+      <el-form-item label="所属页面">
+        <el-link :underline="false" :href="formData.page_url" target="_blank">{{ formData.page_name }}</el-link>
+      </el-form-item>
       <el-form-item label="昵称">
         <el-input v-model="formData.name" readonly />
       </el-form-item>
@@ -23,7 +26,7 @@
     </el-form>
     <div class="comment-reply">
       <comment-reply
-        :form-data.sync="formData"
+        :form-data.sync="replyData"
         :submit-comment="submitComment"
       />
     </div>
@@ -31,6 +34,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import CommentReply from '#/components/Comment/CommentReply'
 
 export default {
@@ -43,15 +47,24 @@ export default {
       formData: {
         content: ''
       },
-      replyData: {
-        topic_id: this.topicId
-      },
+      replyData: {},
       replyContent: '',
       fetchLoading: false
     }
   },
+  computed: {
+    ...mapGetters['userInfo']
+  },
   created() {
     this.fetchData()
+
+    const { nickname, email } = this.userInfo
+    this.replyData = {
+      name: nickname,
+      website: 'https://www.timelessq.com',
+      content: '',
+      email
+    }
   },
   methods: {
     async fetchData() {
