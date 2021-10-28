@@ -62,7 +62,7 @@ export const routes = [
   },
 
   {
-    path: '/home',
+    path: '/',
     name: 'Home',
     component: home,
     meta: { title: '首页', icon: 'dashboard', affix: true }

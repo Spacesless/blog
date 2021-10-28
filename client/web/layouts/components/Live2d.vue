@@ -3,13 +3,18 @@
     <transition name="fade-transform" mode="out-in">
       <div v-show="tipsShow" class="waifu-tips" v-html="tips" />
     </transition>
-    <canvas id="live2d" ref="live2d" width="240" height="240" class="live2d" />
+    <canvas id="live2d" width="240" height="240" class="live2d" @click="onMouseClick" />
     <div class="waifu-tool">
-      <span ref="home" class="tl-icon" @click="navigatorToHome">&#xe76f;</span>
-      <span ref="model" class="tl-icon" @click="loadOtherModel">&#xe651;</span>
-      <span ref="textures" class="tl-icon" @click="loadOtherTexture">&#xe743;</span>
-      <span ref="photo" class="tl-icon" @click="handleTakePhoto">&#xe60d;</span>
-      <span ref="close" class="tl-icon" @click="handleHideLive2d">&#xe645;</span>
+      <!-- 返回首页 -->
+      <span class="tl-icon" @click="navigatorToHome" @mouseenter="onMouseEnter('home')">&#xe76f;</span>
+      <!-- 切换模型 -->
+      <span class="tl-icon" @click="loadOtherModel" @mouseenter="onMouseEnter('model')">&#xe651;</span>
+      <!-- 更换材质 -->
+      <span class="tl-icon" @click="loadOtherTexture" @mouseenter="onMouseEnter('textures')">&#xe743;</span>
+      <!-- 拍照 -->
+      <span class="tl-icon" @click="handleTakePhoto" @mouseenter="onMouseEnter('photo')">&#xe60d;</span>
+      <!-- 关闭 -->
+      <span class="tl-icon" @click="handleHideLive2d" @mouseenter="onMouseEnter('close')">&#xe645;</span>
     </div>
   </div>
 </template>
@@ -20,50 +25,29 @@ if (process.client) {
   require('@/vendor/live2d')
 }
 
+const mouseTips = {
+  home: '点击前往首页，想回到上一页可以使用浏览器的后退功能哦',
+  model: '๑乛◡乛๑ 让我的好朋友见见你',
+  textures: '(๑¯◡¯๑) 要看看其它的衣服么',
+  photo: '123茄子 西瓜甜不甜，宝宝萌不萌',
+  close: 'つ﹏⊂ 真的到了要分开的时候了么'
+}
+
+const clickTips = [
+  '萝莉控是什么呀',
+  '(๑•́ ∀ •̀๑)',
+  '๑乛◡乛๑嘿嘿',
+  '！⌇●﹏●⌇',
+  '(ó﹏ò｡)'
+]
+
 export default {
   data() {
     return {
       apiurl: '//api.timelessq.com/live2d', // apiurl {string} 模型后端接口
       tips: '',
       isShow: true,
-      tipsShow: false,
-      mouseover: [
-        {
-          'selector': 'home',
-          'text': ['点击前往首页，想回到上一页可以使用浏览器的后退功能哦']
-        },
-        {
-          'selector': 'model',
-          'text': ['๑乛◡乛๑ 让我的好朋友见见你']
-        },
-        {
-          'selector': 'textures',
-          'text': ['(๑¯◡¯๑) 要看看其它的衣服么']
-        },
-        {
-          'selector': 'photo',
-          'text': ['123茄子 西瓜甜不甜，宝宝萌不萌']
-        },
-        {
-          'selector': 'close',
-          'text': ['つ﹏⊂ 真的到了要分开的时候了么']
-        },
-        {
-          'selector': 'live2d',
-          'text': [
-            '(๑•́ ₃ •̀๑)',
-            '.^◡^.',
-            'ᖗ乛◡乛ᖘ'
-          ]
-        }
-      ],
-      click: [
-        '萝莉控是什么呀',
-        '(๑•́ ∀ •̀๑)',
-        '๑乛◡乛๑嘿嘿',
-        '！⌇●﹏●⌇',
-        '(ó﹏ò｡)'
-      ]
+      tipsShow: false
     }
   },
   computed: {
@@ -88,23 +72,24 @@ export default {
     if (this.isShow) {
       this.initModel()
 
-      /** 开启开发者工具 */
+      // 开启开发者工具
       const re = /x/
       re.toString = function() {
-        this.showMessage('哈哈，你打开了控制台，是想要看看我的秘密吗？', 3000, true)
+        this.showMessage('哈哈，你打开了控制台，是想要看看我的秘密吗？', 3000)
         return ''
       }
+      // 复制
       document.addEventListener('copy', () => {
-        this.showMessage('你都复制了些什么呀，转载要记得加上出处哦', 3000, true)
+        this.showMessage('你都复制了些什么呀，转载要记得加上出处哦', 3000)
       })
     }
   },
   methods: {
     dragMove(e) {
-      const odiv = this.$refs.waifu // 获取目标元素
+      const $el = this.$refs.waifu // 获取目标元素
       // 算出鼠标相对元素的位置
-      const disX = e.clientX - odiv.offsetLeft
-      const disY = e.clientY - odiv.offsetTop
+      const disX = e.clientX - $el.offsetLeft
+      const disY = e.clientY - $el.offsetTop
       document.onmousemove = (e) => { // 鼠标按下并移动的事件
         // 用鼠标的位置减去鼠标相对元素的位置，得到元素的位置
         let left = e.clientX - disX
@@ -114,25 +99,25 @@ export default {
         const clientHeight = document.documentElement.clientHeight || document.body.clientHeight
         if (left < 0) {
           left = 0
-        } else if (left > clientWidth - odiv.clientWidth) {
-          left = clientWidth - odiv.clientWidth
+        } else if (left > clientWidth - $el.clientWidth) {
+          left = clientWidth - $el.clientWidth
         }
         if (top < 0) {
           top = 0
-        } else if (top > clientHeight - odiv.clientHeight) {
-          top = clientHeight - odiv.clientHeight
+        } else if (top > clientHeight - $el.clientHeight) {
+          top = clientHeight - $el.clientHeight
         }
 
         // 移动当前元素
-        odiv.style.left = left + 'px'
-        odiv.style.top = top + 'px'
+        $el.style.left = left + 'px'
+        $el.style.top = top + 'px'
 
         document.body.style.userSelect = 'none'
       }
       document.onmouseup = () => {
         document.onmousemove = null
         document.onmouseup = null
-        document.body.style.userSelect = 'text'
+        document.body.style.userSelect = 'unset'
       }
     },
     /**
@@ -141,7 +126,7 @@ export default {
      * @param {Number [int]} duration 持续时间
      */
     showMessage(text, duration = 3000) {
-      if (Array.isArray(text)) text = text[Math.floor(Math.random() * text.length + 1) - 1]
+      if (!text) return
       this.tips = text
       this.tipsShow = true
       clearTimeout(this.timer)
@@ -152,8 +137,7 @@ export default {
     // 初始化模型
     initModel() {
       this.loadModel(this.modelId, this.texturesId)
-      this.onBrowsing()
-      this.addInteraction()
+      this.onEnterPage()
     },
     /**
      * 加载指定模型
@@ -175,14 +159,14 @@ export default {
       }).then(res => {
         const { id, message } = res.data
         if (id) {
-          this.showMessage(message, 3000)
+          this.showMessage(message)
           this.loadModel(id)
         } else {
-          this.showMessage('哎呀 还没有其它的小伙伴呢', 3000)
+          this.showMessage('哎呀 还没有其它的小伙伴呢')
         }
       })
     },
-    // 更换衣服
+    // 更换材质
     loadOtherTexture() {
       this.$axios.get(this.apiurl + '/texture/random', {
         params: {
@@ -192,33 +176,33 @@ export default {
       }).then(res => {
         const { id, texture } = res.data
         if (id) {
-          this.showMessage('我的新衣服好看嘛', 3000)
+          this.showMessage('我的新衣服好看嘛')
           this.loadModel(id, texture)
         } else {
-          this.showMessage('我还没有其他衣服呢', 3000)
+          this.showMessage('我还没有其他衣服呢')
         }
       })
     },
-    onBrowsing() {
+    onEnterPage() {
       let text
-      const SiteIndexUrl = window.location.protocol + '//' + window.location.hostname + '/' // 自动获取主页
-      if (window.location.href === SiteIndexUrl) { // 如果是主页
-        const now = (new Date()).getHours()
-        if (now > 23 || now <= 5) {
+      const homePath = window.location.protocol + '//' + window.location.hostname + '/' // 自动获取主页
+      if (window.location.href === homePath) { // 如果是主页
+        const nowHour = new Date().getHours()
+        if (nowHour > 23 || nowHour <= 5) {
           text = '你是夜猫子呀？这么晚还不睡觉，明天起的来嘛'
-        } else if (now > 5 && now <= 7) {
+        } else if (nowHour > 5 && nowHour <= 7) {
           text = '早上好！一日之计在于晨，美好的一天就要开始了'
-        } else if (now > 7 && now <= 11) {
+        } else if (nowHour > 7 && nowHour <= 11) {
           text = '上午好！工作顺利嘛，不要久坐，多起来走动走动哦！'
-        } else if (now > 11 && now <= 14) {
+        } else if (nowHour > 11 && nowHour <= 14) {
           text = '中午了，工作了一个上午，现在是午餐时间！'
-        } else if (now > 14 && now <= 17) {
+        } else if (nowHour > 14 && nowHour <= 17) {
           text = '午后很容易犯困呢，今天的运动目标完成了吗？'
-        } else if (now > 17 && now <= 19) {
+        } else if (nowHour > 17 && nowHour <= 19) {
           text = '傍晚了！窗外夕阳的景色很美丽呢，最美不过夕阳红~'
-        } else if (now > 19 && now <= 21) {
+        } else if (nowHour > 19 && nowHour <= 21) {
           text = '晚上好，今天过得怎么样？'
-        } else if (now > 21 && now <= 23) {
+        } else if (nowHour > 21 && nowHour <= 23) {
           text = '已经这么晚了呀，早点休息吧，晚安~'
         } else {
           text = '嗨~ 快来逗我玩吧！'
@@ -243,37 +227,24 @@ export default {
           text = '欢迎阅读<span style="color:#0099cc;">『' + document.title.split(' - ')[0] + '』</span>'
         }
       }
-      this.showMessage(text, 3000)
+      this.showMessage(text)
     },
     // 鼠标交互
-    addInteraction() {
-      const refs = this.$refs
-      const $mouseoverHandler = (key) => {
-        const rows = this.mouseover.find(item => item.selector === key)
-        if (!rows) return
-        let text = ''
-        if (Array.isArray(rows.text)) {
-          text = rows.text[Math.floor(Math.random() * rows.text.length + 1) - 1]
-        } else {
-          text = rows.text
-        }
-        this.showMessage(text, 3000)
-      }
-      for (const key in refs) {
-        refs[key].addEventListener('mouseover', $mouseoverHandler(key))
-      }
-      this.$refs.live2d.addEventListener('click', () => {
-        const text = this.click[Math.floor(Math.random() * this.click.length + 1) - 1]
-        this.showMessage(text, 3000, true)
-      })
+    onMouseEnter(key) {
+      const tips = mouseTips[key]
+      this.showMessage(tips)
     },
+    onMouseClick() {
+      const text = clickTips[Math.floor(Math.random() * clickTips.length + 1) - 1]
+      this.showMessage(text)
+    },
+    // 返回首页
     navigatorToHome() {
       this.$router.push({ path: '/' })
     },
     handleShowLive2d() {
       this.isShow = true
       this.$nextTick(() => {
-        this.addInteraction()
         this.initModel()
         this.showMessage('锵锵锵锵~ 本宝宝又回来了', 1500)
       })
@@ -285,8 +256,12 @@ export default {
         this.isShow = false
       }, 1500)
     },
+    /**
+     * 拍照
+     * @summary canvas转图片
+     */
     handleTakePhoto() {
-      this.showMessage('照好了嘛，是不是很可爱呐？', 3000)
+      this.showMessage('照好了嘛，是不是很可爱呐？')
       window.Live2D.captureName = 'Pio.png'
       window.Live2D.captureFrame = true
     }

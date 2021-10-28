@@ -55,6 +55,13 @@
           </el-col>
         </el-row>
       </el-form-item>
+      <el-form-item label="背景图片目录">
+        <el-row>
+          <el-col :xs="24" :md="12">
+            <el-input v-model="formData.bg_image_path" />
+          </el-col>
+        </el-row>
+      </el-form-item>
       <el-form-item label="Live2d模型">
         <el-row>
           <el-col :xs="24" :md="12">

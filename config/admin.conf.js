@@ -75,7 +75,7 @@ module.exports = {
   ],
   proxy: {
     '/admin': {
-      target: 'https://www.timelessq.com', // 目标接口域名
+      target: 'https://127.0.0.1:8360', // 目标接口域名
       changeOrigin: true // 表示是否跨域
     }
   },

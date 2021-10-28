@@ -22,6 +22,13 @@
           :fit="fit"
         />
       </el-form-item>
+      <el-form-item class="form-title">首页</el-form-item>
+      <el-form-item label="文章数量">
+        <el-input-number v-model="formData.home_article_num" :min="1" controls-position="right" />
+      </el-form-item>
+      <el-form-item label="番剧数量">
+        <el-input-number v-model="formData.home_bangumi_num" :min="1" controls-position="right" />
+      </el-form-item>
       <el-form-item class="form-title">文章模块</el-form-item>
       <el-form-item label="缩略图宽度">
         <el-input v-model="formData.thumb_article_x" class="form-container-input" />
