@@ -105,8 +105,8 @@ export default {
         reply_name: name,
         parent_id: parent_id || id || 0,
         type: type ? type + 1 : 1,
-        page_url: pageUrl,
-        page_name: document.title,
+        topic_url: pageUrl,
+        topic_title: document.title,
         content
       }
       return this.$axios.$post('/comment/post', postData).then(res => {

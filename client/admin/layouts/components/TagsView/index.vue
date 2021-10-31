@@ -29,8 +29,8 @@
 </template>
 
 <script>
-import ScrollPane from './ScrollPane'
 import path from 'path'
+import ScrollPane from './ScrollPane'
 
 export default {
   components: { ScrollPane },

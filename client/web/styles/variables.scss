@@ -3,10 +3,10 @@ $asideWidth: 235px;
 
 :root {
   --color-primary: #409EFF;
-  --color-main: #303133;
-  --color-normal: #606266;
-  --color-secondary: #909399;
-  --bg: #f4f5f9;
+  --color-main: rgba(#000, .85);
+  --color-normal: rgba(#000, .65);
+  --color-secondary: rgba(#000, .45);
+  --bg: rgba(#000, .04);
   --bg-normal: #fff;
   --bg-secondary: #f2f2f2;
   --border-color: #EBEEF5;

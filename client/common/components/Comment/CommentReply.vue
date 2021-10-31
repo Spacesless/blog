@@ -80,11 +80,15 @@ export default {
     submitComment: {
       type: Function,
       default: () => {}
+    },
+    isAdmin: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
     const validateEmail = (rule, value, callback) => {
-      if (value === '804093032@qq.com') {
+      if (!this.isAdmin && value === '804093032@qq.com') {
         callback(new Error('请不要拿站长的破邮箱来充数哦'))
       } else {
         callback()

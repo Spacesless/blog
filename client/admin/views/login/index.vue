@@ -110,8 +110,6 @@ export default {
   },
   created() {
     this.fetchCaptcha()
-
-    console.log(this.$router)
   },
   methods: {
     showPwd() {

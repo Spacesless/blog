@@ -183,6 +183,7 @@ export default {
       float: none;
       position: relative;
       z-index: 5;
+      border: 1px solid var(--border-color);
       border-radius: 4px;
       &__picture{
         display: block;
@@ -228,6 +229,7 @@ export default {
       }
       &__desc{
         margin: 10px 0;
+        color: var(--color-secondary);
         font-size: 15px;
         line-height: 22px;
       }

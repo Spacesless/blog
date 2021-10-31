@@ -75,7 +75,7 @@ module.exports = {
   ],
   proxy: {
     '/admin': {
-      target: 'https://127.0.0.1:8360', // 目标接口域名
+      target: 'http://127.0.0.1:8360', // 目标接口域名
       changeOrigin: true // 表示是否跨域
     }
   },
@@ -91,5 +91,6 @@ module.exports = {
   },
   srcDir,
   ssr: false,
-  target: 'static'
+  target: 'static',
+  telemetry: false // 关闭收集遥测数据
 }

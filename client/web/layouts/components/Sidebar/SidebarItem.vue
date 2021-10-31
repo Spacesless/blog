@@ -1,6 +1,6 @@
 <template>
   <nuxt-link v-if="!item.children" role="menuitem" :to="item.url" :title="item.name">
-    <el-menu-item :index="item.url">
+    <el-menu-item :index="item.url" :role="null">
       <i v-if="!isNest" class="aside-menu__icon tl-icon" v-html="item.icon" />
       <span slot="title">{{ item.name }}</span>
     </el-menu-item>

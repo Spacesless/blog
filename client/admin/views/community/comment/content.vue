@@ -28,6 +28,7 @@
       <comment-reply
         :form-data.sync="replyData"
         :submit-comment="submitComment"
+        :is-admin="true"
       />
     </div>
   </div>
@@ -53,12 +54,15 @@ export default {
     }
   },
   computed: {
-    ...mapGetters['userInfo']
+    ...mapGetters(['userinfo']),
+    topicId() {
+      return this.$route.params?.id
+    }
   },
   created() {
     this.fetchData()
 
-    const { nickname, email } = this.userInfo
+    const { nickname, email } = this.userinfo
     this.replyData = {
       name: nickname,
       website: 'https://www.timelessq.com',
@@ -69,8 +73,7 @@ export default {
   methods: {
     async fetchData() {
       this.fetchLoading = true
-      const { id } = this.$route.params
-      await this.$api.content.GetContent('comment', id).then(res => {
+      await this.$api.content.GetContent('comment', this.topicId).then(res => {
         this.formData = res.data
       }).catch(() => {})
       this.fetchLoading = false
@@ -80,11 +83,26 @@ export default {
      * @param {String} content 评论信息
      */
     submitComment(content) {
+      const { id, parent_id, topic_id, type, name } = this.formData
       const postData = {
+        ...this.replyData,
+        topic_id,
+        reply_name: name,
+        parent_id: parent_id || id,
+        type: type ? type + 1 : 1,
         content
       }
-      this.$api.content.CreateContent('comment', postData).then(res => {
-        this.fetchData()
+      return this.$api.content.CreateContent('comment', postData).then(res => {
+        this.$message({
+          type: 'success',
+          message: '回复评论成功'
+        })
+        this.$store.dispatch('tagsView/delView', this.$route)
+      }).catch(() => {
+        this.$message({
+          type: 'error',
+          message: '回复评论失败'
+        })
       })
     }
   }

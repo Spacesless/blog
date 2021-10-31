@@ -16,7 +16,7 @@
         role="menu"
       >
         <nuxt-link role="menuitem" to="/">
-          <el-menu-item index="/">
+          <el-menu-item index="/" :role="null">
             <i class="aside-menu__icon tl-icon">&#xe76f;</i>
             <span slot="title">首页</span>
           </el-menu-item>

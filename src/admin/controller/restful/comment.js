@@ -1,3 +1,4 @@
+const moment = require('moment');
 const Rest = require('../rest');
 
 module.exports = class extends Rest {
@@ -27,15 +28,13 @@ module.exports = class extends Rest {
 
   // 回复评论
   async postAction() {
-    let data = this.post();
-    data = {
+    const data = this.post();
+    const insertData = {
       ...data,
-      ...{
-        addtime: new Date(),
-        is_admin: 1
-      }
+      addtime: moment().format('YYYY-MM-DD HH:MM:ss'),
+      is_admin: 1
     };
-    const insertId = await this.modelInstance.add(data);
+    const insertId = await this.modelInstance.add(insertData);
 
     if (insertId) {
       return this.success();
