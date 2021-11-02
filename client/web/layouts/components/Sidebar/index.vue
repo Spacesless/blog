@@ -14,13 +14,12 @@
         :collapse="isCollapse"
         class="aside-menu"
         role="menu"
+        router
       >
-        <nuxt-link role="menuitem" to="/">
-          <el-menu-item index="/" :role="null">
-            <i class="aside-menu__icon tl-icon">&#xe76f;</i>
-            <span slot="title">首页</span>
-          </el-menu-item>
-        </nuxt-link>
+        <el-menu-item index="/" :role="null">
+          <i class="aside-menu__icon tl-icon">&#xe76f;</i>
+          <span slot="title">首页</span>
+        </el-menu-item>
         <sidebar-item v-for="route in menus" :key="route.path" :item="route" />
       </el-menu>
     </el-scrollbar>

@@ -135,7 +135,7 @@ export default {
       color: var(--color-normal);
       font-size: 14px;
       line-height: 20px;
-      box-shadow: 0 13px 15px rgb(0 0 0 / 10%);
+      box-shadow: 0 13px 15px rgba(0, 0, 0, .1);
       cursor: pointer;
       transition: box-shadow .3s, transform .3s,color .1s;
       &:before{
@@ -154,7 +154,7 @@ export default {
       .catalog-item__wrapper{
         background: linear-gradient(100deg, var(--color-primary),#79BBFF);
         color: #fff;
-        box-shadow: 0 13px 15px rgb(32 160 255 / 30%);
+        box-shadow: 0 13px 15px rgba(32, 160, 255, .3);
         &:before{
           border-right-color: var(--color-primary);
         }

@@ -1,6 +1,6 @@
 import Vue from 'vue'
 // @see https://element.eleme.cn/#/zh-CN/component/quickstart
-import 'element-ui/lib/theme-chalk/display.css'
+// import 'element-ui/lib/theme-chalk/display.css'
 
 import {
   Pagination,

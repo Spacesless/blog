@@ -12,7 +12,10 @@ module.exports = {
   alias: {
     '#': resolve('../common')
   },
-  buildModules: ['@nuxtjs/color-mode'],
+  buildModules: [
+    '@nuxtjs/color-mode',
+    '@nuxtjs/style-resources'
+  ],
   build: {
     babel: {
       plugins: [
@@ -20,7 +23,8 @@ module.exports = {
           'component',
           {
             'libraryName': 'element-ui',
-            'styleLibraryName': 'theme-chalk'
+            'styleLibraryName': '../packages/theme-chalk/src',
+            'ext': '.scss'
           }
         ],
         [
@@ -34,6 +38,14 @@ module.exports = {
       ]
     },
     extractCSS: true,
+    // loaders: {
+    //   sass: {
+    //     sassOptions: {
+    //       quietDeps: true,
+    //       outputStyle: 'expanded'
+    //     }
+    //   }
+    // },
     plugins: [
       new CompressionPlugin({
         test: /.(js|css|woff|ttf)$/, // 匹配需要压缩的文件后缀 看需求
@@ -44,7 +56,6 @@ module.exports = {
   },
   buildDir: 'www/web',
   css: [
-    'element-ui/lib/theme-chalk/index.css',
     '@/styles/global.scss'
   ],
   head: {
@@ -75,5 +86,8 @@ module.exports = {
     // resourceHints: false  // 添加prefetch并preload链接以加快初始页面加载时间。
   },
   srcDir,
+  styleResources: {
+    scss: resolve('/styles/element-variables.scss')
+  },
   telemetry: false // 关闭收集遥测数据
 }
