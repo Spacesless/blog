@@ -16,7 +16,7 @@
         role="menu"
         router
       >
-        <el-menu-item index="/" :role="null">
+        <el-menu-item index="/">
           <i class="aside-menu__icon tl-icon">&#xe76f;</i>
           <span slot="title">首页</span>
         </el-menu-item>

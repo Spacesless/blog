@@ -192,3 +192,21 @@ a,a:hover,a:active,a:focus,a:visited{
     }
   }
 }
+
+@media only screen and (min-width:992px){
+  .hidden-md-and-up{
+    display:none!important;
+  }
+}
+
+@media only screen and (max-width:991px){
+  .hidden-sm-and-down{
+    display:none!important;
+  }
+}
+
+@media only screen and (max-width:1199px){
+  .hidden-md-and-down{
+    display:none!important;
+  }
+}
