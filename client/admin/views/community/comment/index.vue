@@ -35,6 +35,11 @@
           {{ `${scope.row.type === 3 ? '@' + scope.row.reply_name : ''} ${scope.row.content}` }}
         </template>
       </el-table-column>
+      <el-table-column label="所属页面" show-overflow-tooltip width="200">
+        <template #default="scope">
+          <el-link :underline="false" :href="scope.row.topic_url" target="_blank">{{ scope.row.topic_title }}</el-link>
+        </template>
+      </el-table-column>
       <el-table-column label="评论人" prop="name" width="150" align="center" />
       <el-table-column class-name="status-col" label="状态" width="110" align="center">
         <template #default="scope">

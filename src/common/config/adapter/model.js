@@ -3,9 +3,9 @@ const mysql = require('think-model-mysql');
 
 let config = {};
 try {
-  config = require(path.join(think.ROOT_PATH, 'config/database.conf.js'));
+  config = require(path.join(think.ROOT_PATH, 'config/adapter.model.js'));
 } catch (e) {
-  think.logger.debug(e);
+  console.error(e);
 }
 
 const isDev = think.env === 'development';

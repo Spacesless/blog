@@ -2,7 +2,7 @@
   <div v-loading="fetchLoading" class="app-container comment">
     <el-form ref="form" label-width="100px">
       <el-form-item label="所属页面">
-        <el-link :underline="false" :href="formData.page_url" target="_blank">{{ formData.page_name }}</el-link>
+        <el-link :underline="false" :href="formData.topic_url" target="_blank">{{ formData.topic_title }}</el-link>
       </el-form-item>
       <el-form-item label="昵称">
         <el-input v-model="formData.name" readonly />

@@ -27,7 +27,7 @@ package-lock.json
 
 # other ignore file
 runtime/
-config/database.conf.js
+config/adapter.model.js
 www/admin
 www/web
 www/upload

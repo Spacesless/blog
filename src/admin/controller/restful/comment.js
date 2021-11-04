@@ -14,7 +14,7 @@ module.exports = class extends Rest {
       return this.success(data);
     } else {
       const { page, pageSize } = this.get();
-      const field = 'id,parent_id,content,addtime,name,reply_name,type,is_show';
+      const field = 'id,parent_id,content,topic_url,topic_title,addtime,name,reply_name,type,is_show';
 
       const list = await this.modelInstance
         .field(field)
