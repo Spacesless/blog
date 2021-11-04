@@ -99,7 +99,8 @@ export default {
   &-item{
     position: relative;
     padding-bottom: 20px;
-    padding-left: 30px;
+    padding-left: 25px;
+    padding-right: 15px;
     &__tail{
       position: absolute;
       left: 4px;
@@ -111,7 +112,7 @@ export default {
       position: absolute;
       background-color: #E4E7ED;
       border-radius: 50%;
-      top: 12px;
+      top: 11px;
       left: -1px;
       width: 12px;
       height: 12px;
