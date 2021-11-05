@@ -63,10 +63,10 @@
               <nuxt-link :to="'/bangumi/detail/' + item.id" :title="item.title">
                 <img
                   class="img-fluid"
-                  :width="item.width"
-                  :height="item.height"
+                  :width="configs.thumb_bangumi_x"
+                  :height="configs.thumb_bangumi_y"
                   :src="item.imgurl"
-                  :srcset="item.imgurl | getImageSrcSet(item.width)"
+                  :srcset="item.imgurl | getImageSrcSet(configs.thumb_bangumi_x)"
                   :alt="item.title"
                 >
               </nuxt-link>
@@ -107,6 +107,11 @@ export default {
     return {
       bannerHeight: 500,
       isLoaded: false
+    }
+  },
+  computed: {
+    configs() {
+      return this.$store.getters.configs
     }
   },
   mounted() {

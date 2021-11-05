@@ -17,13 +17,14 @@
     <div class="blog-content">
       <div class="blog-content-wrap">
         <div ref="content" class="Tinymce" v-html="data.content" />
-        <el-image ref="preview" class="app-preview" :src="previewSrc" :preview-src-list="previewSrcList" />
         <!-- 社区分享 -->
         <Share />
       </div>
-      <!-- 文章目录 -->
-      <Catalog v-if="isLoaded" />
     </div>
+    <!-- 文章目录 -->
+    <Catalog v-if="isLoaded" />
+    <!-- 图片预览 -->
+    <ImageViewer v-if="isLoaded" />
     <!-- 评论 -->
     <Comment :topic-id="'article-' + data.id" />
   </div>
@@ -34,6 +35,7 @@ import Prism from 'prismjs'
 import ClipboardJS from 'clipboard'
 import Catalog from '@/components/Catalog'
 import Comment from '#/components/Comment'
+import ImageViewer from '@/components/ImageViewer'
 import Share from '@/components/Share'
 
 export default {
@@ -41,6 +43,7 @@ export default {
   components: {
     Catalog,
     Comment,
+    ImageViewer,
     Share
   },
   async asyncData({ params, $axios }) {
@@ -53,23 +56,20 @@ export default {
   data() {
     return {
       id: 0,
-      previewSrc: '',
-      previewSrcList: [],
       isLoaded: false
     }
   },
   mounted() {
     this.initPrism()
-    this.initPreviw()
 
     this.$nextTick(() => {
       this.isLoaded = true
     })
 
     // 浏览5秒才算访问量
-    // this.timer = setTimeout(() => {
-    //   this.handleRecordAccess()
-    // }, 5000)
+    this.timer = setTimeout(() => {
+      this.handleRecordAccess()
+    }, 5000)
   },
   beforeDestroy() {
     this.timer && clearInterval(this.timer)
@@ -81,8 +81,7 @@ export default {
         const copyIcon = document.createElement('i')
         const copyTips = document.createElement('em')
         copyElement.className = 'toolbar-item-button'
-        copyIcon.className = 'tl-icon'
-        copyIcon.innerHTML = '&#xe604;'
+        copyIcon.className = 'el-icon-document-copy'
         copyTips.className = 'toolbar-item-button__tips'
         copyTips.innerText = '复制代码'
         copyElement.appendChild(copyIcon)
@@ -94,6 +93,12 @@ export default {
           }
         })
         clipboard.on('success', () => {
+          copyIcon.className = 'el-icon-document-checked'
+          clearTimeout(this.timer)
+          this.timer = setTimeout(() => {
+            copyIcon.className = 'el-icon-document-copy'
+          }, 3000)
+
           this.$notify({
             title: '复制成功',
             message: '转载最好带上出处哟',
@@ -110,21 +115,6 @@ export default {
         return copyElement
       })
       Prism.highlightAll()
-    },
-    initPreviw() {
-      const previews = document.querySelectorAll('.Tinymce img')
-      this.previewSrcList = Array.from(previews).map(item => {
-        return item.src
-      })
-      previews.forEach(item => {
-        item.addEventListener('click', (e) => {
-          this.previewSrc = e.target.src
-          this.$refs.preview && this.$refs.preview.clickHandler()
-        })
-      })
-    },
-    closeViewer() {
-      this.$refs.preview && this.$refs.preview.closeViewer()
     },
     // 记录访问量
     handleRecordAccess() {

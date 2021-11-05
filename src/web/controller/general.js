@@ -1,15 +1,19 @@
-const Base = require('./base.js')
+const Base = require('./base.js');
 
 module.exports = class extends Base {
   async indexAction() {
     // 主导航信息
-    const configs = await this.getConfigs()
-    const categorys = await this.getCategory()
-    const cloneCategory = JSON.parse(JSON.stringify(categorys))
-    const filterCategory = cloneCategory.filter(item => item.is_nav === 1) // isNav 在导航中的菜单
-    const navigation = this.convertToTree(filterCategory)
+    const configs = await this.getConfigs();
+    const categorys = await this.getCategory();
+    const cloneCategory = JSON.parse(JSON.stringify(categorys));
+    const filterCategory = cloneCategory.filter(item => item.is_nav === 1); // isNav 在导航中的菜单
+    const navigation = this.convertToTree(filterCategory);
     // 配置信息
-    const { sitename, is_silent, live2d_model, live2d_texture, icp_beian, police_beian } = configs
+    const {
+      sitename, is_silent, live2d_model, live2d_texture, icp_beian, police_beian,
+      thumb_article_x, thumb_article_y,
+      thumb_bangumi_x, thumb_bangumi_y
+    } = configs;
     const targetConfigs = {
       siteurl: this.siteurl,
       currentYear: new Date().getFullYear(),
@@ -20,8 +24,12 @@ module.exports = class extends Base {
       live2d_model,
       live2d_texture,
       icp_beian,
-      police_beian
-    }
-    return this.success({ navigation, configs: targetConfigs })
+      police_beian,
+      thumb_article_x,
+      thumb_article_y,
+      thumb_bangumi_x,
+      thumb_bangumi_y
+    };
+    return this.success({ navigation, configs: targetConfigs });
   }
-}
+};

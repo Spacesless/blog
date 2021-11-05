@@ -4,6 +4,11 @@ export default axios => ({
     return axios.get('/general/refresh')
   },
 
+  // 清除缩略图
+  ClearThumbnai() {
+    return axios.get('/general/clearThumbnai')
+  },
+
   /**
    * 上传文件
    * @param {Array [binary]} files 文件对象，可多选

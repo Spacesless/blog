@@ -47,10 +47,10 @@
           <nuxt-link :to="'/article/detail/' + item.id" :title="item.title">
             <img
               class="img-full"
-              :width="item.width"
-              :height="item.height"
+              :width="configs.thumb_article_x"
+              :height="configs.thumb_article_y"
               :src="item.imgurl"
-              :srcset="item.imgurl | getImageSrcSet(item.width)"
+              :srcset="item.imgurl | getImageSrcSet(configs.thumb_article_y)"
               :alt="item.title"
             >
           </nuxt-link>
@@ -135,6 +135,9 @@ export default {
   computed: {
     bannerImage() {
       return getAbsolutePath('/static/img/article-banner.jpg')
+    },
+    configs() {
+      return this.$store.getters.configs
     }
   },
   head() {

@@ -55,7 +55,9 @@
     </div>
     <!-- 文章目录 -->
     <Catalog />
-    <!-- comment start -->
+    <!-- 图片预览 -->
+    <ImageViewer v-if="isLoaded" />
+    <!-- 评论 -->
     <Comment :topic-id="'bangumi-' + data.id" />
   </div>
 </template>
@@ -63,12 +65,14 @@
 <script>
 import Catalog from '@/components/Catalog'
 import Comment from '#/components/Comment'
+import ImageViewer from '@/components/ImageViewer'
 import Share from '@/components/Share'
 
 export default {
   components: {
     Catalog,
     Comment,
+    ImageViewer,
     Share
   },
   async asyncData({ params, $axios }) {
@@ -81,9 +85,6 @@ export default {
   },
   data() {
     return {
-      showViewer: false,
-      previewSrc: '',
-      previewSrcList: [],
       apiUrl: '//api.timelessq.com/music/tencent'
     }
   },
@@ -116,6 +117,7 @@ export default {
         lrcType: 1,
         audio: []
       })
+      // 获取歌词
       this.ap.on('canplay', async() => {
         const index = this.ap.list.index
         if (this.ap.list.audios[index].lrc === undefined) {
@@ -142,6 +144,10 @@ export default {
         this.handleSearchSong(item)
       })
     },
+    /**
+     * 根据歌名搜索歌曲
+     * @param {String} keyword 关键字
+     */
     handleSearchSong(keyword) {
       this.$axios.get(`${this.apiUrl}/search`, {
         params: {
@@ -163,6 +169,10 @@ export default {
         this.ap.list.add(current)
       })
     },
+    /**
+     * 根据歌曲id获取播放地址
+     * @param {String} 歌曲ID
+     */
     async getSongs(songmid) {
       const res = await this.$axios.get(`${this.apiUrl}/songUrl?songmid=${songmid}`)
       let result = {}
@@ -170,21 +180,6 @@ export default {
         result = res.data
       }
       return result
-    },
-    initPreviw() {
-      const previews = document.querySelectorAll('.Tinymce img')
-      this.previewSrcList = Array.from(previews).map(item => {
-        return item.src
-      })
-      previews.forEach(item => {
-        item.addEventListener('click', (e) => {
-          this.previewSrc = e.target.src
-          this.$refs.preview && this.$refs.preview.clickHandler()
-        })
-      })
-    },
-    closeViewer() {
-      this.$refs.preview && this.$refs.preview.closeViewer()
     }
   },
   head() {

@@ -3,8 +3,8 @@
     <div v-if="device==='mobile' && sidebar.opened" class="aside-mask" @click="handleClickOutside" />
     <div :class="{'aside-logo': true, 'aside-logo--collapse': isCollapse}">
       <nuxt-link to="/">
-        <img class="aside-logo__img" :src="'/static/avatar.jpg' | getAbsolutePath" alt="logo">
-        <p class="aside-logo__name">{{ logoTitle }}</p>
+        <img class="aside-logo__img" :src="'/static/avatar.jpg' | getAbsolutePath" width="100" height="100" alt="logo">
+        <p class="aside-logo__name">Timeless</p>
       </nuxt-link>
     </div>
     <el-scrollbar class="aside-scrollbar" wrap-class="aside-scrollbar-wrapper">
@@ -41,9 +41,6 @@ export default {
   },
   computed: {
     ...mapGetters(['device', 'sidebar', 'menus', 'configs']),
-    logoTitle() {
-      return this.configs.sitename || "Timeless's 博客"
-    },
     activeMenu() {
       return this.$route.path
     },

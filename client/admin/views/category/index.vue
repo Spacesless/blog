@@ -3,7 +3,6 @@
     <el-row class="app-header">
       <el-button type="primary" icon="el-icon-plus" @click="handleAdd">添加</el-button>
       <el-button type="danger" icon="el-icon-delete" :loading="deleteLoading" @click="handleDeleteSelection">删除</el-button>
-      <el-button type="primary" plain icon="el-icon-check" :loading="saveLoading" @click="handleSave">保存</el-button>
     </el-row>
 
     <el-table
@@ -18,11 +17,7 @@
       @selection-change="onSelectionChange"
     >
       <el-table-column type="selection" align="center" width="55" />
-      <el-table-column
-        prop="id"
-        label="ID"
-        width="110"
-      />
+      <el-table-column prop="id" label="ID" width="110" />
       <el-table-column align="center" label="排序" min-width="160">
         <template #default="scope">
           <el-input-number v-model.number="scope.row.no_order" controls-position="right" />
@@ -44,6 +39,7 @@
       <el-table-column label="所属模块" prop="type" min-width="160" :formatter="formatModuleName" />
       <el-table-column label="操作" align="center" width="250">
         <template #default="scope">
+          <el-button type="success" :loading="scope.row.updateLoading" plain @click="handleUpdate(scope.row)">更新</el-button>
           <el-button class="category-tools-edit" type="primary" @click="handleEdit(scope.row.id)">编辑</el-button>
           <el-dropdown>
             <el-button type="primary" plain :loading="scope.row.deleteLoading">
@@ -58,8 +54,8 @@
         </template>
       </el-table-column>
     </el-table>
-
-    <move-category :visible="dialogVisible" :current-row="currentRow" :categorys="categorys" @onConfirm="onConfirm" />
+    <!-- 移动栏目 -->
+    <move-category :dialog-visible="dialogVisible" :current-row="currentRow" :categorys="categorys" @onConfirm="onConfirm" />
   </div>
 </template>
 
@@ -84,22 +80,29 @@ export default {
       currentType: 'category',
       categoryList: [],
       multipleSelection: [],
-      currentRow: {},
-      saveLoading: false
+      currentRow: {}
     }
   },
   computed: {
-    ...mapGetters(['categorys'])
+    ...mapGetters(['categorys', 'updateRoute'])
+  },
+  watch: {
+    async updateRoute(val) {
+      if (val === this.currentType) {
+        this.fetchList()
+        this.$store.commit('list/SET_UPDATELIST', '')
+      }
+    }
   },
   created() {
-    this.fetchList()
+    if (!this.categorys.length) {
+      this.fetchList()
+    }
   },
   methods: {
     async fetchList() {
       this.listLoading = true
-      if (!this.categorys.length) {
-        await this.$store.dispatch('list/getCategory').catch(() => {})
-      }
+      await this.$store.dispatch('list/getCategory').catch(() => {})
       const category = formatCategory(this.categorys)
       this.categoryList = JSON.parse(JSON.stringify(category))
       this.listLoading = false
@@ -113,30 +116,36 @@ export default {
         params: { id }
       })
     },
+    /**
+     * 添加子栏目
+     * @param {Number} id 父栏目ID
+     */
     handleAddChild(id) {
       this.$router.push({
         name: 'CategoryCreate',
-        query: { class: id }
+        query: { parentId: id }
       })
     },
     handleMove(row) {
       this.currentRow = row
       this.dialogVisible = true
     },
-    async handleSave() {
-      this.saveLoading = true
-      await this.$api.list.UpdateList('category', this.categoryList).then(response => {
+    async handleUpdate(row) {
+      const { id, no_order, name, is_nav } = row
+      this.$set(row, 'updateLoading', true)
+      await this.$api.content.UpdateContent(this.currentType, { id, no_order, name, is_nav }).then(res => {
         this.$message({
           type: 'success',
-          message: response.data
+          message: '更新成功'
         })
-      }).catch(error => {
+        this.fetchList()
+      }).catch(() => {
         this.$message({
           type: 'error',
-          message: error
+          message: '更新失败'
         })
       })
-      this.saveLoading = false
+      this.$set(row, 'updateLoading', false)
     },
     /**
      * 格式化模块名称
@@ -146,10 +155,9 @@ export default {
       const typeEnum = {
         article: '文章模块',
         bangumi: '追番模块',
-        app: '小工具',
-        other: '其它模块'
+        tool: '小工具'
       }
-      return typeEnum[cellValue] || ''
+      return typeEnum[cellValue] || '其它模块'
     }
   }
 }

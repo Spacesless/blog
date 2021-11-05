@@ -58,10 +58,10 @@
               <nuxt-link :to="'/bangumi/detail/' + item.id">
                 <img
                   class="img-fluid"
-                  :width="item.width"
-                  :height="item.height"
+                  :width="configs.thumb_bangumi_x"
+                  :height="configs.thumb_bangumi_y"
                   :src="item.imgurl"
-                  :srcset="item.imgurl | getImageSrcSet(item.width)"
+                  :srcset="item.imgurl | getImageSrcSet(configs.thumb_bangumi_x)"
                   :alt="item.title"
                 >
                 <span class="bangumi-list__ratings">{{ item.ratings }}</span>
@@ -150,6 +150,9 @@ export default {
   computed: {
     bannerImage() {
       return getAbsolutePath('/static/img/bangumi-banner.jpg')
+    },
+    configs() {
+      return this.$store.getters.configs
     }
   },
   head() {

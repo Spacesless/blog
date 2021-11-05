@@ -4,7 +4,6 @@
     :visible="dialogVisible"
     :close-on-click-modal="false"
     width="640px"
-    @open="onOpen"
     @close="handleCancel"
     @closed="onClosed"
   >
@@ -61,21 +60,25 @@ export default {
     }
   },
   methods: {
-    onOpen() {
-
-    },
     handleConfirm() {
       this.$refs.form.validate(async(valid) => {
         if (!valid) return
-        this.dialogLoading = true
         const postData = {
           id: this.currentRow.id,
-          category_id: this.formData.category
+          parent_id: this.formData.category
         }
+        this.dialogLoading = true
         await this.$api.content.UpdateContent('category', postData).then(res => {
-
+          this.$message({
+            type: 'success',
+            message: '移动栏目成功'
+          })
+          this.$emit('onConfirm', true)
         }).catch(() => {
-
+          this.$message({
+            type: 'error',
+            message: '移动栏目失败'
+          })
         })
         this.dialogLoading = false
       })

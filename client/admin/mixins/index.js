@@ -194,11 +194,11 @@ export const listDialog = {
     },
     /**
      * 取消或提交
-     * @param {Boolean} isConfirm 是否提交完成
+     * @param {Boolean} isRefresh 是否刷新列表
      */
-    onConfirm(isConfirm) {
+    onConfirm(isRefresh) {
       this.dialogVisible = false
-      isConfirm && this.fetchList()
+      isRefresh && this.fetchList()
     }
   }
 }

@@ -170,9 +170,11 @@ export default {
   },
   created() {
     if (this.isEdit) {
-      const id = this.$route.params && this.$route.params.id
+      const id = this.$route.params?.id
       this.fetchData(id)
       this.formData.id = id
+    } else {
+      this.formData.column = this.$route.query?.parentId
     }
   },
   methods: {
@@ -196,7 +198,7 @@ export default {
             type: 'success',
             message: this.isEdit ? '更新栏目成功' : '添加栏目成功'
           })
-          this.$store.commit('list/SET_UPDATELIST', 'Category')
+          this.$store.commit('list/SET_UPDATELIST', 'category')
           this.handleCancel()
         }).catch(() => {
           this.$message({

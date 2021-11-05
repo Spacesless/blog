@@ -58,8 +58,6 @@ module.exports = class extends Base {
     const { thumb_bangumi_x: bangumiWidth, thumb_bangumi_y: bangumiHeight, thumb_kind: fit } = configs;
     for (const element of bangumiList) {
       element.description = this.substr(element.description, 0, 60);
-      element.width = bangumiWidth;
-      element.height = bangumiHeight;
       element.imgurl = await this.getThumbnail(element.imgurl, bangumiWidth, bangumiHeight, fit);
     }
 

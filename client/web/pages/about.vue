@@ -1,9 +1,9 @@
 <template>
   <div class="about">
     <h1 class="about__title">关于本站</h1>
-    <p>本站是个人网站，用来记录工作经验以及生活点滴，主要关注web开发、二次元等方面，用爱发电。</p>
-    <p>部分内容(图片、视频)来源于互联网，如果有侵权内容、不妥之处，请联系我删除。</p>
     <div class="about-introduce">
+      <p>本站是个人网站，用来记录工作经验以及生活点滴，主要关注web开发、二次元等方面，用爱发电。</p>
+      <p>部分内容(图片、视频)来源于互联网，如果有侵权内容、不妥之处，请联系我删除。</p>
       <p>Timeless</p>
       <p>大区：广州</p>
       <p>职业：练习时长3年半的前端开发</p>
@@ -29,7 +29,11 @@
         </el-timeline-item>
         <el-timeline-item timestamp="2019-10-15" placement="top">
           <div class="about-timeline-card">
-            <p>使用nodejs开发的Api站点<a class="about-timeline__link" href="https://api.timelessq.com" target="_blank">https://api.timelessq.com</a>上线</p>
+            <p>
+              使用nodejs开发的Api站点
+              <a class="about-timeline__link" href="https://api.timelessq.com" target="_blank">https://api.timelessq.com</a>
+              上线
+            </p>
           </div>
         </el-timeline-item>
         <el-timeline-item timestamp="2019-08-10" placement="top">
@@ -102,6 +106,9 @@ export default {
   }
   &-timeline {
     padding-top: 15px;
+    &-card{
+      color: var(--color-normal);
+    }
     &__link{
       margin: 0 5px;
       color: var(--color-primary);

@@ -52,8 +52,6 @@ module.exports = class extends Base {
     for (const item of list.data) {
       const { imgurl, tag } = item;
       item.description = this.substr(item.description, 0, 60);
-      item.width = width;
-      item.height = height;
       item.imgurl = await this.getThumbnail(imgurl, width, height, fit);
       item.tag = tag ? tag.split('|') : [];
     }

@@ -8,6 +8,9 @@
       <el-tooltip class="right-menu-item hover-effect" effect="dark" content="刷新页面" placement="bottom">
         <span @click="handleRefresh"><i class="el-icon-refresh-right" /></span>
       </el-tooltip>
+      <el-tooltip class="right-menu-item hover-effect" effect="dark" content="删除缩略图" placement="bottom">
+        <span @click="handleClearThumbnai"><i class="el-icon-brush" /></span>
+      </el-tooltip>
       <el-tooltip class="right-menu-item hover-effect" effect="dark" content="清除缓存" placement="bottom">
         <span @click="handleClearCache"><i class="el-icon-brush" /></span>
       </el-tooltip>
@@ -25,7 +28,7 @@
             <nuxt-link to="/">首页</nuxt-link>
           </el-dropdown-item>
           <el-dropdown-item>
-            <nuxt-link to="/system/options-profile">个人资料</nuxt-link>
+            <nuxt-link :to="{ name: 'Profile' }">个人资料</nuxt-link>
           </el-dropdown-item>
           <el-dropdown-item divided>
             <span style="display:block;" @click="logout">注销</span>
@@ -79,6 +82,25 @@ export default {
           this.$message({
             type: 'error',
             message: '清除缓存失败'
+          })
+        })
+      })
+    },
+    handleClearThumbnai() {
+      this.$confirm('此操作将清除缩略图, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$api.common.ClearThumbnai().then(res => {
+          this.$message({
+            type: 'success',
+            message: '清除缩略图成功'
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'error',
+            message: '清除缩略图失败'
           })
         })
       })

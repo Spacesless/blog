@@ -117,36 +117,6 @@ module.exports = class extends think.Controller {
   }
 
   /**
-   * 获取缩略图
-   * @param {Number} width 目标图片宽度.
-   * @param {Number} height 目标图片高度
-   * @param {Number} fit 裁剪方式
-   * @param {Object} options 目标图片输出参数
-   * @returns {String}
-   */
-  async getThumbnail(src, width, height, fit = 0, options = {}) {
-    if (think.isEmpty(src)) {
-      src = '/static/placeholder.png';
-    }
-
-    const SharpHelper = think.service('sharp', 'common');
-    const dest = await SharpHelper.resizeAndCrop(
-      src,
-      {
-        width: +width,
-        height: +height,
-        fit: +fit
-      },
-      {
-        format: 'jpg',
-        ...options
-      }
-    );
-
-    return this.getAbsolutePath(dest);
-  }
-
-  /**
    * 文章内图片添加CDN地址
    * @param {String} str 文章内容
    * @returns {String}
