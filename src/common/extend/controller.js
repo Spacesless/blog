@@ -48,6 +48,11 @@ module.exports = {
       return dest;
     }
 
+    // 如果目标文件存在，直接返回
+    if (think.isExist(dest)) {
+      return dest;
+    }
+
     const SharpHelper = think.service('sharp', 'common');
     const result = await SharpHelper.resizeAndCrop(
       src,
