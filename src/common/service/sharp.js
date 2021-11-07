@@ -33,7 +33,7 @@ module.exports = class extends think.Service {
 
     const destAbsolutePath = path.join(think.RESOURCE_PATH, dest);
     try {
-      await fs.ensureDir(destAbsolutePath);
+      await fs.ensureDir(path.dirname(destAbsolutePath));
     } catch (err) {
       console.error(err);
       // 创建目录失败

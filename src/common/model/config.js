@@ -4,13 +4,13 @@ module.exports = class extends think.Model {
    * @return {Object} config表配置信息
    */
   async getConfig() {
-    const rows = await this.cache('config', { timeout: 30 * 24 * 3600 * 1000 }).select()
-    const result = {}
+    const rows = await this.cache('config', { timeout: 90 * 24 * 3600 * 1000 }).select();
+    const result = {};
     rows.forEach(item => {
-      result[item.key] = item.value
-    })
+      result[item.key] = item.value;
+    });
 
-    return result
+    return result;
   }
 
   /**
@@ -18,23 +18,23 @@ module.exports = class extends think.Model {
    * @return {Object} config表配置信息
    */
   async updateConfig(data) {
-    const promises = []
+    const promises = [];
     for (const key in data) {
-      const value = data[key]
-      const exist = await this.where({ key }).count('key')
-      let step
+      const value = data[key];
+      const exist = await this.where({ key }).count('key');
+      let step;
       if (exist) {
-        step = this.where({ key }).update({ value })
+        step = this.where({ key }).update({ value });
       }
-      promises.push(step)
+      promises.push(step);
     }
-    const rows = await Promise.all(promises)
-    const result = {}
+    const rows = await Promise.all(promises);
+    const result = {};
     rows.forEach(item => {
-      result[item.key] = item.value
-    })
+      result[item.key] = item.value;
+    });
 
-    await think.cache('config', null)
-    return result
+    await think.cache('config', null);
+    return result;
   }
-}
+};

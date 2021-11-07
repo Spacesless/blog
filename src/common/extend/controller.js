@@ -1,29 +1,14 @@
 const path = require('path');
 
 module.exports = {
-  get isMobile() {
-    return this.ctx.isMobile;
-  },
-
-  /**
-   * 判断是否在缩略图缓存中
-   * @param {String} url 缩略图地址
-   * @returns {Boolean}
-   */
-  hasThumbnailCache(url) {
-    const thumbnails = this.cache('thumbnail') || {};
-    return thumbnails[url];
-  },
-
   /**
    * 添加缩略图缓存
    * @param {String} url 缩略图地址
    */
   addThumbnailCache(url) {
     if (think.isEmpty(url)) return;
-    const thumbnails = this.cache('thumbnail') || {};
-    thumbnails[url] = 1;
-    this.cache('thumbnail', thumbnails);
+    this.thumbnailCache[url] = 1;
+    return this.cache('thumbnail', this.thumbnailCache, { timeout: 90 * 24 * 3600 * 1000 });
   },
 
   /**
@@ -40,36 +25,38 @@ module.exports = {
       return '';
     }
 
+    if (!this.thumbnailCache) {
+      const cache = await this.cache('thumbnail');
+      this.thumbnailCache = cache || {};
+    }
     const destDirname = `${path.dirname(src)}/thumb`;
     const fileSourceName = path.basename(src, path.extname(src));
-    const dest = `${destDirname}/${fileSourceName}-w${width}-h${height}.jpg`;
-    // 如果缓存中存在则直接返回
-    if (this.hasThumbnailCache(dest)) {
-      return dest;
+    let dest = `${destDirname}/${fileSourceName}-w${width}-h${height}.jpg`;
+    // 如果命中缓存则直接返回
+    if (this.thumbnailCache[dest]) {
+      return this.getAbsolutePath(dest);
     }
 
-    // 如果目标文件存在，直接返回
-    if (think.isExist(dest)) {
-      return dest;
+    // 如果目标文件不存在，则进行裁剪生成
+    if (!think.isExist(path.join(think.RESOURCE_PATH, dest))) {
+      const SharpHelper = think.service('sharp', 'common');
+      dest = await SharpHelper.resizeAndCrop(
+        src,
+        dest,
+        {
+          width: +width,
+          height: +height,
+          fit: +fit
+        },
+        {
+          format: 'jpg',
+          ...options
+        }
+      );
     }
+    // 否则直接添加到缓存，并返回
+    await this.addThumbnailCache(dest);
 
-    const SharpHelper = think.service('sharp', 'common');
-    const result = await SharpHelper.resizeAndCrop(
-      src,
-      dest,
-      {
-        width: +width,
-        height: +height,
-        fit: +fit
-      },
-      {
-        format: 'jpg',
-        ...options
-      }
-    );
-
-    this.addThumbnailCache(result);
-
-    return this.getAbsolutePath(result);
+    return this.getAbsolutePath(dest);
   }
 };
