@@ -9,7 +9,7 @@
         <span @click="handleRefresh"><i class="el-icon-refresh-right" /></span>
       </el-tooltip>
       <el-tooltip class="right-menu-item hover-effect" effect="dark" content="删除缩略图" placement="bottom">
-        <span @click="handleClearThumbnai"><i class="el-icon-delete" /></span>
+        <span @click="handleClearThumbnail"><i class="el-icon-delete" /></span>
       </el-tooltip>
       <el-tooltip class="right-menu-item hover-effect" effect="dark" content="清除缓存" placement="bottom">
         <span @click="handleClearCache"><i class="el-icon-brush" /></span>
@@ -86,13 +86,13 @@ export default {
         })
       })
     },
-    handleClearThumbnai() {
+    handleClearThumbnail() {
       this.$confirm('此操作将清除缩略图, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.$api.common.ClearThumbnai().then(res => {
+        this.$api.common.ClearThumbnail().then(res => {
           this.$message({
             type: 'success',
             message: '清除缩略图成功'

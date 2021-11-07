@@ -50,7 +50,7 @@
               :width="configs.thumb_article_x"
               :height="configs.thumb_article_y"
               :src="item.imgurl"
-              :srcset="item.imgurl | getImageSrcSet(configs.thumb_article_y)"
+              :srcset="item.imgurl | getImageSrcSet(configs.thumb_article_x)"
               :alt="item.title"
             >
           </nuxt-link>

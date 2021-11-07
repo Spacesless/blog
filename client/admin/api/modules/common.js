@@ -5,8 +5,8 @@ export default axios => ({
   },
 
   // 清除缩略图
-  ClearThumbnai() {
-    return axios.get('/general/clearThumbnai')
+  ClearThumbnail() {
+    return axios.get('/general/clearThumbnail')
   },
 
   /**
