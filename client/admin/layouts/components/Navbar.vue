@@ -9,7 +9,7 @@
         <span @click="handleRefresh"><i class="el-icon-refresh-right" /></span>
       </el-tooltip>
       <el-tooltip class="right-menu-item hover-effect" effect="dark" content="删除缩略图" placement="bottom">
-        <span @click="handleClearThumbnai"><i class="el-icon-brush" /></span>
+        <span @click="handleClearThumbnai"><i class="el-icon-delete" /></span>
       </el-tooltip>
       <el-tooltip class="right-menu-item hover-effect" effect="dark" content="清除缓存" placement="bottom">
         <span @click="handleClearCache"><i class="el-icon-brush" /></span>

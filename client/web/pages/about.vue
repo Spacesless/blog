@@ -89,7 +89,7 @@ export default {
   line-height: 2;
   &-introduce{
     padding: 20px 15px;
-    margin: 20px 0;
+    margin-bottom: 20px;
     background-color: var(--bg-normal);
     border-radius: 4px;
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);

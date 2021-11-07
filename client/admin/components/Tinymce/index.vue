@@ -130,7 +130,7 @@ export default {
             editor.setContent(this.value)
           }
           this.hasInit = true
-          editor.on('NodeChange Change KeyUp SetContent', () => {
+          editor.on('Change KeyUp SetContent', (e) => {
             this.hasChange = true
             this.$emit('input', editor.getContent())
           })

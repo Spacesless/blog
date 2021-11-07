@@ -11,7 +11,9 @@ export default {
     }
   },
   mounted() {
-    this.initViewer()
+    this.$nextTick(() => {
+      this.initViewer()
+    })
   },
   methods: {
     initViewer() {
