@@ -195,6 +195,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~@/styles/content.scss";
+
 .bangumi{
   &-info{
     overflow: hidden;

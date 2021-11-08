@@ -152,6 +152,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~@/styles/bangumi.scss";
+
 .home{
   &-head{
     position: relative;
@@ -177,6 +179,7 @@ export default {
   }
 }
 
+// 轮播图
 .carousel {
   overflow: hidden;
   margin-bottom: 15px;
@@ -201,6 +204,7 @@ export default {
   }
 }
 
+// 最新文章
 .article{
   &-item {
     position: relative;
@@ -271,94 +275,6 @@ export default {
       height: 60px;
       font-size: 14px;
       line-height: 2em;
-    }
-  }
-}
-
-.bangumi{
-  &-list{
-    &-item{
-      overflow: hidden;
-      margin-bottom: 20px;
-      border: 1px solid var(--border-color);
-      background-color: var(--bg-normal);
-      border-radius: 4px;
-      box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-      transition: all .3s;
-      &:hover{
-        border-style: dashed;
-        border-color: var(--color-primary);
-      }
-    }
-    &-cover{
-      position: relative;
-    }
-    &__ratings{
-      position: absolute;
-      right: 0;
-      bottom: 0;
-      width: 30px;
-      height: 16px;
-      background: var(--color-primary);
-      color: var(--bg);
-      font-size: 12px;
-      line-height: 16px;
-      text-align: center;
-      border-top-left-radius: 4px;
-    }
-    &-info{
-      padding: 10px 12px;
-      p, span, .el-progress__text{
-        font-size: 14px;
-        line-height: 1.6em;
-      }
-      .el-progress-bar{
-        padding-right: 55px;
-      }
-      .el-progress__text{
-        margin-left: 0;
-        color: var(--color-noraml);
-        font-size: 12px;
-      }
-      .para-name{
-        color: var(--color-secondary);
-      }
-    }
-    &__title{
-      overflow: hidden;
-      display: inline-block;
-      max-width: 100%;
-      margin-bottom: 5px;
-      font-size: 18px;
-      color: var(--color-main);
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      &:hover{
-        color: var(--color-primary);
-      }
-    }
-  }
-  &-ratings{
-    .para-name{
-      float: left;
-    }
-    .el-rate {
-      overflow: hidden;
-    }
-  }
-  &-progress{
-    position: absolute;
-    bottom: 10px;
-    width: calc(66.6% - 24px);
-    @media screen and (min-width: 1920px){
-      width: calc(58.3% - 24px);
-    }
-    .para-name{
-      float: left;
-    }
-    .el-progress{
-      margin-left: 45px;
-      line-height: 1.2em;
     }
   }
 }

@@ -19,61 +19,60 @@ module.exports = class extends think.Service {
    * @param {Object} outputOpts 目标图片参数 { quality: jpg/webp的压缩质量, lossless: webp无损压缩, compressionLevel: png的zlib压实级别 }
    * @see https://sharp.pixelplumbing.com/api-output
    */
-  async resizeAndCrop(src, dest, resizeOpts, outputOpts) {
-    const { width, height, fit, position, background } = resizeOpts;
-    const { format } = outputOpts; // 文件格式
-
-    let result;
+  async resizeAndCrop(options, outputOpts) {
+    const { src, dest, destAbsolutePath, width, height, fit, position, background } = options;
 
     const fileSrc = path.join(think.RESOURCE_PATH, src);
-    // 源文件不存在
-    if (!think.isExist(fileSrc)) {
+    // 目标地址或源文件不存在
+    if (think.isEmpty(dest) || !think.isExist(fileSrc)) {
       return '';
     }
 
-    const destAbsolutePath = path.join(think.RESOURCE_PATH, dest);
+    let result;
+    const extname = path.extname(dest); // 目标文件后缀
+
+    // 先创建目标目录结构，才能输出图片
     try {
       await fs.ensureDir(path.dirname(destAbsolutePath));
     } catch (err) {
       console.error(err);
-      // 创建目录失败
       return '';
     }
 
     // 先调整图像大小
     const fitEnum = ['cover', 'contain', 'fill', 'inside', 'outside'];
-    const hasBackgroundEnum = ['png', 'webp', 'tile'];
+    const hasBackgroundEnum = ['.png', '.webp', '.tile'];
     const image = await sharp(fileSrc)
       .resize(width, height, {
         fit: fitEnum[fit] || 'cover',
         position,
         background: background || (
-          hasBackgroundEnum.includes(format)
+          hasBackgroundEnum.includes(extname)
             ? { r: 255, g: 255, b: 255, alpha: 0 }
             : { r: 255, g: 255, b: 255, alpha: 1 }
         )
       });
 
     // 再根据输出格式生成文件
-    switch (format) {
-      case 'png':
+    switch (extname) {
+      case '.png':
         result = await image.png(outputOpts)
           .toFile(destAbsolutePath)
           .catch(error => console.error(error, fileSrc));
         break;
-      case 'webp':
+      case '.webp':
         result = await image.webp(outputOpts)
           .toFile(destAbsolutePath)
           .catch(error => console.error(error, fileSrc));
         break;
-      case 'jpg':
-      case 'jpeg':
-        result = await image.jpeg(think.extend(outputOpts, {
-          chromaSubsampling: '4:4:4',
+      default:
+        const jpgOptions = {
+          ...outputOpts,
           mozjpeg: true
-        })).toFile(destAbsolutePath)
+        };
+        result = await image.jpeg(jpgOptions)
+          .toFile(destAbsolutePath)
           .catch(error => console.error(error, fileSrc));
-        break;
     }
 
     return result ? dest : '';

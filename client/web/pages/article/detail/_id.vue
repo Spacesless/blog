@@ -136,6 +136,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~@/styles/content.scss";
+@import '~@/styles/prism.scss';
+
 .blog{
   &-summary{
     overflow: hidden;
@@ -179,8 +182,4 @@ export default {
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   }
 }
-</style>
-
-<style lang="scss">
-@import '~@/styles/prism.scss';
 </style>

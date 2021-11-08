@@ -1,4 +1,8 @@
-@import './variables.scss';
+@font-face {
+  font-family: 'Bega';
+  src: url('~@/assets/fonts/Bega-Light.ttf');
+  font-display: swap;
+}
 
 body{
   background-color: var(--bg);
@@ -6,6 +10,7 @@ body{
   transition: background-color .3s;
 }
 
+// 侧边菜单
 .aside{
   position: fixed;
   top: 0;
@@ -39,7 +44,7 @@ body{
       padding-top: 5px;
       color: var(--color-primary);
       font-family: 'Bega', sans-serif;
-      font-size: 24px;
+      font-size: 28px;
       white-space: nowrap;
       transition: width 0.3;
     }
@@ -56,7 +61,7 @@ body{
     }
   }
   &-scrollbar{
-    height: calc(100vh - 205px);
+    height: calc(100vh - 207px);
     background-color: var(--bg-normal);
     &-wrapper{
       overflow-x: hidden;
@@ -122,6 +127,7 @@ body{
   }
 }
 
+// 头部
 $header-height: 45px;
 .header{
   position: fixed;
@@ -188,6 +194,7 @@ $header-height: 45px;
   }
 }
 
+// 搜索
 .el-drawer{
   background-color: var(--bg-normal);
 }
@@ -262,6 +269,7 @@ $header-height: 45px;
   }
 }
 
+// 内容
 .app-main{
   margin-left: $asideWidth + 15px;
   margin-right: $asideWidth + 15px;
@@ -315,9 +323,35 @@ $header-height: 45px;
   }
 }
 
+// background
+.background{
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg);
+  background-image: url('~@/assets/image/background.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  #flower{
+    width: 100%;
+    height: 100%;
+  }
+}
+.dark-mode{
+  .background{
+    background-image: none;
+  }
+}
+
+// 底部
 .footer{
   padding: 15px 0 20px;
-  color: var(--color-secondary);
+  color: var(--color-normal);
   font-size: 14px;
   line-height: 1.3;
   &__icon{

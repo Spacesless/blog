@@ -19,7 +19,7 @@ module.exports = {
    * @param {Object} options 目标图片输出参数
    * @returns {String}
    */
-  async getThumbnail(src, width, height, fit = 0, options = {}) {
+  async getThumbnail(src, width, height, fit, options) {
     // 图片地址或宽高未提供
     if (think.isEmpty(src) || (!width && !height)) {
       return '';
@@ -38,21 +38,17 @@ module.exports = {
     }
 
     // 如果目标文件不存在，则进行裁剪生成
-    if (!think.isExist(path.join(think.RESOURCE_PATH, dest))) {
+    const destAbsolutePath = path.join(think.RESOURCE_PATH, dest);
+    if (!think.isExist(destAbsolutePath)) {
       const SharpHelper = think.service('sharp', 'common');
-      dest = await SharpHelper.resizeAndCrop(
+      dest = await SharpHelper.resizeAndCrop({
+        width: +width,
+        height: +height,
+        fit: +fit,
         src,
         dest,
-        {
-          width: +width,
-          height: +height,
-          fit: +fit
-        },
-        {
-          format: 'jpg',
-          ...options
-        }
-      );
+        destAbsolutePath
+      }, options);
     }
     // 否则直接添加到缓存，并返回
     await this.addThumbnailCache(dest);

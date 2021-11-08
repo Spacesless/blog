@@ -1,47 +1,73 @@
 @import './variables.scss';
 
-//reset
-body, html{
+// normalize
+body,
+html{
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
-    'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
-    'Noto Color Emoji';
+    'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 }
-body,dl,dd,h1,h2,h3,h4,h5,h6,p,form,ul,ol{
+body,
+dl,
+dd,
+h1,
+h2,
+h3,
+h4,
+h5,
+p,
+form,
+ul,
+ol
+{
   margin:0;
 }
-ul,ol{
+ul,
+ol{
   padding:0;
   list-style:none;
 }
 img{
   border:0;
 }
-input,button,textarea{
+input,
+button,
+textarea{
   outline:none;
 }
-i,s,b,em{
+i,
+s,
+b,
+em{
   font-weight:normal;
   font-style:normal;
   text-decoration:none;
 }
-.clearfix:before,
-.clearfix:after{
-  content:"";
-  visibility:hidden;
-  clear:both;
-  display:block;
-  height:0;
-  line-height:0;
-}
 .clearfix{
   zoom:1;
+  &:before,
+  &:after{
+    content:"";
+    visibility:hidden;
+    clear:both;
+    display:block;
+    height:0;
+    line-height:0;
+  }
 }
-a,a:hover,a:active,a:focus,a:visited{
-  text-decoration:none;
+a {
+  &,
+  &:hover,
+  &:active,
+  &:focus,
+  &:visited{
+    text-decoration:none;
+  }
 }
-//iconfont
+
+// iconfont
 @font-face {
   font-display: swap;
+
   font-family: 'iconfont';  /* Project id 442558 */
   src: url('//at.alicdn.com/t/font_442558_eiymwjdxi7c.woff2?t=1634307910325') format('woff2'),
        url('//at.alicdn.com/t/font_442558_eiymwjdxi7c.woff?t=1634307910325') format('woff'),
@@ -56,28 +82,7 @@ a,a:hover,a:active,a:focus,a:visited{
   vertical-align: baseline;
   text-transform: none;
 }
-.img-fluid{
-  display: block;
-  max-width:100%;
-  height:auto;
-  margin: 0 auto;
-}
-.img-full{
-  display: block;
-  width: 100%;
-  height:auto;
-}
-.text-center{
-  text-align: center;
-}
-.text-right{
-  text-align: right;
-}
-.silent{
-  filter: grayscale(100%);
-  filter: progid:DXImageTransform.Microsoft.BasicImage(grayscale=1);
-  filter: gray;
-}
+
 // element-ui
 .el{
   &-image-viewer__close{
@@ -95,7 +100,55 @@ a,a:hover,a:active,a:focus,a:visited{
     margin-left: 10px;
   }
 }
-//waifu
+
+// 公共类名
+.img-fluid{
+  display: block;
+  max-width:100%;
+  height:auto;
+  margin: 0 auto;
+}
+.img-full{
+  display: block;
+  width: 100%;
+  height:auto;
+}
+.silent{
+  filter: grayscale(100%);
+  filter: progid:DXImageTransform.Microsoft.BasicImage(grayscale=1);
+  filter: gray;
+}
+.tl{
+  &-tag{
+    display: inline-block;
+    padding: 0 10px;
+    margin-top: 5px;
+    margin-right: 5px;
+    color: var(--color-main);
+    font-size: 12px;
+    line-height: 20px;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+}
+$tagColor:(
+  "red": #ff4d4f,
+  "geekblue": #597ef7,
+  "orange": #ffa940,
+  "cyan": #36cfc9,
+  "green": #73d13d,
+  "blue": #409eff,
+  "purple": #9254de,
+  "magenta": #f759ab
+);
+@each $tag, $color in $tagColor{
+  .tl-tag--#{$tag}{
+    color: $color;
+    background-color: rgba($color: $color, $alpha: .15);
+  }
+}
+
+// waifu
 .waifu {
   position: fixed;
   bottom: 0;
@@ -141,13 +194,13 @@ a,a:hover,a:active,a:focus,a:visited{
     span {
       display: block;
       margin-bottom: 5px;
-      color: var(--color-primary);
+      color: var(--color-normal);
       font-size: 20px;
       line-height: 20px;
       cursor: pointer;
       transition: 0.2s;
       &:hover{
-        color: #fba100;
+        color: var(--color-primary);
       }
     }
   }
@@ -156,7 +209,8 @@ a,a:hover,a:active,a:focus,a:visited{
   position: relative;
   top: 15px
 }
-//Animation
+
+// Animation
 /* fade-transform */
 .fade-transform-leave-active,
 .fade-transform-enter-active {
@@ -173,7 +227,7 @@ a,a:hover,a:active,a:focus,a:visited{
   transform: translateX(30px);
 }
 
-//media query
+// Media query
 @media (pointer: fine) {
   ::-webkit-scrollbar {
     height: 8px;
@@ -193,6 +247,7 @@ a,a:hover,a:active,a:focus,a:visited{
   }
 }
 
+// 断点显示
 @media only screen and (min-width:992px){
   .hidden-md-and-up{
     display:none!important;

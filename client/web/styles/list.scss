@@ -1,0 +1,65 @@
+// 列表banner
+.banner{
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 30px;
+  border-radius: 4px;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  &__title{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 7px 15px;
+    background: rgba($color: #000000, $alpha: .5);
+    color: #fff;
+    font-size: 15px;
+    border-top-left-radius: 4px;
+  }
+}
+
+// 列表过滤
+.filter{
+  position: relative;
+  padding-bottom: 12px;
+  .el-form-item{
+    &__label{
+      color: var(--color-normal);
+    }
+    &__content{
+      overflow: hidden;
+    }
+  }
+  .el-select{
+    vertical-align: middle;
+    margin-right: 10px;
+  }
+  .el-tag{
+    margin-right: 10px;
+  }
+}
+
+// 分页
+.list-page{
+  margin: 25px 0;
+  text-align: center;
+  .el-pagination.is-background{
+    .btn-prev, .btn-next, .number{
+      min-width: 32px;
+      height: 32px;
+      background-color: var(--bg-normal);
+      border: 1px solid var(--border-color);
+      line-height: 30px;
+      border-radius: 4px;
+    }
+    .btn-prev, .btn-next{
+      .el-icon{
+        display: inline-block;
+      }
+    }
+    .number {
+      &:hover, &.active{
+        border-color: var(--color-primary);
+      }
+    }
+  }
+}

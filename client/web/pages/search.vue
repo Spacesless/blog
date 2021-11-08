@@ -12,7 +12,7 @@
         placeholder="请输入关键字"
         @keyup.enter.native="handleSearch"
       />
-      <span class="el-icon-search search__button" @click="handleSearch" />
+      <span class="el-icon-search search-input__button" @click="handleSearch" />
     </div>
     <div class="search-hot">
       <p class="search-hot-header">
@@ -22,23 +22,23 @@
       <a class="search-hot__link" @click="handleSearchHot('web前端')">web前端</a>
       <a class="search-hot__link" @click="handleSearchHot('二次元')">二次元</a>
     </div>
-    <ol v-if="total > 0" class="search-list">
+    <div v-if="total > 0" class="search-list">
       <h3 class="search-list__result">检索到包含 {{ resultInfo.keyword }} 的{{ resultInfo.classify }} {{ total }} 篇</h3>
-      <li v-for="item in searchList" :key="item.id" class="search-list-item el-row">
-        <div class="search-list__thumb el-col el-col el-col-sm-10 el-col-md-6 el-col-lg-8">
+      <el-row v-for="item in searchList" :key="item.id" class="search-list-item">
+        <el-col class="search-list__thumb" :sm="10" :md="6" :lg="8">
           <nuxt-link :to="item.url">
             <img class="img-fluid" :src="item.imgurl" :alt="item.title">
           </nuxt-link>
-        </div>
-        <div class="search-list__info el-col el-col-sm-14 el-col-md-18 el-col-lg-16">
+        </el-col>
+        <el-col class="search-list__info" :sm="14" :md="18" :lg="16">
           <nuxt-link class="search-list__title" :to="item.url" v-html="item.title" />
           <p v-html="item.content" />
           <div class="search-list__classify">
             <nuxt-link v-for="info in item.classList" :key="info.name" :to="info.url" :title="info.name">{{ info.name }}</nuxt-link>
           </div>
-        </div>
-      </li>
-    </ol>
+        </el-col>
+      </el-row>
+    </div>
     <div v-else class="search-noData">暂无数据</div>
     <!-- list page -->
     <div class="list-page">
@@ -76,7 +76,8 @@ export default {
         keyword: ''
       },
       resultInfo: {},
-      total: 0
+      total: 0,
+      fetchLoading: false
     }
   },
   computed: {
@@ -93,8 +94,11 @@ export default {
     }
   },
   methods: {
-    fetchList() {
-      this.$axios.$get('/search', { params: this.listQuery }).then(res => {
+    async fetchList() {
+      this.total = 0
+      this.searchList = []
+      this.fetchLoading = true
+      await this.$axios.$get('/search', { params: this.listQuery }).then(res => {
         const { count, data } = res
         this.total = count
         this.searchList = data
@@ -105,12 +109,17 @@ export default {
           keyword,
           classify: findClassify ? findClassify.value : '文章'
         }
-      })
+      }).catch(() => {})
+      this.fetchLoading = false
     },
     handleSearch() {
       this.listQuery.page = 1
       this.fetchList()
     },
+    /**
+     * 搜索热门关键词
+     * @param {String} keyword 关键词
+     */
     handleSearchHot(keyword) {
       this.listQuery.keyword = keyword
       this.listQuery.classify = null
@@ -131,11 +140,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~@/styles/list.scss";
+
 .search{
-  padding-top: 30px;
-  &-hot{
-    padding-top: 15px;
-  }
+  padding-top: 50px;
   &-noData{
     height: 350px;
     color: var(--color-secondary);
@@ -147,7 +155,8 @@ export default {
     overflow: hidden;
     margin-top: 15px;
     border: 1px solid var(--border-color);
-    background-color: var(--bg);
+    background-color: var(--bg-normal);
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
     border-radius: 4px;
     &__result{
       padding: 10px 15px;

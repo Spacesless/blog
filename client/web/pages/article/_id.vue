@@ -154,6 +154,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~@/styles/list.scss";
+
 .article{
   &-list{
     position: relative;

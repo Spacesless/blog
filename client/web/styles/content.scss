@@ -1,0 +1,60 @@
+// content
+.Tinymce{
+  color: var(--color-normal);
+  font-size: 15px;
+  line-height: 1.7;
+  letter-spacing: 1px;
+  h2,h3,h4,h5{
+    color: var(--color-main);
+    font-weight: 100;
+  }
+  h2{
+    margin: 4px 0 6px;
+    font-size: 24px;
+  }
+  h3{
+    margin: 3px 0 5px;
+    font-size: 22px;
+  }
+  h4{
+    margin: 2px 0 4px;
+    font-size: 20px;
+  }
+  h5{
+    margin: 1px 0 3px;
+    font-size: 18px;
+  }
+  img{
+    height: auto !important;
+    max-width: 100%;
+    margin: 12px 0;
+    cursor: pointer;
+  }
+  a{
+    color: var(--color-primary);
+    &:hover{
+      color: #E6A23C;
+    }
+  }
+  p{
+    margin: 12px 0;
+    & > code{
+      display: inline-block;
+      padding: 3px 6px;
+      margin: 0 3px;
+      background-color: #ecf5ff;
+      color: var(--color-primary);
+      font-size: 90%;
+      font-family: Consolas,Menlo,Courier,monospace;
+      line-height: 1em;
+      border-radius: 4px;
+    }
+  }
+}
+.app-preview{
+  .el-image{
+    &__inner, &__error{
+      display: none;
+    }
+  }
+}
