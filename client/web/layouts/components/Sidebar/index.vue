@@ -10,8 +10,9 @@
     <el-scrollbar class="aside-scrollbar" wrap-class="aside-scrollbar-wrapper">
       <el-menu
         ref="navigation"
-        :default-active="activeMenu"
+        :background-color="null"
         :collapse="isCollapse"
+        :default-active="activeMenu"
         class="aside-menu"
         role="menu"
         router
@@ -42,7 +43,9 @@ export default {
   computed: {
     ...mapGetters(['device', 'sidebar', 'menus', 'configs']),
     activeMenu() {
-      return this.$route.path
+      const { path, params } = this.$route
+      const [id] = params?.split('-') || []
+      return id ? path.replace(params, id) : path
     },
     isCollapse() {
       return !this.sidebar.opened
