@@ -45,7 +45,7 @@ $asideWidth: 235px;
       padding-top: 5px;
       color: var(--color-primary);
       font-family: 'Bega', sans-serif;
-      font-size: 28px;
+      font-size: 30px;
       white-space: nowrap;
       transition: width 0.3;
     }
@@ -62,7 +62,7 @@ $asideWidth: 235px;
     }
   }
   &-scrollbar{
-    height: calc(100vh - 207px);
+    height: calc(100vh - 210px);
     background-color: var(--bg-normal);
     &-wrapper{
       overflow-x: hidden;

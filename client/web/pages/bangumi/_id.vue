@@ -53,7 +53,7 @@
     <div class="bangumi-list">
       <el-row :gutter="20">
         <el-col v-for="item in bangumiList" :key="item.id" :xs="24" :sm="12">
-          <el-row class="bangumi-list__item">
+          <el-row class="bangumi-list-item">
             <el-col class="bangumi-list-cover" :span="8" :xl="10">
               <nuxt-link :to="'/bangumi/detail/' + item.id">
                 <img

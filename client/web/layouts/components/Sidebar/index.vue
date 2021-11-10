@@ -44,8 +44,8 @@ export default {
     ...mapGetters(['device', 'sidebar', 'menus', 'configs']),
     activeMenu() {
       const { path, params } = this.$route
-      const [id] = params?.split('-') || []
-      return id ? path.replace(params, id) : path
+      const [id] = params.id?.split('-') || []
+      return id ? path.replace(params.id, id) : path
     },
     isCollapse() {
       return !this.sidebar.opened
