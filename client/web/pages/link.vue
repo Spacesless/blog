@@ -69,7 +69,7 @@ export default {
 
 <style lang="scss" scoped>
 .link{
-  color: var(--color-normal);
+  color: var(--color-text);
   font-size: 15px;
   line-height: 2;
   &__title{
@@ -92,7 +92,7 @@ export default {
     padding: 10px;
     background-color: var(--bg-normal);
     border-top: 3px solid var(--color-primary);
-    color: var(--color-normal);
+    color: var(--color-text);
     border-radius: 4px;
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   }

@@ -160,7 +160,7 @@ export default {
     border-radius: 4px;
     &__result{
       padding: 10px 15px;
-      color: var(--color-main);
+      color: var(--color-heading);
       font-size: 24px;
       font-weight: normal;
     }
@@ -190,7 +190,7 @@ export default {
     &__title{
       display: inline-block;
       margin: 5px 0 10px;
-      color: var(--color-main);
+      color: var(--color-heading);
       font-size: 20px;
       &:hover{
         color: var(--color-primary);

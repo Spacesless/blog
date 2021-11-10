@@ -152,7 +152,7 @@ export default {
       padding-right: 15px;
     }
     &__title{
-      color: var(--color-main);
+      color: var(--color-heading);
       font-size: 30px;
       font-weight: normal;
       line-height: 2;
@@ -168,7 +168,7 @@ export default {
     }
     &__desc{
       padding-top: 10px;
-      color: var(--color-normal);
+      color: var(--color-text);
       font-size: 15px;
       line-height: 1.7;
       letter-spacing: 1px;

@@ -313,7 +313,7 @@ export default {
       padding: 10px;
       cursor: pointer;
       border-radius: 4px;
-      color: var(--color-main);
+      color: var(--color-heading);
       background-color: var(--bg-normal);
       &.el-icon-plus{
         border-bottom-left-radius: 0;

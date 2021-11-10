@@ -135,7 +135,7 @@ export default {
       padding: 8px 15px 8px 12px;
       background: var(--bg-secondary);
       border-radius: 10px;
-      color: var(--color-normal);
+      color: var(--color-text);
       font-size: 14px;
       line-height: 20px;
       box-shadow: 0 13px 15px rgba(0, 0, 0, .1);

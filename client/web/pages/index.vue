@@ -240,7 +240,7 @@ export default {
       overflow: hidden;
       display: inline-block;
       max-width: 100%;
-      color: var(--color-main);
+      color: var(--color-heading);
       text-overflow: ellipsis;
       white-space: nowrap;
       &:hover{

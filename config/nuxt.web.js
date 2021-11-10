@@ -30,8 +30,8 @@ module.exports = {
         [
           'prismjs',
           {
-            'languages': ['markup', 'css', 'javascript', 'json', 'bash', 'less', 'php', 'sql'],
-            'plugins': ['line-numbers', 'show-language', 'highlight-keywords', 'toolbar'],
+            'languages': ['markup', 'css', 'javascript', 'json', 'less', 'scss', 'shell', 'typescript'],
+            'plugins': ['show-language', 'highlight-keywords', 'toolbar'],
             'css': false
           }
         ]

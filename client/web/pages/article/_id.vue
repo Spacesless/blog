@@ -227,7 +227,7 @@ export default {
         word-break: break-all;
       }
       &__url{
-        color: var(--color-main);
+        color: var(--color-heading);
         &:hover{
           color: var(--color-primary);
         }

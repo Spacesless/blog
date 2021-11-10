@@ -138,7 +138,7 @@ export default {
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   &-title{
     margin-bottom: 15px;
-    color: var(--color-main);
+    color: var(--color-heading);
     font-size: 24px;
     font-weight: normal;
     line-height: 1em;

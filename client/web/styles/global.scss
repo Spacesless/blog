@@ -124,7 +124,7 @@ a {
     padding: 0 10px;
     margin-top: 5px;
     margin-right: 5px;
-    color: var(--color-main);
+    color: var(--color-heading);
     font-size: 12px;
     line-height: 20px;
     border-radius: 10px;
@@ -194,7 +194,7 @@ $tagColor:(
     span {
       display: block;
       margin-bottom: 5px;
-      color: var(--color-normal);
+      color: var(--color-text);
       font-size: 20px;
       line-height: 20px;
       cursor: pointer;

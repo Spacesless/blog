@@ -72,7 +72,7 @@ export default {
 .webapp{
   &__title{
     padding: 30px 0 20px 15px;
-    color: var(--color-main);
+    color: var(--color-heading);
     font-size: 32px;
     font-weight: normal;
     line-height: 1.5;
@@ -85,7 +85,7 @@ export default {
     position: relative;
     margin: 10px 0;
     background-color: var(--bg-normal);
-    color: var(--color-normal);
+    color: var(--color-text);
     font-size: 14px;
     border-radius: 4px;
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
@@ -130,7 +130,7 @@ export default {
     &__header{
       height: 42px;
       padding: 0 15px;
-      color: var(--color-main);
+      color: var(--color-heading);
       line-height: 42px;
       border-bottom: 1px solid var(--border-color);
     }

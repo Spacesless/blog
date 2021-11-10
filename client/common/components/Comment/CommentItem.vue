@@ -173,7 +173,7 @@ export default {
       margin-bottom: 20px;
       padding: 7px 12px;
       border: 1px solid var(--border-color);
-      color: var(--color-main);
+      color: var(--color-heading);
       font-size: 14px;
       line-height: 1.5;
       border-radius: 4px;

@@ -84,7 +84,7 @@ export default {
 
 <style lang="scss" scoped>
 .about{
-  color: var(--color-normal);
+  color: var(--color-text);
   font-size: 15px;
   line-height: 2;
   &-introduce{
@@ -99,7 +99,7 @@ export default {
   }
   &__title{
     padding: 30px 0;
-    color: var(--color-main);
+    color: var(--color-heading);
     font-size: 32px;
     font-weight: normal;
     line-height: 1.5;
@@ -107,7 +107,7 @@ export default {
   &-timeline {
     padding-top: 15px;
     &-card{
-      color: var(--color-normal);
+      color: var(--color-text);
     }
     &__link{
       margin: 0 5px;
@@ -120,7 +120,7 @@ export default {
       margin-right: 10px;
       padding: 5px 12px;
       border: 1px solid var(--border-color);
-      color: var(--color-normal);
+      color: var(--color-text);
       line-height: 1;
       vertical-align: middle;
       border-radius: 4px;

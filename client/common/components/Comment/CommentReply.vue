@@ -177,7 +177,7 @@ export default {
       width: 20px;
       height: 20px;
       margin-right: 5px;
-      color: var(--color-normal);
+      color: var(--color-text);
       outline: none;
       fill: currentColor;
       cursor: pointer;
@@ -194,7 +194,7 @@ export default {
     margin-bottom: 18px;
     padding: 5px 15px;
     border: 1px solid rgba(#C0C4CC, .6);
-    color: var(--color-normal);
+    color: var(--color-text);
     font-size: 14px;
     line-height: 1.5;
     border-radius: 4px;

@@ -6,7 +6,7 @@
 
 body{
   background-color: var(--bg);
-  color: var(--color-normal);
+  color: var(--color-text);
   transition: background-color .3s;
 }
 
@@ -100,11 +100,11 @@ $asideWidth: 235px;
     overflow: hidden;
     display: inline-block;
     width: 100%;
-    color: var(--color-main);
+    color: var(--color-heading);
   }
   .el-menu-item, .el-submenu__title{
     height: 50px;
-    color: var(--color-main);
+    color: var(--color-heading);
     line-height: 50px;
   }
   .el-menu-item{
@@ -165,7 +165,7 @@ $header-height: 45px;
       font-size: 18px;
       cursor: pointer;
       &:hover{
-        color: var(--color-main);
+        color: var(--color-heading);
       }
       &--collapse{
         left: -60px;
@@ -183,13 +183,13 @@ $header-height: 45px;
     &__btn{
       margin-left: 3px;
       padding: 5px;
-      color: var(--color-normal);
+      color: var(--color-text);
       font-size: 18px;
       user-select: none;
       outline: none;
       cursor: pointer;
       &:hover{
-        color: var(--color-main);
+        color: var(--color-heading);
       }
     }
   }
@@ -282,7 +282,7 @@ $header-height: 45px;
     position: relative;
     margin: 30px 0 15px;
     padding-left: 15px;
-    color: var(--color-main);
+    color: var(--color-heading);
     font-size: 24px;
     font-weight: normal;
     line-height: 1em;
@@ -352,7 +352,7 @@ $header-height: 45px;
 // 底部
 .footer{
   padding: 15px 0 20px;
-  color: var(--color-main);
+  color: var(--color-heading);
   font-size: 14px;
   line-height: 1.3;
   &__icon{

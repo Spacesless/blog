@@ -14,6 +14,7 @@ import PictureAblum from '@/components/Upload/components/PictureAblum'
 import plugins from './plugins'
 import toolbar from './toolbar'
 import load from './dynamicLoadScript'
+import codesampleLanguages from './codesampleLanguages'
 
 // why use this cdn, detail see https://github.com/PanJiaChen/tinymce-all-in-one
 const tinymceCDN = process.env.NODE_ENV === 'production'
@@ -121,6 +122,7 @@ export default {
         powerpaste_word_import: 'clean',
         code_dialog_height: 650,
         code_dialog_width: 1200,
+        codesample_languages: codesampleLanguages,
         default_link_target: '_blank',
         nonbreaking_force_tab: true, // inserting nonbreaking space &nbsp; need Nonbreaking Space Plugin
         fontsize_formats: '12px 14px 16px 18px 24px 36px 48px 56px 72px',
