@@ -72,12 +72,6 @@ export default {
     if (this.isShow) {
       this.initModel()
 
-      // 开启开发者工具
-      const re = /x/
-      re.toString = function() {
-        this.showMessage('哈哈，你打开了控制台，是想要看看我的秘密吗？', 3000)
-        return ''
-      }
       // 复制
       document.addEventListener('copy', () => {
         this.showMessage('你都复制了些什么呀，转载要记得加上出处哦', 3000)

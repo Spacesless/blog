@@ -5,6 +5,7 @@
       :current-page.sync="currentPage"
       :page-size.sync="pageSize"
       :layout="pageLayout"
+      :pager-count="device === 'desktop' ? 7 : 5"
       :page-sizes="pageSizes"
       :total="total"
       v-bind="$attrs"
@@ -89,6 +90,10 @@ export default {
     }
   },
   methods: {
+    /**
+     * 每页个数改变
+     * @param {Number [int]} val 每页个数
+     */
     handleSizeChange(val) {
       this.$emit('pagination', { page: this.currentPage, limit: val })
       if (this.autoScroll) {
@@ -96,6 +101,10 @@ export default {
         multipleTable && scrollTo(0, 200, multipleTable)
       }
     },
+    /**
+     * 页码改变
+     * @param {Number [int]} val 页码
+     */
     handleCurrentChange(val) {
       this.$emit('pagination', { page: val, limit: this.pageSize })
       if (this.autoScroll) {

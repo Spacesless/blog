@@ -167,7 +167,7 @@ export default {
       }
     }
     &__desc{
-      padding-top: 10px;
+      padding: 10px 0;
       color: var(--color-text);
       font-size: 15px;
       line-height: 1.7;

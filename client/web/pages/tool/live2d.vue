@@ -82,12 +82,6 @@ export default {
   async mounted() {
     this.fetchList()
     this.initModel()
-    /** 开启开发者工具 */
-    var re = /x/
-    re.toString = function() {
-      this.showMessage('哈哈，你打开了控制台，是想要看看我的秘密吗？', 3000, true)
-      return ''
-    }
   },
   methods: {
     fetchList() {
