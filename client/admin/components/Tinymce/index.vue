@@ -169,9 +169,9 @@ export default {
         once you do not need it anymore.
       */
 
-      const that = this
-      input.onchange = () => {
-        const file = this.files[0]
+      input.onchange = e => {
+        const file = e.target.files[0]
+        if (!file) return
         const formData = new FormData()
         formData.append('file', file)
         this.$api.common.UploadFiles(formData).then(res => {
@@ -179,7 +179,7 @@ export default {
           const { url, name } = fileList[0] || {}
           callback(url, { alt: name })
         }).catch(() => {
-          that.$message({
+          this.$message({
             type: 'error',
             message: '图片上传失败.'
           })
@@ -205,7 +205,7 @@ export default {
       })
     },
     onSelectFile(arr) {
-      arr.forEach(v => window.tinymce.get(this.tinymceId).insertContent(`<img src="${v.url}" >`))
+      arr.forEach(v => window.tinymce.get(this.tinymceId).insertContent(`<img src="${v.url}" width="${v.width}" height="${v.height}" >`))
     },
     destroyTinymce() {
       const tinymce = window.tinymce.get(this.tinymceId)

@@ -4,6 +4,22 @@ const sharp = require('sharp');
 
 module.exports = class extends think.Service {
   /**
+   * 获取图片元数据
+   * @param {String} src 图片地址
+   * @see https://sharp.pixelplumbing.com/api-input
+   * @returns {Object}
+   */
+  async getMetadata(src) {
+    const fileSrc = path.join(think.RESOURCE_PATH, src);
+    // 源文件不存在
+    if (!think.isExist(fileSrc)) {
+      return {};
+    }
+    const metadata = await sharp(fileSrc).metadata();
+    return metadata || {};
+  }
+
+  /**
    * 调整图像大小
    * @param {String} src 源图片地址
    * @param {String} dest 目标图片地址

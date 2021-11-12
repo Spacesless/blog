@@ -36,6 +36,7 @@
     <el-scrollbar class="ablum-scroll" wrap-class="scrollbar-wrapper">
       <el-row v-loading="listLoading" class="file-grid">
         <el-col v-for="(item, index) in fileList" :key="index" :xs="12" :sm="8" :md="6" :xl="4">
+          <!-- 目录 -->
           <div
             v-if="item.type === 1"
             class="grid-item folder"
@@ -44,6 +45,7 @@
             <span class="el-icon-folder" />
             <p>{{ item.name }}</p>
           </div>
+          <!-- 图片 -->
           <div
             v-else-if="item.type === 2"
             class="grid-item image"
@@ -55,21 +57,6 @@
                 <span class="el-icon-picture-outline-round" />
               </div>
             </el-image>
-            <div class="file-info">
-              <p class="file-name">{{ item.name }}</p>
-              <p class="file-time">{{ item.mtime | timeFilter }}</p>
-              <p class="file-size">{{ item.size | sizeFilter }}</p>
-            </div>
-          </div>
-          <div
-            v-else
-            class="grid-item blob"
-            :class="{active:item.checked}"
-            @click="toggleSelect(item)"
-          >
-            <div class="blob-slot">
-              <span class="el-icon-document" />
-            </div>
             <div class="file-info">
               <p class="file-name">{{ item.name }}</p>
               <p class="file-time">{{ item.mtime | timeFilter }}</p>
@@ -139,7 +126,7 @@ export default {
       },
       path: '',
       breadcrumbs: [
-        { name: '根目录', path: '' }
+        { name: 'Home', path: '' }
       ],
       fileList: [],
       isLazyLoaded: false
@@ -193,22 +180,29 @@ export default {
       this.listQuery.page = 1
       this.fecthList()
     },
+    /**
+     * 切换选中状态
+     * @param {Object} item 点击项
+     */
     toggleSelect(item) {
-      if (!item.check) {
-        this.$set(item, 'checked', 1)
-      } else {
-        this.$set(item, 'checked', 0)
-      }
+      this.$set(item, 'checked', !item.check)
     },
     handleCancel() {
       this.$emit('update:visible', false)
+      this.listQuery = {
+        keyword: '',
+        page: 1,
+        limit: 20
+      }
+      this.path = ''
+      this.breadcrumbs = [
+        { name: 'Home', path: '' }
+      ]
+      this.fileList = []
     },
     handleConfirm() {
       const findSelectFile = this.fileList.filter(item => item.checked)
       this.$emit('onSelectFile', findSelectFile)
-      this.fileList.forEach(item => {
-        item.checked = false
-      })
       this.handleCancel()
     }
   }

@@ -1,8 +1,18 @@
-const url = require('url');
+const URL = require('url');
 const path = require('path');
 const fs = require('fs-extra');
 const Base = require('./base');
 const readdirSync = think.promisify(fs.readdir, fs);
+
+function resolve(from, to) {
+  const resolvedUrl = new URL(to, new URL(from, 'resolve://'));
+  if (resolvedUrl.protocol === 'resolve:') {
+    // `from` is a relative URL.
+    const { pathname, search, hash } = resolvedUrl;
+    return pathname + search + hash;
+  }
+  return resolvedUrl.toString();
+}
 
 module.exports = class extends Base {
   /**
@@ -33,7 +43,7 @@ module.exports = class extends Base {
       await fs.move(file.path, filepath, { overwrite: true });
       return {
         name: basename,
-        url: url.resolve(this.siteurl, filepath.replace(think.UPLOAD_PATH, '/upload'))
+        url: resolve(this.siteurl, filepath.replace(think.UPLOAD_PATH, '/upload'))
       };
     } catch (e) {
       console.error(e);
@@ -49,16 +59,20 @@ module.exports = class extends Base {
    * @param {Number} pageSize 每页个数
    */
   async getFileList(keyword, src = '', page = 1, pageSize = 20) {
+    let list = [];
+    let filesAndDirs = [];
+
     const targetPath = path.join(think.UPLOAD_PATH, src);
     if (think.isDirectory(targetPath)) {
-      const filesAndDirs = await readdirSync(targetPath);
-      let list = [];
+      const SharpHelper = think.service('sharp', 'common');
+
+      filesAndDirs = await readdirSync(targetPath);
       for (const item of filesAndDirs) {
         const itempath = path.join(targetPath, item);
         if (think.isDirectory(itempath)) {
           list.push({
             name: item,
-            url: url.resolve('', itempath.replace(think.UPLOAD_PATH, '')),
+            url: resolve('', itempath.replace(think.UPLOAD_PATH, '')),
             type: 1 // 目录
           });
         } else {
@@ -69,13 +83,21 @@ module.exports = class extends Base {
             };
           });
           const extname = path.extname(item).replace('.', '');
+          const isImage = /(gif|jpe?g|png|webp|tiff|bmp|ico)$/i.test(extname);
+          // 获取图片宽、高元数据
+          let metadata = {};
+          if (isImage) {
+            const { width, height } = await SharpHelper.getMetadata(itempath);
+            metadata = { width, height };
+          }
           list.push({
             name: item,
-            url: url.resolve(this.siteurl, itempath.replace(think.RESOURCE_PATH, '')),
-            type: /(gif|jpe?g|png|webp|tiff|bmp|ico)$/i.test(extname) ? 2 : 3,
+            url: resolve(this.siteurl, itempath.replace(think.RESOURCE_PATH, '')),
+            type: isImage ? 2 : 3,
             extname,
             size,
-            mtime
+            mtime,
+            ...metadata
           });
         }
       }
@@ -86,11 +108,12 @@ module.exports = class extends Base {
         return a.type - b.type;
       });
       list = list.slice((page - 1) * pageSize, page * pageSize);
-      return {
-        count: keyword ? list.length : filesAndDirs.length,
-        page: page,
-        data: list
-      };
     }
+
+    return {
+      count: keyword ? list.length : filesAndDirs.length,
+      page: page,
+      data: list
+    };
   }
 };

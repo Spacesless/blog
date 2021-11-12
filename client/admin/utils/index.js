@@ -27,7 +27,7 @@ export function formatCategory(categorys, parent_id = 0) {
  * @returns {Array} 栏目树形结果数组
  */
 export function getCategoryByType(categorys, type) {
-  const filterColumn = categorys.filter(item => item.type === type)
+  const filterColumn = categorys.filter(item => type ? item.type === type : true)
   filterColumn.forEach(element => {
     element.value = element.id
     element.label = element.name

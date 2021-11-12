@@ -163,7 +163,7 @@ export default {
   computed: {
     ...mapGetters(['categorys']),
     categoryOptions() {
-      const currentType = this.$route.query.type
+      const currentType = this.$route.query?.type
       const result = getCategoryByType(this.categorys, currentType)
       return result
     }
@@ -174,7 +174,7 @@ export default {
       this.fetchData(id)
       this.formData.id = id
     } else {
-      this.formData.column = this.$route.query?.parentId
+      this.formData.column = +this.$route.query?.parentId
     }
   },
   methods: {

@@ -10,6 +10,7 @@ const ALLOW_EXTS = [
   /\.(txt|xml|json|docx?|xlsx?|pptx?)$/i,
   /\.(zip|rar|pdf|gz)$/i
 ];
+
 module.exports = class extends Base {
   constructor(...args) {
     super(...args);

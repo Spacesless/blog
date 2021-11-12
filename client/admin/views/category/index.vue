@@ -46,7 +46,7 @@
               更多操作<span class="el-icon-arrow-down el-icon--right" />
             </el-button>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item @click.native="handleAddChild(scope.row.id)">添加</el-dropdown-item>
+              <el-dropdown-item @click.native="handleAddChild(scope.row)">添加</el-dropdown-item>
               <el-dropdown-item @click.native="handleMove(scope.row)">移动</el-dropdown-item>
               <el-dropdown-item @click.native="handleDelete(scope.row.id)">删除</el-dropdown-item>
             </el-dropdown-menu>
@@ -120,10 +120,10 @@ export default {
      * 添加子栏目
      * @param {Number} id 父栏目ID
      */
-    handleAddChild(id) {
+    handleAddChild({ id, type }) {
       this.$router.push({
         name: 'CategoryCreate',
-        query: { parentId: id }
+        query: { parentId: id, type }
       })
     },
     handleMove(row) {
