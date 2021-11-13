@@ -128,14 +128,12 @@ export default {
       breadcrumbs: [
         { name: 'Home', path: '' }
       ],
-      fileList: [],
-      isLazyLoaded: false
+      fileList: []
     }
   },
   watch: {
     visible(isShow) {
-      if (isShow && !this.isLazyLoaded) {
-        this.isLazyLoaded = true
+      if (isShow) {
         this.fecthList()
       }
     }

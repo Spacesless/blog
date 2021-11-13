@@ -24,10 +24,11 @@
 
     <el-drawer
       title="站内搜索"
-      custom-class="search-drawer"
-      :visible.sync="searchVisible"
-      direction="ttb"
       :append-to-body="true"
+      custom-class="search-drawer"
+      direction="ttb"
+      :visible.sync="searchVisible"
+      :size="device === 'desktop' ? 250 : 205"
     >
       <div class="search">
         <div class="container">
@@ -74,7 +75,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['sidebar']),
+    ...mapGetters(['sidebar', 'device']),
     isCollapse() {
       return !this.sidebar.opened
     }

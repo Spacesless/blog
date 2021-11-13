@@ -86,44 +86,44 @@ $asideWidth: 235px;
   .horizontal-collapse-transition {
     transition: 0s width ease-in-out, 0s padding-left ease-in-out, 0s padding-right ease-in-out;
   }
-  .el-submenu .el-menu-item{
-    height: 45px;
-    line-height: 45px;
-  }
-}
-.el-menu {
-  background: none;
-  &--popup {
-    background-color: var(--bg-normal);
-  }
-  a{
-    overflow: hidden;
-    display: inline-block;
-    width: 100%;
-    color: var(--color-heading);
-  }
-  .el-menu-item, .el-submenu__title{
-    height: 50px;
-    color: var(--color-heading);
-    line-height: 50px;
-  }
-  .el-menu-item{
-    &.is-active{
-      color: var(--color-primary);
+  .el-menu {
+    background: none;
+    .el-submenu .el-menu-item{
+      height: 45px;
+      line-height: 45px;
     }
-    &:focus,&:hover{
-      background-color: #ecf5ff !important;
-      color: var(--color-primary);
-      a, i{
+    &--popup {
+      background-color: var(--bg-normal);
+    }
+    a{
+      overflow: hidden;
+      display: inline-block;
+      width: 100%;
+      color: var(--color-heading);
+    }
+    .el-menu-item, .el-submenu__title{
+      height: 50px;
+      color: var(--color-heading);
+      line-height: 50px;
+    }
+    .el-menu-item{
+      &.is-active{
         color: var(--color-primary);
       }
+      &:focus,&:hover{
+        background-color: #ecf5ff !important;
+        color: var(--color-primary);
+        a, i{
+          color: var(--color-primary);
+        }
+      }
     }
-  }
-  .el-submenu__title:hover{
-    background-color: #ecf5ff !important;
-    color: var(--color-primary);
-    i{
+    .el-submenu__title:hover{
+      background-color: #ecf5ff !important;
       color: var(--color-primary);
+      i{
+        color: var(--color-primary);
+      }
     }
   }
 }
@@ -202,6 +202,9 @@ $header-height: 45px;
 .search{
   clear: both;
   padding-bottom: 32px;
+  .container{
+    min-height: auto;
+  }
   &-drawer{
     height: auto;
     outline: none;
@@ -376,6 +379,68 @@ $header-height: 45px;
       }
     }
   }
+}
+
+// waifu
+.waifu {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: 999;
+  width: 240px;
+  height: 250px;
+  transition: margin-top .3s ease-in-out;
+  transform-origin: bottom center;
+  @media (max-width: 992px) {
+    display: none;
+  }
+  &:hover{
+    margin-top: 0;
+    cursor: grab;
+    .waifu-tool {
+      display: block;
+    }
+  }
+  &-tips {
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    width: 215px;
+    height: 60px;
+    padding: 5px 10px;
+    border: 1px solid var(--color-primary);
+    border-radius: 12px;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #303133;
+    font-size: 12px;
+    text-overflow: ellipsis;
+    box-shadow: 0 1px 3px #66ccff;
+  }
+  &-tool {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    margin-top: -75px;
+    color: #aaa;
+    font-size: 14px;
+    span {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--color-text);
+      font-size: 20px;
+      line-height: 20px;
+      cursor: pointer;
+      transition: 0.2s;
+      &:hover{
+        color: var(--color-primary);
+      }
+    }
+  }
+}
+#live2d {
+  position: relative;
+  top: 15px
 }
 
 .hideAside {

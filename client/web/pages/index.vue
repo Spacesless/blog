@@ -131,7 +131,6 @@ export default {
     onImageLoad(e) {
       if (this.isLoaded) return
       this.isLoaded = true
-      this.bannerHeight = e.target.getAttribute('height')
       this.handleResize()
     },
     handleResize() {

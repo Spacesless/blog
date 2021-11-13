@@ -10,12 +10,11 @@ module.exports = class extends think.Service {
    * @returns {Object}
    */
   async getMetadata(src) {
-    const fileSrc = path.join(think.RESOURCE_PATH, src);
     // 源文件不存在
-    if (!think.isExist(fileSrc)) {
+    if (!think.isExist(src)) {
       return {};
     }
-    const metadata = await sharp(fileSrc).metadata();
+    const metadata = await sharp(src).metadata();
     return metadata || {};
   }
 

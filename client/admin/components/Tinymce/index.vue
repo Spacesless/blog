@@ -137,6 +137,7 @@ export default {
             this.$emit('input', editor.getContent())
           })
         },
+        relative_urls: false,
         setup(editor) {
           editor.on('FullscreenStateChanged', (e) => {
             this.fullscreen = e.state
@@ -195,7 +196,7 @@ export default {
      */
     uploadImages(blobInfo, success, failure) {
       const formData = new FormData()
-      formData.append('file', blobInfo.file)
+      formData.append('file', blobInfo.blob())
       this.$api.common.UploadFiles(formData).then(res => {
         const fileList = res.data
         const { url } = fileList[0] || {}
@@ -205,7 +206,7 @@ export default {
       })
     },
     onSelectFile(arr) {
-      arr.forEach(v => window.tinymce.get(this.tinymceId).insertContent(`<img src="${v.url}" width="${v.width}" height="${v.height}" >`))
+      arr.forEach(v => this.insertContent(`<img src="${v.url}" width="${v.width || ''}" height="${v.height || ''}" >`))
     },
     destroyTinymce() {
       const tinymce = window.tinymce.get(this.tinymceId)
@@ -219,6 +220,9 @@ export default {
     },
     setContent(value) {
       window.tinymce.get(this.tinymceId).setContent(value)
+    },
+    insertContent(value) {
+      window.tinymce.get(this.tinymceId).insertContent(value)
     },
     getContent() {
       window.tinymce.get(this.tinymceId).getContent()

@@ -85,7 +85,8 @@ export default {
   },
   data() {
     return {
-      apiUrl: '//api.timelessq.com/music/tencent'
+      apiUrl: '//api.timelessq.com/music/tencent',
+      isLoaded: false
     }
   },
   computed: {
@@ -95,6 +96,10 @@ export default {
   },
   mounted() {
     this.initAplayer()
+
+    this.$nextTick(() => {
+      this.isLoaded = true
+    })
   },
   beforeDestroy() {
     this.ap.list.clear()

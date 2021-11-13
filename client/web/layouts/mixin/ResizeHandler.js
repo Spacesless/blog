@@ -9,7 +9,7 @@ export default {
   watch: {
     $route(route) {
       if (this.device === 'mobile' && this.sidebar.opened) {
-        this.$store.dispatch('closeSideBar', { withoutAnimation: false })
+        this.$store.dispatch('tools/closeSideBar', { withoutAnimation: false })
       }
     }
   },

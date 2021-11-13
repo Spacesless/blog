@@ -197,24 +197,15 @@ export default {
     }
     &-info{
       position: absolute;
-      top: 50%;
-      height: 400px;
-      margin-top: -200px;
-      padding: 70px 60px 0 60px;
+      top: 6%;
+      bottom: 6%;
+      padding: 5%;
       background-color: var(--bg-normal);
       border: 1px solid var(--border-color);
       @media (max-width: 992px) {
         position: static;
         height: auto;
         border: none;
-      }
-      @media (min-width: 992px) {
-        height: 300px;
-        margin-top: -150px;
-      }
-      @media (min-width: 1200px) {
-        height: 360px;
-        margin-top: -180px;
       }
       &__time{
         color: var(--color-secondary);
@@ -234,20 +225,22 @@ export default {
       }
       &__desc{
         margin: 10px 0;
-        color: var(--color-secondary);
+        color: var(--color-text);
         font-size: 15px;
         line-height: 22px;
       }
       &-stuff{
         position: absolute;
-        bottom: 70px;
-        left: 60px;
+        bottom: 15%;
         color: var(--color-secondary);
         font-size: 14px;
         .tl-icon{
           margin-top: -2px;
           margin-right: 3px;
           font-size: 17px;
+        }
+        @media (max-width: 992px) {
+          position: static;
         }
       }
     }

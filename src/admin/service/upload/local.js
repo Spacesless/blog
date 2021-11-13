@@ -1,18 +1,8 @@
-const URL = require('url');
+const url = require('url');
 const path = require('path');
 const fs = require('fs-extra');
 const Base = require('./base');
 const readdirSync = think.promisify(fs.readdir, fs);
-
-function resolve(from, to) {
-  const resolvedUrl = new URL(to, new URL(from, 'resolve://'));
-  if (resolvedUrl.protocol === 'resolve:') {
-    // `from` is a relative URL.
-    const { pathname, search, hash } = resolvedUrl;
-    return pathname + search + hash;
-  }
-  return resolvedUrl.toString();
-}
 
 module.exports = class extends Base {
   /**
@@ -43,7 +33,7 @@ module.exports = class extends Base {
       await fs.move(file.path, filepath, { overwrite: true });
       return {
         name: basename,
-        url: resolve(this.siteurl, filepath.replace(think.UPLOAD_PATH, '/upload'))
+        url: url.resolve(this.siteurl, filepath.replace(think.UPLOAD_PATH, '/upload'))
       };
     } catch (e) {
       console.error(e);
@@ -72,7 +62,7 @@ module.exports = class extends Base {
         if (think.isDirectory(itempath)) {
           list.push({
             name: item,
-            url: resolve('', itempath.replace(think.UPLOAD_PATH, '')),
+            url: url.resolve('', itempath.replace(think.UPLOAD_PATH, '')),
             type: 1 // 目录
           });
         } else {
@@ -92,7 +82,7 @@ module.exports = class extends Base {
           }
           list.push({
             name: item,
-            url: resolve(this.siteurl, itempath.replace(think.RESOURCE_PATH, '')),
+            url: url.resolve(this.siteurl, itempath.replace(think.RESOURCE_PATH, '')),
             type: isImage ? 2 : 3,
             extname,
             size,

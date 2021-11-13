@@ -6,6 +6,7 @@ const state = () => ({
 const mutations = {
   ADD_VISITED_VIEW: (state, view) => {
     if (state.visitedViews.some(v => v.path === view.path)) return
+    // FIXME 不能直接使用view，否则会报错 Maximum call stack size exceeded
     state.visitedViews.push({
       name: view.name,
       fullPath: view.fullPath,

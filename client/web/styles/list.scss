@@ -42,7 +42,7 @@
 .list-page{
   margin: 25px 0;
   text-align: center;
-  .el-pagination.is-background{
+  ::v-deep .el-pagination.is-background{
     .btn-prev, .btn-next, .number{
       min-width: 32px;
       height: 32px;
