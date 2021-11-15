@@ -98,14 +98,13 @@ export default {
      */
     submitComment(content) {
       const { id, topic_id, parent_id, name, type } = this.replyData
-      const pageUrl = encodeURIComponent(location.pathname)
       const postData = {
         ...this.formData,
         topic_id,
         reply_name: name,
         parent_id: parent_id || id || 0,
         type: type ? type + 1 : 1,
-        topic_url: pageUrl,
+        topic_url: location.pathname,
         topic_title: document.title,
         content
       }

@@ -65,6 +65,7 @@ import MoveCategory from './components/MoveCategory'
 import elHeightAdaptiveTable from '#/directive/el-table'
 import { crud, listDialog } from '@/mixins'
 import { formatCategory } from '@/utils'
+import typeOptions from './modules'
 
 export default {
   name: 'Category',
@@ -152,12 +153,7 @@ export default {
      * @param {Number [int]} cellValue 当前行所属模块
      */
     formatModuleName(row, column, cellValue) {
-      const typeEnum = {
-        article: '文章模块',
-        bangumi: '追番模块',
-        tool: '小工具'
-      }
-      return typeEnum[cellValue] || '其它模块'
+      return typeOptions[cellValue] || ''
     }
   }
 }

@@ -26,7 +26,15 @@
           </el-image>
         </template>
       </el-table-column>
-      <el-table-column label="标题" prop="title" />
+      <el-table-column label="标题" min-width="200">
+        <template #default="scope">
+          <el-link
+            :underline="false"
+            :href="`${configs.siteurl}/${currentType}/detail/${scope.row.id}`"
+            target="_blank"
+          >{{ scope.row.title }}</el-link>
+        </template>
+      </el-table-column>
       <el-table-column label="访问量" prop="hits" width="100" align="center" />
       <el-table-column class-name="status-col" label="前台展示" width="100" align="center">
         <template #default="scope">
@@ -77,7 +85,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['categorys', 'updateRoute']),
+    ...mapGetters(['categorys', 'updateRoute', 'configs']),
     categoryOptions() {
       const result = getCategoryByType(this.categorys, this.currentType)
       return result

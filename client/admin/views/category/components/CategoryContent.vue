@@ -20,10 +20,10 @@
       <el-form-item label="栏目类型" prop="type">
         <el-select v-model="formData.type" placeholder="请选择栏目类型">
           <el-option
-            v-for="item in typeOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
+            v-for="(key, value) in typeOptions"
+            :key="key"
+            :label="value"
+            :value="key"
           />
         </el-select>
       </el-form-item>
@@ -133,6 +133,7 @@
 import { mapGetters } from 'vuex'
 import JsonEditor from '@/components/JsonEditor'
 import { getCategoryByType } from '@/utils'
+import typeOptions from '../modules'
 
 export default {
   components: {
@@ -157,7 +158,8 @@ export default {
       rules: {
         name: [{ required: true, message: '请输入栏目名称', trigger: 'blur' }],
         type: [{ required: true, message: '请选择栏目类型', trigger: 'change' }]
-      }
+      },
+      typeOptions
     }
   },
   computed: {

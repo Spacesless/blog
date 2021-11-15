@@ -27,7 +27,15 @@
           </el-image>
         </template>
       </el-table-column>
-      <el-table-column label="标题" prop="title" min-width="200" />
+      <el-table-column label="标题" min-width="200">
+        <template #default="scope">
+          <el-link
+            :underline="false"
+            :href="`${configs.siteurl}/${currentType}/detail/${scope.row.id}`"
+            target="_blank"
+          >{{ scope.row.title }}</el-link>
+        </template>
+      </el-table-column>
       <el-table-column label="总集数" width="150" align="center">
         <template #default="scope">
           <el-input-number

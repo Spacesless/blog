@@ -50,11 +50,7 @@ export default {
     Hamburger
   },
   computed: {
-    ...mapGetters([
-      'sidebar',
-      'userinfo',
-      'configs'
-    ])
+    ...mapGetters(['sidebar', 'userinfo', 'configs'])
   },
   methods: {
     toggleSideBar() {
@@ -158,7 +154,7 @@ export default {
     .right-menu-item {
       display: inline-block;
       height: 100%;
-      padding: 0 8px;
+      padding: 0 6px;
       color: #5a5e66;
       font-size: 18px;
       vertical-align: middle;
