@@ -1,17 +1,11 @@
 module.exports = class extends think.Model {
-  constructor(...args) {
-    super(...args);
-    this.modelMap = ['', '', 'blog', 'image', 'bangumi', 'webapp', 'video'];
-  }
-
   /**
    * get category
    * @return {Array} 栏目数组
    */
   async getCategory() {
     const field = 'id,name,parent_id,level,type,no_order,is_nav';
-    const list = await this.where({ is_show: 1 })
-      .field(field)
+    const list = await this.field(field)
       .order('no_order ASC')
       .select();
     return list;
@@ -23,15 +17,15 @@ module.exports = class extends think.Model {
    */
   async deleteColumn(id) {
     const row = await this.where({ id }).find();
-    const _model = this.modelMap[row.type];
-    const content = await this.model(_model).where(`category_id = ${id}`).select();
+    const type = row.type;
+    const content = await this.model(type).where(`category_id = ${id}`).select();
     const data = content.map(item => {
       return {
         id: item.id,
         is_recycle: 1
       };
     });
-    await this.model(_model).updateMany(data);
+    await this.model(type).updateMany(data);
     let result = {};
     if (row.level === 1) {
       const pidArr = await this.where({ parent_id: id }).getField('id');

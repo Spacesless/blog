@@ -16,7 +16,7 @@ module.exports = class extends think.Model {
    * @returns  {String}
    */
   getRelativeContentUrl(content, siteurl) {
-    return content.replace(new RegExp(siteurl, 'gi'), '')
+    return content.replace(new RegExp('src="' + siteurl, 'gi'), 'src="')
       .replace(/"upload/gi, '"/upload');
   }
 };
