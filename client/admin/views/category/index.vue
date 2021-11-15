@@ -37,7 +37,7 @@
         </template>
       </el-table-column>
       <el-table-column label="所属模块" prop="type" min-width="160" :formatter="formatModuleName" />
-      <el-table-column label="操作" align="center" width="250">
+      <el-table-column label="操作" align="center" width="300">
         <template #default="scope">
           <el-button type="success" :loading="scope.row.updateLoading" plain @click="handleUpdate(scope.row)">更新</el-button>
           <el-button class="category-tools-edit" type="primary" @click="handleEdit(scope.row.id)">编辑</el-button>

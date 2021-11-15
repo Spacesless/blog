@@ -20,7 +20,7 @@
       <el-form-item label="栏目类型" prop="type">
         <el-select v-model="formData.type" placeholder="请选择栏目类型">
           <el-option
-            v-for="(key, value) in typeOptions"
+            v-for="(value, key) in typeOptions"
             :key="key"
             :label="value"
             :value="key"
