@@ -108,7 +108,7 @@ export default {
     width: 40px;
     height: 40px;
     margin-right: 3px;
-    background-color: var(--bg-secondary);
+    background-color: var(--bg-normal);
     font-size: 22px;
     line-height: 40px;
     border-radius: 50%;

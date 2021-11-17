@@ -1,19 +1,21 @@
 <template>
-  <ul v-if="catalogList.length" class="catalog">
-    <li
-      v-for="(item, index) in catalogList"
-      :key="index"
-      class="catalog-item"
-      :class="{
-        'catalog-item--active': index === isActive
-      }"
-      :title="item.innerText"
-    >
-      <div v-if="index !== catalogList.length - 1" class="catalog-item__tail" />
-      <div class="catalog-item__node" :class="item.nodeName" />
-      <div class="catalog-item__wrapper" :class="item.nodeName" @click="scrollIntoView(item)">{{ item.innerText }}</div>
-    </li>
-  </ul>
+  <div v-if="catalogList.length" class="catalog">
+    <el-scrollbar tag="ul">
+      <li
+        v-for="(item, index) in catalogList"
+        :key="index"
+        class="catalog-item"
+        :class="{
+          'catalog-item--active': index === isActive
+        }"
+        :title="item.innerText"
+      >
+        <div v-if="index !== catalogList.length - 1" class="catalog-item__tail" />
+        <div class="catalog-item__node" :class="item.nodeName" />
+        <div class="catalog-item__wrapper" :class="item.nodeName" @click="scrollIntoView(item)">{{ item.innerText }}</div>
+      </li>
+    </el-scrollbar>
+  </div>
 </template>
 
 <script>
@@ -93,8 +95,9 @@ export default {
 .catalog{
   position: fixed;
   top: 60px;
-  right: 0;
-  width: 240px;
+  right: 15px;
+  bottom: 260px;
+  width: 225px;
   @media (max-width: 768px){
     display: none;
   }
@@ -102,7 +105,6 @@ export default {
     position: relative;
     padding-bottom: 20px;
     padding-left: 25px;
-    padding-right: 15px;
     &__tail{
       position: absolute;
       left: 4px;
@@ -133,7 +135,7 @@ export default {
       display: inline-block;
       position: relative;
       padding: 8px 15px 8px 12px;
-      background: var(--bg-secondary);
+      background: var(--bg-normal);
       border-radius: 10px;
       color: var(--color-text);
       font-size: 14px;
@@ -143,7 +145,7 @@ export default {
       transition: box-shadow .3s, transform .3s,color .1s;
       &:before{
         position: absolute;
-        border-right: 14px solid var(--bg-secondary);
+        border-right: 14px solid var(--bg-normal);
         border-top: 14px solid transparent;
         border-bottom: 14px solid transparent;
         top: 4px;

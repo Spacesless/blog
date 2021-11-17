@@ -101,7 +101,7 @@ export default {
     float: left;
     width: 65px;
     height: 65px;
-    background-color: var(--bg-secondary);
+    background-color: var(--bg-normal);
     border-radius: 50%;
     &__picture{
       display: block;

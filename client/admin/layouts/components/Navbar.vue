@@ -140,6 +140,9 @@ export default {
 
   .breadcrumb-container {
     float: left;
+    @media (max-width: 768px) {
+      display: none;
+    }
   }
 
   .right-menu {

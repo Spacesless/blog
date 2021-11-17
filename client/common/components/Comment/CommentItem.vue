@@ -148,7 +148,7 @@ export default {
       display: block;
       width: 100%;
       height: 100%;
-      background-color: var(--bg-secondary);
+      background-color: var(--bg-normal);
       text-align: center;
       line-height: 50px;
     }

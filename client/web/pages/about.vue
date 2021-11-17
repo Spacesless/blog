@@ -126,7 +126,7 @@ export default {
       border-radius: 4px;
       &:hover{
         border-color: var(--color-primary);
-        background-color: var(--bg-secondary);
+        background-color: var(--bg-normal);
         color: var(--color-primary);
       }
       .tl-icon{
