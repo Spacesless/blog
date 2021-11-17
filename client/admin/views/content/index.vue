@@ -27,12 +27,14 @@
         </template>
       </el-table-column>
       <el-table-column label="标题" min-width="200">
-        <template #default="scope">
+        <template #default="{row}">
           <el-link
+            v-if="row.is_show"
             :underline="false"
-            :href="`${configs.siteurl}/${currentType}/detail/${scope.row.id}`"
+            :href="`${configs.siteurl}/${currentType}/detail/${row.id}`"
             target="_blank"
-          >{{ scope.row.title }}</el-link>
+          >{{ row.title }}</el-link>
+          <span v-else>{{ row.title }}</span>
         </template>
       </el-table-column>
       <el-table-column label="访问量" prop="hits" width="100" align="center" />

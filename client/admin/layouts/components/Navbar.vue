@@ -173,7 +173,7 @@ export default {
     }
 
     .avatar-container {
-      margin: 0 15px;
+      margin: 0 15px 0 8px;
       line-height: 22px;
       vertical-align: middle;
 
