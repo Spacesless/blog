@@ -3,7 +3,7 @@
     <transition name="fade-transform" mode="out-in">
       <div v-show="tipsShow" class="waifu-tips" v-html="tips" />
     </transition>
-    <canvas id="live2d" width="240" height="240" class="live2d" @click="onMouseClick" />
+    <canvas id="live2d" width="240" height="240" class="live2d" @click="onMouseClick" @mouseenter="onMouseEnter('live2d')" />
     <div class="waifu-tool">
       <!-- 返回首页 -->
       <span class="tl-icon" @click="navigatorToHome" @mouseenter="onMouseEnter('home')">&#xe76f;</span>
@@ -26,6 +26,11 @@ if (process.client) {
 }
 
 const mouseTips = {
+  live2d: [
+    '(๑•́ ₃ •̀๑)',
+    '.^◡^.',
+    'ᖗ乛◡乛ᖘ'
+  ],
   home: '点击前往首页，想回到上一页可以使用浏览器的后退功能哦',
   model: '๑乛◡乛๑ 让我的好朋友见见你',
   textures: '(๑¯◡¯๑) 要看看其它的衣服么',
@@ -226,7 +231,11 @@ export default {
     // 鼠标交互
     onMouseEnter(key) {
       const tips = mouseTips[key]
-      this.showMessage(tips)
+      let text = tips
+      if (tips instanceof Array) {
+        text = tips[Math.floor(Math.random() * tips.length + 1) - 1]
+      }
+      this.showMessage(text)
     },
     onMouseClick() {
       const text = clickTips[Math.floor(Math.random() * clickTips.length + 1) - 1]

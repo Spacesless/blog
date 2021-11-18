@@ -100,14 +100,23 @@ div:focus {
     padding: 15px 20px;
     border: 1px solid #EBEEF5;
     border-bottom: none;
-    &-select{
-      margin-right: 10px;
-    }
     .el-input{
       width: 200px;
+      @media (max-width: 768px) {
+        width: calc(50% - 8px);
+      }
     }
     .el-dropdown{
       margin-left: 10px;
+    }
+    &-select{
+      margin-right: 10px;
+      @media (max-width: 768px) {
+        width: calc(50% - 8px);
+      }
+      .el-input{
+        width: 100%;
+      }
     }
   }
   &-footer {

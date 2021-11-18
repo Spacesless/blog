@@ -113,7 +113,7 @@ export default {
           title: '评论成功',
           message: '感谢您留下美好的声音',
           type: 'success',
-          offset: 50
+          offset: 40
         })
         this.formData.content = ''
         this.fetchList()

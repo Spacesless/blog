@@ -1,6 +1,6 @@
 <template>
   <div v-if="catalogList.length" class="catalog">
-    <el-scrollbar tag="ul">
+    <el-scrollbar class="catalog-scrollbar" tag="ul">
       <li
         v-for="(item, index) in catalogList"
         :key="index"
@@ -95,19 +95,23 @@ export default {
 .catalog{
   position: fixed;
   top: 60px;
-  right: 15px;
+  right: 0;
   bottom: 260px;
-  width: 225px;
+  width: 240px;
   @media (max-width: 768px){
     display: none;
+  }
+  &-scrollbar{
+    height: 100%;
   }
   &-item{
     position: relative;
     padding-bottom: 20px;
-    padding-left: 25px;
+    padding-left: 28px;
+    padding-right: 15px;
     &__tail{
       position: absolute;
-      left: 4px;
+      left: 6px;
       top: 12px;
       height: 100%;
       border-left: 2px solid #E4E7ED;
@@ -117,16 +121,16 @@ export default {
       background-color: #E4E7ED;
       border-radius: 50%;
       top: 11px;
-      left: -1px;
+      left: 1px;
       width: 12px;
       height: 12px;
       &.H2{
-        left: -2px;
+        left: 0;
         width: 14px;
         height: 14px;
       }
       &.H4{
-        left: -4px;
+        left: 2px;
         width: 10px;
         height: 10px;
       }

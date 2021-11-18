@@ -3,7 +3,7 @@
     <el-form
       ref="form"
       :model="formData"
-      label-position="left"
+      :label-position="device === 'desktop' ? 'left' : 'top'"
       label-width="100px"
       class="form-container is-stick"
     >
@@ -71,7 +71,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['configs']),
+    ...mapGetters(['configs', 'device']),
     fit() {
       const fit = +this.formData.thumb_kind
       const fitEnum = ['cover', 'contain', 'fill']

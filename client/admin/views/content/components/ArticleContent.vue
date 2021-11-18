@@ -5,7 +5,7 @@
       v-loading="fetchLoading"
       :model="formData"
       :rules="rules"
-      label-position="left"
+      :label-position="device === 'desktop' ? 'left' : 'top'"
       label-width="100px"
       class="form-container is-stick"
     >
@@ -47,26 +47,20 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item label="发布时间" prop="addtime">
-        <el-row>
-          <el-col :sm="24" :md="12">
-            <el-date-picker
-              v-model="formData.addtime"
-              type="datetime"
-              format="yyyy-MM-dd HH:mm:ss"
-              placeholder="请选择发布时间"
-            />
-          </el-col>
-          <el-col :xs="24" :md="12" prop="updatetime">
-            <el-form-item label="更新时间" class="inner-item">
-              <el-date-picker
-                v-model="formData.updatetime"
-                type="datetime"
-                value-format="yyyy-MM-dd HH:mm:ss"
-                placeholder="请选择更新时间"
-              />
-            </el-form-item>
-          </el-col>
-        </el-row>
+        <el-date-picker
+          v-model="formData.addtime"
+          type="datetime"
+          format="yyyy-MM-dd HH:mm:ss"
+          placeholder="请选择发布时间"
+        />
+      </el-form-item>
+      <el-form-item label="更新时间">
+        <el-date-picker
+          v-model="formData.updatetime"
+          type="datetime"
+          value-format="yyyy-MM-dd HH:mm:ss"
+          placeholder="请选择更新时间"
+        />
       </el-form-item>
       <el-form-item label="访问量">
         <el-input v-model="formData.hits" class="form-container-input" />
@@ -167,7 +161,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['userinfo']),
+    ...mapGetters(['userinfo', 'device']),
     currentType() {
       return this.$route.query && this.$route.query.type
     },
@@ -271,12 +265,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.form-container{
-  .inner-item{
-    padding: 0;
-    border: none;
-  }
-}
 .el-tag + .el-tag {
   margin-left: 10px;
 }

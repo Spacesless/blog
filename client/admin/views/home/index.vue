@@ -5,92 +5,88 @@
       <p class="home-welcome__text">我们一日日度过的所谓的日常，实际上可能是接连不断的奇迹</p>
     </div>
 
-    <div class="home-general">
-      <el-row :gutter="20">
-        <el-col :xs="24" :sm="12" :md="6">
-          <div class="home-general-item category" @click="navigateTo('Category')">
-            <div class="home-general-icon">
-              <svg-icon icon-class="category" />
-            </div>
-            <div class="home-general-info">
-              <p class="home-general__desc">Category</p>
-              <p class="home-general__count">{{ count.category }}</p>
-            </div>
+    <el-row class="home-general" :gutter="20">
+      <el-col :xs="24" :sm="12" :md="6">
+        <div class="home-general-item category" @click="navigateTo('Category')">
+          <div class="home-general-icon">
+            <svg-icon icon-class="category" />
           </div>
-        </el-col>
-        <el-col :xs="24" :sm="12" :md="6">
-          <div class="home-general-item article" @click="navigateTo('Article')">
-            <div class="home-general-icon">
-              <svg-icon icon-class="content" />
-            </div>
-            <div class="home-general-info">
-              <p class="home-general__desc">Article</p>
-              <p class="home-general__count">{{ count.article }}</p>
-            </div>
+          <div class="home-general-info">
+            <p class="home-general__desc">Category</p>
+            <p class="home-general__count">{{ count.category }}</p>
           </div>
-        </el-col>
-        <el-col :xs="24" :sm="12" :md="6">
-          <div class="home-general-item bangumi" @click="navigateTo('Bangumi')">
-            <div class="home-general-icon">
-              <svg-icon icon-class="bangumi" />
-            </div>
-            <div class="home-general-info">
-              <p class="home-general__desc">Bangumi</p>
-              <p class="home-general__count">{{ count.bangumi }}</p>
-            </div>
+        </div>
+      </el-col>
+      <el-col :xs="24" :sm="12" :md="6">
+        <div class="home-general-item article" @click="navigateTo('Article')">
+          <div class="home-general-icon">
+            <svg-icon icon-class="content" />
           </div>
-        </el-col>
-        <el-col :xs="24" :sm="12" :md="6">
-          <div class="home-general-item comment" @click="navigateTo('Comment')">
-            <div class="home-general-icon">
-              <svg-icon icon-class="community" />
-            </div>
-            <div class="home-general-info">
-              <p class="home-general__desc">Comment</p>
-              <p class="home-general__count">{{ count.comment }}</p>
-            </div>
+          <div class="home-general-info">
+            <p class="home-general__desc">Article</p>
+            <p class="home-general__count">{{ count.article }}</p>
           </div>
-        </el-col>
-      </el-row>
-    </div>
+        </div>
+      </el-col>
+      <el-col :xs="24" :sm="12" :md="6">
+        <div class="home-general-item bangumi" @click="navigateTo('Bangumi')">
+          <div class="home-general-icon">
+            <svg-icon icon-class="bangumi" />
+          </div>
+          <div class="home-general-info">
+            <p class="home-general__desc">Bangumi</p>
+            <p class="home-general__count">{{ count.bangumi }}</p>
+          </div>
+        </div>
+      </el-col>
+      <el-col :xs="24" :sm="12" :md="6">
+        <div class="home-general-item comment" @click="navigateTo('Comment')">
+          <div class="home-general-icon">
+            <svg-icon icon-class="community" />
+          </div>
+          <div class="home-general-info">
+            <p class="home-general__desc">Comment</p>
+            <p class="home-general__count">{{ count.comment }}</p>
+          </div>
+        </div>
+      </el-col>
+    </el-row>
 
-    <div class="home-info">
-      <el-row :gutter="20">
-        <el-col :xs="24" :sm="12">
-          <comment-list />
-        </el-col>
-        <el-col :xs="24" :sm="12" :lg="6">
-          <todo-list />
-        </el-col>
-        <el-col :xs="24" :sm="12" :lg="6">
-          <el-card>
-            <div slot="header">运行环境</div>
-            <ul class="home-info-env">
-              <li>
-                <img class="home-env__icon" src="@/assets/home/nodejs.png" alt="">
-                <span class="home-env__desc">Node.js：{{ version.nodeVersion }}</span>
-              </li>
-              <li>
-                <img class="home-env__icon" src="@/assets/home/nginx.png" alt="">
-                <span class="home-env__desc">Web Server：{{ version.v8Version }}</span>
-              </li>
-              <li>
-                <img class="home-env__icon" src="@/assets/home/centos.png" alt="">
-                <span class="home-env__desc">System：{{ version.platform }}</span>
-              </li>
-              <li>
-                <img class="home-env__icon" src="@/assets/home/thinkjs.png" alt="">
-                <span class="home-env__desc">Think.js：{{ version.thinkjsVersion }}</span>
-              </li>
-              <li>
-                <img class="home-env__icon" src="@/assets/home/mysql.png" alt="">
-                <span class="home-env__desc">Mysql：{{ version.mysqlVersion }}</span>
-              </li>
-            </ul>
-          </el-card>
-        </el-col>
-      </el-row>
-    </div>
+    <el-row class="home-info" :gutter="20">
+      <el-col :xs="24" :sm="12">
+        <comment-list />
+      </el-col>
+      <el-col :xs="24" :sm="12" :lg="6">
+        <todo-list />
+      </el-col>
+      <el-col :xs="24" :sm="12" :lg="6">
+        <el-card>
+          <div slot="header">运行环境</div>
+          <ul class="home-info-env">
+            <li>
+              <img class="home-env__icon" src="@/assets/home/nodejs.png" alt="">
+              <span class="home-env__desc">Node.js：{{ version.nodeVersion }}</span>
+            </li>
+            <li>
+              <img class="home-env__icon" src="@/assets/home/nginx.png" alt="">
+              <span class="home-env__desc">Web Server：{{ version.v8Version }}</span>
+            </li>
+            <li>
+              <img class="home-env__icon" src="@/assets/home/centos.png" alt="">
+              <span class="home-env__desc">System：{{ version.platform }}</span>
+            </li>
+            <li>
+              <img class="home-env__icon" src="@/assets/home/thinkjs.png" alt="">
+              <span class="home-env__desc">Think.js：{{ version.thinkjsVersion }}</span>
+            </li>
+            <li>
+              <img class="home-env__icon" src="@/assets/home/mysql.png" alt="">
+              <span class="home-env__desc">Mysql：{{ version.mysqlVersion }}</span>
+            </li>
+          </ul>
+        </el-card>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -184,10 +180,10 @@ export default {
   }
 
   &-general{
-    margin-bottom: 20px;
     padding: 0 20px;
     &-item{
       height: 110px;
+      margin-bottom: 20px;
       border-radius: 6px;
       box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
       cursor: pointer;
@@ -231,6 +227,9 @@ export default {
 
   &-info{
     padding: 0 20px;
+    .el-col{
+      margin-bottom: 20px;
+    }
     ::v-deep .todoapp{
       box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
        .main{

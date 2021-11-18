@@ -26,7 +26,7 @@ code[class*="language-"], pre[class*="language-"] {
 pre[class*="language-"] {
   margin: 0;
 	padding: 50px 15px 10px;
-  color: var(--color-text);
+  color: var(--color-heading);
 }
 
 /* Inline code */
@@ -73,8 +73,7 @@ pre[class*="language-"] {
 .code-toolbar{
   position: relative;
   margin: 10px 0;
-  border: 1px solid var(--border-color);
-  background: var(--bg-normal);
+  background: var(--bg);
   border-radius: 4px;
 }
 .toolbar{
@@ -96,7 +95,7 @@ pre[class*="language-"] {
       top: 0;
       padding-right: 10px;
       color: var(--color-text);
-      font-size: 16px;
+      font-size: 20px;
       font-weight: normal;
       user-select: none;
     }
@@ -107,7 +106,7 @@ pre[class*="language-"] {
       border: none;
       background: none;
       color: var(--color-text);
-      font-size: 16px;
+      font-size: 18px;
       cursor: pointer;
       &__tips{
         position: absolute;

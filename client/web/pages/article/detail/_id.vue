@@ -67,9 +67,9 @@ export default {
     })
 
     // 浏览5秒才算访问量
-    this.timer = setTimeout(() => {
-      this.handleRecordAccess()
-    }, 5000)
+    // this.timer = setTimeout(() => {
+    //   this.handleRecordAccess()
+    // }, 5000)
   },
   beforeDestroy() {
     this.timer && clearInterval(this.timer)
@@ -103,7 +103,7 @@ export default {
             title: '复制成功',
             message: '转载最好带上出处哟',
             type: 'success',
-            offset: 50
+            offset: 40
           })
         })
         clipboard.on('error', () => {
