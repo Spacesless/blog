@@ -81,7 +81,7 @@ module.exports = class extends Base {
   // 生成图片验证码
   async captchaAction() {
     const options = this.get();
-    const SvgHelper = think.service('captcha', 'common', options);
+    const SvgHelper = think.service('captcha', options);
     const { text, data } = SvgHelper.createCaptcha();
 
     await this.session('captcha', text); // 将图片验证码存到session

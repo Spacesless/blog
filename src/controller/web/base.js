@@ -16,7 +16,7 @@ module.exports = class extends think.Controller {
    * @returns {Object}
    */
   async getConfigs() {
-    const configs = await this.model('config').getConfig();
+    const configs = await this.model('config').getCacheConfig();
     return configs;
   }
 
@@ -25,7 +25,7 @@ module.exports = class extends think.Controller {
    * @returns {Array}
    */
   async getCategory() {
-    let categorys = await this.model('category').getCategory();
+    let categorys = await this.model('category').getCacheCategory();
     categorys = this.model('category').formatCategoryUrl(categorys);
     return categorys;
   }

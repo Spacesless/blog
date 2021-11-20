@@ -37,7 +37,11 @@
       </el-table-column>
       <el-table-column label="所属页面" show-overflow-tooltip width="200">
         <template #default="scope">
-          <el-link :underline="false" :href="scope.row.topic_url" target="_blank">{{ scope.row.topic_title }}</el-link>
+          <el-link
+            :underline="false"
+            :href="siteurl + scope.row.topic_url"
+            target="_blank"
+          >{{ scope.row.topic_title }}</el-link>
         </template>
       </el-table-column>
       <el-table-column label="评论人" prop="name" width="150" align="center" />
@@ -78,6 +82,11 @@ export default {
     return {
       currentType: 'comment',
       changeLoading: false
+    }
+  },
+  computed: {
+    siteurl() {
+      return this.$store.getters.configs?.siteurl
     }
   },
   methods: {

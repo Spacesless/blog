@@ -40,7 +40,7 @@ module.exports = {
     // 如果目标文件不存在，则进行裁剪生成
     const destAbsolutePath = path.join(think.RESOURCE_PATH, dest);
     if (!think.isExist(destAbsolutePath)) {
-      const SharpHelper = think.service('sharp', 'common');
+      const SharpHelper = think.service('sharp');
       dest = await SharpHelper.resizeAndCrop({
         width: +width,
         height: +height,

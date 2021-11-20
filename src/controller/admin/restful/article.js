@@ -19,9 +19,9 @@ module.exports = class extends Rest {
       }
       if (category) {
         // 筛选栏目
-        const categorys = await this.model('category').getCategory();
+        const categorys = await this.model('admin/category').getCategory();
         const categoryId = parseInt(category);
-        const findCategory = await this.model('category', {}, 'common').getChildrenCategory(categorys, categoryId);
+        const findCategory = await this.model('category').getChildrenCategory(categorys, categoryId);
         where.category_id = ['IN', findCategory];
       }
 
@@ -33,7 +33,7 @@ module.exports = class extends Rest {
         .countSelect();
 
       // 裁剪缩略图
-      const configs = await this.model('config').getConfig();
+      const configs = await this.model('config').getCacheConfig();
       const { thumb_kind: fit, thumb_article_x: width, thumb_article_y: height } = configs;
       const { data } = list;
       for (const item of data) {

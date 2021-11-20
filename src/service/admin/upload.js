@@ -1,10 +1,10 @@
 const url = require('url');
 const path = require('path');
 const fs = require('fs-extra');
-const Base = require('./base');
+const moment = require('moment');
 const readdirSync = think.promisify(fs.readdir, fs);
 
-module.exports = class extends Base {
+module.exports = class extends think.Service {
   /**
    * @param {String} siteurl 网站地址
    */
@@ -12,6 +12,15 @@ module.exports = class extends Base {
     super();
     this.siteurl = siteurl;
   }
+
+  /**
+   * 获取当前的格式化时间
+   * @returns {String} YYYYMM 年月
+   */
+  getYearMonth() {
+    return moment(new Date()).format('YYYYMM');
+  }
+
   /**
    * 文件
    * @param {Object} file
@@ -54,7 +63,7 @@ module.exports = class extends Base {
 
     const targetPath = path.join(think.UPLOAD_PATH, src);
     if (think.isDirectory(targetPath)) {
-      const SharpHelper = think.service('sharp', 'common');
+      const SharpHelper = think.service('sharp');
 
       filesAndDirs = await readdirSync(targetPath);
       for (const item of filesAndDirs) {

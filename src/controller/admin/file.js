@@ -24,8 +24,7 @@ module.exports = class extends Base {
        * 文件操作
        * @param {String} service 本地
        */
-      const service = 'local'; // TODO 腾讯云COS
-      this.fileHelper = think.service(`upload/${service}`, 'admin', this.siteurl);
+      this.fileHelper = think.service('admin/upload', this.siteurl);
     } catch (e) {
       return this.fail(e.message || 'FILE_SERVICES_ERROR');
     }

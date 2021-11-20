@@ -11,7 +11,7 @@ module.exports = class extends Base {
   async rssAction() {
     this.assign('siteurl', this.baseUrl);
 
-    const configs = await this.model('config').getConfig();
+    const configs = await this.model('config').getCacheConfig();
     this.assign('options', configs);
 
     this.assign('currentTime', (new Date()).toUTCString());
