@@ -11,7 +11,36 @@ module.exports = class extends think.Model {
       .field(field)
       .order('no_order ASC')
       .select();
+
+    this.formatCategoryUrl(list);
+
     return list;
+  }
+
+  /**
+   * 格式化导航菜单地址
+   * @param {Array} categorys
+   */
+  formatCategoryUrl(categorys) {
+    categorys.forEach(item => {
+      const { id, filename, type } = item;
+      let path;
+      if (think.isEmpty(filename)) {
+        switch (type) {
+          case 'about':
+          case 'link':
+          case 'tool':
+            path = '';
+            break;
+          default:
+            path = id;
+        }
+      } else {
+        path = `${filename}`;
+      }
+      item.url = `/${type}/${path}`;
+    });
+    return categorys;
   }
 
   /**
@@ -42,31 +71,5 @@ module.exports = class extends think.Model {
     } else {
       return target.map(item => item.id);
     }
-  }
-
-  /**
-   * 格式化导航菜单地址
-   * @param {Array} categorys
-   */
-  formatCategoryUrl(categorys) {
-    categorys.forEach(item => {
-      const { id, filename, type } = item;
-      let path;
-      if (think.isEmpty(filename)) {
-        switch (type) {
-          case 'about':
-          case 'link':
-          case 'tool':
-            path = '';
-            break;
-          default:
-            path = id;
-        }
-      } else {
-        path = `${filename}`;
-      }
-      item.url = `/${type}/${path}`;
-    });
-    return categorys;
   }
 };

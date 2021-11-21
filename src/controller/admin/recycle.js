@@ -1,63 +1,52 @@
-const Base = require('./base.js')
+const Base = require('./base.js');
 
 module.exports = class extends Base {
+  constructor() {
+    super();
+    this.modelInstance = this.model('admin/recycle');
+  }
+
+  // 获取回收站列表
   async getListAction() {
-    const field = 'id,title,category_id,updatetime'
-    const type = this.get('type')
-    const articleList = type && type !== 'article' ? [] : await this.model('article')
-      .field(`${field},'article' as type`)
-      .where({ is_recycle: 1 })
-      .select()
-    const bangumiList = type && type !== 'bangumi' ? [] : await this.model('bangumi')
-      .field(`${field},'bangumi' as type`)
-      .where({ is_recycle: 1 })
-      .select()
-    const totalList = [...articleList, ...bangumiList]
-    const page = this.get('page') ? this.get('page') : 1
-    const pageSize = this.get('pagesize') ? this.get('pagesize') : 20
-    const result = totalList.slice((page - 1) * pageSize, page * pageSize)
+    const { page = 1, pageSize = 20 } = this.post();
+
+    const totalList = await this.modelInstance.selectPost();
+
+    const result = totalList.slice((page - 1) * pageSize, page * pageSize);
     result.sort((a, b) => {
-      return b.updatetime - a.updatetime
-    })
+      return b.updatetime - a.updatetime;
+    });
+
     return this.success({
       count: totalList.length,
       page: page,
       data: result
-    })
+    });
   }
 
+  // 删除回收站记录
   async deleteAction() {
-    const list = this.post('list')
-    const promises = []
+    const list = this.post('list');
+    const promises = [];
     list.forEach(item => {
-      const { id, type } = item
-      const step = this.model(type).deleteForever(id)
-      promises.push(step)
-    })
+      const { id, type } = item;
+      const step = this.model(type).deleteForever(id);
+      promises.push(step);
+    });
 
-    let rows
+    let rows;
     await Promise.all(promises).then(result => {
-      rows = [...result]
-    })
-    return this.success(rows)
+      rows = [...result];
+    });
+    return this.success(rows);
   }
 
+  // 还原回收站
   async restoreAction() {
-    const list = this.post('list')
-    const promises = []
-    list.forEach(item => {
-      const { id, type } = item
-      const step = this.model(type).where({ id }).update({
-        updatetime: new Date(),
-        is_recycle: 0
-      })
-      promises.push(step)
-    })
+    const list = this.post('list');
 
-    let rows
-    await Promise.all(promises).then(result => {
-      rows = [...result]
-    })
-    return this.success(rows)
+    const affectedRows = this.modelInstance.restorePost(list);
+
+    return this.success(affectedRows);
   }
-}
+};

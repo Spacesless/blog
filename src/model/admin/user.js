@@ -1,5 +1,5 @@
-const { PasswordHash } = require('phpass')
-const Base = require('./base.js')
+const { PasswordHash } = require('phpass');
+const Base = require('./base.js');
 
 module.exports = class extends Base {
   /**
@@ -8,9 +8,9 @@ module.exports = class extends Base {
    * @return {String} 哈希后的字符串
    */
   getEncryptPassword(password) {
-    const passwordHash = new PasswordHash()
-    const hash = passwordHash.hashPassword(password)
-    return hash
+    const passwordHash = new PasswordHash();
+    const hash = passwordHash.hashPassword(password);
+    return hash;
   }
 
   /**
@@ -20,8 +20,8 @@ module.exports = class extends Base {
    * @return {Boolean}
    */
   checkPassword(userInfo, password) {
-    const passwordHash = new PasswordHash()
-    return passwordHash.checkPassword(password, userInfo.password)
+    const passwordHash = new PasswordHash();
+    return passwordHash.checkPassword(password, userInfo.password);
   }
 
   /**
@@ -30,17 +30,17 @@ module.exports = class extends Base {
    * @param {String} ip 客户端ip地址
    */
   async saveAdmin(data, ip) {
-    const info = await this.where({ id: data.id }).find()
+    const info = await this.where({ id: data.id }).find();
     if (think.isEmpty(info)) {
-      return Promise.reject(new Error('UESR_NOT_EXIST'))
+      return Promise.reject(new Error('UESR_NOT_EXIST'));
     }
-    const { id, password } = data
+    const { id, password } = data;
     if (password) {
-      data.password = this.getEncryptPassword(password)
+      data.password = this.getEncryptPassword(password);
     }
-    data.login_ip = ip
-    data.login_time = think.datetime()
-    return this.where({ id }).update(data)
+    data.login_ip = ip;
+    data.login_time = think.datetime();
+    return this.where({ id }).update(data);
   }
 
   /**
@@ -51,6 +51,6 @@ module.exports = class extends Base {
     return this.where({ id: user.id }).update({
       login_time: think.datetime(),
       login_ip: user.login_ip
-    })
+    });
   }
-}
+};

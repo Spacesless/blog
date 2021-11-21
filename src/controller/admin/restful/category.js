@@ -34,9 +34,9 @@ module.exports = class extends Rest {
     }
 
     const data = this.post();
-    const rows = await this.modelInstance.where({ id: this.id }).update(data);
+    const affectedRows = await this.modelInstance.where({ id: this.id }).update(data);
 
-    if (rows) {
+    if (affectedRows) {
       await think.cache('column', null);
       return this.success();
     } else {

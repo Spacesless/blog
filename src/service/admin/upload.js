@@ -63,7 +63,7 @@ module.exports = class extends think.Service {
 
     const targetPath = path.join(think.UPLOAD_PATH, src);
     if (think.isDirectory(targetPath)) {
-      const SharpHelper = think.service('sharp');
+      const sharpService = think.service('sharp');
 
       filesAndDirs = await readdirSync(targetPath);
       for (const item of filesAndDirs) {
@@ -86,7 +86,7 @@ module.exports = class extends think.Service {
           // 获取图片宽、高元数据
           let metadata = {};
           if (isImage) {
-            const { width, height } = await SharpHelper.getMetadata(itempath);
+            const { width, height } = await sharpService.getMetadata(itempath);
             metadata = { width, height };
           }
           list.push({

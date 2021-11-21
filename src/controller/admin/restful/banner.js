@@ -15,9 +15,9 @@ module.exports = class extends Rest {
         .order('sort ASC')
         .select();
 
-      for (const item of list) {
+      list.forEach(item => {
         item.imgurl = this.getAbsolutePath(item.imgurl);
-      }
+      });
 
       return this.success(list);
     }
@@ -42,22 +42,24 @@ module.exports = class extends Rest {
     // 列表页更新
     const list = this.post('list');
     if (list) {
-      const rows = await this.modelInstance.updateMany(list);
-      if (rows) {
+      const affectedRows = await this.modelInstance.updateMany(list);
+      if (affectedRows) {
         return this.success();
       } else {
         return this.fail();
       }
     }
+
     // 详情更新
     if (!this.id) {
       return this.fail('CONTENT_NOT_EXIST');
     }
+
     const data = this.post();
     const { imgurl } = data;
     if (imgurl) data.imgurl = imgurl.replace(this.siteurl, '');
-    const row = await this.modelInstance.where({ id: this.id }).update(data);
-    if (row) {
+    const affectedRows = await this.modelInstance.where({ id: this.id }).update(data);
+    if (affectedRows) {
       return this.success();
     } else {
       return this.fail();
@@ -69,9 +71,9 @@ module.exports = class extends Rest {
     if (!list.length) {
       return this.fail('CONTENT_NOT_EXIST');
     }
-    // TODO目前暂时是将is_recycle设为1，移入回收站
-    const rows = await this.modelInstance.where({ id: ['IN', list] }).delete();
-    if (rows) {
+
+    const affectedRows = await this.modelInstance.where({ id: ['IN', list] }).delete();
+    if (affectedRows) {
       return this.success();
     } else {
       return this.fail();

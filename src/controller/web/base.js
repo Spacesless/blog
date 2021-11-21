@@ -16,8 +16,7 @@ module.exports = class extends think.Controller {
    * @returns {Object}
    */
   async getConfigs() {
-    const configs = await this.model('config').getCacheConfig();
-    return configs;
+    await this.model('config').getCacheConfig();
   }
 
   /**
@@ -25,9 +24,7 @@ module.exports = class extends think.Controller {
    * @returns {Array}
    */
   async getCategory() {
-    let categorys = await this.model('category').getCacheCategory();
-    categorys = this.model('category').formatCategoryUrl(categorys);
-    return categorys;
+    await this.model('category').getCacheCategory();
   }
 
   /**
@@ -140,16 +137,6 @@ module.exports = class extends think.Controller {
     }
 
     return content;
-  }
-
-  /**
-   * 截取字符串
-   * @param {Number [int]} index 开始下标
-   * @param {Number [int]} length 截取长度
-   * @returns {String}
-   */
-  substr(str, index, length) {
-    return str.substr(index, length);
   }
 
   __cell() {

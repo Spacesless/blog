@@ -1,12 +1,10 @@
-const Base = require('./base.js')
-
-module.exports = class extends Base {
+module.exports = class extends think.Controller {
   async indexAction() {
     const links = await this.model('link')
       .where({ is_show: 1 })
       .order('no_order ASC')
-      .select()
+      .select();
 
-    return this.success(links)
+    return this.success(links);
   }
-}
+};

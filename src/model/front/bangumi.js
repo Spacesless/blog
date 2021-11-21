@@ -4,13 +4,12 @@ module.exports = class extends think.Model {
    * @param {Object} params 查询条件
    * @returns {Object}
    */
-  async selectPost({ category, page, pageSize, sortBy, orderBy, status, progress, tags }, categorys) {
+  async selectPost({ category, page, pageSize, sortBy, orderBy, status, progress, tags, childCategories }) {
     const field = 'id,title,description,total,current,ratings,imgurl,showtime,status,tag';
     const sort = sortBy || 'updatetime';
     const order = orderBy ? orderBy.toUpperCase() : 'DESC';
 
     const where = { is_show: 1, is_recycle: 0 };
-    const childCategories = await this.model('category').findChildCategory(categorys, category.id);
     where.category_id = ['IN', childCategories];
     // 番剧状态
     if (status) where.status = status;

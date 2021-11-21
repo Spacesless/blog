@@ -47,9 +47,9 @@ module.exports = class extends Rest {
     // 列表页更新
     const list = this.post('list');
     if (list) {
-      const rows = await this.modelInstance.updateMany(list);
+      const affectedRows = await this.modelInstance.updateMany(list);
 
-      if (rows) {
+      if (affectedRows) {
         return this.success();
       } else {
         return this.fail();
@@ -61,9 +61,9 @@ module.exports = class extends Rest {
     }
 
     const data = this.post();
-    const row = await this.modelInstance.where({ id: this.id }).update(data);
+    const affectedRows = await this.modelInstance.where({ id: this.id }).update(data);
 
-    if (row) {
+    if (affectedRows) {
       return this.success('更新成功');
     } else {
       return this.fail('更新失败');

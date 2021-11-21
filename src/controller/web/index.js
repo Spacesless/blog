@@ -36,7 +36,7 @@ module.exports = class extends Base {
 
     for (const element of articleList) {
       const { category_id: categoryId, description } = element;
-      element.description = this.substr(description, 0, 80);
+      element.description = description.substr(0, 80);
       const currentCategory = categorys.find(item => item.id === categoryId);
       const folder = currentCategory ? currentCategory.type : 'article';
       element.column = {
@@ -57,8 +57,9 @@ module.exports = class extends Base {
 
     const { bangumi_width: bangumiWidth, bangumi_height: bangumiHeight, image_fit: fit } = configs;
     for (const element of bangumiList) {
-      element.description = this.substr(element.description, 0, 60);
-      element.imgurl = await this.getThumbnail(element.imgurl, bangumiWidth, bangumiHeight, fit);
+      const { description, imgurl } = element;
+      element.description = description.substr(0, 60);
+      element.imgurl = await this.getThumbnail(imgurl, bangumiWidth, bangumiHeight, fit);
     }
 
     return this.success({

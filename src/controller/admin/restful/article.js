@@ -20,15 +20,11 @@ module.exports = class extends Rest {
 
     const list = await this.modelInstance.selectPost(query);
 
-    // 裁剪缩略图
-    const thumbnail = this.service('thumbnail', 'article', this);
-    list.data = await thumbnail.getThumbnail(list.data);
-    // const configs = await this.model('config').getCacheConfig();
-    // const { image_fit: fit, article_width: width, article_height: height } = configs;
-    // for (const item of list.data) {
-    //   const { imgurl } = item;
-    //   item.imgurl = await this.getThumbnail(imgurl, width, height, fit);
-    // }
+    // 转换列表
+    const postService = this.service('post', 'article');
+    list.data = await postService.formatList(list.data, item => {
+      item.imgurl = this.getAbsolutePath(item.imgurl);
+    });
 
     return this.success(list);
   }

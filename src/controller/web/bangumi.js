@@ -7,7 +7,8 @@ module.exports = class extends Base {
   }
 
   async listAction() {
-    const { id, page, sortBy, orderBy, status, progress, tags } = this.get();
+    const req = this.get();
+    const { id } = req;
 
     const configs = await this.getConfigs();
     const categorys = await this.getCategory();
@@ -19,42 +20,23 @@ module.exports = class extends Base {
     }
 
     // 当前列表
-    const { list_bangumi: pageSize, bangumi_width: width, bangumi_height: height, image_fit: fit } = configs;
-    const field = 'id,title,description,total,current,ratings,imgurl,showtime,status,tag';
-    const sort = sortBy || 'updatetime';
-    const order = orderBy ? orderBy.toUpperCase() : 'DESC';
-
-    const where = { is_show: 1, is_recycle: 0 };
+    const { list_bangumi: pageSize } = configs;
     const childCategories = await this.model('category').findChildCategory(categorys, category.id);
-    where.category_id = ['IN', childCategories];
-    // 番剧状态
-    if (status) where.status = status;
-    // 追剧进度
-    switch (progress) {
-      case '0':
-        where.current = ['EXP', '< `total`'];
-        break;
-      case '1':
-        where.current = ['EXP', '= `total`'];
-        break;
-    }
-    // tag标签
-    if (tags) where.tag = ['like', tags.split(',').map(item => `%${item}%`)];
+    const query = {
+      ...req,
+      pageSize,
+      childCategories
+    };
+    const list = await this.model('front/bangumi').selectPost(query);
 
-    const list = await this.modelInstance
-      .where(where)
-      .field(field)
-      .order(`${sort} ${order}`)
-      .page(page, pageSize)
-      .countSelect();
-
-    // 裁剪图片
-    for (const item of list.data) {
-      const { imgurl, tag } = item;
-      item.description = this.substr(item.description, 0, 60);
-      item.imgurl = await this.getThumbnail(imgurl, width, height, fit);
+    // 转换列表
+    const postService = this.service('post', 'bangumi', configs);
+    list.data = await postService.formatList(list.data, item => {
+      const { imgurl, description, tag } = item;
+      item.imgurl = this.getAbsolutePath(imgurl);
+      item.description = description.substr(0, 60);
       item.tag = tag ? tag.split('|') : [];
-    }
+    });
 
     return this.success({
       seo,
