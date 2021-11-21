@@ -17,7 +17,7 @@ export default {
   },
   methods: {
     initViewer() {
-      const previews = document.querySelectorAll('.Tinymce img')
+      const previews = document.querySelectorAll('.markdown img')
       this.previewSrcList = Array.from(previews).map(item => item.src)
       previews.forEach(item => {
         item.addEventListener('click', e => {

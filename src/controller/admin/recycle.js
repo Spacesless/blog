@@ -31,7 +31,7 @@ module.exports = class extends Base {
     const promises = []
     list.forEach(item => {
       const { id, type } = item
-      const step = this.model(type).foreverDelete(id)
+      const step = this.model(type).deleteForever(id)
       promises.push(step)
     })
 

@@ -11,8 +11,8 @@ module.exports = class extends Base {
     // 配置信息
     const {
       sitename, is_silent, live2d_model, live2d_texture, icp_beian, police_beian,
-      thumb_article_x, thumb_article_y,
-      thumb_bangumi_x, thumb_bangumi_y
+      article_width, article_height,
+      bangumi_width, bangumi_height
     } = configs;
     const targetConfigs = {
       siteurl: this.siteurl,
@@ -25,10 +25,10 @@ module.exports = class extends Base {
       live2d_texture,
       icp_beian,
       police_beian,
-      thumb_article_x,
-      thumb_article_y,
-      thumb_bangumi_x,
-      thumb_bangumi_y
+      article_width,
+      article_height,
+      bangumi_width,
+      bangumi_height
     };
     return this.success({ navigation, configs: targetConfigs });
   }

@@ -11,7 +11,7 @@ const normalSessionOpt = {
 module.exports = class extends Base {
   constructor(...arg) {
     super(...arg);
-    this.modelInstance = this.model('user');
+    this.modelInstance = this.model('admin/user');
   }
 
   /**

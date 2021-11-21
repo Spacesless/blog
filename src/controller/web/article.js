@@ -19,15 +19,15 @@ module.exports = class extends Base {
     }
 
     // 当前列表
-    const { list_article: pageSize, thumb_article_x: width, thumb_article_y: height, thumb_kind: fit } = configs;
+    const { list_article: pageSize, article_width: width, article_height: height, image_fit: fit } = configs;
 
     const field = 'id,title,description,imgurl,updatetime,hits,tag';
     const sort = sortBy || 'updatetime';
     const order = orderBy ? orderBy.toUpperCase() : 'DESC';
 
     const where = { is_show: 1, is_recycle: 0 };
-    const findCategory = await this.model('category').getChildrenCategory(categorys, category.id);
-    where.category_id = ['IN', findCategory];
+    const childCategories = await this.model('category').findChildCategory(categorys, category.id);
+    where.category_id = ['IN', childCategories];
     // tag标签
     if (tags) where.tag = ['like', tags.split(',').map(item => `%${item}%`)];
 
@@ -38,10 +38,13 @@ module.exports = class extends Base {
       .page(page, pageSize)
       .countSelect();
 
+    const thumbnail = this.service('thumbnail', 'article', this, configs);
+    list.data = await thumbnail.getThumbnail(list.data);
+
     for (const item of list.data) {
-      const { imgurl, tag } = item;
-      item.description = this.substr(item.description, 0, 80);
-      item.imgurl = await this.getThumbnail(imgurl, width, height, fit);
+      const { description, tag } = item;
+      item.description = this.substr(description, 0, 80);
+      // item.imgurl = await this.getThumbnail(item.imgurl, width, height, fit);
       item.tag = tag ? tag.split('|') : [];
     }
 
@@ -70,7 +73,7 @@ module.exports = class extends Base {
     const categorys = await this.getCategory();
 
     const { category, seo } = this.getDetailInfo(data, categorys, configs);
-    const { thumb_article_x: width, thumb_article_y: height, thumb_kind: fit } = configs;
+    const { article_width: width, article_height: height, image_fit: fit } = configs;
     data.imgurl = await this.getThumbnail(data.imgurl, width, height, fit);
     data.content = await this.formatContent(data.content);
 

@@ -10,46 +10,33 @@ module.exports = class extends Rest {
       data.content = this.getContentAbsolutePath(data.content);
       return this.success(data);
     } else {
-      // 文章列表
-      const { keyword, category, page, pageSize } = this.get();
-
-      const where = { is_recycle: 0 };
-      if (keyword) {
-        where.title = ['like', `%${keyword}%`];
-      }
-      if (category) {
-        // 筛选栏目
-        const categorys = await this.model('admin/category').getCategory();
-        const categoryId = parseInt(category);
-        const findCategory = await this.model('category').getChildrenCategory(categorys, categoryId);
-        where.category_id = ['IN', findCategory];
-      }
-
-      const field = 'id,title,imgurl,hits,updatetime,is_show';
-      const list = await this.modelInstance.where(where)
-        .field(field)
-        .order('updatetime DESC')
-        .page(page, pageSize)
-        .countSelect();
-
-      // 裁剪缩略图
-      const configs = await this.model('config').getCacheConfig();
-      const { thumb_kind: fit, thumb_article_x: width, thumb_article_y: height } = configs;
-      const { data } = list;
-      for (const item of data) {
-        const { imgurl } = item;
-        item.imgurl = await this.getThumbnail(imgurl, width, height, fit);
-      }
-      list.data = data;
-
-      return this.success(list);
+      return this.listAction();
     }
+  }
+
+  // 文章列表
+  async listAction() {
+    const query = this.get();
+
+    const list = await this.modelInstance.selectPost(query);
+
+    // 裁剪缩略图
+    const thumbnail = this.service('thumbnail', 'article', this);
+    list.data = await thumbnail.getThumbnail(list.data);
+    // const configs = await this.model('config').getCacheConfig();
+    // const { image_fit: fit, article_width: width, article_height: height } = configs;
+    // for (const item of list.data) {
+    //   const { imgurl } = item;
+    //   item.imgurl = await this.getThumbnail(imgurl, width, height, fit);
+    // }
+
+    return this.success(list);
   }
 
   // 添加文章
   async postAction() {
     const data = this.post();
-    const insertId = await this.modelInstance.addContent(data, this.siteurl);
+    const insertId = await this.modelInstance.createPost(data, this.siteurl);
 
     if (insertId) {
       return this.success();
@@ -63,8 +50,8 @@ module.exports = class extends Rest {
     // 列表页更新
     const list = this.post('list');
     if (list) {
-      const rows = await this.modelInstance.updateMany(list);
-      if (rows) {
+      const affectedRows = await this.modelInstance.updateMany(list);
+      if (affectedRows) {
         return this.success();
       } else {
         return this.fail();
@@ -76,9 +63,9 @@ module.exports = class extends Rest {
       return this.fail('CONTENT_NOT_EXIST');
     }
     const data = this.post();
-    const row = await this.modelInstance.updateContent(this.id, data, this.siteurl);
+    const affectedRows = await this.modelInstance.updatePost(this.id, data, this.siteurl);
 
-    if (row) {
+    if (affectedRows) {
       return this.success();
     } else {
       return this.fail();
@@ -92,16 +79,9 @@ module.exports = class extends Rest {
       return this.fail('CONTENT_NOT_EXIST');
     }
 
-    const data = list.map(item => {
-      return {
-        id: item,
-        updatetime: new Date(),
-        is_recycle: 1
-      };
-    });
-    const rows = await this.modelInstance.updateMany(data);
+    const affectedRows = await this.modelInstance.deletePost(list);
 
-    if (rows) {
+    if (affectedRows) {
       return this.success();
     } else {
       return this.fail();

@@ -11,29 +11,12 @@ module.exports = class extends Rest {
       return this.success(data);
     } else {
       // 番剧列表
-      const { keyword, category, page, pageSize, order } = this.get();
+      const query = this.get();
 
-      const where = { is_recycle: 0 };
-      if (keyword) {
-        where.title = ['like', `%${keyword}%`];
-      }
-      if (category) {
-        // 筛选栏目
-        const categorys = await this.model('admin/category').getCategory();
-        const categoryId = parseInt(category);
-        const findCategory = await this.model('category').getChildrenCategory(categorys, categoryId);
-        where.category_id = ['IN', findCategory];
-      }
-
-      const field = 'id,title,imgurl,total,current,status,ratings,is_show';
-      const list = await this.modelInstance.where(where)
-        .field(field)
-        .order(order || 'updatetime DESC')
-        .page(page, pageSize)
-        .countSelect();
+      const list = await this.modelInstance.selectPost(query);
 
       const configs = await this.model('config').getCacheConfig();
-      const { thumb_kind: fit, thumb_bangumi_x: width, thumb_bangumi_y: height } = configs;
+      const { image_fit: fit, bangumi_width: width, bangumi_height: height } = configs;
       const { data } = list;
       for (const item of data) {
         const { imgurl } = item;
@@ -47,7 +30,7 @@ module.exports = class extends Rest {
   // 添加番剧
   async postAction() {
     const data = this.post();
-    const insertId = await this.modelInstance.addContent(data, this.siteurl);
+    const insertId = await this.modelInstance.createPost(data, this.siteurl);
 
     if (insertId) {
       return this.success();
@@ -75,7 +58,7 @@ module.exports = class extends Rest {
       return this.fail('CONTENT_NOT_EXIST');
     }
     const data = this.post();
-    const row = await this.modelInstance.updateContent(this.id, data, this.siteurl);
+    const row = await this.modelInstance.updatePost(this.id, data, this.siteurl);
 
     if (row) {
       return this.success();
@@ -90,14 +73,7 @@ module.exports = class extends Rest {
       return this.fail('CONTENT_NOT_EXIST');
     }
 
-    const data = list.map(item => {
-      return {
-        id: item,
-        updatetime: new Date(),
-        is_recycle: 1
-      };
-    });
-    const rows = await this.modelInstance.updateMany(data);
+    const rows = await this.modelInstance.deletePost(list);
 
     if (rows) {
       return this.success();

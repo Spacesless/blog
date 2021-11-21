@@ -5,7 +5,7 @@ module.exports = class extends think.Controller {
 
     // 无需鉴权的白名单
     const { controller, action } = this.ctx;
-    const whiteController = ['user'];
+    const whiteController = ['admin/user'];
     const whiteAction = ['login', 'forgot', 'reset', 'captcha'];
     if (whiteController.includes(controller) && whiteAction.includes(action)) {
       return;

@@ -55,11 +55,11 @@ module.exports = class extends Base {
         let thumbX;
         let thumbY;
         if (type === 'bangumi') {
-          thumbX = configs.thumb_bangumi_x;
-          thumbY = configs.thumb_bangumi_y;
+          thumbX = configs.bangumi_width;
+          thumbY = configs.bangumi_height;
         } else {
-          thumbX = configs.thumb_article_x;
-          thumbY = configs.thumb_article_y;
+          thumbX = configs.article_width;
+          thumbY = configs.article_height;
         }
 
         const classList = categorys.filter(item => item.id === categoryId).map(item => {
@@ -73,7 +73,7 @@ module.exports = class extends Base {
           title: _title,
           content: _content,
           url: `/${findCategory.type}/detail/${id}`,
-          imgurl: await this.getThumbnail(imgurl, thumbX, thumbY, configs.thumb_kind),
+          imgurl: await this.getThumbnail(imgurl, thumbX, thumbY, configs.image_fit),
           classList
         });
       }

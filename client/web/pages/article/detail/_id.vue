@@ -16,7 +16,7 @@
     <!-- 文章内容 -->
     <div class="blog-content">
       <div class="blog-content-wrap">
-        <div ref="content" class="Tinymce" v-html="data.content" />
+        <div ref="content" class="markdown" v-html="data.content" />
         <!-- 社区分享 -->
         <Share />
       </div>

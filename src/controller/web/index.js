@@ -13,7 +13,7 @@ module.exports = class extends Base {
     };
 
     // 正在做 banner
-    // const { banner_width: bannerWidth, banner_height: bannerHeight, thumb_kind: fit } = configs;
+    // const { banner_width: bannerWidth, banner_height: bannerHeight, image_fit: fit } = configs;
     const bannerField = 'id,imgurl,title';
     const bannerList = await this.model('banner')
       .field(bannerField)
@@ -55,7 +55,7 @@ module.exports = class extends Base {
       .order('updatetime DESC')
       .select();
 
-    const { thumb_bangumi_x: bangumiWidth, thumb_bangumi_y: bangumiHeight, thumb_kind: fit } = configs;
+    const { bangumi_width: bangumiWidth, bangumi_height: bangumiHeight, image_fit: fit } = configs;
     for (const element of bangumiList) {
       element.description = this.substr(element.description, 0, 60);
       element.imgurl = await this.getThumbnail(element.imgurl, bangumiWidth, bangumiHeight, fit);

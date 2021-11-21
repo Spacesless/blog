@@ -2,11 +2,39 @@ const Base = require('./base.js');
 
 module.exports = class extends Base {
   /**
+   * 查询列表
+   * @param {Object} params 查询条件
+   * @returns {Object}
+   */
+  async selectPost({ keyword, category, page, pageSize }) {
+    const where = { is_recycle: 0 };
+    if (keyword) {
+      where.title = ['like', `%${keyword}%`];
+    }
+    if (category) {
+      // 筛选栏目
+      const categorys = await this.model('admin/category').getCategory();
+      const categoryId = parseInt(category);
+      const childCategories = await this.model('category').findChildCategory(categorys, categoryId);
+      where.category_id = ['IN', childCategories];
+    }
+
+    const field = 'id,title,imgurl,hits,updatetime,is_show';
+    const list = await this.where(where)
+      .field(field)
+      .order('updatetime DESC')
+      .page(page, pageSize)
+      .countSelect();
+
+    return list;
+  }
+
+  /**
    * 新增文章
    * @param {Object} data 文章信息
    * @param {String} siteurl 网站地址
    */
-  async addContent(data, siteurl) {
+  async createPost(data, siteurl) {
     const { imgurl, content } = data;
     if (imgurl) data.imgurl = this.getRelativeImgUrl(imgurl, siteurl);
     if (content) data.content = this.getRelativeContentUrl(content, siteurl);
@@ -19,7 +47,7 @@ module.exports = class extends Base {
    * @param {Object} data 文章信息
    * @param {String} siteurl 网站地址
    */
-  async updateContent(id, data, siteurl) {
+  async updatePost(id, data, siteurl) {
     const { imgurl, content } = data;
     if (imgurl) data.imgurl = this.getRelativeImgUrl(imgurl, siteurl);
     if (content) data.content = this.getRelativeContentUrl(content, siteurl);
@@ -28,10 +56,28 @@ module.exports = class extends Base {
   }
 
   /**
+   * 软删除
+   * @param {Array} list
+   * @returns {Array}
+   */
+  async deletePost(list) {
+    const data = list.map(item => {
+      return {
+        id: item,
+        updatetime: new Date(),
+        is_recycle: 1
+      };
+    });
+    const rows = await this.modelInstance.updateMany(data);
+
+    return rows;
+  }
+
+  /**
    * 永久删除文章
    * @param {Number} id 文章ID
    */
-  async foreverDelete(id) {
+  async deleteForever(id) {
     const row = await this.where({ id }).find();
     if (think.isEmpty(row)) return {};
     // // 删除数据

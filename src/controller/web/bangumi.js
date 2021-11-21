@@ -19,14 +19,14 @@ module.exports = class extends Base {
     }
 
     // 当前列表
-    const { list_bangumi: pageSize, thumb_bangumi_x: width, thumb_bangumi_y: height, thumb_kind: fit } = configs;
+    const { list_bangumi: pageSize, bangumi_width: width, bangumi_height: height, image_fit: fit } = configs;
     const field = 'id,title,description,total,current,ratings,imgurl,showtime,status,tag';
     const sort = sortBy || 'updatetime';
     const order = orderBy ? orderBy.toUpperCase() : 'DESC';
 
     const where = { is_show: 1, is_recycle: 0 };
-    const findCategory = await this.model('category').getChildrenCategory(categorys, category.id);
-    where.category_id = ['IN', findCategory];
+    const childCategories = await this.model('category').findChildCategory(categorys, category.id);
+    where.category_id = ['IN', childCategories];
     // 番剧状态
     if (status) where.status = status;
     // 追剧进度

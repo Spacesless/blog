@@ -16,8 +16,7 @@ module.exports = class extends Rest {
         .select();
 
       for (const item of list) {
-        const { imgurl } = item;
-        item.imgurl = this.siteurl + imgurl;
+        item.imgurl = this.getAbsolutePath(item.imgurl);
       }
 
       return this.success(list);

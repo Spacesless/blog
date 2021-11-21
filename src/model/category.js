@@ -20,7 +20,7 @@ module.exports = class extends think.Model {
    * @param {Number [int]} id 指定栏目id
    * @returns {Array} 指定栏目id以及它所有子栏目id的数组
    */
-  async getChildrenCategory(categorys, id) {
+  async findChildCategory(categorys, id) {
     const flattenCategory = this.flattenDeep(categorys, [id]);
     const findCategory = Array.from(new Set(flattenCategory));
     return findCategory;
@@ -33,14 +33,14 @@ module.exports = class extends think.Model {
    * @param {Array} target 目标数组
    */
   flattenDeep(categorys, predicate, target = []) {
-    const findCategory = categorys.filter(item => predicate.includes(item.id)).map(item => item.id);
-    const childrenCategory = categorys.filter(item => predicate.includes(item.parent_id)).map(item => item.id);
+    const findCategory = categorys.filter(item => predicate.includes(item.id));
+    const childrenCategory = categorys.filter(item => predicate.includes(item.parent_id));
     target = [...target, ...findCategory, ...childrenCategory];
 
     if (childrenCategory.length) {
       return this.flattenDeep(categorys, childrenCategory, target);
     } else {
-      return target;
+      return target.map(item => item.id);
     }
   }
 

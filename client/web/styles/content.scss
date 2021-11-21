@@ -1,5 +1,5 @@
 // content
-.Tinymce{
+.markdown{
   color: var(--color-text);
   font-size: 15px;
   line-height: 1.7;
@@ -7,6 +7,7 @@
   word-break: break-word;
   h2,h3,h4,h5{
     color: var(--color-heading);
+    font-weight: 500;
   }
   h2{
     margin: 4px 0 6px;

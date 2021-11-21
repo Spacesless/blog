@@ -38,7 +38,7 @@
       </el-col>
     </el-row>
     <!--bangumi content-->
-    <div ref="content" class="bangumi-content Tinymce">
+    <div ref="content" class="bangumi-content markdown">
       <h2>主题曲</h2>
       <div id="player">
         <p v-for="(item, index) in songList" :key="index">{{ item }}</p>
