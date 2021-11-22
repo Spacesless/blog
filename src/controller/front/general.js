@@ -1,13 +1,12 @@
+/* eslint-disable */
 const Base = require('./base.js');
 
 module.exports = class extends Base {
   async indexAction() {
     // 主导航信息
     const configs = await this.getConfigs();
-    const categorys = await this.getCategory();
-    const cloneCategory = JSON.parse(JSON.stringify(categorys));
-    const filterCategory = cloneCategory.filter(item => item.is_nav === 1); // isNav 在导航中的菜单
-    const navigation = this.convertToTree(filterCategory);
+    const categoryList = await this.getCategory();
+
     // 配置信息
     const {
       sitename, is_silent, live2d_model, live2d_texture, icp_beian, police_beian,
@@ -30,6 +29,10 @@ module.exports = class extends Base {
       bangumi_width,
       bangumi_height
     };
-    return this.success({ navigation, configs: targetConfigs });
+
+    return this.success({
+      categoryList,
+      configs: targetConfigs
+    });
   }
 };

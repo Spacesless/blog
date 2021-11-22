@@ -1,3 +1,5 @@
+import { mapGetters } from 'vuex'
+
 export const listPage = {
   data() {
     return {
@@ -67,6 +69,64 @@ export const listQuery = {
         }
       }
       return target
+    }
+  }
+}
+
+export const pageMeta = {
+  data() {
+    return {
+      pageType: 'page'
+    }
+  },
+  computed: {
+    ...mapGetters(['menus', 'configs']),
+    findCategory() {
+      const { path, params } = this.$route
+      let result
+      switch (this.pageType) {
+        case 'list': {
+          const [id] = params.id ? params.id.split('-') : []
+          result = id && this.menus.find(item => item.id === +id)
+          break
+        }
+        case 'detail': {
+          const categoryId = this.data.category_id
+          result = this.menus.find(item => item.id === categoryId)
+          break
+        }
+        default:
+          result = this.menus.find(item => path.includes(item.pathname))
+          break
+      }
+      return result || {}
+    },
+    meta() {
+      const { sitename } = this.configs
+      const { name: title, keywords, description } = this.findCategory
+      if (this.pageType === 'detail') {
+        const { title: contentTitle, keywords: contentKeyword, description: contentDescription } = this.data
+        return {
+          title: `${contentTitle} ${title ? '- ' + title : ''} - ${sitename}`,
+          keywords: contentKeyword || keywords,
+          description: contentDescription || description
+        }
+      } else {
+        return {
+          keywords,
+          description,
+          title: title ? `${title} -  ${sitename}` : sitename
+        }
+      }
+    }
+  },
+  head() {
+    return {
+      title: this.meta.title,
+      meta: [
+        { hid: 'description', name: 'description', content: this.meta.description },
+        { hid: 'keyword', name: 'keyword', content: this.meta.keyword }
+      ]
     }
   }
 }

@@ -30,6 +30,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import SidebarItem from './SidebarItem'
+import { convertToTree } from '#/utils'
 
 export default {
   components: {
@@ -41,7 +42,11 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['device', 'sidebar', 'menus', 'configs']),
+    ...mapGetters(['device', 'sidebar', 'categories', 'configs']),
+    menus() {
+      const filterMenus = this.categories.filter(item => item.is_nav)
+      return convertToTree(filterMenus)
+    },
     activeMenu() {
       const { path, params } = this.$route
       const [id] = params.id?.split('-') || []

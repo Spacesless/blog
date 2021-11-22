@@ -14,14 +14,17 @@ module.exports = class extends Base {
     const categorys = await this.getCategory();
 
     // 当前栏目
-    const { category, seo } = this.getListInfo(id, categorys, configs);
-    if (think.isEmpty(category)) {
+    let findCategory = {};
+    if (!think.isEmpty(id)) {
+      findCategory = categorys.find(item => item.id === +id);
+    }
+    if (think.isEmpty(findCategory)) {
       return this.ctx.throw(404);
     }
 
     // 当前列表
     const { list_bangumi: pageSize } = configs;
-    const childCategories = await this.model('category').findChildCategory(categorys, category.id);
+    const childCategories = await this.model('category').findChildCategory(categorys, findCategory.id);
     const query = {
       ...req,
       pageSize,
@@ -38,36 +41,27 @@ module.exports = class extends Base {
       item.tag = tag ? tag.split('|') : [];
     });
 
-    return this.success({
-      seo,
-      category,
-      list
-    });
+    return this.success(list);
   }
 
   async detailAction() {
     const { id } = this.get();
-    if (!think.isInt(+id)) {
+    if (!think.isInt(id)) {
       return this.ctx.throw(404);
     }
 
     const data = await this.modelInstance
-      .where({ id, is_recycle: 0 })
+      .where({
+        id,
+        is_recycle: 0,
+        is_show: 1
+      })
       .find();
 
-    if (think.isEmpty(data) || data.is_show === 0) {
+    if (think.isEmpty(data)) {
       return this.ctx.throw(404);
     }
 
-    const configs = await this.getConfigs();
-    const categorys = await this.getCategory();
-
-    const { category, seo } = this.getDetailInfo(data, categorys, configs);
-
-    return this.success({
-      seo,
-      category,
-      content: data
-    });
+    return this.success(data);
   }
 };

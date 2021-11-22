@@ -40,7 +40,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import Comment from '#/components/Comment'
 
 export default {
@@ -51,11 +50,8 @@ export default {
     const linkList = await $axios.$get('/link')
     return { linkList }
   },
-  computed: {
-    ...mapGetters(['configs'])
-  },
   head() {
-    const { sitename, keywords, description } = this.configs
+    const { sitename, keywords, description } = this.$store.getters.configs
     return {
       title: `友情链接 - ${sitename}`,
       meta: [

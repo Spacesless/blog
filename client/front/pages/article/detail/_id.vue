@@ -37,6 +37,7 @@ import Catalog from '@/components/Catalog'
 import Comment from '#/components/Comment'
 import ImageViewer from '@/components/ImageViewer'
 import Share from '@/components/Share'
+import { pageMeta } from '@/mixins'
 
 export default {
   name: 'BlogConent',
@@ -46,16 +47,17 @@ export default {
     ImageViewer,
     Share
   },
+  mixins: [pageMeta],
   async asyncData({ params, $axios }) {
     const id = params.id
-    const { seo, content: data } = await $axios.$get('/article/detail', {
+    const data = await $axios.$get('/article/detail', {
       params: { id }
     })
-    return { id, seo, data }
+    return { data }
   },
   data() {
     return {
-      id: 0,
+      pageType: 'detail',
       isLoaded: false
     }
   },
@@ -121,15 +123,6 @@ export default {
       this.$axios.$get('/article/access', {
         params: { id: this.id }
       })
-    }
-  },
-  head() {
-    return {
-      title: this.seo.title,
-      meta: [
-        { hid: 'description', name: 'description', content: this.seo.description },
-        { hid: 'keyword', name: 'keyword', content: this.seo.keyword }
-      ]
     }
   }
 }

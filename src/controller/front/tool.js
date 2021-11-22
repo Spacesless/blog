@@ -12,18 +12,10 @@ module.exports = class extends Base {
       return this.ctx.throw(404);
     }
 
-    // meta信息
-    const configs = await this.getConfigs();
-    const { seo } = this.getListInfo(findCategory.id, categorys, configs);
-
     // webapp列表
     const list = categorys.filter(item => item.type === 'tool' && item.level !== 1);
-    const webapps = this.model('category').formatCategoryUrl(list);
 
-    return this.success({
-      seo,
-      list: webapps
-    });
+    return this.success(list);
   }
 
   async contentAction() {
@@ -37,15 +29,9 @@ module.exports = class extends Base {
       return this.ctx.throw(404);
     }
 
-    const configs = await this.getConfigs();
-    const { seo } = this.getListInfo(findCategory.id, categorys, configs);
-
     const data = findCategory;
 
-    return this.success({
-      seo,
-      data
-    });
+    return this.success(data);
   }
 
   async paramsAction() {

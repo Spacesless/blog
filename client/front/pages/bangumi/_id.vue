@@ -106,19 +106,19 @@
 
 <script>
 import Pagination from '#/components/Pagination'
-import { listQuery, listPage } from '@/mixins'
+import { pageMata, listQuery, listPage } from '@/mixins'
 import { getAbsolutePath } from '#/utils'
 
 export default {
   components: {
     Pagination
   },
-  mixins: [listQuery, listPage],
+  mixins: [pageMata, listQuery, listPage],
   async asyncData({ app, params, query, $axios }) {
     const paramId = params.id
     const [id, page] = paramId ? paramId.split('-') : []
     const { sortBy, orderBy, status, progress, tags } = query
-    const { seo, list } = await $axios.$get('/bangumi/list', {
+    const list = await $axios.$get('/bangumi/list', {
       params: {
         id: id === 'list' ? null : id,
         page,
@@ -130,7 +130,6 @@ export default {
       }
     })
     return {
-      seo,
       listPage: {
         page: +page || 1,
         pageSize: list.pageSize
@@ -153,15 +152,6 @@ export default {
     },
     configs() {
       return this.$store.getters.configs
-    }
-  },
-  head() {
-    return {
-      title: this.seo.title,
-      meta: [
-        { hid: 'description', name: 'description', content: this.seo.description },
-        { hid: 'keyword', name: 'keyword', content: this.seo.keyword }
-      ]
     }
   },
   watchQuery: ['sortBy', 'orderBy', 'status', 'progress', 'tags']

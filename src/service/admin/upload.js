@@ -28,15 +28,15 @@ module.exports = class extends think.Service {
   async upload(file) {
     const ext = /^\.\w+$/.test(path.extname(file.path)) ? path.extname(file.path) : '.png';
     // 文件命名16位MD5后的通用唯一识别码(think.md5是32位~太长)
-    let basename = think.md5(think.uuid('v4')).substr(8, 16) + ext;
-    // 过滤 ../../
-    basename = basename.replace(/[\\/]/g, '');
+    const basename = think.md5(think.uuid('v4')).substr(8, 16) + ext;
 
     const destDir = this.getYearMonth();
     const destPath = path.join(think.UPLOAD_PATH, destDir);
-    await fs.ensureDir(destPath); // 如果目录结构不存在，则创建它，如果目录存在，则不进行创建
 
     try {
+      // 如果目录结构不存在，则创建它，如果目录存在，则不进行创建
+      await fs.ensureDir(destPath);
+
       // 上传文件路径
       const filepath = path.join(destPath, basename);
       await fs.move(file.path, filepath, { overwrite: true });
@@ -83,27 +83,33 @@ module.exports = class extends think.Service {
           });
           const extname = path.extname(item).replace('.', '');
           const isImage = /(gif|jpe?g|png|webp|tiff|bmp|ico)$/i.test(extname);
+
           // 获取图片宽、高元数据
           let metadata = {};
           if (isImage) {
             const { width, height } = await sharpService.getMetadata(itempath);
             metadata = { width, height };
           }
+
           list.push({
-            name: item,
-            url: url.resolve(this.siteurl, itempath.replace(think.RESOURCE_PATH, '')),
-            type: isImage ? 2 : 3,
+            ...metadata,
             extname,
             size,
             mtime,
-            ...metadata
+            name: item,
+            url: url.resolve(this.siteurl, itempath.replace(think.RESOURCE_PATH, '')),
+            type: isImage ? 2 : 3
           });
         }
       }
+
       if (keyword) list = list.filter(item => item.name.includes(keyword));
+
       // 目录排前面
       list.sort((a, b) => {
-        if (a.type === b.type) return a.name - b.name;
+        if (a.type === b.type) {
+          return a.name - b.name;
+        }
         return a.type - b.type;
       });
       list = list.slice((page - 1) * pageSize, page * pageSize);

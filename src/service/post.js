@@ -25,19 +25,16 @@ module.exports = class extends think.Service {
     if (!this.configs) {
       this.configs = await this.model('config').getCacheConfig();
     }
-    const {
-      image_fit: fit,
-      article_width: articleWidth,
-      article_height: articleHeight,
-      bangumi_width: bangumiWidth,
-      bangumi_height: bangumiHeight
-    } = this.configs;
-    const width = this.thumbnailType === 'article' ? articleWidth : bangumiWidth;
-    const height = this.thumbnailType === 'bangumi' ? articleHeight : bangumiHeight;
+    const { image_fit: fit } = this.configs;
 
     for (const item of list) {
       const src = item.imgurl;
-      const dest = this.getThumbnail(src, width, height, fit);
+      const dest = this.getThumbnail({
+        src,
+        fit,
+        width: this.configs[this.thumbnailType + '_width'],
+        height: this.configs[this.thumbnailType + '_height']
+      });
       item.imgurl = dest;
 
       typeof predicate === 'function' && predicate(item);
@@ -54,11 +51,12 @@ module.exports = class extends think.Service {
   /**
    * 获取缩略图
    * @param {String} src 原图地址
-   * @param {Number} width 目标图片宽度.
+   * @param {Number} width 目标图片宽度
    * @param {Number} height 目标图片高度
+   * @param {Boolean} isAsync 是否并行处理图片
    * @returns {String}
    */
-  getThumbnail(src, width, height, fit) {
+  async getThumbnail({ src, width, height, fit, isAsync = true }) {
     // 图片地址或宽高未提供
     if (think.isEmpty(src) || (!width && !height)) {
       return '';
@@ -82,7 +80,11 @@ module.exports = class extends think.Service {
         dest,
         destAbsolutePath
       });
-      this.promiseList.push(step);
+      if (isAsync) {
+        this.promiseList.push(step);
+      } else {
+        await step();
+      }
     }
 
     return dest;

@@ -3,34 +3,14 @@ const moment = require('moment');
 
 module.exports = class extends Base {
   async indexAction() {
-    const { topic_id: topicId, page, pageSize } = this.get();
-    // 查询主评论
-    const field = 'id,topic_id,parent_id,reply_name,type,name,email,website,content,addtime,is_admin';
-    const list = await this.model('comment')
-      .field(field)
-      .where({ topic_id: topicId, type: 1, is_show: 1 })
-      .order('addtime DESC')
-      .page(page, pageSize)
-      .select();
-    // 查询回复
-    const parentIds = list.map(item => item.id);
-    let replyList = [];
-    if (parentIds.length) {
-      replyList = await this.model('comment')
-        .field(field)
-        .where({
-          is_show: 1,
-          parent_id: ['IN', parentIds]
-        })
-        .order('addtime DESC')
-        .select();
-    }
+    const req = this.get();
 
-    const allComment = [...list, ...replyList];
-    const treeData = this.convertToTree(allComment);
+    const list = await this.model('front/comment').selectComment(req);
+
+    const treeData = this.convertToTree(list);
 
     return this.success({
-      total: allComment.length,
+      total: list.length,
       data: treeData
     });
   }
@@ -43,10 +23,10 @@ module.exports = class extends Base {
    * 基于 IP 的发布评论频率限制
    */
   async postAction() {
+    const data = this.post();
+
     let IP = this.ctx.ip;
     IP = IP.indexOf('::ffff:') === 0 ? IP.substring(7) : IP;
-
-    const data = this.post();
 
     // 重复内容检测
     const commentList = await this.model('comment')
@@ -66,10 +46,14 @@ module.exports = class extends Base {
 
     data.addtime = moment().format('YYYY-MM-DD HH:mm:ss');
     data.ip = IP;
-    const result = await this.model('comment')
+
+    const insertId = await this.model('comment')
       .add(data);
 
-    if (result) return this.success();
-    else return this.fail('遇到一个无法处理的问题');
+    if (insertId) {
+      return this.success();
+    } else {
+      return this.fail('遇到一个无法处理的问题');
+    }
   }
 };

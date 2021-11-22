@@ -36,8 +36,10 @@
 <script>
 export default {
   async asyncData({ params, query, $axios }) {
-    const { seo, list } = await $axios.$get('/tool/list')
-    return { seo, webappList: list }
+    const list = await $axios.$get('/tool/list')
+    return {
+      webappList: list
+    }
   },
   data() {
     return {

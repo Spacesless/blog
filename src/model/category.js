@@ -19,55 +19,54 @@ module.exports = class extends think.Model {
 
   /**
    * 格式化导航菜单地址
-   * @param {Array} categorys
+   * @param {Array} categoryList
    */
-  formatCategoryUrl(categorys) {
-    categorys.forEach(item => {
+  formatCategoryUrl(categoryList) {
+    categoryList.forEach(item => {
       const { id, filename, type } = item;
       let path;
       if (think.isEmpty(filename)) {
         switch (type) {
-          case 'about':
-          case 'link':
-          case 'tool':
+          case 'show':
             path = '';
             break;
           default:
             path = id;
         }
       } else {
-        path = `${filename}`;
+        path = filename ? `/${filename}` : '';
       }
-      item.url = `/${type}/${path}`;
+      item.url = '/' + type + path;
     });
-    return categorys;
+    return categoryList;
   }
 
   /**
    * 获取指定栏目以及它所有子栏目id
-   * @param {Array} categorys 栏目数组
+   * @param {Array} categoryList 栏目数组
    * @param {Number [int]} id 指定栏目id
    * @returns {Array} 指定栏目id以及它所有子栏目id的数组
    */
-  async findChildCategory(categorys, id) {
-    const flattenCategory = this.flattenDeep(categorys, [id]);
+  async findChildCategory(categoryList, id) {
+    if (!id) return [];
+    const flattenCategory = this.flattenDeep(categoryList, [id]);
     const findCategory = Array.from(new Set(flattenCategory));
     return findCategory;
   }
 
   /**
-   * 递归查找符合条件的栏目一级它的子栏目
-   * @param {Array} categorys 栏目数组
+   * 递归查找符合条件的栏目以及它的子栏目
+   * @param {Array} categoryList 栏目数组
    * @param {Array} predicate 查找条件
    * @param {Array} target 目标数组
    */
-  flattenDeep(categorys, predicate, target = []) {
-    const findCategory = categorys.filter(item => predicate.includes(item.id));
-    const childrenCategory = categorys.filter(item => predicate.includes(item.parent_id));
+  flattenDeep(categoryList, predicate, target = []) {
+    const findCategory = categoryList.filter(item => predicate.includes(item.id));
+    const childrenCategory = categoryList.filter(item => predicate.includes(item.parent_id));
     target = [...target, ...findCategory, ...childrenCategory];
 
     if (childrenCategory.length) {
-      return this.flattenDeep(categorys, childrenCategory, target);
+      return this.flattenDeep(categoryList, childrenCategory, target);
     } else {
       return target.map(item => item.id);
     }

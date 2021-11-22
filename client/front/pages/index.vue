@@ -100,8 +100,8 @@ import { debounce } from '@/utils'
 
 export default {
   async asyncData({ $axios }) {
-    const { seo, bannerList, articleList, bangumiList } = await $axios.$get('/index')
-    return { seo, bannerList, articleList, bangumiList }
+    const { bannerList, articleList, bangumiList } = await $axios.$get('/index')
+    return { bannerList, articleList, bangumiList }
   },
   data() {
     return {
@@ -139,11 +139,12 @@ export default {
     }
   },
   head() {
+    const { sitename, keywords, description } = this.$store.getters.configs
     return {
-      title: this.seo.title,
+      title: sitename,
       meta: [
-        { hid: 'description', name: 'description', content: this.seo.description },
-        { hid: 'keyword', name: 'keyword', content: this.seo.keyword }
+        { hid: 'description', name: 'description', content: description },
+        { hid: 'keyword', name: 'keyword', content: keywords }
       ]
     }
   }

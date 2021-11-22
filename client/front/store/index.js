@@ -1,12 +1,12 @@
 const state = () => ({
-  menus: [],
+  categories: [],
   configs: {},
   device: 'desktop'
 })
 
 const mutations = {
-  SET_MENUS: (state, menus) => {
-    state.menus = menus
+  SET_CATEGORY: (state, categories) => {
+    state.categories = categories
   },
   SET_CONFIGS: (state, configs) => {
     state.configs = configs
@@ -19,8 +19,8 @@ const mutations = {
 const actions = {
   async nuxtServerInit({ commit }, { req, $axios }) {
     // 获取菜单以及系统配置
-    const { navigation, configs } = await $axios.$get(`/general`)
-    commit('SET_MENUS', navigation)
+    const { categoryList, configs } = await $axios.$get(`/general`)
+    commit('SET_CATEGORY', categoryList)
     commit('SET_CONFIGS', configs)
   },
   toggleDevice({ commit }, device) {

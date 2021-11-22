@@ -1,5 +1,5 @@
 const getters = {
-  menus: state => state.menus,
+  categories: state => state.categories,
   configs: state => state.configs,
   device: state => state.device,
   sidebar: state => state.tools.sidebar,

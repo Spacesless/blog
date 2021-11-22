@@ -139,3 +139,26 @@ export function getAbsolutePath(url) {
   const isDev = process.env.NODE_ENV === 'development'
   return isDev ? url : `${url ? '//cdn.timelessq.com' + url : ''}`
 }
+
+/**
+   * 二维数组转树形数组
+   * @param {Array} data 原二维数组
+   * @param {Number} parent_id 父节点id
+   * @returns {Array} 树形数组 [{id:1,children:[{id:2},{id:3,children:[{id:4}]}]}]
+   */
+export function convertToTree(data, key = 'parent_id', value = 0) {
+  data = JSON.parse(JSON.stringify(data))
+  const tree = []
+  let temp
+  for (let i = 0; i < data.length; i++) {
+    const item = data[i]
+    if (item[key] === value) {
+      temp = this.convertToTree(data, key, item.id)
+      if (temp.length > 0) {
+        item.children = temp
+      }
+      tree.push(item)
+    }
+  }
+  return tree
+}
