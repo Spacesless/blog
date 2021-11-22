@@ -1,6 +1,6 @@
 const adminConfig = require('./config/nuxt.admin.js')
-const webConfig = require('./config/nuxt.web.js')
+const frontConfig = require('./config/nuxt.front.js')
 
 const isAdmin = process.argv.includes('--admin')
 
-module.exports = isAdmin ? adminConfig : webConfig
+module.exports = isAdmin ? adminConfig : frontConfig

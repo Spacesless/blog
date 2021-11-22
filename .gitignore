@@ -29,7 +29,7 @@ package-lock.json
 runtime/
 config/adapter.model.js
 www/admin
-www/web
+www/front
 www/upload
 
 config.development.js

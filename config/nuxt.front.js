@@ -2,7 +2,7 @@ const path = require('path')
 const CompressionPlugin = require('compression-webpack-plugin')
 
 const isPro = process.env.NODE_ENV === 'production'
-const srcDir = 'client/web/'
+const srcDir = 'client/front/'
 
 function resolve(dir) {
   return path.join(__dirname, '../', srcDir, dir)
@@ -52,9 +52,9 @@ module.exports = {
         threshold: 10240 // 大于10kb的会压缩，默认为0
       })
     ],
-    publicPath: '//cdn.timelessq.com/web/dist/client' // 只需将www/web上传cdn
+    publicPath: '//cdn.timelessq.com/front/dist/client' // 只需将www/front上传cdn
   },
-  buildDir: 'www/web',
+  buildDir: 'www/front',
   css: [
     '@/styles/global.scss'
   ],

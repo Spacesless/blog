@@ -45,13 +45,9 @@ const middleware = [
     handle: nuxt,
     enable: !process.argv.includes('--api'), // 如果node进程参数中存在--api，表示只运行api不需要nuxt中间件
     match: ctx => {
-      const unless = [/^\/admin?/, /^\/web?/, 'sitemap', 'rss'];
+      const unless = [/^\/admin?/, /^\/front?/, 'sitemap', 'rss'];
       for (const item of unless) {
-        if (ctx.url.match(item)) {
-          return false;
-        } else {
-          return true;
-        }
+        return !ctx.url.match(item);
       }
     },
     options: {
