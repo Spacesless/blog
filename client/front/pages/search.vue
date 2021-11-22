@@ -170,8 +170,7 @@ export default {
       padding: 10px 15px;
       border-top: 1px solid var(--border-color);
     }
-    em{
-      padding: 0 5px;
+    ::v-deep em{
       color: #f56c6c;
     }
     &__thumb{

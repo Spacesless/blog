@@ -34,20 +34,11 @@
 </template>
 
 <script>
+import { pageMeta } from '@/mixins'
+
 export default {
   layout: 'app',
-  async asyncData({ app, route, $axios }) {
-    const filename = route.path.split('/')
-    const { seo, data } = await $axios.$get('/tool/content', {
-      params: {
-        path: filename[filename.length - 1] || 'track'
-      }
-    })
-    return {
-      seo,
-      content: data
-    }
-  },
+  mixins: [pageMeta],
   data() {
     return {
       tourTree: [],
@@ -89,7 +80,7 @@ export default {
       this.fetchLoading = true
       await this.$axios.$get('/tool/params', {
         params: {
-          id: this.content.id
+          id: this.findCategory.id
         }
       }).then(res => {
         const treeData = JSON.parse(JSON.stringify(res))
@@ -264,10 +255,10 @@ export default {
   },
   head() {
     return {
-      title: this.seo.title,
+      title: this.meta.title,
       meta: [
-        { hid: 'description', name: 'description', content: this.seo.description },
-        { hid: 'keyword', name: 'keyword', content: this.seo.keyword }
+        { hid: 'description', name: 'description', content: this.meta.description },
+        { hid: 'keyword', name: 'keyword', content: this.meta.keywords }
       ],
       script: [
         {

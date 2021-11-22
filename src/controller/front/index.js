@@ -1,16 +1,16 @@
 const Base = require('./base.js');
 
 module.exports = class extends Base {
-  constructor() {
-    super();
+  constructor(...arg) {
+    super(...arg);
     this.modelInstance = this.model('front/index');
   }
 
   async indexAction() {
     const configs = await this.getConfigs();
     const {
-      article_num: articleNum,
-      bangumi_num: bangumiNum
+      home_article_num: articleNum,
+      home_bangumi_num: bangumiNum
     } = configs;
 
     // 正在做 banner

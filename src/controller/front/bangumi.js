@@ -17,9 +17,9 @@ module.exports = class extends Base {
     let findCategory = {};
     if (!think.isEmpty(id)) {
       findCategory = categorys.find(item => item.id === +id);
-    }
-    if (think.isEmpty(findCategory)) {
-      return this.ctx.throw(404);
+      if (!findCategory) {
+        return this.ctx.throw(404);
+      }
     }
 
     // 当前列表
@@ -46,7 +46,7 @@ module.exports = class extends Base {
 
   async detailAction() {
     const { id } = this.get();
-    if (!think.isInt(id)) {
+    if (!think.isInt(+id)) {
       return this.ctx.throw(404);
     }
 

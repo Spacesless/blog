@@ -17,9 +17,9 @@ module.exports = class extends Base {
     let findCategory = {};
     if (!think.isEmpty(id)) {
       findCategory = categorys.find(item => item.id === +id);
-    }
-    if (think.isEmpty(findCategory)) {
-      return this.ctx.throw(404);
+      if (!findCategory) {
+        return this.ctx.throw(404);
+      }
     }
 
     // 当前列表
@@ -46,7 +46,7 @@ module.exports = class extends Base {
 
   async detailAction() {
     const { id } = this.get();
-    if (!think.isInt(id)) {
+    if (!think.isInt(+id)) {
       return this.ctx.throw(404);
     }
 
@@ -65,13 +65,14 @@ module.exports = class extends Base {
     const configs = await this.getConfigs();
     const { article_width: width, article_height: height, image_fit: fit } = configs;
     const postService = this.service('post', 'article');
-    data.imgurl = await postService.getThumbnail({
+    const imgurl = await postService.getThumbnail({
       width,
       height,
       fit,
       src: data.imgurl,
       isAsync: false
     });
+    data.imgurl = this.getAbsolutePath(imgurl);
     data.content = await this.formatContent(data.content);
 
     return this.success(data);

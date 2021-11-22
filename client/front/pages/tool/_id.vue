@@ -34,7 +34,10 @@
 </template>
 
 <script>
+import { pageMeta } from '@/mixins'
+
 export default {
+  mixins: [pageMeta],
   async asyncData({ params, query, $axios }) {
     const list = await $axios.$get('/tool/list')
     return {
@@ -43,6 +46,7 @@ export default {
   },
   data() {
     return {
+      pageType: 'list',
       externalApp: [],
       internalApp: []
     }
@@ -56,15 +60,6 @@ export default {
         })
       },
       immediate: true
-    }
-  },
-  head() {
-    return {
-      title: this.seo.title,
-      meta: [
-        { hid: 'description', name: 'description', content: this.seo.description },
-        { hid: 'keyword', name: 'keyword', content: this.seo.keyword }
-      ]
     }
   }
 }

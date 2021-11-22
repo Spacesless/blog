@@ -29,7 +29,7 @@ module.exports = class extends think.Service {
 
     for (const item of list) {
       const src = item.imgurl;
-      const dest = this.getThumbnail({
+      const dest = await this.getThumbnail({
         src,
         fit,
         width: this.configs[this.thumbnailType + '_width'],
@@ -66,6 +66,10 @@ module.exports = class extends think.Service {
     const fileSourceName = path.basename(src, path.extname(src));
     const dest = `${destDirname}/${fileSourceName}-w${width}-h${height}.jpg`;
 
+    if (!this.thumbnailCache) {
+      const cache = await think.cache('thumbnail');
+      this.thumbnailCache = cache || {};
+    }
     // 如果命中缓存则直接返回
     if (this.thumbnailCache[dest]) return dest;
 

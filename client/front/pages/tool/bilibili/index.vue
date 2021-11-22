@@ -48,6 +48,7 @@
 <script>
 import FavoriteList from './components/-favorite-list'
 import FollowList from './components/-follow-list'
+import { pageMeta } from '@/mixins'
 
 const mid = 315883644
 const apiurl = 'https://api.timelessq.com/bilibili'
@@ -58,17 +59,7 @@ export default {
     FavoriteList,
     FollowList
   },
-  async asyncData({ app, route, $axios }) {
-    const filename = route.path.split('/')
-    const { seo } = await $axios.$get('/tool/content', {
-      params: {
-        path: filename[filename.length - 1] || 'bilibili'
-      }
-    })
-    return {
-      seo
-    }
-  },
+  mixins: [pageMeta],
   data() {
     return {
       userInfo: {},
@@ -117,15 +108,6 @@ export default {
     },
     handleViewFollow() {
       this.listType = 'follow'
-    }
-  },
-  head() {
-    return {
-      title: this.seo.title,
-      meta: [
-        { hid: 'description', name: 'description', content: this.seo.description },
-        { hid: 'keyword', name: 'keyword', content: this.seo.keyword }
-      ]
     }
   }
 }

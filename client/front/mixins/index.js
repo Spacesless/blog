@@ -80,23 +80,23 @@ export const pageMeta = {
     }
   },
   computed: {
-    ...mapGetters(['menus', 'configs']),
+    ...mapGetters(['categories', 'configs']),
     findCategory() {
       const { path, params } = this.$route
       let result
       switch (this.pageType) {
         case 'list': {
-          const [id] = params.id ? params.id.split('-') : []
-          result = id && this.menus.find(item => item.id === +id)
+          const [id] = params?.id?.split('-') || []
+          result = id && this.categories.find(item => item.id === +id)
           break
         }
         case 'detail': {
           const categoryId = this.data.category_id
-          result = this.menus.find(item => item.id === categoryId)
+          result = this.categories.find(item => item.id === categoryId)
           break
         }
         default:
-          result = this.menus.find(item => path.includes(item.pathname))
+          result = this.categories.find(item => item.filename && path.includes(item.filename))
           break
       }
       return result || {}

@@ -9,6 +9,7 @@
 
 <script>
 import axios from 'axios'
+import { pageMeta } from '@/mixins'
 
 const totalPaint = 4380
 const partCount = 400
@@ -16,18 +17,7 @@ const maxPart = Math.ceil(totalPaint / partCount)
 
 export default {
   layout: 'app',
-  async asyncData({ app, route, $axios }) {
-    const filename = route.path.split('/')
-    const { seo } = await $axios.$get('/tool/content', {
-      params: {
-        path: filename[filename.length - 1] || 'bad-apple'
-      }
-    })
-
-    return {
-      seo
-    }
-  },
+  mixins: [pageMeta],
   data() {
     return {
       index: 0,
@@ -137,15 +127,6 @@ export default {
         this.index = 0
         this.fileIndex = 1
       })
-    }
-  },
-  head() {
-    return {
-      title: this.seo.title,
-      meta: [
-        { hid: 'description', name: 'description', content: this.seo.description },
-        { hid: 'keyword', name: 'keyword', content: this.seo.keyword }
-      ]
     }
   }
 }

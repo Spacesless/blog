@@ -15,16 +15,16 @@ module.exports = class extends think.Controller {
    * 获取系统配置
    * @returns {Object}
    */
-  async getConfigs() {
-    await this.model('config').getCacheConfig();
+  getConfigs() {
+    return this.model('config').getCacheConfig();
   }
 
   /**
    * 获取导航菜单数据
    * @returns {Array}
    */
-  async getCategory() {
-    await this.model('category').getCacheCategory();
+  getCategory() {
+    return this.model('category').getCacheCategory();
   }
 
   /**

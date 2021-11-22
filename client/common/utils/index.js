@@ -153,7 +153,7 @@ export function convertToTree(data, key = 'parent_id', value = 0) {
   for (let i = 0; i < data.length; i++) {
     const item = data[i]
     if (item[key] === value) {
-      temp = this.convertToTree(data, key, item.id)
+      temp = convertToTree(data, key, item.id)
       if (temp.length > 0) {
         item.children = temp
       }

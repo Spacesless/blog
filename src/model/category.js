@@ -23,20 +23,17 @@ module.exports = class extends think.Model {
    */
   formatCategoryUrl(categoryList) {
     categoryList.forEach(item => {
-      const { id, filename, type } = item;
-      let path;
-      if (think.isEmpty(filename)) {
-        switch (type) {
-          case 'show':
-            path = '';
-            break;
-          default:
-            path = id;
-        }
-      } else {
-        path = filename ? `/${filename}` : '';
+      const { id, filename, type, level } = item;
+      switch (type) {
+        case 'page':
+          item.url = `/${filename || type}`;
+          break;
+        case 'tool':
+          item.url = level === 1 ? `/${type}/${id}` : `/${type}/${filename}`;
+          break;
+        default:
+          item.url = `/${type}/${id}`;
       }
-      item.url = '/' + type + path;
     });
     return categoryList;
   }

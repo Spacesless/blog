@@ -2,7 +2,7 @@ const isDev = process.env.NODE_ENV === 'development'
 
 export default function({ store, app: { $axios }}) {
   // url = base url + request url
-  $axios.defaults.baseURL = isDev ? 'http://127.0.0.1:8360/web' : 'https://www.timelessq.com/web'
+  $axios.defaults.baseURL = isDev ? 'http://127.0.0.1:8360/front' : 'https://www.timelessq.com/front'
   // request timeout
   $axios.defaults.timeout = 15000
 

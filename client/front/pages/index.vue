@@ -37,10 +37,10 @@
             </p>
             <div class="article-meta">
               <span class="article-meta__date"><i class="tl-icon">&#xe70b;</i>{{ item.updatetime | parseTime('{y}-{m}-{d}') }}</span>
-              <span class="article-meta__cate">
+              <!-- <span class="article-meta__cate">
                 <i class="tl-icon">&#xe668;</i>
                 <nuxt-link :to="item.column.url" :title="item.column.name">{{ item.column.name }}</nuxt-link>
-              </span>
+              </span> -->
               <span class="article-meta__view"><i class="tl-icon">&#xe681;</i>{{ item.hits }}</span>
             </div>
             <div class="article-desc">

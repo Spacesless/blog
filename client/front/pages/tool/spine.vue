@@ -32,21 +32,10 @@
 
 <script>
 import { spine } from '@/vendor/spine-ts/spine-webgl.js'
+import { pageMeta } from '@/mixins'
 
 export default {
-  async asyncData({ app, route, $axios }) {
-    const filename = route.path.split('/')
-    const { seo, data } = await $axios.$get('/tool/content', {
-      params: {
-        path: filename[filename.length - 1] || 'live2d'
-      }
-    })
-
-    return {
-      seo,
-      content: data
-    }
-  },
+  mixins: [pageMeta],
   data() {
     return {
       seleteSkeleton: 'lafei_4',
@@ -69,7 +58,7 @@ export default {
     fetchParams() {
       return this.$axios.$get('/tool/params', {
         params: {
-          id: this.content.id
+          id: this.findCategory.id
         }
       }).then(({ seleteSkeleton, selectAnimation }) => {
         this.seleteSkeleton = seleteSkeleton || 'lafei_4'
@@ -271,15 +260,6 @@ export default {
       } else {
         this.filterOptions = this.skelOptions
       }
-    }
-  },
-  head() {
-    return {
-      title: this.seo.title,
-      meta: [
-        { hid: 'description', name: 'description', content: this.seo.description },
-        { hid: 'keyword', name: 'keyword', content: this.seo.keyword }
-      ]
     }
   },
   layout: 'app'

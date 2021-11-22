@@ -36,6 +36,7 @@ import Sidebar from './components/-sidebar'
 import Header from './components/-header'
 import Main from './components/-main'
 import Player from './components/-player'
+import { pageMeta } from '@/mixins'
 
 const apiUrl = '//api.timelessq.com/music'
 const tencentUid = 804093032
@@ -49,17 +50,7 @@ export default {
     Main,
     Player
   },
-  async asyncData({ app, route, $axios }) {
-    const filename = route.path.split('/')
-    const { seo } = await $axios.$get('/tool/content', {
-      params: {
-        path: filename[filename.length - 1] || 'music'
-      }
-    })
-    return {
-      seo
-    }
-  },
+  mixins: [pageMeta],
   data() {
     return {
       platform: 'tencent', // tencent, netease
@@ -209,15 +200,6 @@ export default {
           this.isNoneMore = true
         }
       })
-    }
-  },
-  head() {
-    return {
-      title: this.seo.title,
-      meta: [
-        { hid: 'description', name: 'description', content: this.seo.description },
-        { hid: 'keyword', name: 'keyword', content: this.seo.keyword }
-      ]
     }
   },
   layout: 'app'

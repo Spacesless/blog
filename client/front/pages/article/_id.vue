@@ -85,7 +85,7 @@
 
 <script>
 import Pagination from '#/components/Pagination'
-import { pageMata, listQuery, listPage } from '@/mixins'
+import { pageMeta, listQuery, listPage } from '@/mixins'
 import { getAbsolutePath } from '#/utils'
 
 export default {
@@ -102,7 +102,7 @@ export default {
       return `${monthEnum[month]}月 ${date}, ${year}`
     }
   },
-  mixins: [pageMata, listQuery, listPage],
+  mixins: [pageMeta, listQuery, listPage],
   async asyncData({ app, params, query, $axios }) {
     const paramId = params.id
     const [id, page] = paramId ? paramId.split('-') : []
@@ -129,6 +129,11 @@ export default {
         tags: tags || ''
       },
       dynamicTags: tags ? tags.split(',') : []
+    }
+  },
+  data() {
+    return {
+      pageType: 'list'
     }
   },
   computed: {
