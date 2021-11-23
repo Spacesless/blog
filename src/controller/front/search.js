@@ -31,11 +31,12 @@ module.exports = class extends Base {
 
         const width = configs[type + '_width'];
         const height = configs[type + '_height'];
+        const thumbnail = await postService.getThumbnail(imgurl, width, height, configs.image_fit);
         Object.assign(element, {
           type,
           title: targetTitle,
           content: targetContent,
-          imgurl: await postService.getThumbnail(imgurl, width, height, configs.image_fit)
+          imgurl: this.getAbsolutePath(thumbnail)
         });
       }
 

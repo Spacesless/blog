@@ -28,8 +28,8 @@ package-lock.json
 # other ignore file
 runtime/
 config/adapter.model.js
-www/admin
-www/front
+www/nuxt-admin
+www/nuxt-front
 www/upload
 
 config.development.js

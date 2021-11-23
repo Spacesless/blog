@@ -64,7 +64,7 @@ import { mapGetters } from 'vuex'
 import MoveCategory from './components/MoveCategory'
 import elHeightAdaptiveTable from '#/directive/el-table'
 import { crud, listDialog } from '@/mixins'
-import { formatCategory } from '@/utils'
+import { convertToTree } from '#/utils'
 import typeOptions from './modules'
 
 export default {
@@ -104,8 +104,8 @@ export default {
     async fetchList() {
       this.listLoading = true
       await this.$store.dispatch('list/getCategory').catch(() => {})
-      const category = formatCategory(this.categories)
-      this.categoryList = JSON.parse(JSON.stringify(category))
+      const categoryTree = convertToTree(this.categories)
+      this.categoryList = JSON.parse(JSON.stringify(categoryTree))
       this.listLoading = false
     },
     handleAdd() {

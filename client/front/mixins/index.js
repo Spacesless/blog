@@ -128,5 +128,17 @@ export const pageMeta = {
         { hid: 'keyword', name: 'keyword', content: this.meta.keyword }
       ]
     }
+  },
+  mounted() {
+    if (this.pageType === 'detail') {
+      this.setActiveMenu()
+    }
+  },
+  methods: {
+    setActiveMenu() {
+      const { id, type } = this.findCategory
+      const activeMenu = id ? `/${type}/${id}` : ''
+      this.$store.commit('SET_ACTIVE_MENU', activeMenu)
+    }
   }
 }

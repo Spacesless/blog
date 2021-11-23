@@ -10,6 +10,7 @@
       @submit.native.prevent
     >
       <h1 class="login-form__title">Welcome Home</h1>
+
       <el-form-item prop="username">
         <span class="login-form-label">
           <i class="el-icon-user" />
@@ -67,6 +68,8 @@
         @click="handleLogin"
       >{{ loginLoading ? '登录中' : '登录' }}</el-button>
     </el-form>
+
+    <p class="login__copyright">Copyright © 2021 Timeless自个出品</p>
   </div>
 </template>
 
@@ -125,7 +128,8 @@ export default {
       const svgOptions = {
         width: 150,
         height: 38,
-        fontSize: 50
+        fontSize: 50,
+        background: '#ecf5ff'
       }
       this.captchaLoading = true
       await this.$api.common.GetCaptcha(svgOptions).then(response => {
@@ -155,16 +159,16 @@ export default {
   top: 0;
   width: 100%;
   height: 100%;
-  background: url(~@/assets/login-background.svg) no-repeat center;
+  background: url(~@/assets/login-background.jpg) no-repeat center;
   background-size: cover;
   &-form{
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 380px;
+    width: 360px;
     height: 350px;
     margin-top: -210px;
-    margin-left: -190px;
+    margin-left: -180px;
     @media (max-width: 576px){
       width: 100%;
       padding: 0 20px;
@@ -172,6 +176,7 @@ export default {
       margin-left: 0;
     }
     .el-input{
+      box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
       ::v-deep input{
         padding-left: 40px;
         &:focus{
@@ -226,6 +231,7 @@ export default {
     }
     &-submit{
       width: 100%;
+      box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
     }
   }
   .show-pwd {
@@ -236,6 +242,14 @@ export default {
     font-size: 14px;
     cursor: pointer;
     user-select: none;
+  }
+  &__copyright{
+    position: fixed;
+    bottom: 16px;
+    width: 100%;
+    color: rgba(0,0,0,.45);
+    font-size: 14px;
+    text-align: center;
   }
 }
 </style>

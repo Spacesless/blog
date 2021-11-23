@@ -1,12 +1,16 @@
 const state = () => ({
   categories: [],
   configs: {},
-  device: 'desktop'
+  device: 'desktop',
+  activeMenu: ''
 })
 
 const mutations = {
   SET_CATEGORY: (state, categories) => {
     state.categories = categories
+  },
+  SET_ACTIVE_MENU: (state, activeMenu) => {
+    state.activeMenu = activeMenu
   },
   SET_CONFIGS: (state, configs) => {
     state.configs = configs

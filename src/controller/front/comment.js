@@ -7,11 +7,9 @@ module.exports = class extends Base {
 
     const list = await this.model('front/comment').selectComment(req);
 
-    const treeData = this.convertToTree(list);
-
     return this.success({
       total: list.length,
-      data: treeData
+      data: list
     });
   }
 

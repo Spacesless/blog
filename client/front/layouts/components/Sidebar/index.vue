@@ -42,15 +42,19 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['device', 'sidebar', 'categories', 'configs']),
+    ...mapGetters(['device', 'sidebar', 'categories', 'activeMenu', 'configs']),
     menus() {
       const filterMenus = this.categories.filter(item => item.is_nav)
       return convertToTree(filterMenus)
     },
     activeMenu() {
       const { path, params } = this.$route
-      const [id] = params.id?.split('-') || []
-      return id ? path.replace(params.id, id) : path
+      if (path.includes('detail')) {
+        return this.activeMenu
+      } else {
+        const [id] = params.id?.split('-') || []
+        return id ? path.replace(params.id, id) : path
+      }
     },
     isCollapse() {
       return !this.sidebar.opened

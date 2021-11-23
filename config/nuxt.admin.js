@@ -42,9 +42,9 @@ module.exports = {
         }
       })
     },
-    publicPath: '//cdn.timelessq.com/admin/' // 只需将www/admin上传cdn
+    publicPath: '//cdn.timelessq.com/nuxt-admin/' // 只需将www/admin上传cdn
   },
-  buildDir: 'www/admin',
+  buildDir: 'www/nuxt-admin',
   buildModules: [
     '@nuxtjs/router'
   ],
@@ -58,7 +58,7 @@ module.exports = {
     '@/plugins/svg-icon'
   ],
   generate: {
-    dir: 'www/admin',
+    dir: 'www/nuxt-admin',
     fallback: 'index.html'
   },
   head: {

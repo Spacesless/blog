@@ -10,7 +10,6 @@ module.exports = class extends Base {
     const req = this.get();
     const { id } = req;
 
-    const configs = await this.getConfigs();
     const categories = await this.getCategory();
 
     // 当前栏目
@@ -23,6 +22,7 @@ module.exports = class extends Base {
     }
 
     // 当前列表
+    const configs = await this.getConfigs();
     const { list_bangumi: pageSize } = configs;
     const childCategories = await this.model('category').findChildCategory(categories, findCategory.id);
     const query = {
@@ -35,7 +35,8 @@ module.exports = class extends Base {
     // 转换列表
     const postService = this.service('post', 'bangumi', configs);
     list.data = await postService.formatList(list.data, item => {
-      const { description, tag } = item;
+      const { imgurl, description, tag } = item;
+      item.imgurl = this.getAbsolutePath(imgurl);
       item.description = description.substr(0, 60);
       item.tag = tag ? tag.split('|') : [];
     });
@@ -61,14 +62,15 @@ module.exports = class extends Base {
     const configs = await this.getConfigs();
     const { bangumi_width: width, bangumi_height: height, image_fit: fit } = configs;
     const postService = this.service('post');
-    data.imgurl = await postService.getThumbnail({
+    const imgurl = await postService.getThumbnail({
       width,
       height,
       fit,
       src: data.imgurl,
       isAsync: false
     });
-    data.content = this.formatContent(data.content);
+    data.imgurl = this.getAbsolutePath(imgurl);
+    data.content = this.getContentAbsolutePath(data.content);
 
     return this.success(data);
   }

@@ -35,7 +35,7 @@
 import Pagination from '#/components/Pagination/index'
 import CommentItem from './CommentItem'
 import CommentReply from './CommentReply'
-import { getLocalStorage, setLocalStorage } from '#/utils'
+import { getLocalStorage, setLocalStorage, convertToTree } from '#/utils'
 
 export default {
   components: {
@@ -88,7 +88,7 @@ export default {
       }).then(res => {
         const { total, data } = res
         this.total = total
-        this.commentList = data
+        this.commentList = convertToTree(data)
       }).catch(() => {})
       this.fetchLoading = false
     },

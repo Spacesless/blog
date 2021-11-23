@@ -3,7 +3,7 @@
     <p class="footer-info">
       Power by Node.js + Nuxt.js,&nbsp;由
       <img class="footer__icon" width="20" height="20" src="@/assets/image/tencent-cloud.png" alt="腾讯云">
-      腾讯云 提供云计算服务,&nbsp;本站已经稳稳地存活了 {{ configs.timeless }} 天
+      腾讯云 提供云计算服务,&nbsp;本站已经稳稳地存活了 {{ configs.duration }} 天
     </p>
     <p class="footer-copyright">
       <span>Copyright © 2018 - {{ configs.currentYear }} Timeless. All rights reserved. </span>

@@ -69,9 +69,9 @@ export default {
     })
 
     // 浏览5秒才算访问量
-    // this.timer = setTimeout(() => {
-    //   this.handleRecordAccess()
-    // }, 5000)
+    this.timer = setTimeout(() => {
+      this.handleRecordAccess()
+    }, 5000)
   },
   beforeDestroy() {
     this.timer && clearInterval(this.timer)

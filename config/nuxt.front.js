@@ -52,9 +52,9 @@ module.exports = {
         threshold: 10240 // 大于10kb的会压缩，默认为0
       })
     ],
-    publicPath: '//cdn.timelessq.com/front/dist/client' // 只需将www/front上传cdn
+    publicPath: '//cdn.timelessq.com/nuxt-front/dist/client' // 只需将www/front上传cdn
   },
-  buildDir: 'www/front',
+  buildDir: 'www/nuxt-front',
   css: [
     '@/styles/global.scss'
   ],

@@ -10,7 +10,7 @@
       <span slot="title">{{ item.name }}</span>
     </template>
     <el-menu-item :index="item.url" :title="item.mark_name">
-      <span>{{ item.mark_name }}</span>
+      <span>{{ item.type | getAliasName }}</span>
     </el-menu-item>
 
     <sidebar-item
@@ -26,6 +26,20 @@
 <script>
 export default {
   name: 'SidebarItem',
+  filters: {
+    /**
+     * 获取一级栏目别名
+     * @param {String} type 栏目类型
+     */
+    getAliasName(type) {
+      const names = new Map([
+        ['article', '全部文章'],
+        ['bangumi', '全部追剧']
+      ])
+
+      return names.get(type) || '全部'
+    }
+  },
   props: {
     item: {
       type: Object,

@@ -1,24 +1,4 @@
-/**
- * 栏目数组转换成树形结构
- * @param {Array} category 栏目数组
- * @returns {Array} 栏目树形结果数组
- */
-export function formatCategory(categories, parent_id = 0) {
-  const tree = []
-  let temp
-  const cloneCategory = JSON.parse(JSON.stringify(categories))
-  for (let i = 0; i < cloneCategory.length; i++) {
-    if (cloneCategory[i].parent_id === parent_id) {
-      const item = cloneCategory[i]
-      temp = formatCategory(cloneCategory, cloneCategory[i].id)
-      if (temp.length > 0) {
-        item.children = temp
-      }
-      tree.push(item)
-    }
-  }
-  return tree
-}
+import { convertToTree } from '#/utils'
 
 /**
  * 根据module获取对应类型的栏目树形结构数组
@@ -32,7 +12,7 @@ export function getCategoryByType(categories, type) {
     element.value = element.id
     element.label = element.name
   })
-  return formatCategory(filterColumn)
+  return convertToTree(filterColumn)
 }
 
 /**
