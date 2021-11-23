@@ -1,15 +1,15 @@
 const isDev = process.env.NODE_ENV === 'development'
 
-export default function({ store, app: { $axios }}) {
+export default function({ $axios, error }) {
   // url = base url + request url
   $axios.defaults.baseURL = isDev ? 'http://127.0.0.1:8360/front' : 'https://www.timelessq.com/front'
   // request timeout
   $axios.defaults.timeout = 15000
 
   $axios.onResponse(response => {
-    const { errno, errmsg } = response.data
+    const { errno } = response.data
     if (errno !== 0) {
-      return Promise.reject(errmsg)
+      error({ statusCode: 404, message: '哎呀，假装页面未找到' })
     }
     return response.data
   })

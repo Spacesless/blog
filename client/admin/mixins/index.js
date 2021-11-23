@@ -60,6 +60,7 @@ export const crud = {
   data() {
     return {
       multipleSelection: [],
+      autoFetchList: true,
       tableData: [],
       listLoading: false,
       listQuery: {
@@ -71,7 +72,7 @@ export const crud = {
     }
   },
   created() {
-    this.fetchList()
+    this.autoFetchList && this.fetchList()
   },
   activated() {
     this.$refs.multipleTable && this.$refs.multipleTable.doLayout()

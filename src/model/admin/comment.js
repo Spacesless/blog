@@ -8,8 +8,7 @@ module.exports = class extends think.Model {
   selectComment(page, pageSize) {
     const field = 'id,parent_id,content,topic_url,topic_title,addtime,name,reply_name,type,is_show';
 
-    return this.modelInstance
-      .field(field)
+    return this.field(field)
       .order('addtime DESC')
       .page(page, pageSize)
       .countSelect();
@@ -25,10 +24,10 @@ module.exports = class extends think.Model {
 
     for (const item of list) {
       const id = item.id;
-      const isExist = await this.modelInstance.where({ id }).count('id');
+      const isExist = await this.where({ id }).count('id');
       let step;
       if (isExist) {
-        step = this.modelInstance.where({ id }).delete();
+        step = this.where({ id }).delete();
       }
       promises.push(step);
     }

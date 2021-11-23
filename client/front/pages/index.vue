@@ -37,10 +37,10 @@
             </p>
             <div class="article-meta">
               <span class="article-meta__date"><i class="tl-icon">&#xe70b;</i>{{ item.updatetime | parseTime('{y}-{m}-{d}') }}</span>
-              <!-- <span class="article-meta__cate">
+              <span v-if="item.categoryUrl" class="article-meta__cate">
                 <i class="tl-icon">&#xe668;</i>
-                <nuxt-link :to="item.column.url" :title="item.column.name">{{ item.column.name }}</nuxt-link>
-              </span> -->
+                <nuxt-link :to="item.categoryUrl" :title="item.categoryName">{{ item.categoryName }}</nuxt-link>
+              </span>
               <span class="article-meta__view"><i class="tl-icon">&#xe681;</i>{{ item.hits }}</span>
             </div>
             <div class="article-desc">
@@ -63,10 +63,10 @@
               <nuxt-link :to="'/bangumi/detail/' + item.id" :title="item.title">
                 <img
                   class="img-fluid"
-                  :width="configs.thumb_bangumi_x"
-                  :height="configs.thumb_bangumi_y"
+                  :width="configs.bangumi_width"
+                  :height="configs.bangumi_height"
                   :src="item.imgurl"
-                  :srcset="item.imgurl | getImageSrcSet(configs.thumb_bangumi_x)"
+                  :srcset="item.imgurl | getImageSrcSet(configs.bangumi_width)"
                   :alt="item.title"
                 >
               </nuxt-link>
@@ -99,8 +99,17 @@
 import { debounce } from '@/utils'
 
 export default {
-  async asyncData({ $axios }) {
+  async asyncData({ store, $axios }) {
     const { bannerList, articleList, bangumiList } = await $axios.$get('/index')
+
+    articleList.forEach(element => {
+      const findCategory = store.getters.categories.find(item => item.id === element.category_id)
+      if (findCategory) {
+        element.categoryUrl = `/${findCategory.type}/${findCategory.id}`
+        element.categoryName = findCategory.name
+      }
+    })
+
     return { bannerList, articleList, bangumiList }
   },
   data() {

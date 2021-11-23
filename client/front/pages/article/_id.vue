@@ -47,10 +47,10 @@
           <nuxt-link :to="'/article/detail/' + item.id" :title="item.title">
             <img
               class="img-full"
-              :width="configs.thumb_article_x"
-              :height="configs.thumb_article_y"
+              :width="configs.article_width"
+              :height="configs.article_height"
               :src="item.imgurl"
-              :srcset="item.imgurl | getImageSrcSet(configs.thumb_article_x)"
+              :srcset="item.imgurl | getImageSrcSet(configs.article_width)"
               :alt="item.title"
             >
           </nuxt-link>

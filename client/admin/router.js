@@ -181,24 +181,24 @@ export const routes = [
   {
     path: '/system',
     component: Layout,
-    redirect: '/system/options-general',
+    redirect: '/system/general-config',
     meta: { title: '系统管理', icon: 'system' },
     children: [
       {
-        path: '/system/options-general',
-        name: 'OptionsGeneral',
+        path: '/system/general-config',
+        name: 'GeneralConfig',
         component: generalConfig,
         meta: { title: '常规配置', noCache: true }
       },
       {
-        path: '/system/options-reading',
-        name: 'OptionsReading',
+        path: '/system/reading-config',
+        name: 'ReadingConfug',
         component: readingConfig,
         meta: { title: '阅读设置', noCache: true }
       },
       {
-        path: '/system/options-banner',
-        name: 'OptionsBanner',
+        path: '/system/banner-config',
+        name: 'BannerConfig',
         component: bannerConfig,
         meta: { title: 'Banner管理' }
       }

@@ -53,7 +53,7 @@ export default {
     const data = await $axios.$get('/article/detail', {
       params: { id }
     })
-    return { data }
+    return { id, data }
   },
   data() {
     return {

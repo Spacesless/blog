@@ -9,7 +9,10 @@
       label-position="left"
       @submit.native.prevent
     >
-      <h1 class="login-form__title">Welcome Home</h1>
+      <div class="login-header">
+        <img class="login-header__logo" src="@/assets/logo.jpg" alt="logo">
+        <h1 class="login-header__title">Welcome Home</h1>
+      </div>
 
       <el-form-item prop="username">
         <span class="login-form-label">
@@ -69,7 +72,10 @@
       >{{ loginLoading ? '登录中' : '登录' }}</el-button>
     </el-form>
 
-    <p class="login__copyright">Copyright © 2021 Timeless自个出品</p>
+    <div class="login-footer">
+      <p class="login-footer__tips">希望我们都是会哭的孩子，更是坚强的大人</p>
+      <p class="login-footer__copyright">Copyright © 2018 - 2021 Timeless. All rights reserved. </p>
+    </div>
   </div>
 </template>
 
@@ -161,13 +167,27 @@ export default {
   height: 100%;
   background: url(~@/assets/login-background.jpg) no-repeat center;
   background-size: cover;
+  &-header{
+    margin-bottom: 24px;
+    text-align: center;
+    &__logo{
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+    }
+    &__title{
+      color: transparent;
+      font: normal 32px/50px eafont,Hiragino Sans GB,Hiragino Sans GB W3,Microsoft YaHei;
+      background: linear-gradient(to right, #ff4d4f, #597ef7);
+      background-clip: text;
+    }
+  }
   &-form{
     position: absolute;
     top: 50%;
     left: 50%;
     width: 360px;
-    height: 350px;
-    margin-top: -210px;
+    margin-top: -260px;
     margin-left: -180px;
     @media (max-width: 576px){
       width: 100%;
@@ -183,13 +203,6 @@ export default {
           border-color: #409EFF;
         }
       }
-    }
-    &__title{
-      height: 50px;
-      margin-bottom: 30px;
-      color: #606266;
-      font: normal 32px/50px eafont,Hiragino Sans GB,Hiragino Sans GB W3,Microsoft YaHei;
-      text-align: center;
     }
     &-label{
       position: absolute;
@@ -243,13 +256,21 @@ export default {
     cursor: pointer;
     user-select: none;
   }
-  &__copyright{
+
+  &-footer{
     position: fixed;
     bottom: 16px;
     width: 100%;
-    color: rgba(0,0,0,.45);
-    font-size: 14px;
     text-align: center;
+    &__tips{
+      margin-bottom: 6px;
+      color: rgba(0,0,0,.65);
+      font-size: 14px;
+    }
+    &__copyright{
+      color: rgba(0,0,0,.45);
+      font-size: 13px;
+    }
   }
 }
 </style>

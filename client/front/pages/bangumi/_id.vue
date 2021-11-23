@@ -58,10 +58,10 @@
               <nuxt-link :to="'/bangumi/detail/' + item.id">
                 <img
                   class="img-fluid"
-                  :width="configs.thumb_bangumi_x"
-                  :height="configs.thumb_bangumi_y"
+                  :width="configs.bangumi_width"
+                  :height="configs.bangumi_height"
                   :src="item.imgurl"
-                  :srcset="item.imgurl | getImageSrcSet(configs.thumb_bangumi_x)"
+                  :srcset="item.imgurl | getImageSrcSet(configs.bangumi_width)"
                   :alt="item.title"
                 >
                 <span class="bangumi-list__ratings">{{ item.ratings }}</span>

@@ -82,7 +82,7 @@ export default {
     const data = await $axios.$get('/bangumi/detail', {
       params: { id }
     })
-    const songList = data.songs?.split('\n')
+    const songList = data?.songs?.split('\n')
     return { data, songList }
   },
   data() {

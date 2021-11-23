@@ -33,8 +33,8 @@
         <el-col class="search-list__info" :sm="14" :md="18" :lg="16">
           <nuxt-link class="search-list__title" :to="item.url" v-html="item.title" />
           <p v-html="item.content" />
-          <div class="search-list__classify">
-            <nuxt-link v-for="info in item.classList" :key="info.name" :to="info.url" :title="info.name">{{ info.name }}</nuxt-link>
+          <div v-if="item.categoryUrl" class="search-list__classify">
+            <nuxt-link :title="item.categoryName" :to="item.categoryUrl">{{ item.categoryName }}</nuxt-link>
           </div>
         </el-col>
       </el-row>
@@ -81,7 +81,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['configs'])
+    ...mapGetters(['configs', 'categories'])
   },
   mounted() {
     const { keyword, classify } = this.$route.query
@@ -102,6 +102,16 @@ export default {
         const { count, data } = res
         this.total = count
         this.searchList = data
+
+        this.searchList.forEach(element => {
+          const { id, type, category_id } = element
+          element.url = `/${type}/detail/${id}`
+          const findCategory = this.categories.find(item => item.id === category_id)
+          if (findCategory) {
+            element.categoryUrl = `/${findCategory.type}/${findCategory.id}`
+            element.categoryName = findCategory.name
+          }
+        })
 
         const { keyword, classify } = this.listQuery
         const findClassify = this.classifyOptions.find(item => item.value === classify)

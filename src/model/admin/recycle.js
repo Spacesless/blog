@@ -1,7 +1,6 @@
 module.exports = class extends think.Model {
-  async selectPost() {
+  async selectPost(type) {
     const field = 'id,title,category_id,updatetime';
-    const type = this.get('type');
     const articleList = type && type !== 'article' ? [] : await this.model('article')
       .field(`${field},'article' as type`)
       .where({ is_recycle: 1 })

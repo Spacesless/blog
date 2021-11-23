@@ -1,8 +1,8 @@
 const Base = require('./base');
 
 module.exports = class extends Base {
-  constructor() {
-    super();
+  constructor(...args) {
+    super(...args);
     this.modelInstance = this.model('admin/config');
   }
 

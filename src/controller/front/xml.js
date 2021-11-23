@@ -2,14 +2,13 @@ const Base = require('./base.js');
 
 module.exports = class extends Base {
   async __before() {
-    await super.__before();
-    this.siteurl = 'https' + this.siteurl;
+    this.baseurl = 'https' + this.siteurl;
     this.archives = await this.model('front/xml').selectArchives();
   }
 
   // rss订阅
   async rssAction() {
-    this.assign('siteurl', this.siteurl);
+    this.assign('siteurl', this.baseurl);
 
     const configs = await this.model('config').getCacheConfig();
     this.assign('options', configs);
@@ -25,7 +24,7 @@ module.exports = class extends Base {
 
   // sitemap地图
   async sitemapAction() {
-    this.assign('siteurl', this.siteurl);
+    this.assign('siteurl', this.baseurl);
 
     const categories = await this.model('category').getCacheCategory();
     const sitemapList = await this.getSitemapList(categories);
@@ -44,12 +43,12 @@ module.exports = class extends Base {
         lastmod = rows[0].updatetime;
       }
       return {
-        url: `${this.siteurl}${url}`,
+        url: `${this.baseurl}${url}`,
         lastmod: lastmod || think.datetime(new Date(), 'YYYY-MM-DD'),
         priority: level === 1 ? 0.9 : (level === 2 ? 0.8 : 0.7)
       };
     });
-    this.assign('categories', targetCategory);
+    this.assign('categoryList', targetCategory);
 
     this.ctx.type = 'text/xml';
     return super.display('home/sitemap.xml');
@@ -69,7 +68,7 @@ module.exports = class extends Base {
     rssList.forEach(item => {
       const { id, category_id: categoryId } = item;
       const findCategory = categories.find(element => element.id === categoryId);
-      item.url = findCategory ? `${this.siteurl}/${findCategory.type}/detail/${id}` : '';
+      item.url = findCategory ? `${this.baseurl}/${findCategory.type}/detail/${id}` : '';
     });
     return rssList;
   }
@@ -86,7 +85,7 @@ module.exports = class extends Base {
     sitemapList.forEach(item => {
       const { id, category_id: categoryId } = item;
       const findCategory = categories.find(element => element.id === categoryId);
-      item.url = findCategory ? `${this.siteurl}/${findCategory.type}/detail/${id}` : '';
+      item.url = findCategory ? `${this.baseurl}/${findCategory.type}/detail/${id}` : '';
       item.priority = 0.6;
     });
     return sitemapList;

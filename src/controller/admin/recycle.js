@@ -1,16 +1,16 @@
 const Base = require('./base.js');
 
 module.exports = class extends Base {
-  constructor() {
-    super();
+  constructor(...args) {
+    super(...args);
     this.modelInstance = this.model('admin/recycle');
   }
 
   // 获取回收站列表
   async getListAction() {
-    const { page = 1, pageSize = 20 } = this.post();
+    const { type, page = 1, pageSize = 20 } = this.post();
 
-    const totalList = await this.modelInstance.selectPost();
+    const totalList = await this.modelInstance.selectPost(type);
 
     const result = totalList.slice((page - 1) * pageSize, page * pageSize);
     result.sort((a, b) => {

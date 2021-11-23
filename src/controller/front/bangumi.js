@@ -1,8 +1,8 @@
 const Base = require('./base.js');
 
 module.exports = class extends Base {
-  constructor(...arg) {
-    super(...arg);
+  constructor(...args) {
+    super(...args);
     this.modelInstance = this.model('bangumi');
   }
 
@@ -23,7 +23,7 @@ module.exports = class extends Base {
 
     // 当前列表
     const configs = await this.getConfigs();
-    const { list_bangumi: pageSize } = configs;
+    const { bangumi_num: pageSize } = configs;
     const childCategories = await this.model('category').findChildCategory(categories, findCategory.id);
     const query = {
       ...req,

@@ -31,7 +31,13 @@ module.exports = class extends Base {
 
         const width = configs[type + '_width'];
         const height = configs[type + '_height'];
-        const thumbnail = await postService.getThumbnail(imgurl, width, height, configs.image_fit);
+        const thumbnail = await postService.getThumbnail({
+          width,
+          height,
+          fit: configs.image_fit,
+          src: imgurl,
+          isAsync: false
+        });
         Object.assign(element, {
           type,
           title: targetTitle,

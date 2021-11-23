@@ -68,7 +68,7 @@ module.exports = class extends Base {
         is_recycle: 1
       };
     });
-    const rows = await this.modelInstance.updateMany(data);
+    const rows = await this.updateMany(data);
 
     return rows;
   }

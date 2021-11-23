@@ -12,7 +12,7 @@
         ref="navigation"
         :background-color="null"
         :collapse="isCollapse"
-        :default-active="activeMenu"
+        :default-active="activeKey"
         class="aside-menu"
         role="menu"
         router
@@ -47,7 +47,7 @@ export default {
       const filterMenus = this.categories.filter(item => item.is_nav)
       return convertToTree(filterMenus)
     },
-    activeMenu() {
+    activeKey() {
       const { path, params } = this.$route
       if (path.includes('detail')) {
         return this.activeMenu

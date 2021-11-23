@@ -79,13 +79,17 @@ export default {
   data() {
     return {
       currentType: 'category',
-      categoryList: [],
       multipleSelection: [],
-      currentRow: {}
+      currentRow: {},
+      autoFetchList: false
     }
   },
   computed: {
-    ...mapGetters(['categories', 'updateRoute'])
+    ...mapGetters(['categories', 'updateRoute']),
+    categoryList() {
+      const categoryTree = convertToTree(this.categories)
+      return JSON.parse(JSON.stringify(categoryTree))
+    }
   },
   watch: {
     async updateRoute(val) {
@@ -104,8 +108,6 @@ export default {
     async fetchList() {
       this.listLoading = true
       await this.$store.dispatch('list/getCategory').catch(() => {})
-      const categoryTree = convertToTree(this.categories)
-      this.categoryList = JSON.parse(JSON.stringify(categoryTree))
       this.listLoading = false
     },
     handleAdd() {

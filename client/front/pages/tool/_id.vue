@@ -38,10 +38,10 @@ import { pageMeta } from '@/mixins'
 
 export default {
   mixins: [pageMeta],
-  async asyncData({ params, query, $axios }) {
+  async asyncData({ params, $axios }) {
     const list = await $axios.$get('/tool/list', {
       params: {
-        id: this.findCategory.id
+        id: params.id
       }
     })
 

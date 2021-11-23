@@ -1,8 +1,8 @@
 const Base = require('./base.js');
 
 module.exports = class extends Base {
-  constructor(...arg) {
-    super(...arg);
+  constructor(...args) {
+    super(...args);
     this.modelInstance = this.model('front/index');
   }
 
@@ -33,7 +33,8 @@ module.exports = class extends Base {
     // 最新追番
     const postService = this.service('post', 'bangumi', configs);
     const formatBangumiList = await postService.formatList(bangumiList, item => {
-      const { description } = item;
+      const { imgurl, description } = item;
+      item.imgurl = this.getAbsolutePath(imgurl);
       item.description = description.substr(0, 60);
     });
 
