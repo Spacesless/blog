@@ -3,10 +3,10 @@
  * @param {Array} category 栏目数组
  * @returns {Array} 栏目树形结果数组
  */
-export function formatCategory(categorys, parent_id = 0) {
+export function formatCategory(categories, parent_id = 0) {
   const tree = []
   let temp
-  const cloneCategory = JSON.parse(JSON.stringify(categorys))
+  const cloneCategory = JSON.parse(JSON.stringify(categories))
   for (let i = 0; i < cloneCategory.length; i++) {
     if (cloneCategory[i].parent_id === parent_id) {
       const item = cloneCategory[i]
@@ -26,8 +26,8 @@ export function formatCategory(categorys, parent_id = 0) {
  * @param {Number(Int)} type 栏目模型
  * @returns {Array} 栏目树形结果数组
  */
-export function getCategoryByType(categorys, type) {
-  const filterColumn = categorys.filter(item => type ? item.type === type : true)
+export function getCategoryByType(categories, type) {
+  const filterColumn = categories.filter(item => type ? item.type === type : true)
   filterColumn.forEach(element => {
     element.value = element.id
     element.label = element.name

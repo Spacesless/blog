@@ -5,7 +5,7 @@ module.exports = class extends Base {
   async indexAction() {
     // 主导航信息
     const configs = await this.getConfigs();
-    const categoryList = await this.getCategory();
+    const categories = await this.getCategory();
 
     // 配置信息
     const {
@@ -31,7 +31,7 @@ module.exports = class extends Base {
     };
 
     return this.success({
-      categoryList,
+      categories,
       configs: targetConfigs
     });
   }

@@ -61,7 +61,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['categorys'])
+    ...mapGetters(['categories'])
   },
   created() {
     this.fetchList()
@@ -77,7 +77,7 @@ export default {
       this.listLoading = false
     },
     formatCategory(row, column, cellValue) {
-      const findColumn = this.categorys.find(item => item.type === cellValue)
+      const findColumn = this.categories.find(item => item.type === cellValue)
       return findColumn ? findColumn.name : ''
     },
     /**

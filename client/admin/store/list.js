@@ -1,11 +1,11 @@
 const state = () => ({
-  categorys: [],
+  categories: [],
   updateRoute: ''
 })
 
 const mutations = {
-  SET_CATEGORY: (state, categorys) => {
-    state.categorys = categorys
+  SET_CATEGORY: (state, categories) => {
+    state.categories = categories
   },
   SET_UPDATELIST: (state, module) => {
     state.updateRoute = module

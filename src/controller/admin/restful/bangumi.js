@@ -22,9 +22,7 @@ module.exports = class extends Rest {
 
     // 转换列表
     const postService = this.service('post', 'bangumi');
-    list.data = await postService.formatList(list.data, item => {
-      item.imgurl = this.getAbsolutePath(item.imgurl);
-    });
+    list.data = await postService.formatList(list.data);
 
     return this.success(list);
   }

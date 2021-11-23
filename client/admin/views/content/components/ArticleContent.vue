@@ -127,7 +127,7 @@ export default {
       type: Boolean,
       default: false
     },
-    categorys: {
+    categories: {
       type: Array,
       default: () => []
     },

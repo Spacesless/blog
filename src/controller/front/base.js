@@ -1,5 +1,3 @@
-const isDev = think.env === 'development';
-
 module.exports = class extends think.Controller {
   constructor(...arg) {
     super(...arg);
@@ -53,14 +51,14 @@ module.exports = class extends think.Controller {
    * 设置列表页公共信息
    * @param {Number} id 期望栏目id
    */
-  getListInfo(id, categorys, configs) {
+  getListInfo(id, categories, configs) {
     let findCategory;
     // 当前栏目
     if (think.isEmpty(id)) {
       const path = this.ctx.path;
-      findCategory = categorys.find(item => item.level === 1 && path.includes(item.type));
+      findCategory = categories.find(item => item.level === 1 && path.includes(item.type));
     } else {
-      findCategory = categorys.find(item => item.id === +id);
+      findCategory = categories.find(item => item.id === +id);
     }
 
     if (!findCategory) {
@@ -85,11 +83,11 @@ module.exports = class extends think.Controller {
    * 获取详情的栏目以及seo信息
    * @param {Object} data 详情
    */
-  getDetailInfo(data, categorys, configs) {
+  getDetailInfo(data, categories, configs) {
     const { title, keywords, description, category_id: categoryId } = data;
 
     // meta信息
-    const findCategory = categorys.find(item => item.id === categoryId);
+    const findCategory = categories.find(item => item.id === categoryId);
     const { name: categoryTitle, keywords: categoryKeywords, description: categoryDescription } = findCategory;
 
     const seo = {
@@ -105,20 +103,11 @@ module.exports = class extends think.Controller {
   }
 
   /**
-   * 获取绝对路径
-   * @param {String} src 源路径
-   * @returns  {String}
-   */
-  getAbsolutePath(src) {
-    return isDev ? src : `${src ? '//cdn.timelessq.com' + src : ''}`;
-  }
-
-  /**
    * 文章内图片添加CDN地址
    * @param {String} str 文章内容
    * @returns {String}
    */
-  async formatContent(content) {
+  formatContent(content) {
     const contentImages = content.match(/<img[^>]+>/g) || [];
     const temp = [];
     contentImages.forEach((item) => {

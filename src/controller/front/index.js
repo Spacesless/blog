@@ -32,8 +32,7 @@ module.exports = class extends Base {
 
     const postService = this.service('post', 'bangumi', configs);
     bangumiList = await postService.formatList(bangumiList, item => {
-      const { imgurl, description } = item;
-      item.imgurl = this.getAbsolutePath(imgurl);
+      const { description } = item;
       item.description = description.substr(0, 60);
     });
 

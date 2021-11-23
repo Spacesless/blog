@@ -40,7 +40,7 @@ export default {
       type: Object,
       default: () => {}
     },
-    categorys: {
+    categories: {
       type: Array,
       default: () => []
     }
@@ -56,7 +56,7 @@ export default {
   computed: {
     categoryOptions() {
       const { type } = this.currentRow
-      return getCategoryByType(this.categorys, type)
+      return getCategoryByType(this.categories, type)
     }
   },
   methods: {

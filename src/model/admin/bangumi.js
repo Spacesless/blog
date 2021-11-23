@@ -13,9 +13,9 @@ module.exports = class extends Base {
     }
     if (category) {
       // 筛选栏目
-      const categorys = await this.model('admin/category').getCategory();
+      const categories = await this.model('admin/category').getCategory();
       const categoryId = parseInt(category);
-      const childCategories = await this.model('category').findChildCategory(categorys, categoryId);
+      const childCategories = await this.model('category').findChildCategory(categories, categoryId);
       where.category_id = ['IN', childCategories];
     }
 

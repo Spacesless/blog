@@ -126,9 +126,9 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['categorys', 'updateRoute', 'configs']),
+    ...mapGetters(['categories', 'updateRoute', 'configs']),
     categoryOptions() {
-      const result = getCategoryByType(this.categorys, this.currentType)
+      const result = getCategoryByType(this.categories, this.currentType)
       return result
     }
   },

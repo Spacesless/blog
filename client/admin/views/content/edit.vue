@@ -1,7 +1,7 @@
 <template>
   <article-content
     :is-edit="true"
-    :categorys="categorys"
+    :categories="categories"
     :category-options="categoryOptions"
   />
 </template>
@@ -17,10 +17,10 @@ export default {
     ArticleContent
   },
   computed: {
-    ...mapGetters(['categorys']),
+    ...mapGetters(['categories']),
     categoryOptions() {
       const currentType = this.$route.query.type
-      const result = getCategoryByType(this.categorys, currentType)
+      const result = getCategoryByType(this.categories, currentType)
       return result
     }
   }

@@ -4,7 +4,7 @@ module.exports = class extends think.Logic {
    * @return {} []
    */
   loginAction() {
-    this.allowMethods = 'post'
+    this.allowMethods = 'post';
 
     this.rules = {
       username: {
@@ -20,21 +20,21 @@ module.exports = class extends think.Logic {
       remember: {
         boolean: true
       }
-    }
+    };
   }
 
   forgotAction() {
-    this.allowMethods = 'post'
+    this.allowMethods = 'post';
 
     this.rules = {
       email: {
         required: true
       }
-    }
+    };
   }
 
   resetAction() {
-    this.allowMethods = 'post'
+    this.allowMethods = 'post';
 
     this.rules = {
       password: {
@@ -43,6 +43,6 @@ module.exports = class extends think.Logic {
       resetCode: {
         required: true
       }
-    }
+    };
   }
-}
+};

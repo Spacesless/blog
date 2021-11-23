@@ -5,22 +5,23 @@ module.exports = class extends Base {
     const { type, keyword, page = 1 } = this.get();
 
     const configs = await this.getConfigs();
-    const categorys = await this.getCategory();
 
     let list;
     const pageSize = 20;
     if (keyword) {
       const allData = await this.model('front/search').selectPost(type, keyword);
 
-      const count = allData.length;
-
+      // 转换列表
+      const postService = this.service('post');
       const data = allData.slice((page - 1) * pageSize, page * pageSize);
       for (const element of data) {
-        const { id, title, category_id: categoryId, type, imgurl } = element;
-        let content = element.content;
-        const findCategory = categorys.find(item => item.id === categoryId);
+        const { title, type, imgurl } = element;
 
+        // 标题添加关键字标识
         const targetTitle = title.indexOf(keyword) > -1 ? title.replace(new RegExp(keyword, 'gi'), `<em>${keyword}</em>`) : title;
+
+        // 内容添加关键字标识
+        let content = element.content;
         content = content.replace(/<.*?>/g, '');
         const keyIndex = content.indexOf(keyword);
         const start = keyIndex - 60;
@@ -28,41 +29,26 @@ module.exports = class extends Base {
           ? content.substr(start < 0 ? 0 : start, 130).replace(new RegExp(keyword, 'gi'), `<em>${keyword}</em>`)
           : content.substr(0, 130);
 
-        let width;
-        let height;
-        if (type === 'bangumi') {
-          width = configs.bangumi_width;
-          height = configs.bangumi_height;
-        } else {
-          width = configs.article_width;
-          height = configs.article_height;
-        }
-
-        const classList = categorys.filter(item => item.id === categoryId).map(item => {
-          return {
-            name: item.name,
-            url: `/${item.type}/${item.id}`
-          };
-        });
-
+        const width = configs[type + '_width'];
+        const height = configs[type + '_height'];
         Object.assign(element, {
+          type,
           title: targetTitle,
           content: targetContent,
-          url: `/${findCategory.type}/detail/${id}`,
-          imgurl: await this.getThumbnail(imgurl, width, height, configs.image_fit),
-          classList
+          imgurl: await postService.getThumbnail(imgurl, width, height, configs.image_fit)
         });
       }
 
+      const count = allData.length;
       list = {
         pageSize,
-        currentPage: +page,
         count,
-        totalPages: Math.ceil(allData.length / pageSize),
-        data
+        data,
+        currentPage: +page,
+        totalPages: Math.ceil(count / pageSize)
       };
     } else {
-      list = [];
+      list = {};
     }
 
     return this.success(list);

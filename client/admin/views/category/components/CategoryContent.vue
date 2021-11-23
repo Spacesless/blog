@@ -163,10 +163,10 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['categorys']),
+    ...mapGetters(['categories']),
     categoryOptions() {
       const currentType = this.$route.query?.type
-      const result = getCategoryByType(this.categorys, currentType)
+      const result = getCategoryByType(this.categories, currentType)
       return result
     }
   },

@@ -55,7 +55,7 @@
       </el-table-column>
     </el-table>
     <!-- 移动栏目 -->
-    <move-category :dialog-visible="dialogVisible" :current-row="currentRow" :categorys="categorys" @onConfirm="onConfirm" />
+    <move-category :dialog-visible="dialogVisible" :current-row="currentRow" :categories="categories" @onConfirm="onConfirm" />
   </div>
 </template>
 
@@ -85,7 +85,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['categorys', 'updateRoute'])
+    ...mapGetters(['categories', 'updateRoute'])
   },
   watch: {
     async updateRoute(val) {
@@ -96,7 +96,7 @@ export default {
     }
   },
   created() {
-    if (!this.categorys.length) {
+    if (!this.categories.length) {
       this.fetchList()
     }
   },
@@ -104,7 +104,7 @@ export default {
     async fetchList() {
       this.listLoading = true
       await this.$store.dispatch('list/getCategory').catch(() => {})
-      const category = formatCategory(this.categorys)
+      const category = formatCategory(this.categories)
       this.categoryList = JSON.parse(JSON.stringify(category))
       this.listLoading = false
     },

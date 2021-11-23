@@ -71,7 +71,9 @@ module.exports = class extends think.Service {
       this.thumbnailCache = cache || {};
     }
     // 如果命中缓存则直接返回
-    if (this.thumbnailCache[dest]) return dest;
+    if (this.thumbnailCache[dest]) {
+      return this.getAbsolutePath(dest);
+    }
 
     // 如果目标文件不存在，则进行裁剪生成
     const destAbsolutePath = path.join(think.RESOURCE_PATH, dest);
@@ -91,7 +93,7 @@ module.exports = class extends think.Service {
       }
     }
 
-    return dest;
+    return this.getAbsolutePath(dest);
   }
 
   /**

@@ -14,13 +14,8 @@ module.exports = class extends Rest {
       return this.success(data);
     } else {
       const { page, pageSize } = this.get();
-      const field = 'id,parent_id,content,topic_url,topic_title,addtime,name,reply_name,type,is_show';
 
-      const list = await this.modelInstance
-        .field(field)
-        .order('addtime DESC')
-        .page(page, pageSize)
-        .countSelect();
+      const list = await this.model('admin/comment').selectComment(page, pageSize);
 
       return this.success(list);
     }
@@ -77,18 +72,12 @@ module.exports = class extends Rest {
       return this.fail('CONTENT_NOT_EXIST');
     }
 
-    const promises = [];
-    list.forEach(async(item) => {
-      const id = item.id;
-      const exist = await this.modelInstance.where({ id }).count('id');
-      let step;
-      if (exist) {
-        step = this.modelInstance.where({ id }).delete();
-      }
-      promises.push(step);
-    });
-    await Promise.all(promises);
+    const affectedRows = await this.model('admin/comment').deleteComment(list);
 
-    return this.success();
+    if (affectedRows) {
+      return this.success();
+    } else {
+      return this.fail();
+    }
   }
 };

@@ -18,9 +18,9 @@ module.exports = class extends Base {
   /**
    * 提交评论
    * @summary 支持功能如下
-   * XSS过滤
-   * 重复内容检测
-   * 基于 IP 的发布评论频率限制
+   *   XSS过滤
+   *   重复内容检测
+   *   基于 IP 的发布评论频率限制
    */
   async postAction() {
     const data = this.post();
