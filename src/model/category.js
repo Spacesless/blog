@@ -23,7 +23,9 @@ module.exports = class extends think.Model {
    */
   formatCategoryUrl(categories) {
     categories.forEach(item => {
-      const { id, filename, type, level } = item;
+      const { id, filename, type, level, link } = item;
+      if (link) return;
+
       switch (type) {
         case 'page':
           item.url = `/${filename || type}`;

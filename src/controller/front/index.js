@@ -13,7 +13,11 @@ module.exports = class extends Base {
       home_bangumi_num: bangumiNum
     } = configs;
 
-    const [bannerList, articleList, bangumiList] = await Promise.all([
+    const [
+      { value: bannerList = [] },
+      { value: articleList = [] },
+      { value: bangumiList = [] }
+    ] = await Promise.allSettled([
       this.modelInstance.selectBanner(),
       this.modelInstance.selectArticle(articleNum),
       this.modelInstance.selectBangumi(bangumiNum)

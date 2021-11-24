@@ -27,6 +27,8 @@ module.exports = class extends think.Service {
     }
     const { image_fit: fit } = this.configs;
 
+    // 深拷贝，否则会修改源数组
+    list = JSON.parse(JSON.stringify(list));
     for (const item of list) {
       const src = item.imgurl;
       const dest = await this.getThumbnail({
@@ -104,7 +106,9 @@ module.exports = class extends think.Service {
     if (!caches.length) return;
 
     const temp = caches.reduce((cur, next) => {
-      cur[next.value] = 1;
+      if (next.value) {
+        cur[next.value] = 1;
+      }
       return cur;
     }, {});
     const thumbnailCache = {

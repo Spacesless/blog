@@ -10,9 +10,13 @@ module.exports = class extends think.Model {
     const order = orderBy ? orderBy.toUpperCase() : 'DESC';
 
     const where = { is_show: 1, is_recycle: 0 };
-    where.category_id = ['IN', childCategories];
+    if (childCategories.length) {
+      where.category_id = ['IN', childCategories];
+    }
     // 番剧状态
-    if (status) where.status = status;
+    if (status) {
+      where.status = status;
+    }
     // 追剧进度
     switch (progress) {
       case '0':
@@ -23,7 +27,9 @@ module.exports = class extends think.Model {
         break;
     }
     // tag标签
-    if (tags) where.tag = ['like', tags.split(',').map(item => `%${item}%`)];
+    if (tags) {
+      where.tag = ['like', tags.split(',').map(item => `%${item}%`)];
+    }
 
     const list = await this.where(where)
       .field(field)

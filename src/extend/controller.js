@@ -1,7 +1,7 @@
 const isProd = think.env === 'prodution';
-const CDNdomain = '//cdn.timeless.com';
+const CDNdomain = '//cdn.timelessq.com';
 
-function getPrefixUrl() {
+function getUrlPrefix() {
   const { controller } = this.ctx;
   // admin后台管理不需要CDN
   const isUseCdn = !controller.includes('admin');
@@ -23,7 +23,7 @@ module.exports = {
    * @returns {String}
    */
   getAbsolutePath(src) {
-    const prefix = getPrefixUrl.call(this);
+    const prefix = getUrlPrefix.call(this);
     return src ? prefix + src : '';
   },
 
@@ -33,7 +33,7 @@ module.exports = {
    * @returns {String}
    */
   getContentAbsolutePath(content) {
-    const prefix = getPrefixUrl.call(this);
+    const prefix = getUrlPrefix.call(this);
     return content ? content.replace(new RegExp('src="/upload', 'gi'), `src="${prefix}/upload`) : '';
   }
 };

@@ -8,7 +8,7 @@ const Base = require('./base.js');
  function removeEmpty(obj) {
   Object.keys(obj).forEach(key => {
     const value = obj[key];
-    if (value === '' || value === null) {
+    if (value === '' || value == null) {
       delete obj[key];
     }
   })
@@ -17,8 +17,13 @@ const Base = require('./base.js');
 module.exports = class extends Base {
   async indexAction() {
     // 主导航信息
-    const configs = await this.getConfigs();
-    const categories = await this.getCategory();
+
+    const [configs, categories] = await Promise.all([
+      this.getConfigs(),
+      this.getCategory()
+    ]).catch(() => {
+      return this.fail()
+    })
 
     // 清除值为空的字段
     categories.forEach(item => removeEmpty(item))
