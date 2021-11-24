@@ -111,11 +111,12 @@ export default {
       return this.$axios.$post('/comment/post', postData).then(res => {
         this.$notify({
           title: '评论成功',
-          message: '感谢您留下美好的声音',
+          message: '收到收到over',
           type: 'success',
           offset: 40
         })
         this.formData.content = ''
+        this.replyData.id = 0
         this.fetchList()
       }).catch(error => {
         this.$notify.error({

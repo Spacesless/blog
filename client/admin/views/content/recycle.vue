@@ -21,7 +21,7 @@
 
     <el-table
       ref="multipleTable"
-      v-el-height-adaptive-table="{bottomOffset: 80}"
+      v-el-height-adaptive-table="{bottomOffset: 83}"
       v-loading="listLoading"
       :data="recycleList"
       height="233"
@@ -143,6 +143,10 @@ export default {
     },
     handleRestoreSelection() {
       const listCount = this.multipleSelection.length
+      if (!listCount) {
+        return this.$message('请先选择数据，再进行操作')
+      }
+
       this.$confirm(`此操作将还原这${listCount}条内容, 是否继续?`, '提示', {
         type: 'warning'
       }).then(async() => {

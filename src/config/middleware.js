@@ -23,8 +23,7 @@ const middleware = [
     handle: 'trace',
     enable: !think.isCli,
     options: {
-      debug: isDev,
-      templates: path.join(think.ROOT_PATH, 'view', 'error')
+      debug: isDev
     }
   },
   {

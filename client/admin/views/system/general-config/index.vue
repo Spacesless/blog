@@ -80,29 +80,54 @@
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'OptionsGeneral',
+  name: 'GeneralConfig',
   data() {
     return {
-      activeName: 'info'
+      formData: {},
+      confirmLoading: false
     }
   },
   computed: {
     ...mapGetters(['configs', 'device'])
   },
-  created() {
-    const {
-      sitename, keywords, description, icp_beian, police_beian,
-      is_silent, live2d_model, live2d_texture
-    } = this.configs
-    this.formData = {
-      sitename,
-      keywords,
-      description,
-      icp_beian,
-      police_beian,
-      is_silent: +is_silent,
-      live2d_model,
-      live2d_texture
+  watch: {
+    configs: {
+      handler(data) {
+        const {
+          sitename, keywords, description, icp_beian, police_beian,
+          is_silent, live2d_model, live2d_texture
+        } = data
+        this.formData = {
+          sitename,
+          keywords,
+          description,
+          icp_beian,
+          police_beian,
+          is_silent: +is_silent,
+          live2d_model,
+          live2d_texture
+        }
+      },
+      immediate: true
+    }
+  },
+  methods: {
+    async handleSubmit() {
+      this.confirmLoading = true
+      await this.$store.dispatch('config/updateConfigs', this.formData).then(() => {
+        this.$message({
+          type: 'success',
+          message: '更新成功'
+        })
+
+        this.$store.dispatch('config/getConfigs')
+      }).catch(() => {
+        this.$message({
+          type: 'error',
+          message: '更新失败'
+        })
+      })
+      this.confirmLoading = false
     }
   }
 }

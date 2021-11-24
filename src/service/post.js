@@ -6,6 +6,7 @@ module.exports = class extends think.Service {
     this.thumbnailType = type;
     this.configs = configs;
     this.promiseList = [];
+    this.cacheQueue = [];
 
     this.sharpService = think.service('sharp');
   }
@@ -42,10 +43,11 @@ module.exports = class extends think.Service {
       typeof predicate === 'function' && predicate(item);
     }
 
+    let result = [];
     if (this.promiseList.length) {
-      const result = await Promise.allSettled(this.promiseList);
-      await this.addThumbnailCache(result);
+      result = await Promise.allSettled(this.promiseList);
     }
+    await this.addThumbnailCache([...this.cacheQueue, ...result]);
 
     return list;
   }
@@ -77,9 +79,16 @@ module.exports = class extends think.Service {
       return dest;
     }
 
-    // 如果目标文件不存在，则进行裁剪生成
+    // 如果目标文件存在，则写入缓存
     const destAbsolutePath = path.join(think.RESOURCE_PATH, dest);
-    if (!think.isExist(destAbsolutePath)) {
+    if (think.isExist(destAbsolutePath)) {
+      if (isAsync) {
+        this.cacheQueue.push({ value: dest });
+      } else {
+        await this.addThumbnailCache([{ value: dest }]);
+      }
+    } else {
+      // 如果目标文件不存在，则进行裁剪生成
       const step = this.sharpService.resizeAndCrop({
         width: +width,
         height: +height,

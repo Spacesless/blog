@@ -90,16 +90,22 @@ export const crud = {
     onSelectionChange(val) {
       this.multipleSelection = val
     },
+    /**
+     * 删除单个记录
+     * @param {Object} row
+     */
     handleDelete(row) {
       this.$confirm('此操作将永久删除该内容, 是否继续?', '提示', {
         type: 'warning'
-      }).then(() => {
+      }).then(async() => {
+        this.$set(row, 'deleteLoading', true)
+        await this.deleteMultiple(1, row).catch(() => {})
         this.$set(row, 'deleteLoading', false)
-        this.deleteMultiple(1, row).catch(() => {
-          this.$set(row, 'deleteLoading', false)
-        })
       })
     },
+    /**
+     * 批量删除
+     */
     handleDeleteSelection() {
       const listCount = this.multipleSelection.length
       if (listCount) {
@@ -121,7 +127,7 @@ export const crud = {
      */
     deleteMultiple(listCount, row) {
       const lists = row ? [row.id] : this.multipleSelection.map(item => item.id)
-      this.$api.list.DeleteList(this.currentType, lists).then(res => {
+      return this.$api.list.DeleteList(this.currentType, lists).then(res => {
         this.$message({
           type: 'success',
           message: '删除成功'

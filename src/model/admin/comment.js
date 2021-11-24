@@ -22,8 +22,7 @@ module.exports = class extends think.Model {
   async deleteComment(list) {
     const promises = [];
 
-    for (const item of list) {
-      const id = item.id;
+    for (const id of list) {
       const isExist = await this.where({ id }).count('id');
       let step;
       if (isExist) {

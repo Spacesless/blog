@@ -111,6 +111,7 @@ export default {
 
 <style lang="scss" scoped>
 .comment{
+  padding:  15px;
   &-preview{
     white-space: pre-line;
     line-height: 1.5;

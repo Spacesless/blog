@@ -238,6 +238,7 @@ export default {
     line-height: 30px;
     cursor: pointer;
     border-radius: 3px;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
     &::before {
       content: '';
       display: inline-block;

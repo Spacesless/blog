@@ -77,7 +77,7 @@ export default {
   left: 16px;
   right: 16px;
   height: 38px;
-  line-height: 38px;
+  line-height: 36px;
   white-space: nowrap;
   ::v-deep {
     .el-scrollbar__bar {

@@ -30,9 +30,9 @@ module.exports = class extends Base {
     const field = 'id,content,addtime';
     const list = await this.model('comment')
       .field(field)
-      .where({ is_show: 0, 'is_admin': 0 })
+      .where({ 'is_admin': 0 })
       .order('addtime DESC')
-      .page(1, 7)
+      .page(1, 5)
       .countSelect();
     return this.success(list);
   }

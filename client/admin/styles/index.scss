@@ -77,7 +77,8 @@ div:focus {
 .app {
   &-container {
     margin: 20px;
-    box-shadow: 0 1px 4px rgba(0,21,41,.08);
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
     .is-stick{
       margin-bottom: 80px;
     }
@@ -90,7 +91,7 @@ div:focus {
       padding: 15px 20px;
       background-color: #fff;
       text-align: right;
-      box-shadow: 0 -1px 4px rgba(0, 21, 41, 0.08);
+      box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.1);
       .el-button{
         margin-left: 24px;
       }

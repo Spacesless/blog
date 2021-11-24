@@ -57,7 +57,7 @@
       <el-table-column align="center" label="操作" width="180">
         <template #default="scope">
           <el-button type="primary" @click="handleView(scope.row.id)">查看</el-button>
-          <el-button type="danger" plain :loading="scope.row.deleteLoading" @click="handleDelete(scope.row.id)">删除</el-button>
+          <el-button type="danger" plain :loading="scope.row.deleteLoading" @click="handleDelete(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>

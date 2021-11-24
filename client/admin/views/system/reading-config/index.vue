@@ -62,7 +62,7 @@ import { mapGetters } from 'vuex'
 const example = require('@/assets/example.jpg')
 
 export default {
-  name: 'OptionsReading',
+  name: 'ReadingConfug',
   data() {
     return {
       formData: {},
@@ -78,9 +78,20 @@ export default {
       return fitEnum[fit] || 'none'
     }
   },
-  created() {
-    const { image_fit, article_width, article_height, bangumi_width, bangumi_height, article_num, bangumi_num } = this.configs
-    this.formData = { image_fit, article_width, article_height, bangumi_width, bangumi_height, article_num, bangumi_num }
+  watch: {
+    configs: {
+      handler(data) {
+        const {
+          image_fit, article_width, article_height, bangumi_width, bangumi_height,
+          article_num, bangumi_num, home_article_num, home_bangumi_num
+        } = data
+        this.formData = {
+          image_fit, article_width, article_height, bangumi_width, bangumi_height,
+          article_num, bangumi_num, home_article_num, home_bangumi_num
+        }
+      },
+      immediate: true
+    }
   },
   methods: {
     async handleSubmit() {
@@ -90,6 +101,8 @@ export default {
           type: 'success',
           message: '更新成功'
         })
+
+        this.$store.dispatch('config/getConfigs')
       }).catch(() => {
         this.$message({
           type: 'error',

@@ -46,8 +46,11 @@ module.exports = class extends Rest {
     // 列表页更新
     const list = this.post('list');
     if (list) {
-      const affectedRows = await this.modelInstance.updateMany(list);
+      if (!list.length) {
+        return this.fail('CONTENT_NOT_EXIST');
+      }
 
+      const affectedRows = await this.modelInstance.updateMany(list);
       if (affectedRows) {
         return this.success();
       } else {

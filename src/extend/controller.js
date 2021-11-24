@@ -1,4 +1,4 @@
-const isProd = think.env === 'prodution';
+const isProd = think.env === 'production';
 const CDNdomain = '//cdn.timelessq.com';
 
 function getUrlPrefix() {

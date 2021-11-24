@@ -51,7 +51,7 @@ import elHeightAdaptiveTable from '#/directive/el-table'
 import { crud, listDialog } from '@/mixins'
 
 export default {
-  name: 'OptionsBanner',
+  name: 'BannerConfig',
   components: {
     BannerForm
   },

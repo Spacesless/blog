@@ -68,6 +68,11 @@ module.exports = {
       { hid: 'description', name: 'description', content: '' }
     ]
   },
+  loading: {
+    color: '#409EFF',
+    failedColor: '#F56C6C',
+    continuous: true
+  },
   modern: isPro, // 现代模式
   modules: [
     '@nuxtjs/axios',

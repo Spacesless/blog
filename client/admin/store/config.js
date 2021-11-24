@@ -29,7 +29,6 @@ const actions = {
   updateConfigs({ commit }, data) {
     return new Promise((resolve, reject) => {
       this.$api.config.UpdateConfigs(data).then(res => {
-        commit('SET_CONFIGS', res.data)
         resolve()
       }).catch(error => {
         reject(error)

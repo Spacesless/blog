@@ -27,6 +27,11 @@ module.exports = class extends Base {
   // 删除回收站记录
   async deleteAction() {
     const list = this.post('list');
+
+    if (!list.length) {
+      return this.fail('CONTENT_NOT_EXIST');
+    }
+
     const promises = [];
     list.forEach(item => {
       const { id, type } = item;
@@ -44,6 +49,10 @@ module.exports = class extends Base {
   // 还原回收站
   async restoreAction() {
     const list = this.post('list');
+
+    if (!list.length) {
+      return this.fail('CONTENT_NOT_EXIST');
+    }
 
     const affectedRows = this.modelInstance.restorePost(list);
 
