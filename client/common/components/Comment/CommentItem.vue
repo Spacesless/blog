@@ -108,9 +108,9 @@ export default {
       } else {
         // gravatar镜像
         const gravatarImage = [
-          'https://sdn.geekzu.org/avatar/', // 极客族
+          'https://sdn.geekzu.org/avatar', // 极客族
           'https://gravatar.loli.net/avatar', // Loli源
-          'https://cdn.sep.cc/avatar/' // inwao源
+          'https://cdn.sep.cc/avatar' // inwao源
         ]
         /**
          * s是大小的意思，r是等级，参数一般是g，d的选项如下

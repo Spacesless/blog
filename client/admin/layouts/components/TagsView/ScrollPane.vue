@@ -74,10 +74,10 @@ export default {
 .scroll-container {
   overflow: hidden;
   position: absolute;
-  left: 16px;
-  right: 16px;
-  height: 38px;
-  line-height: 36px;
+  left: 17px;
+  right: 17px;
+  height: 40px;
+  line-height: 40px;
   white-space: nowrap;
   ::v-deep {
     .el-scrollbar__bar {

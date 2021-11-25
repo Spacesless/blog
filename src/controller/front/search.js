@@ -35,8 +35,7 @@ module.exports = class extends Base {
           width,
           height,
           fit: configs.image_fit,
-          src: imgurl,
-          isAsync: false
+          src: imgurl
         });
         Object.assign(element, {
           type,
@@ -45,6 +44,7 @@ module.exports = class extends Base {
           imgurl: this.getAbsolutePath(thumbnail)
         });
       }
+      await postService.handleCropImage();
 
       const count = allData.length;
       list = {

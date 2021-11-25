@@ -12,9 +12,9 @@ module.exports = class extends think.Model {
     }];
     const field = 'id,title,content,category_id,updatetime,imgurl';
     let SQL;
-    let where = '';
+    let where = 'WHERE ( `is_show` = 1 ) AND ( `is_recycle` = 0 )';
     const modelName = typpeEnum[type];
-    where += `where ((title LIKE '%${keyword}%') OR (content LIKE '%${keyword}%'))`;
+    where += `AND ( ( title LIKE '%${keyword}%') OR ( content LIKE '%${keyword}%') )`;
     if (!think.isEmpty(modelName)) {
       SQL = `
         SELECT ${field},'${modelName}' as type FROM tl_${modelName} ${where}

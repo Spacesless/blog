@@ -43,11 +43,7 @@ module.exports = class extends think.Service {
       typeof predicate === 'function' && predicate(item);
     }
 
-    let result = [];
-    if (this.promiseList.length) {
-      result = await Promise.allSettled(this.promiseList);
-    }
-    await this.addThumbnailCache([...this.cacheQueue, ...result]);
+    await this.handleCropImage();
 
     return list;
   }
@@ -82,11 +78,7 @@ module.exports = class extends think.Service {
     // 如果目标文件存在，则写入缓存
     const destAbsolutePath = path.join(think.RESOURCE_PATH, dest);
     if (think.isExist(destAbsolutePath)) {
-      if (isAsync) {
-        this.cacheQueue.push({ value: dest });
-      } else {
-        await this.addThumbnailCache([{ value: dest }]);
-      }
+      this.cacheQueue.push({ value: dest });
     } else {
       // 如果目标文件不存在，则进行裁剪生成
       const step = this.sharpService.resizeAndCrop({
@@ -97,14 +89,26 @@ module.exports = class extends think.Service {
         dest,
         destAbsolutePath
       });
-      if (isAsync) {
-        this.promiseList.push(step);
-      } else {
-        await step();
-      }
+      this.promiseList.push(step);
+    }
+
+    if (!isAsync) {
+      await this.handleCropImage();
     }
 
     return dest;
+  }
+
+  // 裁剪图片
+  async handleCropImage() {
+    let result = [];
+    if (this.promiseList.length) {
+      result = await Promise.allSettled(this.promiseList);
+    }
+    await this.addThumbnailCache([...this.cacheQueue, ...result]);
+
+    this.promiseList = [];
+    this.cacheQueue = [];
   }
 
   /**
