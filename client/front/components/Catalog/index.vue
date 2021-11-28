@@ -114,11 +114,11 @@ export default {
       left: 6px;
       top: 12px;
       height: 100%;
-      border-left: 2px solid #E4E7ED;
+      border-left: 2px solid var(--bg-normal);
     }
     &__node{
       position: absolute;
-      background-color: #E4E7ED;
+      background-color: var(--bg-normal);
       border-radius: 50%;
       top: 11px;
       left: 1px;

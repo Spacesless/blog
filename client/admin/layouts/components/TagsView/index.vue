@@ -204,7 +204,7 @@ export default {
     width: 100%;
     height: 40px;
     background: #f0f2f5;
-    box-shadow: inset 0px -2px 12px rgb(0, 0, 0, 0.1);
+    box-shadow: inset 0px -2px 12px rgba(0, 0, 0, 0.1);
     .contextmenu {
       position: absolute;
       z-index: 3000;
