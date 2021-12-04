@@ -4,8 +4,10 @@
       <el-col class="blog-summary-text" :xs="24" :sm="12" :lg="14">
         <h1 class="blog-summary__title">{{ data.title }}</h1>
         <div class="blog-summary__admin">
-          <span><i class="tl-icon">&#xe70b;</i>{{ data.updatetime | parseTime('{y}-{m}-{d}') }}</span>
-          <span><i class="tl-icon">&#xe681;</i>{{ data.hits }}</span>
+          <span>{{ data.updatetime | parseTime('{y}-{m}-{d}') }}</span>
+          <span>阅读{{ data.hits }}</span>
+          <span>字数{{ data.word_count }}</span>
+          <span>{{ readDuration }}</span>
         </div>
         <p class="blog-summary__desc">{{ data.description }}</p>
       </el-col>
@@ -61,6 +63,13 @@ export default {
       isLoaded: false
     }
   },
+  computed: {
+    readDuration() {
+      const averageVelocity = 8.3
+      const total = (this.data.word_count || 0) / averageVelocity
+      return total ? Math.ceil(total / 60) + ' min read' : ''
+    }
+  },
   mounted() {
     this.initPrism()
 
@@ -70,7 +79,7 @@ export default {
 
     // 浏览5秒才算访问量
     this.timer = setTimeout(() => {
-      this.handleRecordAccess()
+      // this.handleRecordAccess()
     }, 5000)
   },
   beforeDestroy() {
@@ -142,13 +151,15 @@ export default {
       padding-right: 15px;
     }
     &__title{
+      margin-bottom: 12px;
       color: var(--color-heading);
       font-size: 30px;
       font-weight: normal;
-      line-height: 2;
+      line-height: 1;
     }
     &__admin{
       font-size: 15px;
+      color: var(--color-secondary);
       span{
         margin-right: 10px;
       }

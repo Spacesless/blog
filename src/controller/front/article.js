@@ -30,7 +30,17 @@ module.exports = class extends Base {
       pageSize,
       childCategories
     };
-    const list = await this.model('front/article').selectPost(query);
+
+    const [list, commentGroup] = await Promise.all([
+      this.model('front/article').selectPost(query),
+      this.model('front/comment').groupComment()
+    ]);
+
+    // 评论数量
+    const commentCount = commentGroup.reduce((prev, curr) => {
+      prev[curr.topic_id] = curr.count;
+      return prev;
+    }, {});
 
     // 转换列表
     const postService = this.service('post', 'article', configs);
@@ -39,6 +49,7 @@ module.exports = class extends Base {
       item.imgurl = this.getAbsolutePath(imgurl);
       item.description = description.substr(0, 80);
       item.tag = tag ? tag.split('|') : [];
+      item.comment_count = commentCount['article-' + item.id] || 0;
     });
 
     return this.success(list);

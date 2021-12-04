@@ -29,4 +29,12 @@ module.exports = class extends think.Model {
 
     return [...list, ...replyList];
   }
+
+  // 评论分组
+  groupComment() {
+    return this.field('topic_id,count(*) AS count')
+      .where({ topic_id: ['like', 'article%'] })
+      .group('topic_id')
+      .select();
+  }
 };

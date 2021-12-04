@@ -61,6 +61,7 @@ export default {
   mixins: [crud, listDialog],
   data() {
     return {
+      currentType: 'banner',
       bannerList: []
     }
   },

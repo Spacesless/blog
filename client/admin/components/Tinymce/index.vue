@@ -226,6 +226,9 @@ export default {
     },
     getContent() {
       window.tinymce.get(this.tinymceId).getContent()
+    },
+    getWordCount() {
+      return window.tinymce.get(this.tinymceId).plugins.wordcount.getCount()
     }
   }
 }

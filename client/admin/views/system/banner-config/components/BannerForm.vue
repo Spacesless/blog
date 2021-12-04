@@ -62,6 +62,11 @@ export default {
       }
     }
   },
+  watch: {
+    fileList([src]) {
+      this.formData.imgurl = src
+    }
+  },
   methods: {
     onOpen() {
       this.fileList = []
@@ -70,6 +75,9 @@ export default {
         this.fetchData()
       } else {
         this.dialogTitle = '添加Banner'
+        this.formData = {
+          is_show: 1
+        }
       }
     },
     async fetchData() {

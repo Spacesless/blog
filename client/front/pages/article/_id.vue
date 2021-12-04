@@ -71,7 +71,9 @@
             >{{ tag }}</span>
           </div>
           <div class="article-item-info-stuff">
+            <span><i class="tl-icon">&#xe629;</i>{{ item.word_count }}</span>
             <span><i class="tl-icon">&#xe681;</i>{{ item.hits }}</span>
+            <span><i class="tl-icon">&#xe745;</i>{{ item.comment_count }}</span>
           </div>
         </el-col>
       </el-row>
@@ -231,9 +233,12 @@ export default {
         bottom: 15%;
         color: var(--color-secondary);
         font-size: 14px;
+        span{
+          margin-right: 16px;
+        }
         .tl-icon{
           margin-top: -2px;
-          margin-right: 3px;
+          margin-right: 4px;
           font-size: 17px;
         }
         @media (max-width: 992px) {

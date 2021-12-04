@@ -5,7 +5,7 @@ module.exports = class extends think.Model {
    * @returns {Object}
    */
   async selectPost({ category, page, pageSize, sortBy, orderBy, tags, childCategories }) {
-    const field = 'id,title,description,imgurl,updatetime,hits,tag';
+    const field = 'id,title,description,imgurl,updatetime,hits,tag,word_count';
     const sort = sortBy || 'updatetime';
     const order = orderBy ? orderBy.toUpperCase() : 'DESC';
 

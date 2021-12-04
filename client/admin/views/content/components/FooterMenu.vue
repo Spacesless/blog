@@ -65,7 +65,7 @@ export default {
       }).then(async() => {
         const passData = this.multipleSelection.map(item => {
           const { id } = item
-          return { id, category: this.targetCategory }
+          return { id, category_id: this.targetCategory }
         })
         this.moveLoading = true
         await this.$parent.handleUpdateSelection(passData)

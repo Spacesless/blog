@@ -232,10 +232,9 @@ export default {
         this.confirmLoading = true
         const postData = {
           ...this.formData,
-          ...{
-            imgurl: this.fileList.length ? this.fileList[0].url : '',
-            tag: this.tags.join('|')
-          }
+          imgurl: this.fileList.length ? this.fileList[0].url : '',
+          tag: this.tags.join('|'),
+          word_count: this.$refs.editor?.getWordCount() || 0
         }
 
         const SubmitHandler = this.isEdit ? this.$api.content.UpdateContent : this.$api.content.CreateContent
