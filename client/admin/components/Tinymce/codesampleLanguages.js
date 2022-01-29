@@ -1,4 +1,4 @@
-const languages = [
+const codesampleLanguages = [
   { text: 'Text', value: 'text' },
   { text: 'HTML/XML', value: 'markup' },
   { text: 'JavaScript', value: 'javascript' },
@@ -10,4 +10,4 @@ const languages = [
   { text: 'TypeScript', value: 'typescript' }
 ]
 
-export default languages
+export default codesampleLanguages

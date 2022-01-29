@@ -19,6 +19,7 @@ module.exports = class extends Base {
    *   XSS过滤
    *   重复内容检测
    *   基于 IP 的发布评论频率限制
+   *   发送邮件通知
    */
   async postAction() {
     const data = this.post();
@@ -49,6 +50,19 @@ module.exports = class extends Base {
       .add(data);
 
     if (insertId) {
+      const Nodemailer = think.service('nodemailer');
+      Nodemailer.sendMail({
+        from: '18878554196@163.com',
+        to: '804093032@qq.com',
+        subject: '网站收到留言啦',
+        html: `
+          <p>页面标题：${data.topic_title}</p>
+          <p>昵称：${data.name}</p>
+          <p>邮箱：${data.email}</p>
+          <p>网址：${data.website || ''}</p>
+          <p>评论内容：${data.content}</p>
+        `
+      });
       return this.success();
     } else {
       return this.fail('遇到一个无法处理的问题');
