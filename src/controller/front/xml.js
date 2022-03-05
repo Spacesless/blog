@@ -2,7 +2,7 @@ const Base = require('./base.js');
 
 module.exports = class extends Base {
   async __before() {
-    this.baseurl = 'https' + this.siteurl;
+    this.baseurl = 'https:' + this.siteurl;
     this.archives = await this.model('front/xml').selectArchives();
   }
 
