@@ -97,8 +97,10 @@
 
 <script>
 import { debounce } from '@/utils'
+import { pageMeta } from '@/mixins'
 
 export default {
+  mixins: [pageMeta],
   async asyncData({ store, $axios }) {
     const { bannerList, articleList, bangumiList } = await $axios.$get('/index')
 
@@ -145,16 +147,6 @@ export default {
     handleResize() {
       const carouselWidth = this.$refs.carousel?.$el.clientWidth
       this.bannerHeight = 500 * carouselWidth / 1280
-    }
-  },
-  head() {
-    const { sitename, keywords, description } = this.$store.getters.configs
-    return {
-      title: sitename,
-      meta: [
-        { hid: 'description', name: 'description', content: description },
-        { hid: 'keyword', name: 'keyword', content: keywords }
-      ]
     }
   }
 }

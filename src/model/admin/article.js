@@ -6,7 +6,7 @@ module.exports = class extends Base {
    * @param {Object} params 查询条件
    * @returns {Object}
    */
-  async selectPost({ keyword, category, page, pageSize }) {
+  async selectPost({ keyword, category, page, pageSize, updatetime, word_count: wordCount }) {
     const where = { is_recycle: 0 };
     if (keyword) {
       where.title = ['like', `%${keyword}%`];
@@ -19,10 +19,19 @@ module.exports = class extends Base {
       where.category_id = ['IN', childCategories];
     }
 
-    const field = 'id,title,imgurl,hits,updatetime,is_show';
+    const order = { updatetime: 'DESC' };
+    const orderWhiteList = ['DESC', 'ASC'];
+    if (updatetime && orderWhiteList.includes(updatetime)) {
+      order.updatetime = updatetime;
+    }
+    if (wordCount && orderWhiteList.includes(wordCount)) {
+      order.word_count = wordCount;
+    }
+
+    const field = 'id,title,imgurl,hits,word_count,updatetime,is_show';
     const list = await this.where(where)
       .field(field)
-      .order('updatetime DESC')
+      .order(order)
       .page(page, pageSize)
       .countSelect();
 

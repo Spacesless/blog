@@ -61,23 +61,20 @@
 <script>
 import { mapGetters } from 'vuex'
 import Comment from '#/components/Comment'
+import { pageMeta } from '@/mixins'
 
 export default {
   components: {
     Comment
   },
+  mixins: [pageMeta],
+  data() {
+    return {
+      pageName: '关于本站'
+    }
+  },
   computed: {
     ...mapGetters(['configs'])
-  },
-  head() {
-    const { sitename, keywords, description } = this.configs
-    return {
-      title: `关于本站 - ${sitename}`,
-      meta: [
-        { hid: 'description', name: 'description', content: description },
-        { hid: 'keyword', name: 'keyword', content: keywords }
-      ]
-    }
   }
 }
 </script>

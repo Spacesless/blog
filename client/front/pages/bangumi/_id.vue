@@ -106,14 +106,14 @@
 
 <script>
 import Pagination from '#/components/Pagination'
-import { pageMeta, listQuery, listPage } from '@/mixins'
+import { pageMeta, listPage } from '@/mixins'
 import { getAbsolutePath } from '#/utils'
 
 export default {
   components: {
     Pagination
   },
-  mixins: [pageMeta, listQuery, listPage],
+  mixins: [pageMeta, listPage],
   async asyncData({ app, params, query, $axios }) {
     const paramId = params.id
     const [id, page] = paramId ? paramId.split('-') : []

@@ -41,23 +41,20 @@
 
 <script>
 import Comment from '#/components/Comment'
+import { pageMeta } from '@/mixins'
 
 export default {
   components: {
     Comment
   },
+  mixins: [pageMeta],
   async asyncData({ $axios }) {
     const linkList = await $axios.$get('/link')
     return { linkList }
   },
-  head() {
-    const { sitename, keywords, description } = this.$store.getters.configs
+  data() {
     return {
-      title: `友情链接 - ${sitename}`,
-      meta: [
-        { hid: 'description', name: 'description', content: description },
-        { hid: 'keyword', name: 'keyword', content: keywords }
-      ]
+      pageName: '友情链接'
     }
   }
 }

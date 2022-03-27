@@ -75,7 +75,9 @@ export const crud = {
     this.autoFetchList && this.fetchList()
   },
   activated() {
-    this.$refs.multipleTable && this.$refs.multipleTable.doLayout()
+    this.$nextTick(() => {
+      this.$refs.multipleTable?.doLayout()
+    })
   },
   methods: {
     async fetchList() {

@@ -8,12 +8,15 @@
       <el-tooltip class="right-menu-item hover-effect" effect="dark" content="刷新页面" placement="bottom">
         <span @click="handleRefresh"><i class="el-icon-refresh-right" /></span>
       </el-tooltip>
-      <el-tooltip class="right-menu-item hover-effect" effect="dark" content="删除缩略图" placement="bottom">
-        <span @click="handleClearThumbnail"><i class="el-icon-delete" /></span>
-      </el-tooltip>
-      <el-tooltip class="right-menu-item hover-effect" effect="dark" content="清除缓存" placement="bottom">
-        <span @click="handleClearCache"><i class="el-icon-brush" /></span>
-      </el-tooltip>
+      <el-dropdown trigger="click" placement="bottom">
+        <div class="right-menu-item hover-effect">
+          <i class="el-icon-brush" />
+        </div>
+        <el-dropdown-menu slot="dropdown" style="margin-top:-1px;">
+          <el-dropdown-item @click.native="handleClearCache">清除缓存</el-dropdown-item>
+          <el-dropdown-item @click.native="handleClearThumbnail">删除缩略图</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
       <el-tooltip class="right-menu-item hover-effect" effect="dark" content="前台预览" placement="bottom">
         <a :href="configs.siteurl" target="_blank">
           <span class="el-icon-monitor" />

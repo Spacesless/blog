@@ -9,7 +9,7 @@
 
     <el-table
       ref="multipleTable"
-      v-el-height-adaptive-table="{bottomOffset: 152}"
+      v-el-height-adaptive-table="{bottomOffset: 147}"
       v-loading="listLoading"
       :data="tableData"
       height="233"
@@ -57,7 +57,13 @@
           />
         </template>
       </el-table-column>
-      <el-table-column label="状态" column-key="status" width="150" align="center" sortable>
+      <el-table-column
+        label="状态"
+        width="150"
+        align="center"
+        :filters="[{ text: '未上映', value: 0 }, { text: '连载中', value: 1 }, { text: '已完结', value: 2 }]"
+        :filter-method="filterStatus"
+      >
         <template #default="scope">
           <el-select v-model="scope.row.status" placeholder="请选择状态">
             <el-option label="未上映" :value="0" />
@@ -66,7 +72,7 @@
           </el-select>
         </template>
       </el-table-column>
-      <el-table-column label="推荐指数" width="150" align="center">
+      <el-table-column label="推荐指数" width="150" align="center" prop="ratings" sortable>
         <template #default="scope">
           <el-input-number
             v-model="scope.row.ratings"
@@ -77,7 +83,13 @@
           />
         </template>
       </el-table-column>
-      <el-table-column label="前台显示" width="100" align="center">
+      <el-table-column
+        label="前台显示"
+        width="100"
+        align="center"
+        :filters="[{ text: '显示', value: 1 }, { text: '隐藏', value: 0 }]"
+        :filter-method="filterShow"
+      >
         <template #default="scope">
           <el-tag v-if="scope.row.is_show">显示</el-tag>
           <el-tag v-else type="info">隐藏</el-tag>
@@ -168,14 +180,32 @@ export default {
         query: { type: this.currentType }
       })
     },
-    onSortChange({ column, prop, order }) {
-      console.log({ column, prop, order })
+    /**
+     * 列排序
+     * @param {String} prop 列字段
+     * @param {String} order descending降序
+     */
+    onSortChange({ prop, order }) {
       if (order) {
-        this.listQuery.order = `${column.columnKey} ${order === 'descending' ? 'DESC' : 'ASC'}`
+        this.listQuery[prop] = order === 'descending' ? 'DESC' : 'ASC'
       } else {
-        this.listQuery.order = ''
+        this.listQuery[prop] = null
       }
       this.handleSearch()
+    },
+    /**
+     * 过滤状态
+     */
+    filterStatus(value, row) {
+      return row.status === value
+    },
+    /**
+     * 过滤前台是否展示
+     * @param {Number} value 选中的状态
+     * @param {Object} row 行数据
+     */
+    filterShow(value, row) {
+      return row.is_show === value
     },
     handleUpdateSelection(data) {
       return this.$api.list.UpdateList(this.currentType, data).then(res => {

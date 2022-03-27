@@ -30,11 +30,14 @@ module.exports = class extends Base {
 
     // 配置信息
     const {
-      sitename, is_silent, live2d_model, live2d_texture, icp_beian, police_beian,
+      sitename, keywords, description,
+      is_silent, live2d_model, live2d_texture, icp_beian, police_beian,
       article_width, article_height, bangumi_width, bangumi_height
     } = configs;
     const targetConfigs = {
       siteurl: this.siteurl,
+      keywords,
+      description,
       currentYear: new Date().getFullYear(),
       duration: Math.ceil((new Date() - new Date('2018/03/15')) / 86400000),
       sitename,

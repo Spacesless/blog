@@ -50,13 +50,16 @@
 <script>
 import { mapGetters } from 'vuex'
 import Pagination from '#/components/Pagination'
+import { pageMeta } from '@/mixins'
 
 export default {
   components: {
     Pagination
   },
+  mixins: [pageMeta],
   data() {
     return {
+      pageName: '站内搜索',
       searchList: [],
       classifyOptions: [{
         label: '全部',
@@ -134,16 +137,6 @@ export default {
       this.listQuery.keyword = keyword
       this.listQuery.classify = null
       this.handleSearch()
-    }
-  },
-  head() {
-    const { sitename, keywords, description } = this.configs
-    return {
-      title: `站内搜索 - ${sitename}`,
-      meta: [
-        { hid: 'description', name: 'description', content: description },
-        { hid: 'keyword', name: 'keyword', content: keywords }
-      ]
     }
   }
 }
