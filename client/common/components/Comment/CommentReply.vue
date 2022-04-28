@@ -98,14 +98,24 @@ export default {
       tree: null,
       submitLoading: false,
       rules: {
-        name: [{ required: true, trigger: 'blur', message: '你还没告诉我你叫什么呢' }],
+        name: [
+          { required: true, trigger: 'blur', message: '请输入昵称' },
+          { max: 50, trigger: ['change', 'blur'], message: '昵称太长了' }
+        ],
         email: [
           { required: true, message: '要不留个邮箱', trigger: 'blur' },
           { type: 'email', message: '请输入正确的邮箱', trigger: ['change', 'blur'] },
+          { max: 255, trigger: ['change', 'blur'], message: '邮箱地址有那么多字嘛' },
           { trigger: 'change', validator: validateEmail }
         ],
-        website: [{ type: 'url', message: '噫，这个网址好像不对哦', trigger: 'change' }],
-        content: [{ required: true, trigger: 'blur', message: '确定不说点什么?' }]
+        website: [
+          { type: 'url', message: '噫，这个网址好像不对哦', trigger: 'change' },
+          { max: 255, trigger: ['change', 'blur'], message: '网址有那么多字嘛' }
+        ],
+        content: [
+          { required: true, trigger: 'blur', message: '确定不说点什么?' },
+          { max: 500, trigger: ['change', 'blur'], message: '只能输入500个字哦' }
+        ]
       },
       selectionStart: 0,
       isShowPreview: false

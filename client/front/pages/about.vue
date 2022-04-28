@@ -1,6 +1,6 @@
 <template>
   <div class="about">
-    <h1 class="about__title">关于本站</h1>
+    <h1 class="tl__title">关于本站</h1>
     <div class="about-introduce">
       <p>本站是个人网站，用来记录工作经验以及生活点滴，主要关注web开发、二次元等方面，用爱发电。</p>
       <p>部分内容(图片、视频)来源于互联网，如果有侵权内容、不妥之处，请联系我删除。</p>
@@ -86,20 +86,12 @@ export default {
   line-height: 2;
   &-introduce{
     padding: 20px 15px;
-    margin-bottom: 20px;
+    margin-bottom: 4px;
     background-color: var(--bg-normal);
     border-radius: 4px;
-    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
     &-timeline{
       margin-top: 15px;
     }
-  }
-  &__title{
-    padding: 30px 0;
-    color: var(--color-heading);
-    font-size: 32px;
-    font-weight: normal;
-    line-height: 1.5;
   }
   &-timeline {
     padding-top: 15px;

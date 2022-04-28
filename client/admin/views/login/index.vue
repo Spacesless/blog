@@ -87,7 +87,7 @@
 
     <div class="login-footer">
       <p class="login-footer__tips">希望我们都是会哭的孩子，更是坚强的大人</p>
-      <p class="login-footer__copyright">Copyright © 2018 - 2021 Timeless. All rights reserved. </p>
+      <p class="login-footer__copyright">Copyright © 2018 - 2022 Timeless. All rights reserved. </p>
     </div>
   </div>
 </template>

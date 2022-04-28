@@ -1,16 +1,8 @@
 <template>
   <div class="bangumi">
-    <div class="banner">
-      <img
-        class="img-fluid"
-        width="1280"
-        height="500"
-        :src="bannerImage"
-        :srcset="bannerImage | getImageSrcSet(1280)"
-        alt="番剧"
-      >
-      <p class="banner__title">以一朵花的姿态，花开成景，花落成诗</p>
-    </div>
+    <h2 class="tl__title">追番刷剧</h2>
+    <!-- 一言 -->
+    <Hitokoto :kinds="['a', 'b', 'h']" />
     <el-form class="filter" label-width="40px" label-position="left">
       <el-form-item label="排序">
         <el-select v-model="filters.sortBy" placeholder="请选择排序方式" @change="handleSearch">
@@ -105,12 +97,14 @@
 </template>
 
 <script>
+import Hitokoto from '@/components/Hitokoto'
 import Pagination from '#/components/Pagination'
 import { pageMeta, listPage } from '@/mixins'
 import { getAbsolutePath } from '#/utils'
 
 export default {
   components: {
+    Hitokoto,
     Pagination
   },
   mixins: [pageMeta, listPage],

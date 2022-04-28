@@ -1,16 +1,8 @@
 <template>
   <div class="article">
-    <div class="banner">
-      <img
-        class="img-fluid"
-        width="1280"
-        height="500"
-        :src="bannerImage"
-        :srcset="bannerImage | getImageSrcSet(1280)"
-        alt="文章"
-      >
-      <p class="banner__title">用心甘情愿的态度，过随遇而安的生活</p>
-    </div>
+    <h2 class="tl__title">文章笔记</h2>
+    <!-- 一言 -->
+    <Hitokoto :kinds="['k']" />
     <!-- filter -->
     <el-form class="filter" label-width="40px" label-position="left">
       <el-form-item label="排序">
@@ -86,12 +78,14 @@
 </template>
 
 <script>
+import Hitokoto from '@/components/Hitokoto'
 import Pagination from '#/components/Pagination'
 import { pageMeta, listPage } from '@/mixins'
 import { getAbsolutePath } from '#/utils'
 
 export default {
   components: {
+    Hitokoto,
     Pagination
   },
   filters: {

@@ -197,10 +197,9 @@ export default {
 .bangumi{
   &-info{
     overflow: hidden;
-    margin-bottom: 20px;
+    margin-bottom: 4px;
     background-color: var(--bg-normal);
     border-radius: 4px;
-    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
     &__poster{
       max-height: 500px;
     }
@@ -239,10 +238,9 @@ export default {
   }
   &-content{
     padding: 15px;
-    margin-bottom: 20px;
+    margin-bottom: 4px;
     background-color: var(--bg-normal);
     border-radius: 4px;
-    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
     #player {
       ::v-deep .aplayer{
         margin: 20px 0;

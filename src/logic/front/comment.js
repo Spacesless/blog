@@ -22,16 +22,20 @@ module.exports = class extends think.Logic {
         in: [1, 2, 3]
       },
       name: {
-        required: true
+        required: true,
+        length: { max: 50 }
       },
       email: {
-        email: true
+        email: true,
+        length: { max: 255 }
       },
       website: {
-        fqdn: true
+        fqdn: true,
+        length: { max: 255 }
       },
       content: {
-        required: true
+        required: true,
+        length: { max: 500 }
       }
     };
   }

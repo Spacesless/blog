@@ -69,14 +69,20 @@ export default {
       } else {
         this.particleInstance.stopDraw()
       }
+    },
+    '$route.name': {
+      async handler(name) {
+        await this.$nextTick()
+        if (name === 'index' && +this.configs.is_silent) {
+          document.documentElement.classList.add('silent')
+        } else {
+          document.documentElement.classList.remove('silent')
+        }
+      },
+      immediate: true
     }
   },
   mounted() {
-    if (+this.configs.is_silent) {
-      document.documentElement.classList.add('silent')
-    } else {
-      document.documentElement.classList.remove('silent')
-    }
     this.particleInstance = new ParticleCanvas(
       'flower',
       [

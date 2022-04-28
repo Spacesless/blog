@@ -185,7 +185,6 @@ export default {
   overflow: hidden;
   margin-bottom: 15px;
   border-radius: 4px;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   &-item{
     &__image{
       display: block;
@@ -213,7 +212,6 @@ export default {
     padding: 10px 15px;
     background: var(--bg-normal);
     border: 1px solid var(--border-color);
-    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
     border-radius: 4px;
     transition: all .3s;
     &:hover{

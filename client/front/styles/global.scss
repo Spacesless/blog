@@ -112,6 +112,13 @@ a {
     border-radius: 10px;
     cursor: pointer;
   }
+  &__title{
+    padding: 30px 0;
+    color: var(--color-heading);
+    font-size: 32px;
+    font-weight: normal;
+    line-height: 1.5;
+  }
 }
 $tagColor:(
   "red": #ff4d4f,

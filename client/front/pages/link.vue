@@ -1,7 +1,7 @@
 <template>
   <!-- link start -->
   <div class="link">
-    <h1 class="link__title">友情链接</h1>
+    <h1 class="tl__title">友情链接</h1>
     <el-row class="link-wrap" :gutter="15">
       <el-col v-for="item in linkList" :key="item.id" :sm="12" :md="8" :lg="6">
         <a class="link-item" :href="item.website" :title="item.name" target="_blank" rel="noopener noreferrer">
@@ -65,15 +65,9 @@ export default {
   color: var(--color-text);
   font-size: 15px;
   line-height: 2;
-  &__title{
-    padding: 30px 0;
-    font-size: 32px;
-    font-weight: normal;
-    line-height: 1.5;
-  }
   &-wrap {
     ::v-deep .el-col{
-      margin-bottom: 15px;
+      margin-bottom: 4px;
       transition: transform 0.3s;
       &:hover{
         transform:translateY(-5px);
@@ -87,7 +81,6 @@ export default {
     border-top: 3px solid var(--color-primary);
     color: var(--color-text);
     border-radius: 4px;
-    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   }
   &-logo{
     overflow: hidden;
@@ -123,10 +116,9 @@ export default {
   &-tips{
     padding: 20px 15px;
     padding-top: 1px;
-    margin: 5px 0 20px;
+    margin-bottom: 4px;
     background-color: var(--bg-normal);
     border-radius: 4px;
-    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
     span {
       margin-left: 15px;
       color: #F56C6C;

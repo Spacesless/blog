@@ -1,18 +1,18 @@
 <template>
   <div class="blog">
     <el-row class="blog-summary">
+      <el-col class="blog-summary-cover" :xs="24" :sm="12" :lg="10">
+        <img class="img-fluid" :src="data.imgurl" :alt="data.title">
+      </el-col>
       <el-col class="blog-summary-text" :xs="24" :sm="12" :lg="14">
         <h1 class="blog-summary__title">{{ data.title }}</h1>
         <div class="blog-summary__admin">
-          <span>{{ data.updatetime | parseTime('{y}-{m}-{d}') }}</span>
+          <span>{{ data.updatetime | parseTime('{y}年{m}月{d}日') }}</span>
           <span>阅读{{ data.hits }}</span>
           <span>字数{{ data.word_count }}</span>
           <span>{{ readDuration }}</span>
         </div>
         <p class="blog-summary__desc">{{ data.description }}</p>
-      </el-col>
-      <el-col class="blog-summary-cover" :xs="24" :sm="12" :lg="10">
-        <img class="img-fluid" :src="data.imgurl" :alt="data.title">
       </el-col>
     </el-row>
     <!-- 文章内容 -->
@@ -142,13 +142,11 @@ export default {
   &-summary{
     overflow: hidden;
     position: relative;
-    padding: 15px;
-    margin-bottom: 20px;
+    margin-bottom: 6px;
     background-color: var(--bg-normal);
     border-radius: 4px;
-    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
     &-text{
-      padding-right: 15px;
+      padding: 15px;
     }
     &__title{
       margin-bottom: 12px;
@@ -168,7 +166,12 @@ export default {
       }
     }
     &__desc{
-      padding: 10px 0;
+      margin-top: 16px;
+      padding: 8px 12px;
+      background: rgba($--color-primary, .1);
+      border: 1px solid rgba($--color-primary, .3);
+      border-left: 4px solid $--color-primary;
+      border-radius: 4px;
       color: var(--color-text);
       font-size: 15px;
       line-height: 1.7;
@@ -177,10 +180,9 @@ export default {
   }
   &-content{
     padding: 15px;
-    margin-bottom: 20px;
+    margin-bottom: 6px;
     background-color: var(--bg-normal);
     border-radius: 4px;
-    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   }
 }
 </style>

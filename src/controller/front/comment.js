@@ -1,4 +1,5 @@
 const Base = require('./base.js');
+const xss = require('xss');
 const moment = require('moment');
 
 module.exports = class extends Base {
@@ -43,13 +44,16 @@ module.exports = class extends Base {
       return this.fail('操作太频繁，请稍后再试试');
     }
 
+    // XSS过滤
+    data.content = xss(data.content);
+
     data.addtime = moment().format('YYYY-MM-DD HH:mm:ss');
     data.ip = IP;
 
-    const insertId = await this.model('comment')
-      .add(data);
+    const insertId = await this.model('comment').add(data);
 
     if (insertId) {
+      // 发送邮件通知
       const Nodemailer = think.service('nodemailer');
       Nodemailer.sendMail({
         from: '18878554196@163.com',
