@@ -67,18 +67,18 @@ export default {
     display: none;
   }
   .fixbar-item{
-    width: 40px;
-    height: 40px;
-    margin-bottom: 5px;
+    width: 48px;
+    height: 48px;
+    margin-top: $grid-space / 2;
     background-color: var(--bg-normal);
     font-size: 24px;
-    line-height: 40px;
+    line-height: 48px;
     text-align: center;
     outline: none;
     user-select: none;
     cursor: pointer;
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-    border-radius: 4px;
+    border-radius: 50%;
     &:hover{
       background-color: var(--bg-normal);
       color: var(--color-primary);

@@ -81,7 +81,6 @@
 import Hitokoto from '@/components/Hitokoto'
 import Pagination from '#/components/Pagination'
 import { pageMeta, listPage } from '@/mixins'
-import { getAbsolutePath } from '#/utils'
 
 export default {
   components: {
@@ -135,9 +134,6 @@ export default {
     }
   },
   computed: {
-    bannerImage() {
-      return getAbsolutePath('/static/img/article-banner.jpg')
-    },
     configs() {
       return this.$store.getters.configs
     }
@@ -147,7 +143,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/styles/list.scss";
+@import "~@/styles/components/list.scss";
 
 .article{
   &-list{
@@ -168,7 +164,7 @@ export default {
   &-item{
     position: relative;
     z-index: 6;
-    margin-bottom: 100px;
+    margin-bottom: $grid-space * 6;
     &:last-child{
       margin-bottom: 0;
     }

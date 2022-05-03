@@ -2,7 +2,10 @@
   <!-- link start -->
   <div class="link">
     <h1 class="tl__title">友情链接</h1>
-    <el-row class="link-wrap" :gutter="15">
+    <div class="hitokoto">
+      <span class="hitokoto__title">愿以一朵花的姿态行走世间，看得清繁华却不在心中留下痕迹，花开成景，花落成诗。</span>
+    </div>
+    <el-row class="link-wrap" :gutter="16">
       <el-col v-for="item in linkList" :key="item.id" :sm="12" :md="8" :lg="6">
         <a class="link-item" :href="item.website" :title="item.name" target="_blank" rel="noopener noreferrer">
           <div class="link-logo">
@@ -67,7 +70,7 @@ export default {
   line-height: 2;
   &-wrap {
     ::v-deep .el-col{
-      margin-bottom: 4px;
+      margin-bottom: $grid-space;
       transition: transform 0.3s;
       &:hover{
         transform:translateY(-5px);
@@ -116,7 +119,7 @@ export default {
   &-tips{
     padding: 20px 15px;
     padding-top: 1px;
-    margin-bottom: 4px;
+    margin-bottom: $grid-space;
     background-color: var(--bg-normal);
     border-radius: 4px;
     span {

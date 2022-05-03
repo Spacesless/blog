@@ -26,7 +26,7 @@
     &-item{
       overflow: hidden;
       position: relative;
-      margin-bottom: 20px;
+      margin-bottom: $grid-space + 8;
       border: 1px solid var(--border-color);
       background-color: var(--bg-normal);
       border-radius: 4px;

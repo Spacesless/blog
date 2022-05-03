@@ -43,7 +43,7 @@
     </el-form>
     <!--bangumi list-->
     <div class="bangumi-list">
-      <el-row :gutter="20">
+      <el-row :gutter="24">
         <el-col v-for="item in bangumiList" :key="item.id" :xs="24" :sm="12">
           <el-row class="bangumi-list-item">
             <el-col class="bangumi-list-cover" :span="8" :xl="10">
@@ -100,7 +100,6 @@
 import Hitokoto from '@/components/Hitokoto'
 import Pagination from '#/components/Pagination'
 import { pageMeta, listPage } from '@/mixins'
-import { getAbsolutePath } from '#/utils'
 
 export default {
   components: {
@@ -146,9 +145,6 @@ export default {
     }
   },
   computed: {
-    bannerImage() {
-      return getAbsolutePath('/static/img/bangumi-banner.jpg')
-    },
     configs() {
       return this.$store.getters.configs
     }
@@ -158,6 +154,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/styles/list.scss";
-@import "~@/styles/bangumi.scss";
+@import "~@/styles/components/list.scss";
+@import "~@/styles/components/bangumi.scss";
 </style>

@@ -29,7 +29,7 @@
         <h2 class="home-head__title">最新文章</h2>
         <nuxt-link class="home-head__more" to="/article">more+</nuxt-link>
       </div>
-      <el-row class="article-list" :gutter="20">
+      <el-row class="article-list" :gutter="24">
         <el-col v-for="item in articleList" :key="item.id" :md="12">
           <div class="article-item">
             <p class="article-title">
@@ -56,7 +56,7 @@
         <h2 class="home-head__title">最近追番</h2>
         <nuxt-link class="home-head__more" to="/bangumi">more+</nuxt-link>
       </div>
-      <el-row class="bangumi-list" :gutter="20">
+      <el-row class="bangumi-list" :gutter="24">
         <el-col v-for="item in bangumiList" :key="item.id" :xs="24" :sm="12">
           <el-row class="bangumi-list-item">
             <el-col :span="8" :xl="10">
@@ -142,7 +142,9 @@ export default {
     onImageLoad(e) {
       if (this.isLoaded) return
       this.isLoaded = true
-      this.handleResize()
+      this.$nextTick(() => {
+        this.handleResize()
+      })
     },
     handleResize() {
       const carouselWidth = this.$refs.carousel?.$el.clientWidth
@@ -153,7 +155,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/styles/bangumi.scss";
+@import "~@/styles/components/bangumi.scss";
 
 .home{
   &-head{
@@ -208,7 +210,7 @@ export default {
 .article{
   &-item {
     position: relative;
-    margin-bottom: 20px;
+    margin-bottom: $grid-space + 8;
     padding: 10px 15px;
     background: var(--bg-normal);
     border: 1px solid var(--border-color);

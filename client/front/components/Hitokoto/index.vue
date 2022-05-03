@@ -42,15 +42,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.hitokoto{
-  min-height: 24px;
-  margin-top: -16px;
-  margin-bottom: 30px;
-  line-height: 24px;
-  &__from{
-    color: var(--color-secondary);
-  }
-}
-</style>

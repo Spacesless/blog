@@ -143,7 +143,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/styles/list.scss";
+@import "~@/styles/components/list.scss";
 
 .search{
   padding-top: 50px;

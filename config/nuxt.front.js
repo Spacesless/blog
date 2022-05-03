@@ -56,7 +56,7 @@ module.exports = {
   },
   buildDir: 'www/nuxt-front',
   css: [
-    '@/styles/global.scss'
+    '@/styles/index.scss'
   ],
   head: {
     meta: [
@@ -87,7 +87,7 @@ module.exports = {
   },
   srcDir,
   styleResources: {
-    scss: resolve('/styles/element-variables.scss')
+    scss: resolve('/styles/settings/variables.scss')
   },
   telemetry: false // 关闭收集遥测数据
 }

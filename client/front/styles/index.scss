@@ -1,0 +1,46 @@
+// light、dark
+@import './settings/color-mode.scss';
+// normalize
+@import './generic/normalize.scss';
+// element-ui
+@import './generic/element-ui.scss';
+// OOCSS
+@import './objects/objects.scss';
+@import './objects/transition.scss';
+
+// 公共类名
+.silent{
+  filter: grayscale(100%);
+  filter: progid:DXImageTransform.Microsoft.BasicImage(grayscale=1);
+  filter: gray;
+}
+
+.hitokoto{
+  min-height: 24px;
+  margin-top: -16px;
+  margin-bottom: 30px;
+  line-height: 24px;
+  &__from{
+    color: var(--color-secondary);
+  }
+}
+
+// scrollbar
+@media (pointer: fine) {
+  ::-webkit-scrollbar {
+    height: 8px;
+    width: 8px;
+    background-color: transparent;
+  }
+  ::-webkit-scrollbar-button {
+    width: 0;
+    height: 0;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(144,147,153,.4);
+    border-radius: 4px;
+    &:hover{
+      background-color: rgba(144,147,153,.7);
+    }
+  }
+}

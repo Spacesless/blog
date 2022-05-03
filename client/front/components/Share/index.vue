@@ -30,13 +30,24 @@
 import QRCode from 'qrcode'
 
 export default {
+  props: {
+    title: {
+      type: String,
+      default: ''
+    },
+    cover: {
+      type: String,
+      default: ''
+    },
+    description: {
+      type: String,
+      default: ''
+    }
+  },
   data() {
     return {
-      url: '',
-      title: '',
-      description: '',
-      cover: '',
-      website: encodeURIComponent(''),
+      shareUrl: '',
+      website: '',
       wxVisible: false
     }
   },
@@ -45,19 +56,16 @@ export default {
   },
   methods: {
     getShareData() {
-      this.url = encodeURIComponent(location.href)
-      this.title = encodeURIComponent(document.title)
-      const descriptionEle = document.getElementById('description')
-      this.description = descriptionEle ? encodeURIComponent(descriptionEle.innerText) : ''
-      const cover = document.getElementById('cover')
-      this.cover = cover ? cover.src : ''
+      this.shareUrl = encodeURIComponent(location.href)
+      this.website = encodeURIComponent(location.origin)
+      this.shareTitle = this.title || encodeURIComponent(document.title)
     },
     shareToQQ() {
-      const url = `https://connect.qq.com/widget/shareqq/index.html?url='${this.url}&title=${this.title}&desc=${this.description}&summary=&site=${this.website}`
+      const url = `https://connect.qq.com/widget/shareqq/index.html?url='${this.shareUrl}&title=${this.shareTitle}&desc=${this.description}&summary=&site=${this.website}`
       this.openWindow(url)
     },
     shareToQzone() {
-      const url = `http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=${this.url}&title=${this.title}&pics=${this.cover}&desc=${this.description}&site=${this.website}`
+      const url = `http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=${this.shareUrl}&title=${this.shareTitle}&pics=${this.cover}&desc=${this.description}&site=${this.website}`
       this.openWindow(url)
     },
     shareToWx() {
@@ -72,16 +80,16 @@ export default {
           light: '#f5f5f5'
         }
       }
-      QRCode.toDataURL(this.url, options, (err, url) => {
+      QRCode.toDataURL(this.shareUrl, options, (err, url) => {
         if (err) throw err
         this.$refs.qrcode.src = url
       })
     },
     shareToSina() {
       const param = {
-        url: this.url,
+        url: this.shareUrl,
         appkey: '564047643',
-        title: this.title,
+        title: this.shareTitle,
         pic: this.cover,
         rnd: new Date().getTime()
       }

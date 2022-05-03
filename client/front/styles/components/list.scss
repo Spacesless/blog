@@ -1,7 +1,7 @@
 // 列表过滤
 .filter{
   position: relative;
-  padding-bottom: 12px;
+  padding-bottom: $grid-space;
   .el-form-item{
     &__label{
       color: var(--color-text);

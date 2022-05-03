@@ -1,12 +1,18 @@
 <template>
   <div class="about">
     <h1 class="tl__title">关于本站</h1>
+    <div class="hitokoto">
+      <span class="hitokoto__title">
+        生活总是两难，再多执着，再多不肯，最终不得不学会接受，从哭着控制，到笑着对待，到头来不过是一场随遇而安。<br>
+        别想太多，一切都会过去的。
+      </span>
+    </div>
     <div class="about-introduce">
-      <p>本站是个人网站，用来记录工作经验以及生活点滴，主要关注web开发、二次元等方面，用爱发电。</p>
-      <p>部分内容(图片、视频)来源于互联网，如果有侵权内容、不妥之处，请联系我删除。</p>
-      <p>Timeless</p>
-      <p>大区：广州</p>
-      <p>职业：练习时长3年半的前端开发</p>
+      <p>这是一个自个开发的小破站，用来记录工作经验以及生活点滴，虽说现在文章不多就是了，因为总想着改代码、加功能而不是写文章 doge。不过只要还感兴趣，网站肯定会坚持做下去的。</p>
+      <p>昵称：Timeless</p>
+      <p>大区：广州郊区</p>
+      <p>职业：练习时长3年半的前端开发，会一丢丢后端</p>
+      <p>喜好：<s>唱、跳、rap</s> 计算机相关、看动画、旅游、爬山等，以及一些未知的事物</p>
       <div class="about-connact">
         <a class="about-connact__links" href="https://space.bilibili.com/315883644/favlist" rel="noopener noreferrer" target="_blank">
           <i class="tl-icon">&#xe75e;</i>Bilibili
@@ -17,8 +23,8 @@
       </div>
       <h2 class="app-main__title">建站历程</h2>
       <p>服务器：腾讯云学生服务器（1C2G3M）</p>
-      <p>内容分发服务：腾讯云CDN，每月白嫖10G够用了，反正没啥流量</p>
-      <p>对象储存服务：腾讯云COS，每月存储50G + 流量10G，存个静态文件啥的</p>
+      <p>内容分发服务：腾讯云CDN（每月白嫖10G够用了，反正没啥流量）</p>
+      <p>对象储存服务：腾讯云COS（每月存储50G + 流量10G，存个静态文件啥的）</p>
       <p>后台：ThinkJS + Vue-element-admin</p>
       <p>前台：ThinkJS + NuxtJs + Element-ui</p>
       <el-timeline class="about-timeline">
@@ -85,16 +91,16 @@ export default {
   font-size: 15px;
   line-height: 2;
   &-introduce{
-    padding: 20px 15px;
-    margin-bottom: 4px;
+    padding: $grid-space;
+    margin-bottom: $grid-space;
     background-color: var(--bg-normal);
     border-radius: 4px;
     &-timeline{
-      margin-top: 15px;
+      margin-top: $grid-space;
     }
   }
   &-timeline {
-    padding-top: 15px;
+    padding-top: $grid-space;
     &-card{
       color: var(--color-text);
     }

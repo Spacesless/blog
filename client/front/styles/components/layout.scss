@@ -11,7 +11,7 @@ body{
 }
 
 // 侧边菜单
-$asideWidth: 235px;
+$asideWidth: 240px;
 .aside{
   position: fixed;
   top: 0;
@@ -159,9 +159,9 @@ $header-height: 45px;
     }
     &__hamburger{
       position: absolute;
-      top: 9px;
+      top: 10px;
       left: -50px;
-      padding: 5px;
+      padding: 6px;
       font-size: 18px;
       cursor: pointer;
       &:hover{
@@ -274,15 +274,15 @@ $header-height: 45px;
 
 // 内容
 .app-main{
-  margin-left: $asideWidth + 15px;
-  margin-right: $asideWidth + 15px;
+  margin-left: $asideWidth;
+  margin-right: $asideWidth;
   transition: margin 0.3s;
   @media (max-width: 992px) {
     margin-right: 0;
   }
   &__title{
     position: relative;
-    margin: 30px 0 15px;
+    margin: $grid-space + 8px 0;
     padding-left: 15px;
     color: var(--color-heading);
     font-size: 24px;

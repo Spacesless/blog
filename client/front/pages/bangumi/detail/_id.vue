@@ -23,6 +23,14 @@
             />
           </div>
           <p><span class="para-name">简介：</span>{{ data.description }}</p>
+          <div class="bangumi-info-tag">
+            <span
+              v-for="(tag,index) in tags"
+              :key="index"
+              class="tl-tag"
+              :class="tag | tagClassName"
+            >{{ tag }}</span>
+          </div>
           <div class="bangumi-info-progress clearfix">
             <span class="para-name">进度：</span>
             <div class="el-progress el-progress--line">
@@ -39,19 +47,24 @@
     </el-row>
     <!--bangumi content-->
     <div ref="content" class="bangumi-content markdown">
-      <h2>主题曲</h2>
-      <div id="player">
-        <p v-for="(item, index) in songList" :key="index">{{ item }}</p>
-        <div id="aplayer" class="aplayer" />
-      </div>
-      <h2>点评</h2>
+      <template v-if="songList && songList.length">
+        <h2>主题曲</h2>
+        <div id="player">
+          <p v-for="(item, index) in songList" :key="index">{{ item }}</p>
+          <div id="aplayer" class="aplayer" />
+        </div>
+      </template>
       <template v-if="hasContent">
+        <h2>点评</h2>
         <div class="bangumi-content-review" v-html="data.content" />
         <el-image ref="preview" class="app-preview" :src="previewSrc" :preview-src-list="previewSrcList" />
       </template>
-      <p v-else>光顾着看了，啥感悟都没有</p>
       <!-- share start -->
-      <Share />
+      <Share
+        :title="data.title"
+        :cover="data.imgurl"
+        :description="data.description"
+      />
     </div>
     <!-- 文章目录 -->
     <Catalog />
@@ -89,23 +102,29 @@ export default {
     return {
       pageType: 'detail',
       apiUrl: '//api.timelessq.com/music/tencent',
-      isLoaded: false
+      isLoaded: false,
+      songList: []
     }
   },
   computed: {
     hasContent() {
       return this.data.content.trim().length !== 0
+    },
+    tags() {
+      return this.data.tag?.split('|') || []
     }
   },
   mounted() {
-    this.initAplayer()
+    if (this.songList?.length) {
+      this.initAplayer()
+    }
 
     this.$nextTick(() => {
       this.isLoaded = true
     })
   },
   beforeDestroy() {
-    this.ap.list.clear()
+    this.ap?.list.clear()
   },
   methods: {
     async initAplayer() {
@@ -197,7 +216,7 @@ export default {
 .bangumi{
   &-info{
     overflow: hidden;
-    margin-bottom: 4px;
+    margin-bottom: $grid-space;
     background-color: var(--bg-normal);
     border-radius: 4px;
     &__poster{
@@ -229,6 +248,12 @@ export default {
         display: inline-block;
       }
     }
+    &-tag{
+      margin-bottom: $grid-space;
+      .tl-tag{
+        cursor: default;
+      }
+    }
     &-progress{
       .el-progress{
         display: inline-block;
@@ -238,7 +263,7 @@ export default {
   }
   &-content{
     padding: 15px;
-    margin-bottom: 4px;
+    margin-bottom: $grid-space;
     background-color: var(--bg-normal);
     border-radius: 4px;
     #player {
@@ -272,5 +297,5 @@ export default {
 </style>
 
 <style lang="scss">
-@import "~@/styles/content.scss";
+@import "~@/styles/components/content.scss";
 </style>

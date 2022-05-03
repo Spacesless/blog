@@ -1,0 +1,16 @@
+.el{
+  &-image-viewer__close{
+    color: var(--color-primary);
+    &:hover{
+      color: #f56c6c;
+    }
+  }
+  &-cascader-panel{
+    .el-cascader-menu__wrap{
+      height: 215px;
+    }
+  }
+  &-pagination__jump{
+    margin-left: 10px;
+  }
+}

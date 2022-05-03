@@ -1,26 +1,28 @@
 <template>
   <div class="blog">
-    <el-row class="blog-summary">
-      <el-col class="blog-summary-cover" :xs="24" :sm="12" :lg="10">
-        <img class="img-fluid" :src="data.imgurl" :alt="data.title">
-      </el-col>
-      <el-col class="blog-summary-text" :xs="24" :sm="12" :lg="14">
-        <h1 class="blog-summary__title">{{ data.title }}</h1>
-        <div class="blog-summary__admin">
-          <span>{{ data.updatetime | parseTime('{y}年{m}月{d}日') }}</span>
-          <span>阅读{{ data.hits }}</span>
-          <span>字数{{ data.word_count }}</span>
-          <span>{{ readDuration }}</span>
-        </div>
-        <p class="blog-summary__desc">{{ data.description }}</p>
-      </el-col>
-    </el-row>
+    <h1 class="tl__title">{{ data.title }}</h1>
+    <div class="hitokoto">
+      <span class="hitokoto__title">{{ data.description }}</span>
+    </div>
     <!-- 文章内容 -->
     <div class="blog-content">
+      <div class="blog-summary">
+        <div class="blog-summary__admin">
+          <span>发布于：{{ data.updatetime | parseTime('{y}年{m}月{d}日') }}</span>
+          <span>阅读：{{ data.hits }}</span>
+          <span>字数：{{ data.word_count }}</span>
+          <span>阅读时长：{{ readDuration }}</span>
+        </div>
+        <img class="blog-summary__cover" :src="data.imgurl" :alt="data.title">
+      </div>
       <div class="blog-content-wrap">
         <div ref="content" class="markdown" v-html="data.content" />
         <!-- 社区分享 -->
-        <Share />
+        <Share
+          :title="data.title"
+          :cover="data.imgurl"
+          :description="data.description"
+        />
       </div>
     </div>
     <!-- 文章目录 -->
@@ -67,7 +69,7 @@ export default {
     readDuration() {
       const averageVelocity = 8.3
       const total = (this.data.word_count || 0) / averageVelocity
-      return total ? Math.ceil(total / 60) + ' min read' : ''
+      return total ? Math.ceil(total / 60) + ' 分钟' : ''
     }
   },
   mounted() {
@@ -140,13 +142,8 @@ export default {
 <style lang="scss" scoped>
 .blog{
   &-summary{
-    overflow: hidden;
-    position: relative;
-    margin-bottom: 6px;
-    background-color: var(--bg-normal);
-    border-radius: 4px;
     &-text{
-      padding: 15px;
+      padding: $grid-space;
     }
     &__title{
       margin-bottom: 12px;
@@ -156,31 +153,17 @@ export default {
       line-height: 1;
     }
     &__admin{
+      margin-bottom: $grid-space;
       font-size: 15px;
       color: var(--color-secondary);
       span{
-        margin-right: 10px;
+        margin-right: $grid-space;
       }
-      .tl-icon{
-        margin-right: 5px;
-      }
-    }
-    &__desc{
-      margin-top: 16px;
-      padding: 8px 12px;
-      background: rgba($--color-primary, .1);
-      border: 1px solid rgba($--color-primary, .3);
-      border-left: 4px solid $--color-primary;
-      border-radius: 4px;
-      color: var(--color-text);
-      font-size: 15px;
-      line-height: 1.7;
-      letter-spacing: 1px;
     }
   }
   &-content{
-    padding: 15px;
-    margin-bottom: 6px;
+    padding: $grid-space;
+    margin-bottom: $grid-space;
     background-color: var(--bg-normal);
     border-radius: 4px;
   }
@@ -188,6 +171,6 @@ export default {
 </style>
 
 <style lang="scss">
-@import "~@/styles/content.scss";
-@import '~@/styles/prism.scss';
+@import "~@/styles/components/content.scss";
+@import '~@/styles/components/prism.scss';
 </style>

@@ -140,5 +140,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~@/styles/layout.scss';
+@import '~@/styles/components/layout.scss';
 </style>
