@@ -1,10 +1,10 @@
 <template>
   <div class="fixbar">
     <el-tooltip effect="dark" :content="live2dShow ? '关闭看板娘' : '打开看板娘'" placement="left">
-      <div class="fixbar-item tl-icon" :class="live2dShow ? 'active' : ''" @click="toggleWaifu">&#xe703;</div>
+      <div class="fixbar-item tl-icon" :class="live2dShow ? 'fixbar-item--active' : ''" @click="toggleWaifu">&#xe703;</div>
     </el-tooltip>
     <el-tooltip effect="dark" :content="particleActive ? '关闭背景动画' : '打开背景动画'" placement="left">
-      <div class="fixbar-item tl-icon" :class="particleActive ? 'active' : ''" @click="toggleBubble">&#xe640;</div>
+      <div class="fixbar-item tl-icon" :class="particleActive ? 'fixbar-item--active' : ''" @click="toggleBubble">&#xe640;</div>
     </el-tooltip>
     <el-tooltip effect="dark" content="点我坐电梯" placement="left" :disabled="backTopTips">
       <div v-show="backTopShow" class="fixbar-item tl-icon" @click="backTop">&#xe637;</div>
@@ -66,7 +66,7 @@ export default {
   @media (max-width:768px) {
     display: none;
   }
-  .fixbar-item{
+  &-item{
     width: 48px;
     height: 48px;
     margin-top: $grid-space / 2;
@@ -77,13 +77,13 @@ export default {
     outline: none;
     user-select: none;
     cursor: pointer;
-    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: $shadow-3-right;
     border-radius: 50%;
     &:hover{
       background-color: var(--bg-normal);
       color: var(--color-primary);
     }
-    &.active{
+    &--active{
       color: var(--color-primary);
     }
   }

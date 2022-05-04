@@ -1,6 +1,6 @@
 <template>
   <div class="bilibili">
-    <div class="container clearfix">
+    <div class="bilibili-wrapper clearfix">
       <div class="bilibili-menu">
         <div class="bilibili-info">
           <img class="bilibili-info__cover" :src="userInfo.face + '@128w_128h_1o.webp'" alt="" referrerpolicy="no-referrer">
@@ -119,13 +119,13 @@ export default {
   width: 100%;
   height: 100%;
   background-color: #f4f5f7;
-  .container{
+  &-wrapper{
     overflow: hidden;
     height: 100%;
     padding: 0;
     background-color: #fff;
     border-radius: 10px;
-    box-shadow: 2px 0 10px rgba(0,0,0,.1);
+    box-shadow: $shadow-3-down;
   }
   &-info{
     padding: 20px 0;
@@ -167,9 +167,9 @@ export default {
   }
   &-menu{
     float: left;
-    width: 210px;
+    width: 240px;
     height: 100%;
-    border-right: solid 1px #e6e6e6;
+    border-right: solid 1px var(--border-color);
     &-scrollbar{
       height: calc(100% - 200px);
     }
@@ -185,8 +185,15 @@ export default {
     overflow: hidden;
     height: 100%;
   }
-  ::v-deep &-scrollbar-wrapper{
-    overflow-x: hidden;
+  ::v-deep {
+    &-scrollbar-wrapper{
+      overflow-x: hidden;
+    }
+    .pagination{
+      text-align: center;
+      padding: 20px;
+      box-shadow: $shadow-3-up;
+    }
   }
 }
 </style>

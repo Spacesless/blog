@@ -34,7 +34,7 @@
       </dl>
     </el-scrollbar>
     <div class="music-sidebar-fufu">
-      <img class="music-sidebar-fufu__img" :src="'/static/img/music-logo.webp' | replaceUrlPrefix" alt="">
+      <img class="music-sidebar-fufu__img" :src="'/static/img/music-logo.webp' | getAbsolutePath" alt="">
     </div>
   </div>
 </template>

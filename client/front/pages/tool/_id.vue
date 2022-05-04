@@ -80,7 +80,7 @@ export default {
     color: var(--color-text);
     font-size: 14px;
     border-radius: 4px;
-    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: $shadow-3-down;
     transition: all 0.6s ease-in;
     &:before,&:after {
       content: '';

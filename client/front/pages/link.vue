@@ -71,9 +71,10 @@ export default {
   &-wrap {
     ::v-deep .el-col{
       margin-bottom: $grid-space;
-      transition: transform 0.3s;
+      transition: all 0.3s;
       &:hover{
         transform:translateY(-5px);
+        box-shadow: $shadow-3-down;
       }
     }
   }

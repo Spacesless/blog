@@ -145,8 +145,4 @@ export default {
     overflow-x: hidden;
   }
 }
-.pagination{
-  text-align: center;
-  padding: 20px;
-}
 </style>

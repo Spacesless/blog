@@ -3,6 +3,7 @@
     <el-scrollbar class="catalog-scrollbar" tag="ul">
       <li
         v-for="(item, index) in catalogList"
+        ref="catalogItem"
         :key="index"
         class="catalog-item"
         :class="{
@@ -65,6 +66,9 @@ export default {
             this.isActive = -1
           }
         })
+
+        // 激活的目录滚动到可视区域
+        this.$refs.catalogItem[this.isActive]?.scrollIntoView({ behavior: 'smooth' })
       })
     },
     /**

@@ -72,11 +72,13 @@ export default {
     },
     '$route.name': {
       async handler(name) {
-        await this.$nextTick()
-        if (name === 'index' && +this.configs.is_silent) {
-          document.documentElement.classList.add('silent')
-        } else {
-          document.documentElement.classList.remove('silent')
+        if (process.client) {
+          await this.$nextTick()
+          if (name === 'index' && +this.configs.is_silent) {
+            document.documentElement.classList.add('silent')
+          } else {
+            document.documentElement.classList.remove('silent')
+          }
         }
       },
       immediate: true

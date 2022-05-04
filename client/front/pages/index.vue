@@ -116,7 +116,7 @@ export default {
   },
   data() {
     return {
-      bannerHeight: 500,
+      bannerHeight: 200,
       isLoaded: false
     }
   },
@@ -142,9 +142,9 @@ export default {
     onImageLoad(e) {
       if (this.isLoaded) return
       this.isLoaded = true
-      this.$nextTick(() => {
+      setTimeout(() => {
         this.handleResize()
-      })
+      }, 300)
     },
     handleResize() {
       const carouselWidth = this.$refs.carousel?.$el.clientWidth

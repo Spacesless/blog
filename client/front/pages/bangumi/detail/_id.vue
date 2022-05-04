@@ -182,7 +182,7 @@ export default {
         }
       }).then(async res => {
         const { list } = res.data
-        const { songmid, songname, singer, albumcover } = list[0]
+        const { songmid, songname, singer, albumcover } = list[0] || {}
         if (!songmid) return
         const songVkey = await this.getSongs(songmid)
         const songUrl = songVkey[0]?.url || ''

@@ -85,7 +85,7 @@ export default {
     }
     &-face{
       float: left;
-      padding: 0 20px;
+      padding: 0 24px;
       &__img{
         width: 60px;
         height: 60px;
@@ -95,7 +95,7 @@ export default {
     &-info{
       overflow: hidden;
       padding-top: 8px;
-      padding-right: 20px;
+      padding-right: 24px;
       &-link{
         color: #303133;
         &:hover{
@@ -114,9 +114,5 @@ export default {
       }
     }
   }
-}
-.pagination{
-  text-align: center;
-  padding: 20px;
 }
 </style>
