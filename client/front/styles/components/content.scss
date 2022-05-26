@@ -1,5 +1,18 @@
 // content
-.markdown{
+.content{
+  &-wrap{
+    display: flex;
+    flex-direction: row-reverse;
+  }
+  &-left{
+    padding: $grid-space 24px;
+    border-right: 1px dashed var(--border-color);
+  }
+  &-right{
+    width: 200px;
+  }
+}
+.markup{
   color: var(--color-text);
   font-size: 15px;
   line-height: 1.7;
@@ -8,21 +21,22 @@
   h2,h3,h4,h5{
     color: var(--color-heading);
     font-weight: 500;
+    line-height: 1.5;
   }
   h2{
-    margin: 4px 0 6px;
+    padding: 8px 0 10px;
     font-size: 26px;
   }
   h3{
-    margin: 3px 0 5px;
+    padding: 6px 0 8px;
     font-size: 23px;
   }
   h4{
-    margin: 2px 0 4px;
+    padding: 4px 0 6px;
     font-size: 20px;
   }
   h5{
-    margin: 1px 0 3px;
+    padding: 2px 0 4px;
     font-size: 17px;
   }
   img{
@@ -32,9 +46,10 @@
     cursor: pointer;
   }
   a{
+    margin: 0 4px;
     color: var(--color-primary);
     &:hover{
-      color: #E6A23C;
+      color: pink;
     }
   }
   p{
@@ -42,7 +57,7 @@
     & > code{
       display: inline-block;
       padding: 3px 6px;
-      margin: 0 3px;
+      margin: 0 4px;
       background-color: #ecf5ff;
       color: var(--color-primary);
       font-size: 90%;
@@ -51,7 +66,69 @@
       border-radius: 4px;
     }
   }
+  ul, ol{
+    li{
+      position: relative;
+      padding-left: 24px;
+      &:before{
+        position: absolute;
+      }
+    }
+  }
+  ul{
+    li{
+      &:before{
+        content: "";
+        top: 12px;
+        left: 6px;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background-color: var(--color-primary);
+      }
+    }
+  }
+  ol{
+    counter-reset: sectionCounter;
+    li{
+      &:before{
+        content: counter(sectionCounter);
+        counter-increment: sectionCounter;
+        top: 5px;
+        left: 0;
+        width: 18px;
+        height: 18px;
+        line-height: 16px;
+        border-radius: 50%;
+        background-color: var(--color-primary);
+        color: #fff;
+        font-size: 12px;
+        text-align: center;
+      }
+    }
+  }
+
+  blockquote{
+    margin: 10px 0;
+    border-left: 3px solid var(--color-primary);
+    padding: 8px $grid-space;
+    background: var(--bg);
+    border-radius: 4px;
+  }
+
+  table{
+    margin: $grid-space 0;
+    border-spacing: 0;
+    border-left: 1px solid var(--border-color);
+    border-top: 1px solid var(--border-color);
+    th, td{
+      padding: 8px 16px;
+      border-right: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border-color);
+    }
+  }
 }
+
 .app-preview{
   display: none;
 }

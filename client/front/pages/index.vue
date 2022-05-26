@@ -26,25 +26,43 @@
     <!-- 博文 -->
     <div class="article">
       <div class="home-head">
-        <h2 class="home-head__title">最新文章</h2>
+        <h2 class="home-head__title tl__title">最新文章</h2>
         <nuxt-link class="home-head__more" to="/article">more+</nuxt-link>
       </div>
-      <el-row class="article-list" :gutter="24">
-        <el-col v-for="item in articleList" :key="item.id" :md="12">
+      <el-row class="article-list" :gutter="gridSpace">
+        <el-col v-for="item in articleList" :key="item.id" :md="12" :lg="8">
           <div class="article-item">
-            <p class="article-title">
-              <nuxt-link :to="'/article/detail/' + item.id" :title="item.title">{{ item.title }}</nuxt-link>
-            </p>
-            <div class="article-meta">
-              <span class="article-meta__date"><i class="tl-icon">&#xe70b;</i>{{ item.updatetime | parseTime('{y}-{m}-{d}') }}</span>
-              <span v-if="item.categoryUrl" class="article-meta__cate">
-                <i class="tl-icon">&#xe668;</i>
-                <nuxt-link :to="item.categoryUrl" :title="item.categoryName">{{ item.categoryName }}</nuxt-link>
-              </span>
-              <span class="article-meta__view"><i class="tl-icon">&#xe681;</i>{{ item.hits }}</span>
-            </div>
-            <div class="article-desc">
-              <p>{{ item.description }}</p>
+            <nuxt-link class="article-item-cover" :to="'/article/detail/' + item.id" :title="item.title">
+              <img
+                class="img-fluid"
+                :width="configs.article_width"
+                :height="configs.article_height"
+                :src="item.imgurl"
+                :srcset="item.imgurl | getImageSrcSet(configs.article_width)"
+                :alt="item.title"
+              >
+            </nuxt-link>
+            <div class="article-item-media">
+              <p class="article-title">
+                <nuxt-link :to="'/article/detail/' + item.id" :title="item.title">{{ item.title }}</nuxt-link>
+              </p>
+              <div class="article-meta">
+                <span class="article-meta__date"><i class="tl-icon">&#xe70b;</i>{{ item.updatetime | parseTime('{y}-{m}-{d}') }}</span>
+                <span v-if="item.categoryUrl" class="article-meta__cate">
+                  <i class="tl-icon">&#xe668;</i>
+                  <nuxt-link :to="item.categoryUrl" :title="item.categoryName">{{ item.categoryName }}</nuxt-link>
+                </span>
+                <span class="article-meta__view"><i class="tl-icon">&#xe681;</i>{{ item.hits }}</span>
+              </div>
+              <div class="article-desc">
+                <p>{{ item.description }}</p>
+              </div>
+              <div class="article-meta">
+                <span
+                  v-for="(tag,index) in item.tag"
+                  :key="index"
+                >#{{ tag }}</span>
+              </div>
             </div>
           </div>
         </el-col>
@@ -53,13 +71,13 @@
     <!-- 追番 -->
     <div class="bangumi">
       <div class="home-head">
-        <h2 class="home-head__title">最近追番</h2>
+        <h2 class="home-head__title tl__title">最近追番</h2>
         <nuxt-link class="home-head__more" to="/bangumi">more+</nuxt-link>
       </div>
-      <el-row class="bangumi-list" :gutter="24">
-        <el-col v-for="item in bangumiList" :key="item.id" :xs="24" :sm="12">
+      <el-row class="bangumi-list" :gutter="gridSpace">
+        <el-col v-for="item in bangumiList" :key="item.id" :xs="24" :sm="12" :xl="8">
           <el-row class="bangumi-list-item">
-            <el-col :span="8" :xl="10">
+            <el-col class="bangumi-list-cover" :span="8" :xl="10">
               <nuxt-link :to="'/bangumi/detail/' + item.id" :title="item.title">
                 <img
                   class="img-fluid"
@@ -69,6 +87,7 @@
                   :srcset="item.imgurl | getImageSrcSet(configs.bangumi_width)"
                   :alt="item.title"
                 >
+                <span class="bangumi-list__ratings">{{ item.ratings }}</span>
               </nuxt-link>
             </el-col>
             <el-col class="bangumi-list-info" :span="16" :xl="14">
@@ -76,16 +95,14 @@
               <p><span class="para-name">时间：</span>{{ item.showtime }}</p>
               <p><span class="para-name">状态：</span>{{ item.status | bangumiStatus }}</p>
               <p class="hidden-sm-and-down"><span class="para-name">简介：</span>{{ item.description }}……</p>
-              <div class="bangumi-progress clearfix">
-                <span class="para-name">进度：</span>
-                <div class="el-progress el-progress--line">
-                  <div class="el-progress-bar">
-                    <div class="el-progress-bar__outer">
-                      <div class="el-progress-bar__inner" :style="'width:' + item.current / item.total * 100 + '%'" />
-                    </div>
-                  </div>
-                  <div v-if="item.total" class="el-progress__text">{{ item.current }}/{{ item.total }}</div>
-                </div>
+              <p><span class="para-name">进度：</span>{{ item.current }}/{{ item.total }}</p>
+              <div class="bangumi-list-tag">
+                <span
+                  v-for="(tag,index) in item.tag"
+                  :key="index"
+                  class="tl-tag"
+                  :class="tag | tagClassName"
+                >{{ tag }}</span>
               </div>
             </el-col>
           </el-row>
@@ -98,6 +115,7 @@
 <script>
 import { debounce } from '@/utils'
 import { pageMeta } from '@/mixins'
+import { gridSpace } from '@/styles/export-to-js.scss'
 
 export default {
   mixins: [pageMeta],
@@ -105,6 +123,7 @@ export default {
     const { bannerList, articleList, bangumiList } = await $axios.$get('/index')
 
     articleList.forEach(element => {
+      element.tag = element.tag ? element.tag.split('|') : []
       const findCategory = store.getters.categories.find(item => item.id === element.category_id)
       if (findCategory) {
         element.categoryUrl = `/${findCategory.type}/${findCategory.id}`
@@ -112,11 +131,16 @@ export default {
       }
     })
 
+    bangumiList.forEach(element => {
+      element.tag = element.tag ? element.tag.split('|') : []
+    })
+
     return { bannerList, articleList, bangumiList }
   },
   data() {
     return {
-      bannerHeight: 200,
+      gridSpace: +gridSpace,
+      bannerHeight: 500,
       isLoaded: false
     }
   },
@@ -142,9 +166,7 @@ export default {
     onImageLoad(e) {
       if (this.isLoaded) return
       this.isLoaded = true
-      setTimeout(() => {
-        this.handleResize()
-      }, 300)
+      this.handleResize()
     },
     handleResize() {
       const carouselWidth = this.$refs.carousel?.$el.clientWidth
@@ -160,19 +182,14 @@ export default {
 .home{
   &-head{
     position: relative;
-    padding: 15px 0 30px;
     &__title{
-      color: var(--color-primary);
-      font-size: 24px;
-      font-weight: normal;
-      line-height: 1;
+      padding-top: 10px;
     }
     &__more{
       position: absolute;
       right: 0;
-      top: 15px;
+      top: 20px;
       color: var(--color-secondary);
-      font-size: 14px;
       line-height: 24px;
       text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
       &:hover{
@@ -185,8 +202,9 @@ export default {
 // 轮播图
 .carousel {
   overflow: hidden;
-  margin-bottom: 15px;
-  border-radius: 4px;
+  margin-bottom: 20px;
+  border-radius: $border-radius;
+  box-shadow: $shadow-3-down;
   &-item{
     &__image{
       display: block;
@@ -197,11 +215,11 @@ export default {
       position: absolute;
       bottom: 0;
       right: 0;
-      padding: 7px 15px;
+      padding: 8px 24px;
       background: rgba($color: #000000, $alpha: .5);
       color: #fff;
       font-size: 15px;
-      border-top-left-radius: 4px;
+      border-top-left-radius: $border-radius;
     }
   }
 }
@@ -209,33 +227,37 @@ export default {
 // 最新文章
 .article{
   &-item {
-    position: relative;
-    margin-bottom: $grid-space + 8;
-    padding: 10px 15px;
+    overflow: hidden;
+    margin-bottom: $grid-space;
     background: var(--bg-normal);
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
+    box-shadow: $shadow-3-down;
+    border-radius: $border-radius;
     transition: all .3s;
     &:hover{
       box-shadow: 2px 0 10px rgba(0,0,0,.1);
     }
-    &:before{
-      content: "";
-      position: absolute;
-      left: 15px;
-      top: 10px;
-      z-index: 0;
-      width: 36px;
-      height: 27px;
-      background-image: url(~@/assets/image/quotee.svg);
-      background-size: cover;
+    &-cover{
+      overflow: hidden;
+      position: relative;
+      display: block;
+      border-radius: $border-radius;
+      &:after{
+        pointer-events: none;
+        content: "";
+        position: absolute;
+        top: 13%;
+        left: 0;
+        z-index: 35;
+        width: 100%;
+        height: 120%;
+        background: linear-gradient(rgba(250, 250, 250, 0), rgba(250, 250, 250, 0.01) 8.1%, rgba(250, 250, 250, 0.047) 15.5%, rgba(250, 250, 250, 0.106) 22.5%, rgba(250, 250, 250, 0.176) 29%, rgba(250, 250, 250, 0.26) 35.3%, rgba(250, 250, 250, 0.353) 41.2%, rgba(250, 250, 250, 0.45) 47.1%, rgba(250, 250, 250, 0.55) 52.9%, rgba(250, 250, 250, 0.647) 58.8%, rgba(250, 250, 250, 0.74) 64.7%, rgba(250, 250, 250, 0.824) 71%, rgba(250, 250, 250, 0.894) 77.5%, rgba(250, 250, 250, 0.953) 84.5%, rgba(250, 250, 250, 0.99) 91.9%, rgb(255, 255, 255));
+      }
+    }
+    &-media{
+      padding: 16px;
     }
   }
   &-title {
-    position: relative;
-    z-index: 5;
-    padding-top: 5px;
-    padding-left: 36px;
     font-size: 24px;
     a {
       overflow: hidden;
@@ -250,8 +272,10 @@ export default {
     }
   }
   &-meta {
-    padding: 5px 0;
+    height: 30px;
+    padding: 6px 0;
     font-size: 14px;
+    box-sizing: border-box;
     span{
       color: var(--color-secondary);
       margin-right: 10px;
@@ -271,12 +295,20 @@ export default {
     }
   }
   &-desc {
+    overflow: hidden;
+    display: -webkit-box;
+    height: 114px;
+    margin-bottom: 6px;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    text-overflow: ellipsis;
     p {
-      overflow: hidden;
-      height: 60px;
       font-size: 14px;
       line-height: 2em;
     }
+  }
+  &-tag{
+    color: var();
   }
 }
 </style>

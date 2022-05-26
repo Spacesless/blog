@@ -1,6 +1,6 @@
 <template>
   <div v-loading="fetchLoading" class="comment">
-    <h2 class="comment-title">评论<span class="comment-title__count">({{ total }})</span></h2>
+    <h2 class="comment-title">已有<span class="comment-title__count">{{ total }}</span>条回应</h2>
     <comment-reply
       v-if="!replyData.id"
       :form-data.sync="formData"
@@ -132,11 +132,12 @@ export default {
 
 <style lang="scss" scoped>
 .comment{
-  padding: 15px;
+  padding: $grid-space;
   background: var(--bg-normal);
-  border-radius: 4px;
+  border-radius: $border-radius;
+  box-shadow: $shadow-3-down;
   &-title{
-    margin-bottom: 15px;
+    margin-bottom: $grid-space;
     color: var(--color-heading);
     font-size: 24px;
     font-weight: normal;
@@ -147,7 +148,7 @@ export default {
     }
   }
   &-list{
-    padding: 15px 0;
+    padding: $grid-space 0;
   }
   &-none{
     &__img{

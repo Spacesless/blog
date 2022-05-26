@@ -1,32 +1,34 @@
 <template>
-  <div v-if="catalogList.length" class="catalog">
+  <div v-if="catalogList.length" ref="catalog" class="catalog">
+    <p class="catalog-header">
+      <span class="el-icon-reading" />
+      目录
+    </p>
     <el-scrollbar class="catalog-scrollbar" tag="ul">
       <li
         v-for="(item, index) in catalogList"
         ref="catalogItem"
         :key="index"
         class="catalog-item"
-        :class="{
-          'catalog-item--active': index === isActive
-        }"
+        :class="[
+          item.nodeName,
+          { 'catalog-item--active': index === activeIndex }
+        ]"
         :title="item.innerText"
-      >
-        <div v-if="index !== catalogList.length - 1" class="catalog-item__tail" />
-        <div class="catalog-item__node" :class="item.nodeName" />
-        <div class="catalog-item__wrapper" :class="item.nodeName" @click="scrollIntoView(item)">{{ item.innerText }}</div>
-      </li>
+        @click="scrollIntoView(index)"
+      >{{ item.innerText }}</li>
     </el-scrollbar>
   </div>
 </template>
 
 <script>
-import { getPosition, scrollTo } from '#/utils/scroll-to'
+import { scrollTo } from '#/utils/scroll-to'
 
 export default {
   data() {
     return {
       catalogList: [],
-      isActive: -1
+      activeIndex: -1
     }
   },
   computed: {
@@ -41,55 +43,31 @@ export default {
   },
   methods: {
     initCatelog() {
-      const nodes = Array.from(this.content?.childNodes)
-      this.catalogList = nodes.filter(item => {
-        const nodeName = item.nodeName.toLowerCase()
-        return ['h2', 'h3', 'h4'].includes(nodeName)
-      })
-
-      const nodeOffsetTop = []
-      const catalogListLen = this.catalogList.length
-      const contentStart = this.getOffsetTop(this.content) - 10
-      const contentEnd = this.getOffsetTop(this.content) + this.content.clientHeight
-      for (let i = 0; i < catalogListLen; i++) {
-        const top = this.getOffsetTop(this.catalogList[i]) - 10
-        nodeOffsetTop.push(top)
+      const markupElement = document.getElementById('js-content')
+      if (!markupElement) {
+        return
       }
+      this.catalogList = markupElement.querySelectorAll('h2,h3,h4')
 
       window.addEventListener('scroll', () => {
-        const scrollTop = getPosition()
-        nodeOffsetTop.forEach((top, index) => {
-          if (scrollTop >= top) {
-            this.isActive = index
+        let index = -1
+        for (let i = 0, len = this.catalogList.length; i < len; i++) {
+          const el = this.catalogList[i]
+          const { top, height } = el.getBoundingClientRect()
+          if (top <= height) {
+            index = i
           }
-          if (scrollTop < contentStart || scrollTop > contentEnd) {
-            this.isActive = -1
-          }
-        })
+        }
 
-        // 激活的目录滚动到可视区域
-        this.$refs.catalogItem[this.isActive]?.scrollIntoView({ behavior: 'smooth' })
+        this.activeIndex = index
       })
     },
     /**
      * 滚动到对应的dom元素
-     * @param {Element} item
+     * @param {Number} index
      */
-    scrollIntoView(item) {
-      const tagetTop = this.getOffsetTop(item) - 5
-      scrollTo(tagetTop, 400)
-    },
-    /**
-     * 计算元素的OffsetTop
-     * @param {Element} dom
-     */
-    getOffsetTop(dom) {
-      let top = dom.offsetTop
-      while (dom.offsetParent) {
-        dom = dom.offsetParent
-        top += dom.offsetTop
-      }
-      return top
+    scrollIntoView(index) {
+      scrollTo(this.catalogList[index].offsetTop, 500)
     }
   }
 }
@@ -97,84 +75,43 @@ export default {
 
 <style lang="scss" scoped>
 .catalog{
-  position: fixed;
-  top: 60px;
-  right: 0;
-  bottom: 260px;
-  width: 240px;
-  @media (max-width: 768px){
-    display: none;
+  position: sticky;
+  top: 0;
+  bottom: 16px;
+  width: 200px;
+  box-sizing: border-box;
+  @media (max-width: 1280px){
+    position: static;
+    margin-left: 0;
+  }
+  &-header{
+    height: 40px;
+    margin-bottom: 8px;
+    border-bottom: 1px dashed var(--border-color);
+    color: var(--color-secondary);
+    line-height: 40px;
+    text-align: center;
   }
   &-scrollbar{
-    height: 100%;
+    max-height: 100vh;
+    padding-bottom: 10px;
   }
   &-item{
-    position: relative;
-    padding-bottom: 20px;
-    padding-left: 28px;
-    padding-right: 15px;
-    &__tail{
-      position: absolute;
-      left: 6px;
-      top: 12px;
-      height: 100%;
-      border-left: 2px solid var(--bg-normal);
+    margin: 0 10px;
+    color: var(--color-text);
+    line-height: 30px;
+    cursor: pointer;
+    &.H3{
+      padding-left: 10px;
     }
-    &__node{
-      position: absolute;
-      background-color: var(--bg-normal);
-      border-radius: 50%;
-      top: 11px;
-      left: 1px;
-      width: 12px;
-      height: 12px;
-      &.H2{
-        left: 0;
-        width: 14px;
-        height: 14px;
-      }
-      &.H4{
-        left: 2px;
-        width: 10px;
-        height: 10px;
-      }
+    &.H4{
+      padding-left: 20px;
     }
-    &__wrapper{
-      display: inline-block;
-      position: relative;
-      padding: 8px 15px 8px 12px;
-      background: var(--bg-normal);
-      border-radius: 10px;
-      color: var(--color-text);
-      font-size: 14px;
-      line-height: 20px;
-      box-shadow: 0 13px 15px rgba(0, 0, 0, .1);
-      cursor: pointer;
-      transition: box-shadow .3s, transform .3s,color .1s;
-      &:before{
-        position: absolute;
-        border-right: 14px solid var(--bg-normal);
-        border-top: 14px solid transparent;
-        border-bottom: 14px solid transparent;
-        top: 4px;
-        left: -12px;
-      }
-      &.H2:before{
-        content: "";
-      }
+    &.H5{
+      padding-left: 30px;
     }
     &--active {
-      .catalog-item__wrapper{
-        background: linear-gradient(100deg, var(--color-primary),#79BBFF);
-        color: #fff;
-        box-shadow: 0 13px 15px rgba(32, 160, 255, .3);
-        &:before{
-          border-right-color: var(--color-primary);
-        }
-      }
-      .catalog-item__node{
-        background-color: var(--color-primary);
-      }
+      color: var(--color-primary);
     }
   }
 }

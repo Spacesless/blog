@@ -92,4 +92,19 @@ module.exports = class extends Base {
       .increment('hits', 1);
     return this.success();
   }
+
+  async sameAction(categoryId, tags) {
+    const list = await this.modelInstance
+      .field('id,title,description,imgurl')
+      .limit(0, 3)
+      .where({
+        category_id: categoryId,
+        is_recycle: 0,
+        is_show: 1,
+        tag: ['like', tags.split('|').map(item => `%${item}%`)]
+      })
+      .select();
+
+    return this.success(list);
+  }
 };

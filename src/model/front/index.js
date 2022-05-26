@@ -13,7 +13,7 @@ module.exports = class extends think.Model {
    * @param {Number} limit 查询数量
    */
   selectArticle(limit = 8) {
-    const articleField = 'id,imgurl,title,description,category_id,hits,updatetime';
+    const articleField = 'id,title,description,imgurl,category_id,hits,updatetime,tag';
     const articleWhere = { is_show: 1, is_recycle: 0 };
     return this.model('article')
       .field(articleField)
@@ -28,7 +28,7 @@ module.exports = class extends think.Model {
    * @param {Number} limit 查询数量
    */
   selectBangumi(limit = 6) {
-    const bangumiField = 'id,title,description,total,current,imgurl,showtime,status';
+    const bangumiField = 'id,title,description,category_id,imgurl,total,current,showtime,status,ratings,tag';
     const bangumiWhere = { is_show: 1, is_recycle: 0, status: ['!=', 0], current: ['EXP', '< `total`'] };
     return this.model('bangumi')
       .field(bangumiField)

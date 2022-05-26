@@ -122,7 +122,8 @@ export default {
     padding-top: 1px;
     margin-bottom: $grid-space;
     background-color: var(--bg-normal);
-    border-radius: 4px;
+    border-radius: $border-radius;
+    box-shadow: $shadow-3-down;
     span {
       margin-left: 15px;
       color: #F56C6C;

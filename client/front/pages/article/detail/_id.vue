@@ -1,32 +1,36 @@
 <template>
   <div class="blog">
-    <h1 class="tl__title">{{ data.title }}</h1>
-    <div class="hitokoto">
-      <span class="hitokoto__title">{{ data.description }}</span>
-    </div>
-    <!-- 文章内容 -->
-    <div class="blog-content">
-      <div class="blog-summary">
+    <el-row class="blog-summary">
+      <el-col class="blog-summary-cover" :xs="24" :sm="12">
+        <img class="img-fluid" :src="data.imgurl" :alt="data.title">
+      </el-col>
+      <el-col class="blog-summary-text" :xs="24" :sm="12">
+        <h1 class="blog-summary__title">{{ data.title }}</h1>
         <div class="blog-summary__admin">
-          <span>发布于：{{ data.updatetime | parseTime('{y}年{m}月{d}日') }}</span>
+          <span>{{ data.updatetime | parseTime('{y}年{m}月{d}日') }}</span>
           <span>阅读：{{ data.hits }}</span>
-          <span>字数：{{ data.word_count }}</span>
-          <span>阅读时长：{{ readDuration }}</span>
+          <span v-if="data.word_count">字数：{{ data.word_count }}</span>
+          <span v-if="readDuration">阅读时长：{{ readDuration }}</span>
         </div>
-        <img class="blog-summary__cover" :src="data.imgurl" :alt="data.title">
+        <p class="blog-summary__desc">{{ data.description }}</p>
+      </el-col>
+    </el-row>
+    <!-- 文章内容 -->
+    <div class="blog-content content">
+      <div class="content-wrap">
+        <div class="content-right">
+          <!-- 文章目录 -->
+          <Catalog v-if="isLoaded" />
+        </div>
+        <div id="js-content" class="markup content-left line-numbers" v-html="data.content" />
       </div>
-      <div class="blog-content-wrap">
-        <div ref="content" class="markdown" v-html="data.content" />
-        <!-- 社区分享 -->
-        <Share
-          :title="data.title"
-          :cover="data.imgurl"
-          :description="data.description"
-        />
-      </div>
+      <!-- 社区分享 -->
+      <Share
+        :title="data.title"
+        :cover="data.imgurl"
+        :description="data.description"
+      />
     </div>
-    <!-- 文章目录 -->
-    <Catalog v-if="isLoaded" />
     <!-- 图片预览 -->
     <ImageViewer v-if="isLoaded" />
     <!-- 评论 -->
@@ -94,8 +98,9 @@ export default {
         const copyIcon = document.createElement('i')
         const copyTips = document.createElement('em')
         copyElement.className = 'toolbar-item-button'
-        copyIcon.className = 'el-icon-document-copy'
+        copyIcon.className = 'tl-icon'
         copyTips.className = 'toolbar-item-button__tips'
+        copyIcon.innerHTML = '&#xe8b0;'
         copyTips.innerText = '复制代码'
         copyElement.appendChild(copyIcon)
         copyElement.appendChild(copyTips)
@@ -106,10 +111,10 @@ export default {
           }
         })
         clipboard.on('success', () => {
-          copyIcon.className = 'el-icon-document-checked'
+          copyIcon.innerHTML = '&#xe628;'
           clearTimeout(this.timer)
           this.timer = setTimeout(() => {
-            copyIcon.className = 'el-icon-document-copy'
+            copyIcon.innerHTML = '&#xe8b0;'
           }, 3000)
 
           this.$notify({
@@ -142,30 +147,65 @@ export default {
 <style lang="scss" scoped>
 .blog{
   &-summary{
+    overflow: hidden;
+    position: relative;
+    margin-bottom: $grid-space;
+    background-color: var(--bg-normal);
+    border-radius: $border-radius;
+    box-shadow: $shadow-3-down;
+    &-cover{
+      position: relative;
+      &:after{
+        pointer-events: none;
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 0;
+        height: 100%;
+        width: 50%;
+        background: linear-gradient(90deg, rgba(250, 250, 250, 0), rgba(250, 250, 250, 0.01) 8.1%, rgba(250, 250, 250, 0.047) 15.5%, rgba(250, 250, 250, 0.106) 22.5%,rgba(250, 250, 250, 0.99) 91.9%, rgb(255, 255, 255));
+      }
+    }
     &-text{
       padding: $grid-space;
     }
     &__title{
-      margin-bottom: 12px;
       color: var(--color-heading);
-      font-size: 30px;
+      font-size: 32px;
       font-weight: normal;
       line-height: 1;
+      padding: $grid-space 0;
     }
     &__admin{
       margin-bottom: $grid-space;
       font-size: 15px;
       color: var(--color-secondary);
       span{
-        margin-right: $grid-space;
+        margin-right: $grid-space / 2;
+      }
+    }
+    &__desc{
+      position: relative;
+      padding-top: 12px;
+      text-indent: 40px;
+      &:before{
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 0;
+        width: 36px;
+        height: 27px;
+        background-image: url(~@/assets/image/quotee.svg);
+        background-size: cover;
       }
     }
   }
   &-content{
-    padding: $grid-space;
     margin-bottom: $grid-space;
     background-color: var(--bg-normal);
-    border-radius: 4px;
+    border-radius: $border-radius;
+    box-shadow: $shadow-3-down;
   }
 }
 </style>

@@ -42,56 +42,44 @@
       </el-form-item>
     </el-form>
     <!--bangumi list-->
-    <div class="bangumi-list">
-      <el-row :gutter="24">
-        <el-col v-for="item in bangumiList" :key="item.id" :xs="24" :sm="12">
-          <el-row class="bangumi-list-item">
-            <el-col class="bangumi-list-cover" :span="8" :xl="10">
-              <nuxt-link :to="'/bangumi/detail/' + item.id">
-                <img
-                  class="img-fluid"
-                  :width="configs.bangumi_width"
-                  :height="configs.bangumi_height"
-                  :src="item.imgurl"
-                  :srcset="item.imgurl | getImageSrcSet(configs.bangumi_width)"
-                  :alt="item.title"
-                >
-                <span class="bangumi-list__ratings">{{ item.ratings }}</span>
-              </nuxt-link>
-            </el-col>
-            <el-col class="bangumi-list-info" :span="16" :xl="14">
-              <nuxt-link class="bangumi-list__title" :to="'/bangumi/detail/' + item.id">{{ item.title }}</nuxt-link>
-              <p><span class="para-name">时间：</span>{{ item.showtime }}</p>
-              <p><span class="para-name">状态：</span>{{ item.status | bangumiStatus }}</p>
-              <p class="hidden-sm-and-down"><span class="para-name">简介：</span>{{ item.description }}……</p>
-              <div class="bangumi-list-tag">
-                <span
-                  v-for="(tag,index) in item.tag"
-                  :key="index"
-                  class="tl-tag"
-                  :class="tag | tagClassName"
-                  @click="handleAddTag(tag)"
-                >{{ tag }}</span>
-              </div>
-              <div class="bangumi-progress clearfix">
-                <span class="para-name">进度：</span>
-                <div class="el-progress el-progress--line">
-                  <div class="el-progress-bar">
-                    <div class="el-progress-bar__outer">
-                      <div class="el-progress-bar__inner" :style="'width:' + item.current / item.total * 100 + '%'" />
-                    </div>
-                  </div>
-                  <div v-if="item.total" class="el-progress__text">{{ item.current }}/{{ item.total }}</div>
-                </div>
-              </div>
-            </el-col>
-          </el-row>
-        </el-col>
-      </el-row>
-      <!--list paper-->
-      <div class="list-page">
-        <pagination :is-admin="false" :total="total" :page.sync="listPage.page" :limit="listPage.pageSize" @pagination="changeListPage" />
-      </div>
+    <el-row class="bangumi-list" :gutter="24">
+      <el-col v-for="item in bangumiList" :key="item.id" :xs="24" :sm="12" :xl="8">
+        <el-row class="bangumi-list-item">
+          <el-col class="bangumi-list-cover" :span="8" :xl="10">
+            <nuxt-link :to="'/bangumi/detail/' + item.id">
+              <img
+                class="img-fluid"
+                :width="configs.bangumi_width"
+                :height="configs.bangumi_height"
+                :src="item.imgurl"
+                :srcset="item.imgurl | getImageSrcSet(configs.bangumi_width)"
+                :alt="item.title"
+              >
+              <span class="bangumi-list__ratings">{{ item.ratings }}</span>
+            </nuxt-link>
+          </el-col>
+          <el-col class="bangumi-list-info" :span="16" :xl="14">
+            <nuxt-link class="bangumi-list__title" :to="'/bangumi/detail/' + item.id">{{ item.title }}</nuxt-link>
+            <p><span class="para-name">时间：</span>{{ item.showtime }}</p>
+            <p><span class="para-name">状态：</span>{{ item.status | bangumiStatus }}</p>
+            <p class="hidden-sm-and-down"><span class="para-name">简介：</span>{{ item.description }}……</p>
+            <p><span class="para-name">进度：</span>{{ item.current }}/{{ item.total }}</p>
+            <div class="bangumi-list-tag">
+              <span
+                v-for="(tag,index) in item.tag"
+                :key="index"
+                class="tl-tag"
+                :class="tag | tagClassName"
+                @click="handleAddTag(tag)"
+              >{{ tag }}</span>
+            </div>
+          </el-col>
+        </el-row>
+      </el-col>
+    </el-row>
+    <!--list paper-->
+    <div class="list-page">
+      <pagination :is-admin="false" :total="total" :page.sync="listPage.page" :limit="listPage.pageSize" @pagination="changeListPage" />
     </div>
   </div>
 </template>

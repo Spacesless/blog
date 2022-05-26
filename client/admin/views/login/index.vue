@@ -109,7 +109,7 @@ export default {
         username: '',
         password: '',
         captcha: '',
-        remember: true
+        remember: false
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', message: '请输入用户名' }],

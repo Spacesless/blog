@@ -29,14 +29,16 @@ module.exports = class extends Base {
     }
 
     // 最新动态文章
-    for (const element of articleList) {
-      const { description } = element;
-      element.description = description.substr(0, 80);
-    }
+    const articleService = this.service('post', 'article', configs);
+    const formatArticleList = await articleService.formatList(articleList, item => {
+      const { imgurl, description } = item;
+      item.imgurl = this.getAbsolutePath(imgurl);
+      item.description = description.substr(0, 150);
+    });
 
     // 最新追番
-    const postService = this.service('post', 'bangumi', configs);
-    const formatBangumiList = await postService.formatList(bangumiList, item => {
+    const bangumiService = this.service('post', 'bangumi', configs);
+    const formatBangumiList = await bangumiService.formatList(bangumiList, item => {
       const { imgurl, description } = item;
       item.imgurl = this.getAbsolutePath(imgurl);
       item.description = description.substr(0, 60);
@@ -44,7 +46,7 @@ module.exports = class extends Base {
 
     return this.success({
       bannerList,
-      articleList,
+      articleList: formatArticleList,
       bangumiList: formatBangumiList
     });
   }

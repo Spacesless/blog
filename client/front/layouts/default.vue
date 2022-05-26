@@ -1,13 +1,13 @@
 <template>
-  <div class="app" :class="classObj">
+  <div class="app container" :class="classObj">
+    <!--header-->
+    <app-header />
     <!-- aside -->
     <sidebar />
     <!-- app start -->
     <div class="app-main">
-      <!--header-->
-      <app-header />
       <!-- main start -->
-      <nuxt class="container" />
+      <nuxt />
       <!--footer start-->
       <app-footer :configs="configs" />
     </div>
@@ -19,9 +19,7 @@
       <live-2d />
     </div>
     <!--background start-->
-    <div class="background">
-      <canvas id="flower" width="1900" height="1080" />
-    </div>
+    <Background :particle-active="particleActive" />
   </div>
 </template>
 
@@ -32,18 +30,17 @@ import AppHeader from './components/AppHeader'
 import Fixbar from './components/Fixbar'
 import Live2d from './components/Live2d'
 import AppFooter from './components/AppFooter'
-// 落花canvas
-import ParticleCanvas from '@/utils/particle'
+import Background from './components/Background'
 import ResizeMixin from './mixin/ResizeHandler'
-import { getAbsolutePath } from '#/utils'
 
 export default {
   components: {
-    Sidebar,
     AppHeader,
+    AppFooter,
+    Background,
+    Sidebar,
     Fixbar,
-    Live2d,
-    AppFooter
+    Live2d
   },
   mixins: [ResizeMixin],
   data() {
@@ -63,13 +60,6 @@ export default {
     }
   },
   watch: {
-    particleActive(val) {
-      if (val) {
-        this.particleInstance && this.particleInstance.draw()
-      } else {
-        this.particleInstance.stopDraw()
-      }
-    },
     '$route.name': {
       async handler(name) {
         if (process.client) {
@@ -83,60 +73,6 @@ export default {
       },
       immediate: true
     }
-  },
-  mounted() {
-    this.particleInstance = new ParticleCanvas(
-      'flower',
-      [
-        {
-          'type': { 'typeName': 'image', 'url': getAbsolutePath('/static/img/spring/flower-1.png') },
-          'number': 8,
-          'op': { 'min': 0.7, 'max': 1 },
-          'size': { 'min': 50, 'max': 60 },
-          'speed': { 'min': 2, 'max': 4 },
-          'angle': { 'value': 140, 'float': 20 },
-          'area': { 'leftTop': [0, 0], 'rightBottom': [0, 1000] },
-          'rota': { 'value': 30, 'speed': 2, 'floatValue': 120, 'floatSpeed': 1 },
-          'reIn': 'reverseDirection'
-        },
-        {
-          'type': { 'typeName': 'image', 'url': getAbsolutePath('/static/img/spring/flower-2.png') },
-          'number': 9,
-          'size': { 'min': 50, 'max': 60 },
-          'speed': { 'min': 3, 'max': 5 },
-          'area': { 'leftTop': [500, 300], 'rightBottom': [1000, 4000] },
-          'angle': { 'value': 130, 'float': 20 },
-          'reIn': 'reverseDirection'
-        },
-        {
-          'type': { 'typeName': 'image', 'url': getAbsolutePath('/static/img/spring/flower-3.png') },
-          'number': 8,
-          'size': { 'min': 50, 'max': 60 },
-          'speed': { 'min': 3, 'max': 5 },
-          'area': { 'leftTop': [500, 400], 'rightBottom': [1000, 4000] },
-          'angle': { 'value': 140, 'float': 30 },
-          'reIn': 'reverseDirection'
-        },
-        {
-          'type': { 'typeName': 'image', 'url': getAbsolutePath('/static/img/spring/flower-4.png') },
-          'number': 7,
-          'size': { 'min': 50, 'max': 60 },
-          'speed': { 'min': 3, 'max': 4 },
-          'area': { 'leftTop': [500, 600], 'rightBottom': [1000, 4000] },
-          'angle': { 'value': 140, 'float': 30 },
-          'reIn': 'reverseDirection'
-        },
-        {
-          'type': { 'typeName': 'image', 'url': getAbsolutePath('/static/img/spring/flower-5.png') },
-          'number': 6,
-          'size': { 'min': 50, 'max': 60 },
-          'speed': { 'min': 3, 'max': 5 },
-          'area': { 'leftTop': [0, 1400], 'rightBottom': [1900, 4300] },
-          'angle': { 'value': 140, 'float': 40 },
-          'reIn': 'reverseDirection'
-        }
-      ]
-    )
   }
 }
 </script>

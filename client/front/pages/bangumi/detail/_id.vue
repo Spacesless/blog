@@ -23,6 +23,7 @@
             />
           </div>
           <p><span class="para-name">简介：</span>{{ data.description }}</p>
+          <p><span class="para-name">进度：</span>{{ data.current }}/{{ data.total }}</p>
           <div class="bangumi-info-tag">
             <span
               v-for="(tag,index) in tags"
@@ -31,22 +32,11 @@
               :class="tag | tagClassName"
             >{{ tag }}</span>
           </div>
-          <div class="bangumi-info-progress clearfix">
-            <span class="para-name">进度：</span>
-            <div class="el-progress el-progress--line">
-              <div class="el-progress-bar">
-                <div class="el-progress-bar__outer">
-                  <div class="el-progress-bar__inner" :style="'width:' + data.current / data.total * 100 + '%'" />
-                </div>
-              </div>
-              <div v-if="data.total" class="el-progress__text">{{ data.current }}/{{ data.total }}</div>
-            </div>
-          </div>
         </div>
       </el-col>
     </el-row>
     <!--bangumi content-->
-    <div ref="content" class="bangumi-content markdown">
+    <div ref="content" class="bangumi-content markup">
       <template v-if="songList && songList.length">
         <h2>主题曲</h2>
         <div id="player">
@@ -218,7 +208,8 @@ export default {
     overflow: hidden;
     margin-bottom: $grid-space;
     background-color: var(--bg-normal);
-    border-radius: 4px;
+    border-radius: $border-radius;
+    box-shadow: $shadow-3-down;
     &__poster{
       max-height: 500px;
     }
@@ -254,18 +245,13 @@ export default {
         cursor: default;
       }
     }
-    &-progress{
-      .el-progress{
-        display: inline-block;
-        width: calc(100% - 55px);
-      }
-    }
   }
   &-content{
-    padding: 15px;
+    padding: $grid-space;
     margin-bottom: $grid-space;
     background-color: var(--bg-normal);
-    border-radius: 4px;
+    border-radius: $border-radius;
+    box-shadow: $shadow-3-down;
     #player {
       ::v-deep .aplayer{
         margin: 20px 0;

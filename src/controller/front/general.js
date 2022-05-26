@@ -39,7 +39,7 @@ module.exports = class extends Base {
       keywords,
       description,
       currentYear: new Date().getFullYear(),
-      duration: Math.ceil((new Date() - new Date('2018/03/15')) / 86400000),
+      duration: Math.ceil((new Date() - new Date('2018/04/25')) / 86400000),
       sitename,
       is_silent,
       live2d_model,

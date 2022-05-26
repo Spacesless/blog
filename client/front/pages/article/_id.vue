@@ -69,10 +69,10 @@
           </div>
         </el-col>
       </el-row>
-      <!--list paper-->
-      <div class="list-page">
-        <pagination :is-admin="false" :total="total" :page.sync="listPage.page" :limit="listPage.pageSize" @pagination="changeListPage" />
-      </div>
+    </div>
+    <!--list paper-->
+    <div class="list-page">
+      <pagination :is-admin="false" :total="total" :page.sync="listPage.page" :limit="listPage.pageSize" @pagination="changeListPage" />
     </div>
   </div>
 </template>
@@ -146,27 +146,12 @@ export default {
 @import "~@/styles/components/list.scss";
 
 .article{
-  &-list{
-    position: relative;
-    overflow: hidden;
-    &:before{
-      content: '';
-      display: block;
-      width: 1px;
-      position: absolute;
-      top: 0;
-      bottom: 200px;
-      left: 50%;
-      background: #fff;
-      z-index: 5;
-    }
-  }
   &-item{
     position: relative;
     z-index: 6;
     margin-bottom: $grid-space * 6;
     &:last-child{
-      margin-bottom: 0;
+      margin-bottom: 48px;
     }
     @media (max-width: 992px)  {
       margin-top: 30px;
@@ -177,8 +162,8 @@ export default {
       float: none;
       position: relative;
       z-index: 5;
-      border: 1px solid var(--border-color);
-      border-radius: 4px;
+      border-radius: $border-radius;
+      box-shadow: $shadow-3-down;
       &__picture{
         display: block;
         width: 100%;
@@ -190,7 +175,7 @@ export default {
       bottom: 6%;
       padding: 5%;
       background-color: var(--bg-normal);
-      border: 1px solid var(--border-color);
+      box-shadow: $shadow-3-right;
       @media (max-width: 992px) {
         position: static;
         height: auto;
@@ -239,8 +224,8 @@ export default {
     &--odd &-info{
       right: 0;
       border-left: none;
-      border-top-right-radius: 4px;
-      border-bottom-right-radius: 4px;
+      border-top-right-radius: $border-radius;
+      border-bottom-right-radius: $border-radius;
     }
     &--even{
       text-align: right;
@@ -249,8 +234,8 @@ export default {
       left: 0;
       border-right: none;
       text-align: left;
-      border-top-left-radius: 4px;
-      border-bottom-left-radius: 4px;
+      border-top-left-radius: $border-radius;
+      border-bottom-left-radius: $border-radius;
     }
   }
 }

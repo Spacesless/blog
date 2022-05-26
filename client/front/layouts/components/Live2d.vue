@@ -3,7 +3,7 @@
     <transition name="fade-transform" mode="out-in">
       <div v-show="tipsShow" class="waifu-tips" v-html="tips" />
     </transition>
-    <canvas id="live2d" width="240" height="240" class="live2d" @click="onMouseClick" @mouseenter="onMouseEnter('live2d')" />
+    <canvas id="js-live2d" width="208" height="208" class="waifu-live2d" @click="onMouseClick" @mouseenter="onMouseEnter('live2d')" />
     <div class="waifu-tool">
       <!-- 返回首页 -->
       <span class="tl-icon" @click="navigatorToHome" @mouseenter="onMouseEnter('home')">&#xe76f;</span>
@@ -145,7 +145,7 @@ export default {
      */
     loadModel(modelId, texturesId = 1) {
       window.loadlive2d(
-        'live2d', `${this.apiurl}/get?id=${modelId}&texture=${texturesId}&isuseCDN=true`,
+        'js-live2d', `${this.apiurl}/get?id=${modelId}&texture=${texturesId}&isuseCDN=true`,
         console.log('live2d', `模型 ${modelId}-${texturesId} 加载完成`)
       )
     },
@@ -271,3 +271,65 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.waifu {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: 999;
+  width: 208px;
+  height: 220px;
+  transition: margin-top .3s ease-in-out;
+  transform-origin: bottom center;
+  @media (max-width: 992px) {
+    display: none;
+  }
+  &:hover{
+    margin-top: 0;
+    cursor: grab;
+    .waifu-tool {
+      display: block;
+    }
+  }
+  &-tips {
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    width: 185px;
+    height: 60px;
+    padding: 5px 10px;
+    border: 1px solid var(--color-primary);
+    border-radius: 12px;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #303133;
+    font-size: 12px;
+    text-overflow: ellipsis;
+    box-shadow: 0 1px 3px #66ccff;
+  }
+  &-tool {
+    display: none;
+    position: absolute;
+    bottom: 0;
+    left: 10px;
+    color: #aaa;
+    font-size: 14px;
+    span {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--color-text);
+      font-size: 20px;
+      line-height: 20px;
+      cursor: pointer;
+      transition: 0.2s;
+      &:hover{
+        color: var(--color-primary);
+      }
+    }
+  }
+  &-live2d {
+    position: relative;
+    top: 15px
+  }
+}
+</style>

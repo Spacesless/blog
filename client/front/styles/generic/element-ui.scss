@@ -13,6 +13,10 @@
   &-pagination__jump{
     margin-left: 10px;
   }
+  &-menu-item{
+    height: 48px;
+    line-height: 48px;
+  }
 }
 
 // 黑夜魔兽
@@ -22,9 +26,5 @@
   .el-radio-button__inner {
     background-color: var(--bg-normal);
     border-color: var(--border-color);
-  }
-
-  .el-progress-bar__outer{
-    background-color: var(--bg);
   }
 }

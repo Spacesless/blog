@@ -48,7 +48,7 @@ import {
   Row,
   Col,
   // Upload,
-  Progress,
+  // Progress,
   // Spinner,
   // Badge,
   // Card,
@@ -67,8 +67,8 @@ import {
   // Aside,
   // Main,
   // Footer,
-  Timeline,
-  TimelineItem,
+  // Timeline,
+  // TimelineItem,
   // Link,
   // Divider,
   Image,
@@ -119,7 +119,7 @@ Vue.use(Tag)
 // Vue.use(Tree)
 Vue.use(Table)
 Vue.use(TableColumn)
-Vue.use(Progress)
+// Vue.use(Progress)
 Vue.use(Tooltip)
 Vue.use(Popover)
 // Vue.use(Breadcrumb)
@@ -131,8 +131,8 @@ Vue.use(Col)
 Vue.use(Image)
 Vue.use(Carousel)
 Vue.use(CarouselItem)
-Vue.use(Timeline)
-Vue.use(TimelineItem)
+// Vue.use(Timeline)
+// Vue.use(TimelineItem)
 // Vue.use(Card)
 Vue.use(Drawer)
 Vue.use(Loading)

@@ -72,30 +72,45 @@ pre[class*="language-"] {
 // toolbar
 .code-toolbar{
   position: relative;
-  margin: 10px 0;
+  margin: $grid-space 0;
   background: var(--bg);
-  border-radius: 4px;
+  border-radius: 8px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 10px -2px;
 }
 .toolbar{
   position: absolute;
   top: 0px;
   width: 100%;
   height: 40px;
-  padding: 0 10px;
+  padding-right: 16px;
+  background-color: var(--code-toolbar-bg);
   line-height: 40px;
-  border-bottom: 1px dashed var(--border-color);
   text-align: right;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
   box-sizing: border-box;
+  &:before{
+    content: '';
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    width: 12px;
+    height: 12px;
+    margin-top: -6px;
+    background: #fc625d;
+    border-radius: 50%;
+    box-shadow: 1.25rem 0 #fdbc40, 2.5rem 0 #35cd4b;
+  }
   &-item{
     float: right;
     margin-left: 10px;
     span{
       position: absolute;
-      left: 15px;
+      left: 80px;
       top: 0;
       padding-right: 10px;
       color: var(--color-text);
-      font-size: 20px;
+      font-size: 18px;
       font-weight: normal;
       user-select: none;
     }
@@ -140,6 +155,41 @@ pre[class*="language-"] {
       }
       &:hover &__tips{
         opacity: 1;
+      }
+    }
+  }
+}
+
+pre[class*="language-"].line-numbers {
+	position: relative;
+	padding-left: 3.8em;
+	counter-reset: linenumber;
+  & > code {
+    position: relative;
+    white-space: inherit;
+  }
+}
+
+.line-numbers {
+  &-rows {
+    position: absolute;
+    pointer-events: none;
+    top: 0;
+    font-size: 100%;
+    left: -3.8em;
+    width: 3em; /* works for line-numbers below 1000 lines */
+    letter-spacing: -1px;
+    border-right: 1px solid var(--border-color);
+    user-select: none;
+    & > span {
+      display: block;
+      counter-increment: linenumber;
+      &:before {
+        content: counter(linenumber);
+        color: var(--color-text);
+        display: block;
+        padding-right: 0.8em;
+        text-align: right;
       }
     }
   }
