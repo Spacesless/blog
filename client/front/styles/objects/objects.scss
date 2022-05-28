@@ -3,9 +3,9 @@
   font-display: swap;
 
   font-family: 'iconfont';  /* Project id 442558 */
-  src: url('//at.alicdn.com/t/font_442558_dw5vu66qasg.woff2?t=1652529821776') format('woff2'),
-       url('//at.alicdn.com/t/font_442558_dw5vu66qasg.woff?t=1652529821776') format('woff'),
-       url('//at.alicdn.com/t/font_442558_dw5vu66qasg.ttf?t=1652529821776') format('truetype');
+  src: url('//at.alicdn.com/t/font_442558_7kw4oi0e5t7.woff2?t=1653737539508') format('woff2'),
+       url('//at.alicdn.com/t/font_442558_7kw4oi0e5t7.woff?t=1653737539508') format('woff'),
+       url('//at.alicdn.com/t/font_442558_7kw4oi0e5t7.ttf?t=1653737539508') format('truetype');
 }
 [class*=" tl-icon"], [class^=tl-icon], [class*=" tl-icon-"], [class^=tl-icon-]{
   font-family: 'iconfont', sans-serif;
@@ -17,11 +17,18 @@
   text-transform: none;
 }
 
+// 公共类名
+.silent{
+  filter: grayscale(100%);
+  filter: progid:DXImageTransform.Microsoft.BasicImage(grayscale=1);
+  filter: gray;
+}
+
 .container {
   width: 100%;
   min-height: calc(100vh - 80px);
-  padding-right: $grid-space;
   padding-left: $grid-space;
+  padding-right: 40px;
   margin-right: auto;
   margin-left: auto;
   box-sizing: border-box;
@@ -75,19 +82,43 @@
     cursor: pointer;
   }
   &__title{
+    position: relative;
     padding: 32px 0;
-    color: var(--color-primary);
+    color: var(--color-heading);
     font-size: 32px;
     font-weight: normal;
     line-height: 1.5;
-    &:before{
-      content: '\e87a';
-      display: inline-block;
-      margin-right: 6px;
-      color: pink;
-      font-size: 32px;
-      font-family: 'iconfont', sans-serif;
-      animation: rotate 6s linear infinite;
+    &:after{
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 24px;
+      width: 96px;
+      height: 4px;
+      background: linear-gradient(130deg, rgb(36, 198, 220), var(--color-primary) 60%, rgb(84, 51, 255));
+      border-radius: 96px;
+    }
+  }
+  &-card {
+    background: var(--bg-normal);
+    box-shadow: $shadow-3-down;
+    border-radius: $border-radius;
+    transition: all .3s;
+    &__title{
+      margin-bottom: $grid-space;
+      color: var(--color-heading);
+      font-size: 24px;
+      font-weight: normal;
+      line-height: 1em;
+      &:before{
+        content: '\e87a';
+        display: inline-block;
+        margin-right: 6px;
+        color: #fc9fa7;
+        font-size: 28px;
+        font-family: 'iconfont', sans-serif;
+        animation: rotate 6s linear infinite;
+      }
     }
   }
 }

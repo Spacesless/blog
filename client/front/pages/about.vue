@@ -8,14 +8,13 @@
       </span>
     </div>
 
-    <div class="about-introduce content">
+    <div class="about-introduce tl-card content">
       <div class="content-wrap">
         <div class="content-right">
           <!-- 文章目录 -->
           <Catalog v-if="isLoaded" />
         </div>
         <div id="js-content" class="markup content-left">
-          <h2>My Life</h2>
           <p>这是一个自个开发的小破站，用来记录工作经验以及生活点滴，虽说现在文章不多就是了，因为总想着改代码、加功能而不是写文章 doge。不过只要还感兴趣，网站肯定会坚持做下去的。</p>
           <p>Hi 👋, I'm Timeless</p>
           <p>大区：广州郊区</p>
@@ -122,9 +121,6 @@ export default {
   &-introduce{
     padding-top: 0;
     margin-bottom: $grid-space;
-    background-color: var(--bg-normal);
-    box-shadow: $shadow-3-down;
-    border-radius: $border-radius;
   }
 }
 </style>

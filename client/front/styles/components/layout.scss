@@ -177,12 +177,18 @@ $header-height: 45px;
     }
     &__name{
       overflow: hidden;
-      padding-top: 5px;
+      padding: 8px 0;
       color: var(--color-primary);
       font-family: 'Bega', sans-serif;
       font-size: 30px;
       white-space: nowrap;
-      transition: width 0.3;
+      transition: width 0.3s;
+    }
+    &__hitokoto{
+      color: var(--color-secondary);
+      font-size: 15px;
+      white-space: nowrap;
+      transition: width 0.3s;
     }
     &--collapse {
       padding: 24px 0 0;
@@ -191,13 +197,14 @@ $header-height: 45px;
       width: 50px;
       height: 50px;
     }
-    &--collapse &__name{
+    &--collapse &__name,
+    &--collapse &__hitokoto{
       width: 0;
       height: 0;
     }
   }
   &-scrollbar{
-    height: calc(100vh - 250px);
+    height: calc(100vh - 330px);
     background-color: var(--bg-normal);
     &-wrapper{
       overflow-x: hidden;
@@ -267,6 +274,37 @@ $header-height: 45px;
       }
     }
   }
+  &-info{
+    position: absolute;
+    bottom: 8px;
+    width: 100%;
+    padding: 0 6px;
+    box-sizing: border-box;
+    li{
+      width: 20%;
+      height: 44px;
+      float: left;
+      text-align: center;
+      line-height: 44px;
+    }
+    $iconWidth: 40px;
+    &__icon{
+      display: inline-block;
+      width: $iconWidth;
+      height: $iconWidth;
+      background-color: rgba(0,0,0,0.15);
+      color: var(--color-text);
+      font-size: 18px;
+      vertical-align: middle;
+      line-height: $iconWidth;
+      transition: all .3s;
+      clip-path: polygon(50% 3%,91% 25%,91% 75%,50% 97%,9% 75%,9% 25%);
+      &:hover{
+        background-color: rgba(0,0,0,0.25);
+        color: var(--color-primary);
+      }
+    }
+  }
 }
 
 // 内容
@@ -276,25 +314,6 @@ $header-height: 45px;
   transition: margin 0.3s;
   @media (max-width: 992px) {
     margin-right: 0;
-  }
-  &__title{
-    position: relative;
-    margin: $grid-space + 8px 0;
-    padding-left: 15px;
-    color: var(--color-heading);
-    font-size: 24px;
-    font-weight: normal;
-    line-height: 1em;
-    &:before{
-      content: '';
-      display: block;
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 3px;
-      height: 100%;
-      background-color: var(--color-primary);
-    }
   }
 }
 

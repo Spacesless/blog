@@ -1,6 +1,6 @@
 <template>
   <div class="bangumi">
-    <el-row class="bangumi-info">
+    <el-row class="bangumi-info tl-card">
       <el-col :sm="10" :lg="6">
         <div class="bangumi-info__poster">
           <img class="img-fluid" :src="data.imgurl" :alt="data.title">
@@ -36,7 +36,7 @@
       </el-col>
     </el-row>
     <!--bangumi content-->
-    <div ref="content" class="bangumi-content markup">
+    <div ref="content" class="bangumi-content tl-card markup">
       <template v-if="songList && songList.length">
         <h2>主题曲</h2>
         <div id="player">
@@ -207,9 +207,6 @@ export default {
   &-info{
     overflow: hidden;
     margin-bottom: $grid-space;
-    background-color: var(--bg-normal);
-    border-radius: $border-radius;
-    box-shadow: $shadow-3-down;
     &__poster{
       max-height: 500px;
     }
@@ -249,9 +246,6 @@ export default {
   &-content{
     padding: $grid-space;
     margin-bottom: $grid-space;
-    background-color: var(--bg-normal);
-    border-radius: $border-radius;
-    box-shadow: $shadow-3-down;
     #player {
       ::v-deep .aplayer{
         margin: 20px 0;

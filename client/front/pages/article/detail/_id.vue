@@ -1,6 +1,6 @@
 <template>
   <div class="blog">
-    <el-row class="blog-summary">
+    <el-row class="blog-summary tl-card">
       <el-col class="blog-summary-cover" :xs="24" :sm="12">
         <img class="img-fluid" :src="data.imgurl" :alt="data.title">
       </el-col>
@@ -16,7 +16,7 @@
       </el-col>
     </el-row>
     <!-- 文章内容 -->
-    <div class="blog-content content">
+    <div class="blog-content tl-card content">
       <div class="content-wrap">
         <div class="content-right">
           <!-- 文章目录 -->
@@ -150,9 +150,6 @@ export default {
     overflow: hidden;
     position: relative;
     margin-bottom: $grid-space;
-    background-color: var(--bg-normal);
-    border-radius: $border-radius;
-    box-shadow: $shadow-3-down;
     &-cover{
       position: relative;
       &:after{
@@ -163,7 +160,7 @@ export default {
         top: 0;
         height: 100%;
         width: 50%;
-        background: linear-gradient(90deg, rgba(250, 250, 250, 0), rgba(250, 250, 250, 0.01) 8.1%, rgba(250, 250, 250, 0.047) 15.5%, rgba(250, 250, 250, 0.106) 22.5%,rgba(250, 250, 250, 0.99) 91.9%, rgb(255, 255, 255));
+        background: var(--gradient-cover);
       }
     }
     &-text{
@@ -203,9 +200,6 @@ export default {
   }
   &-content{
     margin-bottom: $grid-space;
-    background-color: var(--bg-normal);
-    border-radius: $border-radius;
-    box-shadow: $shadow-3-down;
   }
 }
 </style>

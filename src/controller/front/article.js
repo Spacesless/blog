@@ -95,7 +95,7 @@ module.exports = class extends Base {
 
   async sameAction(categoryId, tags) {
     const list = await this.modelInstance
-      .field('id,title,description,imgurl')
+      .field('id,title,description')
       .limit(0, 3)
       .where({
         category_id: categoryId,

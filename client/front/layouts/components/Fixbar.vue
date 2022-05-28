@@ -9,7 +9,7 @@
     <el-tooltip effect="dark" content="点我坐电梯" placement="left" :disabled="backTopTips">
       <transition name="fade-transform">
         <div v-show="backTopShow" class="fixbar-item fixbar-item-back" @click="backTop">
-          <span class="fixbar-item-back__percent">{{ scrollPercent }}</span>
+          <span class="fixbar-item-back__percent">{{ scrollPercent }}%</span>
           <span class="fixbar-item-back__icon tl-icon">&#xe637;</span>
         </div>
       </transition>
@@ -41,7 +41,8 @@ export default {
 
       const screenHeight = window.innerHeight
       const windowHeight = document.body.clientHeight || document.documentElement.clientHeight
-      this.scrollPercent = Math.floor(this.scrollTop / (windowHeight - screenHeight) * 100)
+      const percent = Math.ceil(this.scrollTop / (windowHeight - screenHeight) * 100)
+      this.scrollPercent = percent > 100 ? 100 : percent
     }
   },
   mounted() {
@@ -99,7 +100,7 @@ export default {
     }
     &-back {
       &__percent{
-        font-size: 16px;
+        font-size: 15px;
         vertical-align: bottom;
       }
       &__icon{

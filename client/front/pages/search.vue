@@ -22,7 +22,7 @@
       <a class="search-hot__link" @click="handleSearchHot('web前端')">web前端</a>
       <a class="search-hot__link" @click="handleSearchHot('二次元')">二次元</a>
     </div>
-    <div v-if="total > 0" class="search-list">
+    <div v-if="total > 0" class="search-list tl-card">
       <h3 class="search-list__result">检索到包含 {{ resultInfo.keyword }} 的{{ resultInfo.classify }} {{ total }} 篇</h3>
       <el-row v-for="item in searchList" :key="item.id" class="search-list-item">
         <el-col class="search-list__thumb" :sm="10" :md="6" :lg="8">
@@ -157,10 +157,6 @@ export default {
   &-list{
     overflow: hidden;
     margin-top: 15px;
-    border: 1px solid var(--border-color);
-    background-color: var(--bg-normal);
-    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-    border-radius: 4px;
     &__result{
       padding: 10px 15px;
       color: var(--color-heading);

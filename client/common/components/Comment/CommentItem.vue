@@ -9,7 +9,7 @@
           :target="commentData.website ? '__blank' : ''"
           :title="commentData.website"
         >
-          <el-image class="comment-avatar__picture" :src="getAvatar(commentData)">
+          <el-image class="comment-avatar__picture" :src="getAvatar(commentData)" lazy>
             <div slot="error" class="image-slot">
               <span class="el-icon-picture-outline" />
             </div>
@@ -101,29 +101,18 @@ export default {
      * @returns {String} 头像图片url地址
      */
     getAvatar({ id, email }) {
-      if (email.toLowerCase().includes('@qq.com')) {
-        // QQ头像
-        const qquin = email.split('@')[0]
-        return `http://q1.qlogo.cn/g?b=qq&s=100&nk=${qquin}`
-      } else {
-        // gravatar镜像
-        const gravatarImage = [
-          'https://sdn.geekzu.org/avatar', // 极客族
-          'https://gravatar.loli.net/avatar', // Loli源
-          'https://cdn.sep.cc/avatar' // inwao源
-        ]
-        /**
-         * s是大小的意思，r是等级，参数一般是g，d的选项如下
-         * 404：如果没有与电子邮件哈希关联的图像，则不加载任何图像，而是返回 HTTP 404 响应
-         * mm：一个简单的卡通风格的人物轮廓（不因电子邮件哈希而异）
-         * identicon：基于电子邮件哈希的几何图案
-         * monsterid：生成的具有不同颜色、面孔等的“怪物”
-         * wavatar：生成具有不同特征和背景的人脸
-         * retro：生成8位街机风格的像素化面孔
-         * blank：透明的PNG图像
-         */
-        return `${gravatarImage[email.length % 3]}/${md5(email || id)}?s=64&d=retro&r=g`
-      }
+      /**
+       * s是大小的意思，r是等级，参数一般是g，d的选项如下
+       * 404：如果没有与电子邮件哈希关联的图像，则不加载任何图像，而是返回 HTTP 404 响应
+       * mm：一个简单的卡通风格的人物轮廓（不因电子邮件哈希而异）
+       * identicon：基于电子邮件哈希的几何图案
+       * monsterid：生成的具有不同颜色、面孔等的“怪物”
+       * wavatar：生成具有不同特征和背景的人脸
+       * retro：生成8位街机风格的像素化面孔
+       * robohash：具有不同颜色、面部的机器人（随机生成）
+       * blank：透明的PNG图像
+       */
+      return `https://cravatar.cn/avatar/${md5(email || id)}?s=64&d=robohash`
     }
   }
 }

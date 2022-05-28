@@ -93,7 +93,7 @@ export default {
     text-align: center;
   }
   &-scrollbar{
-    max-height: 100vh;
+    max-height: calc(100vh - 48px);
     padding-bottom: 10px;
   }
   &-item{
