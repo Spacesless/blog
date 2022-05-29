@@ -3,6 +3,7 @@
     <!--header-->
     <app-header />
     <!-- aside -->
+    <div v-if="device==='mobile' && sidebar.opened" class="app-mask" @click="handleClickOutside" />
     <sidebar />
     <!-- app start -->
     <div class="app-main">
@@ -72,6 +73,11 @@ export default {
         }
       },
       immediate: true
+    }
+  },
+  methods: {
+    handleClickOutside() {
+      this.$store.dispatch('tools/closeSideBar', { withoutAnimation: false })
     }
   }
 }

@@ -28,7 +28,7 @@
   width: 100%;
   min-height: calc(100vh - 80px);
   padding-left: $grid-space;
-  padding-right: 40px;
+  padding-right: $grid-space;
   margin-right: auto;
   margin-left: auto;
   box-sizing: border-box;
@@ -36,7 +36,7 @@
     max-width: 540px;
   }
   @media (min-width: 768px) {
-    max-width: 720px;
+    max-width: 740px;
   }
   @media (min-width: 992px) {
     max-width: 960px;

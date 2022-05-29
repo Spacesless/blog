@@ -3,6 +3,9 @@
   &-wrap{
     display: flex;
     flex-direction: row-reverse;
+    @media (max-width: 1280px) {
+      display: block;
+    }
   }
   &-left{
     padding: $grid-space 24px;
@@ -10,6 +13,9 @@
   }
   &-right{
     width: 200px;
+    @media (max-width: 1280px){
+      width: 100%;
+    }
   }
 }
 .markup{

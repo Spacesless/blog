@@ -93,18 +93,18 @@ module.exports = class extends Base {
     return this.success();
   }
 
-  async sameAction(categoryId, tags) {
-    const list = await this.modelInstance
-      .field('id,title,description')
-      .limit(0, 3)
-      .where({
-        category_id: categoryId,
-        is_recycle: 0,
-        is_show: 1,
-        tag: ['like', tags.split('|').map(item => `%${item}%`)]
-      })
-      .select();
+  // async sameAction(categoryId, tags) {
+  //   const list = await this.modelInstance
+  //     .field('id,title,description')
+  //     .limit(0, 3)
+  //     .where({
+  //       category_id: categoryId,
+  //       is_recycle: 0,
+  //       is_show: 1,
+  //       tag: ['like', tags.split('|').map(item => `%${item}%`)]
+  //     })
+  //     .select();
 
-    return this.success(list);
-  }
+  //   return this.success(list);
+  // }
 };

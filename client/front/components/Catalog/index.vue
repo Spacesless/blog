@@ -82,7 +82,8 @@ export default {
   box-sizing: border-box;
   @media (max-width: 1280px){
     position: static;
-    margin-left: 0;
+    width: 100%;
+    padding: 0 $grid-space;
   }
   &-header{
     height: 40px;
@@ -91,6 +92,10 @@ export default {
     color: var(--color-secondary);
     line-height: 40px;
     text-align: center;
+    @media (max-width: 1280px){
+      text-align: left;
+      border-bottom: none;
+    }
   }
   &-scrollbar{
     max-height: calc(100vh - 48px);

@@ -157,14 +157,6 @@ $header-height: 45px;
   box-shadow: $shadow-3-right;
   border-radius: $border-radius;
   transition: width 0.3s;
-  &-mask{
-    position: fixed;
-    top: 0;
-    z-index: -1;
-    width: 100%;
-    height: 100%;
-    background-color: rgba($color: #000000, $alpha: .5);
-  }
   &-logo{
     padding: 48px 0 16px;
     background-color: var(--bg-normal);
@@ -190,22 +182,9 @@ $header-height: 45px;
       white-space: nowrap;
       transition: width 0.3s;
     }
-    &--collapse {
-      padding: 24px 0 0;
-    }
-    &--collapse &__img{
-      width: 50px;
-      height: 50px;
-    }
-    &--collapse &__name,
-    &--collapse &__hitokoto{
-      width: 0;
-      height: 0;
-    }
   }
   &-scrollbar{
     height: calc(100vh - 330px);
-    background-color: var(--bg-normal);
     &-wrapper{
       overflow-x: hidden;
     }
@@ -215,7 +194,6 @@ $header-height: 45px;
   }
   &-menu{
     height: 100%;
-    background-color: var(--bg-normal);
     border-right: none !important;
     &__icon{
       width: 24px;
@@ -225,6 +203,57 @@ $header-height: 45px;
       vertical-align: middle;
     }
   }
+  &-info{
+    position: absolute;
+    bottom: 8px;
+    width: 100%;
+    padding: 0 6px;
+    box-sizing: border-box;
+    li{
+      width: 20%;
+      height: 44px;
+      float: left;
+      text-align: center;
+      line-height: 44px;
+    }
+    $iconWidth: 40px;
+    &__icon{
+      display: inline-block;
+      width: $iconWidth;
+      height: $iconWidth;
+      background-color: rgba(0,0,0,0.15);
+      color: var(--color-text);
+      font-size: 18px;
+      vertical-align: middle;
+      line-height: $iconWidth;
+      transition: all .3s;
+      clip-path: polygon(50% 3%,91% 25%,91% 75%,50% 97%,9% 75%,9% 25%);
+      &:hover{
+        background-color: rgba(0,0,0,0.25);
+        color: var(--color-primary);
+      }
+    }
+  }
+
+  &--collapse &-logo{
+    padding: 24px 0 0;
+    &__img{
+      width: 50px;
+      height: 50px;
+    }
+    &__name{
+      width: 0;
+      height: 0;
+      padding: 0;
+    }
+    &__hitokoto{
+      display: none;
+    }
+  }
+  &--collapse &-info{
+    display: none;
+  }
+
   .horizontal-collapse-transition {
     transition: 0s width ease-in-out, 0s padding-left ease-in-out, 0s padding-right ease-in-out;
   }
@@ -274,46 +303,25 @@ $header-height: 45px;
       }
     }
   }
-  &-info{
-    position: absolute;
-    bottom: 8px;
-    width: 100%;
-    padding: 0 6px;
-    box-sizing: border-box;
-    li{
-      width: 20%;
-      height: 44px;
-      float: left;
-      text-align: center;
-      line-height: 44px;
-    }
-    $iconWidth: 40px;
-    &__icon{
-      display: inline-block;
-      width: $iconWidth;
-      height: $iconWidth;
-      background-color: rgba(0,0,0,0.15);
-      color: var(--color-text);
-      font-size: 18px;
-      vertical-align: middle;
-      line-height: $iconWidth;
-      transition: all .3s;
-      clip-path: polygon(50% 3%,91% 25%,91% 75%,50% 97%,9% 75%,9% 25%);
-      &:hover{
-        background-color: rgba(0,0,0,0.25);
-        color: var(--color-primary);
-      }
-    }
-  }
 }
 
 // 内容
-.app-main{
-  padding-top: 16px;
-  margin-left: $asideWidth + $grid-space;
-  transition: margin 0.3s;
-  @media (max-width: 992px) {
-    margin-right: 0;
+.app{
+  &-mask{
+    position: fixed;
+    top: 0;
+    z-index: 999;
+    width: 100%;
+    height: 100%;
+    background-color: rgba($color: #000000, $alpha: .5);
+  }
+  &-main{
+    padding-top: 16px;
+    margin-left: $asideWidth + $grid-space;
+    transition: margin 0.3s;
+    @media (max-width: 992px) {
+      margin-right: 0;
+    }
   }
 }
 
@@ -349,11 +357,6 @@ $header-height: 45px;
 .hideAside {
   .aside{
     width: 64px;
-    &-logo{
-      &__name{
-        display: hidden;
-      }
-    }
     &-wrap{
       overflow: hidden;
     }
@@ -397,12 +400,19 @@ $header-height: 45px;
     padding-top: $header-height + 15px;
   }
   .aside{
-    transition: transform .28s;
+    top: 0;
+    left: 0;
+    bottom: 0;
     width: $asideWidth !important;
+    border-radius: 0;
+    transition: transform .28s;
     &-logo{
       &__img{
         transition: none;
       }
+    }
+    &-scrollbar{
+      height: calc(100vh - 298px)
     }
   }
   &.hideAside {
@@ -411,6 +421,10 @@ $header-height: 45px;
       transition-duration: 0.3s;
       transform: translate3d(-$asideWidth, 0, 0);
     }
+  }
+  &.openAside.app{
+    position: fixed;
+    top: 0;
   }
 }
 

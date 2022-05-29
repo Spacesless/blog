@@ -1,10 +1,10 @@
 <template>
   <div class="blog">
     <el-row class="blog-summary tl-card">
-      <el-col class="blog-summary-cover" :xs="24" :sm="12">
-        <img class="img-fluid" :src="data.imgurl" :alt="data.title">
+      <el-col class="blog-summary-cover" :sm="24" :md="12">
+        <img class="img-full" :src="data.imgurl" :alt="data.title">
       </el-col>
-      <el-col class="blog-summary-text" :xs="24" :sm="12">
+      <el-col class="blog-summary-text" :sm="24" :md="12">
         <h1 class="blog-summary__title">{{ data.title }}</h1>
         <div class="blog-summary__admin">
           <span>{{ data.updatetime | parseTime('{y}年{m}月{d}日') }}</span>
@@ -161,6 +161,9 @@ export default {
         height: 100%;
         width: 50%;
         background: var(--gradient-cover);
+        @media (max-width: 992px) {
+          display: none;
+        }
       }
     }
     &-text{

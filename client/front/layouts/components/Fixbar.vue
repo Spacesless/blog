@@ -73,7 +73,7 @@ export default {
   position: fixed;
   right: 8px;
   bottom: 16px;
-  z-index: 1000;
+  z-index: 998;
   @media (max-width:768px) {
     display: none;
   }
