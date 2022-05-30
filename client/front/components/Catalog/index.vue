@@ -1,23 +1,25 @@
 <template>
-  <div v-if="catalogList.length" ref="catalog" class="catalog">
-    <p class="catalog-header">
-      <span class="el-icon-reading" />
-      目录
-    </p>
-    <el-scrollbar class="catalog-scrollbar" tag="ul">
-      <li
-        v-for="(item, index) in catalogList"
-        ref="catalogItem"
-        :key="index"
-        class="catalog-item"
-        :class="[
-          item.nodeName,
-          { 'catalog-item--active': index === activeIndex }
-        ]"
-        :title="item.innerText"
-        @click="scrollIntoView(index)"
-      >{{ item.innerText }}</li>
-    </el-scrollbar>
+  <div v-if="catalogList.length">
+    <div ref="catalog" class="catalog">
+      <p class="catalog-header">
+        <span class="el-icon-reading" />
+        目录
+      </p>
+      <el-scrollbar class="catalog-scrollbar" tag="ul">
+        <li
+          v-for="(item, index) in catalogList"
+          ref="catalogItem"
+          :key="index"
+          class="catalog-item"
+          :class="[
+            item.nodeName,
+            { 'catalog-item--active': index === activeIndex }
+          ]"
+          :title="item.innerText"
+          @click="scrollIntoView(index)"
+        >{{ item.innerText }}</li>
+      </el-scrollbar>
+    </div>
   </div>
 </template>
 

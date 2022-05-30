@@ -15,13 +15,12 @@
         <p class="blog-summary__desc">{{ data.description }}</p>
       </el-col>
     </el-row>
-    <!-- 文章内容 -->
+
     <div class="blog-content tl-card content">
       <div class="content-wrap">
-        <div class="content-right">
-          <!-- 文章目录 -->
-          <Catalog v-if="isLoaded" />
-        </div>
+        <!-- 文章目录 -->
+        <Catalog v-if="isLoaded" class="content-right" />
+        <!-- 文章内容 -->
         <div id="js-content" class="markup content-left line-numbers" v-html="data.content" />
       </div>
       <!-- 社区分享 -->
@@ -168,6 +167,9 @@ export default {
     }
     &-text{
       padding: $grid-space;
+      @media (max-width: 576px) {
+        padding: 16px;
+      }
     }
     &__title{
       color: var(--color-heading);

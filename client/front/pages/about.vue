@@ -10,10 +10,9 @@
 
     <div class="about-introduce tl-card content">
       <div class="content-wrap">
-        <div class="content-right">
-          <!-- 文章目录 -->
-          <Catalog v-if="isLoaded" />
-        </div>
+        <!-- 文章目录 -->
+        <Catalog v-if="isLoaded" class="content-right" />
+
         <div id="js-content" class="markup content-left">
           <p>这是一个自个开发的小破站，用来记录工作经验以及生活点滴，虽说现在文章不多就是了，因为总想着改代码、加功能而不是写文章 doge。不过只要还感兴趣，网站肯定会坚持做下去的。</p>
           <p>Hi 👋, I'm Timeless</p>
@@ -115,12 +114,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/styles/components/content.scss';
-
 .about{
   &-introduce{
     padding-top: 0;
     margin-bottom: $grid-space;
   }
 }
+</style>
+
+<style lang="scss">
+@import '@/styles/components/content.scss';
 </style>

@@ -8,8 +8,13 @@
     }
   }
   &-left{
+    flex: 1;
+    overflow: hidden;
     padding: $grid-space 24px;
     border-right: 1px dashed var(--border-color);
+    @media (max-width: 576px) {
+      padding: 16px;
+    }
   }
   &-right{
     width: 200px;

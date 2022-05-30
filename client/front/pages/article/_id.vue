@@ -154,7 +154,7 @@ export default {
       margin-bottom: 48px;
     }
     @media (max-width: 992px)  {
-      margin-top: 30px;
+      margin-bottom: 48px;
     }
     &-cover{
       overflow: hidden;
@@ -179,7 +179,7 @@ export default {
       @media (max-width: 992px) {
         position: static;
         height: auto;
-        border: none;
+        border-radius: $border-radius;
       }
       &__time{
         color: var(--color-secondary);
@@ -223,7 +223,6 @@ export default {
     }
     &--odd &-info{
       right: 0;
-      border-left: none;
       border-top-right-radius: $border-radius;
       border-bottom-right-radius: $border-radius;
     }
@@ -232,7 +231,6 @@ export default {
     }
     &--even &-info{
       left: 0;
-      border-right: none;
       text-align: left;
       border-top-left-radius: $border-radius;
       border-bottom-left-radius: $border-radius;

@@ -277,7 +277,7 @@ export default {
   position: fixed;
   bottom: 0;
   right: 0;
-  z-index: 999;
+  z-index: 997;
   width: 208px;
   height: 220px;
   transition: margin-top .3s ease-in-out;

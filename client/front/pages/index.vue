@@ -30,7 +30,7 @@
         <nuxt-link class="home-head__more" to="/article">more+</nuxt-link>
       </div>
       <el-row class="article-list" :gutter="gridSpace">
-        <el-col v-for="item in articleList" :key="item.id" :md="12" :lg="8">
+        <el-col v-for="item in articleList" :key="item.id" :sm="12" :lg="8">
           <div class="article-item">
             <nuxt-link class="article-item-cover" :to="'/article/detail/' + item.id" :title="item.title">
               <img

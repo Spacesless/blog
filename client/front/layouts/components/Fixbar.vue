@@ -78,13 +78,13 @@ export default {
     display: none;
   }
   &-item{
-    width: 44px;
-    height: 44px;
+    width: 40px;
+    height: 40px;
     margin-top: $grid-space / 2;
     background-color: var(--bg-normal);
     color: var(--color-secondary);
-    font-size: 22px;
-    line-height: 44px;
+    font-size: 20px;
+    line-height: 40px;
     text-align: center;
     outline: none;
     user-select: none;
@@ -100,7 +100,7 @@ export default {
     }
     &-back {
       &__percent{
-        font-size: 15px;
+        font-size: 14px;
         vertical-align: bottom;
       }
       &__icon{
