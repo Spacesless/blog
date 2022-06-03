@@ -43,9 +43,9 @@
     </el-form>
     <!--bangumi list-->
     <el-row class="bangumi-list" :gutter="24">
-      <el-col v-for="item in bangumiList" :key="item.id" :xs="24" :sm="12" :xl="8">
+      <el-col v-for="item in bangumiList" :key="item.id" :xs="24" :sm="12">
         <el-row class="bangumi-list-item">
-          <el-col class="bangumi-list-cover" :span="8" :xl="10">
+          <el-col class="bangumi-list-cover" :span="10" :xl="8">
             <nuxt-link :to="'/bangumi/detail/' + item.id">
               <img
                 class="img-fluid"
@@ -58,11 +58,11 @@
               <span class="bangumi-list__ratings">{{ item.ratings }}</span>
             </nuxt-link>
           </el-col>
-          <el-col class="bangumi-list-info" :span="16" :xl="14">
+          <el-col class="bangumi-list-info" :span="14" :xl="16">
             <nuxt-link class="bangumi-list__title" :to="'/bangumi/detail/' + item.id">{{ item.title }}</nuxt-link>
             <p><span class="para-name">时间：</span>{{ item.showtime }}</p>
             <p><span class="para-name">状态：</span>{{ item.status | bangumiStatus }}</p>
-            <p class="hidden-sm-and-down"><span class="para-name">简介：</span>{{ item.description }}……</p>
+            <p class="hidden-md-and-down"><span class="para-name">简介：</span>{{ item.description }}……</p>
             <p><span class="para-name">进度：</span>{{ item.current }}/{{ item.total }}</p>
             <div class="bangumi-list-tag">
               <span

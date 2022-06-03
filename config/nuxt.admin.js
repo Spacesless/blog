@@ -44,7 +44,7 @@ module.exports = {
     },
     publicPath: '//cdn.timelessq.com/nuxt-admin/' // 只需将www/admin上传cdn
   },
-  buildDir: 'www/nuxt-admin',
+  buildDir: isPro ? 'www/nuxt-admin' : '.nuxt/admin',
   buildModules: [
     '@nuxtjs/router'
   ],

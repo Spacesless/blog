@@ -27,33 +27,33 @@
 .container {
   width: 100%;
   min-height: calc(100vh - 80px);
-  padding-left: $grid-space;
-  padding-right: $grid-space;
+  padding-left: $grid-space - 4px;
+  padding-right: $grid-space - 4px;
   margin-right: auto;
   margin-left: auto;
   box-sizing: border-box;
-  @media (max-width: 2560px) {
-    max-width: 1600px;
+  @media (min-width: 576px) {
+    max-width: 540px;
   }
-  @media (max-width: 1920px) {
-    max-width: 1440px;
-  }
-  @media (max-width: 1600px) {
-    max-width: 1366px;
-  }
-  @media (max-width: 1200px) {
-    max-width: 1140px;
-  }
-  @media (max-width: 992px) {
-    max-width: 960px;
-  }
-  @media (max-width: 768px) {
+  @media (min-width: 768px) {
     max-width: 720px;
   }
-  @media (max-width: 576px) {
-    max-width: 540px;
-    padding-left: 16px;
-    padding-right: 16px;
+  @media (min-width: 992px) {
+    max-width: 960px;
+    padding-left: $grid-space;
+    padding-right: $grid-space;
+  }
+  @media (min-width: 1200px) {
+    max-width: 1140px;
+  }
+  @media (min-width: 1600px) {
+    max-width: 1366px;
+  }
+  @media (min-width: 1920px) {
+    max-width: 1440px;
+  }
+  @media (min-width: 2560px) {
+    max-width: 1600px;
   }
 }
 

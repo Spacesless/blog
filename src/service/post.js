@@ -53,10 +53,9 @@ module.exports = class extends think.Service {
    * @param {String} src 原图地址
    * @param {Number} width 目标图片宽度
    * @param {Number} height 目标图片高度
-   * @param {Boolean} isAsync 是否并行处理图片
    * @returns {String}
    */
-  async getThumbnail({ src, width, height, fit, isAsync = true }) {
+  async getThumbnail({ src, width, height, fit }) {
     // 图片地址或宽高未提供
     if (think.isEmpty(src) || (!width && !height)) {
       return '';
@@ -90,10 +89,6 @@ module.exports = class extends think.Service {
         destAbsolutePath
       });
       this.promiseList.push(step);
-    }
-
-    if (!isAsync) {
-      await this.handleCropImage();
     }
 
     return dest;

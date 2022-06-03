@@ -1,9 +1,10 @@
 <template>
-  <div v-if="catalogList.length">
-    <div ref="catalog" class="catalog">
+  <div v-if="catalogList.length" class="catalog-wrapper" :class="{'catalog-wrapper--close': !isShowCatalog}">
+    <div v-show="isShowCatalog" ref="catalog" class="catalog">
       <p class="catalog-header">
         <span class="el-icon-reading" />
-        目录
+        <span>文章目录</span>
+        <span class="catalog-header__close el-icon-close" @click="toggleShow" />
       </p>
       <el-scrollbar class="catalog-scrollbar" tag="ul">
         <li
@@ -20,6 +21,7 @@
         >{{ item.innerText }}</li>
       </el-scrollbar>
     </div>
+    <span v-show="!isShowCatalog" class="catalog-wrapper__show" @click="toggleShow">文章目录</span>
   </div>
 </template>
 
@@ -30,7 +32,8 @@ export default {
   data() {
     return {
       catalogList: [],
-      activeIndex: -1
+      activeIndex: -1,
+      isShowCatalog: true
     }
   },
   computed: {
@@ -70,6 +73,9 @@ export default {
      */
     scrollIntoView(index) {
       scrollTo(this.catalogList[index].offsetTop, 500)
+    },
+    toggleShow() {
+      this.isShowCatalog = !this.isShowCatalog
     }
   }
 }
@@ -82,21 +88,50 @@ export default {
   bottom: 16px;
   width: 200px;
   box-sizing: border-box;
+  transition: width .3s;
   @media (max-width: 1280px){
     position: static;
     width: 100%;
     padding: 0 $grid-space;
   }
+  &-wrapper{
+    transition: width .3s;
+    &--close {
+      width: 0;
+      padding-top: 16px;
+    }
+    &__show{
+      display: inline-block;
+      position: sticky;
+      top: 16px;
+      width: 12px;
+      padding: 4px;
+      border-top-right-radius: 6px;
+      border-bottom-right-radius: 6px;
+      background: linear-gradient(130deg, rgb(36, 198, 220), var(--color-primary) 60%, rgb(84, 51, 255));
+      color: #fff;
+      font-size: 12px;
+      cursor: pointer;
+    }
+  }
   &-header{
+    position: relative;
     height: 40px;
+    padding: 0 16px;
     margin-bottom: 8px;
     border-bottom: 1px dashed var(--border-color);
     color: var(--color-secondary);
     line-height: 40px;
-    text-align: center;
     @media (max-width: 1280px){
       text-align: left;
       border-bottom: none;
+    }
+    &__close{
+      position: absolute;
+      right: 12px;
+      top: 11px;
+      font-size: 18px;
+      cursor: pointer;
     }
   }
   &-scrollbar{
@@ -106,6 +141,7 @@ export default {
   &-item{
     margin: 0 10px;
     color: var(--color-text);
+    font-size: 14px;
     line-height: 30px;
     cursor: pointer;
     &.H3{

@@ -10,7 +10,7 @@ module.exports = class extends think.Model {
       article: 'article',
       bangumi: 'bangumi'
     }];
-    const field = 'id,title,content,category_id,updatetime,imgurl';
+    const field = 'id,title,content,category_id,updatetime';
     let SQL;
     let where = 'WHERE ( `is_show` = 1 ) AND ( `is_recycle` = 0 )';
     const modelName = typpeEnum[type];

@@ -141,12 +141,6 @@ export default {
   &--changing{
     animation: themeRotate 2s cubic-bezier(.7,0,0,1);
   }
-  &--dark &__sun{
-    opacity: 0;
-  }
-  &--dark &__moon{
-    opacity: 1;
-  }
   &__sun, &__moon{
     position: absolute;
     left: 60%;
@@ -154,7 +148,8 @@ export default {
     height: 40px;
     width: 40px;
     border-radius: 50%;
-    transition: opacity 2s;
+    transition: opacity 1s;
+    transition-delay: 1s;
   }
   &__sun {
     background: #ffc53d;
@@ -165,6 +160,12 @@ export default {
     background-color: #f5f5f5;
     box-shadow: 0 0 32px #f5f5f5;
     opacity: 0;
+  }
+  &--dark &__sun{
+    opacity: 0;
+  }
+  &--dark &__moon{
+    opacity: 1;
   }
 }
 

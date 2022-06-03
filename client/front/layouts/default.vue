@@ -1,46 +1,43 @@
 <template>
   <div class="app container" :class="classObj">
     <!--header-->
-    <app-header />
+    <LayoutHeader />
     <!-- aside -->
     <div v-if="device==='mobile' && sidebar.opened" class="app-mask" @click="handleClickOutside" />
-    <sidebar />
+    <Sidebar />
     <!-- app start -->
     <div class="app-main">
       <!-- main start -->
       <nuxt />
       <!--footer start-->
-      <app-footer :configs="configs" />
-    </div>
-    <!-- tools start -->
-    <div class="tools">
-      <!-- fixbar -->
-      <fixbar />
-      <!--live2d-->
-      <live-2d />
+      <LayoutFooter :configs="configs" />
     </div>
     <!--background start-->
     <Background :particle-active="particleActive" />
+    <!-- fixedBar -->
+    <FixedBar />
+    <!-- live2d -->
+    <Live2d />
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-import Sidebar from './components/Sidebar/index.vue'
-import AppHeader from './components/AppHeader'
-import Fixbar from './components/Fixbar'
-import Live2d from './components/Live2d'
-import AppFooter from './components/AppFooter'
+import LayoutHeader from './components/LayoutHeader'
+import Sidebar from './components/Sidebar'
+import LayoutFooter from './components/LayoutFooter'
 import Background from './components/Background'
+import FixedBar from './components/FixedBar'
+import Live2d from './components/Live2d'
 import ResizeMixin from './mixin/ResizeHandler'
 
 export default {
   components: {
-    AppHeader,
-    AppFooter,
-    Background,
+    LayoutHeader,
     Sidebar,
-    Fixbar,
+    LayoutFooter,
+    Background,
+    FixedBar,
     Live2d
   },
   mixins: [ResizeMixin],

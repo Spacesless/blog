@@ -1,6 +1,6 @@
-const Base = require('./base.js');
 const xss = require('xss');
 const moment = require('moment');
+const Base = require('./base.js');
 
 module.exports = class extends Base {
   async indexAction() {
@@ -45,7 +45,11 @@ module.exports = class extends Base {
     }
 
     // XSS过滤
-    data.content = xss(data.content);
+    data.content = xss(data.content, {
+      whiteList: {
+        img: ['class']
+      }
+    });
 
     data.addtime = moment().format('YYYY-MM-DD HH:mm:ss');
     data.ip = IP;

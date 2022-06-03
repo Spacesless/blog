@@ -38,14 +38,6 @@ module.exports = {
       ]
     },
     extractCSS: true,
-    // loaders: {
-    //   sass: {
-    //     sassOptions: {
-    //       quietDeps: true,
-    //       outputStyle: 'expanded'
-    //     }
-    //   }
-    // },
     plugins: [
       new CompressionPlugin({
         test: /.(js|css|woff|ttf)$/, // 匹配需要压缩的文件后缀 看需求
@@ -54,7 +46,7 @@ module.exports = {
     ],
     publicPath: '//cdn.timelessq.com/nuxt-front/dist/client' // 只需将www/front上传cdn
   },
-  buildDir: 'www/nuxt-front',
+  buildDir: isPro ? 'www/nuxt-front' : '.nuxt/front',
   css: [
     '@/styles/index.scss'
   ],
