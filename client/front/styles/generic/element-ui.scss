@@ -1,4 +1,10 @@
 .el{
+  &-drawer{
+    background: var(--bg-normal);
+    &__header {
+      margin-bottom: 24px;
+    }
+  }
   &-cascader-panel{
     .el-cascader-menu__wrap{
       height: 215px;

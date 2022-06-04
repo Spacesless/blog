@@ -45,6 +45,7 @@ import Comment from '#/components/Comment'
 import ImageViewer from '@/components/ImageViewer'
 import Share from '@/components/Share'
 import { pageMeta } from '@/mixins'
+import { hasClass, addClass, removeClass } from '@/utils'
 
 export default {
   name: 'BlogConent',
@@ -92,28 +93,66 @@ export default {
   },
   methods: {
     initPrism() {
-      Prism.plugins.toolbar.registerButton('copy-to-clipboard', (env) => {
-        const copyElement = document.createElement('button')
-        const copyIcon = document.createElement('i')
-        const copyTips = document.createElement('em')
-        copyElement.className = 'toolbar-item-button'
-        copyIcon.className = 'tl-icon'
-        copyTips.className = 'toolbar-item-button__tips'
-        copyIcon.innerHTML = '&#xe8b0;'
-        copyTips.innerText = '复制代码'
-        copyElement.appendChild(copyIcon)
-        copyElement.appendChild(copyTips)
+      this.registerNewline()
+      this.registerCopy()
+      this.registerFullScreen()
 
-        const clipboard = new ClipboardJS(copyElement, {
+      Prism.highlightAll()
+    },
+    // 注册换行功能
+    registerNewline() {
+      Prism.plugins.toolbar.registerButton('newline', (env) => {
+        const buttonElement = document.createElement('button')
+        const iconElement = document.createElement('i')
+        const tooltipElement = document.createElement('em')
+        buttonElement.className = 'toolbar-item-button'
+        iconElement.className = 'tl-icon'
+        iconElement.innerHTML = '&#xe648;'
+        tooltipElement.className = 'toolbar-item-button__tips'
+        tooltipElement.innerText = '换行'
+        buttonElement.appendChild(iconElement)
+        buttonElement.appendChild(tooltipElement)
+
+        buttonElement.addEventListener('click', (e) => {
+          const parentElement = e.path.find(item => hasClass(item, 'code-toolbar'))
+          if (parentElement) {
+            if (hasClass(parentElement, 'code-toolbar--newline')) {
+              removeClass(parentElement, 'code-toolbar--newline')
+              iconElement.innerHTML = '&#xe648;'
+            } else {
+              addClass(parentElement, 'code-toolbar--newline')
+              iconElement.innerHTML = '&#xe646;'
+            }
+            Prism.plugins.lineNumbers.resize(parentElement.querySelector('.line-numbers'))
+          }
+        })
+        return buttonElement
+      })
+    },
+    // 注册复制功能
+    registerCopy() {
+      Prism.plugins.toolbar.registerButton('copy-to-clipboard', (env) => {
+        const buttonElement = document.createElement('button')
+        const iconElement = document.createElement('i')
+        const tooltipElement = document.createElement('em')
+        buttonElement.className = 'toolbar-item-button'
+        iconElement.className = 'tl-icon'
+        tooltipElement.className = 'toolbar-item-button__tips'
+        iconElement.innerHTML = '&#xe8b0;'
+        tooltipElement.innerText = '复制'
+        buttonElement.appendChild(iconElement)
+        buttonElement.appendChild(tooltipElement)
+
+        const clipboard = new ClipboardJS(buttonElement, {
           'text': () => {
             return env.code
           }
         })
         clipboard.on('success', () => {
-          copyIcon.innerHTML = '&#xe628;'
+          iconElement.innerHTML = '&#xe628;'
           clearTimeout(this.timer)
           this.timer = setTimeout(() => {
-            copyIcon.innerHTML = '&#xe8b0;'
+            iconElement.innerHTML = '&#xe8b0;'
           }, 3000)
 
           this.$notify({
@@ -129,9 +168,40 @@ export default {
             message: '请使用 Ctrl + V 来复制吧'
           })
         })
-        return copyElement
+        return buttonElement
       })
-      Prism.highlightAll()
+    },
+    // 注册全屏功能
+    registerFullScreen() {
+      Prism.plugins.toolbar.registerButton('full-screen', (env) => {
+        const buttonElement = document.createElement('button')
+        const iconElement = document.createElement('i')
+        const tooltipElement = document.createElement('em')
+        buttonElement.className = 'toolbar-item-button'
+        iconElement.className = 'tl-icon'
+        iconElement.innerHTML = '&#xe632;'
+        tooltipElement.className = 'toolbar-item-button__tips'
+        tooltipElement.innerText = '全屏'
+        buttonElement.appendChild(iconElement)
+        buttonElement.appendChild(tooltipElement)
+
+        buttonElement.addEventListener('click', (e) => {
+          const parentElement = e.path.find(item => hasClass(item, 'code-toolbar'))
+          if (parentElement) {
+            if (hasClass(parentElement, 'code-toolbar--fullscreen')) {
+              removeClass(document.body, 'el-popup-parent--hidden')
+              removeClass(parentElement, 'code-toolbar--fullscreen')
+              iconElement.innerHTML = '&#xe632;'
+            } else {
+              addClass(document.body, 'el-popup-parent--hidden')
+              addClass(parentElement, 'code-toolbar--fullscreen')
+              iconElement.innerHTML = '&#xe638;'
+            }
+            Prism.plugins.lineNumbers.resize(parentElement.querySelector('.line-numbers'))
+          }
+        })
+        return buttonElement
+      })
     },
     // 记录访问量
     handleRecordAccess() {

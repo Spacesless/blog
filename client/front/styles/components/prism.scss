@@ -2,7 +2,6 @@ code[class*="language-"], pre[class*="language-"] {
 	font-family: Consolas,Menlo,Courier,monospace;
 	font-size: 14px;
 	line-height: 1.5;
-	white-space: pre-wrap;
 	word-break: normal;
 	word-wrap: break-word;
 	word-spacing: normal;
@@ -24,6 +23,8 @@ code[class*="language-"], pre[class*="language-"] {
 
 /* Code blocks */
 pre[class*="language-"] {
+  overflow-x: auto;
+  overflow-y: hidden;
   margin: 0;
 	padding: 50px 15px 10px;
   color: var(--color-heading);
@@ -76,6 +77,25 @@ pre[class*="language-"] {
   background: var(--bg);
   border-radius: 8px;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 10px -2px;
+  transition: all .3s;
+  &--fullscreen {
+    overflow-y: auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1001;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    .toolbar{
+      position: fixed;
+    }
+  }
+  &--newline{
+    pre[class*="language-"]{
+      white-space: pre-wrap;
+    }
+  }
 }
 .toolbar{
   position: absolute;
@@ -102,8 +122,8 @@ pre[class*="language-"] {
     box-shadow: 1.25rem 0 #fdbc40, 2.5rem 0 #35cd4b;
   }
   &-item{
-    float: right;
-    margin-left: 10px;
+    display: inline-block;
+    margin-left: 12px;
     span{
       position: absolute;
       left: 80px;
@@ -117,7 +137,7 @@ pre[class*="language-"] {
     &-button{
       display: inline-block;
       position: relative;
-      padding: 3px 6px;
+      padding: 0;
       border: none;
       background: none;
       color: var(--color-text);
@@ -127,13 +147,13 @@ pre[class*="language-"] {
         position: absolute;
         bottom: 30px;
         left: 50%;
-        width: 80px;
-        height: 30px;
-        margin-left: -44px;
+        width: 60px;
+        height: 28px;
+        margin-left: -34px;
         background-color: #303133;
         color: #fff;
         font-size: 12px;
-        line-height: 30px;
+        line-height: 28px;
         border-radius: 4px;
         opacity: 0;
         transition: opacity .3s;

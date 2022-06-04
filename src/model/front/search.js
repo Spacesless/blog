@@ -6,10 +6,10 @@ module.exports = class extends think.Model {
    * @returns {Array}
    */
   async selectPost(type, keyword) {
-    const typpeEnum = [{
+    const typpeEnum = {
       article: 'article',
       bangumi: 'bangumi'
-    }];
+    };
     const field = 'id,title,content,category_id,updatetime';
     let SQL;
     let where = 'WHERE ( `is_show` = 1 ) AND ( `is_recycle` = 0 )';
