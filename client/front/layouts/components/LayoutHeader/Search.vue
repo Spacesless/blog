@@ -35,8 +35,11 @@
       </div>
 
       <div v-loading="fetchLoading" class="search-list">
-        <h3 class="search-list__result">检索到包含 {{ resultInfo.keyword }} 的{{ resultInfo.classify }} {{ total }} 篇</h3>
-        <div class="search-list-wraper">
+        <h3 class="search-list__result">
+          <template v-if="total">检索到包含 {{ resultInfo.keyword }} 的{{ resultInfo.classify }} {{ total }} 篇</template>
+          <template v-else>啥也没找着</template>
+        </h3>
+        <div class="search-list-wrapper">
           <div class="container">
             <ul v-for="(item, index) in searchList" :key="index" class="search-list-item">
               <li class="search-list__info">
@@ -245,7 +248,7 @@ export default {
   }
   &-list{
     height: calc(100vh - 165px);
-    &-wraper{
+    &-wrapper{
       overflow-y: auto;
       height: calc(100% - 118px);
     }

@@ -197,7 +197,9 @@ export default {
               addClass(parentElement, 'code-toolbar--fullscreen')
               iconElement.innerHTML = '&#xe638;'
             }
-            Prism.plugins.lineNumbers.resize(parentElement.querySelector('.line-numbers'))
+            setTimeout(() => {
+              Prism.plugins.lineNumbers.resize(parentElement.querySelector('.line-numbers'))
+            }, 300)
           }
         })
         return buttonElement

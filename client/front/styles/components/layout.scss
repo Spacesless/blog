@@ -238,13 +238,16 @@ $header-height: 45px;
     height: 100%;
     background-color: rgba($color: #000000, $alpha: .5);
   }
-  &-main{
-    padding-top: 16px;
-    margin-left: $asideWidth + $grid-space;
-    transition: margin 0.3s;
-    @media (max-width: 992px) {
-      margin-right: 0;
-    }
+}
+.main{
+  padding-top: 16px;
+  margin-left: $asideWidth + $grid-space;
+  transition: margin 0.3s;
+  @media (max-width: 992px) {
+    margin-right: 0;
+  }
+  &-wrapper{
+    min-height: calc(100vh - 101px);
   }
 }
 
@@ -309,7 +312,7 @@ $header-height: 45px;
   .header {
     width: calc(100% - 64px)
   }
-  .app-main{
+  .main{
     margin-left: 88px;
   }
 }
@@ -318,7 +321,7 @@ $header-height: 45px;
   .header {
     width: 100%;
   }
-  .app-main{
+  .main{
     margin-left: 0;
     padding-top: $header-height + 15px;
   }
@@ -356,7 +359,7 @@ $header-height: 45px;
 }
 
 .withoutAnimation {
-  .app-main,
+  .main,
   .aside {
     transition: none;
   }

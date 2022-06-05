@@ -6,9 +6,9 @@
     <div v-if="device==='mobile' && sidebar.opened" class="app-mask" @click="handleClickOutside" />
     <Sidebar />
     <!-- app start -->
-    <div class="app-main">
+    <div class="main">
       <!-- main start -->
-      <nuxt />
+      <nuxt class="main-wrapper" />
       <!--footer start-->
       <LayoutFooter :configs="configs" />
     </div>

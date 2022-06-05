@@ -33,7 +33,7 @@
       <h2 class="tl-card__title link-tips__title">申请方式</h2>
       <p>可以通过邮件、留言评论等方式申请，格式如下：</p>
       <p>名称：Timeless's博客</p>
-      <p>描述：关注web开发、ACG <span>可选</span></p>
+      <p>描述：花开成景，花落成诗 <span>可选</span></p>
       <p>网址：https://www.timelessq.com</p>
       <p>头像/Logo：https://www.timelessq.com/static/avatar.jpg <span>可选</span></p>
     </div>

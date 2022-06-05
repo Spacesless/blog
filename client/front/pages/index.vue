@@ -146,6 +146,15 @@ export default {
   computed: {
     configs() {
       return this.$store.getters.configs
+    },
+    meta() {
+      const { sitename, keywords, description } = this.configs
+
+      return {
+        keyword: keywords,
+        description: description,
+        title: `${sitename} - 花开成景，花落成诗`
+      }
     }
   },
   mounted() {
