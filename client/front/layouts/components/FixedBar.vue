@@ -1,16 +1,16 @@
 <template>
   <div class="fixbar">
     <el-tooltip effect="dark" :content="live2dShow ? '关闭看板娘' : '打开看板娘'" placement="left">
-      <div class="fixbar-item icon-xiaolian" :class="live2dShow ? 'fixbar-item--active' : ''" @click="toggleWaifu"></div>
+      <div class="fixbar-item icon-xiaolian" :class="live2dShow ? 'fixbar-item--active' : ''" @click="toggleWaifu" />
     </el-tooltip>
     <el-tooltip effect="dark" :content="particleActive ? '关闭背景动画' : '打开背景动画'" placement="left">
-      <div class="fixbar-item icon-dongxiao" :class="particleActive ? 'fixbar-item--active' : ''" @click="toggleBubble"></div>
+      <div class="fixbar-item icon-dongxiao" :class="particleActive ? 'fixbar-item--active' : ''" @click="toggleBubble" />
     </el-tooltip>
     <el-tooltip effect="dark" content="点我坐电梯" placement="left" :disabled="backTopTips">
       <transition name="fade-transform">
         <div v-show="backTopShow" class="fixbar-item fixbar-item-back" @click="backTop">
           <span class="fixbar-item-back__percent">{{ scrollPercent }}%</span>
-          <span class="fixbar-item-back__icon icon-fanhuidingbu"></span>
+          <span class="fixbar-item-back__icon icon-fanhuidingbu" />
         </div>
       </transition>
     </el-tooltip>

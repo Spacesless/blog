@@ -1,12 +1,4 @@
 module.exports = class extends think.Controller {
-  __before() {
-    const referer = this.header('referer');
-    const whiteList = ['127.0.0.1', 'timelessq.com'];
-    if (referer && whiteList.every(item => !referer.includes(item))) {
-      return this.ctx.throw(403);
-    }
-  }
-
   /**
    * 获取系统配置
    * @returns {Object}

@@ -1,11 +1,11 @@
 <template>
   <div class="share">
-    <span class="share-icon tl-icon">&#xe725;</span>
-    <el-tooltip effect="dark" content="分享到QQ好友" placement="bottom">
-      <span class="share-item QQ" @click="shareToQQ" />
+    <span class="share__tooltips">请我喝[茶]~(￣▽￣)~*</span>
+    <el-tooltip effect="dark" content="打赏" placement="bottom">
+      <span class="share-item share-item--sponsor" @click="shareToSina" />
     </el-tooltip>
-    <el-tooltip effect="dark" content="分享到QQ空间" placement="bottom">
-      <span class="share-item Qzone" @click="shareToQzone" />
+    <el-tooltip effect="dark" content="分享到新浪微博" placement="bottom">
+      <span class="share-item share-item--sina" @click="shareToSina" />
     </el-tooltip>
     <el-tooltip effect="dark" content="分享到微信" placement="bottom">
       <el-popover
@@ -17,17 +17,21 @@
           <img ref="qrcode" class="img-fluid" alt="">
           <p>分享到微信</p>
         </div>
-        <span slot="reference" class="share-item Wx" @click="shareToWx" />
+        <span slot="reference" class="share-item share-item--wx" @click="shareToWx" />
       </el-popover>
     </el-tooltip>
-    <el-tooltip effect="dark" content="分享到新浪微博" placement="bottom">
-      <span class="share-item Sina" @click="shareToSina" />
+    <el-tooltip effect="dark" content="分享到QQ好友" placement="bottom">
+      <span class="share-item share-item--qq" @click="shareToQQ" />
+    </el-tooltip>
+    <el-tooltip effect="dark" content="分享到QQ空间" placement="bottom">
+      <span class="share-item share-item--qzone" @click="shareToQzone" />
     </el-tooltip>
   </div>
 </template>
 
 <script>
 import QRCode from 'qrcode'
+import { primaryColor } from '@/styles/export-to-js.scss'
 
 export default {
   props: {
@@ -76,7 +80,7 @@ export default {
         scale: 1,
         width: 256,
         color: {
-          dark: '#409EFF',
+          dark: primaryColor,
           light: '#f5f5f5'
         }
       }
@@ -108,9 +112,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$iconWidth: 36px;
+
 .share{
-  padding: 10px 15px;
-  text-align: center;
+  position: relative;
+  padding: 12px 20px;
+  border-top: 1px solid var(--border-color);
+  text-align: right;
+  &__tooltips{
+    position: absolute;
+    left: 20px;
+    line-height: $iconWidth;
+    color: var(--color-secondary);
+  }
   &-icon{
     display: inline-block;
     width: 40px;
@@ -129,24 +143,27 @@ export default {
   }
   &-item{
     display: inline-block;
-    width: 40px;
-    height: 40px;
-    margin: 0 3px;
+    width: $iconWidth;
+    height: $iconWidth;
+    margin-left: 8px;
     background-image: url('~@/assets/image/share-icon.png');
     vertical-align: bottom;
     cursor: pointer;
-  }
-  .QQ{
-    background-position: 0 0;
-  }
-  .Qzone{
-    background-position: -40px 0;
-  }
-  .Wx{
-    background-position: -80px 0;
-  }
-  .Sina{
-    background-position: -120px 0;
+    &--sponsor{
+      background-position: -0 0;
+    }
+    &--wx{
+      background-position: -$iconWidth 0;
+    }
+    &--sina{
+      background-position: -$iconWidth * 2 0;
+    }
+    &--qzone{
+      background-position: -$iconWidth * 3 0;
+    }
+    &--qq{
+      background-position: -$iconWidth * 4 0;
+    }
   }
 }
 .qrcode-wrap{

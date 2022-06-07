@@ -219,11 +219,6 @@ export default {
     size: contain;
     color: #083b50;
   };
-  ::v-deep .tl-icon-play{
-    &:before{
-      content: "\e769";
-    }
-  }
   &-main{
     overflow: hidden;
     position: relative;

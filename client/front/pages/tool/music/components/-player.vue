@@ -26,7 +26,7 @@
             <p class="music-playlist-item__name">{{ item.name }}</p>
             <p class="music-playlist-item__author">{{ item.artist }}</p>
             <div class="music-playlist-item-menu">
-              <span class="icon-bofang" @click="handlePlaySingle(index)"></span>
+              <span class="icon-bofang" @click="handlePlaySingle(index)" />
               <span class="el-icon-delete" @click="handleDeletePlaylist(index)" />
             </div>
           </li>

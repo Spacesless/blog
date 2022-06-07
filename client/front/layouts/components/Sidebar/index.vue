@@ -19,7 +19,7 @@
         router
       >
         <el-menu-item index="/">
-          <i class="aside-menu__icon icon-shouye"></i>
+          <i class="aside-menu__icon icon-shouye" />
           <span slot="title">首页</span>
         </el-menu-item>
         <sidebar-item v-for="route in menus" :key="route.path" :item="route" />
@@ -28,7 +28,7 @@
 
     <ul class="aside-info clearfix">
       <li>
-        <a class="aside-info__icon icon-gitee" href="https://gitee.com/timelessq" target="__blank" title="Gitee"></a>
+        <a class="aside-info__icon icon-gitee" href="https://gitee.com/timelessq" target="__blank" title="Gitee" />
       </li>
       <li>
         <a
@@ -36,7 +36,7 @@
           href="http://sighttp.qq.com/authd?IDKEY=9d8b594f90881e85bc083a6ec1bd41f275e2761b130b97ca"
           target="__blank"
           title="QQ"
-        ></a>
+        />
       </li>
       <li>
         <a
@@ -44,13 +44,13 @@
           href="https://y.qq.com/n/ryqq/profile/like/song?uin=NenPoeEioeoA"
           target="__blank"
           title="QQ Music"
-        ></a>
+        />
       </li>
       <li>
-        <a class="aside-info__icon icon-bilibili" href="https://space.bilibili.com/315883644" target="__blank" title="Bilibili"></a>
+        <a class="aside-info__icon icon-bilibili" href="https://space.bilibili.com/315883644" target="__blank" title="Bilibili" />
       </li>
       <li>
-        <a class="aside-info__icon icon-rss" href="/rss" target="__blank" title="rss"></a>
+        <a class="aside-info__icon icon-rss" href="/rss" target="__blank" title="rss" />
       </li>
     </ul>
   </div>

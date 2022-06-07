@@ -63,9 +63,9 @@
             >{{ tag }}</span>
           </div>
           <div class="article-item-info-stuff">
-            <span><i class="icon-wenzi"></i>{{ item.word_count }}</span>
-            <span><i class="icon-chakan"></i>{{ item.hits }}</span>
-            <span><i class="icon-pinglun"></i>{{ item.comment_count }}</span>
+            <span><i class="icon-wenzi" />{{ item.word_count }}</span>
+            <span><i class="icon-chakan" />{{ item.hits }}</span>
+            <span><i class="icon-pinglun" />{{ item.comment_count }}</span>
           </div>
         </el-col>
       </el-row>
@@ -211,7 +211,7 @@ export default {
         span{
           margin-right: 16px;
         }
-        .tl-icon{
+        i{
           margin-top: -2px;
           margin-right: 4px;
           font-size: 17px;

@@ -147,7 +147,7 @@ export default {
           }
         })
         clipboard.on('success', () => {
-          iconElement.innerHTML = 'icon-wancheng'
+          iconElement.className = 'icon-wancheng'
           clearTimeout(this.timer)
           this.timer = setTimeout(() => {
             iconElement.className = 'icon-fuzhi'

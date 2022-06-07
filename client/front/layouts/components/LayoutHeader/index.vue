@@ -11,7 +11,7 @@
           'icon-xiangzuoshouqi': !isCollapse
         }"
         @click="toggleSidebar"
-      ></span>
+      />
     </div>
     <div class="header-menus">
       <el-tooltip effect="dark" :content="$colorMode.preference === 'system' ? '黑夜模式' : '白天模式'" placement="bottom">
@@ -21,7 +21,8 @@
             'icon-qingtian': isDark,
             'icon-moon': !isDark
           }"
-          @click="toggleColorMode"></i>
+          @click="toggleColorMode"
+        />
       </el-tooltip>
       <el-tooltip effect="dark" content="站内搜索" placement="bottom">
         <i class="header-menus__btn el-icon-search" @click="handleShowSearch" />

@@ -19,7 +19,7 @@
     <el-scrollbar class="music-sidebar-disst-wrap">
       <dl class="music-sidebar-disst">
         <dt class="music-sidebar-disst__title">
-          <i class="tl-icon">&#xf116;</i>
+          <i class="icon-yinyue" />
           <span>我的歌单</span>
         </dt>
         <template v-for="item in disstList">

@@ -44,10 +44,10 @@
             <ul v-for="(item, index) in searchList" :key="index" class="search-list-item">
               <li class="search-list__info">
                 <span class="search-list__count">{{ index + 1 + (listQuery.page - 1) * 10 }}</span>
-                <nuxt-link class="search-list__title" :to="item.url" v-html="highlightKeyword(item.title)" />
+                <nuxt-link class="search-list__title" :to="item.url" @click.native="onClose" v-html="highlightKeyword(item.title)" />
                 <span v-if="item.categoryUrl" class="search-list-classify">
                   <span class="search-list-classify__separator">-</span>
-                  <nuxt-link class="search-list-classify__link" :title="item.categoryName" :to="item.categoryUrl">{{ item.categoryName }}</nuxt-link>
+                  <nuxt-link class="search-list-classify__link" :title="item.categoryName" :to="item.categoryUrl" @click.native="onClose">{{ item.categoryName }}</nuxt-link>
                 </span>
                 <p class="search-list__content" v-html="highlightKeyword(item.content)" />
               </li>
@@ -247,10 +247,10 @@ export default {
     }
   }
   &-list{
-    height: calc(100vh - 165px);
+    height: calc(100vh - 168px);
     &-wrapper{
       overflow-y: auto;
-      height: calc(100% - 118px);
+      height: calc(100% - 120px);
     }
     &__result{
       padding: 8px 0 16px;

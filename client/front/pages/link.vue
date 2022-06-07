@@ -11,7 +11,7 @@
           <div class="link-logo">
             <el-image class="link-logo__picture" :src="item.logo">
               <div slot="error" class="image-slot">
-                <i class="el-icon-picture-outline"></i>
+                <i class="el-icon-picture-outline" />
               </div>
             </el-image>
           </div>

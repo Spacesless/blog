@@ -6,15 +6,15 @@
     <canvas id="js-live2d" width="208" height="208" class="waifu-live2d" @click="onMouseClick" @mouseenter="onMouseEnter('live2d')" />
     <div class="waifu-tool">
       <!-- 返回首页 -->
-      <span class="icon-shouye" @click="navigatorToHome" @mouseenter="onMouseEnter('home')"></span>
+      <span class="icon-shouye" @click="navigatorToHome" @mouseenter="onMouseEnter('home')" />
       <!-- 切换模型 -->
-      <span class="icon-moxing" @click="loadOtherModel" @mouseenter="onMouseEnter('model')"></span>
+      <span class="icon-moxing" @click="loadOtherModel" @mouseenter="onMouseEnter('model')" />
       <!-- 更换材质 -->
-      <span class="icon-pifu" @click="loadOtherTexture" @mouseenter="onMouseEnter('textures')"></span>
+      <span class="icon-pifu" @click="loadOtherTexture" @mouseenter="onMouseEnter('textures')" />
       <!-- 拍照 -->
-      <span class="icon-paizhao" @click="handleTakePhoto" @mouseenter="onMouseEnter('photo')"></span>
+      <span class="icon-paizhao" @click="handleTakePhoto" @mouseenter="onMouseEnter('photo')" />
       <!-- 关闭 -->
-      <span class="icon-guanbi" @click="handleHideLive2d" @mouseenter="onMouseEnter('close')"></span>
+      <span class="icon-guanbi" @click="handleHideLive2d" @mouseenter="onMouseEnter('close')" />
     </div>
   </div>
 </template>

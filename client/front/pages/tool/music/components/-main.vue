@@ -11,7 +11,7 @@
         </div>
       </div>
       <div class="music-list-menu">
-        <el-button type="primary" round icon="tl-icon-play" @click="handlePlayAll">播放全部</el-button>
+        <el-button type="primary" round icon="icon-play" @click="handlePlayAll">播放全部</el-button>
         <el-button split-button round icon="el-icon-plus" @click="handleJoinAll">添加到列表</el-button>
       </div>
     </div>
@@ -32,7 +32,7 @@
           <span class="music-list__albumdesc">{{ row.albumdesc }}</span>
           <div class="music-list-operate">
             <el-button
-              icon="tl-icon-play"
+              icon="icon-play"
               circle
               @click="handlePlaySingle(row)"
             />

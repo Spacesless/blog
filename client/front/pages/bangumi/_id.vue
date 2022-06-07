@@ -42,7 +42,7 @@
       </el-form-item>
     </el-form>
     <!--bangumi list-->
-    <el-row class="bangumi-list" :gutter="24">
+    <el-row class="bangumi-list" :gutter="gridSpace">
       <el-col v-for="item in bangumiList" :key="item.id" :xs="24" :sm="12">
         <el-row class="bangumi-list-item">
           <el-col class="bangumi-list-cover" :span="10" :xl="8">
@@ -88,6 +88,7 @@
 import Hitokoto from '@/components/Hitokoto'
 import Pagination from '#/components/Pagination'
 import { pageMeta, listPage } from '@/mixins'
+import { gridSpace } from '@/styles/export-to-js.scss'
 
 export default {
   components: {
@@ -129,6 +130,7 @@ export default {
   },
   data() {
     return {
+      gridSpace,
       pageType: 'list'
     }
   },
