@@ -5,17 +5,9 @@
 // element-ui
 @import './generic/element-ui.scss';
 // OOCSS
+@import './objects/iconfont.scss';
 @import './objects/objects.scss';
 @import './objects/transition.scss';
-
-.hitokoto{
-  min-height: 24px;
-  margin-bottom: 30px;
-  line-height: 24px;
-  &__from{
-    color: var(--color-secondary);
-  }
-}
 
 // scrollbar
 @media (pointer: fine) {

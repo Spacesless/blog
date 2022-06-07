@@ -4,13 +4,24 @@
       <nuxt-link to="/">
         <img class="header-logo__avatar" :src="'/static/avatar.jpg' | getAbsolutePath" alt="logo">
       </nuxt-link>
-      <span class="header-logo__hamburger tl-icon" :class="{'header-logo__hamburger--collapse': isCollapse}" @click="toggleSidebar">
-        {{ isCollapse ? '&#xe624;' : '&#xe625;' }}
-      </span>
+      <span
+        class="header-logo__hamburger"
+        :class="{
+          'header-logo__hamburger--collapse icon-xiangyouzhankai': isCollapse,
+          'icon-xiangzuoshouqi': !isCollapse
+        }"
+        @click="toggleSidebar"
+      ></span>
     </div>
     <div class="header-menus">
       <el-tooltip effect="dark" :content="$colorMode.preference === 'system' ? '黑夜模式' : '白天模式'" placement="bottom">
-        <i class="header-menus__btn tl-icon" @click="toggleColorMode">{{ isDark ? '&#xe666;' : '&#xe607;' }}</i>
+        <i
+          class="header-menus__btn"
+          :class="{
+            'icon-qingtian': isDark,
+            'icon-moon': !isDark
+          }"
+          @click="toggleColorMode"></i>
       </el-tooltip>
       <el-tooltip effect="dark" content="站内搜索" placement="bottom">
         <i class="header-menus__btn el-icon-search" @click="handleShowSearch" />

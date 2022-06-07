@@ -19,7 +19,7 @@
         router
       >
         <el-menu-item index="/">
-          <i class="aside-menu__icon tl-icon">&#xe76f;</i>
+          <i class="aside-menu__icon icon-shouye"></i>
           <span slot="title">首页</span>
         </el-menu-item>
         <sidebar-item v-for="route in menus" :key="route.path" :item="route" />
@@ -28,29 +28,29 @@
 
     <ul class="aside-info clearfix">
       <li>
-        <a class="aside-info__icon tl-icon" href="https://gitee.com/timelessq" target="__blank" title="Gitee">&#xe686;</a>
+        <a class="aside-info__icon icon-gitee" href="https://gitee.com/timelessq" target="__blank" title="Gitee"></a>
       </li>
       <li>
         <a
-          class="aside-info__icon tl-icon"
+          class="aside-info__icon icon-qq"
           href="http://sighttp.qq.com/authd?IDKEY=9d8b594f90881e85bc083a6ec1bd41f275e2761b130b97ca"
           target="__blank"
           title="QQ"
-        >&#xe647;</a>
+        ></a>
       </li>
       <li>
         <a
-          class="aside-info__icon tl-icon"
+          class="aside-info__icon icon-music"
           href="https://y.qq.com/n/ryqq/profile/like/song?uin=NenPoeEioeoA"
           target="__blank"
           title="QQ Music"
-        >&#xe63b;</a>
+        ></a>
       </li>
       <li>
-        <a class="aside-info__icon tl-icon" href="https://space.bilibili.com/315883644" target="__blank" title="Bilibili">&#xe75e;</a>
+        <a class="aside-info__icon icon-bilibili" href="https://space.bilibili.com/315883644" target="__blank" title="Bilibili"></a>
       </li>
       <li>
-        <a class="aside-info__icon tl-icon" href="/rss" target="__blank" title="rss">&#xe6d0;</a>
+        <a class="aside-info__icon icon-rss" href="/rss" target="__blank" title="rss"></a>
       </li>
     </ul>
   </div>

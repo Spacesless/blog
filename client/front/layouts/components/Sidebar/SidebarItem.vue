@@ -1,12 +1,12 @@
 <template>
   <el-menu-item v-if="!item.children" :index="item.url" :title="item.name">
-    <i v-if="!isNest" class="aside-menu__icon tl-icon" v-html="item.icon" />
+    <i v-if="!isNest" class="aside-menu__icon tl-icon" :class="item.icon" />
     <span slot="title">{{ item.name }}</span>
   </el-menu-item>
 
   <el-submenu v-else :index="item.url" popper-class="aside-submenu">
     <template slot="title">
-      <i v-if="!isNest" class="aside-menu__icon tl-icon" v-html="item.icon" />
+      <i v-if="!isNest" class="aside-menu__icon tl-icon" :class="item.icon" />
       <span slot="title">{{ item.name }}</span>
     </template>
     <el-menu-item :index="item.url" :title="item.mark_name">

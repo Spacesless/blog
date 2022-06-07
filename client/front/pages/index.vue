@@ -46,12 +46,12 @@
                 <nuxt-link :to="'/article/detail/' + item.id" :title="item.title">{{ item.title }}</nuxt-link>
               </p>
               <div class="article-meta">
-                <span class="article-meta__date"><i class="tl-icon">&#xe70b;</i>{{ item.updatetime | parseTime('{y}-{m}-{d}') }}</span>
+                <span class="article-meta__date"><i class="icon-riqi"></i>{{ item.updatetime | parseTime('{y}-{m}-{d}') }}</span>
                 <span v-if="item.categoryUrl" class="article-meta__cate">
-                  <i class="tl-icon">&#xe668;</i>
+                  <i class="icon-bianqian"></i>
                   <nuxt-link :to="item.categoryUrl" :title="item.categoryName">{{ item.categoryName }}</nuxt-link>
                 </span>
-                <span class="article-meta__view"><i class="tl-icon">&#xe681;</i>{{ item.hits }}</span>
+                <span class="article-meta__view"><i class="icon-chakan"></i>{{ item.hits }}</span>
               </div>
               <div class="article-desc">
                 <p>{{ item.description }}</p>

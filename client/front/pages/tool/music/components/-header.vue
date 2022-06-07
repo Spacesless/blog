@@ -7,7 +7,7 @@
     <div class="music-user" @click="handleChangeUser">
       <el-image class="music-user__avator" :src="userinfo.avatar" />
       <span class="music-user__name">{{ userinfo.nickname || 'Timeless' }}</span>
-      <i class="tl-icon music-user__icon">&#xe613;</i>
+      <i class="music-user__icon icon-qiehuan"></i>
     </div>
   </div>
 </template>

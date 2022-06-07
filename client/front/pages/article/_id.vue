@@ -63,9 +63,9 @@
             >{{ tag }}</span>
           </div>
           <div class="article-item-info-stuff">
-            <span><i class="tl-icon">&#xe629;</i>{{ item.word_count }}</span>
-            <span><i class="tl-icon">&#xe681;</i>{{ item.hits }}</span>
-            <span><i class="tl-icon">&#xe745;</i>{{ item.comment_count }}</span>
+            <span><i class="icon-wenzi"></i>{{ item.word_count }}</span>
+            <span><i class="icon-chakan"></i>{{ item.hits }}</span>
+            <span><i class="icon-pinglun"></i>{{ item.comment_count }}</span>
           </div>
         </el-col>
       </el-row>

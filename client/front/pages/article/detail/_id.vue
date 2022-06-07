@@ -106,8 +106,7 @@ export default {
         const iconElement = document.createElement('i')
         const tooltipElement = document.createElement('em')
         buttonElement.className = 'toolbar-item-button'
-        iconElement.className = 'tl-icon'
-        iconElement.innerHTML = '&#xe648;'
+        iconElement.className = 'icon-danhangwenben'
         tooltipElement.className = 'toolbar-item-button__tips'
         tooltipElement.innerText = '换行'
         buttonElement.appendChild(iconElement)
@@ -118,10 +117,10 @@ export default {
           if (parentElement) {
             if (hasClass(parentElement, 'code-toolbar--newline')) {
               removeClass(parentElement, 'code-toolbar--newline')
-              iconElement.innerHTML = '&#xe648;'
+              iconElement.className = 'icon-danhangwenben'
             } else {
               addClass(parentElement, 'code-toolbar--newline')
-              iconElement.innerHTML = '&#xe646;'
+              iconElement.className = 'icon-duohangwenben'
             }
             Prism.plugins.lineNumbers.resize(parentElement.querySelector('.line-numbers'))
           }
@@ -136,9 +135,8 @@ export default {
         const iconElement = document.createElement('i')
         const tooltipElement = document.createElement('em')
         buttonElement.className = 'toolbar-item-button'
-        iconElement.className = 'tl-icon'
+        iconElement.className = 'icon-fuzhi'
         tooltipElement.className = 'toolbar-item-button__tips'
-        iconElement.innerHTML = '&#xe8b0;'
         tooltipElement.innerText = '复制'
         buttonElement.appendChild(iconElement)
         buttonElement.appendChild(tooltipElement)
@@ -149,10 +147,10 @@ export default {
           }
         })
         clipboard.on('success', () => {
-          iconElement.innerHTML = '&#xe628;'
+          iconElement.innerHTML = 'icon-wancheng'
           clearTimeout(this.timer)
           this.timer = setTimeout(() => {
-            iconElement.innerHTML = '&#xe8b0;'
+            iconElement.className = 'icon-fuzhi'
           }, 3000)
 
           this.$notify({
@@ -178,8 +176,7 @@ export default {
         const iconElement = document.createElement('i')
         const tooltipElement = document.createElement('em')
         buttonElement.className = 'toolbar-item-button'
-        iconElement.className = 'tl-icon'
-        iconElement.innerHTML = '&#xe632;'
+        iconElement.className = 'icon-quanping'
         tooltipElement.className = 'toolbar-item-button__tips'
         tooltipElement.innerText = '全屏'
         buttonElement.appendChild(iconElement)
@@ -191,11 +188,11 @@ export default {
             if (hasClass(parentElement, 'code-toolbar--fullscreen')) {
               removeClass(document.body, 'el-popup-parent--hidden')
               removeClass(parentElement, 'code-toolbar--fullscreen')
-              iconElement.innerHTML = '&#xe632;'
+              iconElement.className = 'icon-quanping'
             } else {
               addClass(document.body, 'el-popup-parent--hidden')
               addClass(parentElement, 'code-toolbar--fullscreen')
-              iconElement.innerHTML = '&#xe638;'
+              iconElement.className = 'icon-tuichuquanping'
             }
             setTimeout(() => {
               Prism.plugins.lineNumbers.resize(parentElement.querySelector('.line-numbers'))

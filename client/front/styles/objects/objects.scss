@@ -1,22 +1,3 @@
-// iconfont
-@font-face {
-  font-display: swap;
-
-  font-family: 'iconfont';  /* Project id 442558 */
-  src: url('//at.alicdn.com/t/font_442558_hxjj4t3u9mp.woff2?t=1654345296367') format('woff2'),
-       url('//at.alicdn.com/t/font_442558_hxjj4t3u9mp.woff?t=1654345296367') format('woff'),
-       url('//at.alicdn.com/t/font_442558_hxjj4t3u9mp.ttf?t=1654345296367') format('truetype');
-}
-[class*=" tl-icon"], [class^=tl-icon], [class*=" tl-icon-"], [class^=tl-icon-]{
-  font-family: 'iconfont', sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  font-variant: normal;
-  line-height: 1;
-  vertical-align: baseline;
-  text-transform: none;
-}
-
 // 公共类名
 .silent{
   filter: grayscale(100%);
@@ -53,6 +34,15 @@
   }
   @media (min-width: 2560px) {
     max-width: 1600px;
+  }
+}
+
+.hitokoto{
+  min-height: 24px;
+  margin-bottom: 30px;
+  line-height: 24px;
+  &__from{
+    color: var(--color-secondary);
   }
 }
 
