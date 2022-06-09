@@ -42,7 +42,9 @@ module.exports = {
         }
       })
     },
-    publicPath: '//cdn.timelessq.com/nuxt-admin/' // 只需将www/admin上传cdn
+    publicPath: '//cdn.timelessq.com/nuxt-admin/', // 只需将www/admin上传cdn
+    postcss: false,
+    transpile: [/^element-ui/]
   },
   buildDir: isPro ? 'www/nuxt-admin' : '.nuxt/admin',
   buildModules: [

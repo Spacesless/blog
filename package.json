@@ -15,10 +15,9 @@
     "build": "npm run build:admin && npm run build:front",
     "build:admin": "nuxt generate --admin",
     "build:front": "nuxt build",
-    "lint:admin": "eslint --ext .js,.vue admin/src",
-    "lint:thinkjs": "eslint --fix src/",
-    "test:thinkjs": "THINK_UNIT_TEST=1 nyc ava test/ && nyc report --reporter=html",
-    "svgo": "svgo -f src/icons/svg --config=admin/src/icons/svgo.yml"
+    "lint:style": "stylelint \"client/front/**/*.{css,scss,html,vue}\" --ignore-path .gitignore",
+    "lint:front": "eslint --ext .js,.vue client/",
+    "lint:api": "eslint --fix src/"
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.13.6",
@@ -43,41 +42,37 @@
     "think-logger3": "^1.0.0",
     "think-model": "^1.4.0",
     "think-model-mysql": "^1.1.1",
-    "think-router": "^1.3.4",
     "think-session": "^1.0.0",
     "think-session-file": "^1.1.3",
     "think-view": "^1.0.0",
     "think-view-nunjucks": "^1.0.9",
     "thinkjs": "^3.0.0",
-    "vue-router": "^3.5.2",
     "xss": "^1.0.11"
   },
   "devDependencies": {
     "@nuxtjs/router": "^1.6.1",
-    "ava": "^3.15.0",
+    "babel-jest": "^27.4.4",
     "babel-plugin-component": "^1.1.1",
     "babel-plugin-prismjs": "^2.0.1",
     "codemirror": "^5.62.0",
     "eslint": "^6.7.2",
     "eslint-config-think": "^1.0.0",
     "eslint-plugin-vue": "^6.2.2",
+    "jest": "^27.4.4",
     "jsonlint": "^1.6.3",
     "lodash-es": "^4.17.15",
     "node-sass": "^4.14.1",
     "path-to-regexp": "6.1.0",
+    "postcss-html": "^1.4.1",
+    "postcss-scss": "^4.0.4",
     "sass-loader": "10.1.1",
     "script-loader": "0.7.2",
+    "stylelint": "^14.1.0",
+    "stylelint-config-rational-order": "^0.1.2",
+    "stylelint-config-standard": "^24.0.0",
+    "stylelint-order": "^5.0.0",
     "svg-sprite-loader": "5.0.0",
-    "svgo": "^2.8.0",
-    "think-watcher": "^3.0.0"
-  },
-  "engines": {
-    "node": ">=8.9",
-    "npm": ">= 3.0.0"
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 8"
-  ]
+    "think-watcher": "^3.0.0",
+    "vue-jest": "^3.0.4"
+  }
 }
