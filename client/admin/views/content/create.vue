@@ -14,16 +14,15 @@ export default {
   },
   computed: {
     ...mapGetters(['categories']),
-    categoryOptions() {
+    categoryOptions () {
       const currentType = this.$route.query.type
       const result = getCategoryByType(this.categories, currentType)
       return result
     },
-    currentCategory() {
+    currentCategory () {
       const category = this.$route.query && +this.$route.query.category
       return category
     }
   }
 }
 </script>
-

@@ -21,13 +21,13 @@ const mutations = {
 }
 
 const actions = {
-  async nuxtServerInit({ commit }, { req, $axios }) {
+  async nuxtServerInit ({ commit }, { req, $axios }) {
     // 获取菜单以及系统配置
-    const { categories, configs } = await $axios.$get(`/general`)
+    const { categories, configs } = await $axios.$get('/general')
     commit('SET_CATEGORY', categories)
     commit('SET_CONFIGS', configs)
   },
-  toggleDevice({ commit }, device) {
+  toggleDevice ({ commit }, device) {
     commit('TOGGLE_DEVICE', device)
   }
 }

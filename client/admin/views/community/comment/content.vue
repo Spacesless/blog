@@ -2,7 +2,9 @@
   <div v-loading="fetchLoading" class="app-container comment">
     <el-form ref="form" label-width="100px">
       <el-form-item label="所属页面">
-        <el-link :underline="false" :href="formData.topic_url" target="_blank">{{ formData.topic_title }}</el-link>
+        <el-link :underline="false" :href="formData.topic_url" target="_blank">
+          {{ formData.topic_title }}
+        </el-link>
       </el-form-item>
       <el-form-item label="昵称">
         <el-input v-model="formData.name" readonly />
@@ -18,7 +20,9 @@
       </el-form-item>
       <el-form-item v-if="formData.replyData" label="回复内容">
         <div class="comment-preview" v-html="formData.replyData.content" />
-        <router-link :to="'/comment/' + formData.parent_id">查看评论</router-link>
+        <router-link :to="'/comment/' + formData.parent_id">
+          查看评论
+        </router-link>
       </el-form-item>
       <el-form-item label="评论内容">
         <div class="comment-preview" v-html="formData.content" />
@@ -43,7 +47,7 @@ export default {
   components: {
     CommentReply
   },
-  data() {
+  data () {
     return {
       formData: {
         content: ''
@@ -55,11 +59,11 @@ export default {
   },
   computed: {
     ...mapGetters(['userinfo']),
-    topicId() {
+    topicId () {
       return this.$route.params?.id
     }
   },
-  created() {
+  created () {
     this.fetchData()
 
     const { nickname, email } = this.userinfo
@@ -71,9 +75,9 @@ export default {
     }
   },
   methods: {
-    async fetchData() {
+    async fetchData () {
       this.fetchLoading = true
-      await this.$api.content.GetContent('comment', this.topicId).then(res => {
+      await this.$api.content.GetContent('comment', this.topicId).then((res) => {
         this.formData = res.data
       }).catch(() => {})
       this.fetchLoading = false
@@ -82,17 +86,17 @@ export default {
      * 提交评论
      * @param {String} content 评论信息
      */
-    submitComment(content) {
-      const { id, parent_id, topic_id, type, name } = this.formData
+    submitComment (content) {
+      const { id, parent_id: parentId, topic_id: topicId, type, name } = this.formData
       const postData = {
         ...this.replyData,
-        topic_id,
+        topic_id: topicId,
         reply_name: name,
-        parent_id: parent_id || id,
+        parent_id: parentId || id,
         type: type ? type + 1 : 1,
         content
       }
-      return this.$api.content.CreateContent('comment', postData).then(res => {
+      return this.$api.content.CreateContent('comment', postData).then((res) => {
         this.$message({
           type: 'success',
           message: '回复评论成功'
@@ -110,12 +114,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.comment{
-  padding:  15px;
-  &-preview{
-    white-space: pre-line;
+.comment {
+  padding: 15px;
+
+  &-preview {
     line-height: 1.5;
-    ::v-deep .emojis{
+    white-space: pre-line;
+
+    ::v-deep .emojis {
       width: 32px;
       height: 32px;
       vertical-align: middle;

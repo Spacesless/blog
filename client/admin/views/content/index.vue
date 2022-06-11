@@ -34,7 +34,9 @@
             :underline="false"
             :href="`${configs.siteurl}/${currentType}/detail/${row.id}`"
             target="_blank"
-          >{{ row.title }}</el-link>
+          >
+            {{ row.title }}
+          </el-link>
           <span v-else>{{ row.title }}</span>
         </template>
       </el-table-column>
@@ -49,14 +51,22 @@
         :filter-method="filterShow"
       >
         <template #default="scope">
-          <el-tag v-if="scope.row.is_show">显示</el-tag>
-          <el-tag v-else type="info">隐藏</el-tag>
+          <el-tag v-if="scope.row.is_show">
+            显示
+          </el-tag>
+          <el-tag v-else type="info">
+            隐藏
+          </el-tag>
         </template>
       </el-table-column>
       <el-table-column label="操作" width="180" align="center">
         <template #default="scope">
-          <el-button type="primary" @click="handleEdit(scope.row.id)">编辑</el-button>
-          <el-button type="danger" plain :loading="scope.row.deleteLoading" @click="handleDelete(scope.row)">删除</el-button>
+          <el-button type="primary" @click="handleEdit(scope.row.id)">
+            编辑
+          </el-button>
+          <el-button type="danger" plain :loading="scope.row.deleteLoading" @click="handleDelete(scope.row)">
+            删除
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -81,14 +91,14 @@ import { crud } from '@/mixins'
 import { getCategoryByType } from '@/utils'
 
 export default {
-  name: 'Article',
+  name: 'ArticleList',
   components: {
     HeaderMenu,
     FooterMenu,
     Pagination
   },
   mixins: [crud],
-  data() {
+  data () {
     return {
       currentType: 'article',
       updateLoading: false
@@ -96,27 +106,27 @@ export default {
   },
   computed: {
     ...mapGetters(['categories', 'updateRoute', 'configs']),
-    categoryOptions() {
+    categoryOptions () {
       const result = getCategoryByType(this.categories, this.currentType)
       return result
     }
   },
   watch: {
-    async updateRoute(val) {
+    async updateRoute (val) {
       if (val === this.currentType) {
         await this.fetchList()
         this.$store.commit('list/SET_UPDATELIST', '')
       }
     }
   },
-  activated() {
+  activated () {
     this.$refs.multipleTable && this.$refs.multipleTable.doLayout()
   },
   methods: {
-    handleEdit(id) {
+    handleEdit (id) {
       this.$router.push({
         name: 'ContentEdit',
-        params: { id: id },
+        params: { id },
         query: { type: this.currentType }
       })
     },
@@ -124,8 +134,8 @@ export default {
      * 更新选中数据
      * @param {Object} data
      */
-    handleUpdateSelection(data) {
-      return this.$api.list.UpdateList(this.currentType, data).then(res => {
+    handleUpdateSelection (data) {
+      return this.$api.list.UpdateList(this.currentType, data).then((res) => {
         this.$message({
           type: 'success',
           message: '更新成功'
@@ -143,7 +153,7 @@ export default {
      * @param {String} prop 列字段
      * @param {String} order descending降序
      */
-    onSortChange({ prop, order }) {
+    onSortChange ({ prop, order }) {
       if (order) {
         this.listQuery[prop] = order === 'descending' ? 'DESC' : 'ASC'
       } else {
@@ -156,7 +166,7 @@ export default {
      * @param {Number} value 选中的状态
      * @param {Object} row 行数据
      */
-    filterShow(value, row) {
+    filterShow (value, row) {
       return row.is_show === value
     }
   }
@@ -164,8 +174,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.blog{
-  .el-image{
+.blog {
+  .el-image {
     display: block;
     width: 150px;
     height: 120px;

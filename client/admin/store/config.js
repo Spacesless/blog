@@ -10,13 +10,13 @@ const mutations = {
 
 const actions = {
   // 获取配置信息
-  getConfigs({ commit }) {
+  getConfigs ({ commit }) {
     return new Promise((resolve, reject) => {
-      this.$api.config.GetConfigs().then(response => {
+      this.$api.config.GetConfigs().then((response) => {
         const { data } = response
         commit('SET_CONFIGS', data)
         resolve()
-      }).catch(error => {
+      }).catch((error) => {
         reject(error)
       })
     })
@@ -26,11 +26,11 @@ const actions = {
    * 更新配置信息
    * @param {Object} data 所需更新的配置
    */
-  updateConfigs({ commit }, data) {
+  updateConfigs ({ commit }, data) {
     return new Promise((resolve, reject) => {
-      this.$api.config.UpdateConfigs(data).then(res => {
+      this.$api.config.UpdateConfigs(data).then((res) => {
         resolve()
-      }).catch(error => {
+      }).catch((error) => {
         reject(error)
       })
     })
@@ -43,4 +43,3 @@ export default {
   mutations,
   actions
 }
-

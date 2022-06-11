@@ -24,7 +24,8 @@ import { getPosition, scrollTo } from '#/utils/scroll-to'
 const REFERENCE = 100
 
 export default {
-  data() {
+  name: 'FixedBar',
+  data () {
     return {
       backTopShow: false,
       backTopTips: false,
@@ -36,7 +37,7 @@ export default {
     ...mapGetters(['particleActive', 'live2dShow'])
   },
   watch: {
-    scrollTop() {
+    scrollTop () {
       this.backTopShow = this.scrollTop > REFERENCE
 
       const screenHeight = window.innerHeight
@@ -45,20 +46,20 @@ export default {
       this.scrollPercent = percent > 100 ? 100 : percent
     }
   },
-  mounted() {
+  mounted () {
     this.scrollTop = getPosition()
     window.addEventListener('scroll', () => {
       this.scrollTop = getPosition()
     })
   },
   methods: {
-    toggleWaifu() {
+    toggleWaifu () {
       this.$store.commit('tools/TOGGLE_LIVE2D')
     },
-    toggleBubble() {
+    toggleBubble () {
       this.$store.commit('tools/TOGGLE_PARTICLE')
     },
-    backTop() {
+    backTop () {
       this.backTopTips = true
       scrollTo(0, 800, undefined, () => {
         this.backTopTips = false
@@ -69,48 +70,56 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.fixbar{
+.fixbar {
   position: fixed;
   right: 8px;
   bottom: 16px;
   z-index: 998;
-  @media (max-width:768px) {
+
+  @media (max-width: 768px) {
     display: none;
   }
-  &-item{
+
+  &-item {
     width: 40px;
     height: 40px;
     margin-top: $grid-space / 2;
-    background-color: var(--bg-normal);
-    color: var(--color-secondary);
     font-size: 20px;
     line-height: 40px;
+    color: var(--color-secondary);
     text-align: center;
-    outline: none;
-    user-select: none;
     cursor: pointer;
-    box-shadow: $shadow-3-right;
+    user-select: none;
+    background-color: var(--bg-normal);
     border-radius: 50%;
-    &:hover{
+    outline: none;
+    box-shadow: $shadow-3-right;
+
+    &:hover {
+      color: var(--color-primary);
       background-color: var(--bg-normal);
+    }
+
+    &--active {
       color: var(--color-primary);
     }
-    &--active{
-      color: var(--color-primary);
-    }
+
     &-back {
-      &__percent{
+      &__percent {
         font-size: 14px;
         vertical-align: bottom;
       }
-      &__icon{
+
+      &__icon {
         display: none;
       }
-      &:hover &{
-        &__percent{
+
+      &:hover & {
+        &__percent {
           display: none;
         }
-        &__icon{
+
+        &__icon {
           display: inline-block;
         }
       }

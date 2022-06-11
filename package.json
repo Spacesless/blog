@@ -15,8 +15,8 @@
     "build": "npm run build:admin && npm run build:front",
     "build:admin": "nuxt generate --admin",
     "build:front": "nuxt build",
-    "lint:style": "stylelint --fix \"client/front/**/*.{css,scss,html,vue}\"",
-    "lint:front": "eslint --ext .js,.vue client/",
+    "lint:style": "stylelint --fix \"client/**/*.{css,scss,html,vue}\"",
+    "lint:client": "eslint --ext .js,.vue client/",
     "lint:api": "eslint --fix src/"
   },
   "dependencies": {

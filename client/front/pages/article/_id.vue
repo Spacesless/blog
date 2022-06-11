@@ -1,6 +1,8 @@
 <template>
   <div class="article">
-    <h2 class="tl__title">文章笔记</h2>
+    <h2 class="tl__title">
+      文章笔记
+    </h2>
     <!-- 一言 -->
     <Hitokoto :kinds="['k']" />
     <!-- filter -->
@@ -12,8 +14,12 @@
           <el-option label="浏览次数" value="hits" />
         </el-select>
         <el-radio-group v-model="filters.orderBy" @change="handleSearch">
-          <el-radio-button label="">降序</el-radio-button>
-          <el-radio-button label="asc">升序</el-radio-button>
+          <el-radio-button label="">
+            降序
+          </el-radio-button>
+          <el-radio-button label="asc">
+            升序
+          </el-radio-button>
         </el-radio-group>
       </el-form-item>
       <el-form-item v-if="dynamicTags.length" label="标签">
@@ -24,7 +30,9 @@
           size="medium"
           :disable-transitions="false"
           @close="handleDeleteTag(tag)"
-        >{{ tag }}</el-tag>
+        >
+          {{ tag }}
+        </el-tag>
       </el-form-item>
     </el-form>
     <!--article list-->
@@ -48,11 +56,17 @@
           </nuxt-link>
         </el-col>
         <el-col class="article-item-info" :sm="24" :md="10">
-          <p class="article-item-info__time">{{ item.updatetime | parseTime }}</p>
+          <p class="article-item-info__time">
+            {{ item.updatetime | parseTime }}
+          </p>
           <div class="article-item-info-title">
-            <nuxt-link class="article-item-info__url" :to="'/article/detail/' + item.id" :title="item.title">{{ item.title }}</nuxt-link>
+            <nuxt-link class="article-item-info__url" :to="'/article/detail/' + item.id" :title="item.title">
+              {{ item.title }}
+            </nuxt-link>
           </div>
-          <p class="article-item-info__desc">{{ item.description }}</p>
+          <p class="article-item-info__desc">
+            {{ item.description }}
+          </p>
           <div class="article-item-info-tags">
             <span
               v-for="(tag,childIndex) in item.tag"
@@ -83,12 +97,13 @@ import Pagination from '#/components/Pagination'
 import { pageMeta, listPage } from '@/mixins'
 
 export default {
+  name: 'ArticleList',
   components: {
     Hitokoto,
     Pagination
   },
   filters: {
-    parseTime(time) {
+    parseTime (time) {
       const monthEnum = ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十', '十一', '十二']
       const dateTime = new Date(time)
       const year = dateTime.getFullYear()
@@ -98,7 +113,7 @@ export default {
     }
   },
   mixins: [pageMeta, listPage],
-  async asyncData({ app, params, query, $axios }) {
+  async asyncData ({ app, params, query, $axios }) {
     const paramId = params.id
     const [id, page] = paramId ? paramId.split('-') : []
     const { sortBy, orderBy, tags } = query
@@ -128,13 +143,13 @@ export default {
       dynamicTags: tags ? tags.split(',') : []
     }
   },
-  data() {
+  data () {
     return {
       pageType: 'list'
     }
   },
   computed: {
-    configs() {
+    configs () {
       return this.$store.getters.configs
     }
   },
@@ -143,93 +158,111 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/styles/components/list.scss";
+@import '~@/styles/components/list.scss';
 
-.article{
-  &-item{
+.article {
+  &-item {
     position: relative;
     z-index: 6;
     margin-bottom: $grid-space * 6;
-    &:last-child{
+
+    &:last-child {
       margin-bottom: 48px;
     }
-    @media (max-width: 992px)  {
+
+    @media (max-width: 992px) {
       margin-bottom: 48px;
     }
-    &-cover{
-      overflow: hidden;
-      display: inline-block;
-      float: none;
+
+    &-cover {
       position: relative;
       z-index: 5;
+      display: inline-block;
+      float: none;
+      overflow: hidden;
       border-radius: $border-radius;
       box-shadow: $shadow-3-down;
-      &__picture{
+
+      &__picture {
         display: block;
         width: 100%;
       }
     }
-    &-info{
+
+    &-info {
       position: absolute;
       top: 6%;
       bottom: 6%;
       padding: 5%;
       background-color: var(--bg-normal);
       box-shadow: $shadow-3-right;
+
       @media (max-width: 992px) {
         position: static;
         height: auto;
         border-radius: $border-radius;
       }
-      &__time{
-        color: var(--color-secondary);
+
+      &__time {
         font-size: 14px;
+        color: var(--color-secondary);
       }
-      &-title{
+
+      &-title {
         margin-top: 8px;
         font-size: 24px;
         line-height: 30px;
         word-break: break-all;
       }
-      &__url{
+
+      &__url {
         color: var(--color-heading);
-        &:hover{
+
+        &:hover {
           color: var(--color-primary);
         }
       }
-      &__desc{
+
+      &__desc {
         margin: 10px 0;
-        color: var(--color-text);
         font-size: 15px;
         line-height: 22px;
+        color: var(--color-text);
       }
-      &-stuff{
+
+      &-stuff {
         position: absolute;
         bottom: 15%;
-        color: var(--color-secondary);
         font-size: 14px;
-        span{
+        color: var(--color-secondary);
+
+        span {
           margin-right: 16px;
         }
-        i{
+
+        i {
           margin-top: -2px;
           margin-right: 4px;
           font-size: 17px;
         }
+
         @media (max-width: 992px) {
           position: static;
         }
       }
     }
-    &--odd &-info{
+
+    &--odd &-info {
       right: 0;
       border-top-right-radius: $border-radius;
       border-bottom-right-radius: $border-radius;
     }
-    &--even{
+
+    &--even {
       text-align: right;
     }
-    &--even &-info{
+
+    &--even &-info {
       left: 0;
       text-align: left;
       border-top-left-radius: $border-radius;

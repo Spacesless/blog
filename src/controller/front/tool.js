@@ -23,22 +23,4 @@ module.exports = class extends Base {
 
     return this.success(list);
   }
-
-  // 查询栏目参数
-  async paramsAction() {
-    const { id } = this.get();
-
-    const findCategory = await this.model('category')
-      .where({ id })
-      .field('params')
-      .find();
-
-    let params;
-    try {
-      params = JSON.parse(findCategory.params);
-    } catch {
-      params = null;
-    }
-    return this.success(params);
-  }
 };

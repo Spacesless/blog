@@ -36,8 +36,12 @@
 
       <div v-loading="fetchLoading" class="search-list">
         <h3 class="search-list__result">
-          <template v-if="total">检索到包含 {{ resultInfo.keyword }} 的{{ resultInfo.classify }} {{ total }} 篇</template>
-          <template v-else>啥也没找着</template>
+          <template v-if="total">
+            检索到包含 {{ resultInfo.keyword }} 的{{ resultInfo.classify }} {{ total }} 篇
+          </template>
+          <template v-else>
+            啥也没找着
+          </template>
         </h3>
         <div class="search-list-wrapper">
           <div class="container">
@@ -73,6 +77,7 @@ const classifyOptions = [
 ]
 
 export default {
+  name: 'HeaderSearch',
   components: {
     Pagination
   },
@@ -86,7 +91,7 @@ export default {
       default: false
     }
   },
-  data() {
+  data () {
     return {
       classifyOptions,
       visible: false,
@@ -103,7 +108,7 @@ export default {
   },
   watch: {
     searchVisible: {
-      handler(isShow) {
+      handler (isShow) {
         this.visible = isShow
         if (isShow) {
           setTimeout(() => {
@@ -115,17 +120,17 @@ export default {
     }
   },
   methods: {
-    async fetchList() {
+    async fetchList () {
       this.fetchLoading = true
-      await this.$axios.$get('/search', { params: this.listQuery }).then(res => {
+      await this.$axios.$get('/search', { params: this.listQuery }).then((res) => {
         const { count, data } = res
         this.total = count
         this.searchList = data
 
-        this.searchList.forEach(element => {
-          const { id, type, category_id } = element
+        this.searchList.forEach((element) => {
+          const { id, type, category_id: categoryId } = element
           element.url = `/${type}/detail/${id}`
-          const findCategory = this.categories.find(item => item.id === category_id)
+          const findCategory = this.categories.find(item => item.id === categoryId)
           if (findCategory) {
             element.categoryUrl = `/${findCategory.type}/${findCategory.id}`
             element.categoryName = findCategory.name
@@ -144,7 +149,7 @@ export default {
       })
       this.fetchLoading = false
     },
-    handleSearch() {
+    handleSearch () {
       this.listQuery.page = 1
       this.fetchList()
     },
@@ -152,12 +157,12 @@ export default {
      * 搜索热门关键词
      * @param {String} keyword 关键词
      */
-    handleSearchHot(keyword) {
+    handleSearchHot (keyword) {
       this.listQuery.keyword = keyword
       this.listQuery.classify = null
       this.handleSearch()
     },
-    onClose() {
+    onClose () {
       this.$emit('onCloseSearch')
     },
     /**
@@ -165,10 +170,10 @@ export default {
      * @param {String} str
      * @returns {String}
      */
-    highlightKeyword(str) {
+    highlightKeyword (str) {
       const keyword = this.listQuery.keyword
       const Reg = new RegExp(keyword, 'gi')
-      const res = str?.replace(Reg, arg => {
+      const res = str?.replace(Reg, (arg) => {
         return '<span class="search-list--highlight">' + arg + '</span>'
       })
       return res || ''
@@ -178,24 +183,30 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.search{
+.search {
   clear: both;
-  .container{
+
+  .container {
     min-height: auto;
   }
-  &-drawer{
+
+  &-drawer {
     height: auto;
     outline: none;
-    .el-drawer__header>:first-child{
+
+    .el-drawer__header > :first-child {
       outline: none;
     }
   }
-  &-wrap{
+
+  &-wrap {
     position: relative;
   }
-  &-classify{
+
+  &-classify {
     float: left;
     margin-right: 15px;
+
     @media (max-width: 769px) {
       float: none;
       width: 100%;
@@ -203,70 +214,83 @@ export default {
       margin-bottom: 15px;
     }
   }
-  &-input{
-    overflow: hidden;
-    display: block;
+
+  &-input {
     position: relative;
+    display: block;
     width: auto;
-    &__button{
-      display: inline-block;
+    overflow: hidden;
+
+    &__button {
       position: absolute;
-      right: 0;
       top: 0;
+      right: 0;
+      display: inline-block;
       width: 40px;
       line-height: 40px;
       text-align: center;
       cursor: pointer;
-      &:hover{
+
+      &:hover {
         color: var(--color-primary);
       }
     }
   }
-  &-hot{
+
+  &-hot {
     padding-top: $grid-space;
-    &-header{
+
+    &-header {
       display: inline-block;
       font-size: 18px;
     }
-    &__icon{
+
+    &__icon {
       color: #F56C6C;
     }
-    &__title{
+
+    &__title {
       font-weight: normal;
     }
-    &__link{
+
+    &__link {
       display: inline-block;
-      margin-bottom: 8px;
-      margin-right: 8px;
       padding: 6px 16px;
-      background-color: #ecf5ff;
-      color: var(--color-primary);
+      margin-right: 8px;
+      margin-bottom: 8px;
       font-size: 12px;
-      border-radius: 15px;
+      color: var(--color-primary);
       cursor: pointer;
+      background-color: #ECF5FF;
+      border-radius: 15px;
     }
   }
-  &-list{
+
+  &-list {
     height: calc(100vh - 168px);
-    &-wrapper{
-      overflow-y: auto;
+
+    &-wrapper {
       height: calc(100% - 120px);
+      overflow-y: auto;
     }
-    &__result{
+
+    &__result {
       padding: 8px 0 16px;
-      text-align: center;
       font-size: 22px;
       font-weight: normal;
+      text-align: center;
     }
-    &-item{
+
+    &-item {
       position: relative;
       min-height: 48px;
-      margin-bottom: 2px;
       padding: 12px 16px 12px 86px;
+      margin-bottom: 2px;
       background: var(--bg);
       border-radius: $border-radius;
     }
-    &__count{
+
+    &__count {
       position: absolute;
       top: 50%;
       left: 0;
@@ -276,38 +300,46 @@ export default {
       font-style: italic;
       text-align: center;
     }
-    &__title{
-      color: var(--color-heading);
+
+    &__title {
       font-size: 18px;
-      &:hover{
+      color: var(--color-heading);
+
+      &:hover {
         color: var(--color-primary);
       }
     }
-    &-classify{
+
+    &-classify {
       font-size: 14px;
-      &__separator{
+
+      &__separator {
         margin: 0 8px;
         color: var(--color-secondary);
       }
-      &__link{
+
+      &__link {
         color: var(--color-secondary);
-        &:hover{
+
+        &:hover {
           color: var(--color-primary);
         }
       }
     }
-    &__content{
+
+    &__content {
       padding-top: 6px;
       font-size: 14px;
       line-height: 1.7;
       color: var(--color-text);
     }
 
-    ::v-deep &--highlight{
+    ::v-deep &--highlight {
       color: #F56C6C;
     }
   }
-  .list-page{
+
+  .list-page {
     padding: 16px 0;
     text-align: center;
   }

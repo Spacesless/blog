@@ -43,7 +43,7 @@ const tencentUid = 804093032
 const neteaseUid = 3979052388
 
 export default {
-  name: 'Music',
+  name: 'MyMusic',
   components: {
     Sidebar,
     Header,
@@ -51,7 +51,8 @@ export default {
     Player
   },
   mixins: [pageMeta],
-  data() {
+  layout: 'app',
+  data () {
     return {
       platform: 'tencent', // tencent, netease
       disstId: 0,
@@ -75,10 +76,10 @@ export default {
     }
   },
   computed: {
-    apiUrl() {
+    apiUrl () {
       return `${apiUrl}/${this.platform}`
     },
-    uid() {
+    uid () {
       return this.platform === 'tencent'
         ? (this.tencentUid || tencentUid)
         : (this.neteaseUid || neteaseUid)
@@ -86,16 +87,16 @@ export default {
   },
   watch: {
     uid: {
-      handler() {
+      handler () {
         this.getCdLists()
       },
       immediate: true
     },
-    disstId(val) {
+    disstId (val) {
       val && this.getSongLists()
     }
   },
-  mounted() {
+  mounted () {
     this.initAplayer()
 
     const element = this.$refs.lists?.$refs.table?.$refs.bodyWrapper
@@ -107,7 +108,7 @@ export default {
     })
   },
   methods: {
-    async initAplayer() {
+    async initAplayer () {
       // eslint-disable-next-line no-unused-expressions
       import(/* webpackChunkName: "chunk-aplayer" */'@/vendor/aplayer/APlayer.min.css')
       const { default: APlayer } = await import(/* webpackChunkName: "chunk-aplayer" */'@/vendor/aplayer/APlayer.min.js')
@@ -124,12 +125,12 @@ export default {
         lrcType: 1,
         audio: []
       })
-      this.ap.on('canplay', async() => {
+      this.ap.on('canplay', async () => {
         const index = this.ap.list.index
         if (this.ap.list.audios[index].lrc === undefined) {
           this.ap.pause()
           const songmid = this.ap.list.audios[index].songmid
-          await this.$axios.get(`${this.apiUrl}/lyric?songmid=${songmid}`).then(res => {
+          await this.$axios.get(`${this.apiUrl}/lyric?songmid=${songmid}`).then((res) => {
             const data = res.data
             const lyric = data.lyric
             const cloneList = this.ap.list.audios
@@ -143,13 +144,13 @@ export default {
         }
       })
     },
-    fetchList() {
-      if (this.listType === 2) return
+    fetchList () {
+      if (this.listType === 2) { return }
       this.listQuery.page += 1
       this.handleSearch()
     },
-    getCdLists() {
-      this.$axios.get(`${this.apiUrl}/cdList?uid=${this.uid}`).then(res => {
+    getCdLists () {
+      this.$axios.get(`${this.apiUrl}/cdList?uid=${this.uid}`).then((res) => {
         const { nickname, uid, avatar, lists } = res.data
         this.userinfo = { nickname, uid, avatar }
         lists.sort((a, b) => a.tid - b.tid)
@@ -157,10 +158,10 @@ export default {
         this.disstId = lists[0]?.tid
       })
     },
-    async getSongLists() {
+    async getSongLists () {
       this.listType = 2
       this.listLoading = true
-      await this.$axios.get(`${this.apiUrl}/songList?disstid=${this.disstId}`).then(res => {
+      await this.$axios.get(`${this.apiUrl}/songList?disstid=${this.disstId}`).then((res) => {
         const { nickname, desc, dissname, cover, songlist, songCount, tags, playCount } = res.data
         this.cdinfo = { nickname, desc, dissname, cover, songlist, songCount, tags, playCount }
         this.songlist = songlist
@@ -169,12 +170,13 @@ export default {
 
       // 表格返回头部
       const multipleTable = this.$refs.lists && this.$refs.lists?.$refs.table?.bodyWrapper
-      if (multipleTable) multipleTable.scrollTop = 0
+      if (multipleTable) { multipleTable.scrollTop = 0 }
     },
-    handleSearch(isReset) {
+    handleSearch (isReset) {
       this.disstId = 0
       this.listType = 1
-      var { page, pageSize } = this.listQuery
+      let { page } = this.listQuery
+      const { pageSize } = this.listQuery
       if (isReset) {
         this.songlist = []
         page = 1
@@ -192,7 +194,7 @@ export default {
           page,
           pageSize
         }
-      }).then(res => {
+      }).then((res) => {
         const { total, list } = res.data
         this.songlist = this.songlist.concat(list)
         this.listLoading = false
@@ -201,31 +203,31 @@ export default {
         }
       })
     }
-  },
-  layout: 'app'
+  }
 }
 </script>
 
 <style lang="scss" scoped>
-.music{
+.music {
   position: fixed;
   top: 0;
+  right: 0;
   bottom: 0;
   left: 0;
-  right: 0;
   background: {
     image: url('~@/assets/image/music-background.png');
     repeat: no-repeat;
     size: contain;
-    color: #083b50;
+    color: #083B50;
   };
-  &-main{
-    overflow: hidden;
+
+  &-main {
     position: relative;
+    box-sizing: border-box;
     height: 100%;
     padding-bottom: 90px;
-    background-color: rgba($color: #000, $alpha: 0.15);
-    box-sizing: border-box;
+    overflow: hidden;
+    background-color: rgba($color: #000000, $alpha: .15);
   }
 }
 </style>

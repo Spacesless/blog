@@ -4,7 +4,7 @@ export default axios => ({
    * @param {String} controller 控制器
    * @param {Number [int]} id
    */
-  GetContent(controller, id) {
+  GetContent (controller, id) {
     return axios({
       url: `/restful/${controller}/${id}`,
       method: 'get'
@@ -16,7 +16,7 @@ export default axios => ({
    * @param {String} controller 控制器
    * @param {Object} data 详情内容
    */
-  CreateContent(controller, data) {
+  CreateContent (controller, data) {
     return axios({
       url: `/restful/${controller}/`,
       method: 'post',
@@ -29,7 +29,7 @@ export default axios => ({
    * @param {String} controller 控制器
    * @param {Object} data 详情内容
    */
-  UpdateContent(controller, data) {
+  UpdateContent (controller, data) {
     return axios({
       url: `/restful/${controller}/${data.id}`,
       method: 'put',

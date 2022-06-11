@@ -3,7 +3,14 @@
     <transition name="fade-transform" mode="out-in">
       <div v-show="tipsShow" class="waifu-tips" v-html="tips" />
     </transition>
-    <canvas id="js-live2d" width="208" height="208" class="waifu-live2d" @click="onMouseClick" @mouseenter="onMouseEnter('live2d')" />
+    <canvas
+      id="js-live2d"
+      width="208"
+      height="208"
+      class="waifu-live2d"
+      @click="onMouseClick"
+      @mouseenter="onMouseEnter('live2d')"
+    />
     <div class="waifu-tool">
       <!-- 返回首页 -->
       <span class="icon-shouye" @click="navigatorToHome" @mouseenter="onMouseEnter('home')" />
@@ -47,7 +54,8 @@ const clickTips = [
 ]
 
 export default {
-  data() {
+  name: 'Live2D',
+  data () {
     return {
       apiurl: '//api.timelessq.com/live2d', // apiurl {string} 模型后端接口
       tips: '',
@@ -57,15 +65,15 @@ export default {
   },
   computed: {
     ...mapGetters(['live2dShow', 'configs']),
-    modelId() { // 模型 ID
+    modelId () { // 模型 ID
       return this.configs.live2d_model || 100
     },
-    texturesId() { // 材质 ID
+    texturesId () { // 材质 ID
       return this.configs.live2d_texture || 1
     }
   },
   watch: {
-    live2dShow(isShow) {
+    live2dShow (isShow) {
       if (isShow) {
         this.handleShowLive2d()
       } else {
@@ -73,7 +81,7 @@ export default {
       }
     }
   },
-  mounted() {
+  mounted () {
     if (this.isShow) {
       this.initModel()
 
@@ -84,7 +92,7 @@ export default {
     }
   },
   methods: {
-    dragMove(e) {
+    dragMove (e) {
       const $el = this.$refs.waifu // 获取目标元素
       // 算出鼠标相对元素的位置
       const disX = e.clientX - $el.offsetLeft
@@ -124,8 +132,8 @@ export default {
      * @param {String} text tips信息
      * @param {Number [int]} duration 持续时间
      */
-    showMessage(text, duration = 3000) {
-      if (!text) return
+    showMessage (text, duration = 3000) {
+      if (!text) { return }
       this.tips = text
       this.tipsShow = true
       clearTimeout(this.timer)
@@ -134,7 +142,7 @@ export default {
       }, duration)
     },
     // 初始化模型
-    initModel() {
+    initModel () {
       this.loadModel(this.modelId, this.texturesId)
       this.onEnterPage()
     },
@@ -143,19 +151,19 @@ export default {
      * @param {Number [int]} modelId 模型id
      * @param {Number [int]} texturesId 材质id
      */
-    loadModel(modelId, texturesId = 1) {
+    loadModel (modelId, texturesId = 1) {
       window.loadlive2d(
         'js-live2d', `${this.apiurl}/get?id=${modelId}&texture=${texturesId}&isuseCDN=true`,
         console.log('live2d', `模型 ${modelId}-${texturesId} 加载完成`)
       )
     },
     // 更换模型
-    loadOtherModel() {
+    loadOtherModel () {
       this.$axios.get(this.apiurl + '/model/switch', {
         params: {
           id: this.modelId
         }
-      }).then(res => {
+      }).then((res) => {
         const { id, message } = res.data
         if (id) {
           this.showMessage(message)
@@ -166,13 +174,13 @@ export default {
       })
     },
     // 更换材质
-    loadOtherTexture() {
+    loadOtherTexture () {
       this.$axios.get(this.apiurl + '/texture/random', {
         params: {
           id: this.modelId,
           texture: this.texturesId
         }
-      }).then(res => {
+      }).then((res) => {
         const { id, texture } = res.data
         if (id) {
           this.showMessage('我的新衣服好看嘛')
@@ -182,7 +190,7 @@ export default {
         }
       })
     },
-    onEnterPage() {
+    onEnterPage () {
       let text
       const homePath = window.location.protocol + '//' + window.location.hostname + '/' // 自动获取主页
       if (window.location.href === homePath) { // 如果是主页
@@ -206,30 +214,28 @@ export default {
         } else {
           text = '嗨~ 快来逗我玩吧！'
         }
-      } else {
-        if (document.referrer !== '') {
-          const referrer = document.createElement('a')
-          referrer.href = document.referrer
-          const domain = referrer.hostname.split('.')[1]
-          if (window.location.hostname === referrer.hostname) {
-            text = '欢迎阅读<span style="color:#0099cc;">『' + document.title.split(' - ')[0] + '』</span>'
-          } else if (domain === 'baidu') {
-            text = 'Hello! 来自 百度搜索 的朋友<br>你是搜索 <span style="color:#0099cc;">' + (referrer.search.split('&wd=')[1]?.split('&')[0] || '') + '</span> 找到的我吗？'
-          } else if (domain === 'so') {
-            text = 'Hello! 来自 360搜索 的朋友<br>你是搜索 <span style="color:#0099cc;">' + (referrer.search.split('&q=')[1]?.split('&')[0] || '') + '</span> 找到的我吗？'
-          } else if (domain === 'google') {
-            text = 'Hello! 来自 谷歌搜索 的朋友<br>欢迎阅读<span style="color:#0099cc;">『' + document.title.split(' - ')[0] + '』</span>'
-          } else {
-            text = 'Hello! 来自 <span style="color:#0099cc;">' + referrer.hostname + '</span> 的朋友'
-          }
-        } else {
+      } else if (document.referrer !== '') {
+        const referrer = document.createElement('a')
+        referrer.href = document.referrer
+        const domain = referrer.hostname.split('.')[1]
+        if (window.location.hostname === referrer.hostname) {
           text = '欢迎阅读<span style="color:#0099cc;">『' + document.title.split(' - ')[0] + '』</span>'
+        } else if (domain === 'baidu') {
+          text = 'Hello! 来自 百度搜索 的朋友<br>你是搜索 <span style="color:#0099cc;">' + (referrer.search.split('&wd=')[1]?.split('&')[0] || '') + '</span> 找到的我吗？'
+        } else if (domain === 'so') {
+          text = 'Hello! 来自 360搜索 的朋友<br>你是搜索 <span style="color:#0099cc;">' + (referrer.search.split('&q=')[1]?.split('&')[0] || '') + '</span> 找到的我吗？'
+        } else if (domain === 'google') {
+          text = 'Hello! 来自 谷歌搜索 的朋友<br>欢迎阅读<span style="color:#0099cc;">『' + document.title.split(' - ')[0] + '』</span>'
+        } else {
+          text = 'Hello! 来自 <span style="color:#0099cc;">' + referrer.hostname + '</span> 的朋友'
         }
+      } else {
+        text = '欢迎阅读<span style="color:#0099cc;">『' + document.title.split(' - ')[0] + '』</span>'
       }
       this.showMessage(text)
     },
     // 鼠标交互
-    onMouseEnter(key) {
+    onMouseEnter (key) {
       const tips = mouseTips[key]
       let text = tips
       if (tips instanceof Array) {
@@ -237,22 +243,22 @@ export default {
       }
       this.showMessage(text)
     },
-    onMouseClick() {
+    onMouseClick () {
       const text = clickTips[Math.floor(Math.random() * clickTips.length + 1) - 1]
       this.showMessage(text)
     },
     // 返回首页
-    navigatorToHome() {
+    navigatorToHome () {
       this.$router.push({ path: '/' })
     },
-    handleShowLive2d() {
+    handleShowLive2d () {
       this.isShow = true
       this.$nextTick(() => {
         this.initModel()
         this.showMessage('锵锵锵锵~ 本宝宝又回来了', 1500)
       })
     },
-    handleHideLive2d() {
+    handleHideLive2d () {
       this.showMessage('愿你有一天能与重要的人重逢', 1500)
       window.setTimeout(() => {
         this.$store.commit('tools/SET_LIVE2D', false)
@@ -263,7 +269,7 @@ export default {
      * 拍照
      * @summary canvas转图片
      */
-    handleTakePhoto() {
+    handleTakePhoto () {
       this.showMessage('照好了嘛，是不是很可爱呐？')
       window.Live2D.captureName = 'Pio.png'
       window.Live2D.captureFrame = true
@@ -275,61 +281,69 @@ export default {
 <style lang="scss" scoped>
 .waifu {
   position: fixed;
-  bottom: 0;
   right: 0;
+  bottom: 0;
   z-index: 997;
   width: 208px;
   height: 220px;
   transition: margin-top .3s ease-in-out;
   transform-origin: bottom center;
+
   @media (max-width: 992px) {
     display: none;
   }
-  &:hover{
+
+  &:hover {
     margin-top: 0;
     cursor: grab;
+
     .waifu-tool {
       display: block;
     }
   }
+
   &-tips {
-    overflow: hidden;
     position: absolute;
     top: 0;
     width: 185px;
     height: 60px;
     padding: 5px 10px;
+    overflow: hidden;
+    font-size: 12px;
+    color: #303133;
+    text-overflow: ellipsis;
+    background-color: rgba(255, 255, 255, .8);
     border: 1px solid var(--color-primary);
     border-radius: 12px;
-    background-color: rgba(255, 255, 255, 0.8);
-    color: #303133;
-    font-size: 12px;
-    text-overflow: ellipsis;
-    box-shadow: 0 1px 3px #66ccff;
+    box-shadow: 0 1px 3px #66CCFF;
   }
+
   &-tool {
-    display: none;
     position: absolute;
     bottom: 0;
     left: 10px;
-    color: #aaa;
+    display: none;
     font-size: 14px;
+    color: #AAAAAA;
+
     span {
       display: block;
       margin-bottom: 10px;
-      color: var(--color-text);
       font-size: 20px;
       line-height: 20px;
+      color: var(--color-text);
       cursor: pointer;
-      transition: 0.2s;
-      &:hover{
+      transition: .2s;
+
+      &:hover {
         color: var(--color-primary);
       }
     }
   }
+
   &-live2d {
     position: relative;
-    top: 15px
+    top: 15px;
   }
 }
 </style>

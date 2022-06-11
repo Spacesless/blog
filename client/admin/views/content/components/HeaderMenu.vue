@@ -1,7 +1,9 @@
 <template>
   <el-row class="app-header">
     <el-col :xs="24" :sm="12">
-      <el-button type="primary" icon="el-icon-plus" @click="handleAdd">添加</el-button>
+      <el-button type="primary" icon="el-icon-plus" @click="handleAdd">
+        添加
+      </el-button>
     </el-col>
     <el-col :xs="24" :sm="12" class="text-right">
       <el-cascader
@@ -42,25 +44,25 @@ export default {
       default: ''
     }
   },
-  data() {
+  data () {
     return {
       keyword: '',
       selectedCategory: null
     }
   },
   methods: {
-    handleAdd() {
+    handleAdd () {
       this.$router.push({
         name: 'ContentCreate',
         query: { type: this.currentType, category: this.selectedCategory }
       })
     },
-    onColumnChange() {
+    onColumnChange () {
       this.$emit('onColumnChange', {
         category: this.selectedCategory
       })
     },
-    handleSearch: debounce(function() {
+    handleSearch: debounce(function () {
       this.$emit('onSearchKeyword', this.keyword)
     }, 500)
   }

@@ -7,7 +7,7 @@ export { parseTime, getAbsolutePath } from '#/utils'
  * @returns {String}
  * @summary 标签charCodeAt总长度%颜色总数
  */
-export function tagClassName(tag) {
+export function tagClassName (tag) {
   const nameEnum = ['red', 'geekblue', 'orange', 'cyan', 'green', 'blue', 'purple', 'magenta']
   const enumLength = nameEnum.length
   let tagLength = 0
@@ -24,7 +24,7 @@ export function tagClassName(tag) {
  * @param {Number} status
  * @returns {String}
  */
-export function bangumiStatus(status) {
+export function bangumiStatus (status) {
   status = status || 0
   const statusList = ['未上映', '连载中', '已完结']
   return statusList[status]
@@ -36,7 +36,7 @@ export function bangumiStatus(status) {
  * @param {Number} width 图片宽度
  * @returns {String}
  */
-export function getImageSrcSet(src, width) {
+export function getImageSrcSet (src, width) {
   let result = ''
   if (src && width) {
     result = `${src} ${width}w, ${src}?imageMogr2/thumbnail/!50p ${width / 2}w`

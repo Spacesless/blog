@@ -9,7 +9,9 @@
       label-width="100px"
       class="form-container is-stick"
     >
-      <el-form-item class="form-title">基本信息</el-form-item>
+      <el-form-item class="form-title">
+        基本信息
+      </el-form-item>
       <el-form-item label="栏目名称" prop="name">
         <el-row>
           <el-col :xs="24" :md="12">
@@ -44,14 +46,22 @@
       </el-form-item>
       <el-form-item label="导航栏显示">
         <el-radio-group v-model="formData.is_nav">
-          <el-radio :label="1">显示</el-radio>
-          <el-radio :label="0">隐藏</el-radio>
+          <el-radio :label="1">
+            显示
+          </el-radio>
+          <el-radio :label="0">
+            隐藏
+          </el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="前台显示">
         <el-radio-group v-model="formData.is_show">
-          <el-radio :label="1">显示</el-radio>
-          <el-radio :label="0">隐藏</el-radio>
+          <el-radio :label="1">
+            显示
+          </el-radio>
+          <el-radio :label="0">
+            隐藏
+          </el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item class="form-title">
@@ -122,8 +132,12 @@
         <json-editor v-model="formData.params" />
       </el-form-item>
       <div class="stick-bottom">
-        <el-button type="primary" plain @click="handleCancel">取消</el-button>
-        <el-button type="primary" :loading="confirmLoading" @click="handleSubmit">保存</el-button>
+        <el-button type="primary" plain @click="handleCancel">
+          取消
+        </el-button>
+        <el-button type="primary" :loading="confirmLoading" @click="handleSubmit">
+          保存
+        </el-button>
       </div>
     </el-form>
   </div>
@@ -131,9 +145,9 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import typeOptions from '../modules'
 import JsonEditor from '@/components/JsonEditor'
 import { getCategoryByType } from '@/utils'
-import typeOptions from '../modules'
 
 export default {
   components: {
@@ -145,7 +159,7 @@ export default {
       default: false
     }
   },
-  data() {
+  data () {
     return {
       formData: {
         params: '',
@@ -164,13 +178,13 @@ export default {
   },
   computed: {
     ...mapGetters(['categories']),
-    categoryOptions() {
+    categoryOptions () {
       const currentType = this.$route.query?.type
       const result = getCategoryByType(this.categories, currentType)
       return result
     }
   },
-  created() {
+  created () {
     if (this.isEdit) {
       const id = this.$route.params?.id
       this.fetchData(id)
@@ -180,22 +194,22 @@ export default {
     }
   },
   methods: {
-    async fetchData(id) {
+    async fetchData (id) {
       this.fetchLoading = true
-      await this.$api.content.GetContent('category', id).then(response => {
+      await this.$api.content.GetContent('category', id).then((response) => {
         const { data } = response
         this.formData = data
         this.formData.params = JSON.parse(data.params)
       }).catch(() => {})
       this.fetchLoading = false
     },
-    handleSubmit() {
-      this.$refs.form.validate(async(valid) => {
-        if (!valid) return
+    handleSubmit () {
+      this.$refs.form.validate(async (valid) => {
+        if (!valid) { return }
 
         this.confirmLoading = true
         const SubmitHander = this.isEdit ? this.$api.content.UpdateContent : this.$api.content.CreateContent
-        await SubmitHander('category', this.formData).then(res => {
+        await SubmitHander('category', this.formData).then((res) => {
           this.$message({
             type: 'success',
             message: this.isEdit ? '更新栏目成功' : '添加栏目成功'
@@ -214,7 +228,7 @@ export default {
     /**
      * 返回列表页
      */
-    handleCancel() {
+    handleCancel () {
       const { path } = this.$route
       this.$store.dispatch('tagsView/delView', { path }).then(() => {
         this.$router.push({ name: 'Category' })
@@ -225,8 +239,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.form-container{
-  &-tips{
+.form-container {
+  &-tips {
     margin-left: 15px;
   }
 }

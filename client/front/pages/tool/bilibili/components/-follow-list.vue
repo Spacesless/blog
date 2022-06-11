@@ -13,12 +13,21 @@
               <span class="follow-list-info__name">{{ item.uname }}</span>
             </a>
             <span class="follow-list-info__desc">({{ item.official_verify.desc }})</span>
-            <p class="follow-list-info__sign">{{ item.sign }}</p>
+            <p class="follow-list-info__sign">
+              {{ item.sign }}
+            </p>
           </div>
         </li>
       </ul>
     </el-scrollbar>
-    <pagination class="pagination" :is-admin="false" :total="total" :page.sync="listQuery.page" :limit="listQuery.pageSize" @pagination="fetchList" />
+    <pagination
+      class="pagination"
+      :is-admin="false"
+      :total="total"
+      :page.sync="listQuery.page"
+      :limit="listQuery.pageSize"
+      @pagination="fetchList"
+    />
   </div>
 </template>
 
@@ -33,11 +42,11 @@ export default {
     Pagination
   },
   filters: {
-    formatFollowUrl(mid) {
+    formatFollowUrl (mid) {
       return mid ? 'https://space.bilibili.com/' + mid : ''
     }
   },
-  data() {
+  data () {
     return {
       followList: [],
       listLoading: false,
@@ -49,15 +58,15 @@ export default {
       total: 0
     }
   },
-  mounted() {
+  mounted () {
     this.fetchList()
   },
   methods: {
-    async fetchList() {
+    async fetchList () {
       this.listLoading = true
       await this.$axios.get(apiurl + '/following', {
         params: this.listQuery
-      }).then(res => {
+      }).then((res) => {
         console.log(res.data)
         const { total, list } = res.data
         this.total = total
@@ -71,46 +80,55 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.follow{
+.follow {
   height: 100%;
-  &-list{
-    &-scrollbar{
+
+  &-list {
+    &-scrollbar {
       height: calc(100% - 72px);
     }
-    &-item{
+
+    &-item {
       padding: 10px 0;
-      background-color: #fff;
       margin-bottom: 3px;
-      border-bottom: 1px solid #e6e6e6;
+      background-color: #FFFFFF;
+      border-bottom: 1px solid #E6E6E6;
     }
-    &-face{
+
+    &-face {
       float: left;
       padding: 0 24px;
-      &__img{
+
+      &__img {
         width: 60px;
         height: 60px;
         border-radius: 50%;
       }
     }
-    &-info{
-      overflow: hidden;
+
+    &-info {
       padding-top: 8px;
       padding-right: 24px;
-      &-link{
+      overflow: hidden;
+
+      &-link {
         color: #303133;
-        &:hover{
+
+        &:hover {
           color: var(--color-primary);
         }
       }
-      &__desc{
+
+      &__desc {
         margin-left: 8px;
         font-size: 12px;
         color: #606266;
       }
-      &__sign{
+
+      &__sign {
+        margin-top: 5px;
         font-size: 14px;
         color: #909399;
-        margin-top: 5px;
       }
     }
   }

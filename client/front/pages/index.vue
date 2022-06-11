@@ -19,14 +19,20 @@
           :alt="item.title"
           @load="onImageLoad"
         >
-        <div class="carousel-item__title">{{ item.title }}</div>
+        <div class="carousel-item__title">
+          {{ item.title }}
+        </div>
       </el-carousel-item>
     </el-carousel>
     <!-- 博文 -->
     <div class="article">
       <div class="home-head">
-        <h2 class="home-head__title tl__title">最新文章</h2>
-        <nuxt-link class="home-head__more" to="/article">more+</nuxt-link>
+        <h2 class="home-head__title tl__title">
+          最新文章
+        </h2>
+        <nuxt-link class="home-head__more" to="/article">
+          more+
+        </nuxt-link>
       </div>
       <el-row class="article-list" :gutter="gridSpace">
         <el-col v-for="item in articleList" :key="item.id" :sm="12" :lg="8">
@@ -43,7 +49,9 @@
             </nuxt-link>
             <div class="article-item-media">
               <p class="article-title">
-                <nuxt-link :to="'/article/detail/' + item.id" :title="item.title">{{ item.title }}</nuxt-link>
+                <nuxt-link :to="'/article/detail/' + item.id" :title="item.title">
+                  {{ item.title }}
+                </nuxt-link>
               </p>
               <div class="article-meta">
                 <span class="article-meta__date"><i class="icon-riqi" />{{ item.updatetime | parseTime('{y}-{m}-{d}') }}</span>
@@ -70,8 +78,12 @@
     <!-- 追番 -->
     <div class="bangumi">
       <div class="home-head">
-        <h2 class="home-head__title tl__title">最近追番</h2>
-        <nuxt-link class="home-head__more" to="/bangumi">more+</nuxt-link>
+        <h2 class="home-head__title tl__title">
+          最近追番
+        </h2>
+        <nuxt-link class="home-head__more" to="/bangumi">
+          more+
+        </nuxt-link>
       </div>
       <el-row class="bangumi-list" :gutter="gridSpace">
         <el-col v-for="item in bangumiList" :key="item.id" :xs="24" :sm="12">
@@ -90,10 +102,14 @@
               </nuxt-link>
             </el-col>
             <el-col class="bangumi-list-info" :span="14" :xl="16">
-              <nuxt-link class="bangumi-list__title" :to="'/bangumi/detail/' + item.id" :title="item.title">{{ item.title }}</nuxt-link>
+              <nuxt-link class="bangumi-list__title" :to="'/bangumi/detail/' + item.id" :title="item.title">
+                {{ item.title }}
+              </nuxt-link>
               <p><span class="para-name">时间：</span>{{ item.showtime }}</p>
               <p><span class="para-name">状态：</span>{{ item.status | bangumiStatus }}</p>
-              <p class="hidden-md-and-down"><span class="para-name">简介：</span>{{ item.description }}……</p>
+              <p class="hidden-md-and-down">
+                <span class="para-name">简介：</span>{{ item.description }}……
+              </p>
               <p><span class="para-name">进度：</span>{{ item.current }}/{{ item.total }}</p>
               <div class="bangumi-list-tag">
                 <span
@@ -117,11 +133,12 @@ import { pageMeta } from '@/mixins'
 import { gridSpace } from '@/styles/export-to-js.scss'
 
 export default {
+  name: 'HomePage',
   mixins: [pageMeta],
-  async asyncData({ store, $axios }) {
+  async asyncData ({ store, $axios }) {
     const { bannerList, articleList, bangumiList } = await $axios.$get('/index')
 
-    articleList.forEach(element => {
+    articleList.forEach((element) => {
       element.tag = element.tag ? element.tag.split('|') : []
       const findCategory = store.getters.categories.find(item => item.id === element.category_id)
       if (findCategory) {
@@ -130,13 +147,13 @@ export default {
       }
     })
 
-    bangumiList.forEach(element => {
+    bangumiList.forEach((element) => {
       element.tag = element.tag ? element.tag.split('|') : []
     })
 
     return { bannerList, articleList, bangumiList }
   },
-  data() {
+  data () {
     return {
       gridSpace: +gridSpace,
       bannerHeight: 500,
@@ -144,26 +161,26 @@ export default {
     }
   },
   computed: {
-    configs() {
+    configs () {
       return this.$store.getters.configs
     },
-    meta() {
+    meta () {
       const { sitename, keywords, description } = this.configs
 
       return {
         keyword: keywords,
-        description: description,
+        description,
         title: `${sitename} - 花开成景，花落成诗`
       }
     }
   },
-  mounted() {
+  mounted () {
     this.__resizeHandler = debounce(() => {
       this.handleResize()
     }, 100)
     window.addEventListener('resize', this.__resizeHandler)
   },
-  beforeDestroy() {
+  beforeDestroy () {
     window.removeEventListener('resize', this.__resizeHandler)
   },
   methods: {
@@ -171,12 +188,12 @@ export default {
      * @event 图片加载完成
      * @summary 设置走马灯高度，适用于所有图片高度一致的情况
      */
-    onImageLoad(e) {
-      if (this.isLoaded) return
+    onImageLoad (e) {
+      if (this.isLoaded) { return }
       this.isLoaded = true
       this.handleResize()
     },
-    handleResize() {
+    handleResize () {
       const carouselWidth = this.$refs.carousel?.$el.clientWidth
       this.bannerHeight = 500 * carouselWidth / 1280
     }
@@ -185,22 +202,25 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/styles/components/bangumi.scss";
+@import '~@/styles/components/bangumi.scss';
 
-.home{
-  &-head{
+.home {
+  &-head {
     position: relative;
-    &__title{
+
+    &__title {
       padding-top: 10px;
     }
-    &__more{
+
+    &__more {
       position: absolute;
-      right: 0;
       top: 20px;
-      color: var(--color-secondary);
+      right: 0;
       line-height: 24px;
-      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
-      &:hover{
+      color: var(--color-secondary);
+      text-shadow: 0 2px 6px rgba(0, 0, 0, .5);
+
+      &:hover {
         color: var(--color-primary);
       }
     }
@@ -209,113 +229,130 @@ export default {
 
 // 轮播图
 .carousel {
-  overflow: hidden;
   margin-bottom: 20px;
+  overflow: hidden;
   border-radius: $border-radius;
   box-shadow: $shadow-3-down;
-  &-item{
-    &__image{
+
+  &-item {
+    &__image {
       display: block;
       width: 100%;
       height: auto;
     }
-    &__title{
+
+    &__title {
       position: absolute;
-      bottom: 0;
       right: 0;
+      bottom: 0;
       padding: 8px 24px;
-      background: rgba($color: #000000, $alpha: .5);
-      color: #fff;
       font-size: 15px;
+      color: #FFFFFF;
+      background: rgba($color: #000000, $alpha: .5);
       border-top-left-radius: $border-radius;
     }
   }
 }
 
 // 最新文章
-.article{
+.article {
   &-item {
-    overflow: hidden;
     margin-bottom: $grid-space;
+    overflow: hidden;
     background: var(--bg-normal);
-    box-shadow: $shadow-3-down;
     border-radius: $border-radius;
+    box-shadow: $shadow-3-down;
     transition: all .3s;
-    &:hover{
-      box-shadow: 2px 0 10px rgba(0,0,0,.1);
+
+    &:hover {
+      box-shadow: 2px 0 10px rgba(0, 0, 0, .1);
     }
-    &-cover{
-      overflow: hidden;
+
+    &-cover {
       position: relative;
       display: block;
+      overflow: hidden;
       border-radius: $border-radius;
-      &:after{
-        pointer-events: none;
-        content: "";
+
+      &::after {
         position: absolute;
         top: 13%;
         left: 0;
         z-index: 35;
         width: 100%;
         height: 120%;
+        pointer-events: none;
+        content: '';
         background: var(--article-cover);
       }
     }
-    &-media{
+
+    &-media {
       padding: 16px;
     }
   }
+
   &-title {
     font-size: 24px;
+
     a {
-      overflow: hidden;
       display: inline-block;
       max-width: 100%;
+      overflow: hidden;
       color: var(--color-heading);
       text-overflow: ellipsis;
       white-space: nowrap;
-      &:hover{
+
+      &:hover {
         color: var(--color-primary);
       }
     }
   }
+
   &-meta {
+    box-sizing: border-box;
     height: 30px;
     padding: 6px 0;
     font-size: 14px;
-    box-sizing: border-box;
-    span{
-      color: var(--color-secondary);
+
+    span {
       margin-right: 10px;
+      color: var(--color-secondary);
     }
+
     i {
       margin-right: 5px;
       font-size: 18px;
       vertical-align: bottom;
     }
-    &__cate{
-      a{
+
+    &__cate {
+      a {
         color: var(--color-secondary);
-        &:hover{
+
+        &:hover {
           color: var(--color-primary);
         }
       }
     }
   }
+
   &-desc {
-    overflow: hidden;
     display: -webkit-box;
     height: 114px;
     margin-bottom: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 4;
-    text-overflow: ellipsis;
+
     p {
       font-size: 14px;
       line-height: 2em;
     }
   }
-  &-tag{
+
+  &-tag {
     color: var(--color-secondary);
   }
 }

@@ -174,7 +174,7 @@ const components = [
   // InfiniteScroll
 ]
 
-components.forEach(component => {
+components.forEach((component) => {
   Vue.component(component.name, component)
 })
 

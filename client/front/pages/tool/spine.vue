@@ -8,8 +8,8 @@
           :label="item.name"
           :value="item.value"
         >
-          <span style="float: left">{{ item.alias ? `${item.name}(${item.alias})` : item.name }}</span>
-          <span style="float: right; color: #606266; font-size: 12px">{{ item.remark }}</span>
+          <span style="float: left;">{{ item.alias ? `${item.name}(${item.alias})` : item.name }}</span>
+          <span style="float: right; font-size: 12px; color: #606266;">{{ item.remark }}</span>
         </el-option>
       </el-select>
       <el-select v-model="selectAnimation" @change="onChangeAnimation">
@@ -35,8 +35,10 @@ import { spine } from '@/vendor/spine-ts/spine-webgl.js'
 import { pageMeta } from '@/mixins'
 
 export default {
+  name: 'SpineGl',
   mixins: [pageMeta],
-  data() {
+  layout: 'app',
+  data () {
     return {
       seleteSkeleton: 'lafei_4',
       selectAnimation: '',
@@ -50,12 +52,12 @@ export default {
       skelLoading: false
     }
   },
-  mounted() {
+  mounted () {
     this.initSpine()
     this.fetchList()
   },
   methods: {
-    fetchParams() {
+    fetchParams () {
       return this.$axios.$get('/tool/params', {
         params: {
           id: this.findCategory.id
@@ -65,25 +67,25 @@ export default {
         this.selectAnimation = selectAnimation || 'normal'
       })
     },
-    async fetchList() {
+    async fetchList () {
       this.listLoading = true
-      await this.$axios.get(this.apiUrl + '/lists').then(res => {
+      await this.$axios.get(this.apiUrl + '/lists').then((res) => {
         this.filterOptions = this.skelOptions = res.data
       }).catch(() => {})
       this.listLoading = false
     },
-    fetchAssets() {
+    fetchAssets () {
       return this.$axios.get(this.apiUrl, {
         params: {
           id: this.seleteSkeleton,
           isuseCDN: true
         }
-      }).then(res => {
+      }).then((res) => {
         this.assetsData = res.data
         this.loadAsset()
       })
     },
-    async initSpine() {
+    async initSpine () {
       // Setup canvas and WebGL context. We pass alpha: false to canvas.getContext() so we don't use premultiplied alpha when
       // loading textures. That is handled separately by PolygonBatcher.
       this.spineCanvas = document.getElementById('canvas')
@@ -107,7 +109,7 @@ export default {
       await this.fetchAssets()
       requestAnimationFrame(this.load)
     },
-    loadAsset() {
+    loadAsset () {
       const { atlas, skelBinary, skelJson } = this.assetsData
       if (skelJson) {
         this.assetManager.loadText(skelJson)
@@ -116,7 +118,7 @@ export default {
       }
       this.assetManager.loadTextureAtlas(atlas)
     },
-    load() {
+    load () {
       this.skelLoading = true
       // Wait until the AssetManager has loaded all resources, then load the skeletons.
       if (this.assetManager.isLoadingComplete()) {
@@ -129,9 +131,9 @@ export default {
         requestAnimationFrame(this.load)
       }
     },
-    loadSkeleton(premultipliedAlpha, skin) {
+    loadSkeleton (premultipliedAlpha, skin) {
       const { atlas, skelBinary, skelJson } = this.assetsData
-      if (skin === undefined) skin = 'default'
+      if (skin === undefined) { skin = 'default' }
       // Load the texture atlas using name.atlas from the AssetManager.
       const atlasData = this.assetManager.get(atlas)
       // Create a AtlasAttachmentLoader that resolves region, mesh, boundingbox and path attachments
@@ -139,12 +141,12 @@ export default {
       // Set the scale to apply during parsing, parse the file, and create a new skeleton.
       let skeletonData
       if (skelJson) {
-        var skeletonJson = new spine.SkeletonJson(atlasLoader)
+        const skeletonJson = new spine.SkeletonJson(atlasLoader)
         skeletonData = skeletonJson.readSkeletonData(this.assetManager.get(skelJson))
       } else {
         // Create a SkeletonBinary instance for parsing the .skel file.
         // var skeletonBinary = new spine.SkeletonBinary(atlasLoader);
-        var skeletonBinary = new spine.SkeletonBinary(atlasLoader)
+        const skeletonBinary = new spine.SkeletonBinary(atlasLoader)
         skeletonData = skeletonBinary.readSkeletonData(this.assetManager.get(skelBinary))
       }
       const skeleton = new spine.Skeleton(skeletonData)
@@ -161,7 +163,7 @@ export default {
       // Pack everything up and return to caller.
       return { skeleton, state: animationState, bounds, premultipliedAlpha }
     },
-    calculateBounds(skeleton) {
+    calculateBounds (skeleton) {
       skeleton.setToSetupPose()
       skeleton.updateWorldTransform()
       const offset = new spine.Vector2()
@@ -169,7 +171,7 @@ export default {
       skeleton.getBounds(offset, size, [])
       return { offset, size }
     },
-    render() {
+    render () {
       this.skelLoading = false
       if (this.isChange) {
         this.load()
@@ -201,7 +203,7 @@ export default {
       this.shader.unbind()
       requestAnimationFrame(this.render)
     },
-    resize() {
+    resize () {
       const w = this.spineCanvas.clientWidth
       const h = this.spineCanvas.clientHeight
       const bounds = this.activeSkeleton.bounds
@@ -215,108 +217,117 @@ export default {
       const scaleX = bounds.size.x / this.spineCanvas.width
       const scaleY = bounds.size.y / this.spineCanvas.height
       let scale = Math.max(scaleX, scaleY) * 1.2
-      if (scale < 1) scale = 1
+      if (scale < 1) { scale = 1 }
       const width = this.spineCanvas.width * scale
       const height = this.spineCanvas.height * scale
       this.mvp.ortho2d(centerX - width / 2, centerY - height / 2, width, height)
       this.gl.viewport(0, 0, this.spineCanvas.width, this.spineCanvas.height)
     },
-    setupAnimation() {
+    setupAnimation () {
       const skeleton = this.activeSkeleton.skeleton
-      this.animationOptions = skeleton.data.animations.map(item => {
+      this.animationOptions = skeleton.data.animations.map((item) => {
         return {
           label: item.name,
           value: item.name
         }
       })
     },
-    async onChangeSkel() {
+    async onChangeSkel () {
       await this.fetchAssets()
       this.isChange = true
     },
-    onChangeAnimation(animationName) {
+    onChangeAnimation (animationName) {
       const state = this.activeSkeleton.state
       const skeleton = this.activeSkeleton.skeleton
       skeleton.setToSetupPose()
       state.setAnimation(0, animationName, true)
     },
-    handleChangeScale() {
-      if (!this.root) return
+    handleChangeScale () {
+      if (!this.root) { return }
       this.root.scaleX = this.root.scaleY = this.spineScale
     },
-    addSpineScale() {
-      if (this.spineScale >= 1.5) return
+    addSpineScale () {
+      if (this.spineScale >= 1.5) { return }
       this.spineScale += 0.1
       this.handleChangeScale()
     },
-    subtractSpineScale() {
-      if (this.spineScale <= 0.5) return
+    subtractSpineScale () {
+      if (this.spineScale <= 0.5) { return }
       this.spineScale -= 0.1
       this.handleChangeScale()
     },
-    filterSkel(keyword) {
+    filterSkel (keyword) {
       if (keyword) {
         this.filterOptions = this.skelOptions.filter(item => JSON.stringify(item).toLowerCase().includes(keyword))
       } else {
         this.filterOptions = this.skelOptions
       }
     }
-  },
-  layout: 'app'
+  }
 }
 </script>
 
 <style lang="scss" scoped>
-.spine{
+.spine {
   position: fixed;
   width: 100%;
   height: 100%;
-  &-tool{
+
+  &-tool {
     position: absolute;
     top: 30px;
     left: 0;
     width: 100%;
     text-align: center;
-    .el-select{
+
+    .el-select {
       margin-bottom: 10px;
     }
+
     @media (max-width: 576px) {
       top: 15px;
     }
   }
-  &-scale{
+
+  &-scale {
     position: absolute;
-    bottom: 30px;
     right: 30px;
-    &__icon{
+    bottom: 30px;
+
+    &__icon {
       display: block;
       padding: 10px;
-      cursor: pointer;
-      border-radius: 4px;
       color: var(--color-heading);
+      cursor: pointer;
       background-color: var(--bg-normal);
-      &.el-icon-plus{
-        border-bottom-left-radius: 0;
-        border-bottom-right-radius: 0;
+      border-radius: 4px;
+
+      &.el-icon-plus {
         border-bottom: 1px solid var(--border-color);
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
       }
-      &.el-icon-minus{
+
+      &.el-icon-minus {
         margin-top: -1px;
         border-top-left-radius: 0;
         border-top-right-radius: 0;
       }
-      &:hover{
+
+      &:hover {
         background-color: var(--color-primary);
       }
     }
   }
+
   &-loading {
     position: absolute;
-    left: 50%;
     bottom: 90px;
+    left: 50%;
     width: 100px;
     height: 60px;
     margin-left: -50px;
+
     @media (max-width: 576px) {
       bottom: 75px;
     }

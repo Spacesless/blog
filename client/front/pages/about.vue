@@ -1,6 +1,8 @@
 <template>
   <div class="about">
-    <h1 class="tl__title">关于</h1>
+    <h1 class="tl__title">
+      关于
+    </h1>
     <div class="hitokoto">
       <span class="hitokoto__title">
         生活总是两难，再多执着，再多不肯，最终不得不学会接受，从哭着控制，到笑着对待，到头来不过是一场随遇而安。<br>
@@ -91,12 +93,13 @@ import Comment from '#/components/Comment'
 import { pageMeta } from '@/mixins'
 
 export default {
+  name: 'AboutUs',
   components: {
     Catalog,
     Comment
   },
   mixins: [pageMeta],
-  data() {
+  data () {
     return {
       pageName: '关于本站',
       isLoaded: false
@@ -105,7 +108,7 @@ export default {
   computed: {
     ...mapGetters(['configs'])
   },
-  mounted() {
+  mounted () {
     this.$nextTick(() => {
       this.isLoaded = true
     })
@@ -114,8 +117,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.about{
-  &-introduce{
+.about {
+  &-introduce {
     padding-top: 0;
     margin-bottom: $grid-space;
   }

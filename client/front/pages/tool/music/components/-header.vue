@@ -24,18 +24,17 @@ export default {
       default: ''
     }
   },
-  data() {
+  data () {
     return {
       sword: ''
     }
   },
   methods: {
-    handleSearch(isReset) {
+    handleSearch (isReset) {
       this.$emit('update:keyword', this.sword)
       this.$emit('handleSearch', isReset)
     },
-    handleChangeUser() {
-      console.log(this.platform)
+    handleChangeUser () {
       const message = '请输入' + (this.platform === 'tencent' ? 'QQ号' : '网易云uid')
       this.$prompt(message, '切换用户', {
         confirmButtonText: '确定',
@@ -53,47 +52,54 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.music{
-  &-header{
+.music {
+  &-header {
     line-height: 50px;
   }
-  &-search{
+
+  &-search {
     position: relative;
     float: left;
     width: 250px;
     padding: 0 20px;
-    .el-input{
-      ::v-deep .el-input__inner{
-        background: none;
-        color: #fff;
+
+    .el-input {
+      ::v-deep .el-input__inner {
         padding-right: 30px;
+        color: #FFFFFF;
+        background: none;
       }
     }
-    &__btn{
+
+    &__btn {
       position: absolute;
-      right: 25px;
       top: 13px;
+      right: 25px;
       padding: 5px;
-      color: #fff;
+      color: #FFFFFF;
       cursor: pointer;
     }
   }
-  &-user{
+
+  &-user {
     float: right;
     margin-right: 20px;
-    color: #fff;
+    color: #FFFFFF;
     cursor: pointer;
-    &__avator{
+
+    &__avator {
       width: 32px;
       height: 32px;
-      border-radius: 50%;
       vertical-align: middle;
+      border-radius: 50%;
     }
-    &__name{
+
+    &__name {
       margin-left: 5px;
       vertical-align: middle;
     }
-    &__icon{
+
+    &__icon {
       margin-left: 5px;
       vertical-align: sub;
     }

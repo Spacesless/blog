@@ -8,7 +8,9 @@
       </el-col>
       <el-col :sm="14" :lg="18">
         <div class="bangumi-info-text">
-          <h1 class="bangumi-info__title">{{ data.title }}</h1>
+          <h1 class="bangumi-info__title">
+            {{ data.title }}
+          </h1>
           <p><span class="para-name">放映时间：</span>{{ data.showtime }}</p>
           <p><span class="para-name">状态：</span>{{ data.status | bangumiStatus }}</p>
           <div class="bangumi-info-ratings">
@@ -40,7 +42,9 @@
       <template v-if="songList && songList.length">
         <h2>主题曲</h2>
         <div id="player">
-          <p v-for="(item, index) in songList" :key="index">{{ item }}</p>
+          <p v-for="(item, index) in songList" :key="index">
+            {{ item }}
+          </p>
           <div id="aplayer" class="aplayer" />
         </div>
       </template>
@@ -73,6 +77,7 @@ import Share from '@/components/Share'
 import { pageMeta } from '@/mixins'
 
 export default {
+  name: 'BangumiDetail',
   components: {
     Catalog,
     Comment,
@@ -80,7 +85,7 @@ export default {
     Share
   },
   mixins: [pageMeta],
-  async asyncData({ params, $axios }) {
+  async asyncData ({ params, $axios }) {
     const id = params.id
     const data = await $axios.$get('/bangumi/detail', {
       params: { id }
@@ -88,7 +93,7 @@ export default {
     const songList = data?.songs?.split('\n')
     return { data, songList }
   },
-  data() {
+  data () {
     return {
       pageType: 'detail',
       apiUrl: '//api.timelessq.com/music/tencent',
@@ -97,14 +102,14 @@ export default {
     }
   },
   computed: {
-    hasContent() {
+    hasContent () {
       return this.data.content.trim().length !== 0
     },
-    tags() {
+    tags () {
       return this.data.tag?.split('|') || []
     }
   },
-  mounted() {
+  mounted () {
     if (this.songList?.length) {
       this.initAplayer()
     }
@@ -113,11 +118,11 @@ export default {
       this.isLoaded = true
     })
   },
-  beforeDestroy() {
+  beforeDestroy () {
     this.ap?.list.clear()
   },
   methods: {
-    async initAplayer() {
+    async initAplayer () {
       // eslint-disable-next-line no-unused-expressions
       import(/* webpackChunkName: "chunk-aplayer" */'@/vendor/aplayer/APlayer.min.css')
       const { default: APlayer } = await import(/* webpackChunkName: "chunk-aplayer" */'@/vendor/aplayer/APlayer.min.js')
@@ -135,7 +140,7 @@ export default {
         audio: []
       })
       // 获取歌词
-      this.ap.on('canplay', async() => {
+      this.ap.on('canplay', async () => {
         const index = this.ap.list.index
         if (this.ap.list.audios[index].lrc === undefined) {
           let pausedFlag = false
@@ -144,7 +149,7 @@ export default {
             pausedFlag = true
           }
           const songmid = this.ap.list.audios[index].songmid
-          await this.$axios.get(`${this.apiUrl}/lyric?songmid=${songmid}`).then(res => {
+          await this.$axios.get(`${this.apiUrl}/lyric?songmid=${songmid}`).then((res) => {
             const data = res.data
             const lyric = data.lyric
             const cloneList = this.ap.list.audios
@@ -157,7 +162,7 @@ export default {
           pausedFlag && this.ap.play()
         }
       })
-      this.songList?.forEach(item => {
+      this.songList?.forEach((item) => {
         this.handleSearchSong(item)
       })
     },
@@ -165,15 +170,15 @@ export default {
      * 根据歌名搜索歌曲
      * @param {String} keyword 关键字
      */
-    handleSearchSong(keyword) {
+    handleSearchSong (keyword) {
       this.$axios.get(`${this.apiUrl}/search`, {
         params: {
           keyword
         }
-      }).then(async res => {
+      }).then(async (res) => {
         const { list } = res.data
         const { songmid, songname, singer, albumcover } = list[0] || {}
-        if (!songmid) return
+        if (!songmid) { return }
         const songVkey = await this.getSongs(songmid)
         const songUrl = songVkey[0]?.url || ''
         const current = {
@@ -190,7 +195,7 @@ export default {
      * 根据歌曲id获取播放地址
      * @param {String} 歌曲ID
      */
-    async getSongs(songmid) {
+    async getSongs (songmid) {
       const res = await this.$axios.get(`${this.apiUrl}/songUrl?songmid=${songmid}`)
       let result = {}
       if (!res.errno) {
@@ -203,70 +208,87 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.bangumi{
-  &-info{
-    overflow: hidden;
+.bangumi {
+  &-info {
     margin-bottom: $grid-space;
-    &__poster{
+    overflow: hidden;
+
+    &__poster {
       max-height: 500px;
     }
-    &-text{
+
+    &-text {
       position: relative;
       padding: 0 15px;
       font-size: 14px;
       line-height: 1.7;
-      p{
+
+      p {
         margin-bottom: 5px;
         letter-spacing: 1px;
       }
-      .para-name{
+
+      .para-name {
         padding-right: 5px;
         color: var(--color-secondary);
       }
     }
-    &__title{
+
+    &__title {
       padding: 10px 0 5px;
-      color: var(--color-primary);
       font-size: 26px;
       font-weight: 100;
+      color: var(--color-primary);
     }
-    &-ratings{
+
+    &-ratings {
       margin-bottom: 5px;
-      .el-rate{
+
+      .el-rate {
         display: inline-block;
       }
     }
-    &-tag{
+
+    &-tag {
       margin-bottom: $grid-space;
-      .tl-tag{
+
+      .tl-tag {
         cursor: default;
       }
     }
   }
-  &-content{
+
+  &-content {
     padding: $grid-space;
     margin-bottom: $grid-space;
+
     #player {
-      ::v-deep .aplayer{
+      ::v-deep .aplayer {
         margin: 20px 0;
-        &-music{
-          margin-bottom: 0;
+
+        &-music {
           padding-bottom: 0;
+          margin-bottom: 0;
         }
-        &-lrc{
+
+        &-lrc {
           height: 40px;
           margin: 0;
-          &:before, &:after{
+
+          &::before,
+          &::after {
             display: none;
           }
-          p{
-            font-size: 14px;
+
+          p {
             height: 20px !important;
+            font-size: 14px;
             line-height: 20px !important;
-            color: #bbb;
+            color: #BBBBBB;
             opacity: 1;
           }
-          &-current{
+
+          &-current {
             color: var(--color-primary) !important;
           }
         }
@@ -277,5 +299,5 @@ export default {
 </style>
 
 <style lang="scss">
-@import "~@/styles/components/content.scss";
+@import '~@/styles/components/content.scss';
 </style>

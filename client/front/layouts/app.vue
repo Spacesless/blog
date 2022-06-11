@@ -9,15 +9,15 @@
 import { mapGetters } from 'vuex'
 
 export default {
-  computed: {
-    ...mapGetters(['configs'])
-  },
-  head() {
+  head () {
     return {
       htmlAttrs: {
         class: parseInt(this.configs.is_silent) ? 'silent' : ''
       }
     }
+  },
+  computed: {
+    ...mapGetters(['configs'])
   }
 }
 </script>

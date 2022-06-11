@@ -15,7 +15,7 @@
 
 <script>
 export default {
-  name: 'Hamburger',
+  name: 'HamburgerButton',
   props: {
     isActive: {
       type: Boolean,
@@ -23,7 +23,7 @@ export default {
     }
   },
   methods: {
-    toggleClick() {
+    toggleClick () {
       this.$emit('toggleClick')
     }
   }
@@ -33,9 +33,9 @@ export default {
 <style scoped>
 .hamburger {
   display: inline-block;
-  vertical-align: middle;
   width: 20px;
   height: 20px;
+  vertical-align: middle;
 }
 
 .hamburger.is-active {

@@ -1,3 +1,4 @@
+/* eslint-disable */
 <template>
   <div class="form-para">
     <el-form-item label="放映日期" prop="showtime">

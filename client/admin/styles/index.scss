@@ -8,8 +8,8 @@ body {
   height: 100%;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+  text-rendering: optimizelegibility;
+  font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', Arial, sans-serif;
 }
 
 label {
@@ -17,23 +17,39 @@ label {
 }
 
 html {
-  height: 100%;
   box-sizing: border-box;
+  height: 100%;
 }
 
-body,dd,dl,form,h1,h2,h3,h4,h5,h6,ol,p,ul{
+body,
+dd,
+dl,
+form,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ol,
+p,
+ul {
   margin: 0;
 }
 
-ol,ul{
+ol,
+ul {
   padding: 0;
-  list-style:none;
+  list-style: none;
 }
 
-b,em,i,s{
-  font-weight:400;
-  font-style:normal;
-  text-decoration:none
+b,
+em,
+i,
+s {
+  font-style: normal;
+  font-weight: 400;
+  text-decoration: none;
 }
 
 #app {
@@ -41,8 +57,8 @@ b,em,i,s{
 }
 
 *,
-*:before,
-*:after {
+*::before,
+*::after {
   box-sizing: inherit;
 }
 
@@ -64,118 +80,141 @@ div:focus {
 }
 
 .clearfix {
-  &:after {
-    content: " ";
+  &::after {
     display: block;
-    visibility: hidden;
-    clear: both;
     height: 0;
+    clear: both;
     font-size: 0;
+    visibility: hidden;
+    content: ' ';
   }
 }
 // main-container global css
 .app {
   &-container {
     margin: 20px;
-    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
     border-radius: 4px;
-    .is-stick{
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .1);
+
+    .is-stick {
       margin-bottom: 80px;
     }
-    .stick-bottom{
+
+    .stick-bottom {
       position: fixed;
+      right: 0;
       bottom: 0;
       left: 0;
-      right: 0;
       z-index: 5;
       padding: 15px 20px;
-      background-color: #fff;
       text-align: right;
-      box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.1);
-      .el-button{
+      background-color: #FFFFFF;
+      box-shadow: 0 -1px 4px rgba(0, 0, 0, .1);
+
+      .el-button {
         margin-left: 24px;
       }
     }
   }
-  &-header{
+
+  &-header {
     padding: 15px 20px;
     border: 1px solid #EBEEF5;
     border-bottom: none;
-    .el-input{
+
+    .el-input {
       width: 200px;
+
       @media (max-width: 768px) {
         width: calc(50% - 8px);
       }
     }
-    .el-dropdown{
+
+    .el-dropdown {
       margin-left: 10px;
     }
-    &-select{
+
+    &-select {
       margin-right: 10px;
+
       @media (max-width: 768px) {
         width: calc(50% - 8px);
       }
-      .el-input{
+
+      .el-input {
         width: 100%;
       }
     }
   }
+
   &-footer {
     padding: 15px 20px;
     border: 1px solid #EBEEF5;
     border-top: none;
-    .el-cascader{
+
+    .el-cascader {
       margin-right: 10px;
     }
-    .el-dropdown{
+
+    .el-dropdown {
       margin-right: 10px;
     }
   }
-  &-preview{
+
+  &-preview {
     display: block;
-    .el-image{
-      &__error, &__inner{
+
+    .el-image {
+      &__error,
+      &__inner {
         display: none;
       }
     }
   }
 }
 
-.text-center{
+.text-center {
   text-align: center;
 }
 
-.text-right{
+.text-right {
   text-align: right;
 }
 
-.form{
-  &-container{
+.form {
+  &-container {
     border: 1px solid #EBEEF5;
-    .el-form-item{
+
+    .el-form-item {
       padding: 20px;
       margin-bottom: 0;
       border-bottom: 1px solid #EBEEF5;
     }
-    &-input, .el-select, .el-date-editor {
+
+    &-input,
+    .el-select,
+    .el-date-editor {
       width: 230px;
     }
   }
-  &-item{
+
+  &-item {
     border-bottom: 1px solid #EBEEF5;
   }
-  &-title{
+
+  &-title {
     padding: 5px 20px;
     color: #409EFF;
-    .el-form-item__content{
+
+    .el-form-item__content {
       margin-left: 0 !important;
     }
   }
 }
 
 .pagination-container {
-  background: #fff;
   padding: 15px 20px;
+  background: #FFFFFF;
   border: 1px solid #EBEEF5;
   border-top: none;
 }
@@ -183,14 +222,17 @@ div:focus {
 // scrollbar
 ::-webkit-scrollbar {
   width: 8px;
+
   &-thumb {
-    background-color: rgba(0,0,0,.2);
+    background-color: rgba(0, 0, 0, .2);
     border-radius: 4px;
-    &:hover{
-      background-color: rgba(0,0,0,.3);
+
+    &:hover {
+      background-color: rgba(0, 0, 0, .3);
     }
   }
 }
-.scrollbar-wrapper{
+
+.scrollbar-wrapper {
   overflow-x: hidden;
 }

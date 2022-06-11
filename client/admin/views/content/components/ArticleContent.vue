@@ -42,8 +42,12 @@
       </el-form-item>
       <el-form-item label="前台显示">
         <el-radio-group v-model="formData.is_show">
-          <el-radio :label="1">显示</el-radio>
-          <el-radio :label="0">隐藏</el-radio>
+          <el-radio :label="1">
+            显示
+          </el-radio>
+          <el-radio :label="0">
+            隐藏
+          </el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="发布时间" prop="addtime">
@@ -74,7 +78,7 @@
             <el-input v-model="formData.keywords" />
           </el-col>
           <el-col :sm="24" :md="12">
-            <span style="margin-left:15px;">多个关键词请用“|”或“，”隔开。</span>
+            <span style="margin-left: 15px;">多个关键词请用“|”或“，”隔开。</span>
           </el-col>
         </el-row>
       </el-form-item>
@@ -99,11 +103,17 @@
           @keyup.enter.native="handleInputConfirm"
           @blur="handleInputConfirm"
         />
-        <el-button v-else class="button-new-tag" @click="showTagInput">+ 新标签</el-button>
+        <el-button v-else class="button-new-tag" @click="showTagInput">
+          + 新标签
+        </el-button>
       </el-form-item>
       <div class="stick-bottom">
-        <el-button type="warning" icon="el-icon-close" plain @click="handleCancel">取消</el-button>
-        <el-button type="primary" icon="el-icon-check" :loading="confirmLoading" @click="handleSubmit">确定</el-button>
+        <el-button type="warning" icon="el-icon-close" plain @click="handleCancel">
+          取消
+        </el-button>
+        <el-button type="primary" icon="el-icon-check" :loading="confirmLoading" @click="handleSubmit">
+          确定
+        </el-button>
       </div>
     </el-form>
   </div>
@@ -111,9 +121,9 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import BangumiParam from './parameter/BangumiParam'
 import UploadImage from '@/components/Upload/index'
 import Tinymce from '@/components/Tinymce'
-import BangumiParam from './parameter/BangumiParam'
 import { getPathName } from '@/utils'
 
 export default {
@@ -140,7 +150,7 @@ export default {
       default: 0
     }
   },
-  data() {
+  data () {
     return {
       formData: {},
       fileList: [],
@@ -162,17 +172,17 @@ export default {
   },
   computed: {
     ...mapGetters(['userinfo', 'device']),
-    currentType() {
+    currentType () {
       return this.$route.query && this.$route.query.type
     },
-    paramComponent() {
+    paramComponent () {
       const moduleEnum = {
         bangumi: 'BangumiParam'
       }
       return moduleEnum[this.currentType] || ''
     }
   },
-  created() {
+  created () {
     if (this.isEdit) {
       const id = this.$route.params && this.$route.params.id
       this.fetchData(id)
@@ -189,9 +199,9 @@ export default {
     }
   },
   methods: {
-    async fetchData(id) {
+    async fetchData (id) {
       this.fetchLoading = true
-      await this.$api.content.GetContent(this.currentType, id).then(res => {
+      await this.$api.content.GetContent(this.currentType, id).then((res) => {
         this.formData = res.data
         const { imgurl, tag } = this.formData
         if (imgurl) {
@@ -209,16 +219,16 @@ export default {
      * 删除tag标签
      * @param {String} tag
      */
-    handleDeleteTag(tag) {
+    handleDeleteTag (tag) {
       this.tags.splice(this.tags.indexOf(tag), 1)
     },
-    showTagInput() {
+    showTagInput () {
       this.inputVisible = true
       this.$nextTick(() => {
         this.$refs.saveTagInput.focus()
       })
     },
-    handleInputConfirm() {
+    handleInputConfirm () {
       const inputTag = this.inputTag
       if (inputTag) {
         this.tags.push(inputTag)
@@ -226,9 +236,9 @@ export default {
       this.inputVisible = false
       this.inputTag = ''
     },
-    handleSubmit() {
-      this.$refs.form.validate(async(valid) => {
-        if (!valid) return
+    handleSubmit () {
+      this.$refs.form.validate(async (valid) => {
+        if (!valid) { return }
         this.confirmLoading = true
         const postData = {
           ...this.formData,
@@ -238,7 +248,7 @@ export default {
         }
 
         const SubmitHandler = this.isEdit ? this.$api.content.UpdateContent : this.$api.content.CreateContent
-        await SubmitHandler(this.currentType, postData).then(res => {
+        await SubmitHandler(this.currentType, postData).then((res) => {
           this.$message({
             type: 'success',
             message: this.isEdit ? '更新成功' : '添加成功'
@@ -254,7 +264,7 @@ export default {
         this.confirmLoading = false
       })
     },
-    handleCancel() {
+    handleCancel () {
       this.$store.dispatch('tagsView/delView', this.$route).then(() => {
         this.$router.push({ name: this.currentType.charAt(0).toUpperCase() + this.currentType.slice(1) })
       })
@@ -267,17 +277,18 @@ export default {
 .el-tag + .el-tag {
   margin-left: 10px;
 }
+
 .button-new-tag {
   height: 32px;
-  margin-left: 10px;
   padding-top: 0;
   padding-bottom: 0;
+  margin-left: 10px;
   line-height: 30px;
 }
+
 .input-new-tag {
   width: 90px;
   margin-left: 10px;
   vertical-align: bottom;
 }
 </style>
-

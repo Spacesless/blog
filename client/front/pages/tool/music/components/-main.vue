@@ -11,8 +11,12 @@
         </div>
       </div>
       <div class="music-list-menu">
-        <el-button type="primary" round icon="icon-play" @click="handlePlayAll">播放全部</el-button>
-        <el-button split-button round icon="el-icon-plus" @click="handleJoinAll">添加到列表</el-button>
+        <el-button type="primary" round icon="icon-play" @click="handlePlayAll">
+          播放全部
+        </el-button>
+        <el-button split-button round icon="el-icon-plus" @click="handleJoinAll">
+          添加到列表
+        </el-button>
       </div>
     </div>
     <el-table
@@ -71,14 +75,14 @@ export default {
     elHeightAdaptiveTable
   },
   filters: {
-    tagsFilter(tags) {
+    tagsFilter (tags) {
       tags = tags || []
       return tags.map(item => item).join(' 、 ')
     },
-    singerFilter(singers) {
+    singerFilter (singers) {
       return singers.map(item => item.name).join(' / ')
     },
-    intervalFilter(time) {
+    intervalFilter (time) {
       return (Math.floor(time / 60) < 10 ? '0' + Math.floor(time / 60) : Math.floor(time / 60)) + ':' + (time % 60 < 10 ? '0' + time % 60 : time % 60)
     }
   },
@@ -105,7 +109,7 @@ export default {
     }
   },
   methods: {
-    async getSongs(songmid) {
+    async getSongs (songmid) {
       const res = await this.$axios.get(`${this.apiUrl}/songUrl?songmid=${songmid}`)
       let result = {}
       if (!res.errno) {
@@ -113,7 +117,7 @@ export default {
       }
       return result
     },
-    async handleJoinAll() {
+    async handleJoinAll () {
       const aplayerLists = this.ap.list.audios
       const differences = differenceBy(this.songlist, aplayerLists, 'songmid')
       const songmids = differences.map(item => item.songmid)
@@ -133,7 +137,7 @@ export default {
       })
       this.ap.list.add(result)
     },
-    async handlePlayAll() {
+    async handlePlayAll () {
       const songmids = this.songlist.map(item => item.songmid)
       const songVkey = await this.getSongs(songmids.join(','))
       const result = []
@@ -152,7 +156,7 @@ export default {
       this.ap.list.clear()
       this.ap.list.add(result)
     },
-    async handleJoinSingle(row) {
+    async handleJoinSingle (row) {
       const { songmid, songname, singer, albumcover } = row
       const isExist = this.ap.list.audios.find(item => item.songmid === songmid)
       if (isExist) {
@@ -181,7 +185,7 @@ export default {
         this.ap.list.add(current)
       }
     },
-    async handlePlaySingle(row) {
+    async handlePlaySingle (row) {
       const { songmid, songname, singer, albumcover } = row
       const isExist = this.ap.list.audios.findIndex(item => item.songmid === songmid)
       if (isExist > -1) {
@@ -200,7 +204,7 @@ export default {
         this.ap.list.switch(this.ap.list.audios.length - 1)
       }
     },
-    getRowClassName({ row, rowIndex }) {
+    getRowClassName ({ row, rowIndex }) {
       const index = this.ap.list.index
       const currentSong = this.ap.list.audios[index] || {}
       if (currentSong.songmid === row.songmid) {
@@ -212,91 +216,114 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.music{
-  &-list{
-    &-header{
+.music {
+  &-list {
+    &-header {
       position: relative;
       padding: 0 15px 15px;
     }
-    &-info{
+
+    &-info {
       position: relative;
       padding: 20px;
-      &-logo{
+
+      &-logo {
+        float: left;
         width: 120px;
         height: 120px;
-        float: left;
         border-radius: 50%;
       }
-      &-text{
-        overflow: hidden;
+
+      &-text {
         padding-left: 15px;
-        h2{
-          color: #fff;
-          line-height: 1.5;
+        overflow: hidden;
+
+        h2 {
           font-weight: normal;
+          line-height: 1.5;
+          color: #FFFFFF;
         }
-        p{
+
+        p {
           font-size: 14px;
           line-height: 1.7;
-          color: #bbb;
+          color: #BBBBBB;
         }
       }
     }
-    &-menu{
+
+    &-menu {
       position: absolute;
-      bottom: 15px;
       right: 20px;
-      ::v-deep .el-button{
-        span{
+      bottom: 15px;
+
+      ::v-deep .el-button {
+        span {
           margin-left: 5px;
         }
       }
     }
-    &__albumdesc{
+
+    &__albumdesc {
       padding-left: 10px;
-      color: #bbb;
+      color: #BBBBBB;
     }
-    &-operate{
+
+    &-operate {
       position: absolute;
+      top: 50%;
       right: 15px;
       z-index: 99;
-      top: 50%;
       margin-top: -16px;
       opacity: 0;
       transition: opacity .3s;
-      .el-button{
+
+      .el-button {
         border: none;
       }
     }
-    ::v-deep .el-table{
-      &:before{
+
+    ::v-deep .el-table {
+      &::before {
         display: none;
       }
-      &,tr,th{
+
+      &,
+      tr,
+      th {
         background: none;
       }
-      th{
-        color: #bbb;
+
+      th {
+        color: #BBBBBB;
       }
-      th, td{
+
+      th,
+      td {
         padding: 15px 0;
         border-bottom: none;
       }
-      tr{
-        color: #fff;
-        &.playing{
+
+      tr {
+        color: #FFFFFF;
+
+        &.playing {
           color: var(--color-primary);
         }
-        &:hover, &.playing{
-          td{
-            background-color: rgba($color: #fff, $alpha: .15);
+
+        &:hover,
+        &.playing {
+          td {
+            background-color: rgba($color: #FFFFFF, $alpha: .15);
           }
         }
       }
-      .el-table__row{
+
+      .el-table__row {
         position: relative;
-        &:hover{
-          .music-list-operate{
+
+        &:hover {
+          .music-list-operate {
             opacity: 1;
           }
         }

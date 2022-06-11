@@ -4,23 +4,24 @@
 
 <script>
 export default {
-  data() {
+  name: 'ImageViewer',
+  data () {
     return {
       previewSrc: '',
       previewSrcList: []
     }
   },
-  mounted() {
+  mounted () {
     this.$nextTick(() => {
       this.initViewer()
     })
   },
   methods: {
-    initViewer() {
+    initViewer () {
       const previews = document.querySelectorAll('.markup img')
       this.previewSrcList = Array.from(previews).map(item => item.src)
-      previews.forEach(item => {
-        item.addEventListener('click', e => {
+      previews.forEach((item) => {
+        item.addEventListener('click', (e) => {
           this.handlePreview(e.target.src)
         })
       })
@@ -29,7 +30,7 @@ export default {
      * 预览图片
      * @param {String} src 图片地址
      */
-    handlePreview(src) {
+    handlePreview (src) {
       if (!src) {
         return
       }

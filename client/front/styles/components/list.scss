@@ -1,44 +1,55 @@
 // 列表过滤
-.filter{
+.filter {
   position: relative;
   padding-bottom: $grid-space;
-  .el-form-item{
-    &__label{
+
+  .el-form-item {
+    &__label {
       color: var(--color-text);
     }
-    &__content{
+
+    &__content {
       overflow: hidden;
     }
   }
-  .el-select{
-    vertical-align: middle;
+
+  .el-select {
     margin-right: 10px;
+    vertical-align: middle;
   }
-  .el-tag{
+
+  .el-tag {
     margin-right: 10px;
   }
 }
 
 // 分页
-.list-page{
+.list-page {
   margin: 24px 0;
   text-align: center;
-  ::v-deep .el-pagination.is-background{
-    .btn-prev, .btn-next, .number{
+
+  ::v-deep .el-pagination.is-background {
+    .btn-prev,
+    .btn-next,
+    .number {
       min-width: 32px;
       height: 32px;
+      line-height: 30px;
       background-color: var(--bg-normal);
       border: 1px solid var(--border-color);
-      line-height: 30px;
       border-radius: 4px;
     }
-    .btn-prev, .btn-next{
-      .el-icon{
+
+    .btn-prev,
+    .btn-next {
+      .el-icon {
         display: inline-block;
       }
     }
+
     .number {
-      &:hover, &.active{
+      &:hover,
+      &.active {
         border-color: var(--color-primary);
       }
     }

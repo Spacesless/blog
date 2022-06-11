@@ -35,7 +35,14 @@
 
     <el-scrollbar class="ablum-scroll" wrap-class="scrollbar-wrapper">
       <el-row v-loading="listLoading" class="file-grid">
-        <el-col v-for="(item, index) in fileList" :key="index" :xs="12" :sm="8" :md="6" :xl="4">
+        <el-col
+          v-for="(item, index) in fileList"
+          :key="index"
+          :xs="12"
+          :sm="8"
+          :md="6"
+          :xl="4"
+        >
           <!-- 目录 -->
           <div
             v-if="item.type === 1"
@@ -58,9 +65,15 @@
               </div>
             </el-image>
             <div class="file-info">
-              <p class="file-name">{{ item.name }}</p>
-              <p class="file-time">{{ item.mtime | timeFilter }}</p>
-              <p class="file-size">{{ item.size | sizeFilter }}</p>
+              <p class="file-name">
+                {{ item.name }}
+              </p>
+              <p class="file-time">
+                {{ item.mtime | timeFilter }}
+              </p>
+              <p class="file-size">
+                {{ item.size | sizeFilter }}
+              </p>
             </div>
           </div>
         </el-col>
@@ -76,8 +89,12 @@
     </div>
 
     <div slot="footer" class="dialog-footer">
-      <el-button plain @click="handleCancel">取消</el-button>
-      <el-button type="primary" @click="handleConfirm">确定</el-button>
+      <el-button plain @click="handleCancel">
+        取消
+      </el-button>
+      <el-button type="primary" @click="handleConfirm">
+        确定
+      </el-button>
     </div>
   </el-dialog>
 </template>
@@ -88,15 +105,15 @@ import Pagination from '#/components/Pagination'
 import { parseTime } from '#/utils'
 
 export default {
-  name: 'Upload',
+  name: 'PictureAblum',
   components: {
     Pagination
   },
   filters: {
-    timeFilter(time) {
+    timeFilter (time) {
       return time ? parseTime(time) : ''
     },
-    sizeFilter(size) {
+    sizeFilter (size) {
       if (!size) {
         return '0 Bytes'
       }
@@ -115,7 +132,7 @@ export default {
       default: false
     }
   },
-  data() {
+  data () {
     return {
       total: 0,
       listLoading: false,
@@ -132,17 +149,17 @@ export default {
     }
   },
   watch: {
-    visible(isShow) {
+    visible (isShow) {
       if (isShow) {
         this.fecthList()
       }
     }
   },
   methods: {
-    async fecthList() {
+    async fecthList () {
       this.listLoading = true
       this.listQuery.path = this.path
-      await this.$api.common.GetPathList(this.listQuery).then(res => {
+      await this.$api.common.GetPathList(this.listQuery).then((res) => {
         const { data, count } = res.data
         this.fileList = data
         this.total = count
@@ -154,13 +171,13 @@ export default {
      * @param {String} 目录路径
      * @param {Number [int]} index 所在面包屑菜单下标
      */
-    changePath(path, index) {
+    changePath (path, index) {
       this.path = path
       this.breadcrumbs = this.breadcrumbs.slice(0, index + 1)
       this.listQuery.page = 1
       this.fecthList()
     },
-    onKeywordInput: debounce(function() {
+    onKeywordInput: debounce(function () {
       this.listQuery.page = 1
       this.fecthList()
     }, 200),
@@ -168,12 +185,12 @@ export default {
      * 进入目录
      * @param {String} path 目录路径
      */
-    enterDirectory(path) {
+    enterDirectory (path) {
       this.path = path
       const urlHash = path.split('/')
       this.breadcrumbs.push({
         name: urlHash[urlHash.length - 1],
-        path: path
+        path
       })
       this.listQuery.page = 1
       this.fecthList()
@@ -182,10 +199,10 @@ export default {
      * 切换选中状态
      * @param {Object} item 点击项
      */
-    toggleSelect(item) {
+    toggleSelect (item) {
       this.$set(item, 'checked', !item.check)
     },
-    handleCancel() {
+    handleCancel () {
       this.$emit('update:visible', false)
       this.listQuery = {
         keyword: '',
@@ -198,7 +215,7 @@ export default {
       ]
       this.fileList = []
     },
-    handleConfirm() {
+    handleConfirm () {
       const findSelectFile = this.fileList.filter(item => item.checked)
       this.$emit('onSelectFile', findSelectFile)
       this.handleCancel()
@@ -208,102 +225,123 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.ablum{
-  ::v-deep .el-dialog{
+.ablum {
+  ::v-deep .el-dialog {
     height: 90%;
-    &__body{
+
+    &__body {
       height: calc(100% - 95px);
       padding: 15px 20px;
     }
   }
-  &-scroll{
+
+  &-scroll {
     height: calc(100% - 95px);
   }
 }
+
 .file {
-  &-header{
+  &-header {
     padding: 0 15px 10px;
-    .el-breadcrumb{
-      color: #606266;
+
+    .el-breadcrumb {
       line-height: 36px;
-      .redirect{
+      color: #606266;
+
+      .redirect {
         cursor: pointer;
-        &:hover{
-          color: #409eff;
+
+        &:hover {
+          color: #409EFF;
         }
       }
     }
   }
-  &-grid{
-    .el-col{
+
+  &-grid {
+    .el-col {
       padding: 0 15px;
     }
-    .grid-item{
-      overflow: hidden;
+
+    .grid-item {
       z-index: 1;
       height: 210px;
       margin-bottom: 15px;
-      border: 1px solid #d9ecff;
-      background-color: #ecf5ff;
+      overflow: hidden;
       cursor: pointer;
+      background-color: #ECF5FF;
+      border: 1px solid #D9ECFF;
       border-radius: 4px;
-      &.active{
-        border-color: #409eff;
-        background-color: #d9ecff;
+
+      &.active {
+        background-color: #D9ECFF;
+        border-color: #409EFF;
       }
     }
-    .folder{
+
+    .folder {
       padding: 60px 0;
       text-align: center;
-      .el-icon-folder{
+
+      .el-icon-folder {
         margin: 10px 0;
         font-size: 28px;
       }
-      p{
+
+      p {
         margin: 0;
-        color: #409eff;
         font-size: 16px;
+        color: #409EFF;
       }
     }
-    .image{
-      .el-image{
+
+    .image {
+      .el-image {
         display: block;
         height: 135px;
         padding: 5px 10px;
         margin: 0 auto;
       }
     }
-    .blob{
-      .blob-slot{
+
+    .blob {
+      .blob-slot {
         font-size: 28px;
         line-height: 130px;
         text-align: center;
       }
     }
   }
-  &-info{
+
+  &-info {
     padding: 5px 10px;
-    background-color: #fdf6ec;
-    p{
-      overflow: hidden;
+    background-color: #FDF6EC;
+
+    p {
       margin: 0;
-      color: #e6a23c;
+      overflow: hidden;
       font-size: 14px;
       line-height: 22px;
-      white-space: nowrap;
+      color: #E6A23C;
       text-overflow: ellipsis;
+      white-space: nowrap;
     }
   }
-  &-time, &-size{
+
+  &-time,
+  &-size {
     font-size: 13px;
     color: #909399;
   }
-  &-footer{
+
+  &-footer {
     line-height: 40px;
-    .select{
+
+    .select {
       padding-top: 18px;
     }
-    ::v-deep .pagination-container{
+
+    ::v-deep .pagination-container {
       padding-bottom: 0;
       border: none;
     }

@@ -6,12 +6,12 @@ import { scrollTo } from '#/utils/scroll-to'
  * echarts自适应
  */
 export const resizeChart = {
-  data() {
+  data () {
     return {
       $_sidebarElm: null
     }
   },
-  mounted() {
+  mounted () {
     // 函数消抖
     this.__resizeHandler = debounce(() => {
       if (this.chartInstance) {
@@ -29,11 +29,11 @@ export const resizeChart = {
     this.$_sidebarElm = document.getElementsByClassName('sidebar-container')[0]
     this.$_sidebarElm && this.$_sidebarElm.addEventListener('transitionend', this.$_sidebarResizeHandler)
   },
-  activated() {
+  activated () {
     this.chartInstance && this.chartInstance.resize()
     this.doResize && this.doResize()
   },
-  beforeDestroy() {
+  beforeDestroy () {
     window.removeEventListener('resize', this.__resizeHandler)
 
     this.$_sidebarElm && this.$_sidebarElm.removeEventListener('transitionend', this.$_sidebarResizeHandler)
@@ -41,7 +41,7 @@ export const resizeChart = {
   methods: {
     // use $_ for mixins properties
     // https://vuejs.org/v2/style-guide/index.html#Private-property-names-essential
-    $_sidebarResizeHandler(e) {
+    $_sidebarResizeHandler (e) {
       if (e.propertyName === 'width') {
         this.__resizeHandler()
       }
@@ -57,7 +57,7 @@ export const crud = {
   directives: {
     elHeightAdaptiveTable
   },
-  data() {
+  data () {
     return {
       multipleSelection: [],
       autoFetchList: true,
@@ -71,35 +71,35 @@ export const crud = {
       deleteLoading: false
     }
   },
-  created() {
+  created () {
     this.autoFetchList && this.fetchList()
   },
-  activated() {
+  activated () {
     this.$nextTick(() => {
       this.$refs.multipleTable?.doLayout()
     })
   },
   methods: {
-    async fetchList() {
+    async fetchList () {
       this.listLoading = true
-      await this.$api.list.GetList(this.currentType, this.listQuery).then(res => {
+      await this.$api.list.GetList(this.currentType, this.listQuery).then((res) => {
         const { data, count } = res.data
         this.tableData = data
         this.total = count
       }).catch(() => {})
       this.listLoading = false
     },
-    onSelectionChange(val) {
+    onSelectionChange (val) {
       this.multipleSelection = val
     },
     /**
      * 删除单个记录
      * @param {Object} row
      */
-    handleDelete(row) {
+    handleDelete (row) {
       this.$confirm('此操作将永久删除该内容, 是否继续?', '提示', {
         type: 'warning'
-      }).then(async() => {
+      }).then(async () => {
         this.$set(row, 'deleteLoading', true)
         await this.deleteMultiple(1, row).catch(() => {})
         this.$set(row, 'deleteLoading', false)
@@ -108,12 +108,12 @@ export const crud = {
     /**
      * 批量删除
      */
-    handleDeleteSelection() {
+    handleDeleteSelection () {
       const listCount = this.multipleSelection.length
       if (listCount) {
         this.$confirm(`确定要删除${listCount}条内容?`, '提示', {
           type: 'warning'
-        }).then(async() => {
+        }).then(async () => {
           this.deleteLoading = true
           await this.deleteMultiple(listCount).catch(() => {})
           this.deleteLoading = false
@@ -127,9 +127,9 @@ export const crud = {
      * @param {Number} listCount 删除数目
      * @param {Object} row 当前行
      */
-    deleteMultiple(listCount, row) {
+    deleteMultiple (listCount, row) {
       const lists = row ? [row.id] : this.multipleSelection.map(item => item.id)
-      return this.$api.list.DeleteList(this.currentType, lists).then(res => {
+      return this.$api.list.DeleteList(this.currentType, lists).then((res) => {
         this.$message({
           type: 'success',
           message: '删除成功'
@@ -143,7 +143,7 @@ export const crud = {
         })
       })
     },
-    handleSearch() {
+    handleSearch () {
       this.listQuery.page = 1 // 搜索重置页码
       this.fetchList && this.fetchList()
 
@@ -151,14 +151,14 @@ export const crud = {
       const multipleTable = this.$refs.multipleTable && this.$refs.multipleTable.bodyWrapper
       multipleTable && scrollTo(0, 200, multipleTable)
     },
-    onKeywordInput: debounce(function() {
+    onKeywordInput: debounce(function () {
       this.handleSearch()
     }, 500),
-    handleSearchTitle(keyword) {
+    handleSearchTitle (keyword) {
       this.listQuery.keyword = keyword
       this.handleSearch()
     },
-    handleChangeColumn(category) {
+    handleChangeColumn (category) {
       this.listQuery = { ...this.listQuery, ...category, page: 1 }
       this.handleSearch()
     },
@@ -167,7 +167,7 @@ export const crud = {
      * @summary 处理删除分页最后一页所有数据时，PageIndex不变，页面列表为空的问题
      * @param {Number [int]} listCount 列表改变的个数（暂为删除操作）
      */
-    calcCurrentPage(listCount) {
+    calcCurrentPage (listCount) {
       this.total -= listCount
       const { page, pageSize } = this.listQuery
       if (this.total > 0 && (page - 1) * pageSize === this.total) {
@@ -182,14 +182,14 @@ export const crud = {
  * @summary 包括添加、搜索、编辑、监听子组件提交或取消事件
  */
 export const listDialog = {
-  data() {
+  data () {
     return {
       currentId: 0,
       dialogVisible: false
     }
   },
   methods: {
-    handleAdd() {
+    handleAdd () {
       this.currentId = 0
       this.dialogVisible = true
     },
@@ -197,7 +197,7 @@ export const listDialog = {
      * 编辑指定ID数据
      * @param {Number [int]} id
      */
-    handleEdit(id) {
+    handleEdit (id) {
       this.currentId = id
       this.dialogVisible = true
     },
@@ -205,7 +205,7 @@ export const listDialog = {
      * 取消或提交
      * @param {Boolean} isRefresh 是否刷新列表
      */
-    onConfirm(isRefresh) {
+    onConfirm (isRefresh) {
       this.dialogVisible = false
       isRefresh && this.fetchList()
     }
@@ -223,14 +223,14 @@ export const dialogForm = {
       default: () => false
     }
   },
-  data() {
+  data () {
     return {
       dialogTitle: '',
       dialogLoading: false
     }
   },
   methods: {
-    handleCancel() {
+    handleCancel () {
       // 取消只关闭弹窗，不刷新列表
       this.$emit('onConfirm', false)
     },
@@ -238,7 +238,7 @@ export const dialogForm = {
      * 关闭弹窗后重置表单，保证编辑、添加不互相影响
      * @summary 部分表单有初始默认值的需要在onOpen或onOpened中重新赋值
      */
-    onClosed() {
+    onClosed () {
       this.$refs.form && this.$refs.form.resetFields() // 关闭后对整个表单进行重置值以及校验结果
       this.formData = {} // 必须 否则1、重置后部分无法改变值，当然也可在data()给对应属性赋初始值 2、无prop属性的formColumn没重置
     }

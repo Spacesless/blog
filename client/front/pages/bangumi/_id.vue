@@ -1,6 +1,8 @@
 <template>
   <div class="bangumi">
-    <h2 class="tl__title">追番刷剧</h2>
+    <h2 class="tl__title">
+      追番刷剧
+    </h2>
     <!-- 一言 -->
     <Hitokoto :kinds="['a', 'b', 'h']" />
     <el-form class="filter" label-width="40px" label-position="left">
@@ -11,23 +13,41 @@
           <el-option label="推荐指数" value="ratings" />
         </el-select>
         <el-radio-group v-model="filters.orderBy" @change="handleSearch">
-          <el-radio-button label="">降序</el-radio-button>
-          <el-radio-button label="asc">升序</el-radio-button>
+          <el-radio-button label="">
+            降序
+          </el-radio-button>
+          <el-radio-button label="asc">
+            升序
+          </el-radio-button>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="状态">
         <el-radio-group v-model="filters.status" @change="handleSearch">
-          <el-radio-button label="">全部</el-radio-button>
-          <el-radio-button label="0">未上映</el-radio-button>
-          <el-radio-button label="1">连载中</el-radio-button>
-          <el-radio-button label="2">已完结</el-radio-button>
+          <el-radio-button label="">
+            全部
+          </el-radio-button>
+          <el-radio-button label="0">
+            未上映
+          </el-radio-button>
+          <el-radio-button label="1">
+            连载中
+          </el-radio-button>
+          <el-radio-button label="2">
+            已完结
+          </el-radio-button>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="进度">
         <el-radio-group v-model="filters.progress" @change="handleSearch">
-          <el-radio-button label="">全部</el-radio-button>
-          <el-radio-button label="0">在看</el-radio-button>
-          <el-radio-button label="1">看过</el-radio-button>
+          <el-radio-button label="">
+            全部
+          </el-radio-button>
+          <el-radio-button label="0">
+            在看
+          </el-radio-button>
+          <el-radio-button label="1">
+            看过
+          </el-radio-button>
         </el-radio-group>
       </el-form-item>
       <el-form-item v-if="dynamicTags.length" label="标签">
@@ -38,7 +58,9 @@
           size="medium"
           :disable-transitions="false"
           @close="handleDeleteTag(tag)"
-        >{{ tag }}</el-tag>
+        >
+          {{ tag }}
+        </el-tag>
       </el-form-item>
     </el-form>
     <!--bangumi list-->
@@ -59,10 +81,14 @@
             </nuxt-link>
           </el-col>
           <el-col class="bangumi-list-info" :span="14" :xl="16">
-            <nuxt-link class="bangumi-list__title" :to="'/bangumi/detail/' + item.id">{{ item.title }}</nuxt-link>
+            <nuxt-link class="bangumi-list__title" :to="'/bangumi/detail/' + item.id">
+              {{ item.title }}
+            </nuxt-link>
             <p><span class="para-name">时间：</span>{{ item.showtime }}</p>
             <p><span class="para-name">状态：</span>{{ item.status | bangumiStatus }}</p>
-            <p class="hidden-md-and-down"><span class="para-name">简介：</span>{{ item.description }}……</p>
+            <p class="hidden-md-and-down">
+              <span class="para-name">简介：</span>{{ item.description }}……
+            </p>
             <p><span class="para-name">进度：</span>{{ item.current }}/{{ item.total }}</p>
             <div class="bangumi-list-tag">
               <span
@@ -91,12 +117,13 @@ import { pageMeta, listPage } from '@/mixins'
 import { gridSpace } from '@/styles/export-to-js.scss'
 
 export default {
+  name: 'BangumiList',
   components: {
     Hitokoto,
     Pagination
   },
   mixins: [pageMeta, listPage],
-  async asyncData({ app, params, query, $axios }) {
+  async asyncData ({ app, params, query, $axios }) {
     const paramId = params.id
     const [id, page] = paramId ? paramId.split('-') : []
     const { sortBy, orderBy, status, progress, tags } = query
@@ -128,14 +155,14 @@ export default {
       dynamicTags: tags ? tags.split(',') : []
     }
   },
-  data() {
+  data () {
     return {
       gridSpace,
       pageType: 'list'
     }
   },
   computed: {
-    configs() {
+    configs () {
       return this.$store.getters.configs
     }
   },
@@ -144,6 +171,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/styles/components/list.scss";
-@import "~@/styles/components/bangumi.scss";
+@import '~@/styles/components/list.scss';
+@import '~@/styles/components/bangumi.scss';
 </style>

@@ -2,14 +2,18 @@
   <div class="app-container">
     <el-row class="app-header">
       <el-col :xs="24" :sm="12">
-        <el-button type="danger" icon="el-icon-delete" :loading="deleteLoading" @click="handleDeleteSelection">删除</el-button>
+        <el-button type="danger" icon="el-icon-delete" :loading="deleteLoading" @click="handleDeleteSelection">
+          删除
+        </el-button>
         <el-button
           type="primary"
           plain
           icon="el-icon-refresh-right"
           :loading="restoreLoading"
           @click="handleRestoreSelection"
-        >还原</el-button>
+        >
+          还原
+        </el-button>
       </el-col>
       <el-col :xs="24" :sm="12" class="text-right">
         <el-select v-model="listQuery.type" clearable placeholder="请选择模块" @change="handleSearch">
@@ -35,8 +39,12 @@
       <el-table-column align="center" label="删除时间" prop="updatetime" width="200" />
       <el-table-column align="center" label="操作" width="180">
         <template #default="scope">
-          <el-button type="primary" :loading="scope.row.restoreLoading" @click="handleRestore(scope.row)">还原</el-button>
-          <el-button type="danger" plain :loading="scope.row.deleteLoading" @click="handleDelete(scope.row)">删除</el-button>
+          <el-button type="primary" :loading="scope.row.restoreLoading" @click="handleRestore(scope.row)">
+            还原
+          </el-button>
+          <el-button type="danger" plain :loading="scope.row.deleteLoading" @click="handleDelete(scope.row)">
+            删除
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -51,10 +59,10 @@ import Pagination from '#/components/Pagination'
 import { crud } from '@/mixins'
 
 export default {
-  name: 'Recycle',
+  name: 'RecycleList',
   components: { Pagination },
   mixins: [crud],
-  data() {
+  data () {
     return {
       recycleList: [],
       restoreLoading: false
@@ -63,20 +71,20 @@ export default {
   computed: {
     ...mapGetters(['categories'])
   },
-  created() {
+  created () {
     this.fetchList()
   },
   methods: {
-    async fetchList() {
+    async fetchList () {
       this.listLoading = true
-      await this.$api.list.GetRecycleList(this.listQuery).then(res => {
+      await this.$api.list.GetRecycleList(this.listQuery).then((res) => {
         const { count, data } = res.data
         this.recycleList = data
         this.total = count
       }).catch(() => {})
       this.listLoading = false
     },
-    formatCategory(row, column, cellValue) {
+    formatCategory (row, column, cellValue) {
       const findColumn = this.categories.find(item => item.type === cellValue)
       return findColumn ? findColumn.name : ''
     },
@@ -84,7 +92,7 @@ export default {
      * 格式化模块名称
      * @param {Number [int]} cellValue 当前行所属模块
      */
-    formatModuleName(row, column, cellValue) {
+    formatModuleName (row, column, cellValue) {
       const typeEnum = {
         article: '文章模块',
         bangumi: '追番模块',
@@ -93,13 +101,13 @@ export default {
       }
       return typeEnum[cellValue] || ''
     },
-    handleRestore(row) {
+    handleRestore (row) {
       const { id, type } = row
       this.$confirm('确定要还原该内容?', '提示', {
         type: 'success'
-      }).then(async() => {
+      }).then(async () => {
         this.$set(row, 'restoreLoading', true)
-        await this.$api.list.RestoreRecycleList([{ id, type }]).then(response => {
+        await this.$api.list.RestoreRecycleList([{ id, type }]).then((response) => {
           this.$message({
             type: 'success',
             message: '还原成功'
@@ -120,14 +128,14 @@ export default {
      * @param {Number} listCount 删除数目
      * @param {Object} row 当前行
      */
-    deleteMultiple(listCount, row) {
+    deleteMultiple (listCount, row) {
       const lists = row
         ? [{ id: row.id, type: row.type }]
-        : this.multipleSelection.map(item => {
+        : this.multipleSelection.map((item) => {
           const { id, type } = item
           return { id, type }
         })
-      return this.$api.list.DeleteRecyleList(lists).then(res => {
+      return this.$api.list.DeleteRecyleList(lists).then((res) => {
         this.$message({
           type: 'success',
           message: '删除成功'
@@ -141,7 +149,7 @@ export default {
         })
       })
     },
-    handleRestoreSelection() {
+    handleRestoreSelection () {
       const listCount = this.multipleSelection.length
       if (!listCount) {
         return this.$message('请先选择数据，再进行操作')
@@ -149,13 +157,13 @@ export default {
 
       this.$confirm(`此操作将还原这${listCount}条内容, 是否继续?`, '提示', {
         type: 'warning'
-      }).then(async() => {
-        const list = this.multipleSelection.map(item => {
+      }).then(async () => {
+        const list = this.multipleSelection.map((item) => {
           const { id, type } = item
           return { id, type }
         })
         this.restoreLoading = true
-        await this.$api.list.RestoreRecycleList(list).then(response => {
+        await this.$api.list.RestoreRecycleList(list).then((response) => {
           this.$message({
             type: 'success',
             message: '还原成功'

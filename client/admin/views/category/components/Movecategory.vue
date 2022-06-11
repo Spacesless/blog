@@ -23,8 +23,12 @@
     </el-form>
 
     <div slot="footer" class="dialog-footer">
-      <el-button @click="handleCancel">取消</el-button>
-      <el-button type="primary" :loading="dialogLoading" @click="handleConfirm">确认</el-button>
+      <el-button @click="handleCancel">
+        取消
+      </el-button>
+      <el-button type="primary" :loading="dialogLoading" @click="handleConfirm">
+        确认
+      </el-button>
     </div>
   </el-dialog>
 </template>
@@ -34,6 +38,7 @@ import { dialogForm } from '@/mixins'
 import { getCategoryByType } from '@/utils'
 
 export default {
+  name: 'MoveCategory',
   mixins: [dialogForm],
   props: {
     currentRow: {
@@ -45,7 +50,7 @@ export default {
       default: () => []
     }
   },
-  data() {
+  data () {
     return {
       formData: {},
       rules: {
@@ -54,21 +59,21 @@ export default {
     }
   },
   computed: {
-    categoryOptions() {
+    categoryOptions () {
       const { type } = this.currentRow
       return getCategoryByType(this.categories, type)
     }
   },
   methods: {
-    handleConfirm() {
-      this.$refs.form.validate(async(valid) => {
-        if (!valid) return
+    handleConfirm () {
+      this.$refs.form.validate(async (valid) => {
+        if (!valid) { return }
         const postData = {
           id: this.currentRow.id,
           parent_id: this.formData.category
         }
         this.dialogLoading = true
-        await this.$api.content.UpdateContent('category', postData).then(res => {
+        await this.$api.content.UpdateContent('category', postData).then((res) => {
           this.$message({
             type: 'success',
             message: '移动栏目成功'

@@ -8,7 +8,6 @@
     @close="handleCancel"
     @closed="onClosed"
   >
-
     <el-form ref="form" v-loading="fetchLoading" :model="formData" :rules="rules" label-width="80px">
       <el-form-item label="网站标题" prop="name">
         <el-input v-model="formData.name" />
@@ -34,8 +33,12 @@
     </el-form>
 
     <div slot="footer" class="dialog-footer">
-      <el-button @click="handleCancel">取消</el-button>
-      <el-button type="primary" :loading="dialogLoading" @click="handleConfirm">确定</el-button>
+      <el-button @click="handleCancel">
+        取消
+      </el-button>
+      <el-button type="primary" :loading="dialogLoading" @click="handleConfirm">
+        确定
+      </el-button>
     </div>
   </el-dialog>
 </template>
@@ -51,7 +54,7 @@ export default {
       default: 0
     }
   },
-  data() {
+  data () {
     return {
       formData: {},
       fetchLoading: false,
@@ -66,27 +69,27 @@ export default {
     }
   },
   methods: {
-    onOpen() {
+    onOpen () {
       this.formData = {
         is_show: 1
       }
       this.dialogTitle = this.currentId ? '编辑友链' : '添加友链'
       this.currentId && this.fetchData()
     },
-    async fetchData() {
+    async fetchData () {
       this.fetchLoading = true
-      await this.$api.content.GetContent('link', this.currentId).then(res => {
+      await this.$api.content.GetContent('link', this.currentId).then((res) => {
         this.formData = res.data
       }).catch(() => {})
       this.fetchLoading = false
     },
-    handleConfirm() {
-      this.$refs.form.validate(async(valid) => {
-        if (!valid) return
+    handleConfirm () {
+      this.$refs.form.validate(async (valid) => {
+        if (!valid) { return }
         this.dialogLoading = true
 
         const SubmitHandler = this.currentId ? this.$api.content.UpdateContent : this.$api.content.CreateContent
-        await SubmitHandler('link', this.formData).then(res => {
+        await SubmitHandler('link', this.formData).then((res) => {
           this.$message({
             type: 'success',
             message: this.isEdit ? '更新成功' : '添加成功'

@@ -1,159 +1,175 @@
 // 公共类名
-.silent{
+.silent {
   filter: grayscale(100%);
-  filter: progid:DXImageTransform.Microsoft.BasicImage(grayscale=1);
   filter: gray;
 }
 
 .container {
+  box-sizing: border-box;
   width: 100%;
-  padding-left: $grid-space - 4px;
   padding-right: $grid-space - 4px;
+  padding-left: $grid-space - 4px;
   margin-right: auto;
   margin-left: auto;
-  box-sizing: border-box;
+
   @media (min-width: 576px) {
     max-width: 540px;
   }
+
   @media (min-width: 768px) {
     max-width: 720px;
   }
+
   @media (min-width: 992px) {
     max-width: 960px;
-    padding-left: $grid-space;
     padding-right: $grid-space;
+    padding-left: $grid-space;
   }
+
   @media (min-width: 1200px) {
     max-width: 1140px;
   }
+
   @media (min-width: 1600px) {
     max-width: 1366px;
   }
+
   @media (min-width: 1920px) {
     max-width: 1440px;
   }
+
   @media (min-width: 2560px) {
     max-width: 1600px;
   }
 }
 
-.hitokoto{
+.hitokoto {
   min-height: 24px;
   margin-bottom: 30px;
   line-height: 24px;
-  &__from{
+
+  &__from {
     color: var(--color-secondary);
   }
 }
 
 // image
-.img-fluid{
+.img-fluid {
   display: block;
-  max-width:100%;
-  height:auto;
+  max-width: 100%;
+  height: auto;
   margin: 0 auto;
 }
-.img-full{
+
+.img-full {
   display: block;
   width: 100%;
-  height:auto;
+  height: auto;
 }
 
 // tag
-.tl{
-  &-tag{
+.tl {
+  &-tag {
     display: inline-block;
     padding: 0 10px;
     margin-top: 5px;
     margin-right: 5px;
-    color: var(--color-heading);
     font-size: 12px;
     line-height: 20px;
-    border-radius: 10px;
+    color: var(--color-heading);
     cursor: pointer;
+    border-radius: 10px;
   }
-  &__title{
+
+  &__title {
     position: relative;
     padding: 32px 0;
-    color: var(--color-heading);
     font-size: 32px;
     font-weight: normal;
     line-height: 1.5;
-    &:after{
-      content: '';
+    color: var(--color-heading);
+
+    &::after {
       position: absolute;
-      left: 0;
       bottom: 24px;
+      left: 0;
       width: 96px;
       height: 4px;
+      content: '';
       background: linear-gradient(130deg, rgb(36, 198, 220), var(--color-primary) 60%, rgb(84, 51, 255));
       border-radius: 96px;
     }
   }
+
   &-card {
     background: var(--bg-normal);
-    box-shadow: $shadow-3-down;
     border-radius: $border-radius;
+    box-shadow: $shadow-3-down;
     transition: all .3s;
-    &__title{
+
+    &__title {
       margin-bottom: $grid-space;
-      color: var(--color-heading);
       font-size: 24px;
       font-weight: normal;
       line-height: 1em;
-      &:before{
-        content: '\e87a';
+      color: var(--color-heading);
+
+      &::before {
         display: inline-block;
         margin-right: 6px;
-        color: #fc9fa7;
+        font-family: iconfont, sans-serif;
         font-size: 28px;
-        font-family: 'iconfont', sans-serif;
+        color: #FC9FA7;
+        content: '\e87a';
         animation: rotate 6s linear infinite;
       }
     }
   }
 }
+
 @media (max-width: 576px) {
-  .tl__title{
+  .tl__title {
     padding: 24px 0;
-    &:after{
+
+    &::after {
       bottom: 12px;
     }
   }
 }
 
 $tagColor:(
-  "red": #ff4d4f,
-  "geekblue": #597ef7,
-  "orange": #ffa940,
-  "cyan": #36cfc9,
-  "green": #73d13d,
-  "blue": #409eff,
-  "purple": #9254de,
-  "magenta": #f759ab
+  'red': #FF4D4F,
+  'geekblue': #597EF7,
+  'orange': #FFA940,
+  'cyan': #36CFC9,
+  'green': #73D13D,
+  'blue': #409EFF,
+  'purple': #9254DE,
+  'magenta': #F759AB
 );
-@each $tag, $color in $tagColor{
-  .tl-tag--#{$tag}{
+
+@each $tag, $color in $tagColor {
+  .tl-tag--#{$tag} {
     color: $color;
     background-color: rgba($color: $color, $alpha: .15);
   }
 }
 
 // 断点显示
-@media only screen and (min-width:992px){
-  .hidden-md-and-up{
-    display:none!important;
+@media only screen and (min-width: 992px) {
+  .hidden-md-and-up {
+    display: none !important;
   }
 }
 
-@media only screen and (max-width:991px){
-  .hidden-sm-and-down{
-    display:none!important;
+@media only screen and (max-width: 991px) {
+  .hidden-sm-and-down {
+    display: none !important;
   }
 }
 
-@media only screen and (max-width:1199px){
-  .hidden-md-and-down{
-    display:none!important;
+@media only screen and (max-width: 1199px) {
+  .hidden-md-and-down {
+    display: none !important;
   }
 }

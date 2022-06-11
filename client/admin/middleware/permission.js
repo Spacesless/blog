@@ -4,7 +4,7 @@ import getPageTitle from '@/utils/get-page-title'
 
 const whiteList = ['/login'] // no redirect whitelist
 
-export default async function({ redirect, store, route }) {
+export default async function ({ redirect, store, route }) {
   const { meta, path } = route
   // set page title
   document.title = getPageTitle(meta[meta.length - 1]?.title)
@@ -33,11 +33,9 @@ export default async function({ redirect, store, route }) {
         }
       }
     }
-  } else {
-    /* has no token*/
-    if (!whiteList.includes(path)) {
-      // other pages that do not have permission to access are redirected to the login page.
-      redirect(`/login?redirect=${path}`)
-    }
+  } else if (!whiteList.includes(path)) {
+    /* has no token */
+    // other pages that do not have permission to access are redirected to the login page.
+    redirect(`/login?redirect=${path}`)
   }
 }

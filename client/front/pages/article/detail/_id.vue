@@ -5,14 +5,18 @@
         <img class="img-full" :src="data.imgurl" :alt="data.title">
       </el-col>
       <el-col class="blog-summary-text" :sm="24" :md="12">
-        <h1 class="blog-summary__title">{{ data.title }}</h1>
+        <h1 class="blog-summary__title">
+          {{ data.title }}
+        </h1>
         <div class="blog-summary__admin">
           <span>{{ data.updatetime | parseTime('{y}年{m}月{d}日') }}</span>
           <span>阅读：{{ data.hits }}</span>
           <span v-if="data.word_count">字数：{{ data.word_count }}</span>
           <span v-if="readDuration">阅读时长：{{ readDuration }}</span>
         </div>
-        <p class="blog-summary__desc">{{ data.description }}</p>
+        <p class="blog-summary__desc">
+          {{ data.description }}
+        </p>
       </el-col>
     </el-row>
 
@@ -48,7 +52,7 @@ import { pageMeta } from '@/mixins'
 import { hasClass, addClass, removeClass } from '@/utils'
 
 export default {
-  name: 'BlogConent',
+  name: 'ArticleDetail',
   components: {
     Catalog,
     Comment,
@@ -56,27 +60,27 @@ export default {
     Share
   },
   mixins: [pageMeta],
-  async asyncData({ params, $axios }) {
+  async asyncData ({ params, $axios }) {
     const id = params.id
     const data = await $axios.$get('/article/detail', {
       params: { id }
     })
     return { id, data }
   },
-  data() {
+  data () {
     return {
       pageType: 'detail',
       isLoaded: false
     }
   },
   computed: {
-    readDuration() {
+    readDuration () {
       const averageVelocity = 8.3
       const total = (this.data.word_count || 0) / averageVelocity
       return total ? Math.ceil(total / 60) + ' 分钟' : ''
     }
   },
-  mounted() {
+  mounted () {
     this.initPrism()
 
     this.$nextTick(() => {
@@ -88,11 +92,11 @@ export default {
       this.handleRecordAccess()
     }, 5000)
   },
-  beforeDestroy() {
+  beforeDestroy () {
     this.timer && clearInterval(this.timer)
   },
   methods: {
-    initPrism() {
+    initPrism () {
       this.registerNewline()
       this.registerCopy()
       this.registerFullScreen()
@@ -100,7 +104,7 @@ export default {
       Prism.highlightAll()
     },
     // 注册换行功能
-    registerNewline() {
+    registerNewline () {
       Prism.plugins.toolbar.registerButton('newline', (env) => {
         const buttonElement = document.createElement('button')
         const iconElement = document.createElement('i')
@@ -129,7 +133,7 @@ export default {
       })
     },
     // 注册复制功能
-    registerCopy() {
+    registerCopy () {
       Prism.plugins.toolbar.registerButton('copy-to-clipboard', (env) => {
         const buttonElement = document.createElement('button')
         const iconElement = document.createElement('i')
@@ -142,7 +146,7 @@ export default {
         buttonElement.appendChild(tooltipElement)
 
         const clipboard = new ClipboardJS(buttonElement, {
-          'text': () => {
+          text: () => {
             return env.code
           }
         })
@@ -170,7 +174,7 @@ export default {
       })
     },
     // 注册全屏功能
-    registerFullScreen() {
+    registerFullScreen () {
       Prism.plugins.toolbar.registerButton('full-screen', (env) => {
         const buttonElement = document.createElement('button')
         const iconElement = document.createElement('i')
@@ -203,7 +207,7 @@ export default {
       })
     },
     // 记录访问量
-    handleRecordAccess() {
+    handleRecordAccess () {
       this.$axios.$get('/article/access', {
         params: { id: this.id }
       })
@@ -213,72 +217,83 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.blog{
-  &-summary{
-    overflow: hidden;
+.blog {
+  &-summary {
     position: relative;
     margin-bottom: $grid-space;
-    &-cover{
+    overflow: hidden;
+
+    &-cover {
       position: relative;
-      &:after{
-        pointer-events: none;
-        content: "";
+
+      &::after {
         position: absolute;
-        left: 50%;
         top: 0;
-        height: 100%;
+        left: 50%;
         width: 50%;
+        height: 100%;
+        pointer-events: none;
+        content: '';
         background: var(--gradient-cover);
+
         @media (max-width: 992px) {
           display: none;
         }
       }
     }
-    &-text{
+
+    &-text {
       padding: $grid-space;
+
       @media (max-width: 576px) {
         padding: 16px;
       }
     }
-    &__title{
-      color: var(--color-heading);
+
+    &__title {
+      padding: $grid-space 0;
       font-size: 32px;
       font-weight: normal;
       line-height: 1;
-      padding: $grid-space 0;
+      color: var(--color-heading);
     }
-    &__admin{
+
+    &__admin {
       margin-bottom: $grid-space;
       font-size: 15px;
       color: var(--color-secondary);
-      span{
+
+      span {
         margin-right: $grid-space / 2;
       }
     }
-    &__desc{
+
+    &__desc {
       position: relative;
       padding-top: 12px;
       text-indent: 40px;
-      &:before{
-        content: "";
+
+      &::before {
         position: absolute;
-        left: 0;
         top: 0;
+        left: 0;
         z-index: 0;
         width: 36px;
         height: 27px;
-        background-image: url(~@/assets/image/quotee.svg);
+        content: '';
+        background-image: url('~@/assets/image/quotee.svg');
         background-size: cover;
       }
     }
   }
-  &-content{
+
+  &-content {
     margin-bottom: $grid-space;
   }
 }
 </style>
 
 <style lang="scss">
-@import "~@/styles/components/content.scss";
+@import '~@/styles/components/content.scss';
 @import '~@/styles/components/prism.scss';
 </style>

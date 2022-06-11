@@ -58,7 +58,9 @@
           icon="el-icon-position"
           :loading="submitLoading"
           @click="handleSubmit"
-        >提交评论</el-button>
+        >
+          提交评论
+        </el-button>
       </el-col>
     </el-row>
   </el-form>
@@ -86,7 +88,7 @@ export default {
       default: false
     }
   },
-  data() {
+  data () {
     const validateEmail = (rule, value, callback) => {
       if (!this.isAdmin && value === '804093032@qq.com') {
         callback(new Error('请不要拿站长的破邮箱来充数哦'))
@@ -122,10 +124,10 @@ export default {
     }
   },
   computed: {
-    previewHtml() {
+    previewHtml () {
       return this.formatContent()
     },
-    emojiList() {
+    emojiList () {
       return this.$refs.emoji.emojis
     }
   },
@@ -134,7 +136,7 @@ export default {
      * @event 选中表情
      * @param {String} emojis 表情名称
      */
-    onSelectEmojis(emojis) {
+    onSelectEmojis (emojis) {
       const content = this.formData.content || ''
       this.formData.content = `${content.slice(0, this.selectionStart)} :${emojis}: ${content.slice(this.selectionStart)}`
     },
@@ -143,12 +145,12 @@ export default {
      * @param {Event} e
      * @summary 获取输入光标位置
      */
-    onTextareaBlur(e) {
+    onTextareaBlur (e) {
       this.selectionStart = e.target.selectionStart
     },
     // 格式化表情展示
-    formatContent() {
-      return this.formData.content.replace(/:((?!:).)*:/g, emojis => {
+    formatContent () {
+      return this.formData.content.replace(/:((?!:).)*:/g, (emojis) => {
         const [prefix, ...name] = emojis.replace(/:/g, '').split('_')
 
         const findEmojis = this.emojiList.find(item => item.prefix.includes(prefix))
@@ -158,9 +160,9 @@ export default {
         return emojis
       })
     },
-    handleSubmit() {
-      this.$refs.form.validate(async(valid) => {
-        if (!valid) return
+    handleSubmit () {
+      this.$refs.form.validate(async (valid) => {
+        if (!valid) { return }
 
         this.submitLoading = true
         const content = this.formatContent()
@@ -173,42 +175,47 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.reply{
-  &-content{
-    ::v-deep .el-textarea__inner{
+.reply {
+  &-content {
+    ::v-deep .el-textarea__inner {
       padding-right: 66px;
-      font-family: Quicksand,"Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+      font-family: Quicksand, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
     }
   }
-  &-toolbar{
+
+  &-toolbar {
     position: relative;
     height: 32px;
-    ::v-deep &__icon{
+
+    ::v-deep &__icon {
       width: 20px;
       height: 20px;
       margin-right: 5px;
       color: var(--color-text);
-      outline: none;
-      fill: currentColor;
       cursor: pointer;
-      &--active{
+      outline: none;
+      fill: currentcolor;
+
+      &--active {
         color: var(--color-primary);
       }
     }
-    &__submit{
+
+    &__submit {
       position: absolute;
       right: 5px;
     }
   }
-  &-preview{
-    margin-bottom: 18px;
+
+  &-preview {
     padding: 5px 15px;
-    border: 1px solid rgba(#C0C4CC, .6);
-    color: var(--color-text);
+    margin-bottom: 18px;
     font-size: 14px;
     line-height: 1.5;
-    border-radius: 4px;
+    color: var(--color-text);
     white-space: pre-line;
+    border: 1px solid rgba(#C0C4CC, .6);
+    border-radius: 4px;
   }
 }
 </style>

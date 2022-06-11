@@ -26,13 +26,14 @@ import variables from '@/styles/variables.scss'
 import { routes } from '@/router'
 
 export default {
+  name: 'SidebarMenu',
   components: { SidebarItem, Logo },
   computed: {
     ...mapGetters(['sidebar']),
-    routes() {
+    routes () {
       return routes
     },
-    activeMenu() {
+    activeMenu () {
       const route = this.$route
       const { meta, path } = route
       // if set path, the sidebar will highlight the path you set
@@ -41,10 +42,10 @@ export default {
       }
       return path
     },
-    variables() {
+    variables () {
       return variables
     },
-    isCollapse() {
+    isCollapse () {
       return !this.sidebar.opened
     }
   }

@@ -18,7 +18,9 @@
           ]"
           :title="item.innerText"
           @click="scrollIntoView(index)"
-        >{{ item.innerText }}</li>
+        >
+          {{ item.innerText }}
+        </li>
       </el-scrollbar>
     </div>
     <span v-show="!isShowCatalog" class="catalog-wrapper__show" @click="toggleShow">文章目录</span>
@@ -29,7 +31,8 @@
 import { scrollTo } from '#/utils/scroll-to'
 
 export default {
-  data() {
+  name: 'ArticleCatalog',
+  data () {
     return {
       catalogList: [],
       activeIndex: -1,
@@ -37,17 +40,17 @@ export default {
     }
   },
   computed: {
-    content() {
+    content () {
       return this.$parent?.$refs.content || {}
     }
   },
-  mounted() {
+  mounted () {
     this.$nextTick(() => {
       this.initCatelog()
     })
   },
   methods: {
-    initCatelog() {
+    initCatelog () {
       const markupElement = document.getElementById('js-content')
       if (!markupElement) {
         return
@@ -71,10 +74,10 @@ export default {
      * 滚动到对应的dom元素
      * @param {Number} index
      */
-    scrollIntoView(index) {
+    scrollIntoView (index) {
       scrollTo(this.catalogList[index].offsetTop, 500)
     },
-    toggleShow() {
+    toggleShow () {
       this.isShowCatalog = !this.isShowCatalog
     }
   }
@@ -82,77 +85,90 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.catalog{
+.catalog {
   position: sticky;
   top: 0;
   bottom: 16px;
-  width: 200px;
   box-sizing: border-box;
+  width: 200px;
   transition: width .3s;
-  @media (max-width: 1280px){
+
+  @media (max-width: 1280px) {
     position: static;
     width: 100%;
     padding: 0 $grid-space;
   }
-  &-wrapper{
+
+  &-wrapper {
     transition: width .3s;
+
     &--close {
       width: 0;
       padding-top: 16px;
     }
-    &__show{
-      display: inline-block;
+
+    &__show {
       position: sticky;
       top: 16px;
+      display: inline-block;
       width: 12px;
       padding: 4px;
+      font-size: 12px;
+      color: #FFFFFF;
+      cursor: pointer;
+      background: linear-gradient(130deg, rgb(36, 198, 220), var(--color-primary) 60%, rgb(84, 51, 255));
       border-top-right-radius: 6px;
       border-bottom-right-radius: 6px;
-      background: linear-gradient(130deg, rgb(36, 198, 220), var(--color-primary) 60%, rgb(84, 51, 255));
-      color: #fff;
-      font-size: 12px;
-      cursor: pointer;
     }
   }
-  &-header{
+
+  &-header {
     position: relative;
     height: 40px;
     padding: 0 16px;
     margin-bottom: 8px;
-    border-bottom: 1px dashed var(--border-color);
-    color: var(--color-secondary);
     line-height: 40px;
-    @media (max-width: 1280px){
+    color: var(--color-secondary);
+    border-bottom: 1px dashed var(--border-color);
+
+    @media (max-width: 1280px) {
       text-align: left;
       border-bottom: none;
     }
-    &__close{
+
+    &__close {
       position: absolute;
-      right: 12px;
       top: 11px;
+      right: 12px;
       font-size: 18px;
       cursor: pointer;
     }
   }
-  &-scrollbar{
+
+  &-scrollbar {
     max-height: calc(100vh - 48px);
     padding-bottom: 10px;
   }
-  &-item{
+
+  &-item {
     margin: 0 10px;
-    color: var(--color-text);
     font-size: 14px;
     line-height: 30px;
+    color: var(--color-text);
     cursor: pointer;
-    &.H3{
+
+    &.H3 {
       padding-left: 10px;
     }
-    &.H4{
+
+    &.H4 {
       padding-left: 20px;
     }
-    &.H5{
+
+    &.H5 {
       padding-left: 30px;
     }
+
     &--active {
       color: var(--color-primary);
     }

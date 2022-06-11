@@ -1,7 +1,9 @@
 <template>
   <!-- link start -->
   <div class="link">
-    <h1 class="tl__title">友情链接</h1>
+    <h1 class="tl__title">
+      友情链接
+    </h1>
     <div class="hitokoto">
       <span class="hitokoto__title">愿以一朵花的姿态行走世间，看得清繁华却不在心中留下痕迹，花开成景，花落成诗。</span>
     </div>
@@ -23,14 +25,18 @@
       </el-col>
     </el-row>
     <div class="link-tips tl-card">
-      <h2 class="tl-card__title link-tips__title">友链要求</h2>
+      <h2 class="tl-card__title link-tips__title">
+        友链要求
+      </h2>
       <p>1、优先考虑博客类、ACG、国风相关的网站</p>
       <p>2、需有原创内容，内容积极向上，如有广告需适量</p>
       <p>3、不定期检查链接(๑＞ڡ＜)☆，长时间打不开的站会被删掉的，如要恢复请打call</p>
       <p>4、申请前先添加本站为友链的最好不过了，能拉满成功率</p>
       <p>5、ฅ^ω^ฅ 各位大神、二次元小伙伴可大幅降低以上要求，如不嫌弃随时欢迎入驻</p>
       <!--<p>6、如果看到这，请忽略上述要求</p>-->
-      <h2 class="tl-card__title link-tips__title">申请方式</h2>
+      <h2 class="tl-card__title link-tips__title">
+        申请方式
+      </h2>
       <p>可以通过邮件、留言评论等方式申请，格式如下：</p>
       <p>名称：Timeless's博客</p>
       <p>描述：花开成景，花落成诗 <span>可选</span></p>
@@ -47,15 +53,16 @@ import Comment from '#/components/Comment'
 import { pageMeta } from '@/mixins'
 
 export default {
+  name: 'FriendLink',
   components: {
     Comment
   },
   mixins: [pageMeta],
-  async asyncData({ $axios }) {
+  async asyncData ({ $axios }) {
     const linkList = await $axios.$get('/link')
     return { linkList }
   },
-  data() {
+  data () {
     return {
       pageName: '友情链接'
     }
@@ -64,32 +71,36 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.link{
-  color: var(--color-text);
+.link {
   font-size: 15px;
   line-height: 2;
-  &-item{
+  color: var(--color-text);
+
+  &-item {
     display: block;
     padding: 10px;
     margin-bottom: $grid-space;
+    color: var(--color-text);
     background-color: var(--bg-normal);
     border-top: 3px solid var(--color-primary);
-    color: var(--color-text);
     border-radius: 4px;
     box-shadow: $shadow-3-down;
-    transition: all 0.3s;
-    &:hover{
-      transform:translateY(-5px);
+    transition: all .3s;
+
+    &:hover {
+      transform: translateY(-5px);
     }
   }
-  &-logo{
-    overflow: hidden;
+
+  &-logo {
     float: left;
     width: 65px;
     height: 65px;
+    overflow: hidden;
     background-color: var(--bg-normal);
     border-radius: 50%;
-    &__picture{
+
+    &__picture {
       display: block;
       width: 65px;
       height: 65px;
@@ -98,28 +109,34 @@ export default {
       text-align: center;
     }
   }
-  &-info{
-    overflow: hidden;
+
+  &-info {
     padding-left: 10px;
-    &__name{
+    overflow: hidden;
+
+    &__name {
       font-size: 16px;
       line-height: 22px;
       color: var(--color-primary);
     }
-    &__desc{
-      overflow: hidden;
+
+    &__desc {
       height: 42px;
+      overflow: hidden;
       font-size: 13px;
       line-height: 1.6em;
     }
   }
-  &-tips{
+
+  &-tips {
     padding: 20px 15px;
     padding-top: 1px;
     margin-bottom: $grid-space;
-    &__title{
+
+    &__title {
       margin-top: $grid-space;
     }
+
     span {
       margin-left: 15px;
       color: #F56C6C;

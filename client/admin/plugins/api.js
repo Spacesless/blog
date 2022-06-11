@@ -1,8 +1,8 @@
 import apis from '@/api/index'
 
 export default (ctx, inject) => {
-  var apiList = {}
-  for (var i in apis) {
+  const apiList = {}
+  for (const i in apis) {
     apiList[i] = apis[i](ctx.$axios)
   }
 

@@ -20,7 +20,7 @@
             <el-input v-model="formData.keywords" />
           </el-col>
           <el-col :xs="24" :md="12">
-            <span style="margin-left:15px;">多个关键词请用竖线|隔开，建议3到4个关键词。</span>
+            <span style="margin-left: 15px;">多个关键词请用竖线|隔开，建议3到4个关键词。</span>
           </el-col>
         </el-row>
       </el-form-item>
@@ -30,7 +30,7 @@
             <el-input v-model="formData.description" type="textarea" :rows="5" />
           </el-col>
           <el-col :xs="24" :md="12">
-            <span style="margin-left:15px;">网站描述建议80到120个字符。</span>
+            <span style="margin-left: 15px;">网站描述建议80到120个字符。</span>
           </el-col>
         </el-row>
       </el-form-item>
@@ -70,7 +70,9 @@
         </el-row>
       </el-form-item>
       <div class="stick-bottom">
-        <el-button type="primary" icon="el-icon-check" :loading="confirmLoading" @click="handleSubmit">保存</el-button>
+        <el-button type="primary" icon="el-icon-check" :loading="confirmLoading" @click="handleSubmit">
+          保存
+        </el-button>
       </div>
     </el-form>
   </div>
@@ -81,7 +83,7 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'GeneralConfig',
-  data() {
+  data () {
     return {
       formData: {},
       confirmLoading: false
@@ -92,7 +94,7 @@ export default {
   },
   watch: {
     configs: {
-      handler(data) {
+      handler (data) {
         const {
           sitename, keywords, description, icp_beian, police_beian,
           is_silent, live2d_model, live2d_texture
@@ -112,7 +114,7 @@ export default {
     }
   },
   methods: {
-    async handleSubmit() {
+    async handleSubmit () {
       this.confirmLoading = true
       await this.$store.dispatch('config/updateConfigs', this.formData).then(() => {
         this.$message({

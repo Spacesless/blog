@@ -3,7 +3,9 @@
     <transition name="sidebarLogoFade">
       <nuxt-link class="sidebar-logo-link" to="/">
         <img v-if="logo" :src="logo" class="sidebar-logo">
-        <h1 v-if="!collapse" class="sidebar-logo__name">{{ title }}</h1>
+        <h1 v-if="!collapse" class="sidebar-logo__name">
+          {{ title }}
+        </h1>
       </nuxt-link>
     </transition>
   </div>
@@ -20,7 +22,7 @@ export default {
       required: true
     }
   },
-  data() {
+  data () {
     return {
       title: 'Timeless',
       logo
@@ -31,7 +33,7 @@ export default {
 
 <style lang="scss" scoped>
 @font-face {
-  font-family: 'Bega';
+  font-family: Bega;
   src: url('~@/assets/fonts/Bega-Light.ttf');
 }
 
@@ -45,38 +47,41 @@ export default {
 }
 
 .sidebar-logo-container {
-  overflow: hidden;
   position: relative;
   width: 100%;
   padding-top: 15px;
+  overflow: hidden;
   text-align: center;
 
   .sidebar-logo {
     display: inline-block;
     width: 60px;
-    border-radius: 50%;
     vertical-align: middle;
+    border-radius: 50%;
+
     &-link {
-      height: 100%;
       width: 100%;
+      height: 100%;
     }
-    &__name{
-      color: #fff;
+
+    &__name {
       line-height: 1.5;
+      color: #FFFFFF;
+      vertical-align: middle;
       font: {
         size: 30px;
         weight: 100;
         family: 'Bega', sans-serif;
       };
-      vertical-align: middle;
     }
   }
 
   &.collapse {
     padding: 10px 0;
+
     .sidebar-logo {
       width: 36px;
-      margin-right: 0px;
+      margin-right: 0;
     }
   }
 }

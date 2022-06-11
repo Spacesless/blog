@@ -1,5 +1,5 @@
 class Point {
-  constructor(param, canvas) {
+  constructor (param, canvas) {
     // 点原形
     const tempPoint = {
       type: param.type,
@@ -26,8 +26,8 @@ class Point {
     // 初始化旋转属性
     if (param.rota.value !== 0) {
       const tempRota = this.dealRota(param.rota)
-      tempPoint.rota['value'] = tempRota.value
-      tempPoint.rota['speed'] = tempRota.speed
+      tempPoint.rota.value = tempRota.value
+      tempPoint.rota.speed = tempRota.speed
     }
     // 生成初始坐标
     const tempposition = this.createPosition(param.area)
@@ -39,7 +39,7 @@ class Point {
     tempPoint.reInX = tempReIn.x
     tempPoint.reInY = tempReIn.y
 
-    /* 生成离屏缓存*/
+    /* 生成离屏缓存 */
     tempPoint.cacheImage = this.drawPoint(tempPoint.type, tempPoint.size, tempPoint.opc, tempPoint.color, tempPoint.zoom)
     // 离屏缓存会改变size大小,重新获取一次
     tempPoint.size = tempPoint.cacheImage.width
@@ -47,16 +47,16 @@ class Point {
     return tempPoint
   }
 
-  /* 绘制单点离屏缓存图像*/
-  drawPoint(type, size, opc, color, zoom) {
-    var cacheCanvas, cacheCtx
+  /* 绘制单点离屏缓存图像 */
+  drawPoint (type, size, opc, color, zoom) {
+    let cacheCanvas
     // 创建离屏
     cacheCanvas = document.createElement('canvas')
     // 为了兼容ie8,引入了excanvas.js,但是动态创建canvas需要手动实例化
     if (window.G_vmlCanvasManager !== undefined) {
       cacheCanvas = window.G_vmlCanvasManager.initElement(cacheCanvas)
     }
-    cacheCtx = cacheCanvas.getContext('2d')
+    const cacheCtx = cacheCanvas.getContext('2d')
     switch (type.typeName) {
       case 'circle':
       {
@@ -78,15 +78,15 @@ class Point {
       {
         cacheCanvas.width = size
         cacheCanvas.height = size
-        var img = new Image()
+        const img = new Image()
         img.src = type.url
         if (img.complete) {
           cacheCtx.drawImage(img, 0, 0, size, size)
         } else {
-          img.onload = function() {
+          img.onload = function () {
             cacheCtx.drawImage(img, 0, 0, size, size)
           }
-          img.onerror = function() {
+          img.onerror = function () {
             console.log(type.url + '加载失败，请重试')
           }
         }
@@ -103,12 +103,11 @@ class Point {
         cacheCtx.strokeStyle = color
         cacheCtx.lineWidth = type.lineWidth
 
-        var tempVertexData
-        tempVertexData = type.vertexData
+        const tempVertexData = type.vertexData
         cacheCtx.scale(zoom, zoom)
         cacheCtx.beginPath()
         cacheCtx.moveTo(tempVertexData[0][0], tempVertexData[0][1])
-        for (var j = tempVertexData.length, i = 1; i < j; ++i) {
+        for (let j = tempVertexData.length, i = 1; i < j; ++i) {
           cacheCtx.lineTo(tempVertexData[i][0], tempVertexData[i][1])
         }
         cacheCtx.lineTo(tempVertexData[0][0], tempVertexData[0][1])
@@ -121,18 +120,18 @@ class Point {
     return cacheCanvas
   }
 
-  /* 计算重新进入画布的位置*/
-  reIn(canvas, way, angle, initX, initY, size, speed) {
-    var rX, rY, tempX, tempY, radian, opAngle
+  /* 计算重新进入画布的位置 */
+  reIn (canvas, way, angle, initX, initY, size, speed) {
+    let rX, rY, tempX, tempY, radian, opAngle
     switch (way) {
-      /* 根据角度去找点移出屏幕之后,重新进入屏幕的点.*/
+      /* 根据角度去找点移出屏幕之后,重新进入屏幕的点. */
       case 'reverseDirection':
       { // 找到相反的方向
         opAngle = angle - 180
         // 相反方向对应的弧度
         radian = opAngle / 180 * Math.PI
         // 根据相反的方向弧度去计算重新进入屏幕时的坐标
-        for (var j = 1; j <= canvas.width; j += speed) {
+        for (let j = 1; j <= canvas.width; j += speed) {
           tempX = initX + Math.cos(radian) * j
           tempY = initY + Math.sin(radian) * j
           if (angle > 270 && angle <= 360) {
@@ -153,12 +152,10 @@ class Point {
               tempY -= size
               break
             }
-          } else {
-            if (tempX <= 0 || tempY <= 0) {
-              tempX -= size
-              tempY -= size
-              break
-            }
+          } else if (tempX <= 0 || tempY <= 0) {
+            tempX -= size
+            tempY -= size
+            break
           }
         }
         rX = tempX
@@ -178,41 +175,40 @@ class Point {
     }
   }
 
-  /* 随机生成初始点*/
-  createPosition(area) {
-    var x, y
-    x = Math.random() * (area.rightBottom[0] - area.leftTop[0]) + area.leftTop[0] >> 0
-    y = Math.random() * (area.rightBottom[1] - area.leftTop[1]) + area.leftTop[1] >> 0
+  /* 随机生成初始点 */
+  createPosition (area) {
+    const x = Math.random() * (area.rightBottom[0] - area.leftTop[0]) + area.leftTop[0] >> 0
+    const y = Math.random() * (area.rightBottom[1] - area.leftTop[1]) + area.leftTop[1] >> 0
     return {
-      x: x,
-      y: y
+      x,
+      y
     }
   }
 
-  /* 处理旋转信息*/
-  dealRota(rota) {
-    var value, speed
+  /* 处理旋转信息 */
+  dealRota (rota) {
+    let value, speed
     if (rota.floatValue) { value = Math.random() * rota.floatValue - rota.floatValue / 2 + rota.value }
     if (rota.floatSpeed) { speed = Math.random() * rota.floatSpeed - rota.floatSpeed / 2 + rota.speed }
     return {
-      'value': value,
-      'speed': speed
+      value,
+      speed
     }
   }
 
-  /* 初始化size*/
-  dealSize(tpye, size) {
-    var tempSize
+  /* 初始化size */
+  dealSize (tpye, size) {
+    let tempSize
     switch (tpye.typeName) {
       case 'shape':
       {
-        var temp, maxX, maxY
+        let maxX, maxY
 
-        temp = tpye.vertexData
+        const temp = tpye.vertexData
         maxX = temp[0][0]
         maxY = temp[0][1]
 
-        for (var i = temp.length - 1; i >= 0; --i) {
+        for (let i = temp.length - 1; i >= 0; --i) {
           // 找出最大X
           if (temp[i][0] > maxX) {
             maxX = temp[i][0]
@@ -240,20 +236,20 @@ class Point {
   }
 }
 
-var deal_mouse = function(event, width, height) {
+const dealMouse = function (event, width, height) {
   event = event || window.event
   // 阻止其他相同事件,IE10以下不支持则不阻止
   event.preventDefault ? event.preventDefault() : (event.returnValue = false)
   // 获取鼠标垫,兼容IE10以下不支持pageX/Y
-  var touches = event.touches ? event.touches[0] : event
-  var x = (touches.pageX) ? touches.pageX : event.clientX + (document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft)
-  var y = (touches.pageY) ? touches.pageY : event.clientY + (document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop)
+  const touches = event.touches ? event.touches[0] : event
+  const x = (touches.pageX) ? touches.pageX : event.clientX + (document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft)
+  const y = (touches.pageY) ? touches.pageY : event.clientY + (document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop)
 
   // 计算鼠标点与canvas中心点的角度
-  var dx = x - width / 2
-  var dy = y - height / 2
-  var dd = Math.sqrt(dx * dx + dy * dy)
-  var acos = Math.acos(dx / dd)
+  const dx = x - width / 2
+  const dy = y - height / 2
+  const dd = Math.sqrt(dx * dx + dy * dy)
+  const acos = Math.acos(dx / dd)
   // 因为acos接收的参数是-1~1.所以求出来的弧度也是在0-PI,不适合当前0-2PI(360度)的设定.所以需要早度数超过180的时候,也就是dy<0的时候,取180度的对角.
   if (dy >= 0) {
     window.particleCanvasMouseAngle = acos * 180 / Math.PI >> 0
@@ -263,7 +259,7 @@ var deal_mouse = function(event, width, height) {
 }
 
 class ParticleCanvas {
-  constructor(canvasId, paramArray) {
+  constructor (canvasId, paramArray) {
     this.defaultParameter = {
       area: {
         leftTop: [0, 0],
@@ -305,7 +301,7 @@ class ParticleCanvas {
       flowAngle: 'off' // on
     }
     /** *组件构造函数***/
-    /* 获取canvas画布*/
+    /* 获取canvas画布 */
     this.canvasE = document.getElementById(canvasId)
     this.canvasE.width = this.canvasE.clientWidth
     this.canvasE.height = this.canvasE.clientHeight
@@ -314,14 +310,13 @@ class ParticleCanvas {
     this.canvasWidth = this.canvasE.clientWidth
     this.canvasHeight = this.canvasE.clientHeight
 
-    /* 格式化参数*/
+    /* 格式化参数 */
     if (paramArray.length !== 0) { // 获取列表参数
-      var temp
       // 获取canvas的id
       this.canvasId = canvasId
       // 获取定义的点数组参数
-      temp = []
-      for (var i = 0, j = paramArray.length; i < j; ++i) {
+      const temp = []
+      for (let i = 0, j = paramArray.length; i < j; ++i) {
         temp.push(paramArray[i])
       }
       // 把传入的点相关参数和默认参数合并到最终使用的"使用参数"
@@ -331,12 +326,12 @@ class ParticleCanvas {
       return
     }
 
-    /* 生成点数组*/
+    /* 生成点数组 */
     this.pointGroup = this.createpointGroup()
 
     // 获取开启了鼠标响应的点数组下标
     this.mouseArrayIndex = this.onMouse()
-    /* 绘制*/
+    /* 绘制 */
     if (this.pointGroup.length > 0) {
       // 通知绘制函数绘制
       this.draw(this)
@@ -345,15 +340,15 @@ class ParticleCanvas {
     }
   }
 
-  /* 格式化参数*/
-  formatParameter(data) {
-    var temp, tempUseParameter
-    tempUseParameter = []
+  /* 格式化参数 */
+  formatParameter (data) {
+    let temp
+    const tempUseParameter = []
     data = data || {}
     // 把参数合并,没有填的参数使用默认参数
-    for (var index in data) {
+    for (const index in data) {
       temp = {}
-      for (var key in this.defaultParameter) {
+      for (const key in this.defaultParameter) {
         temp[key] = (data[index][key]) ? data[index][key] : this.defaultParameter[key]
       }
       tempUseParameter.push(temp)
@@ -361,15 +356,15 @@ class ParticleCanvas {
     return tempUseParameter
   }
 
-  /* 创建点数组*/
-  createpointGroup() {
-    var temp, tempArray, tempPoints
-    tempArray = [] // 全部点数组的集合
-    for (var index in this.useParameter) {
+  /* 创建点数组 */
+  createpointGroup () {
+    let temp, tempPoints
+    const tempArray = [] // 全部点数组的集合
+    for (const index in this.useParameter) {
       tempPoints = [] // 某一组的点集合
       temp = this.useParameter[index]
       // 根据这一组对应的number生成点
-      for (var i = temp.number; i > 0; --i) {
+      for (let i = temp.number; i > 0; --i) {
         tempPoints.push(new Point(temp, this.canvasE))
       }
       tempArray.push(tempPoints)
@@ -377,12 +372,12 @@ class ParticleCanvas {
     return tempArray
   }
 
-  /* 更新图像点数据*/
-  update() {
-    var tempArray, tempPoint
+  /* 更新图像点数据 */
+  update () {
+    let tempArray, tempPoint
     if (this.mouseArrayIndex !== null) {
       for (let i = this.mouseArrayIndex.length - 1; i >= 0; --i) {
-        var tempPointGroup = this.pointGroup[this.mouseArrayIndex[i]]
+        const tempPointGroup = this.pointGroup[this.mouseArrayIndex[i]]
         for (let j = tempPointGroup.length - 1; j >= 0; --j) {
           if (window.particleCanvasMouseAngle !== undefined) {
             tempPointGroup[j].mouseAngle = window.particleCanvasMouseAngle
@@ -390,7 +385,7 @@ class ParticleCanvas {
         }
       }
     }
-    for (var index in this.pointGroup) {
+    for (const index in this.pointGroup) {
       tempArray = this.pointGroup[index]
       for (let i = tempArray.length - 1; i >= 0; --i) {
         tempPoint = tempArray[i]
@@ -415,16 +410,16 @@ class ParticleCanvas {
     }
   }
 
-  /* 绘制函数*/
-  draw(data) {
+  /* 绘制函数 */
+  draw (data) {
     // 这里把原对象作为data传递进来,解决requestAnimationFrame执行函数时,this指向了window
-    var temp, tempArray, tempSize
+    let temp, tempArray, tempSize
     // 清理画布
     this.canvasE.width = this.canvasWidth
     // 循环绘制
-    for (var index in this.pointGroup) {
+    for (const index in this.pointGroup) {
       tempArray = this.pointGroup[index]
-      for (var i = tempArray.length - 1; i >= 0; --i) {
+      for (let i = tempArray.length - 1; i >= 0; --i) {
         temp = tempArray[i]
         // 如果开启了鼠标响应,把鼠标的角度传递给现在的角度
         if (temp.mouseAngle !== null) {
@@ -462,14 +457,14 @@ class ParticleCanvas {
     this.stopAni = requestAnimationFrame(this.draw.bind(this))
   }
 
-  stopDraw() {
+  stopDraw () {
     window.cancelAnimationFrame(this.stopAni)
     this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight)
   }
 
-  onMouse() {
-    var temp = [] // 开启角度移动的组
-    for (var i = this.useParameter.length - 1; i >= 0; --i) {
+  onMouse () {
+    const temp = [] // 开启角度移动的组
+    for (let i = this.useParameter.length - 1; i >= 0; --i) {
       if (this.useParameter[i].respondMouse === 'on') {
         temp.push(i)
       }
@@ -478,8 +473,8 @@ class ParticleCanvas {
     if (temp.length === 0) {
       return null
     } else { // 如果有,添加鼠标移动事件
-      document.getElementById(this.canvasId).onmousemove = function() {
-        deal_mouse(event, 1000, 600)
+      document.getElementById(this.canvasId).onmousemove = function () {
+        dealMouse(event, 1000, 600)
       }
       return temp
     }

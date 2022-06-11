@@ -32,6 +32,7 @@ import Live2d from './components/Live2d'
 import ResizeMixin from './mixin/ResizeHandler'
 
 export default {
+  name: 'DefaultLayout',
   components: {
     LayoutHeader,
     Sidebar,
@@ -41,14 +42,14 @@ export default {
     Live2d
   },
   mixins: [ResizeMixin],
-  data() {
+  data () {
     return {
       isOpen: true
     }
   },
   computed: {
     ...mapGetters(['sidebar', 'device', 'configs', 'particleActive']),
-    classObj() {
+    classObj () {
       return {
         hideAside: !this.sidebar.opened,
         openAside: this.sidebar.opened,
@@ -59,7 +60,7 @@ export default {
   },
   watch: {
     '$route.name': {
-      async handler(name) {
+      async handler (name) {
         if (process.client) {
           await this.$nextTick()
           if (name === 'index' && +this.configs.is_silent) {
@@ -73,7 +74,7 @@ export default {
     }
   },
   methods: {
-    handleClickOutside() {
+    handleClickOutside () {
       this.$store.dispatch('tools/closeSideBar', { withoutAnimation: false })
     }
   }

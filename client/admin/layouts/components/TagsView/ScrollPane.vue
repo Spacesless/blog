@@ -9,32 +9,32 @@ const tagAndTagSpacing = 4 // tagAndTagSpacing
 
 export default {
   name: 'ScrollPane',
-  data() {
+  data () {
     return {
       left: 0
     }
   },
   computed: {
-    scrollWrapper() {
+    scrollWrapper () {
       return this.$refs.scrollContainer.$refs.wrap
     }
   },
-  mounted() {
+  mounted () {
     this.scrollWrapper.addEventListener('scroll', this.emitScroll, true)
   },
-  beforeDestroy() {
+  beforeDestroy () {
     this.scrollWrapper.removeEventListener('scroll', this.emitScroll)
   },
   methods: {
-    handleScroll(e) {
+    handleScroll (e) {
       const eventDelta = e.wheelDelta || -e.deltaY * 40
       const $scrollWrapper = this.scrollWrapper
       $scrollWrapper.scrollLeft = $scrollWrapper.scrollLeft + eventDelta / 4
     },
-    emitScroll() {
+    emitScroll () {
       this.$emit('scroll')
     },
-    moveToTarget(currentTag) {
+    moveToTarget (currentTag) {
       const $container = this.$refs.scrollContainer.$el
       const $containerWidth = $container.offsetWidth
       const $scrollWrapper = this.scrollWrapper
@@ -72,17 +72,19 @@ export default {
 
 <style lang="scss" scoped>
 .scroll-container {
-  overflow: hidden;
   position: absolute;
-  left: 17px;
   right: 17px;
+  left: 17px;
   height: 40px;
+  overflow: hidden;
   line-height: 40px;
   white-space: nowrap;
+
   ::v-deep {
     .el-scrollbar__bar {
-      bottom: 0px;
+      bottom: 0;
     }
+
     .el-scrollbar__wrap {
       height: 56px;
     }

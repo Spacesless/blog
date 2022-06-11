@@ -1,13 +1,17 @@
 <template>
   <div v-loading="fetchLoading" class="comment tl-card">
-    <h2 class="comment-title tl-card__title">已有<span class="comment-title__count">{{ total }}</span>条回应</h2>
+    <h2 class="comment-title tl-card__title">
+      已有<span class="comment-title__count">{{ total }}</span>条回应
+    </h2>
     <comment-reply
       v-if="!replyData.id"
       :form-data.sync="formData"
       :submit-comment="submitComment"
     />
     <div v-if="total === 0" class="comment-none">
-      <p class="comment-none__tips">还没有评论，快来抢第一吧</p>
+      <p class="comment-none__tips">
+        还没有评论，快来抢第一吧
+      </p>
       <img class="comment-none__img" src="@/assets/image/no-data.svg" alt="">
     </div>
     <div v-else class="comment-list">
@@ -28,13 +32,12 @@
       />
     </div>
   </div>
-
 </template>
 
 <script>
-import Pagination from '#/components/Pagination/index'
 import CommentItem from './CommentItem'
 import CommentReply from './CommentReply'
+import Pagination from '#/components/Pagination/index'
 import { getLocalStorage, setLocalStorage, convertToTree } from '#/utils'
 
 export default {
@@ -49,7 +52,7 @@ export default {
       default: ''
     }
   },
-  data() {
+  data () {
     return {
       formData: {},
       replyData: {
@@ -64,7 +67,7 @@ export default {
       commentList: []
     }
   },
-  mounted() {
+  mounted () {
     this.storageInfo = getLocalStorage('comment')
     this.formData = {
       ...this.storageInfo,
@@ -72,7 +75,7 @@ export default {
     }
     this.fetchList()
   },
-  beforeDestroy() {
+  beforeDestroy () {
     delete this.formData.content
     if (JSON.stringify(this.formData) !== JSON.stringify(this.storageInfo)) {
       setLocalStorage('comment', this.formData)
@@ -80,12 +83,12 @@ export default {
   },
   methods: {
     // 获取评论列表
-    async fetchList() {
+    async fetchList () {
       this.listQuery.topic_id = this.topicId
       this.fetchLoading = true
       this.$axios.$get('/comment', {
         params: this.listQuery
-      }).then(res => {
+      }).then((res) => {
         const { total, data } = res
         this.total = total
         this.commentList = convertToTree(data)
@@ -96,7 +99,7 @@ export default {
      * 提交评论
      * @param {String} content 评论信息
      */
-    submitComment(content) {
+    submitComment (content) {
       const { id, topic_id, parent_id, name, type } = this.replyData
       const postData = {
         ...this.formData,
@@ -108,7 +111,7 @@ export default {
         topic_title: document.title,
         content
       }
-      return this.$axios.$post('/comment/post', postData).then(res => {
+      return this.$axios.$post('/comment/post', postData).then((res) => {
         this.$notify({
           title: '评论成功',
           message: '收到收到over',
@@ -118,7 +121,7 @@ export default {
         this.formData.content = ''
         this.replyData.id = 0
         this.fetchList()
-      }).catch(error => {
+      }).catch((error) => {
         this.$notify.error({
           title: '评论失败',
           message: error,
@@ -131,29 +134,34 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.comment{
+.comment {
   padding: $grid-space;
-  &-title{
-    &__count{
+
+  &-title {
+    &__count {
       margin: 0 6px;
       font-size: 16px;
     }
   }
-  &-list{
+
+  &-list {
     padding: $grid-space 0;
   }
-  &-none{
-    &__img{
+
+  &-none {
+    &__img {
       display: block;
       width: 300px;
       margin: 0 auto;
     }
-    &__tips{
+
+    &__tips {
       color: var(--color-secondary);
       text-align: center;
     }
   }
-  ::v-deep .emojis{
+
+  ::v-deep .emojis {
     width: 32px;
     height: 32px;
     vertical-align: middle;

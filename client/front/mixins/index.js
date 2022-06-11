@@ -2,7 +2,7 @@ import { mapGetters } from 'vuex'
 
 // 设置页面Meta
 export const pageMeta = {
-  data() {
+  data () {
     return {
       pageType: 'page',
       pageName: ''
@@ -10,7 +10,7 @@ export const pageMeta = {
   },
   computed: {
     ...mapGetters(['categories', 'configs']),
-    findCategory() {
+    findCategory () {
       const { path, params } = this.$route
       let result
       switch (this.pageType) {
@@ -34,7 +34,7 @@ export const pageMeta = {
      * 设置页面Meta属性
      * @returns {title: '页面标题', keyword: '关键字', description: '描述'}
      */
-    meta() {
+    meta () {
       const { sitename, keywords, description } = this.configs
       const { name: title, keywords: cateKeywords, description: cateDescription } = this.findCategory
       if (this.pageType === 'detail') {
@@ -54,7 +54,7 @@ export const pageMeta = {
       }
     }
   },
-  head() {
+  head () {
     return {
       title: this.meta.title,
       meta: [
@@ -63,7 +63,7 @@ export const pageMeta = {
       ]
     }
   },
-  mounted() {
+  mounted () {
     if (this.pageType === 'detail') {
       this.setActiveMenu()
     }
@@ -72,7 +72,7 @@ export const pageMeta = {
     /**
      * 详情页设置侧边菜单激活状态
      */
-    setActiveMenu() {
+    setActiveMenu () {
       const { id, type } = this.findCategory
       const activeMenu = id ? `/${type}/${id}` : ''
       this.$store.commit('SET_ACTIVE_MENU', activeMenu)
@@ -82,7 +82,7 @@ export const pageMeta = {
 
 // 列表页，分页、查询
 export const listPage = {
-  data() {
+  data () {
     return {
       total: 0,
       listPage: {
@@ -98,12 +98,12 @@ export const listPage = {
      * 列表分页切换
      * @param {Object} { page: 当前页, limit: 每页个数 }
      */
-    changeListPage({ page }) {
+    changeListPage ({ page }) {
       const { name, params, query } = this.$route
       const [id] = params.id ? params.id.split('-') : ['list']
       this.$router.push({ name, params: { id: `${id}-${page}` }, query })
     },
-    handleSearch() {
+    handleSearch () {
       const { name, params } = this.$route
       const [id] = params.id ? params.id.split('-') : ['list']
       const serachParams = this.filterParams(this.filters)
@@ -113,7 +113,7 @@ export const listPage = {
      * 删除筛选标签
      * @param {String} tag 列表标签
      */
-    handleDeleteTag(tag) {
+    handleDeleteTag (tag) {
       this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1)
       this.filters.tags = this.dynamicTags.join()
       this.handleSearch()
@@ -122,8 +122,8 @@ export const listPage = {
      * 添加筛选标签
      * @param {String} tag 列表标签
      */
-    handleAddTag(tag) {
-      if (this.dynamicTags.includes(tag)) return
+    handleAddTag (tag) {
+      if (this.dynamicTags.includes(tag)) { return }
       this.dynamicTags.push(tag)
       this.filters.tags = this.dynamicTags.join()
       this.handleSearch()
@@ -133,7 +133,7 @@ export const listPage = {
      * @param {Object} data 源对象
      * @returns {Object}
      */
-    filterParams(data) {
+    filterParams (data) {
       const target = {}
       for (const key in data) {
         if (data[key] !== '') {

@@ -24,7 +24,9 @@
     >
       <div class="login-header">
         <img class="login-header__logo" src="@/assets/logo.jpg" alt="logo">
-        <h1 class="login-header__title">Welcome Home</h1>
+        <h1 class="login-header__title">
+          Welcome Home
+        </h1>
       </div>
 
       <el-form-item prop="username">
@@ -74,7 +76,9 @@
       </el-form-item>
       <!-- session有效期：不记录为1天，记录为15天 -->
       <el-form-item class="login-form-remember">
-        <el-checkbox v-model="loginForm.remember">记住登录状态</el-checkbox>
+        <el-checkbox v-model="loginForm.remember">
+          记住登录状态
+        </el-checkbox>
       </el-form-item>
       <el-button
         class="login-form-submit"
@@ -82,21 +86,27 @@
         type="primary"
         size="large"
         @click="handleLogin"
-      >{{ loginLoading ? '登录中' : '登录' }}</el-button>
+      >
+        {{ loginLoading ? '登录中' : '登录' }}
+      </el-button>
     </el-form>
 
     <div class="login-footer">
-      <p class="login-footer__tips">希望我们都是会哭的孩子，更是坚强的大人</p>
-      <p class="login-footer__copyright">Copyright © 2018 - 2022 Timeless. All rights reserved. </p>
+      <p class="login-footer__tips">
+        希望我们都是会哭的孩子，更是坚强的大人
+      </p>
+      <p class="login-footer__copyright">
+        Copyright © 2018 - 2022 Timeless. All rights reserved.
+      </p>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Login',
+  name: 'LoginPage',
   layout: 'index',
-  data() {
+  data () {
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6 || value.length > 20) {
         callback(new Error('请输入6-20位密码'))
@@ -124,24 +134,24 @@ export default {
   },
   watch: {
     $route: {
-      handler: function(route) {
+      handler (route) {
         this.redirect = route.query && route.query.redirect
       },
       immediate: true
     }
   },
-  created() {
+  created () {
     this.fetchCaptcha()
   },
   methods: {
-    showPwd() {
+    showPwd () {
       this.passwordType = this.passwordType === 'password' ? '' : 'password'
       this.$nextTick(() => {
         this.$refs.password.focus()
       })
     },
     // 请求接口svg图片验证码
-    async fetchCaptcha() {
+    async fetchCaptcha () {
       this.loginForm.captcha = ''
       // SVG二维码参数
       const svgOptions = {
@@ -151,13 +161,13 @@ export default {
         background: '#ecf5ff'
       }
       this.captchaLoading = true
-      await this.$api.common.GetCaptcha(svgOptions).then(response => {
+      await this.$api.common.GetCaptcha(svgOptions).then((response) => {
         this.svgCaptcha = response.data
       }).catch(() => {})
       this.captchaLoading = false
     },
-    handleLogin() {
-      this.$refs.loginForm.validate(async(valid) => {
+    handleLogin () {
+      this.$refs.loginForm.validate(async (valid) => {
         if (valid) {
           this.loginLoading = true
           await this.$store.dispatch('user/login', this.loginForm).then(() => {
@@ -172,188 +182,217 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.login{
+.login {
   position: fixed;
-  left: 0;
   top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  background: url(~@/assets/login-background.jpg) no-repeat center;
+  background: url('~@/assets/login-background.jpg') no-repeat center;
   background-size: cover;
-  &-header{
+
+  &-header {
     margin-bottom: 24px;
     text-align: center;
-    &__logo{
+
+    &__logo {
       width: 80px;
       height: 80px;
       border-radius: 50%;
     }
-    &__title{
+
+    &__title {
+      font: normal 32px/50px eafont, 'Hiragino Sans GB', 'Hiragino Sans GB W3', 'Microsoft YaHei';
       color: transparent;
-      font: normal 32px/50px eafont,Hiragino Sans GB,Hiragino Sans GB W3,Microsoft YaHei;
-      background: linear-gradient(to right, #ff4d4f, #597ef7);
-      background-clip: text;
+      background: linear-gradient(to right, #FF4D4F, #597EF7);
+      -webkit-background-clip: text;
     }
   }
-  &-form{
+
+  &-form {
     position: absolute;
     top: 50%;
     left: 50%;
     width: 360px;
     margin-top: -260px;
     margin-left: -180px;
-    @media (max-width: 576px){
+
+    @media (max-width: 576px) {
+      left: 0;
       width: 100%;
       padding: 0 20px;
-      left: 0;
       margin-left: 0;
     }
-    .el-input{
-      box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-      ::v-deep input{
+
+    .el-input {
+      box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .1);
+
+      ::v-deep input {
         padding-left: 40px;
-        &:focus{
+
+        &:focus {
           border-color: #409EFF;
         }
       }
     }
-    &-label{
+
+    &-label {
       position: absolute;
-      left: 0;
       top: 0;
+      left: 0;
       z-index: 5;
       width: 40px;
-      color: #909399;
       font-size: 24px;
+      color: #909399;
       text-align: center;
     }
-    &-captcha{
-      ::v-deep .el-input{
-        &__inner{
+
+    &-captcha {
+      ::v-deep .el-input {
+        &__inner {
           padding-right: 180px;
         }
+
         &__suffix {
           right: 155px;
         }
       }
-      &__svg{
-        overflow: hidden;
+
+      &__svg {
         position: absolute;
-        right: 1px;
         top: 1px;
+        right: 1px;
         width: 150px;
         height: 38px;
+        overflow: hidden;
+        cursor: pointer;
         border-left: 1px solid #DCDFE6;
         border-top-right-radius: 4px;
         border-bottom-right-radius: 4px;
-        cursor: pointer;
       }
     }
-    &-remember{
+
+    &-remember {
       position: relative;
-      ::v-deep .el-form-item__content{
+
+      ::v-deep .el-form-item__content {
         line-height: 19px;
       }
     }
-    &-submit{
+
+    &-submit {
       width: 100%;
-      box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+      box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .1);
     }
   }
+
   .show-pwd {
     position: absolute;
-    right: 10px;
     top: 0;
-    color: #909399;
+    right: 10px;
     font-size: 14px;
+    color: #909399;
     cursor: pointer;
     user-select: none;
   }
 
-  &-footer{
+  &-footer {
     position: fixed;
     bottom: 16px;
     width: 100%;
     text-align: center;
-    &__tips{
+
+    &__tips {
       margin-bottom: 6px;
-      color: rgba(0,0,0,.65);
       font-size: 14px;
+      color: rgba(0, 0, 0, .65);
     }
-    &__copyright{
-      color: rgba(0,0,0,.45);
+
+    &__copyright {
       font-size: 13px;
+      color: rgba(0, 0, 0, .45);
     }
   }
 
-  &-background{
-    overflow: hidden;
+  &-background {
     position: absolute;
     z-index: 0;
     width: 100%;
     height: 100%;
+    overflow: hidden;
+
     li {
-      display: block;
       position: absolute;
       bottom: -160px;
+      display: block;
       width: 40px;
       height: 40px;
-      background-color: rgba($color: #409EFF, $alpha: 0.2);
       list-style: none;
-      animation: square 25s infinite;
+      background-color: rgba($color: #409EFF, $alpha: .2);
       transition-timing-function: linear;
+      animation: square 25s infinite;
+
       &:nth-child(1) {
         left: 10%;
       }
+
       &:nth-child(2) {
         left: 20%;
         width: 80px;
         height: 80px;
-        animation-delay: 2s;
         animation-duration: 17s;
+        animation-delay: 2s;
       }
+
       &:nth-child(3) {
         left: 25%;
         animation-delay: 4s;
       }
+
       &:nth-child(4) {
         left: 40%;
         width: 60px;
         height: 60px;
+        background-color: rgba($color: #409EFF, $alpha: .3);
         animation-duration: 22s;
-        background-color: rgba($color: #409EFF, $alpha: 0.3);
       }
+
       &:nth-child(5) {
         left: 70%;
       }
+
       &:nth-child(6) {
         left: 80%;
         width: 120px;
         height: 120px;
+        background-color: rgba($color: #409EFF, $alpha: .25);
         animation-delay: 3s;
-        background-color: rgba($color: #409EFF, $alpha: 0.25);
       }
+
       &:nth-child(7) {
         left: 32%;
         width: 160px;
         height: 160px;
         animation-delay: 7s;
       }
+
       &:nth-child(8) {
         left: 55%;
         width: 20px;
         height: 20px;
-        animation-delay: 15s;
         animation-duration: 40s;
+        animation-delay: 15s;
       }
+
       &:nth-child(9) {
         left: 25%;
         width: 10px;
         height: 10px;
-        animation-delay: 2s;
+        background-color: rgba($color: #409EFF, $alpha: .35);
         animation-duration: 40s;
-        background-color: rgba($color: #409EFF, $alpha: 0.35);
+        animation-delay: 2s;
       }
+
       &:nth-child(10) {
         left: 90%;
         width: 160px;
@@ -363,14 +402,16 @@ export default {
     }
   }
 }
+
 @keyframes square {
   0% {
-    transform: translateY(0);
     opacity: 1;
+    transform: translateY(0);
   }
+
   100% {
-    transform: translateY(-800px) rotate(600deg);
     opacity: 0;
+    transform: translateY(-800px) rotate(600deg);
   }
 }
 </style>

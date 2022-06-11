@@ -1,8 +1,12 @@
 <template>
   <div class="app-container category">
     <el-row class="app-header">
-      <el-button type="primary" icon="el-icon-plus" @click="handleAdd">添加</el-button>
-      <el-button type="danger" icon="el-icon-delete" :loading="deleteLoading" @click="handleDeleteSelection">删除</el-button>
+      <el-button type="primary" icon="el-icon-plus" @click="handleAdd">
+        添加
+      </el-button>
+      <el-button type="danger" icon="el-icon-delete" :loading="deleteLoading" @click="handleDeleteSelection">
+        删除
+      </el-button>
     </el-row>
 
     <el-table
@@ -39,16 +43,26 @@
       <el-table-column label="所属模块" prop="type" min-width="160" :formatter="formatModuleName" />
       <el-table-column label="操作" align="center" width="300">
         <template #default="scope">
-          <el-button type="success" :loading="scope.row.updateLoading" plain @click="handleUpdate(scope.row)">更新</el-button>
-          <el-button class="category-tools-edit" type="primary" @click="handleEdit(scope.row.id)">编辑</el-button>
+          <el-button type="success" :loading="scope.row.updateLoading" plain @click="handleUpdate(scope.row)">
+            更新
+          </el-button>
+          <el-button class="category-tools-edit" type="primary" @click="handleEdit(scope.row.id)">
+            编辑
+          </el-button>
           <el-dropdown>
             <el-button type="primary" plain :loading="scope.row.deleteLoading">
               更多操作<span class="el-icon-arrow-down el-icon--right" />
             </el-button>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item @click.native="handleAddChild(scope.row)">添加</el-dropdown-item>
-              <el-dropdown-item @click.native="handleMove(scope.row)">移动</el-dropdown-item>
-              <el-dropdown-item @click.native="handleDelete(scope.row.id)">删除</el-dropdown-item>
+              <el-dropdown-item @click.native="handleAddChild(scope.row)">
+                添加
+              </el-dropdown-item>
+              <el-dropdown-item @click.native="handleMove(scope.row)">
+                移动
+              </el-dropdown-item>
+              <el-dropdown-item @click.native="handleDelete(scope.row.id)">
+                删除
+              </el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </template>
@@ -62,13 +76,13 @@
 <script>
 import { mapGetters } from 'vuex'
 import MoveCategory from './components/MoveCategory'
+import typeOptions from './modules'
 import elHeightAdaptiveTable from '#/directive/el-table'
 import { crud, listDialog } from '@/mixins'
 import { convertToTree } from '#/utils'
-import typeOptions from './modules'
 
 export default {
-  name: 'Category',
+  name: 'CategoryList',
   components: {
     MoveCategory
   },
@@ -76,7 +90,7 @@ export default {
     elHeightAdaptiveTable
   },
   mixins: [crud, listDialog],
-  data() {
+  data () {
     return {
       currentType: 'category',
       multipleSelection: [],
@@ -86,34 +100,34 @@ export default {
   },
   computed: {
     ...mapGetters(['categories', 'updateRoute']),
-    categoryList() {
+    categoryList () {
       const categoryTree = convertToTree(this.categories)
       return JSON.parse(JSON.stringify(categoryTree))
     }
   },
   watch: {
-    async updateRoute(val) {
+    updateRoute (val) {
       if (val === this.currentType) {
         this.fetchList()
         this.$store.commit('list/SET_UPDATELIST', '')
       }
     }
   },
-  created() {
+  created () {
     if (!this.categories.length) {
       this.fetchList()
     }
   },
   methods: {
-    async fetchList() {
+    async fetchList () {
       this.listLoading = true
       await this.$store.dispatch('list/getCategory').catch(() => {})
       this.listLoading = false
     },
-    handleAdd() {
+    handleAdd () {
       this.$router.push({ name: 'CategoryCreate' })
     },
-    handleEdit(id) {
+    handleEdit (id) {
       this.$router.push({
         name: 'CategoryEdit',
         params: { id }
@@ -123,20 +137,25 @@ export default {
      * 添加子栏目
      * @param {Number} id 父栏目ID
      */
-    handleAddChild({ id, type }) {
+    handleAddChild ({ id, type }) {
       this.$router.push({
         name: 'CategoryCreate',
         query: { parentId: id, type }
       })
     },
-    handleMove(row) {
+    handleMove (row) {
       this.currentRow = row
       this.dialogVisible = true
     },
-    async handleUpdate(row) {
-      const { id, no_order, name, is_nav } = row
+    async handleUpdate (row) {
+      const postData = {
+        id: row.id,
+        no_order: row.no_order,
+        name: row.name,
+        is_nav: row.is_nav
+      }
       this.$set(row, 'updateLoading', true)
-      await this.$api.content.UpdateContent(this.currentType, { id, no_order, name, is_nav }).then(res => {
+      await this.$api.content.UpdateContent(this.currentType, postData).then((res) => {
         this.$message({
           type: 'success',
           message: '更新成功'
@@ -154,7 +173,7 @@ export default {
      * 格式化模块名称
      * @param {Number [int]} cellValue 当前行所属模块
      */
-    formatModuleName(row, column, cellValue) {
+    formatModuleName (row, column, cellValue) {
       return typeOptions[cellValue] || ''
     }
   }
@@ -162,14 +181,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.app-header{
-  .expand-ctrl{
+.app-header {
+  .expand-ctrl {
     padding-left: 15px;
   }
 }
-.category{
-  &-tools{
-    &-edit{
+
+.category {
+  &-tools {
+    &-edit {
       margin-right: 15px;
     }
   }

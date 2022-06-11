@@ -10,7 +10,7 @@ const state = () => ({
 })
 
 const mutations = {
-  TOGGLE_SIDEBAR: state => {
+  TOGGLE_SIDEBAR: (state) => {
     state.sidebar.opened = !state.sidebar.opened
     state.sidebar.withoutAnimation = false
     if (state.sidebar.opened) {
@@ -29,25 +29,25 @@ const mutations = {
     state.sidebar.opened = false
     state.sidebar.withoutAnimation = withoutAnimation
   },
-  TOGGLE_PARTICLE: state => {
+  TOGGLE_PARTICLE: (state) => {
     state.particleActive = !state.particleActive
   },
   SET_LIVE2D: (state, isShow) => {
     state.live2dShow = isShow
   },
-  TOGGLE_LIVE2D: state => {
+  TOGGLE_LIVE2D: (state) => {
     state.live2dShow = !state.live2dShow
   }
 }
 
 const actions = {
-  toggleSideBar({ commit }) {
+  toggleSideBar ({ commit }) {
     commit('TOGGLE_SIDEBAR')
   },
-  openSideBar({ commit }, { withoutAnimation }) {
+  openSideBar ({ commit }, { withoutAnimation }) {
     commit('OPEN_SIDEBAR', withoutAnimation)
   },
-  closeSideBar({ commit }, { withoutAnimation }) {
+  closeSideBar ({ commit }, { withoutAnimation }) {
     commit('CLOSE_SIDEBAR', withoutAnimation)
   }
 }

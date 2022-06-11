@@ -63,7 +63,7 @@ export const routes = [
 
   {
     path: '/',
-    name: 'Home',
+    name: 'HomePage',
     component: home,
     meta: { title: '首页', icon: 'dashboard', affix: true }
   },
@@ -76,13 +76,13 @@ export const routes = [
     children: [
       {
         path: '/content/article',
-        name: 'Article',
+        name: 'ArticleList',
         component: article,
         meta: { title: '文章模块' }
       },
       {
         path: '/content/bangumi',
-        name: 'Bangumi',
+        name: 'BangumiList',
         component: bangumi,
         meta: { title: '番剧模块' }
       },
@@ -104,7 +104,7 @@ export const routes = [
       },
       {
         path: '/content/recycle',
-        name: 'Recycle',
+        name: 'RecycleList',
         component: recycle,
         meta: { title: '回收站' }
       }
@@ -119,7 +119,7 @@ export const routes = [
     children: [
       {
         path: '/category',
-        name: 'Category',
+        name: 'CategoryList',
         component: category,
         meta: { title: '栏目列表' }
       },
@@ -150,7 +150,7 @@ export const routes = [
     children: [
       {
         path: '/community/comment',
-        name: 'Comment',
+        name: 'CommentList',
         component: commentList,
         meta: { title: '评论系统' }
       },
@@ -164,7 +164,7 @@ export const routes = [
       },
       {
         path: '/community/link',
-        name: 'Link',
+        name: 'LinkList',
         component: link,
         meta: { title: '友情链接' }
       }
@@ -173,7 +173,7 @@ export const routes = [
 
   {
     path: '/profile',
-    name: 'Profile',
+    name: 'OptionsProfile',
     component: profile,
     meta: { title: '用户管理', icon: 'member', noCache: true }
   },
@@ -213,8 +213,8 @@ export const constantRoutes = flattenDeep(routes)
  * @param {Array} source
  * @param {Array} result
  */
-function flattenDeep(source, result = []) {
-  source.forEach(item => {
+function flattenDeep (source, result = []) {
+  source.forEach((item) => {
     if (item.children?.length) {
       flattenDeep(item.children, result)
     }
@@ -225,7 +225,7 @@ function flattenDeep(source, result = []) {
   return result
 }
 
-export function createRouter() {
+export function createRouter () {
   return new Router({
     mode: 'hash',
     routes: constantRoutes

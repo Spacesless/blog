@@ -3,9 +3,13 @@
     <div class="aside-logo">
       <nuxt-link to="/">
         <img class="aside-logo__img" :src="'/static/avatar.jpg' | getAbsolutePath" width="100" height="100" alt="logo">
-        <p class="aside-logo__name">Timeless</p>
+        <p class="aside-logo__name">
+          Timeless
+        </p>
       </nuxt-link>
-      <p class="aside-logo__hitokoto">花开成景，花落成诗</p>
+      <p class="aside-logo__hitokoto">
+        花开成景，花落成诗
+      </p>
     </div>
 
     <el-scrollbar class="aside-scrollbar" wrap-class="aside-scrollbar-wrapper">
@@ -62,21 +66,22 @@ import SidebarItem from './SidebarItem'
 import { convertToTree } from '#/utils'
 
 export default {
+  name: 'SidebarMenu',
   components: {
     SidebarItem
   },
-  data() {
+  data () {
     return {
       isOpen: false
     }
   },
   computed: {
     ...mapGetters(['device', 'sidebar', 'categories', 'activeMenu', 'configs']),
-    menus() {
+    menus () {
       const filterMenus = this.categories.filter(item => item.is_nav)
       return convertToTree(filterMenus)
     },
-    activeKey() {
+    activeKey () {
       const { path, params } = this.$route
       if (path.includes('detail')) {
         return this.activeMenu
@@ -85,7 +90,7 @@ export default {
         return id ? path.replace(params.id, id) : path
       }
     },
-    isCollapse() {
+    isCollapse () {
       return !this.sidebar.opened
     }
   }

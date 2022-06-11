@@ -1,45 +1,80 @@
 // normalize
-body,html{
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
-    'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+body,
+html {
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    'Noto Sans',
+    sans-serif,
+    'Apple Color Emoji',
+    'Segoe UI Emoji',
+    'Segoe UI Symbol',
     'Noto Color Emoji';
 }
-body,dl,dd,h1,h2,h3,h4,h5,p,form,ul,ol{
-  margin:0;
+
+body,
+dl,
+dd,
+h1,
+h2,
+h3,
+h4,
+h5,
+p,
+form,
+ul,
+ol {
+  margin: 0;
 }
-ul,ol{
-  padding:0;
-  list-style:none;
+
+ul,
+ol {
+  padding: 0;
+  list-style: none;
 }
-img{
-  border:0;
+
+img {
+  border: 0;
 }
-input,button,textarea{
-  outline:none;
+
+input,
+button,
+textarea {
+  outline: none;
 }
-i,b,em{
-  font-weight:normal;
-  font-style:normal;
-  text-decoration:none;
+
+i,
+b,
+em {
+  font-style: normal;
+  font-weight: normal;
+  text-decoration: none;
 }
-.clearfix{
-  zoom:1;
-  &:before,
-  &:after{
-    content:"";
-    visibility:hidden;
-    clear:both;
-    display:block;
-    height:0;
-    line-height:0;
+
+.clearfix {
+  zoom: 1;
+
+  &::before,
+  &::after {
+    display: block;
+    height: 0;
+    clear: both;
+    line-height: 0;
+    visibility: hidden;
+    content: '';
   }
 }
+
 a {
   &,
   &:hover,
   &:active,
   &:focus,
-  &:visited{
-    text-decoration:none;
+  &:visited {
+    text-decoration: none;
   }
 }

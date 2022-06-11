@@ -29,7 +29,9 @@
             class="music-sidebar-disst__item"
             :class="disstId == item.tid ? 'music-sidebar-disst__item--active' : ''"
             @click="changeDisstId(item.tid)"
-          >{{ item.name }}</dd>
+          >
+            {{ item.name }}
+          </dd>
         </template>
       </dl>
     </el-scrollbar>
@@ -56,10 +58,10 @@ export default {
     }
   },
   methods: {
-    changePlatform(platform) {
+    changePlatform (platform) {
       this.$emit('update:platform', platform)
     },
-    changeDisstId(id) {
+    changeDisstId (id) {
       this.$emit('update:disstId', id)
     }
   }
@@ -67,52 +69,62 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.music{
-  &-sidebar{
+.music {
+  &-sidebar {
     float: left;
     width: 250px;
     height: 100%;
-    &-logo{
+
+    &-logo {
       padding: 35px 20px 15px;
       text-align: center;
-      .tencent{
+
+      .tencent {
         margin-right: 35px;
       }
-      &__pic{
-        overflow: hidden;
+
+      &__pic {
         width: 60px;
         height: 60px;
-        filter: brightness(50%);
+        overflow: hidden;
         cursor: pointer;
-        &--active{
+        filter: brightness(50%);
+
+        &--active {
           filter: brightness(100%);
         }
       }
     }
-    &-disst{
-      &-wrap{
+
+    &-disst {
+      &-wrap {
         height: calc(100% - 340px);
       }
-      &__title{
-        padding: 0 20px;
-        color: #fff;
+
+      &__title {
         height: 50px;
+        padding: 0 20px;
         line-height: 50px;
+        color: #FFFFFF;
       }
-      &__item{
-        padding: 0 40px;
-        color: #d2d2d2;
-        font-size: 14px;
+
+      &__item {
         height: 42px;
+        padding: 0 40px;
+        font-size: 14px;
         line-height: 42px;
+        color: #D2D2D2;
         cursor: pointer;
-        &:hover, &--active{
-          background-color: rgba($color: #fff, $alpha: .15);
+
+        &:hover,
+        &--active {
+          background-color: rgba($color: #FFFFFF, $alpha: .15);
         }
       }
     }
-    &-fufu{
-      &__img{
+
+    &-fufu {
+      &__img {
         display: inline-block;
         width: 250px;
         vertical-align: middle;

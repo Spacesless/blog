@@ -18,7 +18,9 @@
       </div>
       <div class="comment-info">
         <!-- 昵称 -->
-        <p class="comment-info-name">{{ commentData.name }}<span v-if="commentData.is_admin" class="comment-info__admin">管网站的</span></p>
+        <p class="comment-info-name">
+          {{ commentData.name }}<span v-if="commentData.is_admin" class="comment-info__admin">管网站的</span>
+        </p>
         <div class="comment-info-operate">
           <!-- 评论时间 -->
           <span class="comment-info__time">{{ commentData.addtime }}</span>
@@ -84,12 +86,12 @@ export default {
   },
   methods: {
     // 回复指定评论
-    handleReply() {
+    handleReply () {
       this.tempReplyId = this.replyData.id
       this.$emit('update:replyData', this.commentData)
     },
     // 取消回复
-    handleCancel() {
+    handleCancel () {
       this.$emit('update:replyData', {
         id: this.tempReplyId
       })
@@ -100,7 +102,7 @@ export default {
      * @param {String} email 邮箱地址
      * @returns {String} 头像图片url地址
      */
-    getAvatar({ id, email }) {
+    getAvatar ({ id, email }) {
       /**
        * s是大小的意思，r是等级，参数一般是g，d的选项如下
        * 404：如果没有与电子邮件哈希关联的图像，则不加载任何图像，而是返回 HTTP 404 响应
@@ -119,79 +121,93 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.comment{
-  &-tree{
+.comment {
+  &-tree {
     padding-left: 65px;
   }
-  &-item{
+
+  &-item {
     margin-bottom: 8px;
   }
-  &-avatar{
-    overflow: hidden;
+
+  &-avatar {
     float: left;
     width: 50px;
     height: 50px;
     margin-right: 15px;
+    overflow: hidden;
     border-radius: 50%;
-    &__picture{
+
+    &__picture {
       display: block;
       width: 100%;
       height: 100%;
-      background-color: var(--bg-normal);
-      text-align: center;
       line-height: 50px;
+      text-align: center;
+      background-color: var(--bg-normal);
     }
   }
-  &-info{
+
+  &-info {
     overflow: hidden;
-    &-name{
+
+    &-name {
       margin-bottom: 5px;
       font-size: 13px;
       line-height: 22px;
     }
-    &__admin{
+
+    &__admin {
       display: inline-block;
       height: 22px;
-      margin-left: 5px;
       padding: 0 6px;
-      background: #ecf5ff;
+      margin-left: 5px;
       color: var(--color-primary);
+      background: #ECF5FF;
       border-radius: 4px;
     }
-    &-content{
-      margin-bottom: 20px;
+
+    &-content {
       padding: 7px 12px;
-      border: 1px solid var(--border-color);
-      color: var(--color-heading);
+      margin-bottom: 20px;
       font-size: 14px;
       line-height: 1.5;
+      color: var(--color-heading);
+      border: 1px solid var(--border-color);
       border-radius: 4px;
-      &__replyname{
+
+      &__replyname {
         display: inline-block;
-        margin-right: 5px;
         padding: 3px 6px;
-        background: var(--color-primary);
-        color: #fff;
+        margin-right: 5px;
         font-size: 12px;
+        color: #FFFFFF;
+        background: var(--color-primary);
         border-radius: 11px;
       }
-      &__text{
+
+      &__text {
         white-space: pre-line;
       }
     }
-    &-operate{
+
+    &-operate {
       margin-bottom: 16px;
       font-size: 13px;
     }
-    &__time{
+
+    &__time {
       margin-right: 10px;
     }
-    &-btn{
+
+    &-btn {
       cursor: pointer;
+
       span {
         margin-right: 3px;
       }
-      &:hover{
+
+      &:hover {
         color: #409EFF;
       }
     }

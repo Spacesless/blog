@@ -39,35 +39,36 @@ import { mapGetters } from 'vuex'
 import Search from './Search'
 
 export default {
+  name: 'LayoutHeader',
   components: {
     Search
   },
-  data() {
+  data () {
     return {
       searchVisible: false
     }
   },
   computed: {
     ...mapGetters(['sidebar', 'device', 'categories']),
-    isCollapse() {
+    isCollapse () {
       return !this.sidebar.opened
     },
-    isDark() {
+    isDark () {
       return this.$colorMode.preference === 'dark'
     }
   },
   methods: {
-    handleShowSearch() {
+    handleShowSearch () {
       this.searchVisible = true
     },
-    toggleSidebar() {
+    toggleSidebar () {
       this.$store.dispatch('tools/toggleSideBar')
     },
     // 白天、黑夜模式切换
-    toggleColorMode() {
+    toggleColorMode () {
       this.$colorMode.preference = this.isDark ? 'system' : 'dark'
     },
-    handleCloseSearch() {
+    handleCloseSearch () {
       this.searchVisible = false
     }
   }

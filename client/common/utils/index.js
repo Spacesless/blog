@@ -4,7 +4,7 @@
  * @param {string} cFormat
  * @returns {string}
  */
-export function parseTime(time, cFormat) {
+export function parseTime (time, cFormat) {
   if (arguments.length === 0) {
     return null
   }
@@ -34,7 +34,7 @@ export function parseTime(time, cFormat) {
     s: date.getSeconds(),
     a: date.getDay()
   }
-  const time_str = format.replace(/{(y|m|d|h|i|s|a)+}/g, (result, key) => {
+  const timeStr = format.replace(/{(y|m|d|h|i|s|a)+}/g, (result, key) => {
     let value = formatObj[key]
     // Note: getDay() returns 0 on Sunday
     if (key === 'a') { return ['日', '一', '二', '三', '四', '五', '六'][value] }
@@ -43,7 +43,7 @@ export function parseTime(time, cFormat) {
     }
     return value || 0
   })
-  return time_str
+  return timeStr
 }
 
 /**
@@ -51,7 +51,7 @@ export function parseTime(time, cFormat) {
  * @param {string} option
  * @returns {string}
  */
-export function formatTime(time, option) {
+export function formatTime (time, option) {
   if (('' + time).length === 10) {
     time = parseInt(time) * 1000
   } else {
@@ -94,7 +94,7 @@ export function formatTime(time, option) {
  * @param {String} key localStorage键名
  * @returns {Object} 格式化的json数据
  */
-export function getLocalStorage(key) {
+export function getLocalStorage (key) {
   const data = localStorage.getItem(key)
   let result
   try {
@@ -110,7 +110,7 @@ export function getLocalStorage(key) {
  * @param {String} key localStorage键名
  * @param {Object} data 数据
  */
-export function setLocalStorage(key, data) {
+export function setLocalStorage (key, data) {
   const format = typeof data === 'object' ? JSON.stringify(data) : data
   localStorage.setItem(key, format)
 }
@@ -120,7 +120,7 @@ export function setLocalStorage(key, data) {
  * @param {String} key localStorage键名
  * @param {Object} data 数据
  */
-export function updateLocalStorage(key, data) {
+export function updateLocalStorage (key, data) {
   const source = JSON.parse(localStorage.getItem(key))
   if (typeof source === 'object' && typeof data === 'object') {
     const format = Object.assign(source, data)
@@ -135,7 +135,7 @@ export function updateLocalStorage(key, data) {
  * @param {String} src 源路径
  * @returns  {String}
  */
-export function getAbsolutePath(url) {
+export function getAbsolutePath (url) {
   const isDev = process.env.NODE_ENV === 'development'
   return isDev ? url : `${url ? '//cdn.timelessq.com' + url : ''}`
 }
@@ -146,7 +146,7 @@ export function getAbsolutePath(url) {
    * @param {Number} parent_id 父节点id
    * @returns {Array} 树形数组 [{id:1,children:[{id:2},{id:3,children:[{id:4}]}]}]
    */
-export function convertToTree(data, key = 'parent_id', value = 0) {
+export function convertToTree (data, key = 'parent_id', value = 0) {
   data = JSON.parse(JSON.stringify(data))
   const tree = []
   let temp

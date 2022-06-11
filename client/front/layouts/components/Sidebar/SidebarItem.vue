@@ -31,7 +31,7 @@ export default {
      * 获取一级栏目别名
      * @param {String} type 栏目类型
      */
-    getAliasName(type) {
+    getAliasName (type) {
       const names = new Map([
         ['article', '全部文章'],
         ['bangumi', '全部追剧']

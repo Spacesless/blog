@@ -10,7 +10,9 @@
       :with-header="false"
       :append-to-body="true"
     >
-      <h2 class="music-playlist__title">播放列表</h2>
+      <h2 class="music-playlist__title">
+        播放列表
+      </h2>
       <div class="music-playlist-header">
         <span>{{ playlist.length }}首歌曲</span>
         <span class="el-icon-delete music-playlist-header__clear" @click="handleClearPlaylist" />
@@ -23,8 +25,12 @@
             class="music-playlist-item"
             :class="{'music-playlist-item--playing': ap.list.index === index}"
           >
-            <p class="music-playlist-item__name">{{ item.name }}</p>
-            <p class="music-playlist-item__author">{{ item.artist }}</p>
+            <p class="music-playlist-item__name">
+              {{ item.name }}
+            </p>
+            <p class="music-playlist-item__author">
+              {{ item.artist }}
+            </p>
             <div class="music-playlist-item-menu">
               <span class="icon-bofang" @click="handlePlaySingle(index)" />
               <span class="el-icon-delete" @click="handleDeletePlaylist(index)" />
@@ -44,14 +50,14 @@ export default {
       default: () => {}
     }
   },
-  data() {
+  data () {
     return {
       playlist: [],
       playlistVisible: false
     }
   },
   watch: {
-    ap(newVal, oldVal) {
+    ap (newVal, oldVal) {
       if (newVal && !oldVal) {
         document.querySelector('.aplayer-icon-menu').addEventListener('click', () => {
           this.playlistVisible = true
@@ -61,14 +67,14 @@ export default {
     }
   },
   methods: {
-    handlePlaySingle(index) {
+    handlePlaySingle (index) {
       this.ap.list.switch(index)
     },
-    handleClearPlaylist() {
+    handleClearPlaylist () {
       this.ap.list.clear()
       this.playlist = []
     },
-    handleDeletePlaylist(index) {
+    handleDeletePlaylist (index) {
       this.ap.list.remove(index)
       this.playlist.splice(index, 1)
     }
@@ -77,130 +83,159 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.music{
+.music {
   &-player {
     position: absolute;
     bottom: 0;
-    width: 100%;
     z-index: 3000;
+    width: 100%;
   }
 }
+
 #player {
-  ::v-deep .aplayer{
-    overflow: inherit;
+  ::v-deep .aplayer {
     margin: 0;
+    overflow: inherit;
+    color: #FFFFFF;
     background: none;
-    color: #fff;
     box-shadow: none;
-    &-pic{
+
+    &-pic {
       position: relative;
       z-index: 99;
       width: 70px;
       height: 70px;
-      border-radius: 4px;
       margin: 10px 20px;
+      border-radius: 4px;
     }
-    &-info{
+
+    &-info {
       padding: 10px 0;
-      .aplayer-title{
+
+      .aplayer-title {
         font-size: 16px;
       }
-      .aplayer-author{
+
+      .aplayer-author {
         font-size: 12px;
-        color: #bbb;
+        color: #BBBBBB;
       }
     }
+
     &-icon {
       width: 18px;
       height: 18px;
       opacity: 1;
-      path{
-        fill: #fff;
+
+      path {
+        fill: #FFFFFF;
       }
-      &-back, &-play, &-forward{
-        display: block;
+
+      &-back,
+      &-play,
+      &-forward {
         position: absolute;
         left: 108px;
+        display: block;
         width: 26px;
         height: 26px;
         border-radius: 50%;
       }
-      &-back, &-forward{
+
+      &-back,
+      &-forward {
         top: 37px;
       }
-      &-play{
+
+      &-play {
         top: 32px;
         width: 26px;
         height: 26px;
         padding: 5px;
         margin-left: 35px;
-        background-color: var(--color-primary);;
+        background-color: var(--color-primary);
       }
+
       &-forward {
         margin-left: 82px;
       }
-      &-menu, &-lrc{
+
+      &-menu,
+      &-lrc {
         display: inline;
       }
     }
-    &-music{
-      margin: 0;
+
+    &-music {
       height: auto;
+      margin: 0;
     }
-    &-controller{
-      display: block;
+
+    &-controller {
       position: absolute;
       top: 0;
-      left: 0;
       right: 0;
+      left: 0;
+      display: block;
     }
-    &-bar{
-      background: rgba($color: #fff, $alpha: .15);
-      &-wrap{
-        margin: -5px 0 0 0;
+
+    &-bar {
+      background: rgba($color: #FFFFFF, $alpha: .15);
+
+      &-wrap {
+        margin: -5px 0 0;
       }
     }
-    &-volume{
-      &-bar{
-        &-wrap{
-          bottom: 20px;
+
+    &-volume {
+      &-bar {
+        &-wrap {
           right: 0;
+          bottom: 20px;
         }
       }
     }
-    &-time{
+
+    &-time {
       top: 4px;
       bottom: 0;
       padding-right: 20px;
-      color: #fff;
       font-size: 14px;
+      color: #FFFFFF;
       text-align: right;
     }
-    &-button{
+
+    &-button {
       display: none;
     }
-    &-lrc{
+
+    &-lrc {
       position: absolute;
-      left: 10px;
       right: 10px;
       bottom: 20px;
+      left: 10px;
       height: 40px;
       margin: 0;
-      &:before, &:after{
+
+      &::before,
+      &::after {
         display: none;
       }
-      p{
-        font-size: 14px;
+
+      p {
         height: 20px !important;
+        font-size: 14px;
         line-height: 20px !important;
-        color: #bbb;
+        color: #BBBBBB;
         opacity: 1;
       }
-      &-current{
+
+      &-current {
         color: var(--color-primary) !important;
       }
     }
-    &-list{
+
+    &-list {
       display: none;
     }
   }
@@ -209,75 +244,95 @@ export default {
 
 <style lang="scss">
 .music {
-  &-playlist{
+  &-playlist {
+    color: #FFFFFF;
+    background-color: #083B50;
     outline: none;
-    background-color: #083b50;
-    color: #fff;
-    box-shadow: 0 8px 10px -5px rgba($color: #083b50, $alpha: .2),
-    0 16px 24px 2px rgba($color: #083b50, $alpha: .14),
-    0 6px 30px 5px rgba($color: #083b50, $alpha: .12);
-    .el-drawer__body{
+    box-shadow:
+      0 8px 10px -5px rgba($color: #083B50, $alpha: .2),
+      0 16px 24px 2px rgba($color: #083B50, $alpha: .14),
+      0 6px 30px 5px rgba($color: #083B50, $alpha: .12);
+
+    .el-drawer__body {
       height: 100%;
     }
-    &__title{
+
+    &__title {
       padding: 15px 20px 5px;
       font-weight: normal;
     }
-    &-header{
+
+    &-header {
       position: relative;
       padding: 0 20px 15px;
       line-height: 22px;
-      &__clear{
+
+      &__clear {
         position: absolute;
         top: 2px;
         right: 20px;
         cursor: pointer;
       }
     }
+
     &-wrap {
       height: calc(100% - 90px);
     }
-    &-item{
+
+    &-item {
       position: relative;
       padding: 10px 20px;
       font-size: 14px;
-      &__name, &__author{
+
+      &__name,
+      &__author {
         overflow: hidden;
-        white-space: nowrap;
         text-overflow: ellipsis;
+        white-space: nowrap;
       }
-      &__author{
-        color: #bbb;
+
+      &__author {
+        color: #BBBBBB;
       }
-      &-menu{
+
+      &-menu {
         position: absolute;
-        right: 20px;
         top: 50%;
+        right: 20px;
         margin-top: -9px;
         opacity: 0;
         transition: opacity .3s;
-        span{
+
+        span {
           margin-left: 5px;
-          color: #bbb;
+          color: #BBBBBB;
           cursor: pointer;
-          &:hover{
+
+          &:hover {
             color: var(--color-primary);
           }
         }
       }
-      &:hover{
-        background-color: rgba($color: #fff, $alpha: .15);
+
+      &:hover {
+        background-color: rgba($color: #FFFFFF, $alpha: .15);
       }
-      &:hover &__name, &:hover &__author{
+
+      &:hover &__name,
+      &:hover &__author {
         max-width: 200px;
       }
-      &:hover &-menu{
+
+      &:hover &-menu {
         opacity: 1;
       }
-      &--playing{
-        .music-playlist-item{
-          background-color: rgba($color: #fff, $alpha: .15);
-          &__name, &__author{
+
+      &--playing {
+        .music-playlist-item {
+          background-color: rgba($color: #FFFFFF, $alpha: .15);
+
+          &__name,
+          &__author {
             color: var(--color-primary);
           }
         }

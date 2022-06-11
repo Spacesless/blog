@@ -13,11 +13,11 @@ const doResize = (el, binding, vnode) => {
   const { value } = binding
 
   if (!$table.height) {
-    throw new Error(`el-$table must set the height. Such as height='100px'`)
+    throw new Error('el-$table must set the height. Such as height=\'100px\'')
   }
   const bottomOffset = (value && value.bottomOffset) || 30
 
-  if (!$table) return
+  if (!$table) { return }
 
   const height = window.innerHeight - el.getBoundingClientRect().top - bottomOffset
 
@@ -28,17 +28,17 @@ const doResize = (el, binding, vnode) => {
 }
 
 export default {
-  bind(el, binding, vnode) {
+  bind (el, binding, vnode) {
     el.resizeListener = debounce(() => {
       doResize(el, binding, vnode)
     }, 100)
     // parameter 1 is must be "Element" type
     window.addEventListener('resize', el.resizeListener)
   },
-  inserted(el, binding, vnode) {
+  inserted (el, binding, vnode) {
     doResize(el, binding, vnode)
   },
-  unbind(el) {
+  unbind (el) {
     window.removeEventListener('resize', el.resizeListener)
   }
 }

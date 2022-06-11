@@ -1,8 +1,12 @@
 <template>
   <div v-loading="fetchLoading" class="home">
     <div class="home-welcome">
-      <h2 class="home-welcome__hello">{{ helloText }}</h2>
-      <p class="home-welcome__text">我们一日日度过的所谓的日常，实际上可能是接连不断的奇迹</p>
+      <h2 class="home-welcome__hello">
+        {{ helloText }}
+      </h2>
+      <p class="home-welcome__text">
+        我们一日日度过的所谓的日常，实际上可能是接连不断的奇迹
+      </p>
     </div>
 
     <el-row class="home-general" :gutter="20">
@@ -12,8 +16,12 @@
             <svg-icon icon-class="category" />
           </div>
           <div class="home-general-info">
-            <p class="home-general__desc">Category</p>
-            <p class="home-general__count">{{ count.category }}</p>
+            <p class="home-general__desc">
+              Category
+            </p>
+            <p class="home-general__count">
+              {{ count.category }}
+            </p>
           </div>
         </div>
       </el-col>
@@ -23,8 +31,12 @@
             <svg-icon icon-class="content" />
           </div>
           <div class="home-general-info">
-            <p class="home-general__desc">Article</p>
-            <p class="home-general__count">{{ count.article }}</p>
+            <p class="home-general__desc">
+              Article
+            </p>
+            <p class="home-general__count">
+              {{ count.article }}
+            </p>
           </div>
         </div>
       </el-col>
@@ -34,8 +46,12 @@
             <svg-icon icon-class="bangumi" />
           </div>
           <div class="home-general-info">
-            <p class="home-general__desc">Bangumi</p>
-            <p class="home-general__count">{{ count.bangumi }}</p>
+            <p class="home-general__desc">
+              Bangumi
+            </p>
+            <p class="home-general__count">
+              {{ count.bangumi }}
+            </p>
           </div>
         </div>
       </el-col>
@@ -45,8 +61,12 @@
             <svg-icon icon-class="community" />
           </div>
           <div class="home-general-info">
-            <p class="home-general__desc">Comment</p>
-            <p class="home-general__count">{{ count.comment }}</p>
+            <p class="home-general__desc">
+              Comment
+            </p>
+            <p class="home-general__count">
+              {{ count.comment }}
+            </p>
           </div>
         </div>
       </el-col>
@@ -61,7 +81,9 @@
       </el-col>
       <el-col :xs="24" :sm="12" :lg="6">
         <el-card>
-          <div slot="header">运行环境</div>
+          <div slot="header">
+            运行环境
+          </div>
           <ul class="home-info-env">
             <li>
               <img class="home-env__icon" src="@/assets/home/nodejs.png" alt="">
@@ -96,12 +118,12 @@ import CommentList from './components/CommentList'
 import TodoList from './components/TodoList'
 
 export default {
-  name: 'Home',
+  name: 'HomePage',
   components: {
     CommentList,
     TodoList
   },
-  data() {
+  data () {
     return {
       generals: {},
       fetchLoading: false
@@ -109,7 +131,7 @@ export default {
   },
   computed: {
     ...mapGetters(['userinfo']),
-    helloText() {
+    helloText () {
       const now = new Date().getHours()
       if (now > 23 || now <= 5) {
         return `${this.userinfo.nickname}你是夜猫子呀？这么晚还不睡觉，明天起的来嘛`
@@ -131,23 +153,23 @@ export default {
         return `Hello ${this.userinfo.nickname}，祝你开心每一天`
       }
     },
-    version() {
+    version () {
       return this.generals.version || {}
     },
-    count() {
+    count () {
       return this.generals.count || {}
     }
   },
-  created() {
+  created () {
     this.fetchData()
   },
   methods: {
     /**
      * 获取运行环境、统计数据
      */
-    async fetchData() {
+    async fetchData () {
       this.fetchLoading = true
-      await this.$api.home.GetGeneral().then(res => {
+      await this.$api.home.GetGeneral().then((res) => {
         this.generals = res.data
       }).catch(() => {})
       this.fetchLoading = false
@@ -156,7 +178,7 @@ export default {
      * 跳转到对应名称的路由
      * @param {String} 路由名称
      */
-    navigateTo(name) {
+    navigateTo (name) {
       this.$router.push({ name })
     }
   }
@@ -164,93 +186,112 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.home{
-  &-welcome{
-    margin-bottom: 20px;
+.home {
+  &-welcome {
     padding: 30px;
-    box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
-    &__hello{
-      font-weight: normal;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .1);
+
+    &__hello {
       margin-bottom: 15px;
+      font-weight: normal;
     }
-    &__text{
+
+    &__text {
       font-size: 14px;
       color: #606266;
     }
   }
 
-  &-general{
+  &-general {
     padding: 0 20px;
-    &-item{
+
+    &-item {
       height: 110px;
       margin-bottom: 20px;
-      border-radius: 6px;
-      box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
       cursor: pointer;
+      border-radius: 6px;
+      box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .1);
     }
-    &-icon{
+
+    &-icon {
       float: left;
       width: 120px;
-      color: #fff;
       line-height: 110px;
+      color: #FFFFFF;
       text-align: center;
-      .svg-icon{
+
+      .svg-icon {
         width: 50px;
         height: 50px;
       }
     }
-    &-info{
+
+    &-info {
       overflow: hidden;
     }
-    &__desc{
+
+    &__desc {
       padding: 25px 0 6px;
-      color: #efefef;
       font-size: 22px;
+      color: #EFEFEF;
     }
-    &__count{
-      color: #fff;
+
+    &__count {
       font-size: 30px;
+      color: #FFFFFF;
     }
-    .category{
-      background-image: linear-gradient(to right, #ff4d4f , #ffa940);
+
+    .category {
+      background-image: linear-gradient(to right, #FF4D4F, #FFA940);
     }
-    .article{
-      background-image: linear-gradient(to right, #ffc53d , #bae637);
+
+    .article {
+      background-image: linear-gradient(to right, #FFC53D, #BAE637);
     }
-    .bangumi{
-      background-image: linear-gradient(to right, #73d13d , #40a9ff);
+
+    .bangumi {
+      background-image: linear-gradient(to right, #73D13D, #40A9FF);
     }
-    .comment{
-      background-image: linear-gradient(to right, #597ef7 , #f759ab);
+
+    .comment {
+      background-image: linear-gradient(to right, #597EF7, #F759AB);
     }
   }
 
-  &-info{
+  &-info {
     padding: 0 20px;
-    .el-col{
+
+    .el-col {
       margin-bottom: 20px;
     }
-    ::v-deep .todoapp{
-      box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
-       .main{
+
+    ::v-deep .todoapp {
+      box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .1);
+
+      .main {
         min-height: 330px;
       }
     }
-    &-env{
+
+    &-env {
       min-height: 335px;
-      li{
+
+      li {
         margin-bottom: 15px;
       }
     }
   }
-  &-env{
-    &__icon{
+
+  &-env {
+    &__icon {
       display: inline-block;
       width: 32px;
       margin-right: 10px;
       vertical-align: middle;
     }
-    &__desc{
+
+    &__desc {
       font-size: 14px;
       color: #606266;
     }

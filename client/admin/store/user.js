@@ -17,7 +17,7 @@ const mutations = {
 
 const actions = {
   // user login
-  login({ commit }, userInfo) {
+  login ({ commit }, userInfo) {
     const { username, password, captcha, remember } = userInfo
     return new Promise((resolve, reject) => {
       this.$api.user.Login({
@@ -25,21 +25,21 @@ const actions = {
         password: md5(password),
         captcha,
         remember
-      }).then(response => {
+      }).then((response) => {
         const { data } = response
         commit('SET_TOKEN', data.token)
         setToken(data.token, data.expires)
         resolve()
-      }).catch(error => {
+      }).catch((error) => {
         reject(error)
       })
     })
   },
 
   // get user info
-  getInfo({ commit, state }) {
+  getInfo ({ commit, state }) {
     return new Promise((resolve, reject) => {
-      this.$api.user.GetInfo().then(response => {
+      this.$api.user.GetInfo().then((response) => {
         const { data } = response
         if (!data) {
           reject(new Error('Verification failed, please Login again.'))
@@ -47,28 +47,28 @@ const actions = {
 
         commit('SET_USERINFO', data)
         resolve(data)
-      }).catch(error => {
+      }).catch((error) => {
         reject(error)
       })
     })
   },
 
   // user logout
-  logout({ commit, state }) {
+  logout ({ commit, state }) {
     return new Promise((resolve, reject) => {
       this.$api.user.Logout(state.token).then(() => {
         commit('SET_TOKEN', '')
         removeToken()
         resolve()
-      }).catch(error => {
+      }).catch((error) => {
         reject(error)
       })
     })
   },
 
   // remove token
-  resetToken({ commit }) {
-    return new Promise(resolve => {
+  resetToken ({ commit }) {
+    return new Promise((resolve) => {
       commit('SET_TOKEN', '')
       removeToken()
       resolve()
@@ -82,4 +82,3 @@ export default {
   mutations,
   actions
 }
-

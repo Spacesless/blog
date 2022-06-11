@@ -1,85 +1,122 @@
-code[class*="language-"], pre[class*="language-"] {
-	font-family: Consolas,Menlo,Courier,monospace;
-	font-size: 14px;
-	line-height: 1.5;
-	word-break: normal;
-	word-wrap: break-word;
-	word-spacing: normal;
-	tab-size: 2;
+code[class*='language-'],
+pre[class*='language-'] {
+  font-family: Consolas, Menlo, Courier, monospace;
+  font-size: 14px;
   hyphens: none;
+  line-height: 1.5;
+  word-break: normal;
+  word-spacing: normal;
+  word-wrap: break-word;
+  tab-size: 2;
 
   &::selection,
-  & ::selection{
+  & ::selection {
     text-shadow: none;
-    background: #b3d4fc;
+    background: #B3D4FC;
   }
 }
+
 @media print {
-	code[class*="language-"],
-	pre[class*="language-"] {
-		text-shadow: none;
-	}
+  code[class*='language-'],
+  pre[class*='language-'] {
+    text-shadow: none;
+  }
 }
 
 /* Code blocks */
-pre[class*="language-"] {
+pre[class*='language-'] {
+  padding: 50px 15px 10px;
+  margin: 0;
   overflow-x: auto;
   overflow-y: hidden;
-  margin: 0;
-	padding: 50px 15px 10px;
   color: var(--color-heading);
 }
 
 /* Inline code */
-.token{
-  &.comment,&.prolog,&.doctype,&.cdata{ // 注释
-    color: #b3b3b3;
+.token {
+  &.comment,
+  &.prolog,
+  &.doctype,
+  &.cdata { // 注释
+    color: #B3B3B3;
   }
-  &.punctuation{ // 标点符号
+
+  &.punctuation { // 标点符号
     color: var(--color-secondary);
   }
+
   &.tag {
-    color: #3e76f6;
+    color: #3E76F6;
   }
-  &.boolean,&.number,&.constant,&.symbol,&.deleted{
-    color: #fc1e70;
+
+  &.boolean,
+  &.number,
+  &.constant,
+  &.symbol,
+  &.deleted {
+    color: #FC1E70;
   }
-  &.selector,&.string,&.attr-value,&.char,&.builtin,&.inserted{
-    color: #42b983;
+
+  &.selector,
+  &.string,
+  &.attr-value,
+  &.char,
+  &.builtin,
+  &.inserted {
+    color: #42B983;
   }
-  &.operator,&.entity,&.regex,&.url,.language-css &.string,.style &.string{
-    color: #af7dff;
+
+  &.operator,
+  &.entity,
+  &.regex,
+  &.url,
+  .language-css &.string,
+  .style &.string {
+    color: #AF7DFF;
   }
-  &.atrule,&.attr-name,&.keyword{
-    color: #008dff;
+
+  &.atrule,
+  &.attr-name,
+  &.keyword {
+    color: #008DFF;
   }
-  &.function,&.class-name{
-    color: #f74455;
+
+  &.function,
+  &.class-name {
+    color: #F74455;
   }
-  &.property,&.function,&.important,&.variable{
-    color: #e96900;
+
+  &.property,
+  &.function,
+  &.important,
+  &.variable {
+    color: #E96900;
   }
-  &.important,&.bold{
+
+  &.important,
+  &.bold {
     font-weight: bold;
   }
-  &.italic{
+
+  &.italic {
     font-style: italic;
   }
-  &.entity{
+
+  &.entity {
     cursor: help;
   }
 }
 
 // toolbar
-.code-toolbar{
+.code-toolbar {
   position: relative;
   margin: $grid-space 0;
   background: var(--bg);
   border-radius: 8px;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 10px -2px;
+  box-shadow: rgba(0, 0, 0, .1) 0 5px 10px -2px;
   transition: all .3s;
+
   &--fullscreen {
-    overflow-y: auto;
     position: fixed;
     top: 0;
     left: 0;
@@ -87,103 +124,116 @@ pre[class*="language-"] {
     width: 100%;
     height: 100%;
     margin: 0;
-    .toolbar{
+    overflow-y: auto;
+
+    .toolbar {
       position: fixed;
     }
   }
-  &--newline{
-    pre[class*="language-"]{
+
+  &--newline {
+    pre[class*='language-'] {
       white-space: pre-wrap;
     }
   }
 }
-.toolbar{
+
+.toolbar {
   position: absolute;
-  top: 0px;
+  top: 0;
+  box-sizing: border-box;
   width: 100%;
   height: 40px;
   padding-right: 16px;
-  background-color: var(--code-toolbar-bg);
   line-height: 40px;
   text-align: right;
+  background-color: var(--code-toolbar-bg);
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
-  box-sizing: border-box;
-  &:before{
-    content: '';
+
+  &::before {
     position: absolute;
-    left: 16px;
     top: 50%;
+    left: 16px;
     width: 12px;
     height: 12px;
     margin-top: -6px;
-    background: #fc625d;
+    content: '';
+    background: #FC625D;
     border-radius: 50%;
-    box-shadow: 1.25rem 0 #fdbc40, 2.5rem 0 #35cd4b;
+    box-shadow: 1.25rem 0 #FDBC40, 2.5rem 0 #35CD4B;
   }
-  &-item{
+
+  &-item {
     display: inline-block;
     margin-left: 12px;
-    span{
+
+    span {
       position: absolute;
-      left: 80px;
       top: 0;
+      left: 80px;
       padding-right: 10px;
-      color: var(--color-text);
       font-size: 18px;
       font-weight: normal;
+      color: var(--color-text);
       user-select: none;
     }
-    &-button{
-      display: inline-block;
+
+    &-button {
       position: relative;
+      display: inline-block;
       padding: 0;
-      border: none;
-      background: none;
-      color: var(--color-text);
       font-size: 18px;
+      color: var(--color-text);
       cursor: pointer;
-      &__tips{
+      background: none;
+      border: none;
+
+      &__tips {
         position: absolute;
         bottom: 30px;
         left: 50%;
         width: 60px;
         height: 28px;
         margin-left: -34px;
-        background-color: #303133;
-        color: #fff;
         font-size: 12px;
         line-height: 28px;
+        color: #FFFFFF;
+        background-color: #303133;
         border-radius: 4px;
         opacity: 0;
         transition: opacity .3s;
-        &:after{
-          content: '';
-          display: block;
+
+        &::after {
           position: absolute;
           left: 50%;
+          display: block;
           width: 0;
           height: 0;
           margin-left: -3px;
+          content: '';
           border: 6px solid transparent;
           border-top-color: #303133;
           border-bottom-width: 0;
         }
       }
-      &:hover{
+
+      &:hover {
         color: var(--color-primary);
       }
-      &:hover &__tips{
+
+      &:hover &__tips {
         opacity: 1;
       }
     }
   }
 }
 
-pre[class*="language-"].line-numbers {
-	position: relative;
-	padding-left: 3.8em;
-	counter-reset: linenumber;
+pre[class*='language-'].line-numbers {
+  position: relative;
+  padding-left: 3.8em;
+  counter-reset: linenumber;
+
   & > code {
     position: relative;
     white-space: inherit;
@@ -193,23 +243,25 @@ pre[class*="language-"].line-numbers {
 .line-numbers {
   &-rows {
     position: absolute;
-    pointer-events: none;
     top: 0;
-    font-size: 100%;
     left: -3.8em;
     width: 3em; /* works for line-numbers below 1000 lines */
+    font-size: 100%;
     letter-spacing: -1px;
-    border-right: 1px solid var(--border-color);
+    pointer-events: none;
     user-select: none;
+    border-right: 1px solid var(--border-color);
+
     & > span {
       display: block;
       counter-increment: linenumber;
-      &:before {
-        content: counter(linenumber);
-        color: var(--color-text);
+
+      &::before {
         display: block;
-        padding-right: 0.8em;
+        padding-right: .8em;
+        color: var(--color-text);
         text-align: right;
+        content: counter(linenumber);
       }
     }
   }

@@ -40,7 +40,9 @@
         </el-col>
       </el-form-item>
       <div class="stick-bottom">
-        <el-button type="primary" icon="el-icon-check" :loading="confirmLoading" @click="handleSubmit">保存</el-button>
+        <el-button type="primary" icon="el-icon-check" :loading="confirmLoading" @click="handleSubmit">
+          保存
+        </el-button>
       </div>
     </el-form>
   </div>
@@ -51,7 +53,7 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'OptionsProfile',
-  data() {
+  data () {
     const validatePassword = (rule, value, callback) => {
       if (value && value.length < 6) {
         callback(new Error('密码不能少于8位'))
@@ -85,18 +87,18 @@ export default {
   },
   watch: {
     userinfo: {
-      handler(data) {
+      handler (data) {
         this.formData = { ...data }
       },
       immediate: true
     }
   },
   methods: {
-    handleSubmit() {
-      this.$refs.form.validate(async(valid) => {
-        if (!valid) return
+    handleSubmit () {
+      this.$refs.form.validate(async (valid) => {
+        if (!valid) { return }
         this.confirmLoading = true
-        await this.$api.user.UpdateAdmin(this.formData).then(res => {
+        await this.$api.user.UpdateAdmin(this.formData).then((res) => {
           this.$message({
             type: 'success',
             message: this.isEdit ? '更新成功' : '添加成功'

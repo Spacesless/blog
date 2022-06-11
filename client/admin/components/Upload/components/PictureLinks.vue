@@ -6,7 +6,9 @@
     @close="handleCancel"
   >
     <div class="links-header">
-      <el-button type="primary" plain @click="addLink">新增图片</el-button>
+      <el-button type="primary" plain @click="addLink">
+        新增图片
+      </el-button>
     </div>
     <el-form ref="dynamicForm" :model="dynamicForm" label-width="80px" class="links-form">
       <el-form-item
@@ -15,13 +17,19 @@
         :label="'图片' + index"
       >
         <el-input v-model="item.url" />
-        <el-button class="links-form-remove" type="warning" @click.prevent="removeLink(item)">删除</el-button>
+        <el-button class="links-form-remove" type="warning" @click.prevent="removeLink(item)">
+          删除
+        </el-button>
       </el-form-item>
     </el-form>
 
     <div slot="footer" class="dialog-footer">
-      <el-button plain @click="handleCancel">取消</el-button>
-      <el-button type="primary" @click="handleConfirm">确定</el-button>
+      <el-button plain @click="handleCancel">
+        取消
+      </el-button>
+      <el-button type="primary" @click="handleConfirm">
+        确定
+      </el-button>
     </div>
   </el-dialog>
 </template>
@@ -38,7 +46,7 @@ export default {
       default: () => []
     }
   },
-  data() {
+  data () {
     return {
       dynamicForm: {
         fileList: []
@@ -47,15 +55,15 @@ export default {
   },
   watch: {
     fileList: {
-      handler(data) {
+      handler (data) {
         this.dynamicForm.fileList = Array.from(data)
       },
       immediate: true
     }
   },
   methods: {
-    handleConfirm() {
-      const result = this.dynamicForm.fileList.map(item => {
+    handleConfirm () {
+      const result = this.dynamicForm.fileList.map((item) => {
         return {
           name: item.name,
           url: item.url
@@ -64,19 +72,19 @@ export default {
       this.$emit('onFileUrlChange', result)
       this.handleCancel()
     },
-    addLink() {
+    addLink () {
       this.dynamicForm.fileList.push({
         name: '测试',
         url: ''
       })
     },
-    removeLink(item) {
+    removeLink (item) {
       const findIndex = this.dynamicForm.fileList.indexOf(item)
       if (findIndex !== -1) {
         this.dynamicForm.fileList.splice(findIndex, 1)
       }
     },
-    handleCancel() {
+    handleCancel () {
       this.$emit('update:visible', false)
     }
   }
@@ -84,18 +92,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.links{
-  &-header{
+.links {
+  &-header {
     padding: 0 15px 30px;
   }
+
   &-form {
-    .el-form-item{
+    .el-form-item {
       margin-bottom: 15px;
     }
-    .el-input{
-      width: calc(100% - 75px)
+
+    .el-input {
+      width: calc(100% - 75px);
     }
-    &-remove{
+
+    &-remove {
       margin-left: 15px;
     }
   }

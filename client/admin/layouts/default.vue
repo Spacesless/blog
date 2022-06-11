@@ -21,7 +21,7 @@ import TagsView from './components/TagsView/index'
 import ResizeMixin from './mixin/ResizeHandler'
 
 export default {
-  name: 'Layout',
+  name: 'DefaultLayout',
   components: {
     Navbar,
     Sidebar,
@@ -34,7 +34,7 @@ export default {
       sidebar: state => state.sidebar,
       device: state => state.device
     }),
-    classObj() {
+    classObj () {
       return {
         hideSidebar: !this.sidebar.opened,
         openSidebar: this.sidebar.opened,
@@ -44,7 +44,7 @@ export default {
     }
   },
   methods: {
-    handleClickOutside() {
+    handleClickOutside () {
       this.$store.dispatch('closeSideBar', { withoutAnimation: false })
     }
   }
@@ -52,27 +52,30 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/styles/mixin.scss";
-@import "~@/styles/variables.scss";
+@import '~@/styles/mixin.scss';
+@import '~@/styles/variables.scss';
 
 .app-wrapper {
   @include clearfix;
+
   position: relative;
   width: 100%;
   height: 100%;
-  &.mobile.openSidebar{
+
+  &.mobile.openSidebar {
     position: fixed;
     top: 0;
   }
 }
+
 .drawer-bg {
   position: absolute;
   top: 0;
   z-index: 999;
   width: 100%;
   height: 100%;
-  background-color: #000;
-  opacity: 0.3;
+  background-color: #000000;
+  opacity: .3;
 }
 
 .header {
@@ -81,11 +84,11 @@ export default {
   right: 0;
   z-index: 9;
   width: calc(100% - #{$sideBarWidth});
-  transition: width 0.28s;
+  transition: width .28s;
 }
 
 .hideSidebar .header {
-  width: calc(100% - 54px)
+  width: calc(100% - 54px);
 }
 
 .mobile .header {

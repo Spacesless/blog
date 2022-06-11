@@ -10,19 +10,19 @@
 <script>
 export default {
   name: 'AppMain',
-  data() {
+  data () {
     return {
       transitionName: 'fade-transform'
     }
   },
   computed: {
-    cachedViews() {
+    cachedViews () {
       return this.$store.state.tagsView.cachedViews
     }
   },
   watch: {
     // watch $route 决定使用哪种过渡，path包含redirect则为刷新
-    '$route'(to, from) {
+    '$route' (to, from) {
       this.transitionName = to.path.includes('redirect') || from.path.includes('redirect') ? 'fade' : 'fade-transform'
     }
   }
@@ -31,11 +31,11 @@ export default {
 
 <style lang="scss" scoped>
 .app-main {
-  /*50 = navbar  */
+  /* 50 = navbar  */
   position: relative;
-  overflow: hidden;
   width: 100%;
   min-height: 100vh;
   padding-top: 90px;
+  overflow: hidden;
 }
 </style>

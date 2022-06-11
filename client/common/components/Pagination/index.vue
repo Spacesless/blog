@@ -20,7 +20,7 @@ import { mapGetters } from 'vuex'
 import { scrollTo } from '#/utils/scroll-to'
 
 export default {
-  name: 'Pagination',
+  name: 'PaginationIndex',
   props: {
     total: {
       required: true,
@@ -36,7 +36,7 @@ export default {
     },
     pageSizes: {
       type: Array,
-      default() {
+      default () {
         return [10, 20, 30, 50, 100]
       }
     },
@@ -68,22 +68,22 @@ export default {
   computed: {
     ...mapGetters(['device']),
     currentPage: {
-      get() {
+      get () {
         return this.page
       },
-      set(val) {
+      set (val) {
         this.$emit('update:page', val)
       }
     },
     pageSize: {
-      get() {
+      get () {
         return this.limit
       },
-      set(val) {
+      set (val) {
         this.$emit('update:limit', val)
       }
     },
-    pageLayout() {
+    pageLayout () {
       return this.device === 'desktop'
         ? (this.isAdmin ? this.adminLayout : this.webLayout)
         : 'prev, pager, next'
@@ -94,7 +94,7 @@ export default {
      * 每页个数改变
      * @param {Number [int]} val 每页个数
      */
-    handleSizeChange(val) {
+    handleSizeChange (val) {
       this.$emit('pagination', { page: this.currentPage, limit: val })
       if (this.autoScroll) {
         const multipleTable = this.$parent?.$refs.multipleTable?.bodyWrapper
@@ -105,7 +105,7 @@ export default {
      * 页码改变
      * @param {Number [int]} val 页码
      */
-    handleCurrentChange(val) {
+    handleCurrentChange (val) {
       this.$emit('pagination', { page: val, limit: this.pageSize })
       if (this.autoScroll) {
         const multipleTable = this.$parent?.$refs.multipleTable?.bodyWrapper
@@ -120,7 +120,8 @@ export default {
 .pagination-container.hidden {
   display: none;
 }
-.el-pagination{
+
+.el-pagination {
   font-weight: normal;
 }
 </style>

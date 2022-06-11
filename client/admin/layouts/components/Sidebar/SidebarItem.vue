@@ -26,10 +26,10 @@
 
 <script>
 import path from 'path'
-import { isExternal } from '@/utils/validate'
 import Item from './Item'
 import AppLink from './Link'
 import FixiOSBug from './FixiOSBug'
+import { isExternal } from '@/utils/validate'
 
 export default {
   name: 'SidebarItem',
@@ -50,15 +50,15 @@ export default {
       default: ''
     }
   },
-  data() {
+  data () {
     // To fix https://github.com/PanJiaChen/vue-admin-template/issues/237
     // TODO: refactor with render function
     this.onlyOneChild = null
     return {}
   },
   methods: {
-    hasOneShowingChild(parent, children = []) {
-      const showingChildren = children.filter(item => {
+    hasOneShowingChild (parent, children = []) {
+      const showingChildren = children.filter((item) => {
         if (item.hidden) {
           return false
         } else {
@@ -81,7 +81,7 @@ export default {
 
       return false
     },
-    resolvePath(routePath) {
+    resolvePath (routePath) {
       if (isExternal(routePath)) {
         return routePath
       }

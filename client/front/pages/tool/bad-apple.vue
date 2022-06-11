@@ -16,9 +16,9 @@ const partCount = 400
 const maxPart = Math.ceil(totalPaint / partCount)
 
 export default {
-  layout: 'app',
   mixins: [pageMeta],
-  data() {
+  layout: 'app',
+  data () {
     return {
       index: 0,
       fileIndex: 1,
@@ -28,23 +28,23 @@ export default {
       failCount: 0
     }
   },
-  mounted() {
+  mounted () {
     this.resize()
-    this.fetchData().then(res => {
+    this.fetchData().then((res) => {
       this.print()
       this.addAudioListener()
     })
   },
   methods: {
-    fetchData() {
-      return axios.get(`//cos.timelessq.com/static/bad-apple/frame-${this.fileIndex}.txt`).then(res => {
+    fetchData () {
+      return axios.get(`//cos.timelessq.com/static/bad-apple/frame-${this.fileIndex}.txt`).then((res) => {
         const data = res.data?.trim().split('\n\r') || []
         data.forEach((item, index) => {
           this.dotsArr[(this.fileIndex - 1) * partCount + index] = item
         })
       })
     },
-    async play() {
+    async play () {
       if (this.index >= totalPaint || this.failCount > 5) {
         return clearInterval(this.timer)
       }
@@ -55,7 +55,7 @@ export default {
         this.$refs.audio.pause()
         this.isPlaying = false
         this.fileIndex = Math.ceil(this.index / partCount)
-        await this.fetchData().then(res => {
+        await this.fetchData().then((res) => {
           this.$refs.audio.play()
           if (!this.dotsArr[this.index]) {
             this.failCount++
@@ -64,7 +64,7 @@ export default {
           }
         })
       } else if (preLoadIndex < totalPaint && !this.dotsArr[preLoadIndex]) {
-        if (this.fileIndex < maxPart) this.fileIndex++
+        if (this.fileIndex < maxPart) { this.fileIndex++ }
         this.fetchData()
       }
 
@@ -76,9 +76,9 @@ export default {
         clearInterval(this.timer)
       }
     },
-    print() {
+    print () {
       const currtPaint = this.dotsArr[this.index]
-      if (currtPaint) this.$refs.apple.innerText = this.shrinkString(currtPaint)
+      if (currtPaint) { this.$refs.apple.innerText = this.shrinkString(currtPaint) }
     },
     /**
      * 解压字符串
@@ -86,13 +86,13 @@ export default {
      * @summary wwwcaabbbb 压缩成 w3ca2b4
      * @returns {String}
      */
-    shrinkString(sText) {
+    shrinkString (sText) {
       return sText.replace(/(\D\d+)/g, (m, p1) => {
         const match = m.match(/(\D)(\d+)/)
         return ''.padEnd(+match[2], match[1])
       })
     },
-    resize() {
+    resize () {
       const resize = () => {
         const bodyHeight = window.innerHeight - 54
         const scale = bodyHeight / 726
@@ -103,7 +103,7 @@ export default {
       resize()
       window.addEventListener('resize', resize)
     },
-    addAudioListener() {
+    addAudioListener () {
       this.$refs.audio.addEventListener('play', () => {
         console.log('play')
         if (this.index === totalPaint) {
@@ -118,7 +118,7 @@ export default {
         console.log('pause')
         this.isPlaying = false
       })
-      this.$refs.audio.addEventListener('timeupdate', e => {
+      this.$refs.audio.addEventListener('timeupdate', (e) => {
         const cuurentTime = e.target.currentTime
         const duration = e.target.duration
         this.index = Math.round(cuurentTime / duration * totalPaint)
@@ -133,22 +133,23 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.apple{
-  &-console{
+.apple {
+  &-console {
     position: fixed;
     top: 50%;
     left: 50%;
     width: 1046px;
     height: 726px;
-    margin-left: -523px;
     margin-top: -390px;
+    margin-left: -523px;
     // margin-top: -28px;
     // transform: translateX(-50%) translateY(-50%);
-    font-family: simsun;
+    font-family: sans-serif;
     font-size: 12px;
     line-height: 12px;
     text-align: center;
   }
+
   &-audio {
     position: fixed;
     bottom: 0;

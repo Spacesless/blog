@@ -7,8 +7,12 @@
           <div class="bilibili-info-text">
             <span v-if="userInfo.level" class="bilibili-info__level">Lv{{ userInfo.level }}</span>
             <span v-if="vipText" class="bilibili-info__vip">{{ vipText }}</span>
-            <p class="bilibili-info__name">{{ userInfo.name }}</p>
-            <p class="bilibili-info__sign">{{ userInfo.sign }}</p>
+            <p class="bilibili-info__name">
+              {{ userInfo.name }}
+            </p>
+            <p class="bilibili-info__sign">
+              {{ userInfo.sign }}
+            </p>
           </div>
         </div>
         <el-scrollbar class="bilibili-menu-scrollbar" wrap-class="bilibili-scrollbar-wrapper">
@@ -54,13 +58,14 @@ const mid = 315883644
 const apiurl = 'https://api.timelessq.com/bilibili'
 
 export default {
-  layout: 'app',
+  name: 'MyBilibili',
   components: {
     FavoriteList,
     FollowList
   },
   mixins: [pageMeta],
-  data() {
+  layout: 'app',
+  data () {
     return {
       userInfo: {},
       favoriteList: [],
@@ -71,42 +76,42 @@ export default {
     }
   },
   computed: {
-    vipText() {
+    vipText () {
       return this.userInfo.vip?.label?.text
     }
   },
-  mounted() {
+  mounted () {
     this.fetchInfo()
     this.fetchFavoriteList()
   },
   methods: {
     // 获取用户信息
-    fetchInfo() {
+    fetchInfo () {
       this.$axios.get(apiurl + '/info', {
         params: {
           mid
         }
-      }).then(res => {
+      }).then((res) => {
         this.userInfo = res.data
       })
     },
     // 获取收藏列表
-    fetchFavoriteList() {
+    fetchFavoriteList () {
       this.$axios.get(apiurl + '/favorite', {
         params: {
           mid
         }
-      }).then(res => {
+      }).then((res) => {
         const { list } = res.data
         this.favoriteList = list
         this.favoriteId = this.favoriteList[0] ? this.favoriteList[0].id + '' : '0'
       })
     },
-    changeFavorite(id) {
+    changeFavorite (id) {
       this.listType = 'favorite'
       this.favoriteId = id.toString()
     },
-    handleViewFollow() {
+    handleViewFollow () {
       this.listType = 'follow'
     }
   }
@@ -114,84 +119,98 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.bilibili{
+.bilibili {
   position: fixed;
   width: 100%;
   height: 100%;
-  background-color: #f4f5f7;
-  &-wrapper{
-    overflow: hidden;
+  background-color: #F4F5F7;
+
+  &-wrapper {
     height: 100%;
     padding: 0;
-    background-color: #fff;
+    overflow: hidden;
+    background-color: #FFFFFF;
     border-radius: 10px;
     box-shadow: $shadow-3-down;
   }
-  &-info{
+
+  &-info {
     padding: 20px 0;
     text-align: center;
-    &__cover{
+
+    &__cover {
       width: 80px;
       height: 80px;
-      border-radius: 50%;
-      vertical-align: middle;
       margin-bottom: 10px;
+      vertical-align: middle;
+      border-radius: 50%;
     }
-    &__level{
+
+    &__level {
       display: inline-block;
       padding: 2px 6px;
       margin-right: 5px;
+      font-size: 12px;
+      color: #FFFFFF;
       background-color: var(--color-primary);
-      color: #fff;
-      font-size: 12px;
       border-radius: 4px;
     }
-    &__vip{
+
+    &__vip {
       display: inline-block;
       padding: 2px 6px;
       margin-right: 5px;
-      background-color: #f45a8d;
-      color: #fff;
       font-size: 12px;
+      color: #FFFFFF;
+      background-color: #F45A8D;
       border-radius: 4px;
     }
-    &__name{
+
+    &__name {
       font-size: 18px;
-      color: #303133;
       line-height: 30px;
+      color: #303133;
     }
-    &__sign{
+
+    &__sign {
       font-size: 12px;
       color: #909399;
     }
   }
-  &-menu{
+
+  &-menu {
     float: left;
     width: 240px;
     height: 100%;
     border-right: solid 1px var(--border-color);
-    &-scrollbar{
+
+    &-scrollbar {
       height: calc(100% - 200px);
     }
-    &__desc{
-      font-size: 12px;
+
+    &__desc {
       margin-left: 3px;
+      font-size: 12px;
     }
-    .el-menu{
+
+    .el-menu {
       border-right: none;
     }
   }
-  &-main{
-    overflow: hidden;
+
+  &-main {
     height: 100%;
+    overflow: hidden;
   }
+
   ::v-deep {
-    &-scrollbar-wrapper{
+    &-scrollbar-wrapper {
       overflow-x: hidden;
     }
-    .pagination{
-      text-align: center;
+
+    .pagination {
       padding: 20px;
+      text-align: center;
       box-shadow: $shadow-3-up;
     }
   }

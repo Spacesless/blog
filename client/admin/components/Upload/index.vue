@@ -25,7 +25,9 @@
     >
       <template v-if="draggable">
         <span class="el-icon-upload" />
-        <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+        <div class="el-upload__text">
+          将文件拖到此处，或<em>点击上传</em>
+        </div>
       </template>
       <template v-else>
         <span class="el-icon-plus" />
@@ -45,7 +47,7 @@ import PictureAblum from './components/PictureAblum'
 import PictureLinks from './components/PictureLinks'
 
 export default {
-  name: 'Upload',
+  name: 'UploadImage',
   components: {
     PictureAblum,
     PictureLinks
@@ -64,7 +66,7 @@ export default {
       default: () => []
     }
   },
-  data() {
+  data () {
     return {
       ablumVisible: false,
       linksVisible: false,
@@ -73,7 +75,7 @@ export default {
     }
   },
   computed: {
-    isDisableUpload() {
+    isDisableUpload () {
       if (this.multiple) {
         return false
       } else {
@@ -82,14 +84,14 @@ export default {
     }
   },
   methods: {
-    handleUpload() {
+    handleUpload () {
       this.$refs.upload.submit()
     },
-    beforeUpload(file) {
-      const isImage = file.type.indexOf('image') !== -1
-      if (!isImage) this.$message.error('上传的文件只能是图片格式!')
+    beforeUpload (file) {
+      const isImage = file.type.includes('image')
+      if (!isImage) { this.$message.error('上传的文件只能是图片格式!') }
     },
-    handlePreviewCard(file) {
+    handlePreviewCard (file) {
       const previewImage = file.url
       this.previewSrc = previewImage
       this.previewSrcList = [previewImage]
@@ -98,14 +100,14 @@ export default {
         this.$refs.preview && this.$refs.preview.clickHandler()
       })
     },
-    onChange(file, fileList) {
+    onChange (file, fileList) {
       this.$emit('update:fileList', fileList)
     },
     /**
      * 删除list-card里面的图片
      */
-    onRemove(file, fileList) {
-      const result = fileList.map(item => {
+    onRemove (file, fileList) {
+      const result = fileList.map((item) => {
         const data = item.response ? item.response.data : item
         const { name, url } = data
         return { name, url }
@@ -116,20 +118,20 @@ export default {
      * 覆盖默认的上传行为
      * @param {Object} param 文件信息 { file: 文件对象 }
      */
-    handleUploadFile(param) {
+    handleUploadFile (param) {
       const files = param.file
       const formData = new FormData()
       formData.append('file', files)
-      this.$api.common.UploadFiles(formData).then(res => {
+      this.$api.common.UploadFiles(formData).then((res) => {
         const fileList = res.data
         this.$emit('update:fileList', fileList)
       })
     },
-    onSelectFile(files) {
+    onSelectFile (files) {
       const result = [...this.fileList, ...files]
       this.$emit('update:fileList', result)
     },
-    onFileUrlChange(files) {
+    onFileUrlChange (files) {
       this.$emit('update:fileList', files)
     }
   }
@@ -137,38 +139,43 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.upload{
-  &-menus{
+.upload {
+  &-menus {
     padding-bottom: 15px;
   }
-  &-file{
-    ::v-deep .el-upload--picture-card{
+
+  &-file {
+    ::v-deep .el-upload--picture-card {
       width: 180px;
       height: 180px;
       line-height: 180px;
     }
+
     ::v-deep .el-upload-list--picture-card {
-      .el-upload-list__item{
+      .el-upload-list__item {
         width: 180px;
         height: 180px;
-        &-thumbnail{
+
+        &-thumbnail {
           object-fit: contain;
         }
       }
     }
+
     &--disable {
       ::v-deep .el-upload--picture-card {
         display: none;
       }
     }
-    &-drag{
-      ::v-deep .el-upload{
+
+    &-drag {
+      ::v-deep .el-upload {
         &--picture-card {
           display: inline-block;
           width: 360px;
           height: 180px;
-          border: none;
           line-height: 1em;
+          border: none;
         }
       }
     }

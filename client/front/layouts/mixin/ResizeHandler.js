@@ -7,19 +7,19 @@ const MDWIDTH = 1280
 
 export default {
   watch: {
-    $route(route) {
+    $route (route) {
       if (this.device === 'mobile' && this.sidebar.opened) {
         this.$store.dispatch('tools/closeSideBar', { withoutAnimation: false })
       }
     }
   },
-  beforeMount() {
+  beforeMount () {
     window.addEventListener('resize', this.$_resizeHandler)
   },
-  beforeDestroy() {
+  beforeDestroy () {
     window.removeEventListener('resize', this.$_resizeHandler)
   },
-  mounted() {
+  mounted () {
     const isMobile = this.$_isMobile()
     const isMiddleWidth = this.$_isMDwidth()
     if (isMobile) {
@@ -34,15 +34,15 @@ export default {
   methods: {
     // use $_ for mixins properties
     // https://vuejs.org/v2/style-guide/index.html#Private-property-names-essential
-    $_isMobile() {
+    $_isMobile () {
       const rect = body.getBoundingClientRect()
       return rect.width + 7 < WIDTH
     },
-    $_isMDwidth() {
+    $_isMDwidth () {
       const rect = body.getBoundingClientRect()
       return rect.width + 7 < MDWIDTH
     },
-    $_resizeHandler() {
+    $_resizeHandler () {
       if (!document.hidden) {
         const isMobile = this.$_isMobile()
         const isMiddleWidth = this.$_isMDwidth()

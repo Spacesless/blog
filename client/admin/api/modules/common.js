@@ -1,11 +1,11 @@
 export default axios => ({
   // 清除缓存
-  RefreshCache(data) {
+  RefreshCache (data) {
     return axios.get('/general/refresh')
   },
 
   // 清除缩略图
-  ClearThumbnail() {
+  ClearThumbnail () {
     return axios.get('/general/clearThumbnail')
   },
 
@@ -13,7 +13,7 @@ export default axios => ({
    * 上传文件
    * @param {Array [binary]} files 文件对象，可多选
    */
-  UploadFiles(formData) {
+  UploadFiles (formData) {
     return axios({
       url: '/file/post',
       method: 'post',
@@ -26,7 +26,7 @@ export default axios => ({
    * 获取上传文件列表
    * @param {Object} query 查询条件
    */
-  GetPathList(query) {
+  GetPathList (query) {
     return axios({
       url: '/file/get',
       method: 'get',
@@ -39,7 +39,7 @@ export default axios => ({
    * @param {Object} params 图片验证码参数
    * @returns {Element} svg图片
    */
-  GetCaptcha(params) {
+  GetCaptcha (params) {
     return axios({
       url: '/user/captcha',
       method: 'get',
@@ -47,4 +47,3 @@ export default axios => ({
     })
   }
 })
-

@@ -16,7 +16,9 @@
             v-for="(child, childIndex) in item.children"
             :key="childIndex"
             @click="handleClickNode(child.cityCode)"
-          >{{ child.name }}({{ child.count }})</dd>
+          >
+            {{ child.name }}({{ child.count }})
+          </dd>
         </dl>
       </el-scrollbar>
     </div>
@@ -37,9 +39,10 @@
 import { pageMeta } from '@/mixins'
 
 export default {
-  layout: 'app',
+  name: 'MyTrack',
   mixins: [pageMeta],
-  data() {
+  layout: 'app',
+  data () {
     return {
       tourTree: [],
       keyword: '',
@@ -48,20 +51,39 @@ export default {
       fetchLoading: false
     }
   },
+  head () {
+    return {
+      title: this.meta.title,
+      meta: [
+        { hid: 'description', name: 'description', content: this.meta.description },
+        { hid: 'keyword', name: 'keyword', content: this.meta.keywords }
+      ],
+      script: [
+        {
+          type: 'text/javascript',
+          src: '//webapi.amap.com/maps?v=1.4.15&key=e5f8a818ff67f77976be46e54f4a9d51&plugin=AMap.Scale,AMap.ToolBar,AMap.MarkerClusterer'
+        },
+        {
+          type: 'text/javascript',
+          src: '//webapi.amap.com/ui/1.1/main.js'
+        }
+      ]
+    }
+  },
   computed: {
-    filterTree() {
+    filterTree () {
       if (this.keyword) {
-        return this.filterNodesDeep(this.tourTree, node => node.name.indexOf(this.keyword) > -1)
+        return this.filterNodesDeep(this.tourTree, node => node.name.includes(this.keyword))
       } else {
         return [...this.tourTree]
       }
     }
   },
-  mounted() {
+  mounted () {
     this.initMap()
   },
   methods: {
-    async initMap() {
+    initMap () {
       const AMap = window.AMap
       this.mapInstance = new AMap.Map('map', {
         resizeEnable: true, // 是否监控地图容器尺寸变化
@@ -76,17 +98,17 @@ export default {
 
       this.addClusterLayer()
     },
-    async fetchList() {
+    async fetchList () {
       this.fetchLoading = true
       await this.$axios.$get('/tool/params', {
         params: {
           id: this.findCategory.id
         }
-      }).then(res => {
+      }).then((res) => {
         const treeData = JSON.parse(JSON.stringify(res))
-        treeData.forEach(item => {
+        treeData.forEach((item) => {
           item.count = 0
-          item.children.forEach(child => {
+          item.children.forEach((child) => {
             const length = child.children.length
             this.cityCount += 1
             this.trackCount += length
@@ -100,23 +122,23 @@ export default {
         const { province, point } = this.flattenDeep(res)
         this.topAdcodes = province
         this.tourList = point
-      }).catch(error => {
+      }).catch((error) => {
         console.log(error)
       })
       this.fetchLoading = false
     },
-    flattenDeep(source, province = [], point = []) {
-      source.forEach(item => {
+    flattenDeep (source, province = [], point = []) {
+      source.forEach((item) => {
         const { children, provCode, coordinates } = item
         if (children && children.length) {
           this.flattenDeep(item.children, province, point)
         }
-        if (provCode) province.push(provCode)
-        if (coordinates) point.push(item)
+        if (provCode) { province.push(provCode) }
+        if (coordinates) { point.push(item) }
       })
       return { province, point }
     },
-    addClusterLayer(excludedAdcodes) {
+    addClusterLayer (excludedAdcodes) {
       const refresh = () => {
         const zoom = this.mapInstance.getZoom()
 
@@ -133,14 +155,14 @@ export default {
         }
       }
 
-      this.mapInstance.on('zoomend', function() {
+      this.mapInstance.on('zoomend', function () {
         refresh()
       })
 
       // 加载相关组件
       window.AMapUI.load(
         ['ui/geo/DistrictCluster', 'ui/misc/PointSimplifier'],
-        async(DistrictCluster, PointSimplifier) => {
+        async (DistrictCluster, PointSimplifier) => {
           await this.fetchList()
 
           // 启动页面
@@ -153,12 +175,12 @@ export default {
           refresh()
         })
     },
-    renderCluster(DistrictCluster, PointSimplifier) {
+    renderCluster (DistrictCluster, PointSimplifier) {
       this.pointSimplifierIns = new PointSimplifier({
         map: this.mapInstance, // 所属的地图实例
         autoSetFitView: false, // 禁止自动更新地图视野
         zIndex: 110,
-        getPosition: function(item) {
+        getPosition (item) {
           if (!item) {
             return null
           }
@@ -168,7 +190,7 @@ export default {
           // 返回经纬度
           return [parseFloat(parts[0]), parseFloat(parts[1])]
         },
-        getHoverTitle: function(dataItem, idx) {
+        getHoverTitle (dataItem, idx) {
           return dataItem.name
         },
         renderOptions: {
@@ -189,7 +211,7 @@ export default {
         zIndex: 100,
         map: this.mapInstance, // 所属的地图实例
         topAdcodes: this.topAdcodes,
-        getPosition: function(item) {
+        getPosition (item) {
           if (!item) {
             return null
           }
@@ -200,7 +222,7 @@ export default {
           return [parseFloat(parts[0]), parseFloat(parts[1])]
         },
         renderOptions: {
-          getFeatureStyle: function(feature, dataItems) {
+          getFeatureStyle (feature, dataItems) {
             const length = dataItems.length
             if (length) {
               return {
@@ -223,7 +245,7 @@ export default {
   * @return 过滤后的根节点数组
   * @see https://segmentfault.com/q/1010000018197249/a-1020000018203261
   */
-    filterNodesDeep(nodes, predicate) {
+    filterNodesDeep (nodes, predicate) {
     // 如果已经没有节点了，结束递归
       if (!(nodes && nodes.length)) {
         return
@@ -241,35 +263,16 @@ export default {
           newChildren.push(node)
         }
       }
-      return newChildren.length ? newChildren : void 0
+      return newChildren.length ? newChildren : undefined
     },
     /**
      * 点击树节点，定位地图
      * @param {String} cityCode 城市区域编码
      */
-    handleClickNode(cityCode) {
-      if (!cityCode) return
+    handleClickNode (cityCode) {
+      if (!cityCode) { return }
       const { idealZoom, center } = this.distCluster.getAreaNodeProps(cityCode)
       idealZoom && center && this.mapInstance.setZoomAndCenter(idealZoom - 1, center)
-    }
-  },
-  head() {
-    return {
-      title: this.meta.title,
-      meta: [
-        { hid: 'description', name: 'description', content: this.meta.description },
-        { hid: 'keyword', name: 'keyword', content: this.meta.keywords }
-      ],
-      script: [
-        {
-          type: 'text/javascript',
-          src: '//webapi.amap.com/maps?v=1.4.15&key=e5f8a818ff67f77976be46e54f4a9d51&plugin=AMap.Scale,AMap.ToolBar,AMap.MarkerClusterer'
-        },
-        {
-          type: 'text/javascript',
-          src: '//webapi.amap.com/ui/1.1/main.js'
-        }
-      ]
     }
   }
 }
@@ -277,74 +280,90 @@ export default {
 
 <style lang="scss" scoped>
 $sidebar-width: 200px;
-.tour{
+
+.tour {
   width: 100%;
   height: 100%;
-  &-list{
+
+  &-list {
     position: fixed;
     top: 0;
-    left: 0;
     bottom: 0;
+    left: 0;
     width: $sidebar-width;
-    background-color: #1a232c;
+    background-color: #1A232C;
     box-shadow: 0 2px 5px rgba($color: #000000, $alpha: .6);
-    &-filter{
+
+    &-filter {
       height: 70px;
       padding: 0 15px;
       line-height: 70px;
     }
-    &-scrollbar{
+
+    &-scrollbar {
       height: calc(100% - 180px);
     }
-    dl{
+
+    dl {
       padding: 0 10px;
-      color: #f7f7f7;
       font-size: 14px;
       line-height: 1.7;
-      dd{
+      color: #F7F7F7;
+
+      dd {
         padding-left: 15px;
         cursor: pointer;
       }
     }
-    ::v-deep .el-icon-caret-right:before{
-      content: "\e6e0";
+
+    ::v-deep .el-icon-caret-right::before {
+      content: '\e6e0';
     }
-    &__item{
+
+    &__item {
       font-size: 14px;
     }
   }
-  &-overview{
+
+  &-overview {
     position: fixed;
     bottom: 10px;
     left: 0;
     width: $sidebar-width;
     text-align: center;
-    &-item{
-      color: #fff;
-      &__count{
+
+    &-item {
+      color: #FFFFFF;
+
+      &__count {
         font-size: 36px;
       }
     }
   }
 }
-#map{
+
+#map {
   position: fixed;
-  left: $sidebar-width;
   right: 0;
+  left: $sidebar-width;
   height: 100%;
-  ::v-deep .amap{
-    &-logo{
+
+  ::v-deep .amap {
+    &-logo {
       display: none !important;
     }
-    &-toolbar{
-      right: 25px !important;
+
+    &-toolbar {
       top: 20px !important;
-    }
-    &-scalecontrol{
       right: 25px !important;
     }
-    &-scale-text{
-      text-shadow: 0 1px #fff;
+
+    &-scalecontrol {
+      right: 25px !important;
+    }
+
+    &-scale-text {
+      text-shadow: 0 1px #FFFFFF;
     }
   }
 }

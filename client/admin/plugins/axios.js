@@ -4,11 +4,11 @@ let networkErrorMsg = false
 let invalidTokenMsg = false
 const _Message = Message
 
-export default function({ store, app: { $axios }}) {
+export default function ({ store, app: { $axios } }) {
   // request timeout
   $axios.defaults.timeout = 15000
 
-  $axios.onResponse(response => {
+  $axios.onResponse((response) => {
     const res = response.data
 
     // if the custom code is not 0, it is judged as an error.
@@ -36,7 +36,7 @@ export default function({ store, app: { $axios }}) {
       return res
     }
   },
-  error => {
+  (error) => {
     let message = '[err] ' + error
     console.log(message) // for debug
 

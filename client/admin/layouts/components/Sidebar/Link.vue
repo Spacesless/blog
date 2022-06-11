@@ -1,4 +1,3 @@
-
 <template>
   <!-- eslint-disable vue/require-component-is -->
   <component v-bind="linkProps(to)">
@@ -10,6 +9,7 @@
 import { isExternal } from '@/utils/validate'
 
 export default {
+  name: 'SidebarLink',
   props: {
     to: {
       type: String,
@@ -17,7 +17,7 @@ export default {
     }
   },
   methods: {
-    linkProps(url) {
+    linkProps (url) {
       if (isExternal(url)) {
         return {
           is: 'a',

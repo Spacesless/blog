@@ -8,7 +8,6 @@
     @close="handleCancel"
     @closed="onClosed"
   >
-
     <el-form ref="form" :model="formData" :rules="rules" label-width="80px">
       <el-form-item label="图片" prop="imgurl">
         <upload-image :file-list.sync="fileList" />
@@ -28,8 +27,12 @@
     </el-form>
 
     <div slot="footer" class="dialog-footer">
-      <el-button @click="handleCancel">取消</el-button>
-      <el-button type="primary" :loading="dialogLoading" @click="handleConfirm">确定</el-button>
+      <el-button @click="handleCancel">
+        取消
+      </el-button>
+      <el-button type="primary" :loading="dialogLoading" @click="handleConfirm">
+        确定
+      </el-button>
     </div>
   </el-dialog>
 </template>
@@ -50,7 +53,7 @@ export default {
       default: 0
     }
   },
-  data() {
+  data () {
     return {
       dialogTitle: '',
       formData: {},
@@ -63,12 +66,12 @@ export default {
     }
   },
   watch: {
-    fileList([src]) {
+    fileList ([src]) {
       this.formData.imgurl = src
     }
   },
   methods: {
-    onOpen() {
+    onOpen () {
       this.fileList = []
       if (this.currentId) {
         this.dialogTitle = '修改Banner'
@@ -80,9 +83,9 @@ export default {
         }
       }
     },
-    async fetchData() {
+    async fetchData () {
       this.fetchLoading = true
-      await this.$api.content.GetContent('banner', this.currentId).then(res => {
+      await this.$api.content.GetContent('banner', this.currentId).then((res) => {
         const { imgurl } = res.data
         this.formData = res.data
         if (imgurl) {
@@ -95,9 +98,9 @@ export default {
       }).catch(() => {})
       this.fetchLoading = false
     },
-    handleConfirm() {
-      this.$refs.form.validate(async(valid) => {
-        if (!valid) return
+    handleConfirm () {
+      this.$refs.form.validate(async (valid) => {
+        if (!valid) { return }
         this.dialogLoading = true
 
         const postData = {
@@ -108,7 +111,7 @@ export default {
         }
 
         const SubmitHandler = this.currentId ? this.$api.content.UpdateContent : this.$api.content.CreateContent
-        await SubmitHandler('banner', postData).then(res => {
+        await SubmitHandler('banner', postData).then((res) => {
           this.$message({
             type: 'success',
             message: this.isEdit ? '更新成功' : '添加成功'

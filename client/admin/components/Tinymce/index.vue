@@ -6,7 +6,6 @@
 </template>
 
 <script>
-import PictureAblum from '@/components/Upload/components/PictureAblum'
 /**
  * docs:
  * https://panjiachen.github.io/vue-element-admin-site/feature/component/rich-editor.html#tinymce
@@ -15,6 +14,7 @@ import plugins from './plugins'
 import toolbar from './toolbar'
 import load from './dynamicLoadScript'
 import codesampleLanguages from './codesampleLanguages'
+import PictureAblum from '@/components/Upload/components/PictureAblum'
 
 // why use this cdn, detail see https://github.com/PanJiaChen/tinymce-all-in-one
 const tinymceCDN = process.env.NODE_ENV === 'production'
@@ -22,14 +22,14 @@ const tinymceCDN = process.env.NODE_ENV === 'production'
   : '/vendor/tinymce/tinymce.min.js'
 
 export default {
-  name: 'Tinymce',
+  name: 'TinymceEditor',
   components: {
     PictureAblum
   },
   props: {
     id: {
       type: String,
-      default: function() {
+      default () {
         return 'vue-tinymce-' + +new Date() + ((Math.random() * 1000).toFixed(0) + '')
       }
     },
@@ -40,7 +40,7 @@ export default {
     toolbar: {
       type: Array,
       required: false,
-      default() {
+      default () {
         return []
       }
     },
@@ -59,7 +59,7 @@ export default {
       default: 'auto'
     }
   },
-  data() {
+  data () {
     return {
       hasChange: false,
       hasInit: false,
@@ -69,7 +69,7 @@ export default {
     }
   },
   computed: {
-    containerWidth() {
+    containerWidth () {
       const width = this.width
       if (/^[\d]+(\.[\d]+)?$/.test(width)) { // matches `100`, `'100'`
         return `${width}px`
@@ -78,28 +78,28 @@ export default {
     }
   },
   watch: {
-    value(val) {
+    value (val) {
       if (!this.hasChange && this.hasInit) {
         this.$nextTick(() => window.tinymce.get(this.tinymceId).setContent(val || ''))
       }
     }
   },
-  mounted() {
+  mounted () {
     this.init()
   },
-  activated() {
+  activated () {
     if (window.tinymce) {
       this.initTinymce()
     }
   },
-  deactivated() {
+  deactivated () {
     this.destroyTinymce()
   },
-  destroyed() {
+  destroyed () {
     this.destroyTinymce()
   },
   methods: {
-    init() {
+    init () {
       // dynamic load tinymce from cdn
       load(tinymceCDN, (err) => {
         if (err) {
@@ -109,7 +109,7 @@ export default {
         this.initTinymce()
       })
     },
-    initTinymce() {
+    initTinymce () {
       window.tinymce.init({
         selector: `#${this.tinymceId}`,
         language: 'zh_CN',
@@ -117,7 +117,7 @@ export default {
         object_resizing: false,
         toolbar: this.toolbar.length > 0 ? this.toolbar : toolbar,
         menubar: this.menubar,
-        plugins: plugins,
+        plugins,
         end_container_on_empty_block: true,
         powerpaste_word_import: 'clean',
         code_dialog_height: 650,
@@ -127,7 +127,7 @@ export default {
         nonbreaking_force_tab: true, // inserting nonbreaking space &nbsp; need Nonbreaking Space Plugin
         fontsize_formats: '12px 14px 16px 18px 24px 36px 48px 56px 72px',
         font_formats: '微软雅黑=Microsoft YaHei,Helvetica Neue,PingFang SC,sans-serif;苹果苹方=PingFang SC,Microsoft YaHei,sans-serif;宋体=simsun,serif;仿宋体=FangSong,serif;黑体=SimHei,sans-serif;Arial=arial,helvetica,sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book antiqua,palatino;Comic Sans MS=comic sans ms,sans-serif;Courier New=courier new,courier;Georgia=georgia,palatino;Helvetica=helvetica;Impact=impact,chicago;Terminal=terminal,monaco;Times New Roman=times new roman,times;Verdana=verdana,geneva;',
-        init_instance_callback: editor => {
+        init_instance_callback: (editor) => {
           if (this.value) {
             editor.setContent(this.value)
           }
@@ -138,7 +138,7 @@ export default {
           })
         },
         relative_urls: false,
-        setup(editor) {
+        setup (editor) {
           editor.on('FullscreenStateChanged', (e) => {
             this.fullscreen = e.state
           })
@@ -157,7 +157,7 @@ export default {
      * @param {*} value 当前受影响的字段值
      * @param {Object} meta 包含指定对话框中其它字段值的对象
      */
-    handlerPickerFile(callback, value, meta) {
+    handlerPickerFile (callback, value, meta) {
       const input = document.createElement('input')
       input.setAttribute('type', 'file')
       input.setAttribute('accept', 'image/*')
@@ -170,12 +170,12 @@ export default {
         once you do not need it anymore.
       */
 
-      input.onchange = e => {
+      input.onchange = (e) => {
         const file = e.target.files[0]
-        if (!file) return
+        if (!file) { return }
         const formData = new FormData()
         formData.append('file', file)
-        this.$api.common.UploadFiles(formData).then(res => {
+        this.$api.common.UploadFiles(formData).then((res) => {
           const fileList = res.data
           const { url, name } = fileList[0] || {}
           callback(url, { alt: name })
@@ -194,10 +194,10 @@ export default {
      * @param {Function} success 成功回调
      * @param {Function} failure 失败回调
      */
-    uploadImages(blobInfo, success, failure) {
+    uploadImages (blobInfo, success, failure) {
       const formData = new FormData()
       formData.append('file', blobInfo.blob())
-      this.$api.common.UploadFiles(formData).then(res => {
+      this.$api.common.UploadFiles(formData).then((res) => {
         const fileList = res.data
         const { url } = fileList[0] || {}
         success(url)
@@ -205,10 +205,10 @@ export default {
         failure('图片上传失败.')
       })
     },
-    onSelectFile(arr) {
+    onSelectFile (arr) {
       arr.forEach(v => this.insertContent(`<img src="${v.url}" width="${v.width || ''}" height="${v.height || ''}" >`))
     },
-    destroyTinymce() {
+    destroyTinymce () {
       const tinymce = window.tinymce.get(this.tinymceId)
       if (this.fullscreen) {
         tinymce.execCommand('mceFullScreen')
@@ -218,16 +218,16 @@ export default {
         tinymce.destroy()
       }
     },
-    setContent(value) {
+    setContent (value) {
       window.tinymce.get(this.tinymceId).setContent(value)
     },
-    insertContent(value) {
+    insertContent (value) {
       window.tinymce.get(this.tinymceId).insertContent(value)
     },
-    getContent() {
+    getContent () {
       window.tinymce.get(this.tinymceId).getContent()
     },
-    getWordCount() {
+    getWordCount () {
       return window.tinymce.get(this.tinymceId).plugins.wordcount.getCount()
     }
   }
@@ -238,9 +238,7 @@ export default {
 .tinymce-container {
   position: relative;
   line-height: normal;
-}
 
-.tinymce-container {
   ::v-deep {
     .mce-fullscreen {
       z-index: 10000;
@@ -249,20 +247,21 @@ export default {
 }
 
 .tinymce-textarea {
-  visibility: hidden;
   z-index: -1;
+  visibility: hidden;
 }
 
 .editor-custom-btn-container {
   position: absolute;
-  right: 4px;
   top: 4px;
-  /*z-index: 2005;*/
+  right: 4px;
+
+  /* z-index: 2005; */
 }
 
 .fullscreen .editor-custom-btn-container {
-  z-index: 10000;
   position: fixed;
+  z-index: 10000;
 }
 
 .editor-upload-btn {

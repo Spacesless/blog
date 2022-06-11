@@ -32,15 +32,16 @@
 </template>
 
 <script>
+import { pageMeta } from '@/mixins'
 if (process.client) {
   require('@/vendor/live2d')
 }
-import { pageMeta } from '@/mixins'
 
 export default {
-  layout: 'app',
+  name: 'Live2dPage',
   mixins: [pageMeta],
-  data() {
+  layout: 'app',
+  data () {
     return {
       apiurl: '//api.timelessq.com/live2d', // apiurl {string} 模型后端接口
       modelId: 100, // 模型 ID
@@ -53,8 +54,8 @@ export default {
       currentInfo: {},
       mouseover: [
         {
-          'selector': 'live2d',
-          'text': [
+          selector: 'live2d',
+          text: [
             '(๑•́ ₃ •̀๑)',
             '.^◡^.',
             'ᖗ乛◡乛ᖘ'
@@ -70,53 +71,53 @@ export default {
       ]
     }
   },
-  async mounted() {
+  mounted () {
     this.fetchList()
     this.initModel()
   },
   methods: {
-    fetchList() {
-      this.$axios.get(this.apiurl + '/lists').then(res => {
+    fetchList () {
+      this.$axios.get(this.apiurl + '/lists').then((res) => {
         let source = res.data
         source = JSON.stringify(source).replace(/id/gi, 'value').replace(/name/gi, 'label')
         this.options = JSON.parse(source)
         this.deepOptions = []
-        this.options.forEach(item => {
+        this.options.forEach((item) => {
           this.deepOptions = [...this.deepOptions, ...item.children]
         })
         this.currentInfo = this.deepOptions.find(item => item.value === this.selectModel)
       })
     },
-    changeClassify(val) {
-      if (val === this.selectModel) return
+    changeClassify (val) {
+      if (val === this.selectModel) { return }
       this.selectModel = val
       this.currentInfo = this.deepOptions.find(item => item.value === val)
     },
-    thumbFormat(index) {
+    thumbFormat (index) {
       return `${this.apiurl}/../model/preview/${this.selectModel}/${index}.png`
     },
     /** 提示框 */
-    showMessage(text, timeout) {
-      if (Array.isArray(text)) text = text[Math.floor(Math.random() * text.length + 1) - 1]
+    showMessage (text, timeout) {
+      if (Array.isArray(text)) { text = text[Math.floor(Math.random() * text.length + 1) - 1] }
       this.tips = text
       this.tipsShow = true
-      if (timeout === undefined) timeout = 3000
+      if (timeout === undefined) { timeout = 3000 }
       this.hideMessage(timeout)
     },
-    hideMessage(timeout) {
-      if (timeout === undefined) timeout = 3000
+    hideMessage (timeout) {
+      if (timeout === undefined) { timeout = 3000 }
       clearTimeout(this.timer)
       this.timer = setTimeout(() => {
         this.tipsShow = false
       }, timeout)
     },
     /** 初始化模型 */
-    initModel() {
+    initModel () {
       this.loadModel(this.modelId, this.modelTexturesId)
       this.welcome()
       this.interaction()
     },
-    loadModel(modelId, modelTexturesId) {
+    loadModel (modelId, modelTexturesId) {
       this.modelId = modelId
       this.selectTexture = modelTexturesId
       window.loadlive2d(
@@ -124,13 +125,13 @@ export default {
         console.log('live2d', '模型 ' + modelId + '-' + modelTexturesId + ' 加载完成')
       )
 
-      if (this.deepOptions) this.currentInfo = this.deepOptions.find(item => item.value === modelId)
+      if (this.deepOptions) { this.currentInfo = this.deepOptions.find(item => item.value === modelId) }
     },
-    /** 更换模型*/
-    loadOtherModel() {
+    /** 更换模型 */
+    loadOtherModel () {
       const { modelId } = this.getLocalStorage()
       this.$axios.get(this.apiurl + '/model/switch?id=' + modelId)
-        .then(res => {
+        .then((res) => {
           const { id, message } = res.data
           if (id) {
             this.showMessage(message, 3000)
@@ -140,10 +141,10 @@ export default {
           }
         })
     },
-    loadOtherTexture() {
+    loadOtherTexture () {
       const { modelId, modelTexturesId } = this.getLocalStorage()
       this.$axios.get(this.apiurl + '/texture/random?id=' + modelId + '&texture=' + modelTexturesId)
-        .then(res => {
+        .then((res) => {
           const { id, texture } = res.data
           if (id) {
             this.showMessage('我的新衣服好看嘛', 3000)
@@ -153,11 +154,11 @@ export default {
           }
         })
     },
-    welcome() {
-      var text
-      var SiteIndexUrl = window.location.protocol + '//' + window.location.hostname + '/' // 自动获取主页
+    welcome () {
+      let text
+      const SiteIndexUrl = window.location.protocol + '//' + window.location.hostname + '/' // 自动获取主页
       if (window.location.href === SiteIndexUrl) { // 如果是主页
-        var now = (new Date()).getHours()
+        const now = (new Date()).getHours()
         if (now > 23 || now <= 5) {
           text = '你是夜猫子呀？这么晚还不睡觉，明天起的来嘛'
         } else if (now > 5 && now <= 7) {
@@ -177,34 +178,32 @@ export default {
         } else {
           text = '嗨~ 快来逗我玩吧！'
         }
-      } else {
-        if (document.referrer !== '') {
-          var referrer = document.createElement('a')
-          referrer.href = document.referrer
-          var domain = referrer.hostname.split('.')[1]
-          if (window.location.hostname === referrer.hostname) {
-            text = '欢迎阅读<span style="color:#0099cc;">『' + document.title.split(' - ')[0] + '』</span>'
-          } else if (domain === 'baidu') {
-            text = 'Hello! 来自 百度搜索 的朋友<br>你是搜索 <span style="color:#0099cc;">' + referrer.search.split('&wd=')[1].split('&')[0] + '</span> 找到的我吗？'
-          } else if (domain === 'so') {
-            text = 'Hello! 来自 360搜索 的朋友<br>你是搜索 <span style="color:#0099cc;">' + referrer.search.split('&q=')[1].split('&')[0] + '</span> 找到的我吗？'
-          } else if (domain === 'google') {
-            text = 'Hello! 来自 谷歌搜索 的朋友<br>欢迎阅读<span style="color:#0099cc;">『' + document.title.split(' - ')[0] + '』</span>'
-          } else {
-            text = 'Hello! 来自 <span style="color:#0099cc;">' + referrer.hostname + '</span> 的朋友'
-          }
-        } else {
+      } else if (document.referrer !== '') {
+        const referrer = document.createElement('a')
+        referrer.href = document.referrer
+        const domain = referrer.hostname.split('.')[1]
+        if (window.location.hostname === referrer.hostname) {
           text = '欢迎阅读<span style="color:#0099cc;">『' + document.title.split(' - ')[0] + '』</span>'
+        } else if (domain === 'baidu') {
+          text = 'Hello! 来自 百度搜索 的朋友<br>你是搜索 <span style="color:#0099cc;">' + referrer.search.split('&wd=')[1].split('&')[0] + '</span> 找到的我吗？'
+        } else if (domain === 'so') {
+          text = 'Hello! 来自 360搜索 的朋友<br>你是搜索 <span style="color:#0099cc;">' + referrer.search.split('&q=')[1].split('&')[0] + '</span> 找到的我吗？'
+        } else if (domain === 'google') {
+          text = 'Hello! 来自 谷歌搜索 的朋友<br>欢迎阅读<span style="color:#0099cc;">『' + document.title.split(' - ')[0] + '』</span>'
+        } else {
+          text = 'Hello! 来自 <span style="color:#0099cc;">' + referrer.hostname + '</span> 的朋友'
         }
+      } else {
+        text = '欢迎阅读<span style="color:#0099cc;">『' + document.title.split(' - ')[0] + '』</span>'
       }
       this.showMessage(text, 3000)
     },
     /** 交互时间 */
-    interaction() {
+    interaction () {
       const refs = this.$refs
       const $mouseoverHandler = (key) => {
         const rows = this.mouseover.find(item => item.selector === key)
-        if (!rows) return
+        if (!rows) { return }
         let text = ''
         if (Array.isArray(rows.text)) {
           text = rows.text[Math.floor(Math.random() * rows.text.length + 1) - 1]
@@ -221,7 +220,7 @@ export default {
         this.showMessage(text, 3000, true)
       })
     },
-    handleTakePhoto() {
+    handleTakePhoto () {
       this.showMessage('照好了嘛，是不是很可爱呢？', 3000)
       window.Live2D.captureName = 'Pio.png'
       window.Live2D.captureFrame = true
@@ -231,73 +230,88 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.live{
+.live {
   position: fixed;
   width: 100%;
-  &, .el-row, .el-col{
+
+  &,
+  .el-row,
+  .el-col {
     height: 100%;
   }
-  .el-col{
+
+  .el-col {
     position: relative;
   }
-  .live2d{
+
+  .live2d {
     position: absolute;
     top: 50%;
     left: 50%;
     margin-top: -250px;
     margin-left: -250px;
   }
+
   &-tips {
-    overflow: hidden;
     position: absolute;
     top: 20px;
     left: 50px;
     width: 350px;
     height: 100px;
-    margin: -20px 10px;
     padding: 5px 10px;
-    border: 1px solid var(--color-primary);
-    background-color: rgba(255, 255, 255, 0.8);
+    margin: -20px 10px;
+    overflow: hidden;
     font-size: 12px;
     text-overflow: ellipsis;
-    box-shadow: 0 1px 3px #66ccff;
+    background-color: rgba(255, 255, 255, .8);
+    border: 1px solid var(--color-primary);
     border-radius: 12px;
+    box-shadow: 0 1px 3px #66CCFF;
   }
-  &-info{
+
+  &-info {
     position: absolute;
-    bottom: 10px;
     right: 0;
+    bottom: 10px;
     padding: 0 20px;
     font-size: 15px;
     line-height: 1.5;
     text-align: right;
-    p{
+
+    p {
       color: #606266;
     }
-    a{
+
+    a {
       color: var(--color-primary);
     }
   }
-  &-filter{
+
+  &-filter {
     padding: 15px 0;
   }
-  &-list{
-    &__item{
+
+  &-list {
+    &__item {
       padding: 10px 15px;
-      border: 1px solid #fff;
-      &--active{
+      border: 1px solid #FFFFFF;
+
+      &--active {
         border: 1px solid var(--color-primary);
         border-radius: 4px;
       }
-      .el-image{
+
+      .el-image {
         cursor: pointer;
       }
     }
   }
-  &-wrapper{
+
+  &-wrapper {
     height: calc(100% - 65px);
   }
-  .scroll-warpper{
+
+  .scroll-warpper {
     overflow-x: hidden !important;
   }
 }

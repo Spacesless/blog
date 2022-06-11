@@ -1,58 +1,67 @@
-.bangumi{
-  &-ratings{
-    .para-name{
+.bangumi {
+  &-ratings {
+    .para-name {
       float: left;
     }
+
     .el-rate {
       overflow: hidden;
     }
   }
-  &-list{
-    &-item{
-      overflow: hidden;
+
+  &-list {
+    &-item {
       position: relative;
       margin-bottom: $grid-space;
+      overflow: hidden;
       background-color: var(--bg-normal);
-      box-shadow: $shadow-3-down;
       border-radius: $border-radius;
+      box-shadow: $shadow-3-down;
       transition: all .3s;
-      &:hover{
-        box-shadow: 2px 0 10px rgba(0,0,0,.1);
+
+      &:hover {
+        box-shadow: 2px 0 10px rgba(0, 0, 0, .1);
       }
     }
-    &-cover{
+
+    &-cover {
       position: relative;
     }
-    &__ratings{
+
+    &__ratings {
       position: absolute;
       right: 0;
       bottom: 0;
       width: 30px;
       height: 16px;
-      background: var(--color-primary);
-      color: #fff;
       font-size: 12px;
       line-height: 16px;
+      color: #FFFFFF;
       text-align: center;
+      background: var(--color-primary);
       border-top-left-radius: 4px;
     }
-    &-info{
+
+    &-info {
       padding: 10px 12px;
       font-size: 14px;
       line-height: 1.6em;
-      .para-name{
+
+      .para-name {
         color: var(--color-secondary);
       }
     }
-    &__title{
-      overflow: hidden;
+
+    &__title {
       display: inline-block;
       max-width: 100%;
+      overflow: hidden;
       font-size: 18px;
       color: var(--color-heading);
       text-overflow: ellipsis;
       white-space: nowrap;
-      &:hover{
+
+      &:hover {
         color: var(--color-primary);
       }
     }

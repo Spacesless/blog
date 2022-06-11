@@ -34,6 +34,7 @@ import QRCode from 'qrcode'
 import { primaryColor } from '@/styles/export-to-js.scss'
 
 export default {
+  name: 'ShareSponsor',
   props: {
     title: {
       type: String,
@@ -48,32 +49,32 @@ export default {
       default: ''
     }
   },
-  data() {
+  data () {
     return {
       shareUrl: '',
       website: '',
       wxVisible: false
     }
   },
-  mounted() {
+  mounted () {
     this.getShareData()
   },
   methods: {
-    getShareData() {
+    getShareData () {
       this.shareUrl = encodeURIComponent(location.href)
       this.website = encodeURIComponent(location.origin)
       this.shareTitle = this.title || encodeURIComponent(document.title)
     },
-    shareToQQ() {
+    shareToQQ () {
       const url = `https://connect.qq.com/widget/shareqq/index.html?url='${this.shareUrl}&title=${this.shareTitle}&desc=${this.description}&summary=&site=${this.website}`
       this.openWindow(url)
     },
-    shareToQzone() {
+    shareToQzone () {
       const url = `http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=${this.shareUrl}&title=${this.shareTitle}&pics=${this.cover}&desc=${this.description}&site=${this.website}`
       this.openWindow(url)
     },
-    shareToWx() {
-      if (this.$refs.qrcode.src) return
+    shareToWx () {
+      if (this.$refs.qrcode.src) { return }
       const options = {
         errorCorrectionLevel: 'H',
         margin: 1.5,
@@ -85,11 +86,11 @@ export default {
         }
       }
       QRCode.toDataURL(this.shareUrl, options, (err, url) => {
-        if (err) throw err
+        if (err) { throw err }
         this.$refs.qrcode.src = url
       })
     },
-    shareToSina() {
+    shareToSina () {
       const param = {
         url: this.shareUrl,
         appkey: '564047643',
@@ -104,7 +105,7 @@ export default {
       const url = `http://v.t.sina.com.cn/share/share.php?${temp.join('&')}`
       this.openWindow(url)
     },
-    openWindow(url, width = 850, height = 650) {
+    openWindow (url, width = 850, height = 650) {
       window.open(url, '', `width = ${width}, height = ${height}`)
     }
   }
@@ -114,63 +115,73 @@ export default {
 <style lang="scss" scoped>
 $iconWidth: 36px;
 
-.share{
+.share {
   position: relative;
   padding: 12px 20px;
-  border-top: 1px solid var(--border-color);
   text-align: right;
-  &__tooltips{
+  border-top: 1px solid var(--border-color);
+
+  &__tooltips {
     position: absolute;
     left: 20px;
     line-height: $iconWidth;
     color: var(--color-secondary);
   }
-  &-icon{
+
+  &-icon {
     display: inline-block;
     width: 40px;
     height: 40px;
     margin-right: 3px;
-    background-color: var(--bg-normal);
     font-size: 22px;
     line-height: 40px;
+    background-color: var(--bg-normal);
     border-radius: 50%;
   }
-  .el-icon-share{
+
+  .el-icon-share {
     margin-right: 3px;
-    color: var(--color-primary);
     font-size: 24px;
     line-height: 40px;
+    color: var(--color-primary);
   }
-  &-item{
+
+  &-item {
     display: inline-block;
     width: $iconWidth;
     height: $iconWidth;
     margin-left: 8px;
-    background-image: url('~@/assets/image/share-icon.png');
     vertical-align: bottom;
     cursor: pointer;
-    &--sponsor{
+    background-image: url('~@/assets/image/share-icon.png');
+
+    &--sponsor {
       background-position: -0 0;
     }
-    &--wx{
+
+    &--wx {
       background-position: -$iconWidth 0;
     }
-    &--sina{
+
+    &--sina {
       background-position: -$iconWidth * 2 0;
     }
-    &--qzone{
+
+    &--qzone {
       background-position: -$iconWidth * 3 0;
     }
-    &--qq{
+
+    &--qq {
       background-position: -$iconWidth * 4 0;
     }
   }
 }
-.qrcode-wrap{
-  p{
+
+.qrcode-wrap {
+  p {
     padding-top: 10px;
-    color: var(--color-secondary);
     font-size: 15px;
+    color: var(--color-secondary);
     text-align: center;
   }
 }

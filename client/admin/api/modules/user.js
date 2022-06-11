@@ -3,7 +3,7 @@ export default axios => ({
    * login 登录
    * @param {Object} {username, password, remember}
    */
-  Login(data) {
+  Login (data) {
     return axios({
       url: '/user/login',
       method: 'post',
@@ -15,7 +15,7 @@ export default axios => ({
    * 拉取用户信息
    * @return {Object} userInfo
    */
-  GetInfo() {
+  GetInfo () {
     return axios({
       url: '/user/getInfo',
       method: 'get'
@@ -23,7 +23,7 @@ export default axios => ({
   },
 
   // 注销
-  Logout() {
+  Logout () {
     return axios({
       url: '/user/logout',
       method: 'post'
@@ -34,7 +34,7 @@ export default axios => ({
    * 通过邮箱找回密码
    * @param {String} email 邮箱地址
    */
-  ForgotPassword(email) {
+  ForgotPassword (email) {
     return axios({
       url: '/user/forgot',
       method: 'post',
@@ -49,7 +49,7 @@ export default axios => ({
    * @param {String} password md5密码
    * @param {String} resetCode 邮件验证码
    */
-  ResetPassword(password, resetCode) {
+  ResetPassword (password, resetCode) {
     return axios({
       url: '/user/reset',
       method: 'post',
@@ -63,7 +63,7 @@ export default axios => ({
    * 更新用户信息
    * @param {Object} data
    */
-  UpdateAdmin(data) {
+  UpdateAdmin (data) {
     return axios({
       url: '/user/update',
       method: 'post',
