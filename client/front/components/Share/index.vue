@@ -1,31 +1,51 @@
 <template>
   <div class="share">
-    <span class="share__tooltips">请我喝[茶]~(￣▽￣)~*</span>
-    <el-tooltip effect="dark" content="打赏" placement="bottom">
-      <span class="share-item share-item--sponsor" @click="shareToSina" />
-    </el-tooltip>
-    <el-tooltip effect="dark" content="分享到新浪微博" placement="bottom">
-      <span class="share-item share-item--sina" @click="shareToSina" />
-    </el-tooltip>
-    <el-tooltip effect="dark" content="分享到微信" placement="bottom">
-      <el-popover
-        v-model="wxVisible"
-        placement="bottom"
-        width="256"
-      >
-        <div class="qrcode-wrap">
-          <img ref="qrcode" class="img-fluid" alt="">
-          <p>分享到微信</p>
-        </div>
-        <span slot="reference" class="share-item share-item--wx" @click="shareToWx" />
-      </el-popover>
-    </el-tooltip>
-    <el-tooltip effect="dark" content="分享到QQ好友" placement="bottom">
-      <span class="share-item share-item--qq" @click="shareToQQ" />
-    </el-tooltip>
-    <el-tooltip effect="dark" content="分享到QQ空间" placement="bottom">
-      <span class="share-item share-item--qzone" @click="shareToQzone" />
-    </el-tooltip>
+    <ul v-if="isShowCode" class="share-pay">
+      <li class="share-pay-item">
+        <img class="share-pay__qrcode img-fluid" :src="'/static/img/sponsor-wx.png' | getAbsolutePath" alt="wx">
+        <p class="share-pay__name">
+          微信支付
+        </p>
+      </li>
+      <li class="share-pay-item">
+        <img class="share-pay__qrcode img-fluid" :src="'/static/img/sponsor-alipay.png' | getAbsolutePath" alt="alipay">
+        <p class="share-pay__name">
+          支付宝
+        </p>
+      </li>
+    </ul>
+    <div class="share-body clearfix">
+      <div class="share-sponsor" @click="toggleCodeShow">
+        <el-tooltip effect="dark" content="给我打钱" placement="bottom">
+          <span class="share-item share-item--sponsor" />
+        </el-tooltip>
+        <span class="share-sponsor__tooltips">{{ isShowCode ? '下次一定' : '请我喝[茶]~(￣▽￣)~*' }}</span>
+      </div>
+      <div class="share-community">
+        <el-tooltip effect="dark" content="分享到新浪微博" placement="bottom">
+          <span class="share-item share-item--sina" @click="shareToSina" />
+        </el-tooltip>
+        <el-tooltip effect="dark" content="分享到微信" placement="bottom">
+          <el-popover
+            v-model="wxVisible"
+            placement="bottom"
+            width="256"
+          >
+            <div class="qrcode-wrap">
+              <img ref="qrcode" class="img-fluid" alt="">
+              <p>分享到微信</p>
+            </div>
+            <span slot="reference" class="share-item share-item--wx" @click="shareToWx" />
+          </el-popover>
+        </el-tooltip>
+        <el-tooltip effect="dark" content="分享到QQ好友" placement="bottom">
+          <span class="share-item share-item--qq" @click="shareToQQ" />
+        </el-tooltip>
+        <el-tooltip effect="dark" content="分享到QQ空间" placement="bottom">
+          <span class="share-item share-item--qzone" @click="shareToQzone" />
+        </el-tooltip>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -51,6 +71,7 @@ export default {
   },
   data () {
     return {
+      isShowCode: false,
       shareUrl: '',
       website: '',
       wxVisible: false
@@ -60,6 +81,9 @@ export default {
     this.getShareData()
   },
   methods: {
+    toggleCodeShow () {
+      this.isShowCode = !this.isShowCode
+    },
     getShareData () {
       this.shareUrl = encodeURIComponent(location.href)
       this.website = encodeURIComponent(location.origin)
@@ -117,15 +141,40 @@ $iconWidth: 36px;
 
 .share {
   position: relative;
-  padding: 12px 20px;
-  text-align: right;
   border-top: 1px solid var(--border-color);
 
-  &__tooltips {
-    position: absolute;
-    left: 20px;
-    line-height: $iconWidth;
-    color: var(--color-secondary);
+  &-pay {
+    padding: 16px $grid-space;
+    overflow: hidden;
+    text-align: center;
+    border-bottom: 1px solid var(--border-color);
+
+    &-item {
+      display: inline-block;
+      margin: 0 $grid-space * 2;
+    }
+
+    &__name {
+      color: var(--color-text);
+    }
+  }
+
+  &-body {
+    padding: 16px $grid-space;
+  }
+
+  &-sponsor {
+    float: left;
+    cursor: pointer;
+
+    &__tooltips {
+      line-height: $iconWidth;
+      color: var(--color-secondary);
+    }
+  }
+
+  &-community {
+    float: right;
   }
 
   &-icon {
@@ -139,13 +188,6 @@ $iconWidth: 36px;
     border-radius: 50%;
   }
 
-  .el-icon-share {
-    margin-right: 3px;
-    font-size: 24px;
-    line-height: 40px;
-    color: var(--color-primary);
-  }
-
   &-item {
     display: inline-block;
     width: $iconWidth;
@@ -156,6 +198,7 @@ $iconWidth: 36px;
     background-image: url('~@/assets/image/share-icon.png');
 
     &--sponsor {
+      margin-left: 0;
       background-position: -0 0;
     }
 

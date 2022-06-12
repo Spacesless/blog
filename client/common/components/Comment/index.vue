@@ -1,7 +1,8 @@
 <template>
   <div v-loading="fetchLoading" class="comment tl-card">
     <h2 class="comment-title tl-card__title">
-      已有<span class="comment-title__count">{{ total }}</span>条回应
+      评论区
+      <span class="comment-title__count">{{ total }}</span>
     </h2>
     <comment-reply
       v-if="!replyData.id"
@@ -41,6 +42,7 @@ import Pagination from '#/components/Pagination/index'
 import { getLocalStorage, setLocalStorage, convertToTree } from '#/utils'
 
 export default {
+  name: 'CommentIndex',
   components: {
     Pagination,
     CommentItem,
@@ -86,7 +88,7 @@ export default {
     async fetchList () {
       this.listQuery.topic_id = this.topicId
       this.fetchLoading = true
-      this.$axios.$get('/comment', {
+      await this.$axios.$get('/comment', {
         params: this.listQuery
       }).then((res) => {
         const { total, data } = res
@@ -100,12 +102,12 @@ export default {
      * @param {String} content 评论信息
      */
     submitComment (content) {
-      const { id, topic_id, parent_id, name, type } = this.replyData
+      const { id, topic_id: topicId, parent_id: parentId, name, type } = this.replyData
       const postData = {
         ...this.formData,
-        topic_id,
+        topic_id: topicId,
         reply_name: name,
-        parent_id: parent_id || id || 0,
+        parent_id: parentId || id || 0,
         type: type ? type + 1 : 1,
         topic_url: location.pathname,
         topic_title: document.title,

@@ -97,6 +97,9 @@
           </el-col>
         </el-row>
       </el-form-item>
+      <div class="form-item">
+        <Tinymce ref="editor" v-model="formData.content" :height="600" />
+      </div>
       <el-form-item class="form-title">
         其它设置
       </el-form-item>
@@ -146,11 +149,13 @@
 <script>
 import { mapGetters } from 'vuex'
 import typeOptions from '../modules'
+import Tinymce from '@/components/Tinymce'
 import JsonEditor from '@/components/JsonEditor'
 import { getCategoryByType } from '@/utils'
 
 export default {
   components: {
+    Tinymce,
     JsonEditor
   },
   props: {
@@ -231,7 +236,7 @@ export default {
     handleCancel () {
       const { path } = this.$route
       this.$store.dispatch('tagsView/delView', { path }).then(() => {
-        this.$router.push({ name: 'Category' })
+        this.$router.push({ name: 'CategoryList' })
       })
     }
   }

@@ -10,12 +10,12 @@ module.exports = class extends Base {
       .field('content,params')
       .find();
 
-    let params;
     try {
-      params = JSON.parse(findCategory.params);
+      findCategory.params = JSON.parse(findCategory.params);
     } catch {
-      params = null;
+      findCategory.params = {};
     }
-    return this.success(params);
+
+    return this.success(findCategory);
   }
 };

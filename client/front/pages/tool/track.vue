@@ -100,12 +100,12 @@ export default {
     },
     async fetchList () {
       this.fetchLoading = true
-      await this.$axios.$get('/tool/params', {
+      await this.$axios.$get('/category', {
         params: {
           id: this.findCategory.id
         }
       }).then((res) => {
-        const treeData = JSON.parse(JSON.stringify(res))
+        const treeData = res.params || []
         treeData.forEach((item) => {
           item.count = 0
           item.children.forEach((child) => {

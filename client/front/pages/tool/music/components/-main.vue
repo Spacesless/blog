@@ -36,7 +36,7 @@
           <span class="music-list__albumdesc">{{ row.albumdesc }}</span>
           <div class="music-list-operate">
             <el-button
-              icon="icon-play"
+              icon="icon-bofang"
               circle
               @click="handlePlaySingle(row)"
             />

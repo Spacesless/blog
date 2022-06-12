@@ -58,7 +58,7 @@ export default {
   },
   methods: {
     fetchParams () {
-      return this.$axios.$get('/tool/params', {
+      return this.$axios.$get('/category', {
         params: {
           id: this.findCategory.id
         }

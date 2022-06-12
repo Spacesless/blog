@@ -155,7 +155,7 @@ export default {
   },
   data () {
     return {
-      gridSpace: +gridSpace,
+      gridSpace: +gridSpace || 20,
       bannerHeight: 500,
       isLoaded: false
     }

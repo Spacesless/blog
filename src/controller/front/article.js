@@ -85,6 +85,7 @@ module.exports = class extends Base {
     return this.success(data);
   }
 
+  // 增加访问量
   accessAction() {
     const { id } = this.get();
     // 访问量+1
@@ -93,18 +94,17 @@ module.exports = class extends Base {
     return this.success();
   }
 
-  // async sameAction(categoryId, tags) {
-  //   const list = await this.modelInstance
-  //     .field('id,title,description')
-  //     .limit(0, 3)
-  //     .where({
-  //       category_id: categoryId,
-  //       is_recycle: 0,
-  //       is_show: 1,
-  //       tag: ['like', tags.split('|').map(item => `%${item}%`)]
-  //     })
-  //     .select();
+  // 推荐阅读
+  async sameAction() {
+    const { id, categoryId, tags } = this.get();
 
-  //   return this.success(list);
-  // }
+    const list = await this.model('front/article').samePost({ id, categoryId, tags });
+
+    list.forEach(item => {
+      const { description } = item;
+      item.description = description.substr(0, 60);
+    });
+
+    return this.success(list);
+  }
 };

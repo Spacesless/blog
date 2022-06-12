@@ -38,21 +38,28 @@
       </el-col>
     </el-row>
     <!--bangumi content-->
-    <div ref="content" class="bangumi-content tl-card markup">
-      <template v-if="songList && songList.length">
-        <h2>主题曲</h2>
-        <div id="player">
-          <p v-for="(item, index) in songList" :key="index">
-            {{ item }}
-          </p>
-          <div id="aplayer" class="aplayer" />
+    <div ref="content" class="bangumi-content tl-card">
+      <div class="content-wrap">
+        <!-- 文章目录 -->
+        <Catalog v-if="isLoaded" class="content-right" />
+
+        <div class="content-left">
+          <template v-if="songList && songList.length">
+            <h2>主题曲</h2>
+            <div id="player">
+              <p v-for="(item, index) in songList" :key="index">
+                {{ item }}
+              </p>
+              <div id="aplayer" class="aplayer" />
+            </div>
+          </template>
+          <template v-if="hasContent">
+            <h2>点评</h2>
+            <!-- 文章内容 -->
+            <div id="js-content" class="markup" v-html="data.content" />
+          </template>
         </div>
-      </template>
-      <template v-if="hasContent">
-        <h2>点评</h2>
-        <div class="bangumi-content-review" v-html="data.content" />
-        <el-image ref="preview" class="app-preview" :src="previewSrc" :preview-src-list="previewSrcList" />
-      </template>
+      </div>
       <!-- share start -->
       <Share
         :title="data.title"
@@ -60,10 +67,13 @@
         :description="data.description"
       />
     </div>
-    <!-- 文章目录 -->
-    <Catalog />
+
     <!-- 图片预览 -->
     <ImageViewer v-if="isLoaded" />
+    <!-- 推荐阅读 -->
+    <SimilarList category-type="bangumi" :category-id="data.category_id" :tags="data.tag" />
+    <!-- 谷歌广告 -->
+    <Adsense />
     <!-- 评论 -->
     <Comment :topic-id="'bangumi-' + data.id" />
   </div>
@@ -74,6 +84,8 @@ import Catalog from '@/components/Catalog'
 import Comment from '#/components/Comment'
 import ImageViewer from '@/components/ImageViewer'
 import Share from '@/components/Share'
+import SimilarList from '@/components/SimilarList'
+import Adsense from '@/components/Adsense'
 import { pageMeta } from '@/mixins'
 
 export default {
@@ -82,7 +94,9 @@ export default {
     Catalog,
     Comment,
     ImageViewer,
-    Share
+    Share,
+    SimilarList,
+    Adsense
   },
   mixins: [pageMeta],
   async asyncData ({ params, $axios }) {
@@ -259,7 +273,6 @@ export default {
   }
 
   &-content {
-    padding: $grid-space;
     margin-bottom: $grid-space;
 
     #player {

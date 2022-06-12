@@ -266,7 +266,7 @@ export default {
     },
     handleCancel () {
       this.$store.dispatch('tagsView/delView', this.$route).then(() => {
-        this.$router.push({ name: this.currentType.charAt(0).toUpperCase() + this.currentType.slice(1) })
+        this.$router.push({ name: this.currentType.charAt(0).toUpperCase() + this.currentType.slice(1) + 'List' })
       })
     }
   }

@@ -74,4 +74,18 @@ module.exports = class extends Base {
 
     return this.success(data);
   }
+
+  // 推荐阅读
+  async sameAction() {
+    const { id, categoryId, tags } = this.get();
+
+    const list = await this.model('front/bangumi').samePost({ id, categoryId, tags });
+
+    list.forEach(item => {
+      const { description } = item;
+      item.description = description.substr(0, 60);
+    });
+
+    return this.success(list);
+  }
 };

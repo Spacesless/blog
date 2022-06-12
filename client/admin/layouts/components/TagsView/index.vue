@@ -171,7 +171,7 @@ export default {
       const latestView = visitedViews.slice(-1)[0]
       if (latestView) {
         this.$router.push(latestView.fullPath)
-      } else if (view.name === 'Dashboard') {
+      } else if (view.name === 'HomePage') {
         // now the default is to redirect to the home page if there is no tags-view,
         // you can adjust it according to your needs.
         // to reload home page

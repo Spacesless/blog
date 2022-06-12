@@ -34,8 +34,13 @@
         :description="data.description"
       />
     </div>
+
     <!-- 图片预览 -->
     <ImageViewer v-if="isLoaded" />
+    <!-- 推荐阅读 -->
+    <SimilarList :detail-id="data.id" category-type="article" :category-id="data.category_id" :tags="data.tag" />
+    <!-- 谷歌广告 -->
+    <Adsense />
     <!-- 评论 -->
     <Comment :topic-id="'article-' + data.id" />
   </div>
@@ -48,6 +53,8 @@ import Catalog from '@/components/Catalog'
 import Comment from '#/components/Comment'
 import ImageViewer from '@/components/ImageViewer'
 import Share from '@/components/Share'
+import SimilarList from '@/components/SimilarList'
+import Adsense from '@/components/Adsense'
 import { pageMeta } from '@/mixins'
 import { hasClass, addClass, removeClass } from '@/utils'
 
@@ -57,7 +64,9 @@ export default {
     Catalog,
     Comment,
     ImageViewer,
-    Share
+    Share,
+    SimilarList,
+    Adsense
   },
   mixins: [pageMeta],
   async asyncData ({ params, $axios }) {

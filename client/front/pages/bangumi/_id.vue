@@ -157,7 +157,7 @@ export default {
   },
   data () {
     return {
-      gridSpace,
+      gridSpace: +gridSpace || 20,
       pageType: 'list'
     }
   },
