@@ -21,6 +21,7 @@ module.exports = class extends Rest {
     const rows = await this.modelInstance.add(data);
 
     if (rows) {
+      await think.cache('category', null);
       return this.success();
     } else {
       return this.fail();
@@ -37,7 +38,7 @@ module.exports = class extends Rest {
     const affectedRows = await this.modelInstance.where({ id: this.id }).update(data);
 
     if (affectedRows) {
-      await think.cache('column', null);
+      await think.cache('category', null);
       return this.success();
     } else {
       return this.fail();
@@ -62,7 +63,7 @@ module.exports = class extends Rest {
       promises.push(step);
     });
     await Promise.all(promises);
-    await think.cache('column', null);
+    await think.cache('category', null);
 
     return this.success();
   }

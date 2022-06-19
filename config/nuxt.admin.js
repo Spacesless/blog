@@ -3,7 +3,7 @@ const path = require('path')
 const isPro = process.env.NODE_ENV === 'production'
 const srcDir = 'client/admin/'
 
-function resolve(dir) {
+function resolve (dir) {
   return path.join(__dirname, '../', srcDir, dir)
 }
 
@@ -21,14 +21,14 @@ module.exports = {
         [
           'component',
           {
-            'libraryName': 'element-ui',
-            'styleLibraryName': 'theme-chalk'
+            libraryName: 'element-ui',
+            styleLibraryName: 'theme-chalk'
           }
         ]
       ]
     },
     extractCSS: true,
-    extend(config, ctx) {
+    extend (config, ctx) {
       // set svg-sprite-loader
       const svgRule = config.module.rules.find(rule => rule.test.test('.svg'))
       svgRule.exclude = [resolve('assets/icons/svg')]
@@ -43,7 +43,7 @@ module.exports = {
       })
     },
     publicPath: '//cdn.timelessq.com/nuxt-admin/', // 只需将www/admin上传cdn
-    postcss: false,
+    postcss: true,
     transpile: [/^element-ui/]
   },
   buildDir: isPro ? 'www/nuxt-admin' : '.nuxt/admin',

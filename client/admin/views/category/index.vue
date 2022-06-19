@@ -32,9 +32,17 @@
           <el-input v-model="scope.row.name" />
         </template>
       </el-table-column>
-      <el-table-column align="center" label="状态" min-width="120">
+      <el-table-column align="center" label="导航显示" min-width="120">
         <template #default="scope">
           <el-select v-model="scope.row.is_nav">
+            <el-option label="不显示" :value="0" />
+            <el-option label="显示" :value="1" />
+          </el-select>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="前台显示" min-width="120">
+        <template #default="scope">
+          <el-select v-model="scope.row.is_show">
             <el-option label="不显示" :value="0" />
             <el-option label="显示" :value="1" />
           </el-select>
@@ -152,7 +160,8 @@ export default {
         id: row.id,
         no_order: row.no_order,
         name: row.name,
-        is_nav: row.is_nav
+        is_nav: row.is_nav,
+        is_show: row.is_show
       }
       this.$set(row, 'updateLoading', true)
       await this.$api.content.UpdateContent(this.currentType, postData).then((res) => {

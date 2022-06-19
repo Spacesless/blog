@@ -39,7 +39,7 @@
     </el-row>
     <!--bangumi content-->
     <div ref="content" class="bangumi-content tl-card">
-      <div class="content-wrap">
+      <div v-if="(songList && songList.length) || hasContent" class="content-wrap">
         <!-- 文章目录 -->
         <Catalog v-if="isLoaded" class="content-right" />
 
@@ -72,8 +72,6 @@
     <ImageViewer v-if="isLoaded" />
     <!-- 推荐阅读 -->
     <SimilarList category-type="bangumi" :category-id="data.category_id" :tags="data.tag" />
-    <!-- 谷歌广告 -->
-    <Adsense />
     <!-- 评论 -->
     <Comment :topic-id="'bangumi-' + data.id" />
   </div>
@@ -85,7 +83,6 @@ import Comment from '#/components/Comment'
 import ImageViewer from '@/components/ImageViewer'
 import Share from '@/components/Share'
 import SimilarList from '@/components/SimilarList'
-import Adsense from '@/components/Adsense'
 import { pageMeta } from '@/mixins'
 
 export default {
@@ -95,8 +92,7 @@ export default {
     Comment,
     ImageViewer,
     Share,
-    SimilarList,
-    Adsense
+    SimilarList
   },
   mixins: [pageMeta],
   async asyncData ({ params, $axios }) {

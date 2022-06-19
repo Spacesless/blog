@@ -4,7 +4,7 @@ const CompressionPlugin = require('compression-webpack-plugin')
 const isPro = process.env.NODE_ENV === 'production'
 const srcDir = 'client/front/'
 
-function resolve(dir) {
+function resolve (dir) {
   return path.join(__dirname, '../', srcDir, dir)
 }
 
@@ -22,17 +22,17 @@ module.exports = {
         [
           'component',
           {
-            'libraryName': 'element-ui',
-            'styleLibraryName': '../packages/theme-chalk/src',
-            'ext': '.scss'
+            libraryName: 'element-ui',
+            styleLibraryName: '../packages/theme-chalk/src',
+            ext: '.scss'
           }
         ],
         [
           'prismjs',
           {
-            'languages': ['markup', 'css', 'javascript', 'json', 'less', 'scss', 'shell', 'typescript'],
-            'plugins': ['show-language', 'line-numbers', 'toolbar'],
-            'css': false
+            languages: ['markup', 'css', 'javascript', 'json', 'less', 'scss', 'shell', 'typescript'],
+            plugins: ['show-language', 'line-numbers', 'toolbar'],
+            css: false
           }
         ]
       ]
@@ -45,7 +45,7 @@ module.exports = {
       })
     ],
     publicPath: '//cdn.timelessq.com/nuxt-front/dist/client', // 只需将www/front上传cdn
-    postcss: false,
+    postcss: true,
     transpile: [/^element-ui/]
   },
   buildDir: isPro ? 'www/nuxt-front' : '.nuxt/front',

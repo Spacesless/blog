@@ -25,7 +25,7 @@
       </el-carousel-item>
     </el-carousel>
     <!-- 博文 -->
-    <div class="article">
+    <div v-if="articleList.length" class="article">
       <div class="home-head">
         <h2 class="home-head__title tl__title">
           最新文章
@@ -76,7 +76,7 @@
       </el-row>
     </div>
     <!-- 追番 -->
-    <div class="bangumi">
+    <div v-if="bangumiList.length" class="bangumi">
       <div class="home-head">
         <h2 class="home-head__title tl__title">
           最近追番

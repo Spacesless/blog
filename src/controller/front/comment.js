@@ -47,7 +47,7 @@ module.exports = class extends Base {
     // XSS过滤
     data.content = xss(data.content, {
       whiteList: {
-        img: ['class']
+        img: ['class', 'src']
       }
     });
 

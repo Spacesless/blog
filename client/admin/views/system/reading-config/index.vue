@@ -34,10 +34,10 @@
         首页
       </el-form-item>
       <el-form-item label="文章数量">
-        <el-input-number v-model="formData.home_article_num" :min="1" controls-position="right" />
+        <el-input-number v-model="formData.home_article_num" :min="0" controls-position="right" />
       </el-form-item>
       <el-form-item label="番剧数量">
-        <el-input-number v-model="formData.home_bangumi_num" :min="1" controls-position="right" />
+        <el-input-number v-model="formData.home_bangumi_num" :min="0" controls-position="right" />
       </el-form-item>
       <el-form-item class="form-title">
         文章模块

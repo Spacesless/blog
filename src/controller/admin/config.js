@@ -16,6 +16,7 @@ module.exports = class extends Base {
     const data = this.post();
     const rows = await this.modelInstance.updateConfig(data);
     if (rows) {
+      await this.cache('config', null);
       return this.success('更新成功');
     } else {
       return this.fail('更新失败');
