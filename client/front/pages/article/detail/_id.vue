@@ -260,10 +260,10 @@ export default {
     }
 
     &__title {
-      padding: $grid-space 0;
+      padding: 16px 0;
       font-size: 32px;
       font-weight: normal;
-      line-height: 1;
+      line-height: 1.5;
       color: var(--color-heading);
     }
 

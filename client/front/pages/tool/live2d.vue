@@ -94,7 +94,7 @@ export default {
       this.currentInfo = this.deepOptions.find(item => item.value === val)
     },
     thumbFormat (index) {
-      return `${this.apiurl}/../model/preview/${this.selectModel}/${index}.png`
+      return `${this.apiurl}/../live2d-assets/preview/${this.selectModel}/${index}.png`
     },
     /** 提示框 */
     showMessage (text, timeout) {

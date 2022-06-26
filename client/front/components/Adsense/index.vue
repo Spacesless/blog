@@ -76,5 +76,6 @@ export default {
 .adsense {
   padding: $grid-space;
   margin-bottom: $grid-space;
+  overflow: hidden;
 }
 </style>

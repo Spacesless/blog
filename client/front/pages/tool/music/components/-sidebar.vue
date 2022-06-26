@@ -1,6 +1,6 @@
 <template>
   <div class="music-sidebar">
-    <div class="music-sidebar-logo">
+    <!-- <div class="music-sidebar-logo">
       <img
         class="music-sidebar-logo__pic tencent"
         :class="{'music-sidebar-logo__pic--active': platform === 'tencent'}"
@@ -15,7 +15,7 @@
         alt="netease"
         @click="changePlatform('netease')"
       >
-    </div>
+    </div> -->
     <el-scrollbar class="music-sidebar-disst-wrap">
       <dl class="music-sidebar-disst">
         <dt class="music-sidebar-disst__title">
@@ -75,37 +75,41 @@ export default {
     width: 250px;
     height: 100%;
 
-    &-logo {
-      padding: 35px 20px 15px;
-      text-align: center;
+    // &-logo {
+    //   padding: 35px 20px 15px;
+    //   text-align: center;
 
-      .tencent {
-        margin-right: 35px;
-      }
+    //   .tencent {
+    //     margin-right: 35px;
+    //   }
 
-      &__pic {
-        width: 60px;
-        height: 60px;
-        overflow: hidden;
-        cursor: pointer;
-        filter: brightness(50%);
+    //   &__pic {
+    //     width: 60px;
+    //     height: 60px;
+    //     overflow: hidden;
+    //     cursor: pointer;
+    //     filter: brightness(50%);
 
-        &--active {
-          filter: brightness(100%);
-        }
-      }
-    }
+    //     &--active {
+    //       filter: brightness(100%);
+    //     }
+    //   }
+    // }
 
     &-disst {
       &-wrap {
-        height: calc(100% - 340px);
+        height: calc(100% - 226px);
       }
 
       &__title {
         height: 50px;
-        padding: 0 20px;
+        padding: 0 16px;
         line-height: 50px;
         color: #FFFFFF;
+
+        i {
+          margin-right: 6px;
+        }
       }
 
       &__item {

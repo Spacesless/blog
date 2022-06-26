@@ -96,7 +96,6 @@ export default {
   @media (max-width: 1280px) {
     position: static;
     width: 100%;
-    padding: 0 $grid-space;
   }
 
   &-wrapper {

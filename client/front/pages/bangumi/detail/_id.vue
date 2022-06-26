@@ -43,7 +43,7 @@
         <!-- 文章目录 -->
         <Catalog v-if="isLoaded" class="content-right" />
 
-        <div class="content-left">
+        <div id="js-content" class="content-left markup">
           <template v-if="songList && songList.length">
             <h2>主题曲</h2>
             <div id="player">
@@ -56,7 +56,7 @@
           <template v-if="hasContent">
             <h2>点评</h2>
             <!-- 文章内容 -->
-            <div id="js-content" class="markup" v-html="data.content" />
+            <div v-html="data.content" />
           </template>
         </div>
       </div>

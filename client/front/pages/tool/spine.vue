@@ -47,7 +47,7 @@ export default {
       filterOptions: [],
       animationOptions: [],
       checkboxGroup1: '',
-      apiUrl: '//api.timelessq.com/spine',
+      apiUrl: '//api.timelessq.com/azurlane/spine',
       spineScale: 1,
       skelLoading: false
     }
