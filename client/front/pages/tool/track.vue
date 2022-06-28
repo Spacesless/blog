@@ -105,7 +105,8 @@ export default {
           id: this.findCategory.id
         }
       }).then((res) => {
-        const treeData = res.params || []
+        const data = res.params || []
+        const treeData = JSON.parse(JSON.stringify(data))
         treeData.forEach((item) => {
           item.count = 0
           item.children.forEach((child) => {
@@ -119,7 +120,7 @@ export default {
         })
         this.tourTree = treeData
 
-        const { province, point } = this.flattenDeep(res)
+        const { province, point } = this.flattenDeep(data)
         this.topAdcodes = province
         this.tourList = point
       }).catch((error) => {

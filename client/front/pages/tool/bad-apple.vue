@@ -144,7 +144,7 @@ export default {
     margin-left: -523px;
     // margin-top: -28px;
     // transform: translateX(-50%) translateY(-50%);
-    font-family: sans-serif;
+    font-family: simsun, sans-serif;
     font-size: 12px;
     line-height: 12px;
     text-align: center;

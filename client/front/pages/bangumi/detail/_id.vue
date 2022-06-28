@@ -54,7 +54,7 @@
             </div>
           </template>
           <template v-if="hasContent">
-            <h2>点评</h2>
+            <h2>短评</h2>
             <!-- 文章内容 -->
             <div v-html="data.content" />
           </template>
