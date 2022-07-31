@@ -5,7 +5,7 @@
       :current-page.sync="currentPage"
       :page-size.sync="pageSize"
       :layout="pageLayout"
-      :pager-count="device === 'desktop' ? 7 : 5"
+      :pager-count="pagerNumber"
       :page-sizes="pageSizes"
       :total="total"
       v-bind="$attrs"
@@ -33,6 +33,10 @@ export default {
     limit: {
       type: Number,
       default: 20
+    },
+    pagerCount: {
+      type: Number,
+      default: 0
     },
     pageSizes: {
       type: Array,
@@ -87,6 +91,12 @@ export default {
       return this.device === 'desktop'
         ? (this.isAdmin ? this.adminLayout : this.webLayout)
         : 'prev, pager, next'
+    },
+    pagerNumber () {
+      if (this.pagerCount) {
+        return this.pagerCount
+      }
+      return this.device === 'desktop' ? 7 : 5
     }
   },
   methods: {

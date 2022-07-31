@@ -67,7 +67,6 @@ export default {
       await this.$axios.get(apiurl + '/following', {
         params: this.listQuery
       }).then((res) => {
-        console.log(res.data)
         const { total, list } = res.data
         this.total = total
         this.followList = list
