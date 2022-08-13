@@ -15,9 +15,9 @@ module.exports = class extends Base {
     // 当前栏目
     let findCategory = {};
     if (!think.isEmpty(id)) {
-      findCategory = categories.find(item => item.id === +id);
+      findCategory = categories.find(item => item.id === +id && item.type === 'article');
       if (!findCategory) {
-        return this.ctx.throw(404);
+        return this.fail(404);
       }
     }
 
@@ -67,7 +67,7 @@ module.exports = class extends Base {
       .find();
 
     if (think.isEmpty(data)) {
-      return this.ctx.throw(404);
+      return this.fail(404);
     }
 
     const configs = await this.getConfigs();

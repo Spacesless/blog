@@ -47,7 +47,9 @@ module.exports = class extends think.Model {
    * @returns {Array} 指定栏目id以及它所有子栏目id的数组
    */
   async findChildCategory(categories, id) {
-    if (!id) return [];
+    if (!id) {
+      return [];
+    }
     const flattenCategory = this.flattenDeep(categories, [id]);
     const findCategory = Array.from(new Set(flattenCategory));
     return findCategory;

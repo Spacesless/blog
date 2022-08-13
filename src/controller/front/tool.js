@@ -10,9 +10,9 @@ module.exports = class extends Base {
     let findCategory = {};
     let list = [];
     if (!think.isEmpty(id)) {
-      findCategory = categories.find(item => item.id === +id);
+      findCategory = categories.find(item => item.id === +id && item.type === 'tool');
       if (!findCategory) {
-        return this.ctx.throw(404);
+        return this.fail(404);
       }
       const childCategories = await this.model('category').findChildCategory(categories, findCategory.id);
 

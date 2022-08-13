@@ -1,11 +1,11 @@
 // iconfont
 @font-face {
   font-display: swap;
-  font-family: iconfont; /* Project id 442558 */
+  font-family: iconfont;  /* Project id 442558 */
   src:
-    url('//at.alicdn.com/t/font_442558_z9y1k4uejyn.woff2?t=1654589623955') format('woff2'),
-    url('//at.alicdn.com/t/font_442558_z9y1k4uejyn.woff?t=1654589623955') format('woff'),
-    url('//at.alicdn.com/t/font_442558_z9y1k4uejyn.ttf?t=1654589623955') format('truetype');
+    url('//at.alicdn.com/t/c/font_442558_88eodabfbon.woff2?t=1660357329408') format('woff2'),
+    url('//at.alicdn.com/t/c/font_442558_88eodabfbon.woff?t=1660357329408') format('woff'),
+    url('//at.alicdn.com/t/c/font_442558_88eodabfbon.ttf?t=1660357329408') format('truetype');
 }
 
 [class*=' icon'],
@@ -171,4 +171,8 @@
 
 .icon-riqi::before {
   content: '\e70b';
+}
+
+.icon-guidang::before {
+  content: '\e667';
 }

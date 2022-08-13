@@ -1,6 +1,11 @@
 const path = require('path')
 
-const isPro = process.env.NODE_ENV === 'production'
+let isPro = process.env.NODE_ENV === 'production'
+try {
+  // eslint-disable-next-line no-undef
+  isPro = think.env === 'production' // 作为thinkjs中间件可以获取全局的think对象
+} catch {}
+
 const srcDir = 'client/admin/'
 
 function resolve (dir) {
