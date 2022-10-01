@@ -82,14 +82,22 @@ export default {
           ]
         },
         {
-          name: 'Alus',
-          url: 'https://cos.timelessq.com/static/emojis/alus',
-          prefix: 'alus_',
+          name: 'B站小黄脸',
+          url: 'https://cos.timelessq.com/static/emojis/bmoji',
+          prefix: 'bmoji_',
           type: 'png',
-          icon: 'happy',
+          icon: 'unavailble_doge',
           items: [
-            'happy', 'satisfied', 'unhappy', 'rage', 'shy', 'blush', 'kiss', 'clap', 'embarrassed', 'expect', 'die', 'helpless', 'wise', 'observe', 'ponder', 'silent', 'stare', 'surrender', 'sweat', 'think', 'vomit', 'wait', 'shit', 'smoke', 'grass', 'rich', 'dark', 'bystand', 'expressionless', 'grin', 'hide', 'persevere', 'unamused', 'slap', 'gunshot', 'wound', 'injured', 'knockdown', 'candle', 'flower', 'cucumber', 'high_five', 'huge_sweat', 'observe_dark', 'small_eye', 'smirk', 'astonished', 'sunglasses', 'sweat_smile', 'sob', 'fu', 'thumbsup', 'yum', 'hocho', 'greddy', 'pick_nose', 'awkward', 'vomit_blood', 'vomit_water', 'whatever'
+            'unavailble_doge', 'hot', 'silme', 'mask', 'doge', 'bravo', 'ok', 'wow', 'not_open', 'onlooker', 'comical', 'grin', 'call', 'hei', 'naughty', 'bao_fu', 'crack_melon_seeds', 'smile_cry', 'tibetan_fox', 'blush', 'give_love', 'dudu', 'oh', 'heartbeat', 'lemon', 'wail', 'blushing', 'what', 'haha', 'smirking', 'hehe', 'titter', 'ah', 'um', 'insidious', 'jiong', 'stagnate', 'heihei', 'wa', 'cute', 'emm', 'good', 'applaud', 'um_2', 'oops', 'sad', 'hem', 'hurt', 'cold', 'ill', 'scared', 'spit', 'palming', 'shh', 'hmm', 'bye', 'roll_eye', 'sleeply', 'hard', 'cool', 'unhappy', 'grimace', 'aaa', 'angry', 'shui_dao', 'koi', 'fu', 'drumstick', 'snow', 'cheers', 'love', 'win', 'strong', 'thanks', 'please', 'thumb_up', 'hug_together', 'knees', 'my_fault', 'abandon'
           ]
+        },
+        {
+          name: '贴吧',
+          url: 'https://cos.timelessq.com/static/emojis/tieba',
+          prefix: 'tieba_',
+          type: 'png',
+          icon: 'antic',
+          items: ['laugh', 'joy', 'antic', 'vomit_water', 'sob', 'wink', 'cry', 'dizzy_face', 'heart_eyes', 'huge_sweat', 'rage', 'satisfied', 'sleep', 'smirk', 'sunglasses', 'sweat', 'vomit', 'lovely', 'angry', 'annoyed', 'awkward', 'cute', 'pick_nose', 'shy', 'yum', 'grievance', 'chuckle', 'crazy', 'hurt', 'look_down', 'rolling_eyes', 'agree', 'sorry', 'surprised', 'wow', 'doubt', 'thumbsup', 'v', 'metal', 'ok', 'heart', 'red_scarf', 'sofa', 'moon', 'pill', 'rainbow', 'rose', 'shit', 'banana', 'toilet_paper', 'cake', 'gift', 'candle', 'coffee']
         }
       ]
     }

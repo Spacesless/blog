@@ -18,6 +18,10 @@ module.exports = {
     '#': resolve('../common')
   },
   buildModules: [
+    // https://go.nuxtjs.dev/eslint
+    '@nuxtjs/eslint-module',
+    // https://go.nuxtjs.dev/stylelint
+    '@nuxtjs/stylelint-module',
     '@nuxtjs/color-mode',
     '@nuxtjs/style-resources'
   ],

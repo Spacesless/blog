@@ -53,7 +53,11 @@ module.exports = {
   },
   buildDir: isPro ? 'www/nuxt-admin' : '.nuxt/admin',
   buildModules: [
-    '@nuxtjs/router'
+    // https://go.nuxtjs.dev/eslint
+    '@nuxtjs/eslint-module',
+    // https://go.nuxtjs.dev/stylelint
+    '@nuxtjs/stylelint-module',
+    '@nuxtjs/router',
   ],
   css: [
     '@/styles/index.scss'
