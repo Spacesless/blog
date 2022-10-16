@@ -180,7 +180,9 @@ export default {
       }
 
       this.loading = true
-      this.$set(this.pictureList[index], 'loading', true)
+      if (this.pictureList[index]) {
+        this.$set(this.pictureList[index], 'loading', true)
+      }
     },
     handleDownload () {
       const { url, urlbase } = this.pictureData
@@ -344,7 +346,7 @@ export default {
 
       &--album {
         &:hover .wallpaper-menu-dropdown {
-          opacity: 1;
+          display: block;
         }
       }
 
@@ -361,10 +363,9 @@ export default {
       position: absolute;
       right: 0;
       bottom: 100%;
+      display: none;
       overflow: hidden;
       border-radius: 4px;
-      opacity: 0;
-      transition: all .3s;
 
       li {
         padding: 8px 16px;
