@@ -1,25 +1,41 @@
-# tl-blog
+# timeless-blog
 
 > Timeless's博客
-> 项目是个人博客，主要用于管理和展示文章、追番等动态
+> 项目是个人博客，主要用于管理和展示文章、追番等动态，记录生活点滴、各种想法以及工作学习成果，方便归纳总结。
 
-## 使用框架
-``` bash
-    vue-element-template：模板
-    vue：js框架
-    nuxtjs: ssr渲染
-    thinkjs：nodejs框架
-    element-ui：UI库
-    axios：易用、简洁且高效的http库
+## 技术栈
+``` 
+  前台框架：Nuxt.js（Vue2.0）
+  UI库：Element-ui
+  后台框架：ThinkJS（Node.js）
+  数据库：Mysql
+  缓存：File-cache
+  文件管理：本地+对象存储
+  会话信息：Session+Cookie
 ```
 
-## 目录简介
-> + admin 内容管理平台
-> + web 网站前端模板
-> + src 后端源代码
+## 系统设计
+1. 前后端用同一种开发语言
+2. 一个项目管理（后台、内容管理系统、前台），共用依赖与模块
+3. 同构渲染
+4. Nuxt 渲染引擎作为 Node.js 中间件，不用独立起服务
+5. Node 服务不对外直接访问，使用 Nginx 挡一层
+
+## 功能特性
+- 管理系统登录
+- 系统配置（个性化）
+- 栏目管理（文章类别、展示页如关于）
+- 文章管理（富文本编辑、文件上传、文件管理器）
+- 文章详情（目录、代码高亮、大图预览）
+- 文章归档、搜索（按标签展示）
+- 影视番剧（追剧动态）
+- 各种小工具（单页应用如我的音乐、足迹、必应每日壁纸等）
+- 社区反馈（评论、友情链接）
+- 前台主题（响应式、暗色模式）
+- XML渲染（sitemap、rss 等XML展示）
 
 ## 目录结构
-
+```
 client 前台
 ├── admin 内容管理平台
 |   ├── api 整合管理所有的api接口
@@ -82,7 +98,7 @@ client 前台
 ├── nuxt.config.js
 ├── package.json
 ├── production.js thinkjs生产环境入口
-
+```
 ## 项目构建
 
 ``` bash
@@ -100,7 +116,3 @@ npm run build
 ## 部署
 
 + 项目使用nginx进行部署
-
-## 其他注意事项
-
-...

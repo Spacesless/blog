@@ -209,10 +209,16 @@ export default {
       }
 
       &-title {
+        display: -webkit-box;
+        height: 52px;
         margin-top: 8px;
+        overflow: hidden;
         font-size: 24px;
-        line-height: 30px;
+        line-height: 26px;
+        text-overflow: ellipsis;
         word-break: break-all;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
       }
 
       &__url {
@@ -224,15 +230,25 @@ export default {
       }
 
       &__desc {
-        margin: 10px 0;
+        display: -webkit-box;
+        height: 66px;
+        margin-top: 8px;
+        overflow: hidden;
         font-size: 15px;
         line-height: 22px;
         color: var(--color-text);
+        text-overflow: ellipsis;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+      }
+
+      &-tags {
+        min-height: 25px;
+        margin-top: 5px;
       }
 
       &-stuff {
-        position: absolute;
-        bottom: 15%;
+        margin-top: 10px;
         font-size: 14px;
         color: var(--color-secondary);
 

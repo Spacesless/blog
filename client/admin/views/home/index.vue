@@ -11,7 +11,7 @@
 
     <el-row class="home-general" :gutter="20">
       <el-col :xs="24" :sm="12" :md="6">
-        <div class="home-general-item category" @click="navigateTo('Category')">
+        <nuxt-link class="home-general-item category" to="/category">
           <div class="home-general-icon">
             <svg-icon icon-class="category" />
           </div>
@@ -23,10 +23,10 @@
               {{ count.category }}
             </p>
           </div>
-        </div>
+        </nuxt-link>
       </el-col>
       <el-col :xs="24" :sm="12" :md="6">
-        <div class="home-general-item article" @click="navigateTo('Article')">
+        <nuxt-link class="home-general-item article" to="/content/article">
           <div class="home-general-icon">
             <svg-icon icon-class="content" />
           </div>
@@ -38,10 +38,10 @@
               {{ count.article }}
             </p>
           </div>
-        </div>
+        </nuxt-link>
       </el-col>
       <el-col :xs="24" :sm="12" :md="6">
-        <div class="home-general-item bangumi" @click="navigateTo('Bangumi')">
+        <nuxt-link class="home-general-item bangumi" to="/content/bangumi">
           <div class="home-general-icon">
             <svg-icon icon-class="bangumi" />
           </div>
@@ -53,10 +53,10 @@
               {{ count.bangumi }}
             </p>
           </div>
-        </div>
+        </nuxt-link>
       </el-col>
       <el-col :xs="24" :sm="12" :md="6">
-        <div class="home-general-item comment" @click="navigateTo('Comment')">
+        <nuxt-link class="home-general-item comment" to="/community/comment">
           <div class="home-general-icon">
             <svg-icon icon-class="community" />
           </div>
@@ -68,7 +68,7 @@
               {{ count.comment }}
             </p>
           </div>
-        </div>
+        </nuxt-link>
       </el-col>
     </el-row>
 
@@ -173,13 +173,6 @@ export default {
         this.generals = res.data
       }).catch(() => {})
       this.fetchLoading = false
-    },
-    /**
-     * 跳转到对应名称的路由
-     * @param {String} 路由名称
-     */
-    navigateTo (name) {
-      this.$router.push({ name })
     }
   }
 }
@@ -207,6 +200,7 @@ export default {
     padding: 0 20px;
 
     &-item {
+      display: block;
       height: 110px;
       margin-bottom: 20px;
       cursor: pointer;
