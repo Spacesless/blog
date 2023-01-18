@@ -36,10 +36,12 @@ export function bangumiStatus (status) {
  * @param {Number} width 图片宽度
  * @returns {String}
  */
-export function getImageSrcSet (src, width) {
+export function getImageSrcSet (src, width = 576) {
   let result = ''
-  if (src && width) {
-    result = `${src} ${width}w, ${src}?imageMogr2/thumbnail/!50p ${width / 2}w`
+  const halfWidth = width / 2
+  const smallWidth = halfWidth < 576 ? 576 : halfWidth
+  if (src) {
+    result = `${src}?imageMogr2/thumbnail/!50p ${smallWidth}w, ${src}`
   }
   return result
 }
