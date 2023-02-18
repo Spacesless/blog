@@ -1,3 +1,14 @@
+const sortEnum = {
+  updatetime: 'updatetime',
+  addtime: 'addtime',
+  ratings: 'ratings'
+};
+
+const orderEnum = {
+  asc: 'ASC',
+  desc: 'DESC'
+};
+
 module.exports = class extends think.Model {
   /**
    * 查询列表
@@ -6,8 +17,8 @@ module.exports = class extends think.Model {
    */
   async selectPost({ category, page, pageSize, sortBy, orderBy, status, progress, tags, childCategories }) {
     const field = 'id,title,description,total,current,ratings,imgurl,showtime,status,tag';
-    const sort = sortBy || 'updatetime';
-    const order = orderBy ? orderBy.toUpperCase() : 'DESC';
+    const sort = sortEnum[sortBy] || 'updatetime';
+    const order = orderEnum[orderBy] || 'DESC';
 
     const where = { is_show: 1, is_recycle: 0 };
     if (childCategories.length) {
