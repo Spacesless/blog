@@ -15,6 +15,9 @@
       <el-form-item label="邮箱">
         <el-input v-model="formData.email" readonly />
       </el-form-item>
+      <el-form-item label="网址">
+        <el-input v-model="formData.website" readonly />
+      </el-form-item>
       <el-form-item label="提交时间">
         <el-date-picker v-model="formData.addtime" type="datetime" readonly />
       </el-form-item>

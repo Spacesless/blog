@@ -132,7 +132,7 @@ export default {
       bottom: -25px;
       left: 6px;
       content: '';
-      border-left: 2px solid rgba(0, 0, 0, .15);
+      border-left: 2px solid var(--border-color);
     }
 
     &-header {
