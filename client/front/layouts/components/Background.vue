@@ -35,7 +35,10 @@ export default {
   watch: {
     particleActive (val) {
       if (val) {
-        this.particleInstance && this.particleInstance.draw()
+        if (this.particleInstance) {
+          this.particleInstance.resize()
+          this.particleInstance.draw()
+        }
       } else {
         this.particleInstance.stopDraw()
       }

@@ -462,6 +462,13 @@ class ParticleCanvas {
     this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight)
   }
 
+  resize () {
+    this.canvasE.width = this.canvasE.clientWidth
+    this.canvasE.height = this.canvasE.clientHeight
+    this.canvasWidth = this.canvasE.clientWidth
+    this.canvasHeight = this.canvasE.clientHeight
+  }
+
   onMouse () {
     const temp = [] // 开启角度移动的组
     for (let i = this.useParameter.length - 1; i >= 0; --i) {

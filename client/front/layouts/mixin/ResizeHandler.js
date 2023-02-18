@@ -24,6 +24,8 @@ export default {
     const isMiddleWidth = this.$_isMDwidth()
     if (isMobile) {
       this.$store.dispatch('toggleDevice', 'mobile')
+      this.$store.commit('tools/SET_PARTICLE', false)
+      this.$store.commit('tools/SET_LIVE2D', false)
     }
     if (isMiddleWidth) {
       this.$store.dispatch('tools/closeSideBar', { withoutAnimation: true })

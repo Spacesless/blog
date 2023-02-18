@@ -29,6 +29,9 @@ const mutations = {
     state.sidebar.opened = false
     state.sidebar.withoutAnimation = withoutAnimation
   },
+  SET_PARTICLE: (state, isShow) => {
+    state.particleActive = isShow
+  },
   TOGGLE_PARTICLE: (state) => {
     state.particleActive = !state.particleActive
   },
