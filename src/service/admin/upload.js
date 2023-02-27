@@ -108,7 +108,7 @@ module.exports = class extends think.Service {
       // 目录排前面
       list.sort((a, b) => {
         if (a.type === b.type) {
-          return a.name - b.name;
+          return b.name - a.name;
         }
         return a.type - b.type;
       });

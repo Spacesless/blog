@@ -120,7 +120,7 @@ export default {
         plugins,
         end_container_on_empty_block: true,
         powerpaste_word_import: 'clean',
-        code_dialog_height: 650,
+        code_dialog_height: 700,
         code_dialog_width: 1200,
         codesample_languages: codesampleLanguages,
         default_link_target: '_blank',
