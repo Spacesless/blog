@@ -23,6 +23,8 @@ module.exports = class extends Rest {
   // 添加友链
   async postAction() {
     const data = this.post();
+
+    data.addtime = think.datetime();
     const affectedRows = await this.modelInstance.add(data);
 
     if (affectedRows) {

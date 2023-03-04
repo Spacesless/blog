@@ -202,7 +202,7 @@ export default {
     }
 
     &__title {
-      font: normal 32px/50px eafont, 'Hiragino Sans GB', 'Hiragino Sans GB W3', 'Microsoft YaHei';
+      font: normal 32px/50px eafont, 'Hiragino Sans GB', 'Hiragino Sans GB W3', 'Microsoft YaHei', sans-serif;
       color: transparent;
       background: linear-gradient(to right, #FF4D4F, #597EF7);
       -webkit-background-clip: text;

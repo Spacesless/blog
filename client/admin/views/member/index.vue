@@ -49,6 +49,7 @@
 </template>
 
 <script>
+import md5 from 'md5'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -98,16 +99,22 @@ export default {
       this.$refs.form.validate(async (valid) => {
         if (!valid) { return }
         this.confirmLoading = true
-        await this.$api.user.UpdateAdmin(this.formData).then((res) => {
+        const postData = { ...this.formData }
+        postData.password = md5(postData.password)
+        await this.$api.user.UpdateAdmin(postData).then((res) => {
           this.$message({
             type: 'success',
-            message: this.isEdit ? '更新成功' : '添加成功'
+            message: '修改成功，请重新登录'
           })
-          this.$emit('onConfirm', true)
+          setTimeout(() => {
+            this.$store.dispatch('user/resetToken').then(() => {
+              this.$router.replace('/login')
+            })
+          }, 1000)
         }).catch(() => {
           this.$message({
             type: 'error',
-            message: this.isEdit ? '更新失败' : '添加失败'
+            message: '修改失败'
           })
         })
         this.confirmLoading = false

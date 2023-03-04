@@ -1,17 +1,15 @@
 module.exports = class extends think.Model {
-  async selectPost(type) {
+  async selectPost({type, page, pageSize}) {
     const field = 'id,title,category_id,updatetime';
-    const articleList = type && type !== 'article' ? [] : await this.model('article')
-      .field(`${field},'article' as type`)
-      .where({ is_recycle: 1 })
-      .select();
-    const bangumiList = type && type !== 'bangumi' ? [] : await this.model('bangumi')
-      .field(`${field},'bangumi' as type`)
-      .where({ is_recycle: 1 })
-      .select();
-    const totalList = [...articleList, ...bangumiList];
 
-    return totalList;
+    const list = await this.model(type)
+      .field(`${field},'${type}' as type`)
+      .where({ is_recycle: 1 })
+      .order('updatetime DESC')
+      .page(page, pageSize)
+      .countSelect();
+
+    return list;
   }
 
   /**

@@ -31,6 +31,7 @@ module.exports = {
     port: port,
     user: user,
     password: password,
+    charset: 'utf8mb4',
     dateStrings: true,
     pagesize: 20
   }

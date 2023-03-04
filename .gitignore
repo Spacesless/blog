@@ -25,6 +25,7 @@ package-lock.json
 *.ntvs*
 *.njsproj
 *.sln
+.eslintcache
 
 # other ignore file
 runtime/

@@ -8,20 +8,11 @@ module.exports = class extends Base {
 
   // 获取回收站列表
   async getListAction() {
-    const { type, page = 1, pageSize = 20 } = this.post();
+    const query = this.get();
 
-    const totalList = await this.modelInstance.selectPost(type);
+    const list = await this.modelInstance.selectPost(query);
 
-    const result = totalList.slice((page - 1) * pageSize, page * pageSize);
-    result.sort((a, b) => {
-      return b.updatetime - a.updatetime;
-    });
-
-    return this.success({
-      count: totalList.length,
-      page: page,
-      data: result
-    });
+    return this.success(list);
   }
 
   // 删除回收站记录

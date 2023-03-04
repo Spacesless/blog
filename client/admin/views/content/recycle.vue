@@ -16,7 +16,7 @@
         </el-button>
       </el-col>
       <el-col :xs="24" :sm="12" class="text-right">
-        <el-select v-model="listQuery.type" clearable placeholder="请选择模块" @change="handleSearch">
+        <el-select v-model="listQuery.type" placeholder="请选择模块" @change="handleSearch">
           <el-option label="文章模块" value="article" />
           <el-option label="追番模块" value="bangumi" />
         </el-select>
@@ -72,6 +72,7 @@ export default {
     ...mapGetters(['categories'])
   },
   created () {
+    this.listQuery.type = 'article'
     this.fetchList()
   },
   methods: {

@@ -46,7 +46,7 @@ module.exports = class extends think.Model {
    * @param {Number [int]} id 指定栏目id
    * @returns {Array} 指定栏目id以及它所有子栏目id的数组
    */
-  async findChildCategory(categories, id) {
+  findChildCategory(categories, id) {
     if (!id) {
       return [];
     }

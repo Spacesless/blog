@@ -50,15 +50,15 @@
           </el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="发布时间" prop="addtime">
+      <el-form-item v-if="!isEdit" label="发布时间" prop="addtime">
         <el-date-picker
           v-model="formData.addtime"
           type="datetime"
-          format="yyyy-MM-dd HH:mm:ss"
+          value-format="yyyy-MM-dd HH:mm:ss"
           placeholder="请选择发布时间"
         />
       </el-form-item>
-      <el-form-item label="更新时间">
+      <el-form-item label="更新时间" prop="updatetime">
         <el-date-picker
           v-model="formData.updatetime"
           type="datetime"
@@ -66,8 +66,8 @@
           placeholder="请选择更新时间"
         />
       </el-form-item>
-      <el-form-item label="访问量">
-        <el-input v-model="formData.hits" class="form-container-input" />
+      <el-form-item v-if="isEdit" label="访问量">
+        <el-input v-model="formData.hits" readonly class="form-container-input" />
       </el-form-item>
       <el-form-item class="form-title">
         SEO信息
@@ -125,6 +125,7 @@ import BangumiParam from './parameter/BangumiParam'
 import UploadImage from '@/components/Upload/index'
 import Tinymce from '@/components/Tinymce'
 import { getPathName } from '@/utils'
+import { parseTime } from '#/utils'
 
 export default {
   components: {
@@ -240,8 +241,11 @@ export default {
       this.$refs.form.validate(async (valid) => {
         if (!valid) { return }
         this.confirmLoading = true
+        const { addtime, updatetime } = this.formData
         const postData = {
           ...this.formData,
+          addtime: parseTime(addtime),
+          updatetime: parseTime(updatetime),
           imgurl: this.fileList.length ? this.fileList[0].url : '',
           tag: this.tags.join('|'),
           word_count: this.$refs.editor?.getWordCount() || 0

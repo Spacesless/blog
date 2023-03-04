@@ -43,21 +43,18 @@
         <!-- 文章目录 -->
         <Catalog v-if="isLoaded" class="content-right" />
 
-        <div id="js-content" class="content-left markup">
-          <template v-if="songList && songList.length">
-            <h2>主题曲</h2>
-            <div id="player">
-              <p v-for="(item, index) in songList" :key="index">
-                {{ item }}
-              </p>
-              <div id="aplayer" class="aplayer" />
-            </div>
-          </template>
-          <template v-if="hasContent">
+        <div id="js-content" class="content-left ">
+          <div v-if="songList && songList.length" id="player">
+            <p v-for="(item, index) in songList" :key="index">
+              {{ item }}
+            </p>
+            <div id="aplayer" class="aplayer" />
+          </div>
+          <div v-if="hasContent" class="markup">
             <h2>短评</h2>
             <!-- 文章内容 -->
             <div v-html="data.content" />
-          </template>
+          </div>
         </div>
       </div>
       <!-- share start -->

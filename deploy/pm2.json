@@ -1,0 +1,15 @@
+{
+  "apps": [{
+    "name": "timeless-blog",
+    "script": "production.js",
+    "cwd": "E:\nodejs\blog",
+    "exec_mode": "fork",
+    "max_memory_restart": "2G",
+    "autorestart": true,
+    "node_args": [],
+    "args": [],
+    "env": {
+      
+    }
+  }]
+}

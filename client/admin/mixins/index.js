@@ -97,7 +97,7 @@ export const crud = {
      * @param {Object} row
      */
     handleDelete (row) {
-      this.$confirm('此操作将永久删除该内容, 是否继续?', '提示', {
+      this.$confirm('此操作将删除该内容, 是否继续?', '提示', {
         type: 'warning'
       }).then(async () => {
         this.$set(row, 'deleteLoading', true)

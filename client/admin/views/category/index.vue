@@ -4,9 +4,6 @@
       <el-button type="primary" icon="el-icon-plus" @click="handleAdd">
         添加
       </el-button>
-      <el-button type="danger" icon="el-icon-delete" :loading="deleteLoading" @click="handleDeleteSelection">
-        删除
-      </el-button>
     </el-row>
 
     <el-table
@@ -20,8 +17,7 @@
       border
       @selection-change="onSelectionChange"
     >
-      <el-table-column type="selection" align="center" width="55" />
-      <el-table-column prop="id" label="ID" width="110" />
+      <el-table-column prop="id" label="ID" width="120" />
       <el-table-column align="center" label="排序" min-width="160">
         <template #default="scope">
           <el-input-number v-model.number="scope.row.no_order" controls-position="right" />
@@ -68,7 +64,7 @@
               <el-dropdown-item @click.native="handleMove(scope.row)">
                 移动
               </el-dropdown-item>
-              <el-dropdown-item @click.native="handleDelete(scope.row.id)">
+              <el-dropdown-item @click.native="handleDelete(scope.row)">
                 删除
               </el-dropdown-item>
             </el-dropdown-menu>
@@ -201,6 +197,10 @@ export default {
     &-edit {
       margin-right: 15px;
     }
+  }
+
+  ::v-deep .el-table__expand-icon {
+    margin-right: 8px;
   }
 }
 </style>

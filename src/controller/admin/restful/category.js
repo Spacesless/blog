@@ -52,17 +52,8 @@ module.exports = class extends Rest {
       return this.fail('CONTENT_NOT_EXIST');
     }
 
-    const promises = [];
-    list.forEach(async(item) => {
-      const id = item.id;
-      const exist = await this.model(item.type).where({ id }).count('id');
-      let step;
-      if (exist) {
-        step = this.modelInstance.deleteColumn(id);
-      }
-      promises.push(step);
-    });
-    await Promise.all(promises);
+    const id = list[0];
+    await this.modelInstance.deleteColumn(id);
     await think.cache('category', null);
 
     return this.success();
