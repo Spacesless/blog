@@ -126,16 +126,16 @@ export default {
         buttonElement.appendChild(tooltipElement)
 
         buttonElement.addEventListener('click', (e) => {
-          const parentElement = e.path.find(item => hasClass(item, 'code-toolbar'))
+          const parentElement = env.element.parentNode
           if (parentElement) {
-            if (hasClass(parentElement, 'code-toolbar--newline')) {
-              removeClass(parentElement, 'code-toolbar--newline')
+            if (hasClass(parentElement, 'line-numbers--newline')) {
+              removeClass(parentElement, 'line-numbers--newline')
               iconElement.className = 'icon-danhangwenben'
             } else {
-              addClass(parentElement, 'code-toolbar--newline')
+              addClass(parentElement, 'line-numbers--newline')
               iconElement.className = 'icon-duohangwenben'
             }
-            Prism.plugins.lineNumbers.resize(parentElement.querySelector('.line-numbers'))
+            Prism.plugins.lineNumbers.resize(parentElement)
           }
         })
         return buttonElement
@@ -196,7 +196,7 @@ export default {
         buttonElement.appendChild(tooltipElement)
 
         buttonElement.addEventListener('click', (e) => {
-          const parentElement = e.path.find(item => hasClass(item, 'code-toolbar'))
+          const parentElement = env.element.parentNode?.parentNode
           if (parentElement) {
             if (hasClass(parentElement, 'code-toolbar--fullscreen')) {
               removeClass(document.body, 'el-popup-parent--hidden')
@@ -208,7 +208,7 @@ export default {
               iconElement.className = 'icon-tuichuquanping'
             }
             setTimeout(() => {
-              Prism.plugins.lineNumbers.resize(parentElement.querySelector('.line-numbers'))
+              Prism.plugins.lineNumbers.resize(env.element.parentNode)
             }, 300)
           }
         })

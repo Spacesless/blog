@@ -131,10 +131,8 @@ pre[class*='language-'] {
     }
   }
 
-  &--newline {
-    pre[class*='language-'] {
-      white-space: pre-wrap;
-    }
+  .line-numbers--newline {
+    white-space: pre-wrap;
   }
 }
 
