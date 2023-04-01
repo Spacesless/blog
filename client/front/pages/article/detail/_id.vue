@@ -135,7 +135,7 @@ export default {
               addClass(parentElement, 'line-numbers--newline')
               iconElement.className = 'icon-duohangwenben'
             }
-            Prism.plugins.lineNumbers.resize(parentElement)
+            Prism.plugins.lineNumbers.resize(env.element)
           }
         })
         return buttonElement
@@ -208,7 +208,7 @@ export default {
               iconElement.className = 'icon-tuichuquanping'
             }
             setTimeout(() => {
-              Prism.plugins.lineNumbers.resize(env.element.parentNode)
+              Prism.plugins.lineNumbers.resize(env.element)
             }, 300)
           }
         })
