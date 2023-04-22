@@ -10,16 +10,18 @@ module.exports = class extends think.Service {
     super();
     const defaultOptions = {
       size: 4, // 字符个数
-      ignoreChars: '0oO1i', // 过滤字符
-      noise: 3, // 噪点线条数量
-      color: '#409eff', // default grey, true if background option is set
-      background: '#fafafa', // svg image 背景颜色
+      ignoreChars: '0oO1ilI', // 过滤字符
+      noise: 2, // 噪点线条数量
+      // color: '#409eff', // default grey, true if background option is set
+      // background: '#fafafa', // svg image 背景颜色
       width: 120, // captcha 宽度
       height: 40, // captcha 高度
-      fontSize: 36, // captcha 文字大小
-      charPreset: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789' // random character preset
+      fontSize: 36 // captcha 文字大小
     };
-    this.options = Object.assign(defaultOptions, options);
+    this.options = {
+      ...defaultOptions,
+      ...options
+    };
   }
 
   /**

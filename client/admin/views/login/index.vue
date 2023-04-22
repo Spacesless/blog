@@ -157,8 +157,7 @@ export default {
       const svgOptions = {
         width: 150,
         height: 38,
-        fontSize: 50,
-        background: '#ecf5ff'
+        fontSize: 42
       }
       this.captchaLoading = true
       await this.$api.common.GetCaptcha(svgOptions).then((response) => {

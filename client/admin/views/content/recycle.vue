@@ -64,6 +64,7 @@ export default {
   mixins: [crud],
   data () {
     return {
+      autoFetchList: false,
       recycleList: [],
       restoreLoading: false
     }
