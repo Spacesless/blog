@@ -204,7 +204,7 @@ export default {
     handleCancel () {
       this.$emit('update:visible', false)
       this.fileList.forEach((item) => {
-        item.checked = false
+        this.$set(item, 'checked', false)
       })
     },
     handleConfirm () {
