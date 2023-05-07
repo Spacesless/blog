@@ -50,7 +50,7 @@
           </el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item v-if="!isEdit" label="发布时间" prop="addtime">
+      <el-form-item label="发布时间" prop="addtime">
         <el-date-picker
           v-model="formData.addtime"
           type="datetime"

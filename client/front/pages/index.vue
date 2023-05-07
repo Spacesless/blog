@@ -356,4 +356,13 @@ export default {
     color: var(--color-secondary);
   }
 }
+
+// 最近追番
+.bangumi {
+  &-list {
+    &-tag .tl-tag {
+      cursor: default;
+    }
+  }
+}
 </style>

@@ -1,6 +1,7 @@
 <template>
   <el-dialog
     width="800px"
+    title="添加网络图片"
     :visible="visible"
     append-to-body
     @close="handleCancel"

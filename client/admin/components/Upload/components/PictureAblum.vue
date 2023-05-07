@@ -3,7 +3,6 @@
     append-to-body
     class="ablum"
     width="90%"
-    :destroy-on-close="true"
     :visible="visible"
     @close="handleCancel"
   >
@@ -150,7 +149,7 @@ export default {
   },
   watch: {
     visible (isShow) {
-      if (isShow) {
+      if (isShow && !this.fileList.length) {
         this.fecthList()
       }
     }
@@ -200,20 +199,13 @@ export default {
      * @param {Object} item 点击项
      */
     toggleSelect (item) {
-      this.$set(item, 'checked', !item.check)
+      this.$set(item, 'checked', !item.checked)
     },
     handleCancel () {
       this.$emit('update:visible', false)
-      this.listQuery = {
-        keyword: '',
-        page: 1,
-        limit: 20
-      }
-      this.path = ''
-      this.breadcrumbs = [
-        { name: 'Home', path: '' }
-      ]
-      this.fileList = []
+      this.fileList.forEach((item) => {
+        item.checked = false
+      })
     },
     handleConfirm () {
       const findSelectFile = this.fileList.filter(item => item.checked)

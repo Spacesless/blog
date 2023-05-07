@@ -164,9 +164,6 @@ export default {
       }
     }
   },
-  activated () {
-    this.$refs.multipleTable && this.$refs.multipleTable.doLayout()
-  },
   methods: {
     async handleUpdate (row) {
       const { id, total, current, status, ratings } = row
