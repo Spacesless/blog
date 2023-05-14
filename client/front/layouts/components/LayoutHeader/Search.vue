@@ -48,7 +48,9 @@
             <ul v-for="(item, index) in searchList" :key="index" class="search-list-item">
               <li class="search-list__info">
                 <span class="search-list__count">{{ index + 1 + (listQuery.page - 1) * 10 }}</span>
-                <nuxt-link class="search-list__title" :to="item.url" @click.native="onClose" v-html="highlightKeyword(item.title)" />
+                <nuxt-link class="search-list__title" :to="item.url" @click.native="onClose">
+                  <span v-html="highlightKeyword(item.title)" />
+                </nuxt-link>
                 <span v-if="item.categoryUrl" class="search-list-classify">
                   <span class="search-list-classify__separator">-</span>
                   <nuxt-link class="search-list-classify__link" :title="item.categoryName" :to="item.categoryUrl" @click.native="onClose">{{ item.categoryName }}</nuxt-link>
@@ -171,7 +173,7 @@ export default {
      * @returns {String}
      */
     highlightKeyword (str) {
-      const keyword = this.listQuery.keyword
+      const keyword = this.resultInfo.keyword
       const Reg = new RegExp(keyword, 'gi')
       const res = str?.replace(Reg, (arg) => {
         return '<span class="search-list--highlight">' + arg + '</span>'

@@ -85,7 +85,10 @@ module.exports = class extends Base {
     const { text, data } = captchaService.createCaptcha();
 
     await this.session('captcha', text); // 将图片验证码存到session
-
+    think.logger.info({
+      captcha: text,
+      ip: this.ctx.ip
+    });
     this.success(data);
   }
 };
