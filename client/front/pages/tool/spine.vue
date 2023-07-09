@@ -62,7 +62,8 @@ export default {
         params: {
           id: this.findCategory.id
         }
-      }).then(({ seleteSkeleton, selectAnimation }) => {
+      }).then((res) => {
+        const { seleteSkeleton, selectAnimation } = res.params || {}
         this.seleteSkeleton = seleteSkeleton || 'lafei_4'
         this.selectAnimation = selectAnimation || 'normal'
       })

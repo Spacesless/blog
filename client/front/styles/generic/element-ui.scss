@@ -25,9 +25,15 @@
   &-textarea &-input__count {
     background: none;
   }
+
+  &-pager li.btn-quicknext,
+  &-pager li.btn-quickprev {
+    height: 32px;
+    line-height: 32px;
+  }
 }
 
-// 黑夜魔兽
+// 黑夜模式
 .dark-mode {
   .el-input__inner,
   .el-textarea__inner,
