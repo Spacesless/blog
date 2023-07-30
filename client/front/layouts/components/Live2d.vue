@@ -59,7 +59,7 @@ export default {
     return {
       apiurl: '//api.timelessq.com/live2d', // apiurl {string} 模型后端接口
       tips: '',
-      isShow: true,
+      isShow: false,
       tipsShow: false
     }
   },
@@ -82,14 +82,10 @@ export default {
     }
   },
   mounted () {
-    if (this.isShow) {
-      this.initModel()
-
-      // 复制
-      document.addEventListener('copy', () => {
-        this.showMessage('你都复制了些什么呀，转载要记得加上出处哦', 3000)
-      })
-    }
+    // 复制
+    document.addEventListener('copy', () => {
+      this.showMessage('你都复制了些什么呀，转载要记得加上出处哦', 3000)
+    })
   },
   methods: {
     dragMove (e) {

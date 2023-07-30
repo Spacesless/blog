@@ -54,10 +54,10 @@ export default {
   },
   methods: {
     toggleWaifu () {
-      this.$store.commit('tools/TOGGLE_LIVE2D')
+      this.$store.commit('tools/SET_LIVE2D', !this.live2dShow)
     },
     toggleBubble () {
-      this.$store.commit('tools/TOGGLE_PARTICLE')
+      this.$store.commit('tools/SET_PARTICLE', !this.particleActive)
     },
     backTop () {
       this.backTopTips = true

@@ -145,8 +145,11 @@ export default {
   }
 
   &-scrollbar {
-    max-height: calc(100vh - 48px);
-    padding-bottom: 10px;
+    height: calc(100vh - 60px);
+
+    @media (max-width: 1280px) {
+      height: auto;
+    }
   }
 
   &-item {

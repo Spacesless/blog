@@ -13,13 +13,14 @@
 // 落花canvas
 import ParticleCanvas from '@/utils/particle'
 import { getAbsolutePath } from '#/utils'
+import { debounce } from '@/utils'
 
 export default {
   name: 'BackgroundLayout',
   props: {
     particleActive: {
       type: Boolean,
-      default: true
+      default: false
     }
   },
   data () {
@@ -33,15 +34,30 @@ export default {
     }
   },
   watch: {
-    particleActive (val) {
-      if (val) {
-        if (this.particleInstance) {
-          this.particleInstance.resize()
-          this.particleInstance.draw()
+    particleActive: {
+      async handler (val) {
+        if (val) {
+          if (!this.particleInstance) {
+            await this.$nextTick()
+            this.initParticle()
+          } else {
+            this.particleInstance.resize()
+            this.particleInstance.draw()
+          }
+        } else {
+          this.particleInstance?.stopDraw()
         }
-      } else {
-        this.particleInstance.stopDraw()
-      }
+      },
+      immediate: true
+    },
+    mounted () {
+      this.__resizeHandler = debounce(() => {
+        this.particleInstance?.resize()
+      }, 100)
+      window.addEventListener('resize', this.__resizeHandler)
+    },
+    beforeDestroy () {
+      window.removeEventListener('resize', this.__resizeHandler)
     },
     isLight () {
       this.isShowChange = true
@@ -51,9 +67,6 @@ export default {
         this.isShowChange = false
       }, 2000)
     }
-  },
-  mounted () {
-    this.initParticle()
   },
   methods: {
     initParticle () {

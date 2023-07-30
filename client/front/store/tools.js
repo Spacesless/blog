@@ -5,8 +5,8 @@ const state = () => ({
     opened: Cookies && Cookies.get('sidebarStatus') ? !!+Cookies.get('sidebarStatus') : true,
     withoutAnimation: false
   },
-  particleActive: true,
-  live2dShow: true
+  particleActive: false,
+  live2dShow: false
 })
 
 const mutations = {
@@ -32,14 +32,8 @@ const mutations = {
   SET_PARTICLE: (state, isShow) => {
     state.particleActive = isShow
   },
-  TOGGLE_PARTICLE: (state) => {
-    state.particleActive = !state.particleActive
-  },
   SET_LIVE2D: (state, isShow) => {
     state.live2dShow = isShow
-  },
-  TOGGLE_LIVE2D: (state) => {
-    state.live2dShow = !state.live2dShow
   }
 }
 

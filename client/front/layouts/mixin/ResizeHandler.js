@@ -20,12 +20,15 @@ export default {
     window.removeEventListener('resize', this.$_resizeHandler)
   },
   mounted () {
-    const isMobile = this.$_isMobile()
-    const isMiddleWidth = this.$_isMDwidth()
+    const { isMobile, isMiddleWidth } = this.getScreenSize()
+
     if (isMobile) {
       this.$store.dispatch('toggleDevice', 'mobile')
       this.$store.commit('tools/SET_PARTICLE', false)
       this.$store.commit('tools/SET_LIVE2D', false)
+    } else {
+      this.$store.commit('tools/SET_PARTICLE', true)
+      this.$store.commit('tools/SET_LIVE2D', true)
     }
     if (isMiddleWidth) {
       this.$store.dispatch('tools/closeSideBar', { withoutAnimation: true })
@@ -36,18 +39,17 @@ export default {
   methods: {
     // use $_ for mixins properties
     // https://vuejs.org/v2/style-guide/index.html#Private-property-names-essential
-    $_isMobile () {
+    getScreenSize () {
       const rect = body.getBoundingClientRect()
-      return rect.width + 7 < WIDTH
-    },
-    $_isMDwidth () {
-      const rect = body.getBoundingClientRect()
-      return rect.width + 7 < MDWIDTH
+
+      return {
+        isMobile: rect.width + 7 < WIDTH,
+        isMiddleWidth: rect.width + 7 < MDWIDTH
+      }
     },
     $_resizeHandler () {
       if (!document.hidden) {
-        const isMobile = this.$_isMobile()
-        const isMiddleWidth = this.$_isMDwidth()
+        const { isMobile, isMiddleWidth } = this.getScreenSize()
 
         this.$store.dispatch('toggleDevice', isMobile ? 'mobile' : 'desktop')
 
