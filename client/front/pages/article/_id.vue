@@ -257,9 +257,9 @@ export default {
         }
 
         i {
-          margin-top: -2px;
           margin-right: 4px;
           font-size: 17px;
+          vertical-align: text-bottom;
         }
 
         @media (max-width: 992px) {

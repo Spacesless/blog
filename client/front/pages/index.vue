@@ -323,7 +323,7 @@ export default {
     i {
       margin-right: 5px;
       font-size: 18px;
-      vertical-align: bottom;
+      vertical-align: middle;
     }
 
     &__cate {
