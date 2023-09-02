@@ -6,7 +6,7 @@ module.exports = class extends think.Model {
    */
   async selectComment({ topic_id: topicId, page, pageSize }) {
     // 查询主评论
-    const field = 'id,topic_id,parent_id,reply_name,type,name,email,website,content,addtime,is_admin';
+    const field = 'id,topic_id,parent_id,reply_name,type,name,MD5(email) AS email,website,content,addtime,is_admin';
     const list = await this.model('comment')
       .field(field)
       .where({ topic_id: topicId, type: 1, is_show: 1 })

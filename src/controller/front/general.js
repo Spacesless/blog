@@ -34,12 +34,15 @@ module.exports = class extends Base {
       is_silent, live2d_model, live2d_texture, icp_beian, police_beian,
       article_width, article_height, bangumi_width, bangumi_height
     } = configs;
+    const runDays = Math.ceil((new Date() - new Date('2018/04/25')) / 86400000)
+    const duration = `${Math.floor(runDays / 365)}年${runDays % 365}天`
+
     const targetConfigs = {
       siteurl: this.siteurl,
+      currentYear: new Date().getFullYear(),
+      duration,
       keywords,
       description,
-      currentYear: new Date().getFullYear(),
-      duration: Math.ceil((new Date() - new Date('2018/04/25')) / 86400000),
       sitename,
       is_silent,
       live2d_model,

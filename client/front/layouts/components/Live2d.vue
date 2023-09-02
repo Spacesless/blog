@@ -73,8 +73,9 @@ export default {
     }
   },
   watch: {
-    live2dShow (isShow) {
+    async live2dShow (isShow) {
       if (isShow) {
+        await this.$nextTick()
         this.handleShowLive2d()
       } else {
         this.handleHideLive2d()

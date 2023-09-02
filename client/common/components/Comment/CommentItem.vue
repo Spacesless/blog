@@ -60,7 +60,6 @@
 </template>
 
 <script>
-import md5 from 'md5'
 import CommentReply from './CommentReply'
 
 export default {
@@ -114,7 +113,7 @@ export default {
        * robohash：具有不同颜色、面部的机器人（随机生成）
        * blank：透明的PNG图像
        */
-      return `https://cravatar.cn/avatar/${md5(email || id)}?s=64&d=robohash`
+      return `https://cravatar.cn/avatar/${email || id}?s=64&d=robohash`
     }
   }
 }
