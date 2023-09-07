@@ -82,8 +82,7 @@ module.exports = {
   plugins: [
     '@/plugins/element-ui',
     '@/plugins/axios',
-    '@/plugins/filters',
-    { src: '@/plugins/baidu-tongji', mode: 'client' }
+    '@/plugins/filters'
   ],
   render: {
     compressor: false // 禁用中间件压缩

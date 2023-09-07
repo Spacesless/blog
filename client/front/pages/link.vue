@@ -43,8 +43,6 @@
       <p>网址：https://www.timelessq.com</p>
       <p>头像/Logo：https://www.timelessq.com/static/avatar.jpg <span>可选</span></p>
     </div>
-    <!-- 谷歌广告 -->
-    <Adsense />
     <!-- comment start -->
     <Comment :topic-id="'link'" />
   </div>
@@ -52,14 +50,12 @@
 
 <script>
 import Comment from '#/components/Comment'
-import Adsense from '@/components/Adsense'
 import { pageMeta } from '@/mixins'
 
 export default {
   name: 'FriendLink',
   components: {
-    Comment,
-    Adsense
+    Comment
   },
   mixins: [pageMeta],
   async asyncData ({ $axios }) {

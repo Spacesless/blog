@@ -18,8 +18,6 @@
         <div id="js-content" class="markup content-left" v-html="content" />
       </div>
     </div>
-    <!-- 谷歌广告 -->
-    <Adsense />
     <!-- comment start -->
     <Comment :topic-id="'about'" />
   </div>
@@ -29,15 +27,13 @@
 import { mapGetters } from 'vuex'
 import Catalog from '@/components/Catalog'
 import Comment from '#/components/Comment'
-import Adsense from '@/components/Adsense'
 import { pageMeta } from '@/mixins'
 
 export default {
   name: 'AboutUs',
   components: {
     Catalog,
-    Comment,
-    Adsense
+    Comment
   },
   mixins: [pageMeta],
   async asyncData ({ route, store, $axios }) {
