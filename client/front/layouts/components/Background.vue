@@ -13,7 +13,7 @@
 // 落花canvas
 import ParticleCanvas from '@/utils/particle'
 import { getAbsolutePath } from '#/utils'
-import { debounce } from '@/utils'
+import { debounce, sleep } from '@/utils'
 
 export default {
   name: 'BackgroundLayout',
@@ -25,7 +25,8 @@ export default {
   },
   data () {
     return {
-      isShowChange: false
+      isShowChange: false,
+      isLoaded: false
     }
   },
   computed: {
@@ -38,7 +39,10 @@ export default {
       async handler (val) {
         if (val) {
           if (!this.particleInstance) {
-            await this.$nextTick()
+            if (!this.isLoaded) {
+              this.isLoaded = true
+              await sleep(2000)
+            }
             this.initParticle()
           } else {
             this.particleInstance.resize()

@@ -72,7 +72,7 @@ module.exports = class extends think.Model {
     }
 
     const list = await this.field('id,title,description')
-      .limit(0, 6)
+      .limit(0, 8)
       .where(where)
       .order('updateTime DESC')
       .select();

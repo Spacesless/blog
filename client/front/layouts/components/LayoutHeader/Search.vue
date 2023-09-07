@@ -44,7 +44,7 @@
           </template>
         </h3>
         <div class="search-list-wrapper">
-          <div class="container">
+          <div v-if="total" class="container">
             <ul v-for="(item, index) in searchList" :key="index" class="search-list-item">
               <li class="search-list__info">
                 <span class="search-list__count">{{ index + 1 + (listQuery.page - 1) * 10 }}</span>
@@ -59,6 +59,7 @@
               </li>
             </ul>
           </div>
+          <img v-else class="search-list__placeholder" src="@/assets/image/no-data.svg" alt="">
         </div>
         <!-- list page -->
         <div class="list-page">
@@ -272,8 +273,18 @@ export default {
     height: calc(100vh - 168px);
 
     &-wrapper {
+      position: relative;
       height: calc(100% - 120px);
       overflow-y: auto;
+    }
+
+    &__placeholder {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      height: 86%;
+      max-height: 480px;
+      transform: translateX(-50%) translateY(-50%);
     }
 
     &__result {

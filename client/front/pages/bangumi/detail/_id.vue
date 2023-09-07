@@ -44,6 +44,7 @@
         <Catalog v-if="isLoaded" class="content-right" />
 
         <div id="js-content" class="content-left ">
+          <h2>主题曲</h2>
           <div v-if="songList && songList.length" id="player">
             <p v-for="(item, index) in songList" :key="index">
               {{ item }}

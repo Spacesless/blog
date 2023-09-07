@@ -41,6 +41,9 @@ module.exports = class extends Base {
   async refreshAction() {
     await this.cache('category', null);
     await this.cache('config', null);
+    await this.cache('banner', null);
+    await this.cache('article', null);
+    await this.cache('bangumi', null);
     return this.success();
   }
 

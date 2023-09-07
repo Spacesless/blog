@@ -1,8 +1,7 @@
-const path = require('path');
 const { Nuxt, Builder } = require('nuxt');
 
 module.exports = options => {
-  const config = require(path.join(think.ROOT_PATH, 'config/nuxt.front.js'));
+  const config = options.config;
   config.dev = options.isDev;
 
   const nuxt = new Nuxt(config);

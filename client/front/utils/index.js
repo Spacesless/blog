@@ -102,3 +102,7 @@ export function removeClass (el, cls) {
     el.setAttribute('class', trim(curClass))
   }
 }
+
+export function sleep (wait) {
+  return new Promise(resolve => setTimeout(resolve, wait))
+}

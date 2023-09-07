@@ -28,6 +28,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { sleep } from '@/utils'
 if (process.client) {
   require('@/vendor/live2d')
 }
@@ -60,7 +61,8 @@ export default {
       apiurl: '//api.timelessq.com/live2d', // apiurl {string} 模型后端接口
       tips: '',
       isShow: false,
-      tipsShow: false
+      tipsShow: false,
+      isLoaded: false
     }
   },
   computed: {
@@ -75,7 +77,10 @@ export default {
   watch: {
     async live2dShow (isShow) {
       if (isShow) {
-        await this.$nextTick()
+        if (!this.isLoaded) {
+          this.isLoaded = true
+          await sleep(3000)
+        }
         this.handleShowLive2d()
       } else {
         this.handleHideLive2d()

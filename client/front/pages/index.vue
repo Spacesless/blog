@@ -1,8 +1,7 @@
 <template>
-  <div class="home">
+  <div ref="wrapper" class="home">
     <!-- 轮播图 -->
     <el-carousel
-      ref="carousel"
       class="carousel"
       trigger="click"
       :interval="5000"
@@ -10,14 +9,12 @@
     >
       <el-carousel-item v-for="item in bannerList" :key="item.title">
         <img
-          ref="carouselImg"
           class="carousel-item__image"
           width="1280"
           height="500"
           :src="item.imgurl"
           :srcset="item.imgurl | getImageSrcSet(1280)"
           :alt="item.title"
-          @load="onImageLoad"
         >
         <div class="carousel-item__title">
           {{ item.title }}
@@ -175,6 +172,8 @@ export default {
     }
   },
   mounted () {
+    this.handleResize()
+
     this.__resizeHandler = debounce(() => {
       this.handleResize()
     }, 100)
@@ -184,17 +183,8 @@ export default {
     window.removeEventListener('resize', this.__resizeHandler)
   },
   methods: {
-    /**
-     * @event 图片加载完成
-     * @summary 设置走马灯高度，适用于所有图片高度一致的情况
-     */
-    onImageLoad (e) {
-      if (this.isLoaded) { return }
-      this.isLoaded = true
-      this.handleResize()
-    },
     handleResize () {
-      const carouselWidth = this.$refs.carousel?.$el.clientWidth
+      const carouselWidth = this.$refs.wrapper?.clientWidth || 1280
       this.bannerHeight = 500 * carouselWidth / 1280
     }
   }
