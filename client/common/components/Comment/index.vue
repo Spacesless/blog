@@ -2,7 +2,7 @@
   <div v-loading="fetchLoading" class="comment tl-card">
     <h2 class="comment-title tl-card__title">
       评论区
-      <span class="comment-title__count">{{ total }}</span>
+      <span class="comment-title__count">({{ total }})</span>
     </h2>
     <comment-reply
       v-if="!replyData.id"
@@ -141,8 +141,8 @@ export default {
 
   &-title {
     &__count {
-      margin: 0 6px;
       font-size: 16px;
+      vertical-align: bottom;
     }
   }
 

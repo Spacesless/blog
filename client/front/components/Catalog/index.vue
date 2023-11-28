@@ -145,10 +145,10 @@ export default {
   }
 
   &-scrollbar {
-    height: calc(100vh - 60px);
+    max-height: calc(100vh - 60px);
 
     @media (max-width: 1280px) {
-      height: auto;
+      max-height: auto;
     }
   }
 

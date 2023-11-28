@@ -172,7 +172,9 @@ export default {
     }
   },
   mounted () {
-    this.handleResize()
+    setTimeout(() => {
+      this.handleResize()
+    }, 0)
 
     this.__resizeHandler = debounce(() => {
       this.handleResize()
