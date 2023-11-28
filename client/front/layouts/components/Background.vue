@@ -140,16 +140,24 @@ export default {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background-color: var(--bg);
-  background-image: url('~@/assets/image/background.jpg');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  transition: all .5s;
+
+  &::before {
+    position: absolute;
+    right: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    content: '';
+    background: url('~@/assets/image/background.png') no-repeat bottom right;
+    background-size: cover;
+    opacity: .25;
+  }
 
   #flower {
     width: 100%;
     height: 100%;
+    opacity: .65;
   }
 }
 
@@ -159,6 +167,7 @@ export default {
   left: -50%;
   width: 200%;
   height: 200%;
+  opacity: .65;
   transform-origin: center bottom;
 
   &--changing {
@@ -205,14 +214,6 @@ export default {
 
   to {
     transform: rotate(360deg);
-  }
-}
-</style>
-
-<style lang="scss">
-.dark-mode {
-  .background {
-    background-image: none;
   }
 }
 </style>
