@@ -9,12 +9,11 @@
       :form-data.sync="formData"
       :submit-comment="submitComment"
     />
-    <div v-if="total === 0" class="comment-none">
-      <p class="comment-none__tips">
+    <div v-if="total === 0" class="comment-empty">
+      <p class="comment-empty__tips">
         还没有评论，快来抢第一吧
       </p>
-      <img v-if="isDark" class="comment-none__img" src="@/assets/image/no-data-dark.svg" alt="">
-      <img v-else class="comment-none__img" src="@/assets/image/no-data.svg" alt="">
+      <div class="comment-empty__placeholder" />
     </div>
     <div v-else class="comment-list">
       <comment-item
@@ -68,11 +67,6 @@ export default {
         pageSize: 10
       },
       commentList: []
-    }
-  },
-  computed: {
-    isDark () {
-      return this.$colorMode.preference === 'dark'
     }
   },
   mounted () {
@@ -156,11 +150,11 @@ export default {
     padding: $grid-space 0;
   }
 
-  &-none {
-    &__img {
-      display: block;
-      width: 300px;
-      margin: 0 auto;
+  &-empty {
+    &__placeholder {
+      height: 256px;
+      background: var(--empty-background);
+      background-size: contain;
     }
 
     &__tips {

@@ -59,10 +59,7 @@
               </li>
             </ul>
           </div>
-          <template v-else>
-            <img v-if="isDark" class="search-list__placeholder" src="@/assets/image/no-data-dark.svg" alt="">
-            <img v-else class="search-list__placeholder" src="@/assets/image/no-data.svg" alt="">
-          </template>
+          <div v-else class="search-list__placeholder" />
         </div>
         <!-- list page -->
         <div class="list-page">
@@ -110,11 +107,6 @@ export default {
       resultInfo: {},
       total: 0,
       fetchLoading: false
-    }
-  },
-  computed: {
-    isDark () {
-      return this.$colorMode.preference === 'dark'
     }
   },
   watch: {
@@ -281,18 +273,14 @@ export default {
     height: calc(100vh - 168px);
 
     &-wrapper {
-      position: relative;
       height: calc(100% - 120px);
       overflow-y: auto;
     }
 
     &__placeholder {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      height: 86%;
-      max-height: 480px;
-      transform: translateX(-50%) translateY(-50%);
+      height: 100%;
+      background: var(--empty-background);
+      background-size: contain;
     }
 
     &__result {

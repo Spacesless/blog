@@ -17,7 +17,7 @@ module.exports = class extends think.Model {
     const articleField = 'id,title,description,imgurl,category_id,hits,updatetime,tag';
     const articleWhere = { is_show: 1, is_recycle: 0 };
     return this.model('article')
-      .cache('article', { timeout: 7 * 24 * 3600 * 1000 })
+      .cache('article', { timeout: 3 * 24 * 3600 * 1000 })
       .field(articleField)
       .where(articleWhere)
       .limit(limit)
@@ -33,7 +33,7 @@ module.exports = class extends think.Model {
     const bangumiField = 'id,title,description,category_id,imgurl,total,current,showtime,status,ratings,tag';
     const bangumiWhere = { is_show: 1, is_recycle: 0, status: ['!=', 0], current: ['EXP', '< `total`'] };
     return this.model('bangumi')
-      .cache('bangumi', { timeout: 7 * 24 * 3600 * 1000 })
+      .cache('bangumi', { timeout: 3 * 24 * 3600 * 1000 })
       .field(bangumiField)
       .where(bangumiWhere)
       .limit(limit)
