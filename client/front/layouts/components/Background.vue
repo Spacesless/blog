@@ -2,7 +2,7 @@
   <div class="background">
     <canvas id="flower" width="1900" height="1080" />
 
-    <div class="theme" :class="{'theme--changing': isShowChange, 'theme--dark': !isLight}">
+    <div class="theme" :class="{'theme--changing': isShowChange, 'theme--dark': isDark}">
       <div class="theme__sun" />
       <div class="theme__moon" />
     </div>
@@ -30,8 +30,8 @@ export default {
     }
   },
   computed: {
-    isLight () {
-      return this.$colorMode.preference === 'system'
+    isDark () {
+      return this.$colorMode.preference === 'dark'
     }
   },
   watch: {
@@ -63,7 +63,7 @@ export default {
     beforeDestroy () {
       window.removeEventListener('resize', this.__resizeHandler)
     },
-    isLight () {
+    isDark () {
       this.isShowChange = true
 
       clearTimeout(this.timer)

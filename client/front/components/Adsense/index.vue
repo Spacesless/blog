@@ -78,7 +78,7 @@ export default {
 
   .adsbygoogle {
     min-height: 220px;
-    background: url('@/assets/image/no-data.svg') no-repeat center;
+    background: var(--empty-background);
     background-size: contain;
   }
 }

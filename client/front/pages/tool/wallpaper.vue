@@ -10,19 +10,11 @@
 
     <el-drawer
       :visible.sync="drawerShow"
-      :with-header="false"
+      title="壁纸列表"
       :modal="false"
       size="50%"
       class="wallpaper-drawer"
     >
-      <div class="wallpaper-header">
-        <el-radio-group v-model="listAlbum" @change="onListAlbumChange">
-          <el-radio-button v-for="item in albumList" :key="item.key" :label="item.key">
-            {{ item.name }}
-          </el-radio-button>
-        </el-radio-group>
-      </div>
-
       <el-scrollbar ref="scrollbar" v-loading="listLoading" class="wallpaper-list-scrollbar">
         <el-row class="wallpaper-list">
           <el-col
@@ -40,7 +32,7 @@
               :src="item.thumb"
               fit="cover"
               lazy
-              @click="changePicture(item, true, index)"
+              @click="changePicture(item, index)"
             />
             <p v-if="item.title || item.descriptionz" class="wallpaper-list__desc">
               <span>{{ item.title || item.descriptionz }}</span>
@@ -69,15 +61,7 @@
         <i class="el-icon-download" />
         <span>{{ pictureSize }}</span>
       </li>
-      <li class="wallpaper-menu-item wallpaper-menu-item--album">
-        <span>{{ albumName }}</span>
-        <ul class="wallpaper-menu-dropdown">
-          <li v-for="item in albumList" :key="item.key" @click="changeAlbum(item.key)">
-            {{ item.name }}
-          </li>
-        </ul>
-      </li>
-      <li class="wallpaper-menu-item" @click="handleRandom">
+      <li class="wallpaper-menu-item" @click="fetchBingRandom">
         <i class="el-icon-refresh" />
       </li>
       <li class="wallpaper-menu-item" @click="showDrawer">
@@ -92,11 +76,6 @@ import { saveAs } from 'file-saver'
 import Pagination from '#/components/Pagination'
 import { pageMeta } from '@/mixins'
 
-const bing = {
-  key: 'bing',
-  name: '必应'
-}
-
 export default {
   name: 'DaliyWallpaper',
   components: {
@@ -108,10 +87,8 @@ export default {
     return {
       pictureData: {},
       activeAlbum: 'bing',
-      albumList: [bing],
       loading: false,
       drawerShow: false,
-      listAlbum: 'bing',
       pictureList: [],
       listLoading: false,
       listQuery: {
@@ -122,10 +99,6 @@ export default {
     }
   },
   computed: {
-    albumName () {
-      const findAlbum = this.albumList.find(item => item.key === this.activeAlbum)
-      return findAlbum?.name || this.activeAlbum
-    },
     pictureSize () {
       const { imageWidth, imageHeight } = this.pictureData
 
@@ -134,7 +107,6 @@ export default {
   },
   created () {
     this.fetchBing()
-    this.fetchAblumList()
   },
   methods: {
     onPictureLoaded () {
@@ -145,21 +117,10 @@ export default {
       })
     },
     /**
-     * 切换图册
-     * @param {Any} type
-     */
-    changeAlbum (type) {
-      if (type !== this.activeAlbum) {
-        this.activeAlbum = type
-        this.handleRandom()
-      }
-    },
-    /**
      * 更改预览图片
      * @param {Object} data 图片信息
-     * @param {Boolean} isList 是否列表选择
      */
-    changePicture (data, isList, index) {
+    changePicture (data, index) {
       const { url, urlbase, copyright, imageWidth, imageHeight, descriptionz } = data || {}
 
       let match = []
@@ -175,10 +136,6 @@ export default {
         title: copyright || descriptionz
       }
 
-      if (isList) {
-        this.activeAlbum = this.listAlbum
-      }
-
       this.loading = true
       if (this.pictureList[index]) {
         this.$set(this.pictureList[index], 'loading', true)
@@ -189,21 +146,8 @@ export default {
       if (!url) {
         return
       }
-      let filename = null
-      if (url.includes('bing.com')) {
-        filename = urlbase ? urlbase.split('=').pop() + '.jpg' : null
-      } else {
-        filename = url.split('/').pop()
-      }
+      const filename = urlbase ? urlbase.split('=').pop() + '.jpg' : null
       saveAs(url, filename)
-    },
-    // 随机切换
-    handleRandom () {
-      if (this.activeAlbum === 'bing') {
-        this.fetchBingRandom()
-      } else {
-        this.fetchWallpaperRandom()
-      }
     },
     showDrawer () {
       this.drawerShow = true
@@ -211,22 +155,8 @@ export default {
         this.fetchList()
       }
     },
-    // 切换列表页图册
-    onListAlbumChange () {
-      const findAlbum = this.albumList.find(item => item.key === this.listAlbum)
-      this.listQuery = {
-        page: 1,
-        pageSize: 20,
-        album: findAlbum?.name || ''
-      }
-      this.fetchList()
-    },
     async fetchList () {
-      if (this.listAlbum === 'bing') {
-        await this.fetchBingList()
-      } else {
-        await this.fetchWallpaperList()
-      }
+      await this.fetchBingList()
 
       await this.$nextTick()
       if (this.$refs?.scrollbar.$refs.wrap) {
@@ -255,43 +185,6 @@ export default {
         this.total = count
         data.forEach((item) => {
           item.thumb = `https://cn.bing.com${item.urlbase}_400x240.jpg`
-        })
-        this.pictureList = data
-      }).catch(() => {})
-      this.listLoading = false
-    },
-    fetchAblumList () {
-      this.GetWallpaper('wallpaper/album').then((res) => {
-        const data = (res.data || []).map((item) => {
-          return {
-            key: item.album_id,
-            name: item.album_name
-          }
-        })
-        this.albumList = [
-          bing,
-          ...data
-        ]
-      })
-    },
-    fetchWallpaperRandom () {
-      this.GetWallpaper('wallpaper', {
-        album: this.albumName,
-        format: 'json'
-      }, true).then((res) => {
-        this.changePicture(res.data)
-      })
-    },
-    async fetchWallpaperList () {
-      this.listLoading = true
-      await this.GetWallpaper('wallpaper/list', this.listQuery).then((res) => {
-        const { count, data } = res.data
-        this.total = count
-        data.forEach((item) => {
-          const urlSplit = item.url.split('.')
-          urlSplit.splice(-1, 0, 'md')
-          const thumb = urlSplit.join('.')
-          item.thumb = thumb
         })
         this.pictureList = data
       }).catch(() => {})
@@ -344,12 +237,6 @@ export default {
         background-color: rgba(0, 0, 0, .65);
       }
 
-      &--album {
-        &:hover .wallpaper-menu-dropdown {
-          display: block;
-        }
-      }
-
       &--desc {
         cursor: default;
       }
@@ -358,39 +245,13 @@ export default {
     &__link {
       visibility: hidden;
     }
-
-    &-dropdown {
-      position: absolute;
-      right: 0;
-      bottom: 100%;
-      display: none;
-      overflow: hidden;
-      border-radius: 4px;
-
-      li {
-        padding: 8px 16px;
-        color: rgba($color: #FFFFFF, $alpha: .85);
-        white-space: nowrap;
-        background-color: rgba(0, 0, 0, .45);
-        border-bottom: 1px solid rgba($color: #FFFFFF, $alpha: .45);
-
-        &:hover {
-          color: #FFFFFF;
-          background-color: rgba(0, 0, 0, .65);
-        }
-      }
-    }
-  }
-
-  &-header {
-    padding: 16px;
   }
 
   &-list {
     padding: 0 16px;
 
     &-scrollbar {
-      height: calc(100% - 64px - 56px);
+      height: calc(100% - 56px);
       margin-bottom: 8px;
     }
 

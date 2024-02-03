@@ -13,7 +13,8 @@
       <p class="comment-none__tips">
         还没有评论，快来抢第一吧
       </p>
-      <img class="comment-none__img" src="@/assets/image/no-data.svg" alt="">
+      <img v-if="isDark" class="comment-none__img" src="@/assets/image/no-data-dark.svg" alt="">
+      <img v-else class="comment-none__img" src="@/assets/image/no-data.svg" alt="">
     </div>
     <div v-else class="comment-list">
       <comment-item
@@ -67,6 +68,11 @@ export default {
         pageSize: 10
       },
       commentList: []
+    }
+  },
+  computed: {
+    isDark () {
+      return this.$colorMode.preference === 'dark'
     }
   },
   mounted () {

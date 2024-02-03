@@ -35,6 +35,7 @@
       hsla(0deg, 0%, 98%, .987) 91.9%,
       var(--bg-normal)
     );
+  --empty-background: url('@/assets/image/no-data.svg') no-repeat center;
 }
 
 .dark-mode {
@@ -73,4 +74,5 @@
       rgba(33, 33, 33, .987) 91.9%,
       var(--bg-normal)
     );
+  --empty-background: url('@/assets/image/no-data-dark.svg') no-repeat center;
 }

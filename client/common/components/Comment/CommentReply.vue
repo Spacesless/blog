@@ -8,7 +8,7 @@
       </el-col>
       <el-col :sm="24" :md="8">
         <el-form-item prop="email">
-          <el-input v-model="formData.email" placeholder="邮箱（不会告诉别人的）" clearable />
+          <el-input v-model="formData.email" placeholder="邮箱（MD5存储仅用于展示头像）" clearable />
         </el-form-item>
       </el-col>
       <el-col :sm="24" :md="8">
