@@ -85,7 +85,9 @@ export default {
   computed: {
     readDuration () {
       const averageVelocity = 8.3
-      const total = (this.data.word_count || 0) / averageVelocity
+      let total = (this.data.word_count || 0) / averageVelocity
+      const imageElementCount = this.data.content?.match(/<img/g)?.length || 0
+      total += imageElementCount * 12
       return total ? Math.ceil(total / 60) + ' 分钟' : ''
     }
   },
@@ -229,6 +231,8 @@ export default {
 .blog {
   &-summary {
     position: relative;
+    display: flex;
+    align-items: center;
     margin-bottom: $grid-space;
     overflow: hidden;
 

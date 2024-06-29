@@ -7,10 +7,23 @@ export default function ({ $axios, redirect }) {
   $axios.defaults.timeout = 15000
 
   $axios.onResponse((response) => {
-    const { errno } = response.data
+    const { errno, errmsg } = response.data
     if (errno === 404) {
       return redirect('/404')
     }
-    return response.data
+    if (errno === 0) {
+      return response.data
+    } else {
+      let message = '请求错误'
+      if (errmsg) {
+        try {
+          message = JSON.stringify(errmsg)
+        } catch (e) {
+          // eslint-disable-next-line no-console
+          console.error(e)
+        }
+      }
+      return Promise.reject(new Error(message))
+    }
   })
 }

@@ -8,10 +8,7 @@
         <a class="webapp-card" :href="item.link" :title="item.name" target="_blank">
           <div class="webapp-card__header">{{ item.name }}</div>
           <div class="webapp-card__body">
-            <div class="clearfix">
-              <img class="webapp-card__logo img-fluid" :src="item.columnimg">
-              <p class="webapp-card__desc">{{ item.description }}</p>
-            </div>
+            <p class="webapp-card__desc">{{ item.description }}</p>
             <p class="webapp-card__version">版本号：{{ item.version }}</p>
           </div>
         </a>
@@ -25,10 +22,7 @@
         <a class="webapp-card" :href="item.link || item.url" :title="item.name" target="_blank">
           <div class="webapp-card__header">{{ item.name }}</div>
           <div class="webapp-card__body">
-            <div class="clearfix">
-              <img class="webapp-card__logo img-fluid" :src="item.columnimg">
-              <p class="webapp-card__desc">{{ item.description }}</p>
-            </div>
+            <p class="webapp-card__desc">{{ item.description }}</p>
             <p class="webapp-card__version">版本号：{{ item.version }}</p>
           </div>
         </a>
@@ -145,14 +139,8 @@ export default {
       line-height: 24px;
     }
 
-    &__logo {
-      float: left;
-      width: 64px;
-    }
-
     &__desc {
       height: 3em;
-      padding-left: 10px;
       overflow: hidden;
     }
 
