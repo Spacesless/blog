@@ -54,6 +54,7 @@
         :comment-data="child"
         :reply-data="replyData"
         :submit-comment="submitComment"
+        @onReply="onReply"
       />
     </div>
   </div>
@@ -86,14 +87,26 @@ export default {
   methods: {
     // 回复指定评论
     handleReply () {
-      this.tempReplyId = this.replyData.id
-      this.$emit('update:replyData', this.commentData)
+      if (this.commentData.type === 1) {
+        this.$emit('update:replyData', this.commentData)
+      } else {
+        this.$emit('onReply', this.commentData)
+      }
+    },
+    onReply (commentData) {
+      this.$emit('update:replyData', commentData)
     },
     // 取消回复
     handleCancel () {
-      this.$emit('update:replyData', {
-        id: this.tempReplyId
-      })
+      if (this.commentData.type === 1) {
+        this.$emit('update:replyData', {
+          id: undefined
+        })
+      } else {
+        this.$emit('onReply', {
+          id: undefined
+        })
+      }
     },
     /**
      * 根据邮箱地址获取头像

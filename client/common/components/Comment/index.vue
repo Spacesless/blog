@@ -103,12 +103,13 @@ export default {
      */
     submitComment (content) {
       const { id, topic_id: topicId, parent_id: parentId, name, type } = this.replyData
+      const formatType = type ? type + 1 : 1
       const postData = {
         ...this.formData,
         topic_id: topicId,
         reply_name: name,
         parent_id: parentId || id || 0,
-        type: type ? type + 1 : 1,
+        type: formatType > 3 ? 3 : formatType,
         topic_url: location.pathname,
         topic_title: document.title,
         content
