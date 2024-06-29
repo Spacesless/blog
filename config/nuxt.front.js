@@ -54,7 +54,6 @@ module.exports = {
       })
     ],
     publicPath: '//cdn.timelessq.com/nuxt-front/dist/client', // 只需将www/front上传cdn
-    postcss: true,
     transpile: [/^element-ui/]
   },
   buildDir: isPro ? 'www/nuxt-front' : '.nuxt/front',
