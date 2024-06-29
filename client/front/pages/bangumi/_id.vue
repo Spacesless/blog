@@ -8,8 +8,8 @@
     <el-form class="filter" label-width="40px" label-position="left">
       <el-form-item label="排序">
         <el-select v-model="filters.sortBy" placeholder="请选择排序方式" @change="handleSearch">
-          <el-option label="更新时间" value="" />
-          <el-option label="发布时间" value="addtime" />
+          <el-option label="追番时间" value="" />
+          <el-option label="放映时间" value="showtime" />
           <el-option label="推荐指数" value="ratings" />
         </el-select>
         <el-radio-group v-model="filters.orderBy" @change="handleSearch">
@@ -84,7 +84,7 @@
             <nuxt-link class="bangumi-list__title" :to="'/bangumi/detail/' + item.id">
               {{ item.title }}
             </nuxt-link>
-            <p><span class="para-name">时间：</span>{{ item.showtime }}</p>
+            <p><span class="para-name">时间：</span>{{ item.updatetime | parseTime('{y}-{m}-{d}') }}</p>
             <p><span class="para-name">状态：</span>{{ item.status | bangumiStatus }}</p>
             <p class="hidden-md-and-down">
               <span class="para-name">简介：</span>{{ item.description }}……

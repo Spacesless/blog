@@ -12,6 +12,7 @@
             {{ data.title }}
           </h1>
           <p><span class="para-name">放映时间：</span>{{ data.showtime }}</p>
+          <p><span class="para-name">追番时间：</span>{{ data.updatetime | parseTime('{y}-{m}-{d}') }}</p>
           <p><span class="para-name">状态：</span>{{ data.status | bangumiStatus }}</p>
           <div class="bangumi-info-ratings">
             <span class="para-name">推荐指数：</span>
@@ -39,23 +40,26 @@
     </el-row>
     <!--bangumi content-->
     <div ref="content" class="bangumi-content tl-card">
-      <div v-if="(songList && songList.length) || hasContent" class="content-wrap">
+      <div class="content-wrap">
         <!-- 文章目录 -->
         <Catalog v-if="isLoaded" class="content-right" />
 
-        <div id="js-content" class="content-left ">
-          <h2>主题曲</h2>
-          <div v-if="songList && songList.length" id="player">
-            <p v-for="(item, index) in songList" :key="index">
-              {{ item }}
-            </p>
-            <div id="aplayer" class="aplayer" />
-          </div>
-          <div v-if="hasContent" class="markup">
-            <h2>短评</h2>
-            <!-- 文章内容 -->
-            <div v-html="data.content" />
-          </div>
+        <div id="js-content" class="content-left markup">
+          <template v-if="songList && songList.length">
+            <h2>主题曲</h2>
+            <div id="player">
+              <p v-for="(item, index) in songList" :key="index">
+                {{ item }}
+              </p>
+              <div id="aplayer" class="aplayer" />
+            </div>
+          </template>
+          <h2>短评</h2>
+          <!-- 文章内容 -->
+          <div v-if="hasContent" v-html="data.content" />
+          <p v-else>
+            光顾着看了，啥也没留下，去其他地方看看吧~
+          </p>
         </div>
       </div>
       <!-- share start -->
