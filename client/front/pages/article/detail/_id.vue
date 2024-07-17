@@ -236,6 +236,10 @@ export default {
     margin-bottom: $grid-space;
     overflow: hidden;
 
+    @media (max-width: 992px) {
+      display: block;
+    }
+
     &-cover {
       position: relative;
 
@@ -264,7 +268,7 @@ export default {
     }
 
     &__title {
-      padding: 16px 0;
+      padding-bottom: 16px;
       font-size: 32px;
       font-weight: normal;
       line-height: 1.5;
