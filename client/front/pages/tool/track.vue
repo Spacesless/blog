@@ -61,7 +61,7 @@ export default {
       script: [
         {
           type: 'text/javascript',
-          src: '//webapi.amap.com/maps?v=1.4.15&key=e5f8a818ff67f77976be46e54f4a9d51&plugin=AMap.Scale,AMap.ToolBar,AMap.MarkerClusterer'
+          src: '//webapi.amap.com/maps?v=1.4.15&key=2b3ed4aea9dcf3b1770bc4391fe76ea6&plugin=AMap.Scale,AMap.ToolBar,AMap.MarkerClusterer'
         },
         {
           type: 'text/javascript',
