@@ -3,15 +3,9 @@
     <ul v-if="isShowCode" class="share-pay">
       <li class="share-pay-item">
         <img class="share-pay__qrcode img-fluid" :src="'/static/img/sponsor-wx.png' | getAbsolutePath" alt="wx">
-        <p class="share-pay__name">
-          微信支付
-        </p>
       </li>
       <li class="share-pay-item">
         <img class="share-pay__qrcode img-fluid" :src="'/static/img/sponsor-alipay.png' | getAbsolutePath" alt="alipay">
-        <p class="share-pay__name">
-          支付宝
-        </p>
       </li>
     </ul>
     <div class="share-body clearfix">
@@ -154,8 +148,8 @@ $iconWidth: 36px;
       margin: 0 $grid-space * 2;
     }
 
-    &__name {
-      color: var(--color-text);
+    &__qrcode {
+      width: 300px;
     }
   }
 

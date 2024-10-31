@@ -14,7 +14,7 @@
       />
     </div>
     <div class="header-menus">
-      <el-tooltip effect="dark" :content="$colorMode.preference === 'system' ? '黑夜模式' : '白天模式'" placement="bottom">
+      <el-tooltip effect="dark" :content="isDark ? '白天模式' : '黑夜模式'" placement="bottom">
         <i
           class="header-menus__btn"
           :class="{
@@ -66,7 +66,7 @@ export default {
     },
     // 白天、黑夜模式切换
     toggleColorMode () {
-      this.$colorMode.preference = this.isDark ? 'system' : 'dark'
+      this.$colorMode.preference = this.isDark ? 'light' : 'dark'
     },
     handleCloseSearch () {
       this.searchVisible = false

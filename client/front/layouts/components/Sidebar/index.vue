@@ -32,15 +32,12 @@
 
     <ul class="aside-info clearfix">
       <li>
-        <a class="aside-info__icon icon-gitee" href="https://gitee.com/timelessq" target="__blank" title="Gitee" />
+        <a class="aside-info__icon icon-gitee" href="https://github.com/spacesless" target="__blank" title="Github" />
       </li>
       <li>
-        <a
-          class="aside-info__icon icon-qq"
-          href="http://sighttp.qq.com/authd?IDKEY=9d8b594f90881e85bc083a6ec1bd41f275e2761b130b97ca"
-          target="__blank"
-          title="QQ"
-        />
+        <el-tooltip effect="dark" content="804093032" placement="bottom">
+          <span class="aside-info__icon icon-qq" />
+        </el-tooltip>
       </li>
       <li>
         <a
