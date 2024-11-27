@@ -21,7 +21,9 @@
           <div class="el-row">
             <div v-for="item in currentInfo.total" :key="item" class="el-col-12 el-col-sm-8 el-col-md-6">
               <div class="live-list__item" :class="{ 'live-list__item--active': selectModel === modelId && selectTexture === item }">
-                <el-image :src="thumbFormat(item)" lazy @click="loadModel(selectModel, item)" />
+                <el-tooltip effect="dark" :content="getModelInfo(item)" placement="bottom">
+                  <el-image :src="thumbFormat(item)" lazy @click="loadModel(selectModel, item)" />
+                </el-tooltip>
               </div>
             </div>
           </div>
@@ -224,6 +226,14 @@ export default {
       this.showMessage('照好了嘛，是不是很可爱呢？', 3000)
       window.Live2D.captureName = 'Pio.png'
       window.Live2D.captureFrame = true
+    },
+    /**
+     * 模型、材质信息
+     * @param {number} index 材质序号
+     * @returns {string} 模型信息
+     */
+    getModelInfo (index) {
+      return `模型ID：${this.selectModel}，材质ID：${index}`
     }
   }
 }
