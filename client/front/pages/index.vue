@@ -244,6 +244,10 @@ export default {
       border-top-left-radius: $border-radius;
     }
   }
+
+  ::v-deep .el-carousel__button{
+    background-color: var(--color-primary);
+  }
 }
 
 // 最新文章

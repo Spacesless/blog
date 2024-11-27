@@ -1,7 +1,8 @@
-# timeless-blog
+# 个人博客
 
-> Timeless's博客
-> 项目是个人博客，主要用于管理和展示文章、追番等动态，记录生活点滴、各种想法以及工作学习成果，方便归纳总结。
+ 这是我[个人博客](https://www.timelessq.com)的开源版本，基于Node.js + Nuxt.js开发，主要用于管理和展示文章、追番等动态，记录生活点滴以及工作学习成果，方便归纳总结。
+
+ > 不是通用博客程序，单用户设计，有很多个性化功能，仅供参考。
 
 ## 技术栈
 ``` 
@@ -11,6 +12,7 @@
   数据库：Mysql
   缓存：File-cache
   文件管理：本地+对象存储
+  图片处理：Sharp.js
   会话信息：Session+Cookie
 ```
 
@@ -22,19 +24,22 @@
 5. Node 服务不对外直接访问，使用 Nginx 挡一层
 
 ## 功能特性
-- 管理系统登录
-- 系统配置（个性化）
-- 栏目管理（文章类别、展示页如关于）
 - 文章管理（富文本编辑、文件上传、文件管理器）
 - 文章详情（目录、代码高亮、大图预览）
 - 文章归档、搜索（按标签展示）
 - 影视番剧（追剧动态）
+- 系统配置（个性化）
+- 栏目管理（文章类别、展示页如关于）
+- 文件管理（文件上传、图片裁剪转webp）
 - 各种小工具（单页应用如我的音乐、足迹、必应每日壁纸等）
 - 社区反馈（评论、友情链接）
 - 前台主题（响应式、暗色模式）
 - XML渲染（sitemap、rss 等XML展示）
 
 ## 目录结构
+
+一个项目包含网站前台、内容管理系统、后台接口
+
 ```
 client 前台
 ├── admin 内容管理平台
@@ -99,20 +104,33 @@ client 前台
 ├── package.json
 ├── production.js thinkjs生产环境入口
 ```
-## 项目构建
+## 快速开始
+
+使用deploy里的mysql.sql创建数据库，并修改config目录的adapter.model.js里数据库配置
 
 ``` bash
 # 安装依赖
 npm install/cnpm install
 
-# 调试热更新服务 
-# 服务使用代理，配置位于vue.config.js文件中
+# 启动前台 + 后台api服务
+npm start
+# 只启动后台api服务
+npm run api
+# 只启动内容管理系统
 npm run dev
-
-# 打包项目
-npm run build
 
 ```
 ## 部署
 
-+ 项目使用nginx进行部署
+```
+# 打包项目
+npm run build
+
+# 只打包前台
+npm run build:front
+
+# 只打包内容管理系统
+npm run build:admin
+
+```
+项目使用pm2 + nginx进行部署，可以参考deploy目录的配置
