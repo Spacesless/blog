@@ -28,14 +28,14 @@ export default {
   },
   methods: {
     fetchHitokoto () {
-      const kindToString = this.kinds.map(item => `c=${item}`).join('&')
       this.loading = true
-      axios.get('https://v1.hitokoto.cn?' + kindToString, {
+      axios.get('https://api.timelessq.com/sentence', {
         params: {
-          max_length: 200
+          type: this.kinds.join(','),
+          maxLength: 200
         }
       }).then((res) => {
-        this.hitokotoData = res.data || {}
+        this.hitokotoData = res.data?.data || {}
       }).finally(() => {
         this.loading = false
       })
