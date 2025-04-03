@@ -81,7 +81,8 @@ module.exports = {
   plugins: [
     '@/plugins/element-ui',
     '@/plugins/axios',
-    '@/plugins/filters'
+    '@/plugins/filters',
+    { src: '@/plugins/baidu-analytics', mode: 'client' }
   ],
   render: {
     compressor: false // 禁用中间件压缩

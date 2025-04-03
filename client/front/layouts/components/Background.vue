@@ -141,6 +141,7 @@ export default {
   height: 100%;
   overflow: hidden;
   pointer-events: none;
+  opacity: .65;
 
   &::before {
     position: absolute;
@@ -150,15 +151,13 @@ export default {
     width: 100%;
     height: 100%;
     content: '';
-    background: url('~@/assets/image/background.png') no-repeat bottom right;
-    background-size: cover;
-    opacity: .25;
+    background: url('~@/assets/image/background.png') no-repeat top right;
+    background-size: 30%;
   }
 
   #flower {
     width: 100%;
     height: 100%;
-    opacity: .65;
   }
 }
 
@@ -168,7 +167,6 @@ export default {
   left: -50%;
   width: 200%;
   height: 200%;
-  opacity: .65;
   transform-origin: center bottom;
 
   &--changing {
@@ -179,7 +177,7 @@ export default {
   &__moon {
     position: absolute;
     top: 30%;
-    left: 60%;
+    left: 58%;
     width: 40px;
     height: 40px;
     border-radius: 50%;
