@@ -1,0 +1,179 @@
+/* Color Mode Variables */
+:root {
+  --color-primary: #1890FF;
+  --color-heading: #1F1F1F;
+  --color-text: #434343;
+  --color-secondary: #8C8C8C;
+  --bg: #F5F5F5;
+  --bg-normal: #FFFFFF;
+  --border-color: #EBEEF5;
+  --menu-active: #ECF5FF;
+  --code-toolbar-bg: #EFF2F3;
+  --article-cover: linear-gradient(180deg, hsla(0deg, 0%, 98%, 0), hsla(0deg, 0%, 98%, 0.049) 15.5%, hsla(0deg, 0%, 98%, 0.175) 29%, hsla(0deg, 0%, 98%, 0.352) 41.2%, hsla(0deg, 0%, 98%, 0.55) 52.9%, hsla(0deg, 0%, 98%, 0.741) 64.7%, hsla(0deg, 0%, 98%, 0.896) 77.5%, hsla(0deg, 0%, 98%, 0.987) 91.9%, var(--bg-normal));
+  --gradient-cover: linear-gradient(90deg, hsla(0deg, 0%, 98%, 0), hsla(0deg, 0%, 98%, 0.049) 15.5%, hsla(0deg, 0%, 98%, 0.175) 29%, hsla(0deg, 0%, 98%, 0.352) 41.2%, hsla(0deg, 0%, 98%, 0.55) 52.9%, hsla(0deg, 0%, 98%, 0.741) 64.7%, hsla(0deg, 0%, 98%, 0.896) 77.5%, hsla(0deg, 0%, 98%, 0.987) 91.9%, var(--bg-normal));
+  --shadow-3-down: rgba(0, 0, 0, 0.08) 0 6px 16px 0;
+  --shadow-3-right: rgba(0, 0, 0, 0.08) 6px 0 16px 0;
+  --shadow-3-up: rgba(0, 0, 0, 0.08) 0 -6px 16px 0;
+  --aside-width: 222px;
+  --grid-space: 20px;
+  --border-radius: 10px;
+}
+
+html.dark {
+  --color-primary: #177DDC;
+  --color-heading: #F5F5F5;
+  --color-text: #D9D9D9;
+  --color-secondary: #8C8C8C;
+  --bg: #000000;
+  --bg-normal: #1F1F1F;
+  --border-color: rgba(255, 255, 255, 0.2);
+  --menu-active: #15395B;
+  --code-toolbar-bg: #2D2D2D;
+  --article-cover: linear-gradient(180deg, rgba(33, 33, 33, 0), rgba(33, 33, 33, 0.049) 15.5%, rgba(33, 33, 33, 0.175) 29%, rgba(33, 33, 33, 0.352) 41.2%, rgba(33, 33, 33, 0.55) 52.9%, rgba(33, 33, 33, 0.741) 64.7%, rgba(33, 33, 33, 0.896) 77.5%, rgba(33, 33, 33, 0.987) 91.9%, var(--bg-normal));
+  --gradient-cover: linear-gradient(90deg, rgba(33, 33, 33, 0), rgba(33, 33, 33, 0.049) 15.5%, rgba(33, 33, 33, 0.175) 29%, rgba(33, 33, 33, 0.352) 41.2%, rgba(33, 33, 33, 0.55) 52.9%, rgba(33, 33, 33, 0.741) 64.7%, rgba(33, 33, 33, 0.896) 77.5%, rgba(33, 33, 33, 0.987) 91.9%, var(--bg-normal));
+}
+
+/* Global Base Styles */
+body {
+  color: var(--color-text);
+  background-color: var(--bg);
+  transition: background-color 0.3s;
+}
+
+/* Scrollbar */
+@media (pointer: fine) {
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background-color: transparent;
+  }
+  ::-webkit-scrollbar-button {
+    width: 0;
+    height: 0;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(144, 147, 153, 0.4);
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(144, 147, 153, 0.7);
+  }
+}
+
+/* Vue Transitions */
+.fade-transform-enter-active,
+.fade-transform-leave-active {
+  transition: all 0.3s;
+}
+.fade-transform-enter-from {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+.fade-transform-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+/* Tag Colors */
+.tl-tag {
+  display: inline-block;
+  padding: 2px 10px;
+  margin: 2px 4px 2px 0;
+  font-size: 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.tl-tag--red { color: #CF1322; background: #FFF1F0; border: 1px solid #FFA39E; }
+.tl-tag--geekblue { color: #1D39C4; background: #F0F5FF; border: 1px solid #ADC6FF; }
+.tl-tag--orange { color: #D46B08; background: #FFF7E6; border: 1px solid #FFD591; }
+.tl-tag--cyan { color: #08979C; background: #E6FFFB; border: 1px solid #87E8DE; }
+.tl-tag--green { color: #389E0D; background: #F6FFED; border: 1px solid #B7EB8F; }
+.tl-tag--blue { color: #096DD9; background: #E6F7FF; border: 1px solid #91D5FF; }
+.tl-tag--purple { color: #531DAB; background: #F9F0FF; border: 1px solid #D3ADF7; }
+.tl-tag--magenta { color: #C41D7F; background: #FFF0F6; border: 1px solid #FFADD2; }
+
+html.dark .tl-tag {
+  opacity: 0.85;
+}
+html.dark .tl-tag--red { color: #FF7875; background: #2A1215; border-color: #58181C; }
+html.dark .tl-tag--geekblue { color: #85A5FF; background: #131629; border-color: #1D2E6E; }
+html.dark .tl-tag--orange { color: #FFC069; background: #2B1D11; border-color: #593815; }
+html.dark .tl-tag--cyan { color: #5CDBD3; background: #112123; border-color: #144848; }
+html.dark .tl-tag--green { color: #95DE64; background: #162312; border-color: #274916; }
+html.dark .tl-tag--blue { color: #69C0FF; background: #111D2C; border-color: #15395B; }
+html.dark .tl-tag--purple { color: #B37FEB; background: #1A1325; border-color: #301C4D; }
+html.dark .tl-tag--magenta { color: #FF85C0; background: #291321; border-color: #551C3B; }
+
+/* Clearfix utility */
+.clearfix::after {
+  display: block;
+  clear: both;
+  content: "";
+}
+
+/* Markup rich content (Directus WYSIWYG) */
+.markup {
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--color-text);
+  word-wrap: break-word;
+}
+.markup h1, .markup h2, .markup h3, .markup h4, .markup h5, .markup h6 {
+  margin: 1.2em 0 0.6em;
+  font-weight: 500;
+  color: var(--color-heading);
+}
+.markup h2 { font-size: 24px; }
+.markup h3 { font-size: 20px; }
+.markup h4 { font-size: 18px; }
+.markup p { margin: 0.8em 0; }
+.markup img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  cursor: zoom-in;
+}
+.markup a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+.markup a:hover {
+  text-decoration: underline;
+}
+.markup blockquote {
+  margin: 1em 0;
+  padding: 10px 20px;
+  border-left: 4px solid var(--color-primary);
+  background: var(--bg);
+  border-radius: 4px;
+}
+.markup code {
+  padding: 2px 6px;
+  font-size: 0.9em;
+  background: var(--bg);
+  border-radius: 4px;
+}
+.markup pre {
+  margin: 1em 0;
+  padding: 16px;
+  overflow-x: auto;
+  background: var(--code-toolbar-bg);
+  border-radius: var(--border-radius);
+}
+.markup pre code {
+  padding: 0;
+  background: none;
+}
+.markup table {
+  width: 100%;
+  margin: 1em 0;
+  border-collapse: collapse;
+}
+.markup th, .markup td {
+  padding: 8px 12px;
+  border: 1px solid var(--border-color);
+}
+.markup th {
+  background: var(--bg);
+  font-weight: 500;
+}

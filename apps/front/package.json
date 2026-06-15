@@ -1,0 +1,34 @@
+{
+  "name": "www",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "lint": "eslint .",
+    "typecheck": "nuxt typecheck"
+  },
+  "dependencies": {
+    "@element-plus/nuxt": "1.1.5",
+    "@nuxt/icon": "2.2.3",
+    "@nuxtjs/color-mode": "4.0.1",
+    "@pinia/nuxt": "^0.11.0",
+    "dayjs": "^1.11.10",
+    "nuxt": "^4.4.8",
+    "pinia": "^3.0.0",
+    "prismjs": "^1.29.0",
+    "vue": "^3.5.35",
+    "vue-router": "^5.1.0"
+  },
+  "devDependencies": {
+    "@nuxt/eslint": "^1.16.0",
+    "@types/prismjs": "^1.26.4",
+    "@unocss/nuxt": "^66.7.2",
+    "eslint": "^10.5.0",
+    "typescript": "^6.0.3",
+    "unocss": "^66.7.2"
+  }
+}
