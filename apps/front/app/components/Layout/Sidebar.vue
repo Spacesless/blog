@@ -3,7 +3,7 @@
     <div class="text-center" :class="isCollapse ? 'pt-6' : 'pt-12 pb-4'">
       <NuxtLink to="/">
         <img class="rounded-full transition-all duration-300" :class="isCollapse ? 'w-12 h-12' : 'w-26 h-26'" src="/avatar.jpg" width="100" height="100" alt="logo">
-        <p class="py-2 overflow-hidden text-3xl text-[var(--color-primary)] whitespace-nowrap" :class="{ 'hidden': isCollapse }">Timeless</p>
+        <p class="py-2 overflow-hidden text-3xl text-[var(--color-primary)] whitespace-nowrap font-bega" :class="{ 'hidden': isCollapse }">Timeless</p>
       </NuxtLink>
       <p class="text-[15px] text-[var(--color-secondary)] whitespace-nowrap" :class="{ 'hidden': isCollapse }">花开成景，花落成诗</p>
     </div>
@@ -79,5 +79,9 @@ const activeKey = computed(() => {
 .hexagon {
   clip-path: polygon(50% 3%, 91% 25%, 91% 75%, 50% 97%, 9% 75%, 9% 25%);
   transition: all 0.3s;
+}
+
+.font-bega {
+  font-family: Bega, sans-serif;
 }
 </style>

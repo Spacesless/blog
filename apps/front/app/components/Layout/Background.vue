@@ -15,6 +15,9 @@
 </template>
 
 <script setup lang="ts">
+import ParticleCanvas from '~/utils/particle'
+import { debounce, sleep } from '~/utils'
+
 const props = defineProps<{
   particleActive: boolean
 }>()
@@ -22,9 +25,64 @@ const props = defineProps<{
 const colorMode = useColorMode()
 const canvasRef = ref<HTMLCanvasElement>()
 const isShowChange = ref(false)
+const isLoaded = ref(false)
 const isDark = computed(() => colorMode.preference === 'dark')
 
+let particleInstance: ParticleCanvas | null = null
 let timer: ReturnType<typeof setTimeout> | null = null
+let resizeHandler: (() => void) | null = null
+
+const initParticle = () => {
+  particleInstance = new ParticleCanvas('flower', [
+    {
+      type: { typeName: 'image', url: '/img/spring/flower-1.png' },
+      number: 8,
+      op: { min: 0.7, max: 1 },
+      size: { min: 50, max: 60 },
+      speed: { min: 2, max: 4 },
+      angle: { value: 140, float: 20 },
+      area: { leftTop: [0, 0], rightBottom: [0, 1000] },
+      rota: { value: 30, speed: 2, floatValue: 120, floatSpeed: 1 },
+      reIn: 'reverseDirection',
+    },
+    {
+      type: { typeName: 'image', url: '/img/spring/flower-2.png' },
+      number: 9,
+      size: { min: 50, max: 60 },
+      speed: { min: 3, max: 5 },
+      area: { leftTop: [500, 300], rightBottom: [1000, 4000] },
+      angle: { value: 130, float: 20 },
+      reIn: 'reverseDirection',
+    },
+    {
+      type: { typeName: 'image', url: '/img/spring/flower-3.png' },
+      number: 8,
+      size: { min: 50, max: 60 },
+      speed: { min: 3, max: 5 },
+      area: { leftTop: [500, 400], rightBottom: [1000, 4000] },
+      angle: { value: 140, float: 30 },
+      reIn: 'reverseDirection',
+    },
+    {
+      type: { typeName: 'image', url: '/img/spring/flower-4.png' },
+      number: 7,
+      size: { min: 50, max: 60 },
+      speed: { min: 3, max: 4 },
+      area: { leftTop: [500, 600], rightBottom: [1000, 4000] },
+      angle: { value: 140, float: 30 },
+      reIn: 'reverseDirection',
+    },
+    {
+      type: { typeName: 'image', url: '/img/spring/flower-5.png' },
+      number: 6,
+      size: { min: 50, max: 60 },
+      speed: { min: 3, max: 5 },
+      area: { leftTop: [0, 1400], rightBottom: [1900, 4300] },
+      angle: { value: 140, float: 40 },
+      reIn: 'reverseDirection',
+    },
+  ])
+}
 
 watch(isDark, () => {
   isShowChange.value = true
@@ -37,12 +95,37 @@ watch(isDark, () => {
 watch(
   () => props.particleActive,
   async (val) => {
-    if (val && import.meta.client) {
-      // placeholder for particle vendor
+    if (!import.meta.client) return
+    if (val) {
+      if (!particleInstance) {
+        if (!isLoaded.value) {
+          isLoaded.value = true
+          await sleep(2000)
+        }
+        initParticle()
+      } else {
+        particleInstance.resize()
+        particleInstance.draw()
+      }
+    } else {
+      particleInstance?.stopDraw()
     }
   },
-  { immediate: false },
+  { immediate: true },
 )
+
+onMounted(() => {
+  resizeHandler = debounce(() => {
+    particleInstance?.resize()
+  }, 100)
+  window.addEventListener('resize', resizeHandler)
+})
+
+onBeforeUnmount(() => {
+  if (resizeHandler) window.removeEventListener('resize', resizeHandler)
+  particleInstance?.stopDraw()
+  particleInstance = null
+})
 </script>
 
 <style scoped>

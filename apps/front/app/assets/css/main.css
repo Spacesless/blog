@@ -1,3 +1,10 @@
+/* Custom Fonts */
+@font-face {
+  font-family: Bega;
+  src: url('~/assets/fonts/Bega-Light.ttf') format('truetype');
+  font-display: swap;
+}
+
 /* Color Mode Variables */
 :root {
   --color-primary: #1890FF;
