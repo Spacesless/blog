@@ -18,6 +18,7 @@
     "@vueuse/core": "^11.0.0",
     "@vueuse/nuxt": "^11.0.0",
     "axios": "^1.7.7",
+    "dayjs": "^1.11.21",
     "element-plus": "^2.8.0",
     "js-cookie": "^3.0.5",
     "md5": "^2.3.0",
@@ -37,7 +38,6 @@
     "sass": "^1.78.0",
     "typescript": "^6.0.3",
     "unocss": "^66.7.2",
-    "vite-plugin-svg-icons": "^2.0.1",
     "vue-tsc": "^2.0.0"
   }
 }

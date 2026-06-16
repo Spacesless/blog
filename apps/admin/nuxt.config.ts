@@ -1,9 +1,3 @@
-import { fileURLToPath } from 'node:url'
-import path from 'node:path'
-import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
-
-const iconDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), 'app/assets/icons/svg')
-
 export default defineNuxtConfig({
   compatibilityDate: '2025-01-01',
   ssr: false,
@@ -51,12 +45,6 @@ export default defineNuxtConfig({
         },
       },
     },
-    plugins: [
-      createSvgIconsPlugin({
-        iconDirs: [iconDir],
-        symbolId: 'icon-[name]',
-      }),
-    ],
   },
 
   devServer: {

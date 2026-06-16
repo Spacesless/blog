@@ -1,15 +1,17 @@
-@use './variables.scss';
-@use './mixin.scss';
-@use './transition.scss';
-@use './element-plus.scss';
-@use './sidebar.scss';
+@use "./variables.scss";
+@use "./mixin.scss";
+@use "./transition.scss";
+@use "./element-plus.scss";
+@use "./sidebar.scss";
 
 body {
   height: 100%;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizelegibility;
-  font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', Arial, sans-serif;
+  font-family:
+    "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", Arial, sans-serif;
 }
 
 label {
@@ -86,14 +88,14 @@ div:focus {
     clear: both;
     font-size: 0;
     visibility: hidden;
-    content: ' ';
+    content: " ";
   }
 }
 .app {
   &-container {
     margin: 20px;
     border-radius: 4px;
-    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .1);
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
 
     .is-stick {
       margin-bottom: 80px;
@@ -107,8 +109,8 @@ div:focus {
       z-index: 5;
       padding: 15px 20px;
       text-align: right;
-      background-color: #FFFFFF;
-      box-shadow: 0 -1px 4px rgba(0, 0, 0, .1);
+      background-color: #ffffff;
+      box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.1);
 
       .el-button {
         margin-left: 24px;
@@ -118,7 +120,7 @@ div:focus {
 
   &-header {
     padding: 15px 20px;
-    border: 1px solid #EBEEF5;
+    border: 1px solid #ebeef5;
     border-bottom: none;
 
     .el-input {
@@ -148,7 +150,7 @@ div:focus {
 
   &-footer {
     padding: 15px 20px;
-    border: 1px solid #EBEEF5;
+    border: 1px solid #ebeef5;
     border-top: none;
 
     .el-cascader {
@@ -172,17 +174,29 @@ div:focus {
   }
 }
 
-.text-center { text-align: center; }
-.text-right { text-align: right; }
+.text-center {
+  text-align: center;
+}
+.text-right {
+  text-align: right;
+}
+
+.svg-icon {
+  width: 1.4em;
+  height: 1.4em;
+  overflow: hidden;
+  vertical-align: middle;
+  fill: currentcolor;
+}
 
 .form {
   &-container {
-    border: 1px solid #EBEEF5;
+    border: 1px solid #ebeef5;
 
     .el-form-item {
       padding: 20px;
       margin-bottom: 0;
-      border-bottom: 1px solid #EBEEF5;
+      border-bottom: 1px solid #ebeef5;
     }
 
     &-input,
@@ -193,12 +207,12 @@ div:focus {
   }
 
   &-item {
-    border-bottom: 1px solid #EBEEF5;
+    border-bottom: 1px solid #ebeef5;
   }
 
   &-title {
     padding: 5px 20px;
-    color: #409EFF;
+    color: #409eff;
 
     .el-form-item__content {
       margin-left: 0 !important;
@@ -208,8 +222,8 @@ div:focus {
 
 .pagination-container {
   padding: 15px 20px;
-  background: #FFFFFF;
-  border: 1px solid #EBEEF5;
+  background: #ffffff;
+  border: 1px solid #ebeef5;
   border-top: none;
 }
 
@@ -217,11 +231,11 @@ div:focus {
   width: 8px;
 
   &-thumb {
-    background-color: rgba(0, 0, 0, .2);
+    background-color: rgba(0, 0, 0, 0.2);
     border-radius: 4px;
 
     &:hover {
-      background-color: rgba(0, 0, 0, .3);
+      background-color: rgba(0, 0, 0, 0.3);
     }
   }
 }

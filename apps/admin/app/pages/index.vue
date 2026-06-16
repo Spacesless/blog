@@ -13,7 +13,7 @@
       <el-col :xs="24" :sm="12" :md="8">
         <NuxtLink class="home-general-item category" to="/category">
           <div class="home-general-icon">
-            <SvgIcon icon-class="category" />
+            <Icon name="ph:folders" class="svg-icon" />
           </div>
           <div class="home-general-info">
             <p class="home-general__desc">
@@ -28,7 +28,7 @@
       <el-col :xs="24" :sm="12" :md="8">
         <NuxtLink class="home-general-item article" to="/content/article">
           <div class="home-general-icon">
-            <SvgIcon icon-class="content" />
+            <Icon name="ph:file-text" class="svg-icon" />
           </div>
           <div class="home-general-info">
             <p class="home-general__desc">
@@ -43,7 +43,7 @@
       <el-col :xs="24" :sm="12" :md="8">
         <NuxtLink class="home-general-item bangumi" to="/content/bangumi">
           <div class="home-general-icon">
-            <SvgIcon icon-class="bangumi" />
+            <Icon name="ph:television-simple" class="svg-icon" />
           </div>
           <div class="home-general-info">
             <p class="home-general__desc">

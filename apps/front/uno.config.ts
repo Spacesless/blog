@@ -21,10 +21,10 @@ export default defineConfig({
     presetWebFonts({
       provider: "google",
       fonts: {
-        display: ["Cormorant Garamond:400,500,600", "serif"],
-        serif: ["Noto Serif SC:300,400,500,600", "serif"],
-        sans: ["Inter:300,400,500", "sans-serif"],
-        mono: ["JetBrains Mono:300,400,500", "monospace"],
+        display: "Cormorant Garamond:400,500,600",
+        serif: "Noto Serif SC:300,400,500,600",
+        sans: "Inter:300,400,500",
+        mono: "JetBrains Mono:300,400,500",
       },
     }),
   ],
