@@ -66,9 +66,10 @@ module.exports = class extends Base {
       return new Date(b.updatetime) - new Date(a.updatetime);
     }).slice(0, 6);
     rssList.forEach(item => {
-      const { id, category_id: categoryId } = item;
+      const { id, category_id: categoryId, pathname } = item;
       const findCategory = categories.find(element => element.id === categoryId);
-      item.url = findCategory ? `${this.baseurl}/${findCategory.type}/detail/${id}` : '';
+      const slug = pathname || id;
+      item.url = findCategory ? `${this.baseurl}/${findCategory.type}/detail/${slug}` : '';
     });
     return rssList;
   }
@@ -83,9 +84,10 @@ module.exports = class extends Base {
       return new Date(b.updatetime) - new Date(a.updatetime);
     });
     sitemapList.forEach(item => {
-      const { id, category_id: categoryId } = item;
+      const { id, category_id: categoryId, pathname } = item;
       const findCategory = categories.find(element => element.id === categoryId);
-      item.url = findCategory ? `${this.baseurl}/${findCategory.type}/detail/${id}` : '';
+      const slug = pathname || id;
+      item.url = findCategory ? `${this.baseurl}/${findCategory.type}/detail/${slug}` : '';
       item.priority = 0.6;
     });
     return sitemapList;

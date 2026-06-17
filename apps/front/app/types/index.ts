@@ -40,6 +40,7 @@ export interface Article {
   keywords?: string
   addtime: string
   updatetime: string
+  pathname?: string
   // computed
   categoryUrl?: string
   categoryName?: string
@@ -64,6 +65,7 @@ export interface Bangumi {
   songs?: string
   addtime: string
   updatetime: string
+  pathname?: string
   // computed
   parsedTags?: string[]
 }

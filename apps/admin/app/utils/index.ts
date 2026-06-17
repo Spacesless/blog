@@ -104,3 +104,25 @@ export function scrollTo(to: number, duration = 500, container: HTMLElement | Wi
   }
   requestAnimationFrame(step)
 }
+
+/**
+ * 将字符串转换为 URL 友好的 slug（与服务端 slugify 规则保持一致）
+ */
+export function slugify(input: string): string {
+  if (!input || typeof input !== 'string') return ''
+  return input
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 80)
+    .replace(/-+$/g, '')
+}
+
+/**
+ * 校验 slug 合法性
+ */
+export function isValidSlug(slug: string): boolean {
+  return /^[a-z0-9-]{1,80}$/.test(slug)
+}

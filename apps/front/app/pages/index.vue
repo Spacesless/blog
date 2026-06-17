@@ -45,7 +45,7 @@
           >
             <NuxtLink
               class="relative block overflow-hidden rounded-[var(--border-radius)] article-cover"
-              :to="`/article/detail/${item.id}`"
+              :to="`/article/detail/${item.pathname || item.id}`"
               :title="item.title"
             >
               <img
@@ -59,7 +59,7 @@
               <p class="text-2xl">
                 <NuxtLink
                   class="inline-block max-w-full overflow-hidden text-[var(--color-heading)] text-ellipsis whitespace-nowrap hover:text-[var(--color-primary)]"
-                  :to="`/article/detail/${item.id}`"
+                  :to="`/article/detail/${item.pathname || item.id}`"
                   :title="item.title"
                 >
                   {{ item.title }}
@@ -115,7 +115,7 @@
             class="mb-[var(--grid-space)] overflow-hidden bg-[var(--bg-normal)] rounded-[var(--border-radius)] shadow-[var(--shadow-3-down)]"
           >
             <el-col class="relative" :span="10" :xl="8">
-              <NuxtLink :to="`/bangumi/detail/${item.id}`" :title="item.title">
+              <NuxtLink :to="`/bangumi/detail/${item.pathname || item.id}`" :title="item.title">
                 <img
                   class="max-w-full h-auto"
                   :src="item.imgurl"
@@ -130,7 +130,7 @@
             <el-col class="p-4 text-sm leading-7" :span="14" :xl="16">
               <NuxtLink
                 class="block pb-1.5 text-xl font-normal text-[var(--color-primary)]"
-                :to="`/bangumi/detail/${item.id}`"
+                :to="`/bangumi/detail/${item.pathname || item.id}`"
               >
                 {{ item.title }}
               </NuxtLink>

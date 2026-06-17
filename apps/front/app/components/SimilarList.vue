@@ -7,7 +7,7 @@
         <div class="relative pl-16 p-4 mb-0.5 bg-[var(--bg)] rounded-md">
           <span class="absolute top-1/2 left-0 w-16 -mt-6 text-4xl italic text-center">{{ index + 1 }}</span>
           <p class="pb-1.5 truncate">
-            <NuxtLink class="text-[var(--color-heading)] hover:text-[var(--color-primary)]" :to="`/${categoryType}/detail/${item.id}`" :title="item.title">
+            <NuxtLink class="text-[var(--color-heading)] hover:text-[var(--color-primary)]" :to="`/${categoryType}/detail/${item.pathname || item.id}`" :title="item.title">
               {{ item.title }}
             </NuxtLink>
           </p>

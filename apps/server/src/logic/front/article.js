@@ -5,7 +5,8 @@ module.exports = class extends think.Logic {
     this.rules = {
       id: {
         required: true,
-        int: true
+        string: true,
+        trim: true
       }
     };
   }

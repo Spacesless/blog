@@ -8,7 +8,7 @@
           class="block w-full h-auto"
           :src="data?.imgurl"
           :alt="data?.title"
-        />
+        >
       </el-col>
       <el-col class="p-[var(--grid-space)]" :sm="24" :md="12">
         <h1
@@ -59,6 +59,7 @@
       :category-id="data?.category_id || 0"
       :tags="data?.tag"
     />
+    <WalineComment reaction-title="你觉得这篇文章怎么样？" />
     <Adsense />
   </div>
 </template>
@@ -67,11 +68,11 @@
 const route = useRoute();
 const { fetchArticleDetail, recordArticleAccess } = useApi();
 
-const id = Number(route.params.id);
+const idOrSlug = route.params.id as string;
 const isLoaded = ref(false);
 
-const { data } = await useAsyncData(`article-detail-${id}`, () =>
-  fetchArticleDetail(id).catch(() => null)
+const { data } = await useAsyncData(`article-detail-${idOrSlug}`, () =>
+  fetchArticleDetail(idOrSlug).catch(() => null),
 );
 
 usePageSeo({
@@ -103,7 +104,7 @@ onMounted(() => {
   });
 
   const timer = setTimeout(() => {
-    recordArticleAccess(id);
+    recordArticleAccess(idOrSlug);
   }, 5000);
 
   onUnmounted(() => clearTimeout(timer));

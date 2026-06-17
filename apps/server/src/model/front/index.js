@@ -14,7 +14,7 @@ module.exports = class extends think.Model {
    * @param {Number} limit 查询数量
    */
   selectArticle(limit = 8) {
-    const articleField = 'id,title,description,imgurl,category_id,hits,updatetime,tag';
+    const articleField = 'id,title,description,imgurl,category_id,hits,updatetime,tag,pathname';
     const articleWhere = { is_show: 1, is_recycle: 0 };
     return this.model('article')
       .cache('article', { timeout: 1 * 24 * 3600 * 1000 })

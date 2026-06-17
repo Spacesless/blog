@@ -4,7 +4,7 @@ module.exports = class extends think.Model {
    * @returns {Array} 文章列表
    */
   async selectArchives() {
-    const field = 'id,title,description,updatetime,category_id';
+    const field = 'id,title,description,updatetime,category_id,pathname';
     const where = 'where is_show = 1';
     const SQL = `
       SELECT ${field} FROM tl_article ${where} UNION ALL

@@ -191,3 +191,10 @@ export function scrollTo(to: number, duration = 500, callback?: () => void): voi
 export function getScrollPosition(): number {
   return window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0
 }
+
+/**
+ * 生成详情页 URL，优先使用 slug (pathname)
+ */
+export function detailUrl(type: 'article' | 'bangumi', item: { id: number; pathname?: string | null }): string {
+  return `/${type}/detail/${item.pathname || item.id}`
+}

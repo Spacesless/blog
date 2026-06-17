@@ -26,7 +26,7 @@
           <el-link
             v-if="row.is_show"
             :underline="false"
-            :href="`${configStore.configs.siteurl}/${currentType}/detail/${row.id}`"
+            :href="`${configStore.configs.siteurl}/${currentType}/detail/${row.pathname || row.id}`"
             target="_blank"
           >
             {{ row.title }}

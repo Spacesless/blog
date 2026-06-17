@@ -53,7 +53,7 @@
           :sm="24"
           :md="14"
         >
-          <NuxtLink :to="`/article/detail/${item.id}`" :title="item.title">
+          <NuxtLink :to="`/article/detail/${item.pathname || item.id}`" :title="item.title">
             <img
               class="block w-full h-auto"
               :src="item.imgurl"
@@ -80,7 +80,7 @@
           >
             <NuxtLink
               class="text-[var(--color-heading)] hover:text-[var(--color-primary)]"
-              :to="`/article/detail/${item.id}`"
+              :to="`/article/detail/${item.pathname || item.id}`"
             >
               {{ item.title }}
             </NuxtLink>

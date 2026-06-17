@@ -17,7 +17,7 @@
             <NuxtLink v-if="item.categoryUrl" class="mr-1 text-[15px] text-[var(--color-secondary)] hover:text-[var(--color-primary)]" :to="item.categoryUrl">
               {{ item.categoryName }}
             </NuxtLink>
-            <NuxtLink class="text-[var(--color-text)] hover:text-[var(--color-primary)]" :to="`/article/detail/${item.id}`">
+            <NuxtLink class="text-[var(--color-text)] hover:text-[var(--color-primary)]" :to="`/article/detail/${item.pathname || item.id}`">
               {{ item.title }}
             </NuxtLink>
           </article>

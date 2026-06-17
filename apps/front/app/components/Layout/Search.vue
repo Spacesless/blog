@@ -132,7 +132,7 @@ async function fetchList() {
 
     total.value = res.count || 0
     searchList.value = (res.data || []).map((item: any) => {
-      const url = `/${item.type}/detail/${item.id}`
+      const url = `/${item.type}/detail/${item.pathname || item.id}`
       const findCategory = props.categories.find(c => c.id === item.category_id)
       return {
         ...item,

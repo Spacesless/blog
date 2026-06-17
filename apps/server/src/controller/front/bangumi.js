@@ -47,13 +47,14 @@ module.exports = class extends Base {
   async detailAction() {
     const { id } = this.get();
 
-    const data = await this.modelInstance
-      .where({
-        id,
-        is_recycle: 0,
-        is_show: 1
-      })
-      .find();
+    // 支持通过数字 id 或 slug(pathname) 查询
+    const where = { is_recycle: 0, is_show: 1 };
+    if (/^\d+$/.test(String(id))) {
+      where.id = id;
+    } else {
+      where.pathname = id;
+    }
+    const data = await this.modelInstance.where(where).find();
 
     if (think.isEmpty(data)) {
       return this.fail(404);

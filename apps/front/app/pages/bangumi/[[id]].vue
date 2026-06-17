@@ -64,7 +64,7 @@
           class="mb-[var(--grid-space)] overflow-hidden bg-[var(--bg-normal)] rounded-[var(--border-radius)] shadow-[var(--shadow-3-down)]"
         >
           <el-col class="relative" :span="10" :xl="8">
-            <NuxtLink :to="`/bangumi/detail/${item.id}`">
+            <NuxtLink :to="`/bangumi/detail/${item.pathname || item.id}`">
               <img
                 class="max-w-full h-auto"
                 :src="item.imgurl"
@@ -79,7 +79,7 @@
           <el-col class="p-4 text-sm leading-7" :span="14" :xl="16">
             <NuxtLink
               class="block pb-1.5 text-xl text-[var(--color-primary)]"
-              :to="`/bangumi/detail/${item.id}`"
+              :to="`/bangumi/detail/${item.pathname || item.id}`"
             >
               {{ item.title }}
             </NuxtLink>

@@ -87,6 +87,7 @@
       :category-id="data?.category_id || 0"
       :tags="data?.tag"
     />
+    <WalineComment reaction-title="你觉得这部番剧怎么样？" />
   </div>
 </template>
 
@@ -94,11 +95,11 @@
 const route = useRoute();
 const { fetchBangumiDetail } = useApi();
 
-const id = Number(route.params.id);
+const idOrSlug = route.params.id as string;
 const isLoaded = ref(false);
 
-const { data } = await useAsyncData(`bangumi-detail-${id}`, () =>
-  fetchBangumiDetail(id).catch(() => null)
+const { data } = await useAsyncData(`bangumi-detail-${idOrSlug}`, () =>
+  fetchBangumiDetail(idOrSlug).catch(() => null)
 );
 
 usePageSeo({

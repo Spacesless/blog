@@ -16,7 +16,7 @@ module.exports = class extends think.Model {
    * @returns {Object}
    */
   async selectPost({ category, page, pageSize, sortBy, orderBy, status, progress, tags, childCategories }) {
-    const field = 'id,title,description,total,current,ratings,imgurl,updatetime,status,tag';
+    const field = 'id,title,description,total,current,ratings,imgurl,updatetime,status,tag,pathname';
     const sort = sortEnum[sortBy] || 'updatetime';
     const order = orderEnum[orderBy] || 'DESC';
 

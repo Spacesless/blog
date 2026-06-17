@@ -5,7 +5,7 @@ module.exports = class extends think.Model {
    * @returns {Array}
    */
   async selectPost(childCategories) {
-    const field = 'id,title,updatetime,category_id';
+    const field = 'id,title,updatetime,category_id,pathname';
     const where = { is_show: 1, is_recycle: 0 };
     // 查询所有子栏目的记录
     if (childCategories.length) {

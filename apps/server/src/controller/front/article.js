@@ -58,13 +58,14 @@ module.exports = class extends Base {
   async detailAction() {
     const { id } = this.get();
 
-    const data = await this.modelInstance
-      .where({
-        id,
-        is_recycle: 0,
-        is_show: 1
-      })
-      .find();
+    // 支持通过数字 id 或 slug(pathname) 查询
+    const where = { is_recycle: 0, is_show: 1 };
+    if (/^\d+$/.test(String(id))) {
+      where.id = id;
+    } else {
+      where.pathname = id;
+    }
+    const data = await this.modelInstance.where(where).find();
 
     if (think.isEmpty(data)) {
       return this.fail(404);
@@ -88,8 +89,9 @@ module.exports = class extends Base {
   // 增加访问量
   accessAction() {
     const { id } = this.get();
-    // 访问量+1
-    this.modelInstance.where({ id })
+    // 访问量+1，支持 id 或 slug
+    const where = /^\d+$/.test(String(id)) ? { id } : { pathname: id };
+    this.modelInstance.where(where)
       .increment('hits', 1);
     return this.success();
   }

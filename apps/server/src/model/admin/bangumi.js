@@ -1,4 +1,5 @@
 const Base = require('./base.js');
+const slugify = require('../../service/slugify.js');
 
 module.exports = class extends Base {
   /**
@@ -25,7 +26,7 @@ module.exports = class extends Base {
       order.ratings = ratings;
     }
 
-    const field = 'id,title,imgurl,total,current,status,ratings,is_show';
+    const field = 'id,title,imgurl,total,current,status,ratings,is_show,pathname';
     const list = await this.where(where)
       .field(field)
       .order(order)
@@ -33,6 +34,36 @@ module.exports = class extends Base {
       .countSelect();
 
     return list;
+  }
+
+  /**
+   * 解析并确保 pathname 唯一
+   * @param {Object} data 番剧数据（含 title, pathname）
+   * @param {Number|String} [excludeId] 更新时排除自身
+   * @returns {Promise<String>}
+   */
+  async resolvePathname(data, excludeId) {
+    const inputPath = (data.pathname || '').trim();
+    if (inputPath) {
+      const base = slugify.toSlug(inputPath);
+      if (!base) {
+        return slugify.generateSlug({
+          model: this,
+          title: data.title,
+          fallbackPrefix: 'bangumi',
+          fallbackId: excludeId,
+          excludeId
+        });
+      }
+      return slugify.ensureUniqueSlug(this, base, excludeId);
+    }
+    return slugify.generateSlug({
+      model: this,
+      title: data.title,
+      fallbackPrefix: 'bangumi',
+      fallbackId: excludeId,
+      excludeId
+    });
   }
 
   /**
@@ -44,7 +75,18 @@ module.exports = class extends Base {
     const { imgurl, content } = data;
     if (imgurl) data.imgurl = this.getRelativeImgUrl(imgurl, siteurl);
     if (content) data.content = this.getRelativeContentUrl(content, siteurl);
+    data.pathname = await this.resolvePathname(data);
     const insertId = await this.add(data);
+    if (!data.pathname || data.pathname === 'bangumi') {
+      const finalSlug = await slugify.generateSlug({
+        model: this,
+        title: data.title,
+        fallbackPrefix: 'bangumi',
+        fallbackId: insertId,
+        excludeId: insertId
+      });
+      await this.where({ id: insertId }).update({ pathname: finalSlug });
+    }
     return insertId;
   }
 
@@ -57,6 +99,9 @@ module.exports = class extends Base {
     const { imgurl, content } = data;
     if (imgurl) data.imgurl = this.getRelativeImgUrl(imgurl, siteurl);
     if (content) data.content = this.getRelativeContentUrl(content, siteurl);
+    if (Object.prototype.hasOwnProperty.call(data, 'pathname') || Object.prototype.hasOwnProperty.call(data, 'title')) {
+      data.pathname = await this.resolvePathname(data, id);
+    }
     const result = await this.where({ id }).update(data);
     return result;
   }

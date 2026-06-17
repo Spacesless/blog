@@ -70,7 +70,7 @@ importers:
         version: 0.2.3
       '@unocss/nuxt':
         specifier: ^66.7.2
-        version: 66.7.2(magicast@0.5.3)(vite@7.3.5(@types/node@20.19.43)(jiti@2.7.0)(sass@1.101.0)(terser@5.48.0)(yaml@2.9.0))(webpack@5.107.2(postcss@8.5.15))
+        version: 66.7.2(magicast@0.5.3)(vite@7.3.5(@types/node@20.19.43)(jiti@2.7.0)(sass@1.101.0)(terser@5.48.0)(yaml@2.9.0))(webpack@5.107.2)
       eslint:
         specifier: ^10.5.0
         version: 10.5.0(jiti@2.7.0)
@@ -82,7 +82,7 @@ importers:
         version: 6.0.3
       unocss:
         specifier: ^66.7.2
-        version: 66.7.2(@unocss/webpack@66.7.2(webpack@5.107.2(postcss@8.5.15)))(vite@7.3.5(@types/node@20.19.43)(jiti@2.7.0)(sass@1.101.0)(terser@5.48.0)(yaml@2.9.0))
+        version: 66.7.2(@unocss/webpack@66.7.2(webpack@5.107.2))(vite@7.3.5(@types/node@20.19.43)(jiti@2.7.0)(sass@1.101.0)(terser@5.48.0)(yaml@2.9.0))
       vue-tsc:
         specifier: ^2.0.0
         version: 2.0.0(typescript@6.0.3)
@@ -101,6 +101,9 @@ importers:
       '@pinia/nuxt':
         specifier: ^0.11.0
         version: 0.11.3(magicast@0.5.3)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.38(typescript@6.0.3)))
+      '@waline/client':
+        specifier: ^3.15.2
+        version: 3.15.2(typescript@6.0.3)
       dayjs:
         specifier: ^1.11.10
         version: 1.11.21
@@ -128,7 +131,7 @@ importers:
         version: 1.26.6
       '@unocss/nuxt':
         specifier: ^66.7.2
-        version: 66.7.2(magicast@0.5.3)(vite@7.3.5(@types/node@20.19.43)(jiti@2.7.0)(sass@1.101.0)(terser@5.48.0)(yaml@2.9.0))(webpack@5.107.2)
+        version: 66.7.2(magicast@0.5.3)(vite@7.3.5(@types/node@20.19.43)(jiti@2.7.0)(sass@1.101.0)(terser@5.48.0)(yaml@2.9.0))(webpack@5.107.2(postcss@8.5.15))
       eslint:
         specifier: ^10.5.0
         version: 10.5.0(jiti@2.7.0)
@@ -137,7 +140,7 @@ importers:
         version: 6.0.3
       unocss:
         specifier: ^66.7.2
-        version: 66.7.2(@unocss/webpack@66.7.2(webpack@5.107.2))(vite@7.3.5(@types/node@20.19.43)(jiti@2.7.0)(sass@1.101.0)(terser@5.48.0)(yaml@2.9.0))
+        version: 66.7.2(@unocss/webpack@66.7.2(webpack@5.107.2(postcss@8.5.15)))(vite@7.3.5(@types/node@20.19.43)(jiti@2.7.0)(sass@1.101.0)(terser@5.48.0)(yaml@2.9.0))
 
   apps/server:
     dependencies:
@@ -2508,6 +2511,14 @@ packages:
     peerDependencies:
       vue: ^3.5.0
 
+  '@waline/api@1.1.2':
+    resolution: {integrity: sha512-r1H+XL+/Ww4qXv8vjq09HJQtMvYqMofgfueuokgsDW1kJ9/6CYY7g6LkksYlDJmWm0aqkLR/9ZTI/bbozL4FBA==}
+    engines: {node: '>=22'}
+
+  '@waline/client@3.15.2':
+    resolution: {integrity: sha512-QBAVbruefDR+IKyQdM/Ao9fd07Xxpx1WEJ7xI8lBVNDjMQBr1PpdwrTpLC8RrYbgUR9ymNBvtLDJi0xK3pbORQ==}
+    engines: {node: '>=22'}
+
   '@webassemblyjs/ast@1.14.1':
     resolution: {integrity: sha512-nuBEDgQfm1ccRp/8bCQrx1frohyufl4JlbMMZ4P1wpeOfDhF6FQkxZJ1b/e+PLwr6X1Nhw6OLme5usuBWYBvuQ==}
 
@@ -2697,6 +2708,9 @@ packages:
     hasBin: true
     peerDependencies:
       postcss: ^8.1.0
+
+  autosize@6.0.1:
+    resolution: {integrity: sha512-f86EjiUKE6Xvczc4ioP1JBlWG7FKrE13qe/DxBCpe8GCipCq2nFw73aO8QEBKHfSbYGDN5eB9jXWKen7tspDqQ==}
 
   axios@1.17.0:
     resolution: {integrity: sha512-J8SwNxprqqpbfenehxWYXE7CW+wM1BB4w3+N+g+/Wx40xM4rsLrfPmHHxSWIxJLYDgSY/HqlFPIYb2/S3rxafw==}
@@ -4238,6 +4252,16 @@ packages:
   magicast@0.5.3:
     resolution: {integrity: sha512-pVKE4UdSQ7DvHzivsCIFx2BJn1mHG6KsyrFcaxFx6tONdneEuThrDx0Cj3AMg58KyN4pzYT+LHOotxDQDjNvkw==}
 
+  marked-highlight@2.2.4:
+    resolution: {integrity: sha512-PZxisNMJDduSjc0q6uvjsnqqHCXc9s0eyzxDO9sB1eNGJnd/H1/Fu+z6g/liC1dfJdFW4SftMwMlLvsBhUPrqQ==}
+    peerDependencies:
+      marked: '>=4 <19'
+
+  marked@18.0.5:
+    resolution: {integrity: sha512-S6GcvALHg6K4ohtu4E7x0a1AqhAjp6cV8KhLSyN9qVapnzJkusVBxZRcIU9AeYsbe6P1hKDusSbEOzGyyuce6w==}
+    engines: {node: '>= 20'}
+    hasBin: true
+
   math-intrinsics@1.1.0:
     resolution: {integrity: sha512-/IXtbwEk5HTPyEwyKX6hGkYXxM9nbj64B+ilVJnC/R6B0pH5G4V3b0pVbL7DBj4tkhBAppbQUlf6F6Xl9LHu1g==}
     engines: {node: '>= 0.4'}
@@ -5005,6 +5029,9 @@ packages:
   readdirp@5.0.0:
     resolution: {integrity: sha512-9u/XQ1pvrQtYyMpZe7DXKv2p5CNvyVwzUB6uhLAnQwHMSgKMBR62lc7AHljaeteeHXn11XTAaLLUVZYVZyuRBQ==}
     engines: {node: '>= 20.19.0'}
+
+  recaptcha-v3@1.11.3:
+    resolution: {integrity: sha512-sEE6J0RzUkS+sKEBpgCD/AqCU0ffrAVOADGjvAx9vcttN+VLK42SWMkj/J/I6vHu3Kew+xcfbBqDVb65N0QGDw==}
 
   redis-errors@1.2.0:
     resolution: {integrity: sha512-1qny3OExCf0UvUV/5wpYKf2YwPcOqXzkwKKSmKHiE6ZMQs5heeE/c8eXK+PNllPvmjgAbfnsbpkGZWy8cBpn9w==}
@@ -8620,6 +8647,20 @@ snapshots:
     dependencies:
       vue: 3.5.38(typescript@6.0.3)
 
+  '@waline/api@1.1.2': {}
+
+  '@waline/client@3.15.2(typescript@6.0.3)':
+    dependencies:
+      '@vueuse/core': 14.3.0(vue@3.5.38(typescript@6.0.3))
+      '@waline/api': 1.1.2
+      autosize: 6.0.1
+      marked: 18.0.5
+      marked-highlight: 2.2.4(marked@18.0.5)
+      recaptcha-v3: 1.11.3
+      vue: 3.5.38(typescript@6.0.3)
+    transitivePeerDependencies:
+      - typescript
+
   '@webassemblyjs/ast@1.14.1':
     dependencies:
       '@webassemblyjs/helper-numbers': 1.13.2
@@ -8843,6 +8884,8 @@ snapshots:
       picocolors: 1.1.1
       postcss: 8.5.15
       postcss-value-parser: 4.2.0
+
+  autosize@6.0.1: {}
 
   axios@1.17.0:
     dependencies:
@@ -10472,6 +10515,12 @@ snapshots:
       '@babel/types': 7.29.7
       source-map-js: 1.2.1
 
+  marked-highlight@2.2.4(marked@18.0.5):
+    dependencies:
+      marked: 18.0.5
+
+  marked@18.0.5: {}
+
   math-intrinsics@1.1.0: {}
 
   md5@2.3.0:
@@ -11624,6 +11673,8 @@ snapshots:
       minimatch: 5.1.9
 
   readdirp@5.0.0: {}
+
+  recaptcha-v3@1.11.3: {}
 
   redis-errors@1.2.0: {}
 
