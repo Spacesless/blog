@@ -1,15 +1,32 @@
 {
-  "apps": [{
-    "name": "timeless-blog",
-    "script": "production.js",
-    "cwd": "E:\nodejs\blog",
-    "exec_mode": "fork",
-    "max_memory_restart": "2G",
-    "autorestart": true,
-    "node_args": [],
-    "args": [],
-    "env": {
-      
+  "apps": [
+    {
+      "name": "blog-server",
+      "script": "production.js",
+      "cwd": "./apps/server",
+      "exec_mode": "fork",
+      "instances": 1,
+      "max_memory_restart": "1G",
+      "autorestart": true,
+      "env": {
+        "NODE_ENV": "production"
+      }
+    },
+    {
+      "name": "blog-front",
+      "script": ".output/server/index.mjs",
+      "cwd": "./apps/front",
+      "exec_mode": "cluster",
+      "instances": "max",
+      "max_memory_restart": "1G",
+      "autorestart": true,
+      "env": {
+        "NODE_ENV": "production",
+        "NITRO_PORT": 3000,
+        "NITRO_HOST": "127.0.0.1",
+        "NUXT_PUBLIC_API_BASE": "https://www.timelessq.com/front",
+        "NUXT_PUBLIC_SITE_URL": "https://www.timelessq.com"
+      }
     }
-  }]
+  ]
 }

@@ -1,46 +1,20 @@
 <template>
   <div>
-    <h2
-      class="py-2.5 text-3xl font-normal text-[var(--color-heading)] text-shadow-[0_2px_6px_rgba(0,0,0,0.5)]"
+    <div
+      class="relative mb-[var(--grid-space)] flex flex-col items-center justify-center overflow-hidden rounded-[var(--border-radius)] shadow-[var(--shadow-3-down)] bg-cover bg-center text-center"
+      :style="{ backgroundImage: `url(${bannerImg})` }"
+      style="min-height: 220px"
     >
-      文章笔记
-    </h2>
-    <Hitokoto :kinds="['k']" />
-
-    <el-form
-      class="mb-[var(--grid-space)]"
-      label-width="40px"
-      label-position="left"
-    >
-      <el-form-item label="排序">
-        <el-select
-          v-model="filters.sortBy"
-          placeholder="排序方式"
-          @change="handleSearch"
-        >
-          <el-option label="更新时间" value="" />
-          <el-option label="发布时间" value="addtime" />
-          <el-option label="浏览次数" value="hits" />
-        </el-select>
-        <el-radio-group
-          v-model="filters.orderBy"
-          class="ml-4"
-          @change="handleSearch"
-        >
-          <el-radio-button value="">降序</el-radio-button>
-          <el-radio-button value="asc">升序</el-radio-button>
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item v-if="dynamicTags.length" label="标签">
-        <el-tag
-          v-for="tag in dynamicTags"
-          :key="tag"
-          closable
-          @close="handleDeleteTag(tag)"
-          >{{ tag }}</el-tag
-        >
-      </el-form-item>
-    </el-form>
+      <div class="absolute inset-0 bg-black/40" />
+      <h2
+        class="relative z-1 py-2.5 text-3xl font-normal text-white text-shadow-[0_2px_6px_rgba(0,0,0,0.5)]"
+      >
+        文章笔记
+      </h2>
+      <div class="relative z-1 px-4 text-white [&_span]:text-white/90">
+        <Hitokoto :kinds="['k']" />
+      </div>
+    </div>
 
     <div>
       <el-row
@@ -53,7 +27,10 @@
           :sm="24"
           :md="14"
         >
-          <NuxtLink :to="`/article/detail/${item.pathname || item.id}`" :title="item.title">
+          <NuxtLink
+            :to="`/article/detail/${item.pathname || item.id}`"
+            :title="item.title"
+          >
             <img
               class="block w-full h-auto"
               :src="item.imgurl"
@@ -96,7 +73,6 @@
               :key="i"
               class="tl-tag"
               :class="tagClassName(tag)"
-              @click="handleAddTag(tag)"
               >{{ tag }}</span
             >
           </div>
@@ -156,14 +132,8 @@ const routePage = computed(() => {
   return Number(page) || 1;
 });
 
-const filters = ref({
-  sortBy: (route.query.sortBy as string) || "",
-  orderBy: (route.query.orderBy as string) || "",
-  tags: (route.query.tags as string) || "",
-});
-const dynamicTags = ref<string[]>(
-  filters.value.tags ? filters.value.tags.split(",") : []
-);
+const bannerImg = "/background.png";
+
 const currentPage = ref(routePage.value);
 const total = ref(0);
 const pageSize = ref(10);
@@ -177,10 +147,7 @@ const { data } = await useAsyncData(
     fetchArticles({
       id: routeId.value,
       page: routePage.value,
-      sortBy: filters.value.sortBy || undefined,
-      orderBy: filters.value.orderBy || undefined,
-      tags: filters.value.tags || undefined,
-    }).catch(() => ({ data: [], count: 0, pageSize: 10 }))
+    }).catch(() => ({ data: [], count: 0, pageSize: 10 })),
 );
 
 if (data.value) {
@@ -189,30 +156,8 @@ if (data.value) {
   pageSize.value = data.value.pageSize || 10;
 }
 
-function handleSearch() {
-  const id = paramId.value?.split("-")[0] || "list";
-  const query: Record<string, string> = {};
-  if (filters.value.sortBy) query.sortBy = filters.value.sortBy;
-  if (filters.value.orderBy) query.orderBy = filters.value.orderBy;
-  if (filters.value.tags) query.tags = filters.value.tags;
-  router.push({ path: `/article/${id}-1`, query });
-}
-
 function changePage(page: number) {
   const id = paramId.value?.split("-")[0] || "list";
   router.push({ path: `/article/${id}-${page}`, query: route.query as any });
-}
-
-function handleDeleteTag(tag: string) {
-  dynamicTags.value = dynamicTags.value.filter((t) => t !== tag);
-  filters.value.tags = dynamicTags.value.join(",");
-  handleSearch();
-}
-
-function handleAddTag(tag: string) {
-  if (dynamicTags.value.includes(tag)) return;
-  dynamicTags.value.push(tag);
-  filters.value.tags = dynamicTags.value.join(",");
-  handleSearch();
 }
 </script>

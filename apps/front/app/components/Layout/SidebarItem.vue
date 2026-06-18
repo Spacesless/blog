@@ -42,7 +42,11 @@ defineProps<{
 }>();
 
 function getUrl(item: Category) {
-  return `/${item.type}/${item.id}`;
+  // article/bangumi 是带分类列表的页面，需要 id；其余（archives/about/link）是单页
+  if (item.type === "article" || item.type === "bangumi") {
+    return `/${item.type}/${item.id}`;
+  }
+  return `/${item.type}`;
 }
 
 function getIcon(item: Category) {
