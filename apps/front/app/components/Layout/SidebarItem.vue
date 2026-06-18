@@ -42,9 +42,9 @@ defineProps<{
 }>();
 
 function getUrl(item: Category) {
-  // article/bangumi 是带分类列表的页面，需要 id；其余（archives/about/link）是单页
+  // article/bangumi 是带分类列表的页面，优先使用 filename(slug)，否则用 id
   if (item.type === "article" || item.type === "bangumi") {
-    return `/${item.type}/${item.id}`;
+    return `/${item.type}/${item.filename || item.id}`;
   }
   return `/${item.type}`;
 }

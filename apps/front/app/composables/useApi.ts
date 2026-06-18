@@ -20,7 +20,7 @@ export function useApi() {
   // 统一请求：剥离 errno 包装
   async function request<T>(
     url: string,
-    options: { params?: Record<string, any>; method?: any } = {}
+    options: { params?: Record<string, any>; method?: any } = {},
   ): Promise<T> {
     const res = await $fetch<ApiResponse<T>>(url, {
       baseURL,
@@ -29,7 +29,7 @@ export function useApi() {
     });
     if (res && typeof res === "object" && "errno" in res) {
       if (res.errno === 0) {
-        return (res.data as T);
+        return res.data as T;
       }
       throw new Error(res.errmsg || "请求错误");
     }
@@ -55,7 +55,7 @@ export function useApi() {
 
   // 文章列表
   async function fetchArticles(options?: {
-    id?: number | null;
+    id?: number | string | null;
     page?: number;
     sortBy?: string;
     orderBy?: string;
@@ -87,7 +87,7 @@ export function useApi() {
 
   // 追番列表
   async function fetchBangumiList(options?: {
-    id?: number | null;
+    id?: number | string | null;
     page?: number;
     sortBy?: string;
     orderBy?: string;
@@ -134,9 +134,11 @@ export function useApi() {
     keyword: string;
     classify?: string;
     page?: number;
-  }): Promise<PaginatedResponse<Article | Bangumi> & {
-    data: ((Article | Bangumi) & { type: string })[];
-  }> {
+  }): Promise<
+    PaginatedResponse<Article | Bangumi> & {
+      data: ((Article | Bangumi) & { type: string })[];
+    }
+  > {
     return request("/search", { params: options });
   }
 

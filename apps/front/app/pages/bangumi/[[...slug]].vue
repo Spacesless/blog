@@ -85,15 +85,13 @@ const route = useRoute();
 const router = useRouter();
 const { fetchBangumiList } = useApi();
 
-const paramId = computed(() => route.params.id as string);
-const routeId = computed(() => {
-  const [id] = paramId.value?.split("-") || [];
-  return id === "list" ? null : id ? Number(id) : null;
-});
-const routePage = computed(() => {
-  const [, page] = paramId.value?.split("-") || [];
-  return Number(page) || 1;
-});
+// 解析路由：支持新格式 /bangumi/slug/page，兼容旧格式 /bangumi/id-page
+const routeSlugArray = computed(
+  () => (route.params.slug as string[] | undefined) || [],
+);
+const routeParams = computed(() => parseListRoute(routeSlugArray.value));
+const routeId = computed(() => routeParams.value.id);
+const routePage = computed(() => routeParams.value.page);
 
 const bannerImg = "/background.png";
 
@@ -105,7 +103,7 @@ const bangumiList = ref<any[]>([]);
 usePageSeo({ pageType: "list" });
 
 const { data } = await useAsyncData(
-  `bangumi-list-${paramId.value}-${JSON.stringify(route.query)}`,
+  `bangumi-list-${routeSlugArray.value.join("/")}-${JSON.stringify(route.query)}`,
   () =>
     fetchBangumiList({
       id: routeId.value,
@@ -120,7 +118,9 @@ if (data.value) {
 }
 
 function changePage(page: number) {
-  const id = paramId.value?.split("-")[0] || "list";
-  router.push({ path: `/bangumi/${id}-${page}`, query: route.query as any });
+  router.push({
+    path: buildListPath("bangumi", routeId.value, page),
+    query: route.query as any,
+  });
 }
 </script>

@@ -186,7 +186,7 @@ const { data: pageData } = await useAsyncData("home", async () => {
       ...item,
       parsedTags,
       categoryUrl: findCategory
-        ? `/${findCategory.type}/${findCategory.id}`
+        ? `/${findCategory.type}/${findCategory.filename || findCategory.id}`
         : "",
       categoryName: findCategory?.name || "",
     };

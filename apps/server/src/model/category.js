@@ -5,11 +5,14 @@ module.exports = class extends think.Model {
    */
   async getCacheCategory() {
     // 设置缓存 key 为 column，有效期为 30 天
-    const field = 'id,name,keywords,description,filename,parent_id,type,level,is_nav,icon,version,link';
-    const list = await this.cache('category', { timeout: 90 * 24 * 3600 * 1000 })
+    const field =
+      "id,name,keywords,description,filename,parent_id,type,level,is_nav,icon,version,link";
+    const list = await this.cache("category", {
+      timeout: 90 * 24 * 3600 * 1000,
+    })
       .where({ is_show: 1 })
       .field(field)
-      .order('no_order ASC')
+      .order("no_order ASC")
       .select();
 
     this.formatCategoryUrl(list);
@@ -22,19 +25,20 @@ module.exports = class extends think.Model {
    * @param {Array} categories
    */
   formatCategoryUrl(categories) {
-    categories.forEach(item => {
+    categories.forEach((item) => {
       const { id, filename, type, level, link } = item;
       if (link) return;
 
       switch (type) {
-        case 'page':
+        case "page":
           item.url = `/${filename || type}`;
           break;
-        case 'tool':
+        case "tool":
           item.url = level === 1 ? `/${type}/${id}` : `/${type}/${filename}`;
           break;
         default:
-          item.url = `/${type}/${id}`;
+          // article/bangumi 等列表栏目：优先使用 filename 作为 slug
+          item.url = `/${type}/${filename || id}`;
       }
     });
     return categories;
@@ -62,14 +66,18 @@ module.exports = class extends think.Model {
    * @param {Array} target 目标数组
    */
   flattenDeep(categories, predicate, target = []) {
-    const findCategory = categories.filter(item => predicate.includes(item.id));
-    const childrenCategory = categories.filter(item => predicate.includes(item.parent_id));
+    const findCategory = categories.filter((item) =>
+      predicate.includes(item.id),
+    );
+    const childrenCategory = categories.filter((item) =>
+      predicate.includes(item.parent_id),
+    );
     target = [...target, ...findCategory, ...childrenCategory];
 
     if (childrenCategory.length) {
       return this.flattenDeep(categories, childrenCategory, target);
     } else {
-      return target.map(item => item.id);
+      return target.map((item) => item.id);
     }
   }
 };

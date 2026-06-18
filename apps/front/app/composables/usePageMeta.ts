@@ -19,9 +19,13 @@ export function usePageSeo(options: PageMetaOptions = {}) {
     const categories = appStore.categories
     switch (pageType) {
       case 'list': {
-        const paramId = route.params.id as string
-        const [id] = paramId?.split('-') || []
-        return id ? categories.find(item => item.id === Number(id)) : undefined
+        const segments = (route.params.slug as string[] | undefined) || []
+        const { id } = parseListRoute(segments)
+        if (id === null) return undefined
+        // id 可能是数字 id 或 filename(slug)
+        return categories.find(item =>
+          /^\d+$/.test(String(id)) ? item.id === Number(id) : item.filename === id
+        )
       }
       case 'detail': {
         const categoryId = data?.category_id

@@ -137,7 +137,7 @@ async function fetchList() {
       return {
         ...item,
         url,
-        categoryUrl: findCategory ? `/${findCategory.type}/${findCategory.id}` : '',
+        categoryUrl: findCategory ? `/${findCategory.type}/${findCategory.filename || findCategory.id}` : '',
         categoryName: findCategory?.name || '',
       }
     })

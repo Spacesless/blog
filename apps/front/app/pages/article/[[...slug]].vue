@@ -36,7 +36,7 @@
               :src="item.imgurl"
               :srcset="getImageSrcSet(item.imgurl, 600)"
               :alt="item.title"
-            >
+            />
           </NuxtLink>
         </el-col>
         <el-col
@@ -122,15 +122,13 @@ function formatDate(time: string) {
   return `${monthEnum[d.getMonth()]}月 ${d.getDate()}, ${d.getFullYear()}`;
 }
 
-const paramId = computed(() => route.params.id as string);
-const routeId = computed(() => {
-  const [id] = paramId.value?.split("-") || [];
-  return id === "list" ? null : id ? Number(id) : null;
-});
-const routePage = computed(() => {
-  const [, page] = paramId.value?.split("-") || [];
-  return Number(page) || 1;
-});
+// 解析路由：支持新格式 /article/slug/page，兼容旧格式 /article/id-page
+const routeSlugArray = computed(
+  () => (route.params.slug as string[] | undefined) || [],
+);
+const routeParams = computed(() => parseListRoute(routeSlugArray.value));
+const routeId = computed(() => routeParams.value.id);
+const routePage = computed(() => routeParams.value.page);
 
 const bannerImg = "/background.png";
 
@@ -142,7 +140,7 @@ const articleList = ref<any[]>([]);
 usePageSeo({ pageType: "list" });
 
 const { data } = await useAsyncData(
-  `article-list-${paramId.value}-${JSON.stringify(route.query)}`,
+  `article-list-${routeSlugArray.value.join("/")}-${JSON.stringify(route.query)}`,
   () =>
     fetchArticles({
       id: routeId.value,
@@ -157,7 +155,9 @@ if (data.value) {
 }
 
 function changePage(page: number) {
-  const id = paramId.value?.split("-")[0] || "list";
-  router.push({ path: `/article/${id}-${page}`, query: route.query as any });
+  router.push({
+    path: buildListPath("article", routeId.value, page),
+    query: route.query as any,
+  });
 }
 </script>

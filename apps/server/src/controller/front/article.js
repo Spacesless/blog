@@ -15,7 +15,11 @@ module.exports = class extends Base {
     // 当前栏目
     let findCategory = {};
     if (!think.isEmpty(id)) {
-      findCategory = categories.find(item => item.id === +id && item.type === 'article');
+      // 支持通过数字 id 或 filename(slug) 查询栏目
+      const isNumericId = /^\d+$/.test(String(id));
+      findCategory = categories.find(item =>
+        item.type === 'article' && (isNumericId ? item.id === +id : item.filename === id)
+      );
       if (!findCategory) {
         return this.fail(404);
       }

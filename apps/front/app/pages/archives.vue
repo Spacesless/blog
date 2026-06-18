@@ -79,7 +79,7 @@ const { data } = await useAsyncData("archives", async () => {
     return {
       ...item,
       categoryUrl: findCategory
-        ? `/${findCategory.type}/${findCategory.id}`
+        ? `/${findCategory.type}/${findCategory.filename || findCategory.id}`
         : "",
       categoryName: findCategory?.name || "",
     };

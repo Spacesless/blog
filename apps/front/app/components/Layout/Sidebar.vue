@@ -71,9 +71,12 @@ const activeKey = computed(() => {
   if (path.includes("detail")) {
     return appStore.activeMenu;
   }
-  const paramId = params.id as string;
-  const [id] = paramId?.split("-") || [];
-  return id ? path.replace(paramId, id) : path;
+  // 列表页：去除页码，高亮对应栏目菜单 /{type}/{slug}
+  const segments = (params.slug as string[] | undefined) || [];
+  if (!segments.length) return path;
+  const type = path.split("/")[1];
+  const { id } = parseListRoute(segments);
+  return id ? `/${type}/${id}` : path;
 });
 </script>
 
