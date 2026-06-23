@@ -16,6 +16,7 @@ export interface Category {
   id: number
   name: string
   type: string // 'article' | 'bangumi' | 'archives' | 'about' | 'link'
+  icon: string
   filename?: string
   is_nav: boolean | number
   parent_id: number | null

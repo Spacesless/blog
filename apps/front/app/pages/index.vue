@@ -12,10 +12,10 @@
           class="block w-full h-auto"
           width="1280"
           height="500"
-          :src="item.imgurl"
+          :src="getAbsolutePath(item.imgurl || '')"
           :srcset="getImageSrcSet(item.imgurl, 1280)"
           :alt="item.title"
-        />
+        >
         <div
           class="absolute right-0 bottom-0 px-6 py-2 text-[15px] text-white bg-black/50 rounded-tl-[var(--border-radius)]"
         >
@@ -27,13 +27,9 @@
     <!-- 最新文章 -->
     <div v-if="articleList?.length">
       <div class="relative">
-        <h2
-          class="pt-2.5 pb-2.5 text-3xl font-normal text-[var(--color-heading)] text-shadow-[0_2px_6px_rgba(0,0,0,0.5)]"
-        >
-          最新文章
-        </h2>
+        <h2 class="tl__title">最新文章</h2>
         <NuxtLink
-          class="absolute top-5 right-0 leading-6 text-[var(--color-secondary)] hover:text-[var(--color-primary)]"
+          class="absolute top-8 right-0 leading-6 text-[var(--color-secondary)] hover:text-[var(--color-primary)]"
           to="/article"
           >more+</NuxtLink
         >
@@ -53,7 +49,7 @@
                 :src="item.imgurl"
                 :srcset="getImageSrcSet(item.imgurl, 400)"
                 :alt="item.title"
-              />
+              >
             </NuxtLink>
             <div class="p-4">
               <p class="text-2xl">
@@ -65,27 +61,32 @@
                   {{ item.title }}
                 </NuxtLink>
               </p>
-              <div class="h-7.5 py-1.5 text-sm">
-                <span class="mr-2.5 text-[var(--color-secondary)]">{{
-                  parseTime(item.updatetime, "{y}-{m}-{d}")
-                }}</span>
-                <span
-                  v-if="item.categoryName"
-                  class="mr-2.5 text-[var(--color-secondary)]"
-                  >{{ item.categoryName }}</span
-                >
-                <span class="mr-2.5 text-[var(--color-secondary)]"
-                  >{{ item.hits }}浏览</span
-                >
+              <div class="article-meta h-7.5 py-1.5 text-sm">
+                <span class="article-meta__date">
+                  <i class="icon-riqi" />{{
+                    parseTime(item.updatetime, "{y}-{m}-{d}")
+                  }}
+                </span>
+                <span v-if="item.categoryName" class="article-meta__cate">
+                  <i class="icon-bianqian" />
+                  <NuxtLink
+                    v-if="item.categoryUrl"
+                    :to="item.categoryUrl"
+                    :title="item.categoryName"
+                  >
+                    {{ item.categoryName }}
+                  </NuxtLink>
+                  <template v-else>{{ item.categoryName }}</template>
+                </span>
+                <span class="article-meta__view">
+                  <i class="icon-chakan" />{{ item.hits }}
+                </span>
               </div>
               <div class="h-28.5 mb-4 overflow-hidden line-clamp-4">
                 <p class="text-sm leading-loose">{{ item.description }}</p>
               </div>
-              <div class="h-7.5 py-1.5 text-sm">
-                <span
-                  v-for="(tag, i) in item.parsedTags"
-                  :key="i"
-                  class="mr-2.5 text-[var(--color-secondary)]"
+              <div class="article-tags h-7.5 py-1.5 text-sm">
+                <span v-for="(tag, i) in item.parsedTags" :key="i"
                   >#{{ tag }}</span
                 >
               </div>
@@ -98,13 +99,9 @@
     <!-- 最近追番 -->
     <div v-if="bangumiList?.length">
       <div class="relative">
-        <h2
-          class="pt-2.5 pb-2.5 text-3xl font-normal text-[var(--color-heading)] text-shadow-[0_2px_6px_rgba(0,0,0,0.5)]"
-        >
-          最近追番
-        </h2>
+        <h2 class="tl__title">最近追番</h2>
         <NuxtLink
-          class="absolute top-5 right-0 leading-6 text-[var(--color-secondary)] hover:text-[var(--color-primary)]"
+          class="absolute top-8 right-0 leading-6 text-[var(--color-secondary)] hover:text-[var(--color-primary)]"
           to="/bangumi"
           >more+</NuxtLink
         >
@@ -115,7 +112,10 @@
             class="mb-[var(--grid-space)] overflow-hidden bg-[var(--bg-normal)] rounded-[var(--border-radius)] shadow-[var(--shadow-3-down)]"
           >
             <el-col class="relative" :span="10" :xl="8">
-              <NuxtLink :to="`/bangumi/detail/${item.pathname || item.id}`" :title="item.title">
+              <NuxtLink
+                :to="`/bangumi/detail/${item.pathname || item.id}`"
+                :title="item.title"
+              >
                 <img
                   class="max-w-full h-auto"
                   :src="item.imgurl"
@@ -146,7 +146,7 @@
                 <span class="text-[var(--color-secondary)]">进度：</span
                 >{{ item.current }}/{{ item.total }}
               </p>
-              <div class="mt-2">
+              <div class="mt-2 leading-none">
                 <span
                   v-for="(tag, i) in item.parsedTags"
                   :key="i"
@@ -180,7 +180,7 @@ const { data: pageData } = await useAsyncData("home", async () => {
   const articleList = (res.articleList || []).map((item) => {
     const parsedTags = item.tag ? item.tag.split("|") : [];
     const findCategory = appStore.categories.find(
-      (c) => c.id === item.category_id
+      (c) => c.id === item.category_id,
     );
     return {
       ...item,
@@ -244,5 +244,32 @@ onUnmounted(() => {
   pointer-events: none;
   content: "";
   background: var(--article-cover);
+}
+
+.article-meta {
+  color: var(--color-secondary);
+}
+
+.article-meta > span {
+  margin-right: 10px;
+}
+
+.article-meta i {
+  margin-right: 4px;
+  font-size: 16px;
+  vertical-align: text-bottom;
+}
+
+.article-meta a {
+  color: var(--color-secondary);
+}
+
+.article-meta a:hover {
+  color: var(--color-primary);
+}
+
+.article-tags > span {
+  margin-right: 10px;
+  color: var(--color-secondary);
 }
 </style>

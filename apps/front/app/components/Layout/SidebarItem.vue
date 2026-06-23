@@ -4,21 +4,13 @@
     :index="getUrl(item)"
     :title="item.name"
   >
-    <Icon
-      v-if="!isNest"
-      :name="getIcon(item)"
-      class="w-6 mr-1.5 text-lg align-middle"
-    />
+    <i v-if="!isNest" class="aside-menu__icon" :class="item.icon" />
     <template #title>{{ item.name }}</template>
   </el-menu-item>
 
   <el-sub-menu v-else :index="getUrl(item)" popper-class="aside-submenu">
     <template #title>
-      <Icon
-        v-if="!isNest"
-        :name="getIcon(item)"
-        class="w-6 mr-1.5 text-lg align-middle"
-      />
+      <i v-if="!isNest" class="aside-menu__icon" :class="item.icon" />
       <span>{{ item.name }}</span>
     </template>
     <el-menu-item :index="getUrl(item)">
@@ -49,17 +41,6 @@ function getUrl(item: Category) {
   return `/${item.type}`;
 }
 
-function getIcon(item: Category) {
-  const iconMap: Record<string, string> = {
-    article: "ph:article",
-    bangumi: "ph:television",
-    archives: "ph:archive",
-    about: "ph:info",
-    link: "ph:link",
-  };
-  return iconMap[item.type] || "ph:folder";
-}
-
 function getAliasName(type: string) {
   const names = new Map([
     ["article", "全部文章"],
@@ -68,3 +49,15 @@ function getAliasName(type: string) {
   return names.get(type) || "全部";
 }
 </script>
+
+<style scoped>
+.aside-menu__icon {
+  display: inline-block;
+  width: 24px;
+  margin-right: 6px;
+  font-size: 18px;
+  line-height: 1;
+  text-align: center;
+  vertical-align: middle;
+}
+</style>

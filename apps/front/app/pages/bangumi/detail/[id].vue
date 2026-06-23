@@ -7,7 +7,7 @@
         <div class="max-h-125 overflow-hidden">
           <img
             class="max-w-full h-auto"
-            :src="data?.imgurl"
+            :src="getAbsolutePath(data?.imgurl || '')"
             :alt="data?.title"
           />
         </div>

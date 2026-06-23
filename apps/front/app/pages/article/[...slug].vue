@@ -21,9 +21,10 @@
         v-for="(item, index) in articleList"
         :key="item.id"
         class="relative z-6 mb-30 lt-lg:mb-12 last:mb-12"
+        :class="index % 2 === 1 ? 'md:flex-row-reverse' : ''"
       >
         <el-col
-          class="relative z-5 inline-block float-none overflow-hidden rounded-[var(--border-radius)] shadow-[var(--shadow-3-down)]"
+          class="relative z-5 overflow-hidden rounded-[var(--border-radius)] shadow-[var(--shadow-3-down)]"
           :sm="24"
           :md="14"
         >
@@ -36,7 +37,7 @@
               :src="item.imgurl"
               :srcset="getImageSrcSet(item.imgurl, 600)"
               :alt="item.title"
-            />
+            >
           </NuxtLink>
         </el-col>
         <el-col
@@ -44,7 +45,7 @@
           :class="
             index % 2 === 0
               ? 'right-0 rounded-r-[var(--border-radius)]'
-              : 'left-0 text-left rounded-l-[var(--border-radius)]'
+              : 'left-0 rounded-l-[var(--border-radius)]'
           "
           :sm="24"
           :md="10"
@@ -69,29 +70,29 @@
           </p>
           <div class="min-h-6.25 mt-1.25">
             <span
-              v-for="(tag, i) in item.tag?.split('|') || []"
+              v-for="(tag, i) in item.tag || []"
               :key="i"
               class="tl-tag"
               :class="tagClassName(tag)"
               >{{ tag }}</span
             >
           </div>
-          <div class="mt-2.5 text-sm text-[var(--color-secondary)]">
-            <span class="mr-4">{{ item.word_count }}字</span>
-            <span class="mr-4">{{ item.hits }}浏览</span>
+          <div class="article-stuff mt-2.5 text-sm text-[var(--color-secondary)]">
+            <span><i class="icon-wenzi" />{{ item.word_count }}</span>
+            <span><i class="icon-chakan" />{{ item.hits }}</span>
           </div>
         </el-col>
       </el-row>
     </div>
 
     <div v-if="total > 0" class="py-[var(--grid-space)] text-center">
-      <el-pagination
-        v-model:current-page="currentPage"
+      <Pagination
+        :is-admin="false"
         :total="total"
-        :page-size="pageSize"
-        layout="prev, pager, next"
-        background
-        @current-change="changePage"
+        :page="currentPage"
+        :limit="pageSize"
+        :auto-scroll="false"
+        @pagination="onPaginate"
       />
     </div>
   </div>
@@ -160,4 +161,20 @@ function changePage(page: number) {
     query: route.query as any,
   });
 }
+
+function onPaginate({ page }: { page: number; limit: number }) {
+  changePage(page);
+}
 </script>
+
+<style scoped>
+.article-stuff span {
+  margin-right: 16px;
+}
+
+.article-stuff i {
+  margin-right: 4px;
+  font-size: 17px;
+  vertical-align: text-bottom;
+}
+</style>

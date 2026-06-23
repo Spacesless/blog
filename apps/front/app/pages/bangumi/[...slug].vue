@@ -55,7 +55,7 @@
             </p>
             <div class="mt-2">
               <span
-                v-for="(tag, i) in item.tag?.split('|') || []"
+                v-for="(tag, i) in item.tag || []"
                 :key="i"
                 class="tl-tag"
                 :class="tagClassName(tag)"
@@ -68,13 +68,13 @@
     </el-row>
 
     <div v-if="total > 0" class="py-[var(--grid-space)] text-center">
-      <el-pagination
-        v-model:current-page="currentPage"
+      <Pagination
+        :is-admin="false"
         :total="total"
-        :page-size="pageSize"
-        layout="prev, pager, next"
-        background
-        @current-change="changePage"
+        :page="currentPage"
+        :limit="pageSize"
+        :auto-scroll="false"
+        @pagination="onPaginate"
       />
     </div>
   </div>
@@ -122,5 +122,9 @@ function changePage(page: number) {
     path: buildListPath("bangumi", routeId.value, page),
     query: route.query as any,
   });
+}
+
+function onPaginate({ page }: { page: number; limit: number }) {
+  changePage(page);
 }
 </script>

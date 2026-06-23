@@ -140,12 +140,12 @@ export function getImageSrcSet(src: string, width = 576): string {
 }
 
 /**
- * 获取绝对路径 (Directus 资源文件)
+ * 获取绝对路径 (资源文件)
  */
 export function getAbsolutePath(path: string): string {
   if (!path) return "";
   if (path.startsWith("http")) return path;
-  // 使用 public 目录路径
+  // 图片资源 /upload/* 在开发环境通过 devProxy 代理到后端，生产环境同域
   return path;
 }
 

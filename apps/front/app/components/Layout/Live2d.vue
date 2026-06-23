@@ -12,11 +12,11 @@
       @mouseenter="onMouseEnter('live2d')"
     />
     <div class="absolute bottom-0 left-2.5 hidden text-sm group-hover:block">
-      <Icon name="ph:house" class="block mb-2.5 text-xl text-[var(--color-text)] cursor-pointer hover:text-[var(--color-primary)]" @click="navigatorToHome" @mouseenter="onMouseEnter('home')" />
-      <Icon name="ph:swap" class="block mb-2.5 text-xl text-[var(--color-text)] cursor-pointer hover:text-[var(--color-primary)]" @click="loadOtherModel" @mouseenter="onMouseEnter('model')" />
-      <Icon name="ph:t-shirt" class="block mb-2.5 text-xl text-[var(--color-text)] cursor-pointer hover:text-[var(--color-primary)]" @click="loadOtherTexture" @mouseenter="onMouseEnter('textures')" />
-      <Icon name="ph:camera" class="block mb-2.5 text-xl text-[var(--color-text)] cursor-pointer hover:text-[var(--color-primary)]" @click="handleTakePhoto" @mouseenter="onMouseEnter('photo')" />
-      <Icon name="ph:x" class="block mb-2.5 text-xl text-[var(--color-text)] cursor-pointer hover:text-[var(--color-primary)]" @click="handleHideLive2d" @mouseenter="onMouseEnter('close')" />
+      <i class="icon-shouye block mb-2.5 text-xl text-[var(--color-text)] cursor-pointer hover:text-[var(--color-primary)]" @click="navigatorToHome" @mouseenter="onMouseEnter('home')" />
+      <i class="icon-qiehuan block mb-2.5 text-xl text-[var(--color-text)] cursor-pointer hover:text-[var(--color-primary)]" @click="loadOtherModel" @mouseenter="onMouseEnter('model')" />
+      <i class="icon-pifu block mb-2.5 text-xl text-[var(--color-text)] cursor-pointer hover:text-[var(--color-primary)]" @click="loadOtherTexture" @mouseenter="onMouseEnter('textures')" />
+      <i class="icon-paizhao block mb-2.5 text-xl text-[var(--color-text)] cursor-pointer hover:text-[var(--color-primary)]" @click="handleTakePhoto" @mouseenter="onMouseEnter('photo')" />
+      <i class="icon-guanbi block mb-2.5 text-xl text-[var(--color-text)] cursor-pointer hover:text-[var(--color-primary)]" @click="handleHideLive2d" @mouseenter="onMouseEnter('close')" />
     </div>
   </div>
 </template>

@@ -4,7 +4,7 @@
     :class="{ 'w-16!': isCollapse }"
   >
     <div class="text-center" :class="isCollapse ? 'pt-6' : 'pt-12 pb-4'">
-      <NuxtLink to="/">
+      <NuxtLink to="/" class="inline-block">
         <img
           class="rounded-full transition-all duration-300"
           :class="isCollapse ? 'w-12 h-12' : 'w-26 h-26'"
@@ -35,11 +35,12 @@
       <el-menu
         :collapse="isCollapse"
         :default-active="activeKey"
-        class="h-full !border-r-0"
+        background-color="transparent"
+        class="aside-menu h-full !border-r-0"
         router
       >
         <el-menu-item index="/">
-          <Icon name="ph:house" class="w-6 mr-1.5 text-lg align-middle" />
+          <i class="aside-menu__icon icon-shouye" />
           <template #title>首页</template>
         </el-menu-item>
         <LayoutSidebarItem
@@ -88,5 +89,38 @@ const activeKey = computed(() => {
 
 .font-bega {
   font-family: Bega, sans-serif;
+}
+
+.aside-menu__icon {
+  display: inline-block;
+  width: 24px;
+  margin-right: 6px;
+  font-size: 18px;
+  line-height: 1;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.aside-menu {
+  background-color: transparent;
+}
+
+.aside-menu :deep(.el-menu),
+.aside-menu :deep(.el-menu-item),
+.aside-menu :deep(.el-sub-menu__title) {
+  background-color: transparent !important;
+  color: var(--color-heading);
+}
+
+.aside-menu :deep(.el-menu-item:hover),
+.aside-menu :deep(.el-menu-item:focus),
+.aside-menu :deep(.el-sub-menu__title:hover) {
+  color: var(--color-primary) !important;
+  background-color: transparent !important;
+}
+
+.aside-menu :deep(.el-menu-item.is-active) {
+  color: var(--color-primary) !important;
+  background-color: transparent !important;
 }
 </style>

@@ -1,9 +1,9 @@
-const Base = require('./base.js');
+const Base = require("./base.js");
 
 module.exports = class extends Base {
   constructor(...args) {
     super(...args);
-    this.modelInstance = this.model('article');
+    this.modelInstance = this.model("article");
   }
 
   async listAction() {
@@ -17,8 +17,10 @@ module.exports = class extends Base {
     if (!think.isEmpty(id)) {
       // 支持通过数字 id 或 filename(slug) 查询栏目
       const isNumericId = /^\d+$/.test(String(id));
-      findCategory = categories.find(item =>
-        item.type === 'article' && (isNumericId ? item.id === +id : item.filename === id)
+      findCategory = categories.find(
+        (item) =>
+          item.type === "article" &&
+          (isNumericId ? item.id === +id : item.filename === id),
       );
       if (!findCategory) {
         return this.fail(404);
@@ -28,32 +30,25 @@ module.exports = class extends Base {
     // 当前列表
     const configs = await this.getConfigs();
     const { article_num: pageSize } = configs;
-    const childCategories = await this.model('category').findChildCategory(categories, findCategory.id);
+    const childCategories = await this.model("category").findChildCategory(
+      categories,
+      findCategory.id,
+    );
     const query = {
       ...req,
       pageSize,
-      childCategories
+      childCategories,
     };
 
-    const [list, commentGroup] = await Promise.all([
-      this.model('front/article').selectPost(query),
-      this.model('front/comment').groupComment()
-    ]);
-
-    // 评论数量
-    const commentCount = commentGroup.reduce((prev, curr) => {
-      prev[curr.topic_id] = curr.count;
-      return prev;
-    }, {});
+    const list = await this.model("front/article").selectPost(query);
 
     // 转换列表
-    const postService = this.service('post', 'article', configs);
-    list.data = await postService.formatList(list.data, item => {
+    const postService = this.service("post", "article", configs);
+    list.data = await postService.formatList(list.data, (item) => {
       const { imgurl, description, tag } = item;
       item.imgurl = this.getAbsolutePath(imgurl);
       item.description = description.substr(0, 80);
-      item.tag = tag ? tag.split('|') : [];
-      item.comment_count = commentCount['article-' + item.id] || 0;
+      item.tag = tag ? tag.split("|") : [];
     });
 
     return this.success(list);
@@ -76,14 +71,18 @@ module.exports = class extends Base {
     }
 
     const configs = await this.getConfigs();
-    const { article_width: width, article_height: height, image_fit: fit } = configs;
-    const postService = this.service('post');
+    const {
+      article_width: width,
+      article_height: height,
+      image_fit: fit,
+    } = configs;
+    const postService = this.service("post");
     data.imgurl = await postService.getThumbnail({
       width,
       height,
       fit,
       src: data.imgurl,
-      isAsync: false
+      isAsync: false,
     });
     data.content = this.getContentAbsolutePath(data.content);
 
@@ -95,8 +94,7 @@ module.exports = class extends Base {
     const { id } = this.get();
     // 访问量+1，支持 id 或 slug
     const where = /^\d+$/.test(String(id)) ? { id } : { pathname: id };
-    this.modelInstance.where(where)
-      .increment('hits', 1);
+    this.modelInstance.where(where).increment("hits", 1);
     return this.success();
   }
 
@@ -104,9 +102,13 @@ module.exports = class extends Base {
   async sameAction() {
     const { id, categoryId, tags } = this.get();
 
-    const list = await this.model('front/article').samePost({ id, categoryId, tags });
+    const list = await this.model("front/article").samePost({
+      id,
+      categoryId,
+      tags,
+    });
 
-    list.forEach(item => {
+    list.forEach((item) => {
       const { description } = item;
       item.description = description.substr(0, 60);
     });

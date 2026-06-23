@@ -6,9 +6,9 @@
       <el-col class="relative blog-cover" :sm="24" :md="12">
         <img
           class="block w-full h-auto"
-          :src="data?.imgurl"
+          :src="getAbsolutePath(data?.imgurl || '')"
           :alt="data?.title"
-        >
+        />
       </el-col>
       <el-col class="p-[var(--grid-space)]" :sm="24" :md="12">
         <h1
@@ -47,7 +47,7 @@
       </div>
       <Share
         :title="data?.title"
-        :cover="data?.imgurl"
+        :cover="getAbsolutePath(data?.imgurl || '')"
         :description="data?.description"
       />
     </div>

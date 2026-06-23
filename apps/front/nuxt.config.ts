@@ -11,6 +11,9 @@ export default defineNuxtConfig({
     "@element-plus/nuxt",
     "@pinia/nuxt",
   ],
+  elementPlus: {
+    importStyle: "css",
+  },
   css: [
     "@unocss/reset/tailwind.css",
     "~/assets/css/main.css",
@@ -26,10 +29,14 @@ export default defineNuxtConfig({
       apiBase:
         process.env.NUXT_PUBLIC_API_BASE ||
         (process.env.NODE_ENV === "development"
-          ? "http://127.0.0.1:8360/front"
+          ? "/front"
           : "https://www.timelessq.com/front"),
       siteUrl: process.env.NUXT_PUBLIC_SITE_URL || "http://localhost:3000",
     },
+  },
+  routeRules: {
+    "/front/**": { proxy: "http://127.0.0.1:8360/front/**" },
+    "/upload/**": { proxy: "http://127.0.0.1:8360/upload/**" },
   },
   app: {
     head: {
