@@ -1,6 +1,7 @@
 <template>
   <el-drawer
     title="站内搜索"
+    class="search-drawer"
     :append-to-body="true"
     direction="ttb"
     :model-value="searchVisible"
@@ -9,7 +10,7 @@
   >
     <div>
       <div class="max-w-1200px mx-auto flex gap-4">
-        <el-select v-model="listQuery.classify" size="large" class="w-30">
+        <el-select v-model="listQuery.classify" size="large" class="!w-60">
           <el-option
             v-for="item in classifyOptions"
             :key="item.value"
@@ -218,3 +219,24 @@ function highlightKeyword(str: string) {
   );
 }
 </script>
+
+<style>
+.search-drawer {
+  background-color: var(--bg-normal);
+}
+.search-drawer .el-drawer__header {
+  color: var(--color-heading);
+}
+
+/* 暗色模式下 Element Plus 组件适配 */
+html.dark .search-drawer .el-input__wrapper,
+html.dark .search-drawer .el-textarea__inner {
+  background-color: var(--bg);
+  box-shadow: 0 0 0 1px var(--border-color) inset;
+}
+
+html.dark .search-drawer .el-select__wrapper {
+  background-color: var(--bg);
+  box-shadow: 0 0 0 1px var(--border-color) inset;
+}
+</style>

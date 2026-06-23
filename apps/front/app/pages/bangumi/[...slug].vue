@@ -1,20 +1,10 @@
 <template>
   <div>
-    <div
-      class="relative mb-[var(--grid-space)] flex flex-col items-center justify-center overflow-hidden rounded-[var(--border-radius)] shadow-[var(--shadow-3-down)] bg-cover bg-center text-center"
-      :style="{ backgroundImage: `url(${bannerImg})` }"
-      style="min-height: 220px"
-    >
-      <div class="absolute inset-0 bg-black/40" />
-      <h2
-        class="relative z-1 py-2.5 text-3xl font-normal text-white text-shadow-[0_2px_6px_rgba(0,0,0,0.5)]"
-      >
-        追番刷剧
-      </h2>
-      <div class="relative z-1 px-4 text-white [&_span]:text-white/90">
+    <PageBanner title="追番刷剧" :background-image="bangumiB">
+      <template #subtitle>
         <Hitokoto :kinds="['a', 'b', 'h']" />
-      </div>
-    </div>
+      </template>
+    </PageBanner>
 
     <el-row :gutter="20">
       <el-col v-for="item in bangumiList" :key="item.id" :xs="24" :sm="12">
@@ -81,6 +71,8 @@
 </template>
 
 <script setup lang="ts">
+import bangumiB from "~/assets/image/bangumi.jpg";
+
 const route = useRoute();
 const router = useRouter();
 const { fetchBangumiList } = useApi();
@@ -92,8 +84,6 @@ const routeSlugArray = computed(
 const routeParams = computed(() => parseListRoute(routeSlugArray.value));
 const routeId = computed(() => routeParams.value.id);
 const routePage = computed(() => routeParams.value.page);
-
-const bannerImg = "/background.png";
 
 const currentPage = ref(routePage.value);
 const total = ref(0);

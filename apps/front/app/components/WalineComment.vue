@@ -1,6 +1,13 @@
 <template>
-  <section class="section comment">
-    <h2 id="thumbsup" class="section__title">评论</h2>
+  <section
+    class="comment p-[var(--grid-space)] mb-[var(--grid-space)] overflow-hidden bg-[var(--bg-normal)] rounded-[var(--border-radius)] shadow-[var(--shadow-3-down)]"
+  >
+    <h2
+      id="thumbsup"
+      class="pb-[var(--grid-space)] text-xl font-normal text-[var(--color-heading)]"
+    >
+      评论
+    </h2>
     <div id="waline" />
   </section>
 </template>
@@ -549,10 +556,6 @@ const emoji: WalineEmojiInfo[] = [
 
 let waline: WalineInstance | null;
 onMounted(() => {
-  if (import.meta.env.MODE === "development") {
-    return;
-  }
-
   waline = init({
     el: "#waline",
     path: path.value,
@@ -593,7 +596,7 @@ watch(
 );
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .comment {
   padding: 16px;
 

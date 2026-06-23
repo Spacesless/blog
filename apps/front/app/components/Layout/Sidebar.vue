@@ -29,7 +29,7 @@
     </div>
 
     <el-scrollbar
-      class="h-[calc(100vh-280px)]"
+      class="!h-[calc(100vh-280px)]"
       wrap-class="aside-scrollbar-wrapper"
     >
       <el-menu

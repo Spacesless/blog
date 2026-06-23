@@ -416,7 +416,7 @@ html.dark .tl-tag--magenta {
 .markup h4,
 .markup h5,
 .markup h6 {
-  margin: 1.2em 0 0.6em;
+  margin: 0.6em 0;
   font-weight: 500;
   color: var(--color-heading);
 }

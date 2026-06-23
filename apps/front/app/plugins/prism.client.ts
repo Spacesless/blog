@@ -6,6 +6,7 @@ export default defineNuxtPlugin(async () => {
   // @ts-expect-error prism types
   const Prism = (await import('prismjs')).default || (await import('prismjs'))
 
+  // 导入语言支持
   await Promise.all([
     import('prismjs/components/prism-markup'),
     import('prismjs/components/prism-css'),
@@ -17,11 +18,18 @@ export default defineNuxtPlugin(async () => {
     import('prismjs/components/prism-yaml'),
   ])
 
+  // 导入插件
+  await Promise.all([
+    import('prismjs/plugins/line-numbers/prism-line-numbers'),
+    import('prismjs/plugins/toolbar/prism-toolbar'),
+  ])
+
   return {
     provide: {
       prism: {
         highlightAll: () => Prism.highlightAll(),
         highlightElement: (el: Element) => Prism.highlightElement(el),
+        plugins: Prism.plugins,
       },
     },
   }

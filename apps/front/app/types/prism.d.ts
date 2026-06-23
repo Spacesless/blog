@@ -3,6 +3,7 @@ declare module '#app' {
     $prism: {
       highlightAll: () => void
       highlightElement: (el: Element) => void
+      plugins: any
     }
   }
 }
@@ -12,6 +13,7 @@ declare module 'vue' {
     $prism: {
       highlightAll: () => void
       highlightElement: (el: Element) => void
+      plugins: any
     }
   }
 }

@@ -40,7 +40,7 @@
             class="mb-[var(--grid-space)] overflow-hidden bg-[var(--bg-normal)] rounded-[var(--border-radius)] shadow-[var(--shadow-3-down)] transition-all duration-300 hover:shadow-md"
           >
             <NuxtLink
-              class="relative block overflow-hidden rounded-[var(--border-radius)] article-cover"
+              class="relative block overflow-hidden rounded-t-[var(--border-radius)] article-cover"
               :to="`/article/detail/${item.pathname || item.id}`"
               :title="item.title"
             >

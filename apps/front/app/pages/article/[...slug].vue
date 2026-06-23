@@ -1,20 +1,10 @@
 <template>
   <div>
-    <div
-      class="relative mb-[var(--grid-space)] flex flex-col items-center justify-center overflow-hidden rounded-[var(--border-radius)] shadow-[var(--shadow-3-down)] bg-cover bg-center text-center"
-      :style="{ backgroundImage: `url(${bannerImg})` }"
-      style="min-height: 220px"
-    >
-      <div class="absolute inset-0 bg-black/40" />
-      <h2
-        class="relative z-1 py-2.5 text-3xl font-normal text-white text-shadow-[0_2px_6px_rgba(0,0,0,0.5)]"
-      >
-        文章笔记
-      </h2>
-      <div class="relative z-1 px-4 text-white [&_span]:text-white/90">
+    <PageBanner title="文章笔记" :background-image="articleBg">
+      <template #subtitle>
         <Hitokoto :kinds="['k']" />
-      </div>
-    </div>
+      </template>
+    </PageBanner>
 
     <div>
       <el-row
@@ -77,7 +67,9 @@
               >{{ tag }}</span
             >
           </div>
-          <div class="article-stuff mt-2.5 text-sm text-[var(--color-secondary)]">
+          <div
+            class="article-stuff mt-2.5 text-sm text-[var(--color-secondary)]"
+          >
             <span><i class="icon-wenzi" />{{ item.word_count }}</span>
             <span><i class="icon-chakan" />{{ item.hits }}</span>
           </div>
@@ -99,6 +91,8 @@
 </template>
 
 <script setup lang="ts">
+import articleBg from "~/assets/image/article.jpg";
+
 const route = useRoute();
 const router = useRouter();
 const { fetchArticles } = useApi();
@@ -130,8 +124,6 @@ const routeSlugArray = computed(
 const routeParams = computed(() => parseListRoute(routeSlugArray.value));
 const routeId = computed(() => routeParams.value.id);
 const routePage = computed(() => routeParams.value.page);
-
-const bannerImg = "/background.png";
 
 const currentPage = ref(routePage.value);
 const total = ref(0);

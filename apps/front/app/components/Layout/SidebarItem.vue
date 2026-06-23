@@ -38,6 +38,10 @@ function getUrl(item: Category) {
   if (item.type === "article" || item.type === "bangumi") {
     return `/${item.type}/${item.filename || item.id}`;
   }
+  // page 类型的页面（about、link、archives 等）使用 filename
+  if (item.type === "page") {
+    return `/${item.filename || item.type}`;
+  }
   return `/${item.type}`;
 }
 

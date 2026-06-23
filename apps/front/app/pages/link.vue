@@ -1,17 +1,12 @@
 <template>
   <div class="text-[15px] leading-loose text-[var(--color-text)]">
-    <h1
-      class="py-2.5 text-3xl font-normal text-[var(--color-heading)] text-shadow-[0_2px_6px_rgba(0,0,0,0.5)]"
-    >
-      友情链接
-    </h1>
-    <div
-      class="py-2.5 pb-[var(--grid-space)] text-[15px] text-[var(--color-secondary)]"
-    >
-      <span class="text-shadow-[0_2px_6px_rgba(0,0,0,0.5)]"
-        >愿以一朵花的姿态行走世间，看得清繁华却不在心中留下痕迹，花开成景，花落成诗。</span
-      >
-    </div>
+    <PageBanner
+      title="友情链接"
+      subtitle="山水一程，三生有幸。"
+      extra="感谢在茫茫网海中与你相遇，愿我们都能在各自的世界里熠熠生辉。"
+      :background-image="linkBg"
+    />
+
     <el-row :gutter="16">
       <el-col v-for="item in linkList" :key="item.id" :sm="12" :md="8" :lg="6">
         <a
@@ -83,6 +78,8 @@
 </template>
 
 <script setup lang="ts">
+import linkBg from "~/assets/image/link.jpg";
+
 const { fetchFriendLinks } = useApi();
 
 usePageSeo({ pageType: "page", pageName: "友情链接" });

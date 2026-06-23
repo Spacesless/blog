@@ -17,7 +17,7 @@ export default defineNuxtConfig({
   css: [
     "@unocss/reset/tailwind.css",
     "~/assets/css/main.css",
-    "~/assets/css/prism.css",
+    "~/assets/css/prism.scss",
   ],
   colorMode: {
     preference: "dark",

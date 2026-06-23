@@ -66,13 +66,13 @@
     <div
       class="mb-[var(--grid-space)] bg-[var(--bg-normal)] rounded-[var(--border-radius)] shadow-[var(--shadow-3-down)]"
     >
-      <div class="flex p-[var(--grid-space)] lt-xl:flex-col-reverse">
-        <Catalog v-if="isLoaded" class="flex-shrink-0" />
-        <div id="js-content" class="flex-1 min-w-0 overflow-hidden markup">
+      <div class="flex lt-xl:flex-col">
+        <div id="js-content" class="flex-1 min-w-0 overflow-hidden markup p-[var(--grid-space)]">
           <h2>短评</h2>
           <div v-if="hasContent" v-html="data?.content" />
           <p v-else>光顾着看了，啥也没留下，去其他地方看看吧~</p>
         </div>
+        <Catalog v-if="isLoaded" class="flex-shrink-0 lt-xl:p-[var(--grid-space)]" />
       </div>
       <Share
         :title="data?.title"

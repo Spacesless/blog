@@ -1,22 +1,11 @@
 <template>
   <div>
-    <div
-      class="relative mb-[var(--grid-space)] flex flex-col items-center justify-center overflow-hidden rounded-[var(--border-radius)] shadow-[var(--shadow-3-down)] bg-cover bg-center text-center"
-      :style="{ backgroundImage: `url(${bannerImg})` }"
-      style="min-height: 220px"
-    >
-      <div class="absolute inset-0 bg-black/40" />
-      <h2
-        class="relative z-1 py-2.5 text-3xl font-normal text-white text-shadow-[0_2px_6px_rgba(0,0,0,0.5)]"
-      >
-        文章归档
-      </h2>
-      <div
-        class="relative z-1 px-4 text-[15px] text-white/90 text-shadow-[0_2px_6px_rgba(0,0,0,0.5)]"
-      >
-        目前共计 {{ archiveList.length }} 篇文章，不错哟~ 继续努力
-      </div>
-    </div>
+    <PageBanner
+      title="文章归档"
+      subtitle="时光荏苒，岁月如梭。"
+      :extra="`目前共计 ${archiveList.length} 篇文章，不负韶华，继续前行。`"
+      :background-image="archivesBg"
+    />
 
     <div
       class="mb-[var(--grid-space)] bg-[var(--bg-normal)] rounded-[var(--border-radius)] shadow-[var(--shadow-3-down)]"
@@ -63,12 +52,15 @@
 </template>
 
 <script setup lang="ts">
+import type { Article } from "~/types";
+import archivesBg from "~/assets/image/archives.jpg";
+
+type ArchiveEntry = Article & { year: string; month: string; date: string };
+
 const appStore = useAppStore();
 const { fetchArchives } = useApi();
 
 usePageSeo({ pageType: "page", pageName: "归档" });
-
-const bannerImg = "/background.png";
 
 const { data } = await useAsyncData("archives", async () => {
   const list = await fetchArchives().catch(() => []);
@@ -89,11 +81,16 @@ const { data } = await useAsyncData("archives", async () => {
 const archiveList = computed(() => data.value || []);
 
 const formatList = computed(() => {
-  const temp: Record<string, Record<string, any[]>> = {};
+  const temp: Record<string, Record<string, ArchiveEntry[]>> = {};
   archiveList.value.forEach((item) => {
     const dateStr = parseTime(item.updatetime, "{y}-{m}-{d}");
-    const [year, month, date] = dateStr.split("-");
-    const entry = { ...item, year, month, date: `${month}-${date}` };
+    const [year = "", month = "", date = ""] = dateStr.split("-");
+    const entry: ArchiveEntry = {
+      ...item,
+      year,
+      month,
+      date: `${month}-${date}`,
+    };
 
     if (!temp[year]) temp[year] = {};
     if (!temp[year][month]) temp[year][month] = [];
@@ -118,7 +115,7 @@ const formatList = computed(() => {
   position: absolute;
   top: 0;
   bottom: 0;
-  left: calc(1.5rem + 7px);
+  left: 1.5rem;
   width: 2px;
   content: "";
   background: var(--border-color);
@@ -207,7 +204,6 @@ const formatList = computed(() => {
 }
 .node--post:hover {
   background: var(--bg);
-  transform: translateX(4px);
 }
 .node--post:hover::before {
   border-color: var(--color-primary);
