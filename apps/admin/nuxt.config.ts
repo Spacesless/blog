@@ -31,12 +31,8 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      // 开发：跨端口直连后端；生产：同域，走相对路径 /admin 由 Nginx 转发
-      apiBase:
-        process.env.NUXT_PUBLIC_API_BASE ||
-        (process.env.NODE_ENV === "development"
-          ? "http://127.0.0.1:8360/admin"
-          : "/admin"),
+      // 开发/生产均走相对路径 /admin，开发时由 Vite 代理转发，生产时由 Nginx 转发
+      apiBase: process.env.NUXT_PUBLIC_API_BASE || "/admin",
     },
   },
 
@@ -45,6 +41,14 @@ export default defineNuxtConfig({
       preprocessorOptions: {
         scss: {
           additionalData: '@use "~/assets/styles/variables.scss" as *;',
+        },
+      },
+    },
+    server: {
+      proxy: {
+        "/admin": {
+          target: "http://127.0.0.1:8360",
+          changeOrigin: true,
         },
       },
     },

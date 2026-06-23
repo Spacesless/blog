@@ -8,66 +8,34 @@
       class="form-container is-stick"
     >
       <el-form-item label="网站名称">
-        <el-row>
-          <el-col :xs="24" :md="12">
-            <el-input v-model="formData.sitename" />
-          </el-col>
-        </el-row>
+        <el-input v-model="formData.sitename" class="!w-full max-w-[600px]" />
       </el-form-item>
       <el-form-item label="网站关键词">
-        <el-row>
-          <el-col :xs="24" :md="12">
-            <el-input v-model="formData.keywords" />
-          </el-col>
-          <el-col :xs="24" :md="12">
-            <span style="margin-left: 15px;">多个关键词请用竖线|隔开，建议3到4个关键词。</span>
-          </el-col>
-        </el-row>
+        <div class="flex gap-15px items-center flex-wrap w-full">
+          <el-input v-model="formData.keywords" class="!w-full max-w-[600px]" />
+          <span>多个关键词请用竖线|隔开，建议3到4个关键词。</span>
+        </div>
       </el-form-item>
       <el-form-item label="网站描述">
-        <el-row>
-          <el-col :xs="24" :md="12">
-            <el-input v-model="formData.description" type="textarea" :rows="5" />
-          </el-col>
-          <el-col :xs="24" :md="12">
-            <span style="margin-left: 15px;">网站描述建议80到120个字符。</span>
-          </el-col>
-        </el-row>
+        <div class="flex gap-15px items-start flex-wrap w-full">
+          <el-input v-model="formData.description" type="textarea" :rows="5" class="!w-full max-w-[600px]" />
+          <span>网站描述建议80到120个字符。</span>
+        </div>
       </el-form-item>
       <el-form-item label="工信备案">
-        <el-row>
-          <el-col :xs="24" :md="12">
-            <el-input v-model="formData.icp_beian" />
-          </el-col>
-        </el-row>
+        <el-input v-model="formData.icp_beian" class="!w-full max-w-[600px]" />
       </el-form-item>
       <el-form-item label="公网安备">
-        <el-row>
-          <el-col :xs="24" :md="12">
-            <el-input v-model="formData.police_beian" />
-          </el-col>
-        </el-row>
+        <el-input v-model="formData.police_beian" class="!w-full max-w-[600px]" />
       </el-form-item>
       <el-form-item label="沉寂模式">
-        <el-row>
-          <el-col :xs="24" :md="12">
-            <el-switch v-model="formData.is_silent" :active-value="1" :inactive-value="0" />
-          </el-col>
-        </el-row>
+        <el-switch v-model="formData.is_silent" :active-value="1" :inactive-value="0" />
       </el-form-item>
       <el-form-item label="Live2d模型">
-        <el-row>
-          <el-col :xs="24" :md="12">
-            <el-input v-model="formData.live2d_model" />
-          </el-col>
-        </el-row>
+        <el-input v-model="formData.live2d_model" class="!w-full max-w-[600px]" />
       </el-form-item>
       <el-form-item label="Live2d材质">
-        <el-row>
-          <el-col :xs="24" :md="12">
-            <el-input v-model="formData.live2d_texture" />
-          </el-col>
-        </el-row>
+        <el-input v-model="formData.live2d_texture" class="!w-full max-w-[600px]" />
       </el-form-item>
       <div class="stick-bottom">
         <el-button type="primary" :loading="confirmLoading" @click="handleSubmit">

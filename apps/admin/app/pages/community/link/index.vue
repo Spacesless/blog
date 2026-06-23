@@ -30,8 +30,10 @@
 
     <el-table
       ref="multipleTable"
+      v-el-height-adaptive-table="{ bottomOffset: 85 }"
       v-loading="listLoading"
       :data="tableData"
+      height="100px"
       border
       @selection-change="onSelectionChange"
     >

@@ -1,16 +1,23 @@
 <template>
   <div
-    class="fixed top-0 right-0 z-1000 box-border w-[calc(100%-var(--aside-width))] h-0 px-4 transition-[width] duration-300 lt-lg:(z-998 h-[45px] leading-[45px] bg-[var(--bg-normal)] shadow-md)"
+    class="fixed top-0 right-0 z-1000 box-border px-4 transition-[width] duration-300"
+    :class="[
+      isMobile
+        ? 'w-full z-998 h-[45px] flex items-center bg-[var(--bg-normal)] shadow-md'
+        : isCollapse
+          ? 'w-[calc(100%-64px)]'
+          : 'w-[calc(100%-var(--aside-width))]',
+    ]"
   >
-    <div class="relative float-left leading-[45px] lt-lg:block hidden">
+    <div v-if="isMobile" class="flex items-center gap-1">
       <NuxtLink to="/">
         <img
-          class="mr-1 align-middle rounded-full"
+          class="rounded-full"
           src="/avatar.jpg"
           width="36"
           height="36"
           alt="logo"
-        />
+        >
       </NuxtLink>
       <i
         class="p-1.5 text-lg cursor-pointer"
@@ -18,7 +25,7 @@
         @click="toggleSidebar"
       />
     </div>
-    <div class="float-right h-[45px] leading-[45px] text-right">
+    <div class="flex items-center justify-end h-[45px] ml-auto gap-2">
       <ClientOnly>
         <el-tooltip
           effect="dark"
@@ -27,7 +34,7 @@
         >
           <i
             :class="isDark ? 'icon-qingtian' : 'icon-moon'"
-            class="p-1 ml-2 text-lg text-[var(--color-text)] cursor-pointer align-middle hover:text-[var(--color-heading)]"
+            class="p-1 text-lg text-[var(--color-text)] cursor-pointer align-middle hover:text-[var(--color-heading)]"
             @click="toggleColorMode"
           />
         </el-tooltip>
@@ -35,7 +42,7 @@
       <el-tooltip effect="dark" content="站内搜索" placement="bottom">
         <Icon
           name="ph:magnifying-glass"
-          class="p-1 ml-2 text-lg text-[var(--color-text)] cursor-pointer align-middle hover:text-[var(--color-heading)]"
+          class="p-1 text-lg text-[var(--color-text)] cursor-pointer align-middle hover:text-[var(--color-heading)]"
           @click="searchVisible = true"
         />
       </el-tooltip>
@@ -54,9 +61,13 @@ const appStore = useAppStore();
 const toolsStore = useToolsStore();
 const colorMode = useColorMode();
 
+const { device } = storeToRefs(appStore);
+const { sidebar } = storeToRefs(toolsStore);
+
 const searchVisible = ref(false);
 
-const isCollapse = computed(() => !toolsStore.sidebar.opened);
+const isMobile = computed(() => device.value === 'mobile');
+const isCollapse = computed(() => !sidebar.value.opened);
 const isDark = computed(() => colorMode.value === "dark");
 
 function toggleSidebar() {

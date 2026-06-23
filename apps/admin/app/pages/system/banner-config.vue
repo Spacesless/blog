@@ -9,7 +9,13 @@
       </el-col>
     </el-row>
 
-    <el-table v-loading="listLoading" :data="bannerList" border>
+    <el-table
+      v-el-height-adaptive-table="{ bottomOffset: 20 }"
+      v-loading="listLoading"
+      :data="bannerList"
+      height="100px"
+      border
+    >
       <el-table-column label="图片" width="200" align="center">
         <template #default="scope">
           <el-image :src="scope.row.imgurl" fit="contain" lazy />

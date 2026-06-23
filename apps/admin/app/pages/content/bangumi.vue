@@ -9,8 +9,10 @@
 
     <el-table
       ref="multipleTable"
+      v-el-height-adaptive-table="{ bottomOffset: 150 }"
       v-loading="listLoading"
       :data="tableData"
+      height="100px"
       border
       @sort-change="onSortChange"
       @selection-change="onSelectionChange"

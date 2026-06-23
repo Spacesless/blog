@@ -144,7 +144,7 @@ onMounted(() => { fetchCaptcha() })
     margin-bottom: 24px;
     text-align: center;
 
-    &__logo { width: 80px; height: 80px; border-radius: 50%; }
+    &__logo { width: 80px; height: 80px; border-radius: 50%; display: inline-block; }
     &__title {
       font: normal 32px/50px 'Hiragino Sans GB','Microsoft YaHei',sans-serif;
       color: transparent;
@@ -193,7 +193,7 @@ onMounted(() => { fetchCaptcha() })
     color: rgba(255,255,255,.85);
 
     &__tips { margin-bottom: 6px; font-size: 14px; }
-    &__copyright { font-size: 13px; }
+    &__copyright { font-size: 13px; color: #606266; }
   }
 
   &-background {

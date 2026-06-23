@@ -99,16 +99,12 @@ const clickTips = [
 
 // 在组件顶层使用 useHead，条件式加载脚本
 useHead({
-  script: computed(() =>
-    live2dShow.value
-      ? [
-          {
-            src: "/vendor/live2d/index.js",
-            defer: true,
-          },
-        ]
-      : [],
-  ),
+  script: [
+    {
+      src: "/vendor/live2d/index.js",
+      defer: true,
+    },
+  ],
 });
 
 watch(live2dShow, async (val) => {

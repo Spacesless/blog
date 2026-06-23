@@ -53,6 +53,11 @@
       margin-right: 16px;
     }
 
+    .el-sub-menu__title .svg-icon,
+    .el-submenu__title .svg-icon {
+      margin-right: 16px;
+    }
+
     .el-menu {
       width: 100% !important;
       height: 100%;
@@ -148,14 +153,11 @@
 
   .submenu-title-noDropdown {
     position: relative;
-    padding: 0 !important;
+    padding: 0 20px !important;
 
-    .el-tooltip {
-      padding: 0 !important;
-
-      .svg-icon {
-        margin-left: 20px;
-      }
+    .svg-icon {
+      margin-right: 0;
+      margin-left: 0;
     }
   }
 
@@ -163,10 +165,11 @@
     overflow: hidden;
 
     & > .el-submenu__title {
-      padding: 0 !important;
+      padding: 0 20px !important;
 
       .svg-icon {
-        margin-left: 20px;
+        margin-right: 0;
+        margin-left: 0;
       }
 
       .el-submenu__icon-arrow {

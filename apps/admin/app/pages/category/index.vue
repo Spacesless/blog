@@ -8,10 +8,12 @@
     </el-row>
 
     <el-table
+      v-el-height-adaptive-table="{ bottomOffset: 20 }"
       v-loading="listLoading"
       :data="categoryList"
       default-expand-all
       row-key="id"
+      height="100px"
       border
     >
       <el-table-column prop="id" label="ID" width="120" />

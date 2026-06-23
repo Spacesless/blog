@@ -17,7 +17,7 @@
                 class="max-w-full h-auto"
                 :src="item.imgurl"
                 :alt="item.title"
-              />
+              >
               <span
                 class="absolute top-2 right-2 px-1.5 py-0.5 text-sm text-white bg-black/50 rounded"
                 >{{ item.ratings }}</span
@@ -38,6 +38,13 @@
             <p>
               <span class="text-[var(--color-secondary)]">状态：</span
               >{{ bangumiStatus(item.status) }}
+            </p>
+            <p
+              v-if="item.description"
+              class="text-[var(--color-text)] line-clamp-2"
+            >
+              <span class="text-[var(--color-secondary)]">简介：</span
+              >{{ item.description }}
             </p>
             <p>
               <span class="text-[var(--color-secondary)]">进度：</span

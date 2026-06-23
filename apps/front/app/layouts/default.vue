@@ -7,7 +7,7 @@
       @click="handleClickOutside"
     />
     <LayoutSidebar />
-    <div class="main pt-4 transition-[margin] duration-300" :class="mainClass">
+    <div class="main transition-[margin] duration-300" :class="mainClass">
       <slot />
       <LayoutFooter :configs="configs" />
     </div>
@@ -48,13 +48,21 @@ const classObj = computed(() => ({
   mobile: device.value === 'mobile',
 }))
 
-const mainClass = computed(() => ({
-  'ml-[calc(var(--aside-width)+var(--grid-space))]': !classObj.value.mobile && !classObj.value.hideAside,
-  'ml-[88px]': !classObj.value.mobile && classObj.value.hideAside,
-  'ml-0 pt-15': classObj.value.mobile,
-  'lt-lg:ml-0': true,
-  'transition-none': classObj.value.withoutAnimation,
-}))
+const mainClass = computed(() => {
+  if (classObj.value.mobile) {
+    return {
+      'ml-0': true,
+      'pt-[60px]': true,
+      'transition-none': classObj.value.withoutAnimation,
+    }
+  }
+  return {
+    'pt-4': true,
+    'ml-[calc(var(--aside-width)+var(--grid-space))]': !classObj.value.hideAside,
+    'ml-[88px]': classObj.value.hideAside,
+    'transition-none': classObj.value.withoutAnimation,
+  }
+})
 
 function handleClickOutside() {
   toolsStore.closeSidebar(false)

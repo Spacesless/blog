@@ -1,9 +1,15 @@
 <template>
   <div
-    class="fixed top-4 bottom-4 z-999 w-[var(--aside-width)] overflow-hidden bg-[var(--bg-normal)] rounded-[var(--border-radius)] shadow-[var(--shadow-3-right)] transition-[width] duration-300"
-    :class="{ 'w-16!': isCollapse }"
+    class="fixed top-4 bottom-4 z-999 w-[var(--aside-width)] overflow-hidden bg-[var(--bg-normal)] rounded-[var(--border-radius)] shadow-[var(--shadow-3-right)] transition-[width,transform] duration-300"
+    :class="[
+      { 'w-16!': isCollapse },
+      isMobile
+        ? ['top-0!', 'bottom-0!', 'left-0', 'rounded-none', 'w-[var(--aside-width)]!', 'transition-transform', sidebar.opened ? 'translate-x-0' : '-translate-x-full pointer-events-none']
+        : 'translate-x-0',
+      withoutAnimation ? 'transition-none' : '',
+    ]"
   >
-    <div class="text-center" :class="isCollapse ? 'pt-6' : 'pt-12 pb-4'">
+    <div class="text-center" :class="[isCollapse ? 'pt-6' : 'pt-12 pb-4', isMobile ? 'pt-8!' : '']">
       <NuxtLink to="/" class="inline-block">
         <img
           class="rounded-full transition-all duration-300"
@@ -60,7 +66,12 @@ const appStore = useAppStore();
 const toolsStore = useToolsStore();
 const route = useRoute();
 
-const isCollapse = computed(() => !toolsStore.sidebar.opened);
+const { device } = storeToRefs(appStore);
+const { sidebar } = storeToRefs(toolsStore);
+
+const isMobile = computed(() => device.value === 'mobile');
+const isCollapse = computed(() => !sidebar.value.opened && !isMobile.value);
+const withoutAnimation = computed(() => sidebar.value.withoutAnimation);
 
 const menus = computed<Category[]>(() => {
   const filterMenus = (appStore.categories || []).filter((item) => item.is_nav);
