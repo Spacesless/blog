@@ -31,7 +31,7 @@
           :name="resolveIcon(item.meta.icon)"
           class="svg-icon"
         />
-        <span>{{ item.meta?.title }}</span>
+        <span class="menu-title">{{ item.meta?.title }}</span>
       </template>
       <LayoutSidebarItem
         v-for="child in item.children"

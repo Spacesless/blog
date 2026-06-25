@@ -581,7 +581,7 @@ onMounted(() => {
       reaction4: "拉完了",
       placeholder: "欢迎友善评论、交换友链",
     },
-    serverURL: location.origin + "/comment",
+    serverURL: "https://api.timelessq.com/comment",
     emoji,
   });
 });

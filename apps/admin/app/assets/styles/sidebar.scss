@@ -181,12 +181,20 @@
   .el-menu--collapse {
     .el-submenu {
       & > .el-submenu__title {
-        & > span {
+        // 只隐藏文字标题，保留图标
+        .menu-title {
           display: inline-block;
           width: 0;
           height: 0;
           overflow: hidden;
           visibility: hidden;
+        }
+
+        // 确保图标显示
+        .svg-icon {
+          display: inline-block !important;
+          margin-right: 0;
+          margin-left: 0;
         }
       }
     }
