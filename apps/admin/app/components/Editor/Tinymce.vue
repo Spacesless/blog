@@ -1,6 +1,7 @@
 <template>
   <div :class="{ fullscreen: isFullscreen }" class="tinymce-container" :style="{ width: '100%' }">
     <textarea :id="tinymceId" class="tinymce-textarea" />
+    <PictureAlbum v-model:visible="albumVisible" @on-select-file="onSelectFile" />
   </div>
 </template>
 
@@ -9,6 +10,7 @@ import dynamicLoadScript from './dynamicLoadScript'
 import plugins from './plugins'
 import toolbar from './toolbar'
 import codesampleLanguages from './codesampleLanguages'
+import PictureAlbum from '../Upload/PictureAlbum.vue'
 
 const tinymceCDN = '/vendor/tinymce/tinymce.min.js'
 
@@ -33,6 +35,7 @@ const tinymceId = ref(props.id)
 const isFullscreen = ref(false)
 const hasChange = ref(false)
 const hasInit = ref(false)
+const albumVisible = ref(false)
 
 const api = useApi()
 const route = useRoute()
@@ -40,7 +43,7 @@ const route = useRoute()
 const initOptions = computed(() => ({
   selector: `#${tinymceId.value}`,
   language: 'zh_CN',
-  language_url: '/vendor/tinymce/zh_CN.js',
+  language_url: '/vendor/tinymce/langs/zh_CN.js',
   height: props.height,
   body_class: 'panel-body',
   object_resizing: false,
@@ -58,7 +61,16 @@ const initOptions = computed(() => ({
   advlist_number_styles: 'default',
   imagetools_cors_hosts: ['www.tinymce.com', 'codepen.io'],
   default_link_protocol: 'https',
+  relative_urls: false,
+  nonbreaking_force_tab: true,
+  fontsize_formats: '12px 14px 16px 18px 24px 36px 48px 56px 72px',
+  font_formats: '微软雅黑=Microsoft YaHei,Helvetica Neue,PingFang SC,sans-serif;苹果苹方=PingFang SC,Microsoft YaHei,sans-serif;宋体=simsun,serif;仿宋体=FangSong,serif;黑体=SimHei,sans-serif;Arial=arial,helvetica,sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book antiqua,palatino;Comic Sans MS=comic sans ms,sans-serif;Courier New=courier new,courier;Georgia=georgia,palatino;Helvetica=helvetica;Impact=impact,chicago;Terminal=terminal,monaco;Times New Roman=times new roman,times;Verdana=verdana,geneva;',
   images_upload_handler: handleImageUpload,
+  file_picker_types: 'image',
+  file_picker_callback: handlePickerFile,
+  gallery_click_handler: () => {
+    albumVisible.value = true
+  },
   init_instance_callback: (editor: any) => {
     if (props.modelValue) editor.setContent(props.modelValue)
     hasInit.value = true
@@ -85,6 +97,35 @@ function handleImageUpload(blobInfo: any, success: (url: string) => void, failur
     .catch((err: any) => {
       failure(err?.message || '上传失败')
     })
+}
+
+// 在图片、媒体、链接对话框中加入上传文件功能
+function handlePickerFile(callback: (url: string, meta?: any) => void) {
+  const input = document.createElement('input')
+  input.setAttribute('type', 'file')
+  input.setAttribute('accept', 'image/*')
+  input.onchange = (e: any) => {
+    const file = e.target.files[0]
+    if (!file) return
+    const formData = new FormData()
+    formData.append('file', file)
+    formData.append('module', (route.meta as any)?.upload || 'tinymce')
+    api.UploadFiles(formData)
+      .then((res: any) => {
+        const url = res.data?.url || res.data
+        callback(url, { alt: file.name })
+      })
+      .catch(() => {})
+  }
+  input.click()
+}
+
+// 图片库选择后插入图片
+function onSelectFile(list: { name: string; url: string }[]) {
+  const tinymce = (window as any).tinymce
+  const editor = tinymce?.get(tinymceId.value)
+  if (!editor) return
+  list.forEach(v => editor.insertContent(`<img src="${v.url}" >`))
 }
 
 function initTinymce() {

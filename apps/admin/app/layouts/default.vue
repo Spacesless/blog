@@ -69,7 +69,7 @@ function handleClickOutside() {
 }
 
 .hideSidebar .header {
-  width: calc(100% - 54px);
+  width: calc(100% - 60px);
 }
 
 .mobile .header {

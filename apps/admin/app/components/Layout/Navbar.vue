@@ -6,10 +6,10 @@
 
     <div class="right-menu">
       <el-tooltip effect="dark" content="刷新页面" placement="bottom">
-        <span class="right-menu-item hover-effect" @click="handleRefresh"><i class="el-icon-refresh" /></span>
+        <span class="right-menu-item hover-effect" @click="handleRefresh"><el-icon><Refresh /></el-icon></span>
       </el-tooltip>
-      <el-dropdown trigger="click" placement="bottom">
-        <span class="right-menu-item hover-effect"><i class="el-icon-brush" /></span>
+      <el-dropdown trigger="click" placement="bottom" class="h-full">
+        <span class="right-menu-item hover-effect"><el-icon><Brush /></el-icon></span>
         <template #dropdown>
           <el-dropdown-menu>
             <el-dropdown-item @click="handleClearCache">清除缓存</el-dropdown-item>
@@ -19,13 +19,13 @@
       </el-dropdown>
       <el-tooltip effect="dark" content="前台预览" placement="bottom">
         <a class="right-menu-item hover-effect" :href="siteUrl" target="_blank">
-          <i class="el-icon-monitor" />
+          <el-icon><Monitor /></el-icon>
         </a>
       </el-tooltip>
       <el-dropdown class="avatar-container" trigger="click">
         <span class="avatar-container-link">
           {{ userStore.userinfo.nickname || userStore.userinfo.username || '管理员' }}
-          <i class="el-icon-arrow-down" />
+          <el-icon><ArrowDown /></el-icon>
         </span>
         <template #dropdown>
           <el-dropdown-menu class="user-dropdown">
@@ -47,6 +47,7 @@
 
 <script setup lang="ts">
 import { ElMessage, ElMessageBox } from 'element-plus'
+import { Refresh, Brush, Monitor, ArrowDown } from '@element-plus/icons-vue'
 
 const appStore = useAppStore()
 const userStore = useUserStore()
@@ -112,13 +113,14 @@ async function handleRefresh() {
 .navbar {
   position: relative;
   z-index: 5;
+  display: flex;
+  align-items: center;
   height: 50px;
   overflow: hidden;
   background-color: #FFFFFF;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .1);
 
   .hamburger-container {
-    float: left;
     height: 100%;
     line-height: 46px;
     cursor: pointer;
@@ -130,21 +132,21 @@ async function handleRefresh() {
   }
 
   .breadcrumb-container {
-    float: left;
+    flex: 1;
   }
 
   .right-menu {
-    float: right;
+    display: flex;
+    align-items: center;
     height: 100%;
-    line-height: 50px;
 
     .right-menu-item {
-      display: inline-block;
+      display: flex;
+      align-items: center;
       height: 100%;
       padding: 0 10px;
       font-size: 18px;
       color: #5A5E66;
-      vertical-align: middle;
       cursor: pointer;
 
       &.hover-effect:hover {
@@ -153,12 +155,13 @@ async function handleRefresh() {
     }
 
     .avatar-container {
+      display: flex;
+      align-items: center;
       margin: 0 15px 0 8px;
-      line-height: 22px;
-      vertical-align: middle;
 
       &-link {
-        display: block;
+        display: flex;
+        align-items: center;
         color: #5A5E66;
         cursor: pointer;
       }

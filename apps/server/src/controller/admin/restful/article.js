@@ -62,6 +62,7 @@ module.exports = class extends Rest {
     if (!this.id) {
       return this.fail('CONTENT_NOT_EXIST');
     }
+
     const data = this.post();
     const affectedRows = await this.modelInstance.updatePost(this.id, data, this.siteurl);
 

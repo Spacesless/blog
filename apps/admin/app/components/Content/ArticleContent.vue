@@ -19,29 +19,19 @@
         />
       </el-form-item>
       <el-form-item label="文章标题" prop="title">
-        <el-row>
-          <el-col :sm="24" :md="12">
-            <el-input v-model="formData.title" />
-          </el-col>
-        </el-row>
+        <el-input v-model="formData.title" />
       </el-form-item>
       <el-form-item label="URL别名" prop="pathname">
-        <el-row :gutter="10">
-          <el-col :sm="24" :md="12">
-            <el-input
-              v-model="formData.pathname"
-              placeholder="建议手动输入英文别名（小写字母、数字、短横线）；中文标题无法自动生成"
-            />
-          </el-col>
-          <el-col :sm="24" :md="6">
-            <el-button type="primary" plain @click="handleGenerateSlug">
-              按标题生成
-            </el-button>
-          </el-col>
-        </el-row>
+        <el-input
+          v-model="formData.pathname"
+          placeholder="建议手动输入英文别名（小写字母、数字、短横线）；中文标题无法自动生成"
+        />
+        <el-button type="primary" plain @click="handleGenerateSlug">
+          按标题生成
+        </el-button>
       </el-form-item>
       <el-form-item label="封面图片">
-        <UploadIndex v-model="coverUrl" :module="currentType" />
+        <Upload v-model="coverUrl" :module="currentType" />
       </el-form-item>
 
       <ContentBangumiParam
@@ -88,14 +78,8 @@
       </el-form-item>
       <el-form-item class="form-title"> SEO信息 </el-form-item>
       <el-form-item label="文章关键词">
-        <el-row>
-          <el-col :sm="24" :md="12">
-            <el-input v-model="formData.keywords" />
-          </el-col>
-          <el-col :sm="24" :md="12">
-            <span style="margin-left: 15px">多个关键词请用"|"或","隔开。</span>
-          </el-col>
-        </el-row>
+        <el-input v-model="formData.keywords" />
+        <span style="margin-left: 15px">多个关键词请用"|"或","隔开。</span>
       </el-form-item>
       <el-form-item label="描述文字">
         <el-input v-model="formData.description" type="textarea" :rows="4" />

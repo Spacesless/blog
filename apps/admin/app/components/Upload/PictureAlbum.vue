@@ -203,11 +203,11 @@ function formatSize(size?: number) {
 .album {
   :deep(.el-dialog) {
     height: 90%;
+  }
 
-    &__body {
-      height: calc(100% - 95px);
-      padding: 15px 20px;
-    }
+  :deep(.el-dialog__body) {
+    height: calc(100% - 95px);
+    padding: 15px 20px;
   }
 
   &-scroll {

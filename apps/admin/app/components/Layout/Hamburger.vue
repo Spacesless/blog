@@ -20,7 +20,8 @@ const emit = defineEmits<{ (e: 'toggleClick'): void }>()
   display: inline-block;
   vertical-align: middle;
   cursor: pointer;
+  padding: 0 8px;
 }
 .is-active svg { transform: rotate(180deg); }
-svg { transition: transform .38s ease; }
+svg { transition: transform .38s ease; display: inline-block; }
 </style>

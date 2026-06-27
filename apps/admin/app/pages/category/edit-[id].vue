@@ -1,5 +1,5 @@
 <template>
-  <CategoryCategoryContent :is-edit="true" />
+  <CategoryContent :is-edit="true" />
 </template>
 
 <script setup lang="ts">

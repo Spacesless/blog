@@ -9,7 +9,7 @@
   >
     <el-form ref="formRef" v-loading="fetchLoading" :model="formData" :rules="rules" label-width="80px">
       <el-form-item label="图片" prop="imgurl">
-        <UploadIndex v-model="formData.imgurl" module="banner" />
+        <Upload v-model="formData.imgurl" module="banner" />
       </el-form-item>
       <el-form-item label="标题" prop="title">
         <el-input v-model="formData.title" />

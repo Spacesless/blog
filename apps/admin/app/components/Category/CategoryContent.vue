@@ -11,11 +11,7 @@
     >
       <el-form-item class="form-title"> 基本信息 </el-form-item>
       <el-form-item label="栏目名称" prop="name">
-        <el-row>
-          <el-col :xs="24" :md="12">
-            <el-input v-model="formData.name" />
-          </el-col>
-        </el-row>
+        <el-input v-model="formData.name" />
       </el-form-item>
       <el-form-item label="栏目类型" prop="type">
         <el-select v-model="formData.type" placeholder="请选择栏目类型">
@@ -28,14 +24,10 @@
         </el-select>
       </el-form-item>
       <el-form-item label="URL别名" prop="filename">
-        <el-row>
-          <el-col :xs="24" :md="12">
-            <el-input
-              v-model="formData.filename"
-              placeholder="栏目 URL 别名（slug），如 web-dev；留空则用栏目 id"
-            />
-          </el-col>
-        </el-row>
+        <el-input
+          v-model="formData.filename"
+          placeholder="栏目 URL 别名（slug），如 web-dev；留空则用栏目 id"
+        />
       </el-form-item>
       <template v-if="!isEdit">
         <el-form-item label="所属栏目">
@@ -70,29 +62,17 @@
       </el-form-item>
       <el-form-item class="form-title"> SEO信息 </el-form-item>
       <el-form-item label="栏目标题">
-        <el-row>
-          <el-col :xs="24" :md="12">
-            <el-input v-model="formData.title" />
-          </el-col>
-        </el-row>
+        <el-input v-model="formData.title" />
       </el-form-item>
       <el-form-item label="关键词">
-        <el-row>
-          <el-col :xs="24" :md="12">
-            <el-input v-model="formData.keywords" type="textarea" :rows="3" />
-          </el-col>
-        </el-row>
+          <el-input v-model="formData.keywords" type="textarea" :rows="3" />
       </el-form-item>
       <el-form-item label="简短描述">
-        <el-row>
-          <el-col :xs="24" :md="12">
-            <el-input
-              v-model="formData.description"
-              type="textarea"
-              :rows="5"
-            />
-          </el-col>
-        </el-row>
+        <el-input
+          v-model="formData.description"
+          type="textarea"
+          :rows="5"
+        />
       </el-form-item>
       <div class="form-item">
         <EditorTinymce
@@ -103,32 +83,16 @@
       </div>
       <el-form-item class="form-title"> 其它设置 </el-form-item>
       <el-form-item label="栏目修饰名称">
-        <el-row>
-          <el-col :xs="24" :md="12">
-            <el-input v-model="formData.mark_name" />
-          </el-col>
-        </el-row>
+        <el-input v-model="formData.mark_name" />
       </el-form-item>
       <el-form-item label="栏目图标">
-        <el-row>
-          <el-col :xs="24" :md="12">
-            <el-input v-model="formData.icon" />
-          </el-col>
-        </el-row>
+        <el-input v-model="formData.icon" />
       </el-form-item>
       <el-form-item label="栏目版本">
-        <el-row>
-          <el-col :xs="24" :md="12">
-            <el-input v-model="formData.version" />
-          </el-col>
-        </el-row>
+        <el-input v-model="formData.version" />
       </el-form-item>
       <el-form-item label="栏目外链">
-        <el-row>
-          <el-col :xs="24" :md="12">
-            <el-input v-model="formData.link" />
-          </el-col>
-        </el-row>
+        <el-input v-model="formData.link" />
       </el-form-item>
       <el-form-item label="栏目参数">
         <JsonEditor v-model="formData.params" />
