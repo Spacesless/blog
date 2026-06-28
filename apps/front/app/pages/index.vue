@@ -1,11 +1,11 @@
 <template>
-  <div ref="wrapperRef">
+  <div>
     <!-- 轮播图 -->
     <el-carousel
-      class="mb-5 overflow-hidden rounded-[var(--border-radius)] shadow-[var(--shadow-3-down)]"
+      class="banner-carousel mb-5 overflow-hidden rounded-[var(--border-radius)] shadow-[var(--shadow-3-down)]"
       trigger="click"
       :interval="5000"
-      :height="bannerHeight + 'px'"
+      height="auto"
     >
       <el-carousel-item v-for="item in bannerList" :key="item.title">
         <img
@@ -174,9 +174,6 @@
 const appStore = useAppStore();
 const { fetchIndex } = useApi();
 
-const wrapperRef = ref<HTMLDivElement>();
-const bannerHeight = ref(500);
-
 const { data: pageData } = await useAsyncData("home", async () => {
   const res = await fetchIndex().catch(() => ({
     bannerList: [],
@@ -221,26 +218,14 @@ useHead({
     ? `${configs.value.sitename} - 花开成景，花落成诗`
     : "Timeless · 时光",
 });
-
-function handleResize() {
-  const w = wrapperRef.value?.clientWidth || 1280;
-  bannerHeight.value = (500 * w) / 1280;
-}
-
-let resizeHandler: (() => void) | null = null;
-
-onMounted(() => {
-  handleResize();
-  resizeHandler = debounce(handleResize, 100);
-  window.addEventListener("resize", resizeHandler);
-});
-
-onUnmounted(() => {
-  if (resizeHandler) window.removeEventListener("resize", resizeHandler);
-});
 </script>
 
 <style scoped>
+.banner-carousel :deep(.el-carousel__container) {
+  aspect-ratio: 1280 / 500;
+  height: auto !important;
+}
+
 .article-cover::after {
   position: absolute;
   top: 13%;

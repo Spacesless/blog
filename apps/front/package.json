@@ -21,12 +21,14 @@
     "nuxt": "^4.4.8",
     "pinia": "^3.0.0",
     "prismjs": "^1.29.0",
+    "qrcode": "^1.5.4",
     "vue": "^3.5.35",
     "vue-router": "^5.1.0"
   },
   "devDependencies": {
     "@nuxt/eslint": "^1.16.0",
     "@types/prismjs": "^1.26.4",
+    "@types/qrcode": "^1.5.5",
     "@unocss/nuxt": "^66.7.2",
     "eslint": "^10.5.0",
     "sass": "^1.101.0",

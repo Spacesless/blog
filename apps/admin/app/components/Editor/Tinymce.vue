@@ -128,6 +128,16 @@ function onSelectFile(list: { name: string; url: string }[]) {
   list.forEach(v => editor.insertContent(`<img src="${v.url}" >`))
 }
 
+// 获取字数统计
+function getWordCount(): number {
+  const tinymce = (window as any).tinymce
+  return tinymce?.get(tinymceId.value)?.plugins?.wordcount?.getCount() || 0
+}
+
+defineExpose({
+  getWordCount,
+})
+
 function initTinymce() {
   const tinymce = (window as any).tinymce
   if (!tinymce) return

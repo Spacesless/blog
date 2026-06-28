@@ -1,38 +1,54 @@
 <template>
   <div>
-    <el-row
-      class="mb-[var(--grid-space)] overflow-hidden bg-[var(--bg-normal)] rounded-[var(--border-radius)] shadow-[var(--shadow-3-down)] flex items-center lt-lg:block"
+    <div
+      class="article-banner relative mb-[var(--grid-space)] overflow-hidden rounded-[var(--border-radius)] shadow-[var(--shadow-3-down)]"
     >
-      <el-col class="relative blog-cover" :sm="24" :md="12">
-        <img
-          class="block w-full h-auto"
-          :src="getAbsolutePath(data?.imgurl || '')"
-          :alt="data?.title"
-        >
-      </el-col>
-      <el-col class="p-[var(--grid-space)]" :sm="24" :md="12">
-        <h1
-          class="pb-4 text-[32px] font-normal leading-[1.5] text-[var(--color-heading)]"
-        >
-          {{ data?.title }}
-        </h1>
+      <!-- 毛玻璃背景层 -->
+      <div
+        class="absolute inset-0 bg-cover bg-center scale-110 blur-2xl"
+        :style="{ backgroundImage: `url(${getAbsolutePath(data?.imgurl || '')})` }"
+      />
+      <div class="absolute inset-0 bg-black/45" />
+
+      <!-- 内容层 -->
+      <div
+        class="relative z-10 h-full flex items-center gap-[var(--grid-space)] p-[var(--grid-space)] lt-sm:flex-col lt-sm:items-stretch"
+      >
         <div
-          class="mb-[var(--grid-space)] text-[15px] text-[var(--color-secondary)]"
+          class="flex-shrink-0 w-100 overflow-hidden rounded-[var(--border-radius)] shadow-[var(--shadow-3-down)] lt-sm:w-full lt-sm:max-w-50 lt-sm:mx-auto"
         >
-          <span class="mr-2.5">{{ formatDate(data?.updatetime || "") }}</span>
-          <span class="mr-2.5">阅读：{{ data?.hits }}</span>
-          <span v-if="data?.word_count" class="mr-2.5"
-            >字数：{{ data?.word_count }}</span
-          >
-          <span v-if="readDuration" class="mr-2.5"
-            >阅读时长：{{ readDuration }}</span
+          <img
+            class="block w-full h-auto"
+            :src="getAbsolutePath(data?.imgurl || '')"
+            :alt="data?.title"
           >
         </div>
-        <p class="article-description relative pt-3 indent-10">
-          {{ data?.description }}
-        </p>
-      </el-col>
-    </el-row>
+        <div class="flex-1 min-w-0 text-white">
+          <h1
+            class="pb-4 text-[36px] font-normal leading-[1.5] text-white lt-sm:text-[24px]"
+          >
+            {{ data?.title }}
+          </h1>
+          <div
+            class="mb-[var(--grid-space)] flex flex-wrap items-center gap-x-4 gap-y-1 text-[15px] text-white/85"
+          >
+            <span><i class="icon-riqi" /> {{ formatDate(data?.updatetime || "") }}</span>
+            <span><i class="icon-chakan" /> {{ data?.hits }}</span>
+            <span v-if="data?.word_count"><i class="icon-wenzi" /> {{ data?.word_count }}</span>
+            <span v-if="readDuration"><i class="icon-wancheng" /> {{ readDuration }}</span>
+          </div>
+          <div class="min-h-6 mt-2 flex flex-wrap gap-1.5">
+            <span
+              v-for="(tag, i) in data?.tag?.split('|') || []"
+              :key="i"
+              class="tl-tag"
+              :class="tagClassName(tag)"
+              >{{ tag }}</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div
       class="mb-[var(--grid-space)] bg-[var(--bg-normal)] rounded-[var(--border-radius)] shadow-[var(--shadow-3-down)]"
@@ -41,8 +57,12 @@
         <div
           id="js-content"
           class="flex-1 min-w-0 overflow-hidden markup p-[var(--grid-space)]"
-          v-html="data?.content"
-        />
+        >
+          <p class="article-description relative pt-3 indent-10">
+            {{ data?.description }}
+          </p>
+          <div v-html="data?.content"/>
+        </div>
         <Catalog
           v-if="isLoaded"
           class="flex-shrink-0 lt-xl:p-[var(--grid-space)]"
@@ -273,6 +293,14 @@ function registerPrismButtons(nuxtApp: any) {
 </script>
 
 <style scoped>
+.article-banner {
+  aspect-ratio: 1280 / 500;
+}
+@media (max-width: 640px) {
+  .article-banner {
+    aspect-ratio: auto;
+  }
+}
 .article-description::before {
   position: absolute;
   top: 0;
@@ -283,20 +311,5 @@ function registerPrismButtons(nuxtApp: any) {
   content: "";
   background-image: url("~/assets/image/quotee.svg");
   background-size: cover;
-}
-.blog-cover::after {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 50%;
-  height: 100%;
-  pointer-events: none;
-  content: "";
-  background: var(--gradient-cover);
-}
-@media (max-width: 992px) {
-  .blog-cover::after {
-    display: none;
-  }
 }
 </style>

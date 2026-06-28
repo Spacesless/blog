@@ -1,10 +1,9 @@
 <template>
   <div
-    ref="bannerRef"
     class="page-banner relative mb-[var(--grid-space)] flex flex-col items-center justify-center overflow-hidden rounded-[var(--border-radius)] shadow-[var(--shadow-3-down)] bg-cover bg-center"
     :style="{
-      backgroundImage: `url(${backgroundImage})`,
-      height: `${currentHeight}px`,
+      backgroundImage: `url(${props.backgroundImage})`,
+      aspectRatio: `1280 / ${props.baseHeight}`,
     }"
   >
     <!-- 渐变遮罩层 -->
@@ -26,19 +25,19 @@
       <h1
         class="page-banner__title py-3 text-6xl font-extrabold tracking-tight lt-md:text-4xl lt-sm:text-3xl"
       >
-        {{ title }}
+        {{ props.title }}
       </h1>
       <div
-        v-if="subtitle || $slots.subtitle"
+        v-if="props.subtitle || $slots.subtitle"
         class="page-banner__subtitle mt-4 text-xl font-medium text-white/95 leading-relaxed lt-md:text-lg lt-sm:text-base [&_span]:text-white/95"
       >
-        <slot name="subtitle">{{ subtitle }}</slot>
+        <slot name="subtitle">{{ props.subtitle }}</slot>
       </div>
       <p
-        v-if="extra"
+        v-if="props.extra"
         class="page-banner__extra mt-3 text-base text-white/85 leading-relaxed lt-md:text-sm"
       >
-        {{ extra }}
+        {{ props.extra }}
       </p>
     </div>
   </div>
@@ -56,28 +55,10 @@ const props = withDefaults(
   {
     backgroundImage: "/background.png",
     baseHeight: 500,
+    subtitle: '',
+    extra: ''
   },
 );
-
-const bannerRef = ref<HTMLDivElement>();
-const currentHeight = ref(props.baseHeight * 0.72); // 默认约 360px
-
-function handleResize() {
-  const w = bannerRef.value?.clientWidth || 1280;
-  currentHeight.value = (props.baseHeight * w) / 1280;
-}
-
-let resizeHandler: (() => void) | null = null;
-
-onMounted(() => {
-  handleResize();
-  resizeHandler = debounce(handleResize, 100);
-  window.addEventListener("resize", resizeHandler);
-});
-
-onUnmounted(() => {
-  if (resizeHandler) window.removeEventListener("resize", resizeHandler);
-});
 </script>
 
 <style scoped>

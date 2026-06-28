@@ -70,7 +70,7 @@ importers:
         version: 0.2.3
       '@unocss/nuxt':
         specifier: ^66.7.2
-        version: 66.7.2(magicast@0.5.3)(vite@7.3.5(@types/node@20.19.43)(jiti@2.7.0)(sass@1.101.0)(terser@5.48.0)(yaml@2.9.0))(webpack@5.107.2)
+        version: 66.7.2(magicast@0.5.3)(vite@7.3.5(@types/node@20.19.43)(jiti@2.7.0)(sass@1.101.0)(terser@5.48.0)(yaml@2.9.0))(webpack@5.107.2(postcss@8.5.15))
       eslint:
         specifier: ^10.5.0
         version: 10.5.0(jiti@2.7.0)
@@ -82,7 +82,7 @@ importers:
         version: 6.0.3
       unocss:
         specifier: ^66.7.2
-        version: 66.7.2(@unocss/webpack@66.7.2(webpack@5.107.2))(vite@7.3.5(@types/node@20.19.43)(jiti@2.7.0)(sass@1.101.0)(terser@5.48.0)(yaml@2.9.0))
+        version: 66.7.2(@unocss/webpack@66.7.2(webpack@5.107.2(postcss@8.5.15)))(vite@7.3.5(@types/node@20.19.43)(jiti@2.7.0)(sass@1.101.0)(terser@5.48.0)(yaml@2.9.0))
       vue-tsc:
         specifier: ^2.0.0
         version: 2.0.0(typescript@6.0.3)
@@ -116,6 +116,9 @@ importers:
       prismjs:
         specifier: ^1.29.0
         version: 1.30.0
+      qrcode:
+        specifier: ^1.5.4
+        version: 1.5.4
       vue:
         specifier: ^3.5.35
         version: 3.5.38(typescript@6.0.3)
@@ -129,9 +132,12 @@ importers:
       '@types/prismjs':
         specifier: ^1.26.4
         version: 1.26.6
+      '@types/qrcode':
+        specifier: ^1.5.5
+        version: 1.5.6
       '@unocss/nuxt':
         specifier: ^66.7.2
-        version: 66.7.2(magicast@0.5.3)(vite@7.3.5(@types/node@20.19.43)(jiti@2.7.0)(sass@1.101.0)(terser@5.48.0)(yaml@2.9.0))(webpack@5.107.2(postcss@8.5.15))
+        version: 66.7.2(magicast@0.5.3)(vite@7.3.5(@types/node@20.19.43)(jiti@2.7.0)(sass@1.101.0)(terser@5.48.0)(yaml@2.9.0))(webpack@5.107.2)
       eslint:
         specifier: ^10.5.0
         version: 10.5.0(jiti@2.7.0)
@@ -143,7 +149,7 @@ importers:
         version: 6.0.3
       unocss:
         specifier: ^66.7.2
-        version: 66.7.2(@unocss/webpack@66.7.2(webpack@5.107.2(postcss@8.5.15)))(vite@7.3.5(@types/node@20.19.43)(jiti@2.7.0)(sass@1.101.0)(terser@5.48.0)(yaml@2.9.0))
+        version: 66.7.2(@unocss/webpack@66.7.2(webpack@5.107.2))(vite@7.3.5(@types/node@20.19.43)(jiti@2.7.0)(sass@1.101.0)(terser@5.48.0)(yaml@2.9.0))
 
   apps/server:
     dependencies:
@@ -2095,6 +2101,9 @@ packages:
 
   '@types/prismjs@1.26.6':
     resolution: {integrity: sha512-vqlvI7qlMvcCBbVe0AKAb4f97//Hy0EBTaiW8AalRnG/xAN5zOiWWyrNqNXeq8+KAuvRewjCVY1+IPxk4RdNYw==}
+
+  '@types/qrcode@1.5.6':
+    resolution: {integrity: sha512-te7NQcV2BOvdj2b1hCAHzAoMNuj65kNBMz0KBaxM6c3VGBOhU0dURQKOtH8CFNI/dsKkwlv32p26qYQTWoB5bw==}
 
   '@types/resolve@1.20.2':
     resolution: {integrity: sha512-60BCwRFOZCQhDncwQdxxeOEEkbc5dIMccYLwbxsS4TUNeVECQ/pBJ0j09mrHOl/JJvpRPGwO9SvE4nR2Nb/a4Q==}
@@ -8028,6 +8037,10 @@ snapshots:
   '@types/nprogress@0.2.3': {}
 
   '@types/prismjs@1.26.6': {}
+
+  '@types/qrcode@1.5.6':
+    dependencies:
+      '@types/node': 20.19.43
 
   '@types/resolve@1.20.2': {}
 
