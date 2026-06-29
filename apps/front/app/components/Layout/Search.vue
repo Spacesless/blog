@@ -94,6 +94,7 @@
               />
             </li>
           </ul>
+          <div v-if="!searchList.length" class="search-list__placeholder" />
         </div>
         <div v-if="total > 0" class="py-[var(--grid-space)] text-center">
           <Pagination
@@ -226,6 +227,13 @@ function highlightKeyword(str: string) {
 }
 .search-drawer .el-drawer__header {
   color: var(--color-heading);
+}
+
+.search-list__placeholder {
+  margin-top: 32px;
+  height: 320px;
+  background: url("~/assets/image/empty.png") no-repeat center;
+  background-size: contain;
 }
 
 /* 暗色模式下 Element Plus 组件适配 */

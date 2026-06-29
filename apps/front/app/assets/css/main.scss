@@ -218,6 +218,35 @@ $tagColor: (
   }
 }
 
+/* Card title with rotating sakura icon */
+.tl-card__title {
+  margin-bottom: var(--grid-space);
+  font-size: 24px;
+  font-weight: normal;
+  line-height: 1em;
+  color: var(--color-heading);
+  display: flex;
+  align-items: center;
+
+  &::before {
+    margin-right: 6px;
+    font-family: iconfont, sans-serif;
+    font-size: 28px;
+    color: #fc9fa7;
+    content: '\e87a';
+    animation: tl-card-rotate 6s linear infinite;
+  }
+}
+
+@keyframes tl-card-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /* Clearfix utility */
 .clearfix::after {
   display: block;
@@ -303,3 +332,6 @@ $tagColor: (
   }
 }
 
+.el-popup-parent--hidden {
+  overflow: hidden;
+}

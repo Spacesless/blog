@@ -90,6 +90,16 @@ export interface FriendLink {
   sort?: number;
 }
 
+// 工具/附属站
+export interface Tool {
+  id: number;
+  name: string;
+  link?: string;
+  url?: string;
+  description: string;
+  version: string;
+}
+
 // 分页响应
 export interface PaginatedResponse<T> {
   data: T[];

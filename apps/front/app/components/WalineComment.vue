@@ -2,10 +2,7 @@
   <section
     class="comment p-[var(--grid-space)] mb-[var(--grid-space)] overflow-hidden bg-[var(--bg-normal)] rounded-[var(--border-radius)] shadow-[var(--shadow-3-down)]"
   >
-    <h2
-      id="thumbsup"
-      class="pb-[var(--grid-space)] text-xl font-normal text-[var(--color-heading)]"
-    >
+    <h2 id="thumbsup" class="tl-card__title">
       评论
     </h2>
     <div id="waline" />

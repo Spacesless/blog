@@ -65,7 +65,7 @@ const props = withDefaults(defineProps<{
   accept: 'image/*',
   multiple: false,
   limit: 0,
-  enableExtra: false,
+  enableExtra: true,
 })
 
 const emit = defineEmits<{

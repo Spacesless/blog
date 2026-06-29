@@ -4,6 +4,7 @@
     append-to-body
     class="album"
     width="90%"
+    align-center
     @close="handleCancel"
   >
     <div class="file-header">
@@ -201,17 +202,12 @@ function formatSize(size?: number) {
 
 <style lang="scss" scoped>
 .album {
-  :deep(.el-dialog) {
-    height: 90%;
-  }
-
   :deep(.el-dialog__body) {
-    height: calc(100% - 95px);
     padding: 15px 20px;
   }
 
   &-scroll {
-    height: calc(100% - 95px);
+    height: calc(100vh - 295px) !important;
   }
 }
 

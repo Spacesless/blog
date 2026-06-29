@@ -4,6 +4,7 @@
     width="800px"
     title="添加网络图片"
     append-to-body
+    align-center
     @close="handleCancel"
   >
     <div class="links-header">

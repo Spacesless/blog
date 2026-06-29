@@ -38,12 +38,12 @@
       </el-table-column>
       <el-table-column label="总集数" width="150" align="center">
         <template #default="scope">
-          <el-input-number v-model="scope.row.total" controls-position="right" :min="0" />
+          <el-input-number class="!w-full" v-model="scope.row.total" controls-position="right" :min="0" />
         </template>
       </el-table-column>
       <el-table-column label="进度" width="150" align="center">
         <template #default="scope">
-          <el-input-number v-model="scope.row.current" controls-position="right" :min="0" :max="scope.row.total" />
+          <el-input-number class="!w-full" v-model="scope.row.current" controls-position="right" :min="0" :max="scope.row.total" />
         </template>
       </el-table-column>
       <el-table-column label="状态" width="150" align="center" :filters="statusFilters" :filter-method="filterStatus">
@@ -57,7 +57,7 @@
       </el-table-column>
       <el-table-column label="推荐指数" width="150" align="center" prop="ratings" sortable>
         <template #default="scope">
-          <el-input-number v-model="scope.row.ratings" controls-position="right" :min="5" :max="10" :step="0.1" />
+          <el-input-number class="!w-full" v-model="scope.row.ratings" controls-position="right" :min="5" :max="10" :step="0.1" />
         </template>
       </el-table-column>
       <el-table-column label="前台显示" width="100" align="center" :filters="showFilters" :filter-method="filterShow">

@@ -27,7 +27,7 @@ const props = withDefaults(defineProps<{
   page: 1,
   limit: 20,
   pageSizes: () => [10, 20, 30, 50],
-  layout: 'total, sizes, prev, pager, next, jumper',
+  layout: 'total, sizes, ->, prev, pager, next, jumper',
   background: true,
 })
 

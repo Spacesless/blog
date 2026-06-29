@@ -5,6 +5,7 @@ import type {
   FriendLink,
   Category,
   SiteConfig,
+  Tool,
   PaginatedResponse,
   ApiResponse,
 } from "~/types";
@@ -129,6 +130,11 @@ export function useApi() {
     return request<Category>("/category", { params: { id } });
   }
 
+  // 工具/附属站列表
+  async function fetchTools(id: number | string): Promise<Tool[]> {
+    return request<Tool[]>("/tool/list", { params: { id } });
+  }
+
   // 站内搜索
   async function searchContent(options: {
     keyword: string;
@@ -155,6 +161,7 @@ export function useApi() {
     fetchArchives,
     fetchFriendLinks,
     fetchCategory,
+    fetchTools,
     searchContent,
   };
 }
