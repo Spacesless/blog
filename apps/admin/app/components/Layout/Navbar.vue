@@ -105,7 +105,10 @@ function handleClearThumbnail() {
 }
 
 async function handleRefresh() {
-  await router.replace({ path: route.fullPath, query: { _r: Date.now().toString() } })
+  const tagsView = useTagsViewStore()
+  await tagsView.delCachedView(route as any)
+  await nextTick()
+  router.replace('/redirect' + route.fullPath)
 }
 </script>
 

@@ -43,7 +43,7 @@
       class="px-4 py-5 pt-px mb-[var(--grid-space)] bg-[var(--bg-normal)] rounded-[var(--border-radius)] shadow-[var(--shadow-3-down)]"
     >
       <h2
-        class="p-[var(--grid-space)] mt-[var(--grid-space)] text-xl font-normal text-[var(--color-heading)]"
+        class="my-[var(--grid-space)] text-xl font-normal text-[var(--color-heading)]"
       >
         友链要求
       </h2>
@@ -57,7 +57,7 @@
         5、ฅ^ω^ฅ 各位大神、二次元小伙伴可大幅降低以上要求，如不嫌弃随时欢迎入驻
       </p>
       <h2
-        class="p-[var(--grid-space)] mt-[var(--grid-space)] text-xl font-normal text-[var(--color-heading)]"
+        class="my-[var(--grid-space)] text-xl font-normal text-[var(--color-heading)]"
       >
         申请方式
       </h2>

@@ -2,10 +2,11 @@ const isProd = think.env === "production";
 const CDNdomain = "//cdn.timelessq.com";
 
 function getUrlPrefix() {
-  const { controller } = this.ctx;
-  // admin后台管理不需要CDN
-  const isUseCdn = !controller.includes("admin");
-  return isProd && isUseCdn ? CDNdomain : this.siteurl;
+  // const { controller } = this.ctx;
+  // // admin后台管理不需要CDN
+  // const isUseCdn = !controller.includes("admin");
+  // return isProd && isUseCdn ? CDNdomain : this.siteurl;
+  return this.siteurl
 }
 
 module.exports = {

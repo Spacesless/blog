@@ -13,7 +13,7 @@
       <i v-if="!isNest" class="aside-menu__icon" :class="item.icon" />
       <span>{{ item.name }}</span>
     </template>
-    <el-menu-item :index="getUrl(item)">
+    <el-menu-item :index="getListUrl(item)">
       <span>{{ getAliasName(item.type) }}</span>
     </el-menu-item>
     <LayoutSidebarItem
@@ -43,6 +43,11 @@ function getUrl(item: Category) {
     return `/${item.filename || item.type}`;
   }
   return `/${item.type}`;
+}
+
+// 「全部」入口：使用 list 作为 id，进入不带分类筛选的全部列表
+function getListUrl(item: Category) {
+  return `/${item.type}/list`;
 }
 
 function getAliasName(type: string) {

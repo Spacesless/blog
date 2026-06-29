@@ -1,6 +1,13 @@
 <template>
   <div class="webapp">
-    <h2 class="tl__title">附属站</h2>
+    <PageBanner
+      class="!mb-0"
+      title="工具"
+      subtitle="工欲善其事，必先利其器。"
+      extra="这里收录了一些自建的小站与实用工具，希望能为你所用。"
+      :background-image="toolBg"
+    />
+    <h2 class="tl__title">兴趣集</h2>
     <el-row class="webapp-list" :gutter="20">
       <el-col v-for="item in externalApp" :key="item.id" :sm="12" :md="8" :xl="6">
         <a class="webapp-card" :href="item.link" :title="item.name" target="_blank">
@@ -16,10 +23,12 @@
 </template>
 
 <script setup lang="ts">
+import toolBg from "~/assets/image/tool.jpg";
+
 const route = useRoute();
 const { fetchTools } = useApi();
 
-usePageSeo({ pageType: "page", pageName: "附属站" });
+usePageSeo({ pageType: "page", pageName: "工具" });
 
 const { data } = await useAsyncData(`tool-${route.params.id}`, () =>
   fetchTools(route.params.id as string).catch(() => []),

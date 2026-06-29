@@ -2,8 +2,8 @@
   <div
     v-if="isShow"
     ref="waifuRef"
-    class="group fixed right-0 bottom-0 z-997 w-52 h-55 transition-[margin-top] duration-300 lt-lg:hidden hover:cursor-grab"
-    @mousedown="dragMove"
+    class="group fixed z-997 w-52 h-55 transition-[margin-top] duration-300 lt-lg:hidden"
+    :style="{ left: x + 'px', top: y + 'px', cursor: isDragging ? 'grabbing' : 'grab' }"
   >
     <transition name="fade-transform" mode="out-in">
       <div
@@ -51,6 +51,8 @@
 </template>
 
 <script setup lang="ts">
+import { useDraggable } from "@vueuse/core"
+
 // 声明 live2d 全局类型
 declare global {
   interface Window {
@@ -74,6 +76,30 @@ const tipsShow = ref(false);
 const isLoaded = ref(false);
 const waifuRef = ref<HTMLDivElement>();
 let timer: ReturnType<typeof setTimeout> | null = null;
+
+const { x, y, isDragging } = useDraggable(waifuRef, {
+  initialValue: { x: 0, y: 0 },
+  onMove: (position) => {
+    const el = waifuRef.value;
+    if (!el) return position;
+
+    const clientWidth = window.innerWidth;
+    const clientHeight = window.innerHeight;
+    const elWidth = el.clientWidth;
+    const elHeight = el.clientHeight;
+
+    // 边界限制
+    if (position.x < 0) position.x = 0;
+    else if (position.x > clientWidth - elWidth)
+      position.x = clientWidth - elWidth;
+
+    if (position.y < 0) position.y = 0;
+    else if (position.y > clientHeight - elHeight)
+      position.y = clientHeight - elHeight;
+
+    return position;
+  },
+});
 
 const modelId = computed(() => Number(appStore.configs?.live2d_model) || 100);
 const texturesId = computed(
@@ -155,6 +181,9 @@ function navigatorToHome() {
 function handleShowLive2d() {
   isShow.value = true;
   nextTick(() => {
+    // 初始定位到右下角
+    x.value = window.innerWidth - 208;
+    y.value = window.innerHeight - 220;
     loadModel(modelId.value, texturesId.value);
     showMessage("锵锵锵锵~ 本宝宝又回来了", 1500);
   });
@@ -192,34 +221,5 @@ function onMouseEnter(key: string) {
 function onMouseClick() {
   const text = clickTips[Math.floor(Math.random() * clickTips.length)]!;
   showMessage(text);
-}
-
-function dragMove(e: MouseEvent) {
-  const el = waifuRef.value;
-  if (!el) return;
-  const disX = e.clientX - el.offsetLeft;
-  const disY = e.clientY - el.offsetTop;
-
-  document.onmousemove = (e) => {
-    let left = e.clientX - disX;
-    let top = e.clientY - disY;
-    const clientWidth = document.documentElement.clientWidth;
-    const clientHeight = document.documentElement.clientHeight;
-    if (left < 0) left = 0;
-    else if (left > clientWidth - el.clientWidth)
-      left = clientWidth - el.clientWidth;
-    if (top < 0) top = 0;
-    else if (top > clientHeight - el.clientHeight)
-      top = clientHeight - el.clientHeight;
-    el.style.left = left + "px";
-    el.style.top = top + "px";
-    document.body.style.userSelect = "none";
-  };
-
-  document.onmouseup = () => {
-    document.onmousemove = null;
-    document.onmouseup = null;
-    document.body.style.userSelect = "unset";
-  };
 }
 </script>
