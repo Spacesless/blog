@@ -38,12 +38,13 @@
             <span v-if="readDuration"><i class="icon-wancheng" /> {{ readDuration }}</span>
           </div>
           <div class="min-h-6 mt-2 flex flex-wrap gap-1.5">
-            <span
+            <NuxtLink
               v-for="(tag, i) in data?.tag?.split('|') || []"
               :key="i"
-              class="tl-tag"
+              :to="{ path: '/article', query: { tags: tag } }"
+              class="tl-tag !text-sm !leading-7 !px-3"
               :class="tagClassName(tag)"
-              >{{ tag }}</span
+              >{{ tag }}</NuxtLink
             >
           </div>
         </div>
@@ -82,7 +83,10 @@
       :category-id="data?.category_id || 0"
       :tags="data?.tag"
     />
-    <WalineComment reaction-title="你觉得这篇文章怎么样？" />
+    <WalineComment
+      :path="`/article/detail/${data?.id}`"
+      reaction-title="你觉得这篇文章怎么样？"
+    />
     <Adsense />
   </div>
 </template>

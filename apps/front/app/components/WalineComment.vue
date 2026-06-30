@@ -20,6 +20,7 @@ import "@waline/client/waline.css";
 const props = withDefaults(
   defineProps<{
     reactionTitle?: string;
+    path?: string;
   }>(),
   {
     reactionTitle: "你觉得本站怎么样？",
@@ -29,7 +30,9 @@ const props = withDefaults(
 const colorMode = useColorMode();
 const isDark = computed(() => colorMode.value === "dark");
 
-const path = computed(() => location.origin + location.pathname);
+const path = computed(
+  () => location.origin + (props.path || location.pathname),
+);
 const emoji: WalineEmojiInfo[] = [
   {
     name: "贴吧",

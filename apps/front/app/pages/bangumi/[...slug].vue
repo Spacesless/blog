@@ -1,6 +1,6 @@
 <template>
   <div>
-    <PageBanner title="追番刷剧" :background-image="bangumiB">
+    <PageBanner :title="pageTitle" :background-image="bangumiB">
       <template #subtitle>
         <Hitokoto :kinds="['a', 'b', 'h']" />
       </template>
@@ -50,13 +50,14 @@
               <span class="text-[var(--color-secondary)]">进度：</span
               >{{ item.current }}/{{ item.total }}
             </p>
-            <div class="mt-2">
-              <span
+            <div class="min-h-6.25 mt-1.25">
+              <NuxtLink
                 v-for="(tag, i) in item.tag || []"
                 :key="i"
+                :to="{ path: '/bangumi', query: { tags: tag } }"
                 class="tl-tag"
                 :class="tagClassName(tag)"
-                >{{ tag }}</span
+                >{{ tag }}</NuxtLink
               >
             </div>
           </el-col>
@@ -92,27 +93,30 @@ const routeParams = computed(() => parseListRoute(routeSlugArray.value));
 const routeId = computed(() => routeParams.value.id);
 const routePage = computed(() => routeParams.value.page);
 
-const currentPage = ref(routePage.value);
-const total = ref(0);
-const pageSize = ref(10);
-const bangumiList = ref<any[]>([]);
+const currentTag = computed(() => route.query.tags as string | undefined);
+const pageTitle = computed(() =>
+  currentTag.value ? `追番刷剧 - ${currentTag.value}` : "追番刷剧",
+);
 
 usePageSeo({ pageType: "list" });
 
 const { data } = await useAsyncData(
-  `bangumi-list-${routeSlugArray.value.join("/")}-${JSON.stringify(route.query)}`,
+  () => `bangumi-list-${routeSlugArray.value.join("/")}-${JSON.stringify(route.query)}`,
   () =>
     fetchBangumiList({
       id: routeId.value,
       page: routePage.value,
+      tags: route.query.tags as string | undefined,
     }).catch(() => ({ data: [], count: 0, pageSize: 10 })),
+  {
+    watch: [() => route.query.tags, routePage],
+  },
 );
 
-if (data.value) {
-  bangumiList.value = data.value.data || [];
-  total.value = data.value.count;
-  pageSize.value = data.value.pageSize || 10;
-}
+const bangumiList = computed(() => data.value?.data || []);
+const total = computed(() => data.value?.count || 0);
+const pageSize = computed(() => data.value?.pageSize || 10);
+const currentPage = computed(() => routePage.value);
 
 function changePage(page: number) {
   router.push({

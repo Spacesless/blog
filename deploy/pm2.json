@@ -24,8 +24,8 @@
         "NODE_ENV": "production",
         "NITRO_PORT": 3000,
         "NITRO_HOST": "127.0.0.1",
-        "NUXT_PUBLIC_API_BASE": "https://www.timelessq.com/front",
-        "NUXT_PUBLIC_SITE_URL": "https://www.timelessq.com"
+        "NUXT_PUBLIC_API_BASE": "https://blog.timelessq.com/front",
+        "NUXT_PUBLIC_SITE_URL": "https://blog.timelessq.com"
       }
     }
   ]

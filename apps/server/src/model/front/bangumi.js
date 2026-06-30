@@ -4,13 +4,17 @@ module.exports = class extends think.Model {
    * @param {Object} params 查询条件
    * @returns {Object}
    */
-  async selectPost({ page, pageSize, childCategories }) {
+  async selectPost({ page, pageSize, childCategories, tags }) {
     const field =
       "id,title,description,total,current,ratings,imgurl,updatetime,status,tag,pathname";
 
     const where = { is_show: 1, is_recycle: 0 };
     if (childCategories.length) {
       where.category_id = ["IN", childCategories];
+    }
+    // 标签筛选
+    if (tags) {
+      where.tag = ["like", tags.split("|").map((item) => `%${item}%`)];
     }
 
     const list = await this.where(where)

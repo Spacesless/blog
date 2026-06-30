@@ -33,18 +33,20 @@
               :model-value="(data?.ratings || 0) / 2"
               disabled
               show-score
+              size="large"
               :allow-half="true"
               text-color="#fff"
               :score-template="`${data?.ratings || 0}`"
             />
           </div>
           <div class="flex flex-wrap gap-1.5">
-            <span
+            <NuxtLink
               v-for="(tag, i) in tags"
               :key="i"
-              class="tl-tag"
+              :to="{ path: '/bangumi', query: { tags: tag } }"
+              class="tl-tag !text-sm !leading-7 !px-3"
               :class="tagClassName(tag)"
-              >{{ tag }}</span
+              >{{ tag }}</NuxtLink
             >
           </div>
         </div>
@@ -96,7 +98,10 @@
       :category-id="data?.category_id || 0"
       :tags="data?.tag"
     />
-    <WalineComment reaction-title="你觉得这部番剧怎么样？" />
+    <WalineComment
+      :path="`/bangumi/detail/${data?.id}`"
+      reaction-title="你觉得这部番剧怎么样？"
+    />
   </div>
 </template>
 

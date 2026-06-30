@@ -1,6 +1,6 @@
 <template>
   <div>
-    <PageBanner title="文章笔记" :background-image="articleBg">
+    <PageBanner :title="pageTitle" :background-image="articleBg">
       <template #subtitle>
         <Hitokoto :kinds="['k']" />
       </template>
@@ -59,12 +59,13 @@
             {{ item.description }}
           </p>
           <div class="min-h-6.25 mt-1.25">
-            <span
+            <NuxtLink
               v-for="(tag, i) in item.tag || []"
               :key="i"
+              :to="{ path: '/article', query: { tags: tag } }"
               class="tl-tag"
               :class="tagClassName(tag)"
-              >{{ tag }}</span
+              >{{ tag }}</NuxtLink
             >
           </div>
           <div
@@ -125,27 +126,30 @@ const routeParams = computed(() => parseListRoute(routeSlugArray.value));
 const routeId = computed(() => routeParams.value.id);
 const routePage = computed(() => routeParams.value.page);
 
-const currentPage = ref(routePage.value);
-const total = ref(0);
-const pageSize = ref(10);
-const articleList = ref<any[]>([]);
+const currentTag = computed(() => route.query.tags as string | undefined);
+const pageTitle = computed(() =>
+  currentTag.value ? `文章笔记 - ${currentTag.value}` : "文章笔记",
+);
 
 usePageSeo({ pageType: "list" });
 
 const { data } = await useAsyncData(
-  `article-list-${routeSlugArray.value.join("/")}-${JSON.stringify(route.query)}`,
+  () => `article-list-${routeSlugArray.value.join("/")}-${JSON.stringify(route.query)}`,
   () =>
     fetchArticles({
       id: routeId.value,
       page: routePage.value,
+      tags: route.query.tags as string | undefined,
     }).catch(() => ({ data: [], count: 0, pageSize: 10 })),
+  {
+    watch: [() => route.query.tags, routePage],
+  },
 );
 
-if (data.value) {
-  articleList.value = data.value.data || [];
-  total.value = data.value.count;
-  pageSize.value = data.value.pageSize || 10;
-}
+const articleList = computed(() => data.value?.data || []);
+const total = computed(() => data.value?.count || 0);
+const pageSize = computed(() => data.value?.pageSize || 10);
+const currentPage = computed(() => routePage.value);
 
 function changePage(page: number) {
   router.push({

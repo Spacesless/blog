@@ -86,8 +86,11 @@
                 <p class="text-sm leading-loose">{{ item.description }}</p>
               </div>
               <div class="article-tags h-7.5 py-1.5 text-sm">
-                <span v-for="(tag, i) in item.parsedTags" :key="i"
-                  >#{{ tag }}</span
+                <NuxtLink
+                  v-for="(tag, i) in item.parsedTags"
+                  :key="i"
+                  :to="{ path: '/article', query: { tags: tag } }"
+                  >#{{ tag }}</NuxtLink
                 >
               </div>
             </div>
@@ -154,12 +157,13 @@
                 >{{ item.current }}/{{ item.total }}
               </p>
               <div class="mt-2 leading-none">
-                <span
+                <NuxtLink
                   v-for="(tag, i) in item.parsedTags"
                   :key="i"
+                  :to="{ path: '/bangumi', query: { tags: tag } }"
                   class="tl-tag"
                   :class="tagClassName(tag)"
-                  >{{ tag }}</span
+                  >{{ tag }}</NuxtLink
                 >
               </div>
             </el-col>
