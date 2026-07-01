@@ -22,8 +22,8 @@
         />
       </div>
     </div>
-    <WalineComment />
     <Adsense />
+    <WalineComment />
   </div>
 </template>
 

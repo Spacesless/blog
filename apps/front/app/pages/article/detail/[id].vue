@@ -83,11 +83,11 @@
       :category-id="data?.category_id || 0"
       :tags="data?.tag"
     />
+    <Adsense />
     <WalineComment
       :path="`/article/detail/${data?.id}`"
       reaction-title="你觉得这篇文章怎么样？"
     />
-    <Adsense />
   </div>
 </template>
 

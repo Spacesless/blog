@@ -72,8 +72,8 @@
         <span class="text-red-500 ml-4">可选</span>
       </p>
     </div>
-    <WalineComment />
     <Adsense />
+    <WalineComment />
   </div>
 </template>
 

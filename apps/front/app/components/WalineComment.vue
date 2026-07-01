@@ -31,7 +31,7 @@ const colorMode = useColorMode();
 const isDark = computed(() => colorMode.value === "dark");
 
 const path = computed(
-  () => location.origin + (props.path || location.pathname),
+  () => 'https://blog.timelessq.com' + (props.path || location.pathname),
 );
 const emoji: WalineEmojiInfo[] = [
   {

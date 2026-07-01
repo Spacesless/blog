@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col items-center justify-center min-h-screen px-4 text-center">
+  <div class="w-full h-full flex flex-col items-center justify-center min-h-screen px-4 text-center">
     <div class="text-8xl font-display text-ink-200/30">
       {{ error?.statusCode || 500 }}
     </div>
