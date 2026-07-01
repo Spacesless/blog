@@ -30,7 +30,7 @@
         <h2 class="tl__title">最新文章</h2>
         <NuxtLink
           class="absolute top-8 right-0 leading-6 text-[var(--color-secondary)] hover:text-[var(--color-primary)]"
-          to="/article"
+          to="/article/list"
           >more+</NuxtLink
         >
       </div>
@@ -89,7 +89,7 @@
                 <NuxtLink
                   v-for="(tag, i) in item.parsedTags"
                   :key="i"
-                  :to="{ path: '/article', query: { tags: tag } }"
+                  :to="{ path: '/article/list', query: { tags: tag } }"
                   >#{{ tag }}</NuxtLink
                 >
               </div>
@@ -105,7 +105,7 @@
         <h2 class="tl__title">最近追番</h2>
         <NuxtLink
           class="absolute top-8 right-0 leading-6 text-[var(--color-secondary)] hover:text-[var(--color-primary)]"
-          to="/bangumi"
+          to="/bangumi/list"
           >more+</NuxtLink
         >
       </div>
@@ -160,7 +160,7 @@
                 <NuxtLink
                   v-for="(tag, i) in item.parsedTags"
                   :key="i"
-                  :to="{ path: '/bangumi', query: { tags: tag } }"
+                  :to="{ path: '/bangumi/list', query: { tags: tag } }"
                   class="tl-tag"
                   :class="tagClassName(tag)"
                   >{{ tag }}</NuxtLink

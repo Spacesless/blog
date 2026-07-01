@@ -21,7 +21,7 @@ export function usePageSeo(options: PageMetaOptions = {}) {
       case 'list': {
         const segments = (route.params.slug as string[] | undefined) || []
         const { id } = parseListRoute(segments)
-        if (id === null) return undefined
+        if (id === null || id === 'list') return undefined
         // id 可能是数字 id 或 filename(slug)
         return categories.find(item =>
           /^\d+$/.test(String(id)) ? item.id === Number(id) : item.filename === id
@@ -48,10 +48,10 @@ export function usePageSeo(options: PageMetaOptions = {}) {
       }
     }
 
-    const pageTitle = pageName || category?.name
+    const pageTitle = pageName || category?.name || data?.title
     return {
-      keyword: category?.keywords || configs.keywords,
-      description: category?.description || configs.description,
+      keyword: data?.keywords || category?.keywords || configs.keywords,
+      description: data?.description || category?.description || configs.description,
       title: pageTitle ? `${pageTitle} - ${configs.sitename}` : configs.sitename,
     }
   })

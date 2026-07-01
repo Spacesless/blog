@@ -62,7 +62,7 @@
             <NuxtLink
               v-for="(tag, i) in item.tag || []"
               :key="i"
-              :to="{ path: '/article', query: { tags: tag } }"
+              :to="{ path: '/article/list', query: { tags: tag } }"
               class="tl-tag"
               :class="tagClassName(tag)"
               >{{ tag }}</NuxtLink
@@ -131,7 +131,7 @@ const pageTitle = computed(() =>
   currentTag.value ? `文章笔记 - ${currentTag.value}` : "文章笔记",
 );
 
-usePageSeo({ pageType: "list" });
+usePageSeo({ pageType: "list", data: { title: pageTitle.value } });
 
 const { data } = await useAsyncData(
   () => `article-list-${routeSlugArray.value.join("/")}-${JSON.stringify(route.query)}`,

@@ -43,7 +43,7 @@
             <NuxtLink
               v-for="(tag, i) in tags"
               :key="i"
-              :to="{ path: '/bangumi', query: { tags: tag } }"
+              :to="{ path: '/bangumi/list', query: { tags: tag } }"
               class="tl-tag !text-sm !leading-7 !px-3"
               :class="tagClassName(tag)"
               >{{ tag }}</NuxtLink

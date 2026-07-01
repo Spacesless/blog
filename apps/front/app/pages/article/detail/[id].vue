@@ -41,7 +41,7 @@
             <NuxtLink
               v-for="(tag, i) in data?.tag?.split('|') || []"
               :key="i"
-              :to="{ path: '/article', query: { tags: tag } }"
+              :to="{ path: '/article/list', query: { tags: tag } }"
               class="tl-tag !text-sm !leading-7 !px-3"
               :class="tagClassName(tag)"
               >{{ tag }}</NuxtLink

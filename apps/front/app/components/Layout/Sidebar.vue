@@ -85,10 +85,14 @@ const activeKey = computed(() => {
   }
   // 列表页：去除页码，高亮对应栏目菜单 /{type}/{slug}
   const segments = (params.slug as string[] | undefined) || [];
-  if (!segments.length) return path;
+  if (!segments.length) {
+    if (path === "/article" || path === "/article/") return "/article/list";
+    if (path === "/bangumi" || path === "/bangumi/") return "/bangumi/list";
+    return path;
+  }
   const type = path.split("/")[1];
   const { id } = parseListRoute(segments);
-  return id ? `/${type}/${id}` : path;
+  return `/${type}/${id || "list"}`;
 });
 </script>
 

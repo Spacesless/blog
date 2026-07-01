@@ -54,7 +54,7 @@
               <NuxtLink
                 v-for="(tag, i) in item.tag || []"
                 :key="i"
-                :to="{ path: '/bangumi', query: { tags: tag } }"
+                :to="{ path: '/bangumi/list', query: { tags: tag } }"
                 class="tl-tag"
                 :class="tagClassName(tag)"
                 >{{ tag }}</NuxtLink
@@ -98,7 +98,7 @@ const pageTitle = computed(() =>
   currentTag.value ? `追番刷剧 - ${currentTag.value}` : "追番刷剧",
 );
 
-usePageSeo({ pageType: "list" });
+usePageSeo({ pageType: "list", data: { title: pageTitle.value } });
 
 const { data } = await useAsyncData(
   () => `bangumi-list-${routeSlugArray.value.join("/")}-${JSON.stringify(route.query)}`,
