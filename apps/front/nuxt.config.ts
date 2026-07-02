@@ -20,8 +20,8 @@ export default defineNuxtConfig({
     "~/assets/css/prism.scss",
   ],
   colorMode: {
-    preference: "dark",
-    fallback: "dark",
+    preference: "system",
+    fallback: "light",
     classSuffix: "",
   },
   runtimeConfig: {

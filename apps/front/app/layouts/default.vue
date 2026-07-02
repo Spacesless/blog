@@ -1,5 +1,5 @@
 <template>
-  <div class="relative max-w-1200px min-h-screen mx-auto px-4" :class="classObj">
+  <div class="relative max-w-1200px min-h-screen mx-auto px-4 layout" :class="classObj">
     <LayoutHeader />
     <div
       v-if="device === 'mobile' && sidebar.opened"
@@ -84,5 +84,11 @@ watch(
 <style scoped>
 .main > :slotted(*) {
   min-height: calc(100vh - 103px);
+}
+
+@media (min-width: 1600px) {
+  .layout {
+    max-width: 1366px;
+  }
 }
 </style>
