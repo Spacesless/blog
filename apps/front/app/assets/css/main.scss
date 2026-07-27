@@ -1,0 +1,337 @@
+/* Custom Fonts */
+@font-face {
+  font-family: Bega;
+  src: url("~/assets/fonts/Bega-Light.ttf") format("truetype");
+  font-display: swap;
+}
+
+/* iconfont */
+@font-face {
+  font-display: swap;
+  font-family: iconfont;
+  src:
+    url("//at.alicdn.com/t/c/font_442558_88eodabfbon.woff2?t=1660357329408") format("woff2"),
+    url("//at.alicdn.com/t/c/font_442558_88eodabfbon.woff?t=1660357329408") format("woff"),
+    url("//at.alicdn.com/t/c/font_442558_88eodabfbon.ttf?t=1660357329408") format("truetype");
+}
+
+[class*=" icon"],
+[class^="icon"],
+[class*=" icon-"],
+[class^="icon-"] {
+  font-family: iconfont, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-variant: normal;
+  line-height: 1;
+  text-transform: none;
+  vertical-align: baseline;
+}
+
+.icon-quanping::before { content: "\e632"; }
+.icon-tuichuquanping::before { content: "\e638"; }
+.icon-duohangwenben::before { content: "\e646"; }
+.icon-danhangwenben::before { content: "\e648"; }
+.icon-qq::before { content: "\e647"; }
+.icon-music::before { content: "\e63b"; }
+.icon-gitee::before { content: "\e686"; }
+.icon-wancheng::before { content: "\e628"; }
+.icon-fuzhi::before { content: "\e8b0"; }
+.icon-yinghua::before { content: "\e87a"; }
+.icon-wenzi::before { content: "\e629"; }
+.icon-xiangzuoshouqi::before { content: "\e625"; }
+.icon-xiangyouzhankai::before { content: "\e624"; }
+.icon-qiehuan::before { content: "\e613"; }
+.icon-yinyue::before { content: "\f116"; }
+.icon-qingtian::before { content: "\e666"; }
+.icon-guanbi::before { content: "\e645"; }
+.icon-moon::before { content: "\e607"; }
+.icon-paizhao::before { content: "\e60d"; }
+.icon-moxing::before { content: "\e651"; }
+.icon-guanyu::before { content: "\e6f3"; }
+.icon-lianjie::before { content: "\e654"; }
+.icon-bianqian::before { content: "\e668"; }
+.icon-pifu::before { content: "\e743"; }
+.icon-chakan::before { content: "\e681"; }
+.icon-daima::before { content: "\e604"; }
+.icon-bilibili::before { content: "\e75e"; }
+.icon-bofang::before { content: "\e769"; }
+.icon-xiaolian::before { content: "\e703"; }
+.icon-rss::before { content: "\e6d0"; }
+.icon-shuji::before { content: "\e6c2"; }
+.icon-dianshi::before { content: "\e707"; }
+.icon-gongju::before { content: "\e74e"; }
+.icon-shouye::before { content: "\e76f"; }
+.icon-fanhuidingbu::before { content: "\e637"; }
+.icon-pinglun::before { content: "\e745"; }
+.icon-dongxiao::before { content: "\e640"; }
+.icon-riqi::before { content: "\e70b"; }
+.icon-guidang::before { content: "\e667"; }
+
+/* Color Mode Variables */
+:root {
+  --color-primary: #1890ff;
+  --color-heading: #1f1f1f;
+  --color-text: #434343;
+  --color-secondary: #8c8c8c;
+  --bg: #f5f5f5;
+  --bg-normal: #ffffff;
+  --border-color: #ebeef5;
+  --menu-active: #ecf5ff;
+  --code-toolbar-bg: #eff2f3;
+  --article-cover: linear-gradient(180deg, hsla(0deg, 0%, 98%, 0), hsla(0deg, 0%, 98%, 0.049) 15.5%,
+    hsla(0deg, 0%, 98%, 0.175) 29%, hsla(0deg, 0%, 98%, 0.352) 41.2%, hsla(0deg, 0%, 98%, 0.55) 52.9%,
+    hsla(0deg, 0%, 98%, 0.741) 64.7%, hsla(0deg, 0%, 98%, 0.896) 77.5%, hsla(0deg, 0%, 98%, 0.987) 91.9%,
+    var(--bg-normal));
+  --gradient-cover: linear-gradient(90deg, hsla(0deg, 0%, 98%, 0), hsla(0deg, 0%, 98%, 0.049) 15.5%,
+    hsla(0deg, 0%, 98%, 0.175) 29%, hsla(0deg, 0%, 98%, 0.352) 41.2%, hsla(0deg, 0%, 98%, 0.55) 52.9%,
+    hsla(0deg, 0%, 98%, 0.741) 64.7%, hsla(0deg, 0%, 98%, 0.896) 77.5%, hsla(0deg, 0%, 98%, 0.987) 91.9%,
+    var(--bg-normal));
+  --shadow-3-down: rgba(0, 0, 0, 0.08) 0 6px 16px 0;
+  --shadow-3-right: rgba(0, 0, 0, 0.08) 6px 0 16px 0;
+  --shadow-3-up: rgba(0, 0, 0, 0.08) 0 -6px 16px 0;
+  --aside-width: 200px;
+  --grid-space: 20px;
+  --border-radius: 10px;
+}
+
+html.dark {
+  --color-primary: #177ddc;
+  --color-heading: #f5f5f5;
+  --color-text: #d9d9d9;
+  --color-secondary: #8c8c8c;
+  --bg: #000000;
+  --bg-normal: #1f1f1f;
+  --border-color: rgba(255, 255, 255, 0.2);
+  --menu-active: #15395b;
+  --code-toolbar-bg: #2d2d2d;
+  --article-cover: linear-gradient(180deg, rgba(33, 33, 33, 0), rgba(33, 33, 33, 0.049) 15.5%,
+    rgba(33, 33, 33, 0.175) 29%, rgba(33, 33, 33, 0.352) 41.2%, rgba(33, 33, 33, 0.55) 52.9%,
+    rgba(33, 33, 33, 0.741) 64.7%, rgba(33, 33, 33, 0.896) 77.5%, rgba(33, 33, 33, 0.987) 91.9%,
+    var(--bg-normal));
+  --gradient-cover: linear-gradient(90deg, rgba(33, 33, 33, 0), rgba(33, 33, 33, 0.049) 15.5%,
+    rgba(33, 33, 33, 0.175) 29%, rgba(33, 33, 33, 0.352) 41.2%, rgba(33, 33, 33, 0.55) 52.9%,
+    rgba(33, 33, 33, 0.741) 64.7%, rgba(33, 33, 33, 0.896) 77.5%, rgba(33, 33, 33, 0.987) 91.9%,
+    var(--bg-normal));
+}
+
+/* Global Base Styles */
+body {
+  color: var(--color-text);
+  background-color: var(--bg);
+  transition: background-color 0.3s;
+}
+
+/* Scrollbar */
+@media (pointer: fine) {
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background-color: transparent;
+  }
+  ::-webkit-scrollbar-button {
+    width: 0;
+    height: 0;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(144, 147, 153, 0.4);
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(144, 147, 153, 0.7);
+  }
+}
+
+/* Vue Transitions */
+.fade-transform-enter-active,
+.fade-transform-leave-active {
+  transition: all 0.3s;
+}
+.fade-transform-enter-from {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+.fade-transform-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+/* Tag 样式 - 参考旧版 objects.scss */
+.tl-tag {
+  display: inline-block;
+  padding: 0 10px;
+  margin-top: 5px;
+  margin-right: 5px;
+  font-size: 12px;
+  line-height: 20px;
+  color: var(--color-heading);
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+$tagColor: (
+  'red': #FF4D4F,
+  'geekblue': #597EF7,
+  'orange': #FFA940,
+  'cyan': #36CFC9,
+  'green': #73D13D,
+  'blue': #409EFF,
+  'purple': #9254DE,
+  'magenta': #F759AB
+);
+
+@each $tag, $color in $tagColor {
+  .tl-tag--#{$tag} {
+    color: $color;
+    background-color: rgba($color, 0.15);
+  }
+}
+
+/* Title with gradient underline */
+.tl__title {
+  position: relative;
+  padding: 32px 0;
+  font-size: 32px;
+  font-weight: normal;
+  line-height: 1.5;
+  color: var(--color-heading);
+
+  &::after {
+    position: absolute;
+    bottom: 24px;
+    left: 0;
+    width: 96px;
+    height: 4px;
+    content: '';
+    background: linear-gradient(130deg, rgb(36, 198, 220), var(--color-primary) 60%, rgb(84, 51, 255));
+    border-radius: 96px;
+  }
+}
+
+@media (max-width: 576px) {
+  .tl__title {
+    padding: 24px 0;
+
+    &::after {
+      bottom: 12px;
+    }
+  }
+}
+
+/* Card title with rotating sakura icon */
+.tl-card__title {
+  margin-bottom: var(--grid-space);
+  font-size: 24px;
+  font-weight: normal;
+  line-height: 1em;
+  color: var(--color-heading);
+  display: flex;
+  align-items: center;
+
+  &::before {
+    margin-right: 6px;
+    font-family: iconfont, sans-serif;
+    font-size: 28px;
+    color: #fc9fa7;
+    content: '\e87a';
+    animation: tl-card-rotate 6s linear infinite;
+  }
+}
+
+@keyframes tl-card-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Clearfix utility */
+.clearfix::after {
+  display: block;
+  clear: both;
+  content: "";
+}
+
+/* Markup rich content (Directus WYSIWYG) */
+.markup {
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--color-text);
+  word-wrap: break-word;
+
+  h1, h2, h3, h4, h5, h6 {
+    margin: 0.6em 0;
+    font-weight: 500;
+    color: var(--color-heading);
+  }
+  h2 {
+    font-size: 24px;
+  }
+  h3 {
+    font-size: 20px;
+  }
+  h4 {
+    font-size: 18px;
+  }
+  p {
+    margin: 0.8em 0;
+  }
+  img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    cursor: zoom-in;
+  }
+  a {
+    color: var(--color-primary);
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  blockquote {
+    margin: 1em 0;
+    padding: 10px 20px;
+    border-left: 4px solid var(--color-primary);
+    background: var(--bg);
+    border-radius: 4px;
+  }
+  code {
+    padding: 2px 6px;
+    font-size: 0.9em;
+    background: var(--bg);
+    border-radius: 4px;
+  }
+  pre {
+    margin: 1em 0;
+    padding: 16px;
+    overflow-x: auto;
+    background: var(--code-toolbar-bg);
+    border-radius: var(--border-radius);
+
+    code {
+      padding: 0;
+      background: none;
+    }
+  }
+  table {
+    width: 100%;
+    margin: 1em 0;
+    border-collapse: collapse;
+  }
+  th, td {
+    padding: 8px 12px;
+    border: 1px solid var(--border-color);
+  }
+  th {
+    background: var(--bg);
+    font-weight: 500;
+  }
+}
+
+.el-popup-parent--hidden {
+  overflow: hidden;
+}

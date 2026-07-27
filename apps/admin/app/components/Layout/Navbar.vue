@@ -1,0 +1,174 @@
+<template>
+  <div class="navbar">
+    <LayoutHamburger :is-active="appStore.sidebar.opened" class="hamburger-container" @toggle-click="toggleSideBar" />
+
+    <LayoutBreadcrumb class="breadcrumb-container" />
+
+    <div class="right-menu">
+      <el-tooltip effect="dark" content="刷新页面" placement="bottom">
+        <span class="right-menu-item hover-effect" @click="handleRefresh"><el-icon><Refresh /></el-icon></span>
+      </el-tooltip>
+      <el-dropdown trigger="click" placement="bottom" class="h-full">
+        <span class="right-menu-item hover-effect"><el-icon><Brush /></el-icon></span>
+        <template #dropdown>
+          <el-dropdown-menu>
+            <el-dropdown-item @click="handleClearCache">清除缓存</el-dropdown-item>
+            <el-dropdown-item @click="handleClearThumbnail">删除缩略图</el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
+      </el-dropdown>
+      <el-tooltip effect="dark" content="前台预览" placement="bottom">
+        <a class="right-menu-item hover-effect" :href="siteUrl" target="_blank">
+          <el-icon><Monitor /></el-icon>
+        </a>
+      </el-tooltip>
+      <el-dropdown class="avatar-container" trigger="click">
+        <span class="avatar-container-link">
+          {{ userStore.userinfo.nickname || userStore.userinfo.username || '管理员' }}
+          <el-icon><ArrowDown /></el-icon>
+        </span>
+        <template #dropdown>
+          <el-dropdown-menu class="user-dropdown">
+            <el-dropdown-item>
+              <NuxtLink to="/">首页</NuxtLink>
+            </el-dropdown-item>
+            <el-dropdown-item>
+              <NuxtLink to="/profile">个人资料</NuxtLink>
+            </el-dropdown-item>
+            <el-dropdown-item divided>
+              <span @click="logout">注销</span>
+            </el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
+      </el-dropdown>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ElMessage, ElMessageBox } from 'element-plus'
+import { Refresh, Brush, Monitor, ArrowDown } from '@element-plus/icons-vue'
+
+const appStore = useAppStore()
+const userStore = useUserStore()
+const listStore = useListStore()
+const configStore = useConfigStore()
+const route = useRoute()
+const router = useRouter()
+const api = useApi()
+
+const siteUrl = computed(() => (configStore.configs?.siteurl as string) || '/')
+
+function toggleSideBar() {
+  appStore.toggleSideBar()
+}
+
+async function logout() {
+  await userStore.logout()
+  await router.push(`/login?redirect=${route.fullPath}`)
+}
+
+function handleClearCache() {
+  ElMessageBox.confirm('此操作将清除后台缓存, 是否继续?', '提示', {
+    confirmButtonText: '确定',
+    cancelButtonText: '取消',
+    type: 'warning',
+  })
+    .then(async () => {
+      try {
+        await api.RefreshCache()
+        ElMessage.success('清除缓存成功')
+        await listStore.getCategory()
+        await configStore.getConfigs()
+      } catch {
+        ElMessage.error('清除缓存失败')
+      }
+    })
+    .catch(() => {})
+}
+
+function handleClearThumbnail() {
+  ElMessageBox.confirm('此操作将清除缩略图, 是否继续?', '提示', {
+    confirmButtonText: '确定',
+    cancelButtonText: '取消',
+    type: 'warning',
+  })
+    .then(async () => {
+      try {
+        await api.ClearThumbnail()
+        ElMessage.success('清除缩略图成功')
+      } catch {
+        ElMessage.error('清除缩略图失败')
+      }
+    })
+    .catch(() => {})
+}
+
+async function handleRefresh() {
+  const tagsView = useTagsViewStore()
+  await tagsView.delCachedView(route as any)
+  await nextTick()
+  router.replace('/redirect' + route.fullPath)
+}
+</script>
+
+<style lang="scss" scoped>
+.navbar {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  height: 50px;
+  overflow: hidden;
+  background-color: #FFFFFF;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .1);
+
+  .hamburger-container {
+    height: 100%;
+    line-height: 46px;
+    cursor: pointer;
+    transition: background .3s;
+
+    &:hover {
+      background: rgba(0, 0, 0, .06);
+    }
+  }
+
+  .breadcrumb-container {
+    flex: 1;
+  }
+
+  .right-menu {
+    display: flex;
+    align-items: center;
+    height: 100%;
+
+    .right-menu-item {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      padding: 0 10px;
+      font-size: 18px;
+      color: #5A5E66;
+      cursor: pointer;
+
+      &.hover-effect:hover {
+        background: rgba(0, 0, 0, .06);
+      }
+    }
+
+    .avatar-container {
+      display: flex;
+      align-items: center;
+      margin: 0 15px 0 8px;
+
+      &-link {
+        display: flex;
+        align-items: center;
+        color: #5A5E66;
+        cursor: pointer;
+      }
+    }
+  }
+}
+</style>

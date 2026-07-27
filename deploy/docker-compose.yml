@@ -1,0 +1,46 @@
+services:
+  # ThinkJS API (8360) + Nuxt SSR 前端 (3000)，由 PM2 同时管理
+  # admin SPA 已构建进 server/www/cms
+  node:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    container_name: blog-node
+    restart: always
+    environment:
+      NODE_ENV: production
+    env_file:
+      - ../apps/server/.env
+    volumes:
+      # 共享整个 server/www 给 nginx（首次由镜像内容初始化：cms、static）
+      - server-www:/app/apps/server/www
+    expose:
+      - "3000"
+      - "8360"
+    networks:
+      - blog-net
+
+  # Nginx：官方镜像 + 挂载配置，服务 server/www 静态资源 + 反向代理
+  nginx:
+    image: nginx:1.27-alpine
+    container_name: blog-nginx
+    restart: always
+    depends_on:
+      - node
+    ports:
+      - "80:80"
+      # - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      # 与 node 共享同一份 server/www，对应 nginx root /usr/share/nginx/server-www
+      - server-www:/usr/share/nginx/server-www:ro
+    networks:
+      - blog-net
+
+volumes:
+  # server/www 持久化并在两容器间共享（含 cms、static、upload）
+  server-www:
+
+networks:
+  blog-net:
+    driver: bridge

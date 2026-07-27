@@ -28,11 +28,11 @@ package-lock.json
 .eslintcache
 
 # other ignore file
-runtime/
-config/adapter.model.js
-www/nuxt-admin
-www/nuxt-front
-www/upload
+apps/server/config/model.config.js
+apps/server/runtime/
+apps/server/www/nuxt-admin
+apps/server/www/nuxt-front
+apps/server/www/upload
 
 config.development.js
 adapter.development.js
