@@ -34,7 +34,7 @@
 import { Plus, Search } from '@element-plus/icons-vue'
 import { debounce } from '~/utils'
 
-defineProps<{
+const props = defineProps<{
   categoryOptions?: any[]
   currentType?: string
 }>()
@@ -45,7 +45,6 @@ const emit = defineEmits<{
 }>()
 
 const router = useRouter()
-const route = useRoute()
 
 const keyword = ref('')
 const selectedCategory = ref<number | null>(null)
@@ -54,7 +53,7 @@ function handleAdd() {
   router.push({
     path: '/content/create',
     query: {
-      type: (route.query.type as string) || '',
+      type: props.currentType || '',
       category: selectedCategory.value ?? undefined,
     } as any,
   })

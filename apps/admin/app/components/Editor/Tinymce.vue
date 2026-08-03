@@ -12,7 +12,9 @@ import toolbar from './toolbar'
 import codesampleLanguages from './codesampleLanguages'
 import PictureAlbum from '../Upload/PictureAlbum.vue'
 
-const tinymceCDN = '/vendor/tinymce/tinymce.min.js'
+const runtimeConfig = useRuntimeConfig()
+const base = runtimeConfig.app.baseURL
+const tinymceCDN = `${base}vendor/tinymce/tinymce.min.js`
 
 const props = withDefaults(defineProps<{
   modelValue: string
@@ -43,7 +45,7 @@ const route = useRoute()
 const initOptions = computed(() => ({
   selector: `#${tinymceId.value}`,
   language: 'zh_CN',
-  language_url: '/vendor/tinymce/langs/zh_CN.js',
+  language_url: `${base}vendor/tinymce/langs/zh_CN.js`,
   height: props.height,
   body_class: 'panel-body',
   object_resizing: false,
