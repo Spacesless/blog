@@ -40,7 +40,6 @@ const hasInit = ref(false)
 const albumVisible = ref(false)
 
 const api = useApi()
-const route = useRoute()
 
 const initOptions = computed(() => ({
   selector: `#${tinymceId.value}`,
@@ -88,13 +87,20 @@ const initOptions = computed(() => ({
   },
 }))
 
+/**
+ * 使用自定义函数代替TinyMCE来处理上传操作
+ * @param {Object} blobInfo 文件信息
+ * @param {Function} success 成功回调
+ * @param {Function} failure 失败回调
+ */
 function handleImageUpload(blobInfo: any, success: (url: string) => void, failure: (err: string) => void) {
   const formData = new FormData()
-  formData.append('file', blobInfo.blob(), blobInfo.filename())
-  formData.append('module', (route.meta as any)?.upload || 'tinymce')
+  formData.append('file', blobInfo.blob())
   api.UploadFiles(formData)
     .then((res: any) => {
-      success(res.data?.url || res.data)
+      const fileList = res.data
+      const { url } = fileList[0] || {}
+      success(url)
     })
     .catch((err: any) => {
       failure(err?.message || '上传失败')
@@ -111,11 +117,11 @@ function handlePickerFile(callback: (url: string, meta?: any) => void) {
     if (!file) return
     const formData = new FormData()
     formData.append('file', file)
-    formData.append('module', (route.meta as any)?.upload || 'tinymce')
     api.UploadFiles(formData)
       .then((res: any) => {
-        const url = res.data?.url || res.data
-        callback(url, { alt: file.name })
+        const fileList = res.data
+        const { url, name } = fileList[0] || {}
+        callback(url, { alt: name })
       })
       .catch(() => {})
   }
@@ -190,7 +196,7 @@ onDeactivated(() => {
 }
 
 .tinymce-container.fullscreen {
-  z-index: 10000;
+  z-index: 1200;
 }
 
 .tinymce-textarea {

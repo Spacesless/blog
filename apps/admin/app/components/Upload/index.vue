@@ -1,34 +1,42 @@
 <template>
   <div class="upload">
+    <el-button-group class="upload-menus">
+      <el-button type="primary" plain @click="handleUpload">
+        <el-icon><Check /></el-icon>
+      </el-button>
+      <el-button type="primary" plain @click="albumVisible = true">
+        <el-icon><Picture /></el-icon>
+      </el-button>
+      <el-button type="primary" plain @click="linksVisible = true">
+        <el-icon><Share /></el-icon>
+      </el-button>
+    </el-button-group>
+
     <el-upload
       ref="uploadRef"
+      v-model:file-list="innerFileList"
       class="upload-file"
-      :class="{ 'upload-file--disable': isDisableUpload }"
+      :class="{ 'upload-file-drag': draggable, 'upload-file--disable': isDisableUpload }"
       list-type="picture-card"
       :action="''"
       :accept="accept"
       :multiple="multiple"
       :limit="limit"
-      :file-list="innerFileList"
+      :drag="draggable"
+      :auto-upload="false"
       :before-upload="beforeUpload"
       :http-request="handleUploadFile"
-      :on-remove="onRemove"
       :on-preview="handlePreviewCard"
       :on-exceed="onExceed"
     >
-      <el-icon><Plus /></el-icon>
+      <template v-if="draggable">
+        <el-icon class="upload-drag-icon"><UploadFilled /></el-icon>
+        <div class="el-upload__text">
+          将文件拖到此处，或<em>点击上传</em>
+        </div>
+      </template>
+      <el-icon v-else><Plus /></el-icon>
     </el-upload>
-
-    <el-button-group v-if="enableExtra" class="upload-menus">
-      <el-button type="primary" plain @click="albumVisible = true">
-        <el-icon><Picture /></el-icon>
-        图片库
-      </el-button>
-      <el-button type="primary" plain @click="linksVisible = true">
-        <el-icon><Share /></el-icon>
-        网络图片
-      </el-button>
-    </el-button-group>
 
     <el-image-viewer
       v-if="previewVisible"
@@ -38,39 +46,43 @@
     />
 
     <UploadPictureAlbum v-model:visible="albumVisible" @on-select-file="onSelectFile" />
-    <UploadPictureLinks v-model:visible="linksVisible" :file-list="innerFileList" @on-file-url-change="onFileUrlChange" />
+    <UploadPictureLinks v-model:visible="linksVisible" :file-list="linkFileList" @on-file-url-change="onFileUrlChange" />
   </div>
 </template>
 
 <script setup lang="ts">
-import type { UploadFile, UploadInstance, UploadUserFile } from 'element-plus'
+import type { UploadFile, UploadInstance, UploadRequestOptions, UploadUserFile } from 'element-plus'
 import { ElMessage } from 'element-plus'
-import { Plus, Picture, Share } from '@element-plus/icons-vue'
+import { Plus, Picture, Share, Check, UploadFilled } from '@element-plus/icons-vue'
+import { getPathName } from '~/utils'
 
 interface FileItem {
-  name?: string
+  name: string
   url: string
 }
 
+/**
+ * 单图场景绑定 v-model:url，多图场景绑定 v-model:file-list，两者不要同时绑定
+ */
 const props = withDefaults(defineProps<{
-  modelValue?: string | string[] | FileItem[]
-  module?: string
+  url?: string
+  fileList?: FileItem[]
   accept?: string
   multiple?: boolean
   limit?: number
-  enableExtra?: boolean
+  draggable?: boolean
 }>(), {
-  modelValue: '',
-  module: 'common',
+  url: '',
+  fileList: () => [],
   accept: 'image/*',
   multiple: false,
   limit: 0,
-  enableExtra: true,
+  draggable: false,
 })
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', v: string | string[] | FileItem[]): void
-  (e: 'change', v: string | string[] | FileItem[]): void
+  (e: 'update:url', url: string): void
+  (e: 'update:fileList', list: FileItem[]): void
 }>()
 
 const api = useApi()
@@ -80,33 +92,34 @@ const linksVisible = ref(false)
 const previewVisible = ref(false)
 const previewIndex = ref(0)
 
-const isString = computed(() => typeof props.modelValue === 'string')
-
 const innerFileList = ref<UploadUserFile[]>([])
 
-watch(() => props.modelValue, (val) => {
-  innerFileList.value = normalizeToFileList(val)
+// 首个已上传完成的地址（未点击上传的文件只有本地 blob 地址，不能对外输出）
+const uploadedUrl = computed(() => innerFileList.value.find(f => f.url && !f.url.startsWith('blob:'))?.url || '')
+
+function isSameUrls(a: { url?: string }[], b: { url?: string }[]) {
+  return a.length === b.length && a.every((item, i) => item.url === b[i]?.url)
+}
+
+watch(() => props.fileList, (list) => {
+  if (isSameUrls(list, innerFileList.value)) return
+  // 拷一份，避免 Element Plus 往父组件的对象上写 uid / status
+  innerFileList.value = list.map(item => ({ ...item })) as UploadUserFile[]
 }, { immediate: true })
 
-function normalizeToFileList(val: string | string[] | FileItem[] | undefined): UploadUserFile[] {
-  if (!val) return []
-  if (typeof val === 'string') {
-    return val ? [{ name: getNameFromUrl(val), url: val }] as UploadUserFile[] : []
-  }
-  if (Array.isArray(val)) {
-    return val.map((item: any) => {
-      if (typeof item === 'string') return { name: getNameFromUrl(item), url: item }
-      return { name: item.name || getNameFromUrl(item.url), url: item.url }
-    }) as UploadUserFile[]
-  }
-  return []
-}
+watch(() => props.url, (url, oldUrl) => {
+  if (props.multiple) return
+  if (url === uploadedUrl.value) return
+  // oldUrl 为 undefined 说明是首次执行，此时空 url 可能只是未绑定，不能去清空 fileList
+  if (!url && oldUrl === undefined) return
+  innerFileList.value = url ? [{ name: getPathName(url).basename, url }] : []
+}, { immediate: true })
 
-function getNameFromUrl(url: string): string {
-  if (!url) return ''
-  const parts = url.split('/')
-  return parts[parts.length - 1] || url
-}
+// url 和 fileList 同时对外抛出，父组件按需绑定
+watch(innerFileList, (list) => {
+  emit('update:fileList', list as FileItem[])
+  if (uploadedUrl.value !== props.url) emit('update:url', uploadedUrl.value)
+})
 
 const isDisableUpload = computed(() => {
   if (props.multiple) {
@@ -115,23 +128,12 @@ const isDisableUpload = computed(() => {
   return innerFileList.value.length > 0
 })
 
-const previewSrcList = computed(() => innerFileList.value.map(f => (f.url || '')))
+const previewSrcList = computed(() => innerFileList.value.map(f => f.url || ''))
 
-function emitChange() {
-  if (isString.value) {
-    const first = innerFileList.value[0]
-    const url = first?.url || ''
-    emit('update:modelValue', url)
-    emit('change', url)
-  } else if (Array.isArray(props.modelValue) && props.modelValue.every(x => typeof x === 'string')) {
-    const urls = innerFileList.value.map(f => f.url || '')
-    emit('update:modelValue', urls as string[])
-    emit('change', urls as string[])
-  } else {
-    const list = innerFileList.value.map(f => ({ name: f.name || '', url: f.url || '' }))
-    emit('update:modelValue', list)
-    emit('change', list)
-  }
+const linkFileList = computed<FileItem[]>(() => innerFileList.value.map(f => ({ name: f.name, url: f.url || '' })))
+
+function handleUpload() {
+  uploadRef.value?.submit()
 }
 
 function beforeUpload(file: File) {
@@ -142,47 +144,28 @@ function beforeUpload(file: File) {
   return true
 }
 
-async function handleUploadFile(param: any) {
-  const file: File = param.file
+/**
+ * 覆盖默认的上传行为
+ * @param {Object} options 文件信息 { file: 文件对象 }
+ */
+async function handleUploadFile(options: UploadRequestOptions) {
+  const file = options.file
   const formData = new FormData()
   formData.append('file', file)
-  if (props.module) formData.append('module', props.module)
   try {
     const res: any = await api.UploadFiles(formData)
-    const data = res?.data
-    let url = ''
-    let name = file.name
-    if (Array.isArray(data) && data.length) {
-      url = data[0].url || data[0]
-      name = data[0].name || name
-    } else if (data?.url) {
-      url = data.url
-      name = data.name || name
-    } else if (typeof data === 'string') {
-      url = data
-    }
-    if (!url) {
-      ElMessage.error('上传失败')
-      return
-    }
-    if (!props.multiple) {
-      innerFileList.value = [{ name, url } as UploadUserFile]
-    } else {
-      innerFileList.value.push({ name, url } as UploadUserFile)
-    }
-    emitChange()
+    const [uploaded] = (res?.data || []) as FileItem[]
+    if (!uploaded?.url) throw new Error('上传失败')
+    // 用服务端地址替换列表中该项的本地预览地址，并置为已完成，避免再次 submit 时重复上传
+    innerFileList.value = innerFileList.value.map<UploadUserFile>(item => (
+      item.uid === file.uid ? { ...item, ...uploaded, status: 'success', percentage: 100 } : item
+    ))
     ElMessage.success('上传成功')
-  } catch {
+    return res
+  } catch (err) {
     ElMessage.error('上传失败')
+    throw err
   }
-}
-
-function onRemove(file: UploadFile, list: UploadUserFile[]) {
-  innerFileList.value = list.map((item: any) => {
-    const data = item.response ? (item.response.data || item) : item
-    return { name: data.name, url: data.url || item.url }
-  }) as UploadUserFile[]
-  emitChange()
 }
 
 function onExceed() {
@@ -190,33 +173,30 @@ function onExceed() {
 }
 
 function handlePreviewCard(file: UploadFile) {
-  const url = file.url || ''
-  previewIndex.value = previewSrcList.value.indexOf(url)
-  if (previewIndex.value < 0) previewIndex.value = 0
+  const index = previewSrcList.value.indexOf(file.url || '')
+  previewIndex.value = index < 0 ? 0 : index
   previewVisible.value = true
 }
 
 function onSelectFile(files: FileItem[]) {
   if (!files?.length) return
-  if (props.multiple) {
-    const merged = [...innerFileList.value, ...files] as UploadUserFile[]
-    innerFileList.value = merged
-  } else {
-    innerFileList.value = [files[0]] as UploadUserFile[]
-  }
-  emitChange()
+  innerFileList.value = (props.multiple ? [...innerFileList.value, ...files] : [files[0]!]) as UploadUserFile[]
 }
 
 function onFileUrlChange(files: FileItem[]) {
   innerFileList.value = files as UploadUserFile[]
-  emitChange()
 }
 </script>
 
 <style lang="scss" scoped>
 .upload {
   &-menus {
-    padding-top: 10px;
+    padding-bottom: 15px;
+  }
+
+  &-drag-icon {
+    font-size: 48px;
+    color: var(--el-text-color-placeholder);
   }
 
   &-file {
@@ -240,6 +220,16 @@ function onFileUrlChange(files: FileItem[]) {
     &--disable {
       :deep(.el-upload--picture-card) {
         display: none;
+      }
+    }
+
+    &-drag {
+      :deep(.el-upload--picture-card) {
+        display: inline-block;
+        width: 360px;
+        height: 180px;
+        line-height: 1em;
+        border: none;
       }
     }
   }

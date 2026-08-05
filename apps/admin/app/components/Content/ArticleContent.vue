@@ -24,6 +24,7 @@
       <el-form-item label="URL别名" prop="pathname">
         <el-input
           v-model="formData.pathname"
+          class="flex-1"
           placeholder="建议手动输入英文别名（小写字母、数字、短横线）；中文标题无法自动生成"
         />
         <el-button type="primary" plain @click="handleGenerateSlug">
@@ -31,7 +32,7 @@
         </el-button>
       </el-form-item>
       <el-form-item label="封面图片">
-        <Upload v-model="coverUrl" :module="currentType" />
+        <Upload v-model:url="formData.imgurl" />
       </el-form-item>
 
       <ContentBangumiParam
@@ -152,7 +153,6 @@ const editorRef = ref<any>(null);
 const saveTagInput = ref<{ focus: () => void } | null>(null);
 
 const formData = reactive<Record<string, any>>({});
-const coverUrl = ref("");
 const tags = ref<string[]>([]);
 const inputVisible = ref(false);
 const inputTag = ref("");
@@ -185,7 +185,6 @@ async function fetchData(id: number | string) {
   try {
     const res: any = await api.GetContent(currentType.value, id);
     Object.assign(formData, res.data);
-    if (formData.imgurl) coverUrl.value = formData.imgurl;
     tags.value = formData.tag ? formData.tag.split("|") : [];
   } catch {}
   fetchLoading.value = false;
@@ -227,7 +226,6 @@ function handleSubmit() {
       ...formData,
       addtime: parseTime(formData.addtime),
       updatetime: parseTime(formData.updatetime),
-      imgurl: coverUrl.value,
       tag: tags.value.join("|"),
       word_count: editorRef.value?.getWordCount?.() || 0,
     };
