@@ -63,13 +63,14 @@ module.exports = class extends Rest {
     }
   }
 
-  // 删除友链
+  // 删除友链（支持批量）
   async deleteAction() {
-    if (!this.id) {
+    const list = this.post('list');
+    if (!list || !list.length) {
       return this.fail('CONTENT_NOT_EXIST');
     }
 
-    const affectedRows = await await this.modelInstance.where({ id: this.id }).delete();
+    const affectedRows = await this.modelInstance.where({ id: ['IN', list] }).delete();
 
     if (affectedRows) {
       return this.success('删除成功');
