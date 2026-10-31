@@ -19,7 +19,6 @@
     "build": "pnpm -r --parallel build",
     "build:front": "pnpm -F www build",
     "build:admin": "pnpm -F admin generate",
-    "build:server": "pnpm -F server build",
     "lint": "pnpm -r --parallel lint",
     "typecheck": "pnpm -r --parallel typecheck"
   }

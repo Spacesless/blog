@@ -3,15 +3,22 @@
     class="py-[var(--grid-space)] text-sm leading-snug text-[var(--color-heading)]"
   >
     <p class="mb-1 text-center lt-sm:hidden">
-      Power by Node.js + Nuxt.js，由
-      <img
-        class="inline-block"
-        width="20"
-        height="20"
-        src="@/assets/image/tencent-cloud.png"
-        alt="腾讯云"
-      >
-      腾讯云提供服务, 已经稳稳地存活了 {{ configs?.duration }}
+      Power by ThinkJS + Nuxt.js，已经稳稳地存活了 {{ configs?.duration }}
+      <a
+        class="ml-2 inline-block align-middle"
+        href="https://www.foreverblog.cn/go.html"
+        rel="noopener noreferrer"
+        target="_blank"
+        title="虫洞 · 随机访问十年之约成员博客"
+        ><img
+          class="inline-block h-8 w-auto dark:hidden"
+          src="https://www.foreverblog.cn/assets/logo/wormhole_v2_dark.webp"
+          alt="十年之约虫洞"
+        ><img
+          class="hidden h-8 w-auto dark:inline-block"
+          src="https://www.foreverblog.cn/assets/logo/wormhole_v2_light.webp"
+          alt="十年之约虫洞"
+      ></a>
     </p>
     <p class="text-center">
       <span
@@ -48,7 +55,7 @@
 
 <script setup lang="ts">
 defineProps<{
-  configs?: Record<string, any>;
+  configs?: Record<string, string>;
 }>();
 
 const currentYear = new Date().getFullYear();
