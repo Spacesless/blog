@@ -35,7 +35,7 @@ module.exports = class extends Base {
 
     const filterCategory = categories.filter(item => !item.link);
     const targetCategory = filterCategory.map(item => {
-      const { id, url, level } = item;
+      const { id, level } = item;
       const rows = sitemapList.filter(element => element.category_id === id);
       let lastmod;
       if (rows.length) {
@@ -43,7 +43,7 @@ module.exports = class extends Base {
         lastmod = rows[0].updatetime;
       }
       return {
-        url: `${this.baseurl}${url}`,
+        url: `${this.baseurl}${this.getCategoryPath(item)}`,
         lastmod: lastmod || think.datetime(new Date(), 'YYYY-MM-DD'),
         priority: level === 1 ? 0.9 : (level === 2 ? 0.8 : 0.7)
       };
@@ -52,6 +52,26 @@ module.exports = class extends Base {
 
     this.ctx.type = 'text/xml';
     return super.display('home/sitemap.xml');
+  }
+
+  /**
+   * 获取栏目在 sitemap 中的路径
+   * 没有 pathname(filename) 的栏目回退到栏目类型首页，避免输出 /article/1、/tool/3 这类地址
+   * @param {Object} category 栏目数据
+   * @returns {string} 以 / 开头的栏目路径
+   */
+  getCategoryPath(category) {
+    const { type, filename } = category;
+    // 单页栏目：/about、/link
+    if (type === 'page') {
+      return `/${filename || type}`;
+    }
+    // 工具栏目只有一个 /tool 页面，没有按分类拆分的列表页
+    if (type === 'tool') {
+      return `/${type}`;
+    }
+    // 列表栏目：有 pathname 用 /article/work，没有 pathname 回退到 /article
+    return filename ? `/${type}/${filename}` : `/${type}`;
   }
 
   /**
