@@ -118,9 +118,25 @@ function formatDate(time: string) {
 const idOrSlug = route.params.id as string;
 const isLoaded = ref(false);
 
-const { data } = await useAsyncData(`article-detail-${idOrSlug}`, () =>
-  fetchArticleDetail(idOrSlug).catch(() => null),
+const { data, error } = await useAsyncData(`article-detail-${idOrSlug}`, () =>
+  fetchArticleDetail(idOrSlug),
 );
+
+// 文章不存在或接口异常时返回真正的错误状态，避免渲染一张空白详情页
+if (error.value) {
+  throw createError({
+    statusCode: 500,
+    statusMessage: "文章加载失败",
+    fatal: true,
+  });
+}
+if (!data.value) {
+  throw createError({
+    statusCode: 404,
+    statusMessage: "文章不存在或已被删除",
+    fatal: true,
+  });
+}
 
 usePageSeo({
   pageType: "detail",

@@ -200,6 +200,12 @@ function handleSearch() {
   fetchList();
 }
 
+function onPaginate({ page }: { page: number; limit: number }) {
+  if (page === listQuery.value.page) return;
+  listQuery.value.page = page;
+  fetchList();
+}
+
 function handleSearchHot(keyword: string) {
   listQuery.value.keyword = keyword;
   listQuery.value.classify = "";

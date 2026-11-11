@@ -112,9 +112,25 @@ const { fetchBangumiDetail } = useApi();
 const idOrSlug = route.params.id as string;
 const isLoaded = ref(false);
 
-const { data } = await useAsyncData(`bangumi-detail-${idOrSlug}`, () =>
-  fetchBangumiDetail(idOrSlug).catch(() => null)
+const { data, error } = await useAsyncData(`bangumi-detail-${idOrSlug}`, () =>
+  fetchBangumiDetail(idOrSlug),
 );
+
+// 番剧不存在或接口异常时返回真正的错误状态，避免渲染一张空白详情页
+if (error.value) {
+  throw createError({
+    statusCode: 500,
+    statusMessage: "番剧加载失败",
+    fatal: true,
+  });
+}
+if (!data.value) {
+  throw createError({
+    statusCode: 404,
+    statusMessage: "番剧不存在或已被删除",
+    fatal: true,
+  });
+}
 
 usePageSeo({
   pageType: "detail",

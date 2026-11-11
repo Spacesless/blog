@@ -8,6 +8,7 @@ import type {
   Tool,
   PaginatedResponse,
   ApiResponse,
+  ApiError,
 } from "~/types";
 
 /**
@@ -32,7 +33,17 @@ export function useApi() {
       if (res.errno === 0) {
         return res.data as T;
       }
-      throw new Error(res.errmsg || "请求错误");
+      // 后端用 errno 承载业务码；其中 4xx/5xx 具有 HTTP 语义（如 404 资源不存在），
+      // 透传给调用方，页面据此渲染 404/500 错误页
+      const error = new Error(res.errmsg || "请求错误") as ApiError;
+      if (
+        typeof res.errno === "number" &&
+        res.errno >= 400 &&
+        res.errno < 600
+      ) {
+        error.statusCode = res.errno;
+      }
+      throw error;
     }
     return res as unknown as T;
   }
@@ -67,9 +78,16 @@ export function useApi() {
     });
   }
 
-  // 文章详情
-  async function fetchArticleDetail(id: number | string): Promise<Article> {
-    return request<Article>("/article/detail", { params: { id } });
+  // 文章详情（资源不存在时返回 null，由页面渲染 404）
+  async function fetchArticleDetail(
+    id: number | string,
+  ): Promise<Article | null> {
+    return request<Article>("/article/detail", { params: { id } }).catch(
+      (err) => {
+        if ((err as ApiError)?.statusCode === 404) return null;
+        throw err;
+      },
+    );
   }
 
   // 文章访问量记录
@@ -101,9 +119,16 @@ export function useApi() {
     });
   }
 
-  // 追番详情
-  async function fetchBangumiDetail(id: number | string): Promise<Bangumi> {
-    return request<Bangumi>("/bangumi/detail", { params: { id } });
+  // 追番详情（资源不存在时返回 null，由页面渲染 404）
+  async function fetchBangumiDetail(
+    id: number | string,
+  ): Promise<Bangumi | null> {
+    return request<Bangumi>("/bangumi/detail", { params: { id } }).catch(
+      (err) => {
+        if ((err as ApiError)?.statusCode === 404) return null;
+        throw err;
+      },
+    );
   }
 
   // 追番相似推荐

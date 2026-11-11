@@ -113,3 +113,8 @@ export interface ApiResponse<T> {
   errmsg?: string;
   data?: T;
 }
+
+// 请求异常：statusCode 取后端 errno 中具有 HTTP 语义的部分（如 404）
+export interface ApiError extends Error {
+  statusCode?: number;
+}
